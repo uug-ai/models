@@ -31,9 +31,7 @@ jobs:
       - name: Generate Go code
         run: |
           mkdir -p proto/generated/go
-          protoc -I=proto/schemas --go_out=proto/generated/go --go_opt=paths=source_relative \
-                 --go-grpc_out=proto/generated/go --go-grpc_opt=paths=source_relative \
-                 proto/schemas/*.proto
+          protoc --go_out=paths=source_relative:./proto/generated/go -I. proto/schemas/*.proto
 
       - name: Commit and push changes
         run: |

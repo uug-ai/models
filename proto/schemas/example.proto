@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package example;
 
+option go_package = "github.com/uug-ai/models/generated/go;models";
+
+
 message ExampleMessage {
     string id = 1;
     string content = 2;
