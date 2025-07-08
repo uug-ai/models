@@ -35,3 +35,5 @@ type MediaMetadata struct {
 	Tags            []string `json:"tags,omitempty" bson:"tags,omitempty"`
 	Classifications []string `json:"classifications,omitempty" bson:"classifications,omitempty"`
 }
+
+
