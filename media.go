@@ -14,12 +14,12 @@ type Media struct {
 	// Media file information
 	Storage           string `json:"storage,omitempty" bson:"storage,omitempty"`
 	VideoFile         string `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
-	VideoUrl          string `json:"video_url,omitempty" bson:"video_url,omitempty"`
+	VideoUrl          string `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
 	VideoProvider     string `json:"videoProvider,omitempty" bson:"videoProvider,omitempty"`
-	ThumbnailUrl      string `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`
+	ThumbnailUrl      string `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
 	ThumbnailFile     string `json:"thumbnailFile,omitempty" bson:"thumbnailFile,omitempty"`
 	ThumbnailProvider string `json:"thumbnailProvider,omitempty" bson:"thumbnailProvider,omitempty"`
-	SpriteUrl         string `json:"sprite_url,omitempty" bson:"sprite_url,omitempty"`
+	SpriteUrl         string `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
 	SpriteFile        string `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
 	SpriteProvider    string `json:"spriteProvider,omitempty" bson:"spriteProvider,omitempty"`
 	SpriteInterval    int    `json:"spriteInterval,omitempty" bson:"spriteInterval,omitempty"`
