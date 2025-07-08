@@ -35,5 +35,5 @@ COPY . /go/src/github.com/uug-ai/models
 
 RUN cd /go/src/github.com/uug-ai/models && \
     go mod download && \
-    go build -tags timetzdata,netgo --ldflags '-s -w -extldflags "-static -latomic"' main.go && \
+    go build -tags timetzdata,netgo --ldflags '-s -w -extldflags "-static -latomic"' cmd/main.go && \
     rm -rf /go/src/github.com

@@ -1,4 +1,4 @@
-package main
+package models
 
 type Media struct {
 	// Time window of media file.
