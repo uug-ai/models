@@ -1,0 +1,32 @@
+@startuml
+namespace main {
+    class Media << (S,Aquamarine) >> {
+        + StartTimestamp int64
+        + EndTimestamp int64
+        + Duration int64
+        + DeviceId string
+        + GroupId string
+        + UserId string
+        + StorageSolution string
+        + VideoFile string
+        + VideoUrl string
+        + VideoProvider string
+        + ThumbnailUrl string
+        + ThumbnailFile string
+        + ThumbnailProvider string
+        + SpriteUrl string
+        + SpriteFile string
+        + SpriteProvider string
+        + SpriteInterval int
+        + Metadata []MediaMetadata
+
+    }
+    class MediaMetadata << (S,Aquamarine) >> {
+        + Tags []string
+        + Classifications []string
+
+    }
+}
+
+
+@enduml
