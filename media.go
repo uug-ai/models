@@ -11,8 +11,11 @@ type Media struct {
 	GroupId  string `json:"groupId,omitempty" bson:"groupId,omitempty"`
 	UserId   string `json:"userId,omitempty" bson:"userId,omitempty"`
 
+	// Media file information (by default Vault (=kstorage), however might change
+	// in the future (integration with other storage solutions, next to Vault).
+	StorageSolution string `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`
+
 	// Media file information
-	Storage           string `json:"storage,omitempty" bson:"storage,omitempty"`
 	VideoFile         string `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
 	VideoUrl          string `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
 	VideoProvider     string `json:"videoProvider,omitempty" bson:"videoProvider,omitempty"`
