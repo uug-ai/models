@@ -1,5 +1,9 @@
 package models
 
+// --------------------------------------------------------------------
+// Data model for Media
+//
+// This is the main struct for Media
 type Media struct {
 	// Time window of media file.
 	StartTimestamp int64 `json:"startTimestamp,omitempty" bson:"startTimestamp,omitempty"`
@@ -31,6 +35,7 @@ type Media struct {
 	Metadata []MediaMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
 }
 
+// We can store additional metadata for media files, such as tags and classifications.
 type MediaMetadata struct {
 	Tags            []string `json:"tags,omitempty" bson:"tags,omitempty"`
 	Classifications []string `json:"classifications,omitempty" bson:"classifications,omitempty"`
