@@ -14,6 +14,7 @@ type Media struct {
 	DeviceId string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
 	GroupId  string `json:"groupId,omitempty" bson:"groupId,omitempty"`
 	UserId   string `json:"userId,omitempty" bson:"userId,omitempty"`
+	OrganisationId string `json:"organisationId,omitempty" bson:"organisationId,omitempty"`
 
 	// Media file information (by default Vault (=kstorage), however might change
 	// in the future (integration with other storage solutions, next to Vault).
