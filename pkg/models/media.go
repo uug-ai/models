@@ -16,30 +16,38 @@ type Media struct {
 	EndTimestamp   int64 `json:"endTimestamp,omitempty" bson:"endTimestamp,omitempty"`
 	Duration       int64 `json:"duration,omitempty" bson:"duration,omitempty"`
 
-	// Media file owner
-	DeviceId       string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
-	GroupId        string `json:"groupId,omitempty" bson:"groupId,omitempty"`
-	UserId         string `json:"userId,omitempty" bson:"userId,omitempty"`
-	OrganisationId string `json:"organisationId,omitempty" bson:"organisationId,omitempty"`
+	// RBAC information
+	// Note: SiteId is used to identify the site where the device is located.
+	// GroupId is used to identify the group of devices.
+	// OrganisationId is used to identify the organisation that owns the device.
+	// FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.
+	DeviceId       string `json:"deviceId" bson:"deviceId,omitempty"` // device identifier
+	SiteId         string `json:"siteId" bson:"siteId,omitempty"`
+	GroupId        string `json:"groupId" bson:"groupId,omitempty"`
+	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
 
-	// Media file information (by default Vault (=kstorage), however might change
+	// Media file information (by default "vault", however might change
 	// in the future (integration with other storage solutions, next to Vault).
 	StorageSolution string `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`
 
-	// Media file information
-	VideoFile         string `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
-	VideoUrl          string `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
+	// Vault provider information (contains where the media is stored on which underlaying cloud storage)
 	VideoProvider     string `json:"videoProvider,omitempty" bson:"videoProvider,omitempty"`
-	ThumbnailUrl      string `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
-	ThumbnailFile     string `json:"thumbnailFile,omitempty" bson:"thumbnailFile,omitempty"`
 	ThumbnailProvider string `json:"thumbnailProvider,omitempty" bson:"thumbnailProvider,omitempty"`
-	SpriteUrl         string `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
-	SpriteFile        string `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
 	SpriteProvider    string `json:"spriteProvider,omitempty" bson:"spriteProvider,omitempty"`
-	SpriteInterval    int    `json:"spriteInterval,omitempty" bson:"spriteInterval,omitempty"`
+
+	// Media file information
+	VideoFile      string `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
+	ThumbnailFile  string `json:"thumbnailFile,omitempty" bson:"thumbnailFile,omitempty"`
+	SpriteFile     string `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
+	SpriteInterval int    `json:"spriteInterval,omitempty" bson:"spriteInterval,omitempty"`
 
 	// Metadata
 	Metadata *MediaMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
+
+	// AtRuntimeMetadata contains metadata that is generated at runtime, which can include
+	// more verbose information about the device's current state, capabilities, or configuration.
+	// for example the linked sites details, etc.
+	AtRuntimeMetadata *MediaAtRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"atRuntimeMetadata,omitempty"`
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
@@ -49,4 +57,11 @@ type Media struct {
 type MediaMetadata struct {
 	Tags            []string `json:"tags,omitempty" bson:"tags,omitempty"`
 	Classifications []string `json:"classifications,omitempty" bson:"classifications,omitempty"`
+}
+
+// MediaAtRuntimeMetadata contains metadata that is generated at runtime, which can include
+type MediaAtRuntimeMetadata struct {
+	VideoUrl     string `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
+	ThumbnailUrl string `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
+	SpriteUrl    string `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
 }
