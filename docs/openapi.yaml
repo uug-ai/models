@@ -1,0 +1,105 @@
+openapi: 3.0.3
+info:
+    title: Models API
+    version: 1.0.0
+paths: {}
+components:
+    schemas:
+        APIMetadata:
+            type: object
+            properties:
+                error:
+                    type: object
+                path:
+                    type: string
+                timestamp:
+                    type: integer
+                    format: int64
+                user_id:
+                    type: string
+        ErrorResponse:
+            type: object
+            properties:
+                error_code:
+                    type: string
+                message:
+                    type: string
+                meta_data:
+                    $ref: '#/components/schemas/APIMetadata'
+                request_id:
+                    type: string
+                status_code:
+                    type: integer
+                    format: int32
+        Media:
+            type: object
+            properties:
+                deviceId:
+                    type: string
+                duration:
+                    type: integer
+                    format: int64
+                endTimestamp:
+                    type: integer
+                    format: int64
+                groupId:
+                    type: string
+                metadata:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MediaMetadata'
+                organisationId:
+                    type: string
+                spriteFile:
+                    type: string
+                spriteInterval:
+                    type: integer
+                    format: int32
+                spriteProvider:
+                    type: string
+                spriteUrl:
+                    type: string
+                startTimestamp:
+                    type: integer
+                    format: int64
+                storageSolution:
+                    type: string
+                thumbnailFile:
+                    type: string
+                thumbnailProvider:
+                    type: string
+                thumbnailUrl:
+                    type: string
+                userId:
+                    type: string
+                videoFile:
+                    type: string
+                videoProvider:
+                    type: string
+                videoUrl:
+                    type: string
+        MediaMetadata:
+            type: object
+            properties:
+                classifications:
+                    type: array
+                    items:
+                        type: string
+                tags:
+                    type: array
+                    items:
+                        type: string
+        SuccessResponse:
+            type: object
+            properties:
+                message:
+                    type: string
+                meta_data:
+                    $ref: '#/components/schemas/APIMetadata'
+                request_id:
+                    type: string
+                status_code:
+                    type: integer
+                    format: int32
+                success_code:
+                    type: string

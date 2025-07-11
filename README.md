@@ -6,6 +6,51 @@ A Go package defining data models for media file management and metadata handlin
 
 This package provides a unified `Media` struct that represents media files (primarily video) along with their associated metadata, storage information, and processed assets like thumbnails and sprites.
 
+## TypeScript Generation
+
+This project automatically generates TypeScript types from Go models using OpenAPI 3.x as an intermediate format.
+
+### Usage
+
+To generate TypeScript types from your Go models:
+
+```bash
+# Generate both OpenAPI spec and TypeScript types
+npm run generate
+
+# Or run steps individually:
+npm run generate:openapi  # Go models → OpenAPI YAML
+npm run generate:types    # OpenAPI YAML → TypeScript types
+```
+
+### Generated Files
+
+- `docs/openapi.yaml` - OpenAPI 3.x specification generated from Go models
+- `src/types.ts` - TypeScript type definitions
+
+### Adding New Models
+
+1. Add your Go struct to `pkg/models/`
+2. Add the type to the `getModelTypes()` function in `scripts/generate-openapi.go`
+3. Run `npm run generate` to update the TypeScript types
+
+### Example Usage in TypeScript
+
+```typescript
+import { components } from './src/types';
+
+type Media = components['schemas']['Media'];
+type MediaMetadata = components['schemas']['MediaMetadata'];
+
+const media: Media = {
+  deviceId: "camera-001",
+  startTimestamp: 1640995200,
+  endTimestamp: 1640998800,
+  duration: 3600,
+  videoUrl: "https://example.com/video.mp4"
+};
+```
+
 ## Media Model
 
 The `Media` struct is designed to handle comprehensive media file information including:

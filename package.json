@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "generate:openapi": "GOPATH=$HOME/go go run scripts/generate-openapi.go",
+    "generate:types": "npx openapi-typescript docs/openapi.yaml --output src/types.ts",
+    "generate": "npm run generate:openapi && npm run generate:types"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.8.0"
+  }
+}
