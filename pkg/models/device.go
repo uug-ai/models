@@ -15,11 +15,14 @@ type Device struct {
 	// Device information
 	// Note: DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
 	// DeviceType is used to identify the type of device, such as camera, sensor, access control, etc.
-	// Version and ReleaseHash are used to identify the version of the device software.
+	Name       string `json:"name" bson:"name,omitempty"` // e.g. "Front Door Camera"
+	DeviceId   string `json:"deviceId" bson:"deviceId,omitempty"`
+	DeviceType string `json:"deviceType" bson:"deviceType,omitempty"` // e.g. "camera", "sensor", "access_control"
+
+	// Versioning information
+	// Note: Version is used to identify the version of the device software.
+	// ReleaseHash is used to identify the release hash of the device software, it can be used to identify the specific build of the device software.
 	// Deployment is used to identify the deployment type of the device, such as factory, docker, docker compose, kubernetes, etc.
-	Name        string `json:"name" bson:"name,omitempty"` // e.g. "Front Door Camera"
-	DeviceId    string `json:"deviceId" bson:"deviceId,omitempty"`
-	DeviceType  string `json:"deviceType" bson:"deviceType,omitempty"` // e.g. "camera", "sensor", "access_control"
 	Version     string `json:"version" bson:"version,omitempty"`
 	ReleaseHash string `json:"releaseHash" bson:"releaseHash,omitempty"` // e.g. "v1.0.0-abcdef123456"
 	Deployment  string `json:"deployment" bson:"deployment,omitempty"`   // e.g. "factory", "docker", "docker compose", "kubernetes"
@@ -33,13 +36,6 @@ type Device struct {
 	GroupId        string `json:"groupId" bson:"groupId,omitempty"`
 	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
 
-	// FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.
-	// It is a map of feature names to permissions.
-	// For example, "camera" can have permissions like "read", "write", "delete", etc.
-	// This allows for fine-grained control over what features are accessible by users or groups.
-	// FeaturePermissions can be used to implement Role-Based Access Control (RBAC) for devices.
-	FeaturePermissions FeaturePermissions `json:"featurePermissions" bson:"featurePermissions"`
-
 	// Device status
 	// Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc.
 	// LastSeenTimestamp is used to identify the last time the device was seen online.
@@ -47,13 +43,20 @@ type Device struct {
 	LastSeenTimestamp int64  `json:"lastSeenTimestamp" bson:"lastSeenTimestamp,omitempty"` //
 
 	// Metadata
-	Metadata []DeviceMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
+	Metadata DeviceMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
 
 	// Camera Metadata
-	CameraMetadata CameraMetadata `json:"cameraMetadata,omitempty" bson:"cameraMetadata,omitempty"`
+	CameraMetadata DeviceCameraMetadata `json:"cameraMetadata,omitempty" bson:"cameraMetadata,omitempty"`
 
 	// Location metadata
-	LocationMetadata LocationMetadata `json:"locationMetadata,omitempty" bson:"locationMetadata,omitempty"`
+	LocationMetadata DeviceLocationMetadata `json:"locationMetadata,omitempty" bson:"locationMetadata,omitempty"`
+
+	// FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.
+	// It is a map of feature names to permissions.
+	// For example, "camera" can have permissions like "read", "write", "delete", etc.
+	// This allows for fine-grained control over what features are accessible by users or groups.
+	// FeaturePermissions can be used to implement Role-Based Access Control (RBAC) for devices.
+	FeaturePermissions DeviceFeaturePermissions `json:"featurePermissions" bson:"featurePermissions"`
 }
 
 // We can store additional metadata for media files, such as tags and classifications.
@@ -65,21 +68,26 @@ type DeviceMetadata struct {
 	Description      string `json:"description" bson:"description,omitempty"`
 	LastMaintenance  int64  `json:"lastMaintenance" bson:"lastMaintenance,omitempty"`
 	InstallationDate int64  `json:"installationDate" bson:"installationDate,omitempty"`
-	Location         string `json:"location" bson:"location,omitempty"` // e.g. "Front Door", "Back Door", "Living Room"
 }
 
 // CameraMetadata contains metadata specific to camera devices.
-type CameraMetadata struct {
+type DeviceCameraMetadata struct {
 	Resolution string   `json:"resolution" bson:"resolution,omitempty"`
 	FrameRate  int64    `json:"frameRate" bson:"frameRate,omitempty"`
 	Bitrate    int64    `json:"bitrate" bson:"bitrate,omitempty"`
 	Codec      string   `json:"codec" bson:"codec,omitempty"`
+	HasAudio   bool     `json:"hasAudio" bson:"hasAudio,omitempty"`     // Indicates if the camera supports audio
+	HasZoom    bool     `json:"hasZoom" bson:"hasZoom,omitempty"`       // Indicates if the camera supports zoom functionality
+	HasPanTilt bool     `json:"hasPanTilt" bson:"hasPanTilt,omitempty"` // Indicates if the camera supports pan and tilt functionality
+	HasPresets bool     `json:"hasPresets" bson:"hasPresets,omitempty"` // Indicates if the camera supports presets
 	Presets    []Preset `json:"presets" bson:"presets,omitempty"`
 	Tours      []Tour   `json:"tours" bson:"tours,omitempty"`
+	HasIO      bool     `json:"hasIO" bson:"hasIO,omitempty"` // Indicates if the camera has input/output capabilities
+	IOs        []IO     `json:"ios" bson:"ios,omitempty"`     // Input/Output capabilities of the camera
 }
 
 // LocationMetadata contains metadata about the physical location of the device.
-type LocationMetadata struct {
+type DeviceLocationMetadata struct {
 	Latitude     float64  `json:"latitude" bson:"latitude,omitempty"`
 	Longitude    float64  `json:"longitude" bson:"longitude,omitempty"`
 	Altitude     float64  `json:"altitude" bson:"altitude,omitempty"`
@@ -89,7 +97,7 @@ type LocationMetadata struct {
 }
 
 // FeaturePermissions is a map of feature names to permissions.
-type FeaturePermissions struct {
+type DeviceFeaturePermissions struct {
 	PTZ          int `json:"ptz" bson:"ptz"`
 	Liveview     int `json:"liveview" bson:"liveview"`
 	RemoteConfig int `json:"remoteConfig" bson:"remoteConfig"`
