@@ -39,7 +39,10 @@ type Media struct {
 	SpriteInterval    int    `json:"spriteInterval,omitempty" bson:"spriteInterval,omitempty"`
 
 	// Metadata
-	Metadata MediaMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
+	Metadata *MediaMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
+
+	// Audit information
+	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
 }
 
 // We can store additional metadata for media files, such as tags and classifications.

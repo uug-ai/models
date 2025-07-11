@@ -11,4 +11,7 @@ type IO struct {
 	Value             string             `json:"value" bson:"value,omitempty"`
 	LastSeenTimestamp int64              `json:"lastSeenTimestamp" bson:"lastSeenTimestamp,omitempty"` // last time the IO was seen
 	External          bool               `json:"external" bson:"external,omitempty"`
+
+	// Audit information
+	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
 }

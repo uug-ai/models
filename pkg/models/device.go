@@ -62,6 +62,9 @@ type Device struct {
 	// more verbose information about the device's current state, capabilities, or configuration.
 	// for example the linked sites details, etc.
 	AtRuntimeMetadata *DeviceAtRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"atRuntimeMetadata,omitempty"`
+
+	// Audit information
+	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
 }
 
 // We can store additional metadata for media files, such as tags and classifications.
@@ -117,7 +120,7 @@ type DeviceFeaturePermissions struct {
 // more verbose information about the device's current state, capabilities, or configuration.
 type DeviceAtRuntimeMetadata struct {
 	// LinkedSites contains details about the sites that the device is linked to.
-	Sites []Sites `json:"sites,omitempty" bson:"sites,omitempty"`
+	//Sites []Sites `json:"sites,omitempty" bson:"sites,omitempty"`
 	// LinkedGroups contains details about the groups that the device is linked to.
-	Groups []Groups `json:"groups,omitempty" bson:"groups,omitempty"`
+	//Groups []Groups `json:"groups,omitempty" bson:"groups,omitempty"`
 }
