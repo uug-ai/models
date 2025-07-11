@@ -1,19 +1,25 @@
 package models
 
+import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
+
 // --------------------------------------------------------------------
 // Data model for Media
 //
 // This is the main struct for Media
 type Media struct {
+	Id primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+
 	// Time window of media file.
 	StartTimestamp int64 `json:"startTimestamp,omitempty" bson:"startTimestamp,omitempty"`
 	EndTimestamp   int64 `json:"endTimestamp,omitempty" bson:"endTimestamp,omitempty"`
 	Duration       int64 `json:"duration,omitempty" bson:"duration,omitempty"`
 
 	// Media file owner
-	DeviceId string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
-	GroupId  string `json:"groupId,omitempty" bson:"groupId,omitempty"`
-	UserId   string `json:"userId,omitempty" bson:"userId,omitempty"`
+	DeviceId       string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
+	GroupId        string `json:"groupId,omitempty" bson:"groupId,omitempty"`
+	UserId         string `json:"userId,omitempty" bson:"userId,omitempty"`
 	OrganisationId string `json:"organisationId,omitempty" bson:"organisationId,omitempty"`
 
 	// Media file information (by default Vault (=kstorage), however might change
