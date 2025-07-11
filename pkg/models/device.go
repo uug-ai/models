@@ -43,7 +43,7 @@ type Device struct {
 	// Device status
 	// Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc.
 	// LastSeenTimestamp is used to identify the last time the device was seen online.
-	CameraStatus      string `json:"status" bson:"status,omitempty"`                       // e.g. "connected", "idle"
+	Status            string `json:"status" bson:"status,omitempty"`                       // e.g. "connected", "idle"
 	LastSeenTimestamp int64  `json:"lastSeenTimestamp" bson:"lastSeenTimestamp,omitempty"` //
 
 	// Metadata
