@@ -32,6 +32,351 @@
                 }
             }
         },
+        "/internal/device": {
+            "get": {
+                "description": "Internal endpoint used only to ensure Device schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get Device (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Device"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/devicemedia": {
+            "get": {
+                "description": "Internal endpoint used only to ensure DeviceMedia schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get DeviceMedia (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DeviceMedia"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/deviceplacement": {
+            "get": {
+                "description": "Internal endpoint used only to ensure DevicePlacement schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get DevicePlacement (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DevicePlacement"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/deviceshort": {
+            "get": {
+                "description": "Internal endpoint used only to ensure DeviceShort schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get DeviceShort (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DeviceShort"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/deviceswrapper": {
+            "get": {
+                "description": "Internal endpoint used only to ensure DevicesWrapper schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get DevicesWrapper (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DevicesWrapper"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/devicewrapper": {
+            "get": {
+                "description": "Internal endpoint used only to ensure DeviceWrapper schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get DeviceWrapper (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DeviceWrapper"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/featurepermissions": {
+            "get": {
+                "description": "Internal endpoint used only to ensure FeaturePermissions schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get FeaturePermissions (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.FeaturePermissions"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/floorplan": {
+            "get": {
+                "description": "Internal endpoint used only to ensure FloorPlan schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get FloorPlan (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.FloorPlan"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/heartbeat": {
+            "get": {
+                "description": "Internal endpoint used only to ensure Heartbeat schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get Heartbeat (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Heartbeat"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/heartbeatold": {
+            "get": {
+                "description": "Internal endpoint used only to ensure HeartbeatOld schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get HeartbeatOld (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.HeartbeatOld"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/heartbeatshort": {
+            "get": {
+                "description": "Internal endpoint used only to ensure HeartbeatShort schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get HeartbeatShort (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.HeartbeatShort"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/location": {
+            "get": {
+                "description": "Internal endpoint used only to ensure Location schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get Location (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Location"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/locationgeometry": {
+            "get": {
+                "description": "Internal endpoint used only to ensure LocationGeometry schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get LocationGeometry (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.LocationGeometry"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/locationgeometrylocation": {
+            "get": {
+                "description": "Internal endpoint used only to ensure LocationGeometryLocation schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get LocationGeometryLocation (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.LocationGeometryLocation"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/locationshort": {
+            "get": {
+                "description": "Internal endpoint used only to ensure LocationShort schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get LocationShort (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.LocationShort"
+                        }
+                    }
+                }
+            }
+        },
         "/internal/mediametadata": {
             "get": {
                 "description": "Internal endpoint used only to ensure MediaMetadata schema is generated in OpenAPI spec",
@@ -55,9 +400,9 @@
                 }
             }
         },
-        "/internal/testflowstruct": {
+        "/internal/mediashort": {
             "get": {
-                "description": "Internal endpoint used only to ensure TestFlowStruct schema is generated in OpenAPI spec",
+                "description": "Internal endpoint used only to ensure MediaShort schema is generated in OpenAPI spec",
                 "consumes": [
                     "application/json"
                 ],
@@ -67,12 +412,173 @@
                 "tags": [
                     "internal"
                 ],
-                "summary": "Get TestFlowStruct (schema generation only)",
+                "summary": "Get MediaShort (schema generation only)",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.TestFlowStruct"
+                            "$ref": "#/definitions/models.MediaShort"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/mute": {
+            "get": {
+                "description": "Internal endpoint used only to ensure Mute schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get Mute (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Mute"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/onvifevents": {
+            "get": {
+                "description": "Internal endpoint used only to ensure ONVIFEvents schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get ONVIFEvents (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ONVIFEvents"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/preset": {
+            "get": {
+                "description": "Internal endpoint used only to ensure Preset schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get Preset (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Preset"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/role": {
+            "get": {
+                "description": "Internal endpoint used only to ensure Role schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get Role (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Role"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/site": {
+            "get": {
+                "description": "Internal endpoint used only to ensure Site schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get Site (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Site"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/siteshort": {
+            "get": {
+                "description": "Internal endpoint used only to ensure SiteShort schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get SiteShort (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SiteShort"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/sitewrapper": {
+            "get": {
+                "description": "Internal endpoint used only to ensure SiteWrapper schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get SiteWrapper (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SiteWrapper"
                         }
                     }
                 }
@@ -96,6 +602,52 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.TimelineValue"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/timewindow": {
+            "get": {
+                "description": "Internal endpoint used only to ensure TimeWindow schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get TimeWindow (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.TimeWindow"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/tour": {
+            "get": {
+                "description": "Internal endpoint used only to ensure Tour schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get Tour (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Tour"
                         }
                     }
                 }
@@ -196,6 +748,259 @@
                 }
             }
         },
+        "models.Device": {
+            "type": "object",
+            "properties": {
+                "analytics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Heartbeat"
+                    }
+                },
+                "brand": {
+                    "type": "string"
+                },
+                "color": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "enterprise": {
+                    "type": "boolean"
+                },
+                "featurePermissions": {
+                    "$ref": "#/definitions/models.FeaturePermissions"
+                },
+                "fieldOfView": {
+                    "type": "number"
+                },
+                "installationDate": {
+                    "type": "string"
+                },
+                "isActive": {
+                    "type": "boolean"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "lastMaintenance": {
+                    "type": "string"
+                },
+                "latestMedia": {
+                    "$ref": "#/definitions/models.Media"
+                },
+                "latestMediaTimestamp": {
+                    "type": "integer"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "mute": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "onFloorPlans": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "presets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Preset"
+                    }
+                },
+                "sites": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SiteShort"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                },
+                "tours": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tour"
+                    }
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.DeviceMedia": {
+            "type": "object",
+            "properties": {
+                "camera_name": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "media_time": {
+                    "type": "string"
+                },
+                "media_timestamp": {
+                    "type": "integer"
+                },
+                "media_type": {
+                    "type": "string"
+                },
+                "media_url": {
+                    "type": "string"
+                },
+                "sites": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SiteShort"
+                    }
+                },
+                "sprite_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.DevicePlacement": {
+            "type": "object",
+            "properties": {
+                "color": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "createdTime": {
+                    "type": "integer"
+                },
+                "deviceKey": {
+                    "type": "string"
+                },
+                "deviceName": {
+                    "type": "string"
+                },
+                "deviceStatus": {
+                    "type": "string"
+                },
+                "fabricKey": {
+                    "type": "string"
+                },
+                "fieldOfView": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "radius": {
+                    "type": "number"
+                },
+                "relativeX": {
+                    "description": "X relative to canvas width (0 to 1)",
+                    "type": "number"
+                },
+                "relativeY": {
+                    "description": "Y relative to canvas height (0 to 1)",
+                    "type": "number"
+                },
+                "sliceEndAngle": {
+                    "type": "number"
+                },
+                "sliceMiddleAngle": {
+                    "type": "number"
+                },
+                "sliceStartAngle": {
+                    "type": "number"
+                },
+                "updatedBy": {
+                    "type": "string"
+                },
+                "updatedTime": {
+                    "type": "integer"
+                },
+                "x": {
+                    "description": "Absolute X coordinate",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "Absolute Y coordinate",
+                    "type": "number"
+                }
+            }
+        },
+        "models.DeviceShort": {
+            "type": "object",
+            "properties": {
+                "active": {
+                    "type": "boolean"
+                },
+                "analytics": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.HeartbeatShort"
+                    }
+                },
+                "enterprise": {
+                    "type": "boolean"
+                },
+                "featurePermissions": {
+                    "$ref": "#/definitions/models.FeaturePermissions"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "latestMedia": {
+                    "$ref": "#/definitions/models.MediaShort"
+                },
+                "latestMediaTimestamp": {
+                    "type": "integer"
+                },
+                "mute": {
+                    "type": "integer"
+                },
+                "presets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Preset"
+                    }
+                },
+                "sites": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SiteShort"
+                    }
+                },
+                "tours": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tour"
+                    }
+                }
+            }
+        },
+        "models.DeviceWrapper": {
+            "type": "object",
+            "properties": {
+                "device": {
+                    "$ref": "#/definitions/models.Device"
+                }
+            }
+        },
+        "models.DevicesWrapper": {
+            "type": "object",
+            "properties": {
+                "devices": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Device"
+                    }
+                }
+            }
+        },
         "models.ErrorResponse": {
             "type": "object",
             "properties": {
@@ -214,6 +1019,398 @@
                 },
                 "status_code": {
                     "type": "integer"
+                }
+            }
+        },
+        "models.FeaturePermissions": {
+            "type": "object",
+            "properties": {
+                "floorPlans": {
+                    "type": "integer"
+                },
+                "io": {
+                    "type": "integer"
+                },
+                "liveview": {
+                    "type": "integer"
+                },
+                "ptz": {
+                    "type": "integer"
+                },
+                "remote_config": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.FloorPlan": {
+            "type": "object",
+            "properties": {
+                "created_by": {
+                    "type": "string"
+                },
+                "created_time": {
+                    "type": "integer"
+                },
+                "devices": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.DevicePlacement"
+                    }
+                },
+                "height": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "string"
+                },
+                "updated_time": {
+                    "type": "integer"
+                },
+                "width": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Heartbeat": {
+            "type": "object",
+            "properties": {
+                "architecture": {
+                    "type": "string"
+                },
+                "boot_time": {
+                    "type": "string"
+                },
+                "cameraConnected": {
+                    "type": "string"
+                },
+                "cameraname": {
+                    "type": "string"
+                },
+                "cameratype": {
+                    "type": "string"
+                },
+                "cloudpublicKey": {
+                    "type": "string"
+                },
+                "clouduser": {
+                    "type": "string"
+                },
+                "cpuid": {
+                    "type": "string"
+                },
+                "docker": {
+                    "type": "boolean"
+                },
+                "e2e_encryption": {
+                    "type": "string"
+                },
+                "encrypted": {
+                    "type": "boolean"
+                },
+                "encryptedData": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "enterprise": {
+                    "type": "boolean"
+                },
+                "freeMemory": {
+                    "type": "string"
+                },
+                "hasBackChannel": {
+                    "type": "string"
+                },
+                "hash": {
+                    "type": "string"
+                },
+                "hostname": {
+                    "type": "string"
+                },
+                "hub_encryption": {
+                    "type": "string"
+                },
+                "ip_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "key": {
+                    "description": "-----------",
+                    "type": "string"
+                },
+                "kios": {
+                    "type": "boolean"
+                },
+                "kubernetes": {
+                    "type": "boolean"
+                },
+                "mac_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "onvif": {
+                    "type": "string"
+                },
+                "onvif_events_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ONVIFEvents"
+                    }
+                },
+                "onvif_pantilt": {
+                    "type": "string"
+                },
+                "onvif_presets": {
+                    "type": "string"
+                },
+                "onvif_presets_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Preset"
+                    }
+                },
+                "onvif_zoom": {
+                    "type": "string"
+                },
+                "processMemory": {
+                    "type": "string"
+                },
+                "raspberrypi": {
+                    "type": "boolean"
+                },
+                "release": {
+                    "type": "string"
+                },
+                "siteID": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "integer"
+                },
+                "totalMemory": {
+                    "type": "string"
+                },
+                "uptime": {
+                    "type": "string"
+                },
+                "usedMemory": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.HeartbeatOld": {
+            "type": "object",
+            "properties": {
+                "cameraName": {
+                    "type": "string"
+                },
+                "cameraType": {
+                    "type": "string"
+                },
+                "cloudPublicKey": {
+                    "type": "string"
+                },
+                "cloudUser": {
+                    "type": "string"
+                },
+                "cpuId": {
+                    "type": "string"
+                },
+                "docker": {
+                    "type": "boolean"
+                },
+                "enterprise": {
+                    "type": "boolean"
+                },
+                "hash": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "kios": {
+                    "type": "boolean"
+                },
+                "kubernetes": {
+                    "type": "boolean"
+                },
+                "onvif": {
+                    "type": "string"
+                },
+                "raspberrypi": {
+                    "type": "boolean"
+                },
+                "siteID": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "integer"
+                },
+                "uptime": {
+                    "description": "Board          string `json:\"board,omitempty\"`\nDisk1Size      string `json:\"disk1Size,omitempty\" bson:\"disk1size,omitempty\"`\nDisk3Size      string `json:\"disk3Size,omitempty\" bson:\"disk3size,omitempty\"`\nDiskVDASize    string `json:\"diskVDASize,omitempty\" bson:\"diskvdasize,omitempty\"`\nNumberOfFiles  string `json:\"numberOfFiles,omitempty\" bson:\"numberoffiles,omitempty\"`\nTemperature    string `json:\"temperature,omitempty\"`\nWifiSSID       string `json:\"wifiSSID,omitempty\" bson:\"wifissid,omitempty\"`\nWifiStrength   string `json:\"wifiStrength,omitempty\" bson:\"wifisstrength,omitempty\"`",
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.HeartbeatShort": {
+            "type": "object",
+            "properties": {
+                "cameraConnected": {
+                    "type": "string"
+                },
+                "cameraname": {
+                    "type": "string"
+                },
+                "e2e_encryption": {
+                    "type": "string"
+                },
+                "enterprise": {
+                    "type": "boolean"
+                },
+                "freeMemory": {
+                    "type": "string"
+                },
+                "hasBackChannel": {
+                    "type": "string"
+                },
+                "hub_encryption": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "onvif": {
+                    "type": "string"
+                },
+                "onvif_events_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ONVIFEvents"
+                    }
+                },
+                "onvif_pantilt": {
+                    "type": "string"
+                },
+                "onvif_presets": {
+                    "type": "string"
+                },
+                "onvif_presets_list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Preset"
+                    }
+                },
+                "onvif_zoom": {
+                    "type": "string"
+                },
+                "processMemory": {
+                    "type": "string"
+                },
+                "release": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "integer"
+                },
+                "totalMemory": {
+                    "type": "string"
+                },
+                "uptime": {
+                    "type": "string"
+                },
+                "usedMemory": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Location": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "country_short": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "formatted_address": {
+                    "type": "string"
+                },
+                "geometry": {
+                    "$ref": "#/definitions/models.LocationGeometry"
+                },
+                "postal_code": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "street": {
+                    "type": "string"
+                },
+                "street_number": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.LocationGeometry": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "$ref": "#/definitions/models.LocationGeometryLocation"
+                }
+            }
+        },
+        "models.LocationGeometryLocation": {
+            "type": "object",
+            "properties": {
+                "lat": {
+                    "type": "number"
+                },
+                "lng": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.LocationShort": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "formatted_address": {
+                    "type": "string"
+                },
+                "geometry": {
+                    "$ref": "#/definitions/models.LocationGeometry"
                 }
             }
         },
@@ -305,6 +1502,255 @@
                 }
             }
         },
+        "models.MediaShort": {
+            "type": "object",
+            "properties": {
+                "camera_id": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "provider": {
+                    "type": "string"
+                },
+                "source": {
+                    "type": "string"
+                },
+                "spriteFile": {
+                    "type": "string"
+                },
+                "spriteInterval": {
+                    "type": "integer"
+                },
+                "spriteProvider": {
+                    "type": "string"
+                },
+                "sprite_url": {
+                    "type": "string"
+                },
+                "src": {
+                    "type": "string"
+                },
+                "thumbnailFile": {
+                    "type": "string"
+                },
+                "thumbnailProvider": {
+                    "type": "string"
+                },
+                "thumbnail_url": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Mute": {
+            "type": "object",
+            "properties": {
+                "mute": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ONVIFEvents": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Preset": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
+                },
+                "z": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.Role": {
+            "type": "object",
+            "properties": {
+                "featurePermissions": {
+                    "$ref": "#/definitions/models.FeaturePermissions"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "isActive": {
+                    "type": "integer"
+                },
+                "pages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "role": {
+                    "type": "string"
+                },
+                "roleName": {
+                    "type": "string"
+                },
+                "timeWindow": {
+                    "$ref": "#/definitions/models.TimeWindow"
+                },
+                "timeWindowActive": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Site": {
+            "type": "object",
+            "properties": {
+                "access_key": {
+                    "type": "string"
+                },
+                "address": {
+                    "$ref": "#/definitions/models.Location"
+                },
+                "all_devices": {
+                    "description": "Calculated on the fly!",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "color": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "created_time": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "devices": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "floor_plans": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.FloorPlan"
+                    }
+                },
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "initials": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "numberOfFloorPlans": {
+                    "type": "integer"
+                },
+                "secret_key": {
+                    "type": "string"
+                },
+                "storage_uri": {
+                    "type": "string"
+                },
+                "street": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "string"
+                },
+                "updated_time": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "string"
+                },
+                "username": {
+                    "description": "added by accident should be removed!",
+                    "type": "string"
+                }
+            }
+        },
+        "models.SiteShort": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/models.Location"
+                },
+                "color": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "initials": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.SiteWrapper": {
+            "type": "object",
+            "properties": {
+                "site": {
+                    "$ref": "#/definitions/models.Site"
+                }
+            }
+        },
         "models.SuccessResponse": {
             "type": "object",
             "properties": {
@@ -325,21 +1771,92 @@
                 }
             }
         },
-        "models.TestFlowStruct": {
-            "description": "Test flow verification model",
+        "models.TimeWindow": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "string"
+                "timeRange1MaxFriday": {
+                    "type": "number"
                 },
-                "isActive": {
-                    "type": "boolean"
+                "timeRange1MaxMonday": {
+                    "type": "number"
                 },
-                "name": {
-                    "type": "string"
+                "timeRange1MaxSaturday": {
+                    "type": "number"
                 },
-                "testNumber": {
-                    "type": "integer"
+                "timeRange1MaxSunday": {
+                    "type": "number"
+                },
+                "timeRange1MaxThursday": {
+                    "type": "number"
+                },
+                "timeRange1MaxTuesday": {
+                    "type": "number"
+                },
+                "timeRange1MaxWednesday": {
+                    "type": "number"
+                },
+                "timeRange1MinFriday": {
+                    "type": "number"
+                },
+                "timeRange1MinMonday": {
+                    "type": "number"
+                },
+                "timeRange1MinSaturday": {
+                    "type": "number"
+                },
+                "timeRange1MinSunday": {
+                    "type": "number"
+                },
+                "timeRange1MinThursday": {
+                    "type": "number"
+                },
+                "timeRange1MinTuesday": {
+                    "type": "number"
+                },
+                "timeRange1MinWednesday": {
+                    "type": "number"
+                },
+                "timeRange2MaxFriday": {
+                    "type": "number"
+                },
+                "timeRange2MaxMonday": {
+                    "type": "number"
+                },
+                "timeRange2MaxSaturday": {
+                    "type": "number"
+                },
+                "timeRange2MaxSunday": {
+                    "type": "number"
+                },
+                "timeRange2MaxThursday": {
+                    "type": "number"
+                },
+                "timeRange2MaxTuesday": {
+                    "type": "number"
+                },
+                "timeRange2MaxWednesday": {
+                    "type": "number"
+                },
+                "timeRange2MinFriday": {
+                    "type": "number"
+                },
+                "timeRange2MinMonday": {
+                    "type": "number"
+                },
+                "timeRange2MinSaturday": {
+                    "type": "number"
+                },
+                "timeRange2MinSunday": {
+                    "type": "number"
+                },
+                "timeRange2MinThursday": {
+                    "type": "number"
+                },
+                "timeRange2MinTuesday": {
+                    "type": "number"
+                },
+                "timeRange2MinWednesday": {
+                    "type": "number"
                 }
             }
         },
@@ -358,6 +1875,32 @@
                 },
                 "timelineZero": {
                     "type": "integer"
+                }
+            }
+        },
+        "models.Tour": {
+            "type": "object",
+            "properties": {
+                "current": {
+                    "type": "integer"
+                },
+                "loop": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "presets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Preset"
+                    }
+                },
+                "running": {
+                    "type": "boolean"
+                },
+                "speed": {
+                    "type": "number"
                 }
             }
         }

@@ -40,6 +40,26 @@ type MediaMetadata struct {
 	Classifications []string `json:"classifications,omitempty" bson:"classifications,omitempty"`
 }
 
+type MediaShort struct {
+	Key               string `json:"key" bson:"key"`
+	Path              string `json:"path" bson:"path"`
+	Url               string `json:"src" bson:"src"`
+	Timestamp         int64  `json:"timestamp" bson:"timestamp"`
+	CameraId          string `json:"camera_id" bson:"camera_id"`
+	Date              string `json:"date" bson:"date"`
+	Time              string `json:"time" bson:"time"`
+	Type              string `json:"type" bson:"type"`
+	Provider          string `json:"provider" bson:"provider"`
+	Source            string `json:"source" bson:"source"`
+	SpriteUrl         string `json:"sprite_url" bson:"sprite_url"`
+	ThumbnailUrl      string `json:"thumbnail_url" bson:"thumbnail_url"`
+	ThumbnailFile     string `json:"thumbnailFile" bson:"thumbnailFile"`
+	ThumbnailProvider string `json:"thumbnailProvider" bson:"thumbnailProvider"`
+	SpriteFile        string `json:"spriteFile" bson:"spriteFile"`
+	SpriteProvider    string `json:"spriteProvider" bson:"spriteProvider"`
+	SpriteInterval    int    `json:"spriteInterval" bson:"spriteInterval"`
+}
+
 // TimelineValue represents timeline state information.
 // @Description Timeline value model
 type TimelineValue struct {

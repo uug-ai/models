@@ -10,6 +10,174 @@ definitions:
       user_id:
         type: string
     type: object
+  models.Device:
+    properties:
+      analytics:
+        items:
+          $ref: '#/definitions/models.Heartbeat'
+        type: array
+      brand:
+        type: string
+      color:
+        type: string
+      description:
+        type: string
+      enterprise:
+        type: boolean
+      featurePermissions:
+        $ref: '#/definitions/models.FeaturePermissions'
+      fieldOfView:
+        type: number
+      installationDate:
+        type: string
+      isActive:
+        type: boolean
+      key:
+        type: string
+      lastMaintenance:
+        type: string
+      latestMedia:
+        $ref: '#/definitions/models.Media'
+      latestMediaTimestamp:
+        type: integer
+      model:
+        type: string
+      mute:
+        type: integer
+      name:
+        type: string
+      onFloorPlans:
+        items:
+          type: string
+        type: array
+      presets:
+        items:
+          $ref: '#/definitions/models.Preset'
+        type: array
+      sites:
+        items:
+          $ref: '#/definitions/models.SiteShort'
+        type: array
+      status:
+        type: string
+      tours:
+        items:
+          $ref: '#/definitions/models.Tour'
+        type: array
+      user_id:
+        type: string
+    type: object
+  models.DeviceMedia:
+    properties:
+      camera_name:
+        type: string
+      key:
+        type: string
+      media_time:
+        type: string
+      media_timestamp:
+        type: integer
+      media_type:
+        type: string
+      media_url:
+        type: string
+      sites:
+        items:
+          $ref: '#/definitions/models.SiteShort'
+        type: array
+      sprite_url:
+        type: string
+    type: object
+  models.DevicePlacement:
+    properties:
+      color:
+        type: string
+      createdBy:
+        type: string
+      createdTime:
+        type: integer
+      deviceKey:
+        type: string
+      deviceName:
+        type: string
+      deviceStatus:
+        type: string
+      fabricKey:
+        type: string
+      fieldOfView:
+        type: number
+      id:
+        type: string
+      radius:
+        type: number
+      relativeX:
+        description: X relative to canvas width (0 to 1)
+        type: number
+      relativeY:
+        description: Y relative to canvas height (0 to 1)
+        type: number
+      sliceEndAngle:
+        type: number
+      sliceMiddleAngle:
+        type: number
+      sliceStartAngle:
+        type: number
+      updatedBy:
+        type: string
+      updatedTime:
+        type: integer
+      x:
+        description: Absolute X coordinate
+        type: number
+      "y":
+        description: Absolute Y coordinate
+        type: number
+    type: object
+  models.DeviceShort:
+    properties:
+      active:
+        type: boolean
+      analytics:
+        items:
+          $ref: '#/definitions/models.HeartbeatShort'
+        type: array
+      enterprise:
+        type: boolean
+      featurePermissions:
+        $ref: '#/definitions/models.FeaturePermissions'
+      key:
+        type: string
+      latestMedia:
+        $ref: '#/definitions/models.MediaShort'
+      latestMediaTimestamp:
+        type: integer
+      mute:
+        type: integer
+      presets:
+        items:
+          $ref: '#/definitions/models.Preset'
+        type: array
+      sites:
+        items:
+          $ref: '#/definitions/models.SiteShort'
+        type: array
+      tours:
+        items:
+          $ref: '#/definitions/models.Tour'
+        type: array
+    type: object
+  models.DeviceWrapper:
+    properties:
+      device:
+        $ref: '#/definitions/models.Device'
+    type: object
+  models.DevicesWrapper:
+    properties:
+      devices:
+        items:
+          $ref: '#/definitions/models.Device'
+        type: array
+    type: object
   models.ErrorResponse:
     properties:
       error_code:
@@ -23,6 +191,273 @@ definitions:
         type: string
       status_code:
         type: integer
+    type: object
+  models.FeaturePermissions:
+    properties:
+      floorPlans:
+        type: integer
+      io:
+        type: integer
+      liveview:
+        type: integer
+      ptz:
+        type: integer
+      remote_config:
+        type: integer
+    type: object
+  models.FloorPlan:
+    properties:
+      created_by:
+        type: string
+      created_time:
+        type: integer
+      devices:
+        items:
+          $ref: '#/definitions/models.DevicePlacement'
+        type: array
+      height:
+        type: integer
+      id:
+        type: string
+      image:
+        type: string
+      name:
+        type: string
+      updated_by:
+        type: string
+      updated_time:
+        type: integer
+      width:
+        type: integer
+    type: object
+  models.Heartbeat:
+    properties:
+      architecture:
+        type: string
+      boot_time:
+        type: string
+      cameraConnected:
+        type: string
+      cameraname:
+        type: string
+      cameratype:
+        type: string
+      cloudpublicKey:
+        type: string
+      clouduser:
+        type: string
+      cpuid:
+        type: string
+      docker:
+        type: boolean
+      e2e_encryption:
+        type: string
+      encrypted:
+        type: boolean
+      encryptedData:
+        items:
+          type: integer
+        type: array
+      enterprise:
+        type: boolean
+      freeMemory:
+        type: string
+      hasBackChannel:
+        type: string
+      hash:
+        type: string
+      hostname:
+        type: string
+      hub_encryption:
+        type: string
+      ip_list:
+        items:
+          type: string
+        type: array
+      key:
+        description: '-----------'
+        type: string
+      kios:
+        type: boolean
+      kubernetes:
+        type: boolean
+      mac_list:
+        items:
+          type: string
+        type: array
+      onvif:
+        type: string
+      onvif_events_list:
+        items:
+          $ref: '#/definitions/models.ONVIFEvents'
+        type: array
+      onvif_pantilt:
+        type: string
+      onvif_presets:
+        type: string
+      onvif_presets_list:
+        items:
+          $ref: '#/definitions/models.Preset'
+        type: array
+      onvif_zoom:
+        type: string
+      processMemory:
+        type: string
+      raspberrypi:
+        type: boolean
+      release:
+        type: string
+      siteID:
+        type: string
+      timestamp:
+        type: integer
+      totalMemory:
+        type: string
+      uptime:
+        type: string
+      usedMemory:
+        type: string
+      version:
+        type: string
+    type: object
+  models.HeartbeatOld:
+    properties:
+      cameraName:
+        type: string
+      cameraType:
+        type: string
+      cloudPublicKey:
+        type: string
+      cloudUser:
+        type: string
+      cpuId:
+        type: string
+      docker:
+        type: boolean
+      enterprise:
+        type: boolean
+      hash:
+        type: string
+      key:
+        type: string
+      kios:
+        type: boolean
+      kubernetes:
+        type: boolean
+      onvif:
+        type: string
+      raspberrypi:
+        type: boolean
+      siteID:
+        type: string
+      timestamp:
+        type: integer
+      uptime:
+        description: |-
+          Board          string `json:"board,omitempty"`
+          Disk1Size      string `json:"disk1Size,omitempty" bson:"disk1size,omitempty"`
+          Disk3Size      string `json:"disk3Size,omitempty" bson:"disk3size,omitempty"`
+          DiskVDASize    string `json:"diskVDASize,omitempty" bson:"diskvdasize,omitempty"`
+          NumberOfFiles  string `json:"numberOfFiles,omitempty" bson:"numberoffiles,omitempty"`
+          Temperature    string `json:"temperature,omitempty"`
+          WifiSSID       string `json:"wifiSSID,omitempty" bson:"wifissid,omitempty"`
+          WifiStrength   string `json:"wifiStrength,omitempty" bson:"wifisstrength,omitempty"`
+        type: string
+      version:
+        type: string
+    type: object
+  models.HeartbeatShort:
+    properties:
+      cameraConnected:
+        type: string
+      cameraname:
+        type: string
+      e2e_encryption:
+        type: string
+      enterprise:
+        type: boolean
+      freeMemory:
+        type: string
+      hasBackChannel:
+        type: string
+      hub_encryption:
+        type: string
+      key:
+        type: string
+      onvif:
+        type: string
+      onvif_events_list:
+        items:
+          $ref: '#/definitions/models.ONVIFEvents'
+        type: array
+      onvif_pantilt:
+        type: string
+      onvif_presets:
+        type: string
+      onvif_presets_list:
+        items:
+          $ref: '#/definitions/models.Preset'
+        type: array
+      onvif_zoom:
+        type: string
+      processMemory:
+        type: string
+      release:
+        type: string
+      timestamp:
+        type: integer
+      totalMemory:
+        type: string
+      uptime:
+        type: string
+      usedMemory:
+        type: string
+      version:
+        type: string
+    type: object
+  models.Location:
+    properties:
+      city:
+        type: string
+      country:
+        type: string
+      country_short:
+        type: string
+      description:
+        type: string
+      formatted_address:
+        type: string
+      geometry:
+        $ref: '#/definitions/models.LocationGeometry'
+      postal_code:
+        type: string
+      region:
+        type: string
+      street:
+        type: string
+      street_number:
+        type: string
+    type: object
+  models.LocationGeometry:
+    properties:
+      location:
+        $ref: '#/definitions/models.LocationGeometryLocation'
+    type: object
+  models.LocationGeometryLocation:
+    properties:
+      lat:
+        type: number
+      lng:
+        type: number
+    type: object
+  models.LocationShort:
+    properties:
+      description:
+        type: string
+      formatted_address:
+        type: string
+      geometry:
+        $ref: '#/definitions/models.LocationGeometry'
     type: object
   models.Media:
     description: Media model
@@ -86,6 +521,170 @@ definitions:
           type: string
         type: array
     type: object
+  models.MediaShort:
+    properties:
+      camera_id:
+        type: string
+      date:
+        type: string
+      key:
+        type: string
+      path:
+        type: string
+      provider:
+        type: string
+      source:
+        type: string
+      sprite_url:
+        type: string
+      spriteFile:
+        type: string
+      spriteInterval:
+        type: integer
+      spriteProvider:
+        type: string
+      src:
+        type: string
+      thumbnail_url:
+        type: string
+      thumbnailFile:
+        type: string
+      thumbnailProvider:
+        type: string
+      time:
+        type: string
+      timestamp:
+        type: integer
+      type:
+        type: string
+    type: object
+  models.Mute:
+    properties:
+      mute:
+        type: integer
+    type: object
+  models.ONVIFEvents:
+    properties:
+      key:
+        type: string
+      timestamp:
+        type: integer
+      type:
+        type: string
+      value:
+        type: string
+    type: object
+  models.Preset:
+    properties:
+      name:
+        type: string
+      token:
+        type: string
+      x:
+        type: number
+      "y":
+        type: number
+      z:
+        type: number
+    type: object
+  models.Role:
+    properties:
+      featurePermissions:
+        $ref: '#/definitions/models.FeaturePermissions'
+      id:
+        type: string
+      isActive:
+        type: integer
+      pages:
+        items:
+          type: string
+        type: array
+      role:
+        type: string
+      roleName:
+        type: string
+      timeWindow:
+        $ref: '#/definitions/models.TimeWindow'
+      timeWindowActive:
+        type: integer
+      user_id:
+        type: string
+    type: object
+  models.Site:
+    properties:
+      access_key:
+        type: string
+      address:
+        $ref: '#/definitions/models.Location'
+      all_devices:
+        description: Calculated on the fly!
+        items:
+          type: string
+        type: array
+      color:
+        type: string
+      country:
+        type: string
+      created_by:
+        type: string
+      created_time:
+        type: integer
+      description:
+        type: string
+      devices:
+        items:
+          type: string
+        type: array
+      floor_plans:
+        items:
+          $ref: '#/definitions/models.FloorPlan'
+        type: array
+      groups:
+        items:
+          type: string
+        type: array
+      id:
+        type: string
+      initials:
+        type: string
+      name:
+        type: string
+      numberOfFloorPlans:
+        type: integer
+      secret_key:
+        type: string
+      storage_uri:
+        type: string
+      street:
+        type: string
+      updated_by:
+        type: string
+      updated_time:
+        type: integer
+      user_id:
+        type: string
+      username:
+        description: added by accident should be removed!
+        type: string
+    type: object
+  models.SiteShort:
+    properties:
+      address:
+        $ref: '#/definitions/models.Location'
+      color:
+        type: string
+      id:
+        type: string
+      initials:
+        type: string
+      name:
+        type: string
+    type: object
+  models.SiteWrapper:
+    properties:
+      site:
+        $ref: '#/definitions/models.Site'
+    type: object
   models.SuccessResponse:
     properties:
       message:
@@ -99,17 +698,64 @@ definitions:
       success_code:
         type: string
     type: object
-  models.TestFlowStruct:
-    description: Test flow verification model
+  models.TimeWindow:
     properties:
-      id:
-        type: string
-      isActive:
-        type: boolean
-      name:
-        type: string
-      testNumber:
-        type: integer
+      timeRange1MaxFriday:
+        type: number
+      timeRange1MaxMonday:
+        type: number
+      timeRange1MaxSaturday:
+        type: number
+      timeRange1MaxSunday:
+        type: number
+      timeRange1MaxThursday:
+        type: number
+      timeRange1MaxTuesday:
+        type: number
+      timeRange1MaxWednesday:
+        type: number
+      timeRange1MinFriday:
+        type: number
+      timeRange1MinMonday:
+        type: number
+      timeRange1MinSaturday:
+        type: number
+      timeRange1MinSunday:
+        type: number
+      timeRange1MinThursday:
+        type: number
+      timeRange1MinTuesday:
+        type: number
+      timeRange1MinWednesday:
+        type: number
+      timeRange2MaxFriday:
+        type: number
+      timeRange2MaxMonday:
+        type: number
+      timeRange2MaxSaturday:
+        type: number
+      timeRange2MaxSunday:
+        type: number
+      timeRange2MaxThursday:
+        type: number
+      timeRange2MaxTuesday:
+        type: number
+      timeRange2MaxWednesday:
+        type: number
+      timeRange2MinFriday:
+        type: number
+      timeRange2MinMonday:
+        type: number
+      timeRange2MinSaturday:
+        type: number
+      timeRange2MinSunday:
+        type: number
+      timeRange2MinThursday:
+        type: number
+      timeRange2MinTuesday:
+        type: number
+      timeRange2MinWednesday:
+        type: number
     type: object
   models.TimelineValue:
     description: Timeline value model
@@ -122,6 +768,23 @@ definitions:
         type: integer
       timelineZero:
         type: integer
+    type: object
+  models.Tour:
+    properties:
+      current:
+        type: integer
+      loop:
+        type: boolean
+      name:
+        type: string
+      presets:
+        items:
+          $ref: '#/definitions/models.Preset'
+        type: array
+      running:
+        type: boolean
+      speed:
+        type: number
     type: object
 host: localhost
 info:
@@ -146,6 +809,246 @@ paths:
       summary: Get APIMetadata (schema generation only)
       tags:
       - internal
+  /internal/device:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure Device schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Device'
+      summary: Get Device (schema generation only)
+      tags:
+      - internal
+  /internal/devicemedia:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure DeviceMedia schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DeviceMedia'
+      summary: Get DeviceMedia (schema generation only)
+      tags:
+      - internal
+  /internal/deviceplacement:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure DevicePlacement schema is
+        generated in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DevicePlacement'
+      summary: Get DevicePlacement (schema generation only)
+      tags:
+      - internal
+  /internal/deviceshort:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure DeviceShort schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DeviceShort'
+      summary: Get DeviceShort (schema generation only)
+      tags:
+      - internal
+  /internal/deviceswrapper:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure DevicesWrapper schema is
+        generated in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DevicesWrapper'
+      summary: Get DevicesWrapper (schema generation only)
+      tags:
+      - internal
+  /internal/devicewrapper:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure DeviceWrapper schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DeviceWrapper'
+      summary: Get DeviceWrapper (schema generation only)
+      tags:
+      - internal
+  /internal/featurepermissions:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure FeaturePermissions schema
+        is generated in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.FeaturePermissions'
+      summary: Get FeaturePermissions (schema generation only)
+      tags:
+      - internal
+  /internal/floorplan:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure FloorPlan schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.FloorPlan'
+      summary: Get FloorPlan (schema generation only)
+      tags:
+      - internal
+  /internal/heartbeat:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure Heartbeat schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Heartbeat'
+      summary: Get Heartbeat (schema generation only)
+      tags:
+      - internal
+  /internal/heartbeatold:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure HeartbeatOld schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.HeartbeatOld'
+      summary: Get HeartbeatOld (schema generation only)
+      tags:
+      - internal
+  /internal/heartbeatshort:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure HeartbeatShort schema is
+        generated in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.HeartbeatShort'
+      summary: Get HeartbeatShort (schema generation only)
+      tags:
+      - internal
+  /internal/location:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure Location schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Location'
+      summary: Get Location (schema generation only)
+      tags:
+      - internal
+  /internal/locationgeometry:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure LocationGeometry schema is
+        generated in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LocationGeometry'
+      summary: Get LocationGeometry (schema generation only)
+      tags:
+      - internal
+  /internal/locationgeometrylocation:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure LocationGeometryLocation
+        schema is generated in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LocationGeometryLocation'
+      summary: Get LocationGeometryLocation (schema generation only)
+      tags:
+      - internal
+  /internal/locationshort:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure LocationShort schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LocationShort'
+      summary: Get LocationShort (schema generation only)
+      tags:
+      - internal
   /internal/mediametadata:
     get:
       consumes:
@@ -162,20 +1065,132 @@ paths:
       summary: Get MediaMetadata (schema generation only)
       tags:
       - internal
-  /internal/testflowstruct:
+  /internal/mediashort:
     get:
       consumes:
       - application/json
-      description: Internal endpoint used only to ensure TestFlowStruct schema is
-        generated in OpenAPI spec
+      description: Internal endpoint used only to ensure MediaShort schema is generated
+        in OpenAPI spec
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.TestFlowStruct'
-      summary: Get TestFlowStruct (schema generation only)
+            $ref: '#/definitions/models.MediaShort'
+      summary: Get MediaShort (schema generation only)
+      tags:
+      - internal
+  /internal/mute:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure Mute schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Mute'
+      summary: Get Mute (schema generation only)
+      tags:
+      - internal
+  /internal/onvifevents:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure ONVIFEvents schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ONVIFEvents'
+      summary: Get ONVIFEvents (schema generation only)
+      tags:
+      - internal
+  /internal/preset:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure Preset schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Preset'
+      summary: Get Preset (schema generation only)
+      tags:
+      - internal
+  /internal/role:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure Role schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Role'
+      summary: Get Role (schema generation only)
+      tags:
+      - internal
+  /internal/site:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure Site schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Site'
+      summary: Get Site (schema generation only)
+      tags:
+      - internal
+  /internal/siteshort:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure SiteShort schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SiteShort'
+      summary: Get SiteShort (schema generation only)
+      tags:
+      - internal
+  /internal/sitewrapper:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure SiteWrapper schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SiteWrapper'
+      summary: Get SiteWrapper (schema generation only)
       tags:
       - internal
   /internal/timelinevalue:
@@ -192,6 +1207,38 @@ paths:
           schema:
             $ref: '#/definitions/models.TimelineValue'
       summary: Get TimelineValue (schema generation only)
+      tags:
+      - internal
+  /internal/timewindow:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure TimeWindow schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TimeWindow'
+      summary: Get TimeWindow (schema generation only)
+      tags:
+      - internal
+  /internal/tour:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure Tour schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Tour'
+      summary: Get Tour (schema generation only)
       tags:
       - internal
   /media:

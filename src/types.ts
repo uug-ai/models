@@ -43,6 +43,591 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/device": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Device (schema generation only)
+         * @description Internal endpoint used only to ensure Device schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Device"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicemedia": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceMedia (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceMedia schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceMedia"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deviceplacement": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DevicePlacement (schema generation only)
+         * @description Internal endpoint used only to ensure DevicePlacement schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DevicePlacement"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deviceshort": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceShort (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceShort schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceShort"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deviceswrapper": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DevicesWrapper (schema generation only)
+         * @description Internal endpoint used only to ensure DevicesWrapper schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DevicesWrapper"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicewrapper": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceWrapper (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceWrapper schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceWrapper"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/featurepermissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get FeaturePermissions (schema generation only)
+         * @description Internal endpoint used only to ensure FeaturePermissions schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.FeaturePermissions"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/floorplan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get FloorPlan (schema generation only)
+         * @description Internal endpoint used only to ensure FloorPlan schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.FloorPlan"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/heartbeat": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Heartbeat (schema generation only)
+         * @description Internal endpoint used only to ensure Heartbeat schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Heartbeat"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/heartbeatold": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get HeartbeatOld (schema generation only)
+         * @description Internal endpoint used only to ensure HeartbeatOld schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.HeartbeatOld"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/heartbeatshort": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get HeartbeatShort (schema generation only)
+         * @description Internal endpoint used only to ensure HeartbeatShort schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.HeartbeatShort"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/location": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Location (schema generation only)
+         * @description Internal endpoint used only to ensure Location schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Location"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/locationgeometry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get LocationGeometry (schema generation only)
+         * @description Internal endpoint used only to ensure LocationGeometry schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.LocationGeometry"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/locationgeometrylocation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get LocationGeometryLocation (schema generation only)
+         * @description Internal endpoint used only to ensure LocationGeometryLocation schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.LocationGeometryLocation"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/locationshort": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get LocationShort (schema generation only)
+         * @description Internal endpoint used only to ensure LocationShort schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.LocationShort"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/mediametadata": {
         parameters: {
             query?: never;
@@ -82,7 +667,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/testflowstruct": {
+    "/internal/mediashort": {
         parameters: {
             query?: never;
             header?: never;
@@ -90,8 +675,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get TestFlowStruct (schema generation only)
-         * @description Internal endpoint used only to ensure TestFlowStruct schema is generated in OpenAPI spec
+         * Get MediaShort (schema generation only)
+         * @description Internal endpoint used only to ensure MediaShort schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -108,7 +693,280 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.TestFlowStruct"];
+                        "application/json": components["schemas"]["models.MediaShort"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/mute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Mute (schema generation only)
+         * @description Internal endpoint used only to ensure Mute schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Mute"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/onvifevents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ONVIFEvents (schema generation only)
+         * @description Internal endpoint used only to ensure ONVIFEvents schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ONVIFEvents"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/preset": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Preset (schema generation only)
+         * @description Internal endpoint used only to ensure Preset schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Preset"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/role": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Role (schema generation only)
+         * @description Internal endpoint used only to ensure Role schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Role"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/site": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Site (schema generation only)
+         * @description Internal endpoint used only to ensure Site schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Site"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/siteshort": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SiteShort (schema generation only)
+         * @description Internal endpoint used only to ensure SiteShort schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.SiteShort"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/sitewrapper": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SiteWrapper (schema generation only)
+         * @description Internal endpoint used only to ensure SiteWrapper schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.SiteWrapper"];
                     };
                 };
             };
@@ -148,6 +1006,84 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.TimelineValue"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/timewindow": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TimeWindow (schema generation only)
+         * @description Internal endpoint used only to ensure TimeWindow schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.TimeWindow"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/tour": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Tour (schema generation only)
+         * @description Internal endpoint used only to ensure Tour schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Tour"];
                     };
                 };
             };
@@ -274,6 +1210,84 @@ export interface components {
             timestamp?: number;
             user_id?: string;
         };
+        "models.Device": {
+            analytics?: components["schemas"]["models.Heartbeat"][];
+            brand?: string;
+            color?: string;
+            description?: string;
+            enterprise?: boolean;
+            featurePermissions?: components["schemas"]["models.FeaturePermissions"];
+            fieldOfView?: number;
+            installationDate?: string;
+            isActive?: boolean;
+            key?: string;
+            lastMaintenance?: string;
+            latestMedia?: components["schemas"]["models.Media"];
+            latestMediaTimestamp?: number;
+            model?: string;
+            mute?: number;
+            name?: string;
+            onFloorPlans?: string[];
+            presets?: components["schemas"]["models.Preset"][];
+            sites?: components["schemas"]["models.SiteShort"][];
+            status?: string;
+            tours?: components["schemas"]["models.Tour"][];
+            user_id?: string;
+        };
+        "models.DeviceMedia": {
+            camera_name?: string;
+            key?: string;
+            media_time?: string;
+            media_timestamp?: number;
+            media_type?: string;
+            media_url?: string;
+            sites?: components["schemas"]["models.SiteShort"][];
+            sprite_url?: string;
+        };
+        "models.DevicePlacement": {
+            color?: string;
+            createdBy?: string;
+            createdTime?: number;
+            deviceKey?: string;
+            deviceName?: string;
+            deviceStatus?: string;
+            fabricKey?: string;
+            fieldOfView?: number;
+            id?: string;
+            radius?: number;
+            /** @description X relative to canvas width (0 to 1) */
+            relativeX?: number;
+            /** @description Y relative to canvas height (0 to 1) */
+            relativeY?: number;
+            sliceEndAngle?: number;
+            sliceMiddleAngle?: number;
+            sliceStartAngle?: number;
+            updatedBy?: string;
+            updatedTime?: number;
+            /** @description Absolute X coordinate */
+            x?: number;
+            /** @description Absolute Y coordinate */
+            y?: number;
+        };
+        "models.DeviceShort": {
+            active?: boolean;
+            analytics?: components["schemas"]["models.HeartbeatShort"][];
+            enterprise?: boolean;
+            featurePermissions?: components["schemas"]["models.FeaturePermissions"];
+            key?: string;
+            latestMedia?: components["schemas"]["models.MediaShort"];
+            latestMediaTimestamp?: number;
+            mute?: number;
+            presets?: components["schemas"]["models.Preset"][];
+            sites?: components["schemas"]["models.SiteShort"][];
+            tours?: components["schemas"]["models.Tour"][];
+        };
+        "models.DeviceWrapper": {
+            device?: components["schemas"]["models.Device"];
+        };
+        "models.DevicesWrapper": {
+            devices?: components["schemas"]["models.Device"][];
+        };
         "models.ErrorResponse": {
             /** @description More specific custom error code or type */
             error_code?: string;
@@ -281,6 +1295,140 @@ export interface components {
             meta_data?: components["schemas"]["models.APIMetadata"];
             request_id?: string;
             status_code?: number;
+        };
+        "models.FeaturePermissions": {
+            floorPlans?: number;
+            io?: number;
+            liveview?: number;
+            ptz?: number;
+            remote_config?: number;
+        };
+        "models.FloorPlan": {
+            created_by?: string;
+            created_time?: number;
+            devices?: components["schemas"]["models.DevicePlacement"][];
+            height?: number;
+            id?: string;
+            image?: string;
+            name?: string;
+            updated_by?: string;
+            updated_time?: number;
+            width?: number;
+        };
+        "models.Heartbeat": {
+            architecture?: string;
+            boot_time?: string;
+            cameraConnected?: string;
+            cameraname?: string;
+            cameratype?: string;
+            cloudpublicKey?: string;
+            clouduser?: string;
+            cpuid?: string;
+            docker?: boolean;
+            e2e_encryption?: string;
+            encrypted?: boolean;
+            encryptedData?: number[];
+            enterprise?: boolean;
+            freeMemory?: string;
+            hasBackChannel?: string;
+            hash?: string;
+            hostname?: string;
+            hub_encryption?: string;
+            ip_list?: string[];
+            /** @description ----------- */
+            key?: string;
+            kios?: boolean;
+            kubernetes?: boolean;
+            mac_list?: string[];
+            onvif?: string;
+            onvif_events_list?: components["schemas"]["models.ONVIFEvents"][];
+            onvif_pantilt?: string;
+            onvif_presets?: string;
+            onvif_presets_list?: components["schemas"]["models.Preset"][];
+            onvif_zoom?: string;
+            processMemory?: string;
+            raspberrypi?: boolean;
+            release?: string;
+            siteID?: string;
+            timestamp?: number;
+            totalMemory?: string;
+            uptime?: string;
+            usedMemory?: string;
+            version?: string;
+        };
+        "models.HeartbeatOld": {
+            cameraName?: string;
+            cameraType?: string;
+            cloudPublicKey?: string;
+            cloudUser?: string;
+            cpuId?: string;
+            docker?: boolean;
+            enterprise?: boolean;
+            hash?: string;
+            key?: string;
+            kios?: boolean;
+            kubernetes?: boolean;
+            onvif?: string;
+            raspberrypi?: boolean;
+            siteID?: string;
+            timestamp?: number;
+            /** @description Board          string `json:"board,omitempty"`
+             *     Disk1Size      string `json:"disk1Size,omitempty" bson:"disk1size,omitempty"`
+             *     Disk3Size      string `json:"disk3Size,omitempty" bson:"disk3size,omitempty"`
+             *     DiskVDASize    string `json:"diskVDASize,omitempty" bson:"diskvdasize,omitempty"`
+             *     NumberOfFiles  string `json:"numberOfFiles,omitempty" bson:"numberoffiles,omitempty"`
+             *     Temperature    string `json:"temperature,omitempty"`
+             *     WifiSSID       string `json:"wifiSSID,omitempty" bson:"wifissid,omitempty"`
+             *     WifiStrength   string `json:"wifiStrength,omitempty" bson:"wifisstrength,omitempty"` */
+            uptime?: string;
+            version?: string;
+        };
+        "models.HeartbeatShort": {
+            cameraConnected?: string;
+            cameraname?: string;
+            e2e_encryption?: string;
+            enterprise?: boolean;
+            freeMemory?: string;
+            hasBackChannel?: string;
+            hub_encryption?: string;
+            key?: string;
+            onvif?: string;
+            onvif_events_list?: components["schemas"]["models.ONVIFEvents"][];
+            onvif_pantilt?: string;
+            onvif_presets?: string;
+            onvif_presets_list?: components["schemas"]["models.Preset"][];
+            onvif_zoom?: string;
+            processMemory?: string;
+            release?: string;
+            timestamp?: number;
+            totalMemory?: string;
+            uptime?: string;
+            usedMemory?: string;
+            version?: string;
+        };
+        "models.Location": {
+            city?: string;
+            country?: string;
+            country_short?: string;
+            description?: string;
+            formatted_address?: string;
+            geometry?: components["schemas"]["models.LocationGeometry"];
+            postal_code?: string;
+            region?: string;
+            street?: string;
+            street_number?: string;
+        };
+        "models.LocationGeometry": {
+            location?: components["schemas"]["models.LocationGeometryLocation"];
+        };
+        "models.LocationGeometryLocation": {
+            lat?: number;
+            lng?: number;
+        };
+        "models.LocationShort": {
+            description?: string;
+            formatted_address?: string;
+            geometry?: components["schemas"]["models.LocationGeometry"];
         };
         /** @description Media model */
         "models.Media": {
@@ -314,6 +1462,88 @@ export interface components {
             classifications?: string[];
             tags?: string[];
         };
+        "models.MediaShort": {
+            camera_id?: string;
+            date?: string;
+            key?: string;
+            path?: string;
+            provider?: string;
+            source?: string;
+            sprite_url?: string;
+            spriteFile?: string;
+            spriteInterval?: number;
+            spriteProvider?: string;
+            src?: string;
+            thumbnail_url?: string;
+            thumbnailFile?: string;
+            thumbnailProvider?: string;
+            time?: string;
+            timestamp?: number;
+            type?: string;
+        };
+        "models.Mute": {
+            mute?: number;
+        };
+        "models.ONVIFEvents": {
+            key?: string;
+            timestamp?: number;
+            type?: string;
+            value?: string;
+        };
+        "models.Preset": {
+            name?: string;
+            token?: string;
+            x?: number;
+            y?: number;
+            z?: number;
+        };
+        "models.Role": {
+            featurePermissions?: components["schemas"]["models.FeaturePermissions"];
+            id?: string;
+            isActive?: number;
+            pages?: string[];
+            role?: string;
+            roleName?: string;
+            timeWindow?: components["schemas"]["models.TimeWindow"];
+            timeWindowActive?: number;
+            user_id?: string;
+        };
+        "models.Site": {
+            access_key?: string;
+            address?: components["schemas"]["models.Location"];
+            /** @description Calculated on the fly! */
+            all_devices?: string[];
+            color?: string;
+            country?: string;
+            created_by?: string;
+            created_time?: number;
+            description?: string;
+            devices?: string[];
+            floor_plans?: components["schemas"]["models.FloorPlan"][];
+            groups?: string[];
+            id?: string;
+            initials?: string;
+            name?: string;
+            numberOfFloorPlans?: number;
+            secret_key?: string;
+            storage_uri?: string;
+            street?: string;
+            updated_by?: string;
+            updated_time?: number;
+            user_id?: string;
+            /** @description added by accident should be removed! */
+            username?: string;
+        };
+        "models.SiteShort": {
+            address?: components["schemas"]["models.Location"];
+            color?: string;
+            id?: string;
+            initials?: string;
+            name?: string;
+        };
+        "models.SiteWrapper": {
+            site?: components["schemas"]["models.Site"];
+        };
         "models.SuccessResponse": {
             message?: string;
             meta_data?: components["schemas"]["models.APIMetadata"];
@@ -321,12 +1551,35 @@ export interface components {
             status_code?: number;
             success_code?: string;
         };
-        /** @description Test flow verification model */
-        "models.TestFlowStruct": {
-            id?: string;
-            isActive?: boolean;
-            name?: string;
-            testNumber?: number;
+        "models.TimeWindow": {
+            timeRange1MaxFriday?: number;
+            timeRange1MaxMonday?: number;
+            timeRange1MaxSaturday?: number;
+            timeRange1MaxSunday?: number;
+            timeRange1MaxThursday?: number;
+            timeRange1MaxTuesday?: number;
+            timeRange1MaxWednesday?: number;
+            timeRange1MinFriday?: number;
+            timeRange1MinMonday?: number;
+            timeRange1MinSaturday?: number;
+            timeRange1MinSunday?: number;
+            timeRange1MinThursday?: number;
+            timeRange1MinTuesday?: number;
+            timeRange1MinWednesday?: number;
+            timeRange2MaxFriday?: number;
+            timeRange2MaxMonday?: number;
+            timeRange2MaxSaturday?: number;
+            timeRange2MaxSunday?: number;
+            timeRange2MaxThursday?: number;
+            timeRange2MaxTuesday?: number;
+            timeRange2MaxWednesday?: number;
+            timeRange2MinFriday?: number;
+            timeRange2MinMonday?: number;
+            timeRange2MinSaturday?: number;
+            timeRange2MinSunday?: number;
+            timeRange2MinThursday?: number;
+            timeRange2MinTuesday?: number;
+            timeRange2MinWednesday?: number;
         };
         /** @description Timeline value model */
         "models.TimelineValue": {
@@ -334,6 +1587,14 @@ export interface components {
             currentTime?: number;
             startTime?: number;
             timelineZero?: number;
+        };
+        "models.Tour": {
+            current?: number;
+            loop?: boolean;
+            name?: string;
+            presets?: components["schemas"]["models.Preset"][];
+            running?: boolean;
+            speed?: number;
         };
     };
     responses: never;
@@ -347,20 +1608,68 @@ export type operations = Record<string, never>;
 
 // Convenient type exports for easier access
 export type APIMetadata = components['schemas']['models.APIMetadata'];
+export type Device = components['schemas']['models.Device'];
+export type DeviceMedia = components['schemas']['models.DeviceMedia'];
+export type DevicePlacement = components['schemas']['models.DevicePlacement'];
+export type DeviceShort = components['schemas']['models.DeviceShort'];
+export type DeviceWrapper = components['schemas']['models.DeviceWrapper'];
+export type DevicesWrapper = components['schemas']['models.DevicesWrapper'];
 export type ErrorResponse = components['schemas']['models.ErrorResponse'];
+export type FeaturePermissions = components['schemas']['models.FeaturePermissions'];
+export type FloorPlan = components['schemas']['models.FloorPlan'];
+export type Heartbeat = components['schemas']['models.Heartbeat'];
+export type HeartbeatOld = components['schemas']['models.HeartbeatOld'];
+export type HeartbeatShort = components['schemas']['models.HeartbeatShort'];
+export type Location = components['schemas']['models.Location'];
+export type LocationGeometry = components['schemas']['models.LocationGeometry'];
+export type LocationGeometryLocation = components['schemas']['models.LocationGeometryLocation'];
+export type LocationShort = components['schemas']['models.LocationShort'];
 export type Media = components['schemas']['models.Media'];
 export type MediaMetadata = components['schemas']['models.MediaMetadata'];
+export type MediaShort = components['schemas']['models.MediaShort'];
+export type Mute = components['schemas']['models.Mute'];
+export type ONVIFEvents = components['schemas']['models.ONVIFEvents'];
+export type Preset = components['schemas']['models.Preset'];
+export type Role = components['schemas']['models.Role'];
+export type Site = components['schemas']['models.Site'];
+export type SiteShort = components['schemas']['models.SiteShort'];
+export type SiteWrapper = components['schemas']['models.SiteWrapper'];
 export type SuccessResponse = components['schemas']['models.SuccessResponse'];
-export type TestFlowStruct = components['schemas']['models.TestFlowStruct'];
+export type TimeWindow = components['schemas']['models.TimeWindow'];
 export type TimelineValue = components['schemas']['models.TimelineValue'];
+export type Tour = components['schemas']['models.Tour'];
 
 // Export namespace for organized access
 export namespace models {
     export type APIMetadata = components['schemas']['models.APIMetadata'];
+    export type Device = components['schemas']['models.Device'];
+    export type DeviceMedia = components['schemas']['models.DeviceMedia'];
+    export type DevicePlacement = components['schemas']['models.DevicePlacement'];
+    export type DeviceShort = components['schemas']['models.DeviceShort'];
+    export type DeviceWrapper = components['schemas']['models.DeviceWrapper'];
+    export type DevicesWrapper = components['schemas']['models.DevicesWrapper'];
     export type ErrorResponse = components['schemas']['models.ErrorResponse'];
+    export type FeaturePermissions = components['schemas']['models.FeaturePermissions'];
+    export type FloorPlan = components['schemas']['models.FloorPlan'];
+    export type Heartbeat = components['schemas']['models.Heartbeat'];
+    export type HeartbeatOld = components['schemas']['models.HeartbeatOld'];
+    export type HeartbeatShort = components['schemas']['models.HeartbeatShort'];
+    export type Location = components['schemas']['models.Location'];
+    export type LocationGeometry = components['schemas']['models.LocationGeometry'];
+    export type LocationGeometryLocation = components['schemas']['models.LocationGeometryLocation'];
+    export type LocationShort = components['schemas']['models.LocationShort'];
     export type Media = components['schemas']['models.Media'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
+    export type MediaShort = components['schemas']['models.MediaShort'];
+    export type Mute = components['schemas']['models.Mute'];
+    export type ONVIFEvents = components['schemas']['models.ONVIFEvents'];
+    export type Preset = components['schemas']['models.Preset'];
+    export type Role = components['schemas']['models.Role'];
+    export type Site = components['schemas']['models.Site'];
+    export type SiteShort = components['schemas']['models.SiteShort'];
+    export type SiteWrapper = components['schemas']['models.SiteWrapper'];
     export type SuccessResponse = components['schemas']['models.SuccessResponse'];
-    export type TestFlowStruct = components['schemas']['models.TestFlowStruct'];
+    export type TimeWindow = components['schemas']['models.TimeWindow'];
     export type TimelineValue = components['schemas']['models.TimelineValue'];
+    export type Tour = components['schemas']['models.Tour'];
 }
