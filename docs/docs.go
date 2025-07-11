@@ -15,9 +15,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/apimetadata/{id}": {
+        "/internal/apimetadata": {
             "get": {
-                "description": "Get a APIMetadata item by ID",
+                "description": "Internal endpoint used only to ensure APIMetadata schema is generated in OpenAPI spec",
                 "consumes": [
                     "application/json"
                 ],
@@ -25,37 +25,22 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "apimetadata"
+                    "internal"
                 ],
-                "summary": "Get a APIMetadata item",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "APIMetadata ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
+                "summary": "Get APIMetadata (schema generation only)",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.APIMetadata"
                         }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrorResponse"
-                        }
                     }
                 }
             }
         },
-        "/errorresponse/{id}": {
+        "/internal/mediametadata": {
             "get": {
-                "description": "Get a ErrorResponse item by ID",
+                "description": "Internal endpoint used only to ensure MediaMetadata schema is generated in OpenAPI spec",
                 "consumes": [
                     "application/json"
                 ],
@@ -63,23 +48,94 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "errorresponse"
+                    "internal"
                 ],
-                "summary": "Get a ErrorResponse item",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ErrorResponse ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
+                "summary": "Get MediaMetadata (schema generation only)",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ErrorResponse"
+                            "$ref": "#/definitions/models.MediaMetadata"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/testflowstruct": {
+            "get": {
+                "description": "Internal endpoint used only to ensure TestFlowStruct schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get TestFlowStruct (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.TestFlowStruct"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/timelinevalue": {
+            "get": {
+                "description": "Internal endpoint used only to ensure TimelineValue schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get TimelineValue (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.TimelineValue"
+                        }
+                    }
+                }
+            }
+        },
+        "/media": {
+            "post": {
+                "description": "Create a new media item",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "media"
+                ],
+                "summary": "Create a new media item",
+                "parameters": [
+                    {
+                        "description": "Media object",
+                        "name": "media",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Media"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.SuccessResponse"
                         }
                     },
                     "400": {
@@ -93,7 +149,7 @@ const docTemplate = `{
         },
         "/media/{id}": {
             "get": {
-                "description": "Get a Media item by ID",
+                "description": "Get a media item by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -103,7 +159,7 @@ const docTemplate = `{
                 "tags": [
                     "media"
                 ],
-                "summary": "Get a Media item",
+                "summary": "Get a media item",
                 "parameters": [
                     {
                         "type": "string",
@@ -118,82 +174,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.Media"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/mediametadata/{id}": {
-            "get": {
-                "description": "Get a MediaMetadata item by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "mediametadata"
-                ],
-                "summary": "Get a MediaMetadata item",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "MediaMetadata ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.MediaMetadata"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/successresponse/{id}": {
-            "get": {
-                "description": "Get a SuccessResponse item by ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "successresponse"
-                ],
-                "summary": "Get a SuccessResponse item",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "SuccessResponse ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.SuccessResponse"
                         }
                     },
                     "400": {
@@ -348,6 +328,42 @@ const docTemplate = `{
                 },
                 "success_code": {
                     "type": "string"
+                }
+            }
+        },
+        "models.TestFlowStruct": {
+            "description": "Test flow verification model",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "isActive": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "testNumber": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.TimelineValue": {
+            "description": "Timeline value model",
+            "type": "object",
+            "properties": {
+                "currentScale": {
+                    "type": "integer"
+                },
+                "currentTime": {
+                    "type": "integer"
+                },
+                "startTime": {
+                    "type": "integer"
+                },
+                "timelineZero": {
+                    "type": "integer"
                 }
             }
         }

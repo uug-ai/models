@@ -16,14 +16,9 @@ func main() {
 	// This main function exists to allow swag to generate OpenAPI spec
 	// from the models in pkg/models
 	fmt.Println("Models API")
-
-	// Reference the models so they are included in the spec
-	var _ models.Media
-	var _ models.MediaMetadata
-	var _ models.APIMetadata
-	var _ models.ErrorResponse
-	var _ models.SuccessResponse
-	var _ models.Tester
+	
+	// Keep the import valid - models are used in the API endpoint annotations below
+	_ = models.Media{}
 }
 
 // GetMedia godoc
@@ -50,14 +45,45 @@ func GetMedia() {}
 // @Router /media [post]
 func CreateMedia() {}
 
-// GetTest godoc
-// @Summary Get a test item
-// @Description Get a test item by ID
-// @Tags test
+// Dummy endpoints to ensure all models are included in OpenAPI spec
+// These endpoints exist only to force swag to generate schemas for all models
+
+// GetAPIMetadata godoc
+// @Summary Get APIMetadata (schema generation only)
+// @Description Internal endpoint used only to ensure APIMetadata schema is generated in OpenAPI spec
+// @Tags internal
 // @Accept json
 // @Produce json
-// @Param id path string true "Test ID"
-// @Success 200 {object} models.Tester
-// @Failure 400 {object} models.ErrorResponse
-// @Router /test/{id} [get]
-func GetTest() {}
+// @Success 200 {object} models.APIMetadata
+// @Router /internal/apimetadata [get]
+func GetAPIMetadata() {}
+
+// GetMediaMetadata godoc
+// @Summary Get MediaMetadata (schema generation only)
+// @Description Internal endpoint used only to ensure MediaMetadata schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.MediaMetadata
+// @Router /internal/mediametadata [get]
+func GetMediaMetadata() {}
+
+// GetTimelineValue godoc
+// @Summary Get TimelineValue (schema generation only)
+// @Description Internal endpoint used only to ensure TimelineValue schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.TimelineValue
+// @Router /internal/timelinevalue [get]
+func GetTimelineValue() {}
+
+// GetTestFlowStruct godoc
+// @Summary Get TestFlowStruct (schema generation only)
+// @Description Internal endpoint used only to ensure TestFlowStruct schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.TestFlowStruct
+// @Router /internal/testflowstruct [get]
+func GetTestFlowStruct() {}

@@ -99,6 +99,30 @@ definitions:
       success_code:
         type: string
     type: object
+  models.TestFlowStruct:
+    description: Test flow verification model
+    properties:
+      id:
+        type: string
+      isActive:
+        type: boolean
+      name:
+        type: string
+      testNumber:
+        type: integer
+    type: object
+  models.TimelineValue:
+    description: Timeline value model
+    properties:
+      currentScale:
+        type: integer
+      currentTime:
+        type: integer
+      startTime:
+        type: integer
+      timelineZero:
+        type: integer
+    type: object
 host: localhost
 info:
   contact: {}
@@ -106,17 +130,12 @@ info:
   title: Models API
   version: "1.0"
 paths:
-  /apimetadata/{id}:
+  /internal/apimetadata:
     get:
       consumes:
       - application/json
-      description: Get a APIMetadata item by ID
-      parameters:
-      - description: APIMetadata ID
-        in: path
-        name: id
-        required: true
-        type: string
+      description: Internal endpoint used only to ensure APIMetadata schema is generated
+        in OpenAPI spec
       produces:
       - application/json
       responses:
@@ -124,43 +143,88 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.APIMetadata'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.ErrorResponse'
-      summary: Get a APIMetadata item
+      summary: Get APIMetadata (schema generation only)
       tags:
-      - apimetadata
-  /errorresponse/{id}:
+      - internal
+  /internal/mediametadata:
     get:
       consumes:
       - application/json
-      description: Get a ErrorResponse item by ID
-      parameters:
-      - description: ErrorResponse ID
-        in: path
-        name: id
-        required: true
-        type: string
+      description: Internal endpoint used only to ensure MediaMetadata schema is generated
+        in OpenAPI spec
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ErrorResponse'
+            $ref: '#/definitions/models.MediaMetadata'
+      summary: Get MediaMetadata (schema generation only)
+      tags:
+      - internal
+  /internal/testflowstruct:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure TestFlowStruct schema is
+        generated in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TestFlowStruct'
+      summary: Get TestFlowStruct (schema generation only)
+      tags:
+      - internal
+  /internal/timelinevalue:
+    get:
+      consumes:
+      - application/json
+      description: Internal endpoint used only to ensure TimelineValue schema is generated
+        in OpenAPI spec
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TimelineValue'
+      summary: Get TimelineValue (schema generation only)
+      tags:
+      - internal
+  /media:
+    post:
+      consumes:
+      - application/json
+      description: Create a new media item
+      parameters:
+      - description: Media object
+        in: body
+        name: media
+        required: true
+        schema:
+          $ref: '#/definitions/models.Media'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/models.ErrorResponse'
-      summary: Get a ErrorResponse item
+      summary: Create a new media item
       tags:
-      - errorresponse
+      - media
   /media/{id}:
     get:
       consumes:
       - application/json
-      description: Get a Media item by ID
+      description: Get a media item by ID
       parameters:
       - description: Media ID
         in: path
@@ -178,57 +242,7 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/models.ErrorResponse'
-      summary: Get a Media item
+      summary: Get a media item
       tags:
       - media
-  /mediametadata/{id}:
-    get:
-      consumes:
-      - application/json
-      description: Get a MediaMetadata item by ID
-      parameters:
-      - description: MediaMetadata ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.MediaMetadata'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.ErrorResponse'
-      summary: Get a MediaMetadata item
-      tags:
-      - mediametadata
-  /successresponse/{id}:
-    get:
-      consumes:
-      - application/json
-      description: Get a SuccessResponse item by ID
-      parameters:
-      - description: SuccessResponse ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.SuccessResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/models.ErrorResponse'
-      summary: Get a SuccessResponse item
-      tags:
-      - successresponse
 swagger: "2.0"

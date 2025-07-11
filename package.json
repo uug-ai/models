@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "generate:openapi": "cd cmd && swag init --output ../docs --parseDependency && cd .. && npx swagger2openapi docs/swagger.yaml --outfile docs/openapi.yaml",
+    "generate:openapi": "node scripts/auto-discover-models.js && cd cmd && swag init --output ../docs --parseDependency && cd .. && npx swagger2openapi docs/swagger.yaml --outfile docs/openapi.yaml",
     "generate:types": "npx openapi-typescript docs/openapi.yaml --output src/types.ts && node scripts/add-type-exports.js",
     "generate": "npm run generate:openapi && npm run generate:types"
   },

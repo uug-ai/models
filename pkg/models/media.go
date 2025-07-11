@@ -40,25 +40,11 @@ type MediaMetadata struct {
 	Classifications []string `json:"classifications,omitempty" bson:"classifications,omitempty"`
 }
 
-// Tester represents a test object.
-// @Description Test model
-type Tester struct {
-	MediaId  string `json:"mediaId" bson:"mediaId"`
-	DeviceId string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
-}
-
-// NewTester represents a new test object.
-// @Description New test model
-type NewTester struct {
-	MediaId  string `json:"mediaId" bson:"mediaId"`
-	DeviceId string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
-	// Additional fields can be added here as needed
-}
-
-// NewNewTester represents a new test object.
-// @Description NewNew test model
-type NewNewTester struct {
-	MediaId  string `json:"mediaId" bson:"mediaId"`
-	DeviceId string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
-	// Additional fields can be added here as needed
+// TimelineValue represents timeline state information.
+// @Description Timeline value model
+type TimelineValue struct {
+	TimelineZero int64 `json:"timelineZero" bson:"timelineZero"`
+	StartTime    int64 `json:"startTime" bson:"startTime"`
+	CurrentTime  int64 `json:"currentTime" bson:"currentTime"`
+	CurrentScale int64 `json:"currentScale" bson:"currentScale"`
 }

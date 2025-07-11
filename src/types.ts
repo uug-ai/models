@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/apimetadata/{id}": {
+    "/internal/apimetadata": {
         parameters: {
             query?: never;
             header?: never;
@@ -12,17 +12,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get a APIMetadata item
-         * @description Get a APIMetadata item by ID
+         * Get APIMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure APIMetadata schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
                 query?: never;
                 header?: never;
-                path: {
-                    /** @description APIMetadata ID */
-                    id: string;
-                };
+                path?: never;
                 cookie?: never;
             };
             requestBody?: never;
@@ -36,13 +33,43 @@ export interface paths {
                         "application/json": components["schemas"]["models.APIMetadata"];
                     };
                 };
-                /** @description Bad Request */
-                400: {
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/mediametadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MediaMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure MediaMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.ErrorResponse"];
+                        "application/json": components["schemas"]["models.MediaMetadata"];
                     };
                 };
             };
@@ -55,7 +82,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/errorresponse/{id}": {
+    "/internal/testflowstruct": {
         parameters: {
             query?: never;
             header?: never;
@@ -63,17 +90,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get a ErrorResponse item
-         * @description Get a ErrorResponse item by ID
+         * Get TestFlowStruct (schema generation only)
+         * @description Internal endpoint used only to ensure TestFlowStruct schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
                 query?: never;
                 header?: never;
-                path: {
-                    /** @description ErrorResponse ID */
-                    id: string;
-                };
+                path?: never;
                 cookie?: never;
             };
             requestBody?: never;
@@ -84,7 +108,92 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.ErrorResponse"];
+                        "application/json": components["schemas"]["models.TestFlowStruct"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/timelinevalue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TimelineValue (schema generation only)
+         * @description Internal endpoint used only to ensure TimelineValue schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.TimelineValue"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/media": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create a new media item
+         * @description Create a new media item
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            /** @description Media object */
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["models.Media"];
+                };
+            };
+            responses: {
+                /** @description Created */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.SuccessResponse"];
                     };
                 };
                 /** @description Bad Request */
@@ -98,8 +207,6 @@ export interface paths {
                 };
             };
         };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -114,8 +221,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get a Media item
-         * @description Get a Media item by ID
+         * Get a media item
+         * @description Get a media item by ID
          */
         get: {
             parameters: {
@@ -136,108 +243,6 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Media"];
-                    };
-                };
-                /** @description Bad Request */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.ErrorResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/mediametadata/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get a MediaMetadata item
-         * @description Get a MediaMetadata item by ID
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description MediaMetadata ID */
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.MediaMetadata"];
-                    };
-                };
-                /** @description Bad Request */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.ErrorResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/successresponse/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get a SuccessResponse item
-         * @description Get a SuccessResponse item by ID
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /** @description SuccessResponse ID */
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.SuccessResponse"];
                     };
                 };
                 /** @description Bad Request */
@@ -316,6 +321,20 @@ export interface components {
             status_code?: number;
             success_code?: string;
         };
+        /** @description Test flow verification model */
+        "models.TestFlowStruct": {
+            id?: string;
+            isActive?: boolean;
+            name?: string;
+            testNumber?: number;
+        };
+        /** @description Timeline value model */
+        "models.TimelineValue": {
+            currentScale?: number;
+            currentTime?: number;
+            startTime?: number;
+            timelineZero?: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -332,6 +351,8 @@ export type ErrorResponse = components['schemas']['models.ErrorResponse'];
 export type Media = components['schemas']['models.Media'];
 export type MediaMetadata = components['schemas']['models.MediaMetadata'];
 export type SuccessResponse = components['schemas']['models.SuccessResponse'];
+export type TestFlowStruct = components['schemas']['models.TestFlowStruct'];
+export type TimelineValue = components['schemas']['models.TimelineValue'];
 
 // Export namespace for organized access
 export namespace models {
@@ -340,4 +361,6 @@ export namespace models {
     export type Media = components['schemas']['models.Media'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
     export type SuccessResponse = components['schemas']['models.SuccessResponse'];
+    export type TestFlowStruct = components['schemas']['models.TestFlowStruct'];
+    export type TimelineValue = components['schemas']['models.TimelineValue'];
 }
