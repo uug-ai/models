@@ -1,9 +1,7 @@
 package models
 
-// --------------------------------------------------------------------
-// Data model for Media
-//
-// This is the main struct for Media
+// Media represents a media object.
+// @Description Media model
 type Media struct {
 	// Time window of media file.
 	StartTimestamp int64 `json:"startTimestamp,omitempty" bson:"startTimestamp,omitempty"`
@@ -11,9 +9,9 @@ type Media struct {
 	Duration       int64 `json:"duration,omitempty" bson:"duration,omitempty"`
 
 	// Media file owner
-	DeviceId string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
-	GroupId  string `json:"groupId,omitempty" bson:"groupId,omitempty"`
-	UserId   string `json:"userId,omitempty" bson:"userId,omitempty"`
+	DeviceId       string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
+	GroupId        string `json:"groupId,omitempty" bson:"groupId,omitempty"`
+	UserId         string `json:"userId,omitempty" bson:"userId,omitempty"`
 	OrganisationId string `json:"organisationId,omitempty" bson:"organisationId,omitempty"`
 
 	// Media file information (by default Vault (=kstorage), however might change
@@ -40,4 +38,33 @@ type Media struct {
 type MediaMetadata struct {
 	Tags            []string `json:"tags,omitempty" bson:"tags,omitempty"`
 	Classifications []string `json:"classifications,omitempty" bson:"classifications,omitempty"`
+}
+
+type MediaShort struct {
+	Key               string `json:"key" bson:"key"`
+	Path              string `json:"path" bson:"path"`
+	Url               string `json:"src" bson:"src"`
+	Timestamp         int64  `json:"timestamp" bson:"timestamp"`
+	CameraId          string `json:"camera_id" bson:"camera_id"`
+	Date              string `json:"date" bson:"date"`
+	Time              string `json:"time" bson:"time"`
+	Type              string `json:"type" bson:"type"`
+	Provider          string `json:"provider" bson:"provider"`
+	Source            string `json:"source" bson:"source"`
+	SpriteUrl         string `json:"sprite_url" bson:"sprite_url"`
+	ThumbnailUrl      string `json:"thumbnail_url" bson:"thumbnail_url"`
+	ThumbnailFile     string `json:"thumbnailFile" bson:"thumbnailFile"`
+	ThumbnailProvider string `json:"thumbnailProvider" bson:"thumbnailProvider"`
+	SpriteFile        string `json:"spriteFile" bson:"spriteFile"`
+	SpriteProvider    string `json:"spriteProvider" bson:"spriteProvider"`
+	SpriteInterval    int    `json:"spriteInterval" bson:"spriteInterval"`
+}
+
+// TimelineValue represents timeline state information.
+// @Description Timeline value model
+type TimelineValue struct {
+	TimelineZero int64 `json:"timelineZero" bson:"timelineZero"`
+	StartTime    int64 `json:"startTime" bson:"startTime"`
+	CurrentTime  int64 `json:"currentTime" bson:"currentTime"`
+	CurrentScale int64 `json:"currentScale" bson:"currentScale"`
 }
