@@ -97,10 +97,7 @@ type DeviceCameraMetadata struct {
 
 // LocationMetadata contains metadata about the physical location of the device.
 type DeviceLocationMetadata struct {
-	Latitude     float64  `json:"latitude" bson:"latitude,omitempty"`
-	Longitude    float64  `json:"longitude" bson:"longitude,omitempty"`
-	Altitude     float64  `json:"altitude" bson:"altitude,omitempty"`
-	Address      string   `json:"address" bson:"address,omitempty"` // e.g. "123 Main St, Anytown, USA"
+	Location     Location `json:"location" bson:"location,omitempty"`
 	OnFloorPlans []string `json:"onFloorPlans" bson:"onFloorPlans,omitempty"`
 	FieldOfView  float64  `json:"fieldOfView" bson:"fieldOfView,omitempty"`
 }
