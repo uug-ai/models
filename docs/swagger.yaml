@@ -1,4 +1,234 @@
+basePath: /
+definitions:
+  models.APIMetadata:
+    properties:
+      error: {}
+      path:
+        type: string
+      timestamp:
+        type: integer
+      user_id:
+        type: string
+    type: object
+  models.ErrorResponse:
+    properties:
+      error_code:
+        description: More specific custom error code or type
+        type: string
+      message:
+        type: string
+      meta_data:
+        $ref: '#/definitions/models.APIMetadata'
+      request_id:
+        type: string
+      status_code:
+        type: integer
+    type: object
+  models.Media:
+    description: Media model
+    properties:
+      deviceId:
+        description: Media file owner
+        type: string
+      duration:
+        type: integer
+      endTimestamp:
+        type: integer
+      groupId:
+        type: string
+      metadata:
+        description: Metadata
+        items:
+          $ref: '#/definitions/models.MediaMetadata'
+        type: array
+      organisationId:
+        type: string
+      spriteFile:
+        type: string
+      spriteInterval:
+        type: integer
+      spriteProvider:
+        type: string
+      spriteUrl:
+        type: string
+      startTimestamp:
+        description: Time window of media file.
+        type: integer
+      storageSolution:
+        description: |-
+          Media file information (by default Vault (=kstorage), however might change
+          in the future (integration with other storage solutions, next to Vault).
+        type: string
+      thumbnailFile:
+        type: string
+      thumbnailProvider:
+        type: string
+      thumbnailUrl:
+        type: string
+      userId:
+        type: string
+      videoFile:
+        description: Media file information
+        type: string
+      videoProvider:
+        type: string
+      videoUrl:
+        type: string
+    type: object
+  models.MediaMetadata:
+    properties:
+      classifications:
+        items:
+          type: string
+        type: array
+      tags:
+        items:
+          type: string
+        type: array
+    type: object
+  models.SuccessResponse:
+    properties:
+      message:
+        type: string
+      meta_data:
+        $ref: '#/definitions/models.APIMetadata'
+      request_id:
+        type: string
+      status_code:
+        type: integer
+      success_code:
+        type: string
+    type: object
+host: localhost
 info:
   contact: {}
-paths: {}
+  description: API for media models and related types
+  title: Models API
+  version: "1.0"
+paths:
+  /apimetadata/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a APIMetadata item by ID
+      parameters:
+      - description: APIMetadata ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.APIMetadata'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get a APIMetadata item
+      tags:
+      - apimetadata
+  /errorresponse/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a ErrorResponse item by ID
+      parameters:
+      - description: ErrorResponse ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get a ErrorResponse item
+      tags:
+      - errorresponse
+  /media/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a Media item by ID
+      parameters:
+      - description: Media ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Media'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get a Media item
+      tags:
+      - media
+  /mediametadata/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a MediaMetadata item by ID
+      parameters:
+      - description: MediaMetadata ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.MediaMetadata'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get a MediaMetadata item
+      tags:
+      - mediametadata
+  /successresponse/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a SuccessResponse item by ID
+      parameters:
+      - description: SuccessResponse ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get a SuccessResponse item
+      tags:
+      - successresponse
 swagger: "2.0"

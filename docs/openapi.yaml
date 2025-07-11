@@ -1,68 +1,204 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
+  contact: {}
+  description: API for media models and related types
   title: Models API
-  version: 1.0.0
-paths: {}
+  version: "1.0"
+paths:
+  "/apimetadata/{id}":
+    get:
+      description: Get a APIMetadata item by ID
+      parameters:
+        - description: APIMetadata ID
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.APIMetadata"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ErrorResponse"
+      summary: Get a APIMetadata item
+      tags:
+        - apimetadata
+  "/errorresponse/{id}":
+    get:
+      description: Get a ErrorResponse item by ID
+      parameters:
+        - description: ErrorResponse ID
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ErrorResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ErrorResponse"
+      summary: Get a ErrorResponse item
+      tags:
+        - errorresponse
+  "/media/{id}":
+    get:
+      description: Get a Media item by ID
+      parameters:
+        - description: Media ID
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Media"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ErrorResponse"
+      summary: Get a Media item
+      tags:
+        - media
+  "/mediametadata/{id}":
+    get:
+      description: Get a MediaMetadata item by ID
+      parameters:
+        - description: MediaMetadata ID
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.MediaMetadata"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ErrorResponse"
+      summary: Get a MediaMetadata item
+      tags:
+        - mediametadata
+  "/successresponse/{id}":
+    get:
+      description: Get a SuccessResponse item by ID
+      parameters:
+        - description: SuccessResponse ID
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.SuccessResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.ErrorResponse"
+      summary: Get a SuccessResponse item
+      tags:
+        - successresponse
+servers:
+  - url: //localhost
 components:
   schemas:
-    APIMetadata:
-      type: object
+    models.APIMetadata:
       properties:
-        error:
-          type: object
+        error: {}
         path:
           type: string
         timestamp:
           type: integer
-          format: int64
         user_id:
           type: string
-    ErrorResponse:
       type: object
+    models.ErrorResponse:
       properties:
         error_code:
+          description: More specific custom error code or type
           type: string
         message:
           type: string
         meta_data:
-          $ref: '#/components/schemas/APIMetadata'
+          $ref: "#/components/schemas/models.APIMetadata"
         request_id:
           type: string
         status_code:
           type: integer
-          format: int32
-    Media:
       type: object
+    models.Media:
+      description: Media model
       properties:
         deviceId:
+          description: Media file owner
           type: string
         duration:
           type: integer
-          format: int64
         endTimestamp:
           type: integer
-          format: int64
         groupId:
           type: string
         metadata:
-          type: array
+          description: Metadata
           items:
-            $ref: '#/components/schemas/MediaMetadata'
+            $ref: "#/components/schemas/models.MediaMetadata"
+          type: array
         organisationId:
           type: string
         spriteFile:
           type: string
         spriteInterval:
           type: integer
-          format: int32
         spriteProvider:
           type: string
         spriteUrl:
           type: string
         startTimestamp:
+          description: Time window of media file.
           type: integer
-          format: int64
         storageSolution:
+          description: >-
+            Media file information (by default Vault (=kstorage), however might
+            change
+
+            in the future (integration with other storage solutions, next to Vault).
           type: string
         thumbnailFile:
           type: string
@@ -73,33 +209,34 @@ components:
         userId:
           type: string
         videoFile:
+          description: Media file information
           type: string
         videoProvider:
           type: string
         videoUrl:
           type: string
-    MediaMetadata:
       type: object
+    models.MediaMetadata:
       properties:
         classifications:
-          type: array
           items:
             type: string
+          type: array
         tags:
-          type: array
           items:
             type: string
-    SuccessResponse:
+          type: array
       type: object
+    models.SuccessResponse:
       properties:
         message:
           type: string
         meta_data:
-          $ref: '#/components/schemas/APIMetadata'
+          $ref: "#/components/schemas/models.APIMetadata"
         request_id:
           type: string
         status_code:
           type: integer
-          format: int32
         success_code:
           type: string
+      type: object

@@ -39,3 +39,26 @@ type MediaMetadata struct {
 	Tags            []string `json:"tags,omitempty" bson:"tags,omitempty"`
 	Classifications []string `json:"classifications,omitempty" bson:"classifications,omitempty"`
 }
+
+// Tester represents a test object.
+// @Description Test model
+type Tester struct {
+	MediaId  string `json:"mediaId" bson:"mediaId"`
+	DeviceId string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
+}
+
+// NewTester represents a new test object.
+// @Description New test model
+type NewTester struct {
+	MediaId  string `json:"mediaId" bson:"mediaId"`
+	DeviceId string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
+	// Additional fields can be added here as needed
+}
+
+// NewNewTester represents a new test object.
+// @Description NewNew test model
+type NewNewTester struct {
+	MediaId  string `json:"mediaId" bson:"mediaId"`
+	DeviceId string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
+	// Additional fields can be added here as needed
+}

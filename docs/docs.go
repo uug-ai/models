@@ -14,17 +14,354 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/apimetadata/{id}": {
+            "get": {
+                "description": "Get a APIMetadata item by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "apimetadata"
+                ],
+                "summary": "Get a APIMetadata item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "APIMetadata ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.APIMetadata"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/errorresponse/{id}": {
+            "get": {
+                "description": "Get a ErrorResponse item by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "errorresponse"
+                ],
+                "summary": "Get a ErrorResponse item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ErrorResponse ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/media/{id}": {
+            "get": {
+                "description": "Get a Media item by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "media"
+                ],
+                "summary": "Get a Media item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Media ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Media"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/mediametadata/{id}": {
+            "get": {
+                "description": "Get a MediaMetadata item by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mediametadata"
+                ],
+                "summary": "Get a MediaMetadata item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "MediaMetadata ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.MediaMetadata"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/successresponse/{id}": {
+            "get": {
+                "description": "Get a SuccessResponse item by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "successresponse"
+                ],
+                "summary": "Get a SuccessResponse item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "SuccessResponse ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.APIMetadata": {
+            "type": "object",
+            "properties": {
+                "error": {},
+                "path": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error_code": {
+                    "description": "More specific custom error code or type",
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "meta_data": {
+                    "$ref": "#/definitions/models.APIMetadata"
+                },
+                "request_id": {
+                    "type": "string"
+                },
+                "status_code": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Media": {
+            "description": "Media model",
+            "type": "object",
+            "properties": {
+                "deviceId": {
+                    "description": "Media file owner",
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "integer"
+                },
+                "endTimestamp": {
+                    "type": "integer"
+                },
+                "groupId": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "description": "Metadata",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.MediaMetadata"
+                    }
+                },
+                "organisationId": {
+                    "type": "string"
+                },
+                "spriteFile": {
+                    "type": "string"
+                },
+                "spriteInterval": {
+                    "type": "integer"
+                },
+                "spriteProvider": {
+                    "type": "string"
+                },
+                "spriteUrl": {
+                    "type": "string"
+                },
+                "startTimestamp": {
+                    "description": "Time window of media file.",
+                    "type": "integer"
+                },
+                "storageSolution": {
+                    "description": "Media file information (by default Vault (=kstorage), however might change\nin the future (integration with other storage solutions, next to Vault).",
+                    "type": "string"
+                },
+                "thumbnailFile": {
+                    "type": "string"
+                },
+                "thumbnailProvider": {
+                    "type": "string"
+                },
+                "thumbnailUrl": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
+                },
+                "videoFile": {
+                    "description": "Media file information",
+                    "type": "string"
+                },
+                "videoProvider": {
+                    "type": "string"
+                },
+                "videoUrl": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.MediaMetadata": {
+            "type": "object",
+            "properties": {
+                "classifications": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "models.SuccessResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "meta_data": {
+                    "$ref": "#/definitions/models.APIMetadata"
+                },
+                "request_id": {
+                    "type": "string"
+                },
+                "status_code": {
+                    "type": "integer"
+                },
+                "success_code": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
-	Host:             "",
-	BasePath:         "",
+	Version:          "1.0",
+	Host:             "localhost",
+	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "Models API",
+	Description:      "API for media models and related types",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

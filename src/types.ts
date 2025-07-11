@@ -3,59 +3,316 @@
  * Do not make direct changes to the file.
  */
 
-export type paths = Record<string, never>;
+export interface paths {
+    "/apimetadata/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a APIMetadata item
+         * @description Get a APIMetadata item by ID
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description APIMetadata ID */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.APIMetadata"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/errorresponse/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a ErrorResponse item
+         * @description Get a ErrorResponse item by ID
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description ErrorResponse ID */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ErrorResponse"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/media/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a Media item
+         * @description Get a Media item by ID
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Media ID */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Media"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/mediametadata/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a MediaMetadata item
+         * @description Get a MediaMetadata item by ID
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description MediaMetadata ID */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MediaMetadata"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/successresponse/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a SuccessResponse item
+         * @description Get a SuccessResponse item by ID
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description SuccessResponse ID */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.SuccessResponse"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+}
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        APIMetadata: {
-            error?: Record<string, never>;
+        "models.APIMetadata": {
+            error?: unknown;
             path?: string;
-            /** Format: int64 */
             timestamp?: number;
             user_id?: string;
         };
-        ErrorResponse: {
+        "models.ErrorResponse": {
+            /** @description More specific custom error code or type */
             error_code?: string;
             message?: string;
-            meta_data?: components["schemas"]["APIMetadata"];
+            meta_data?: components["schemas"]["models.APIMetadata"];
             request_id?: string;
-            /** Format: int32 */
             status_code?: number;
         };
-        Media: {
+        /** @description Media model */
+        "models.Media": {
+            /** @description Media file owner */
             deviceId?: string;
-            /** Format: int64 */
             duration?: number;
-            /** Format: int64 */
             endTimestamp?: number;
             groupId?: string;
-            metadata?: components["schemas"]["MediaMetadata"][];
+            /** @description Metadata */
+            metadata?: components["schemas"]["models.MediaMetadata"][];
             organisationId?: string;
             spriteFile?: string;
-            /** Format: int32 */
             spriteInterval?: number;
             spriteProvider?: string;
             spriteUrl?: string;
-            /** Format: int64 */
+            /** @description Time window of media file. */
             startTimestamp?: number;
+            /** @description Media file information (by default Vault (=kstorage), however might change
+             *     in the future (integration with other storage solutions, next to Vault). */
             storageSolution?: string;
             thumbnailFile?: string;
             thumbnailProvider?: string;
             thumbnailUrl?: string;
             userId?: string;
+            /** @description Media file information */
             videoFile?: string;
             videoProvider?: string;
             videoUrl?: string;
         };
-        MediaMetadata: {
+        "models.MediaMetadata": {
             classifications?: string[];
             tags?: string[];
         };
-        SuccessResponse: {
+        "models.SuccessResponse": {
             message?: string;
-            meta_data?: components["schemas"]["APIMetadata"];
+            meta_data?: components["schemas"]["models.APIMetadata"];
             request_id?: string;
-            /** Format: int32 */
             status_code?: number;
             success_code?: string;
         };
@@ -70,17 +327,17 @@ export type $defs = Record<string, never>;
 export type operations = Record<string, never>;
 
 // Convenient type exports for easier access
-export type Media = components['schemas']['Media'];
-export type MediaMetadata = components['schemas']['MediaMetadata'];
-export type APIMetadata = components['schemas']['APIMetadata'];
-export type ErrorResponse = components['schemas']['ErrorResponse'];
-export type SuccessResponse = components['schemas']['SuccessResponse'];
+export type APIMetadata = components['schemas']['models.APIMetadata'];
+export type ErrorResponse = components['schemas']['models.ErrorResponse'];
+export type Media = components['schemas']['models.Media'];
+export type MediaMetadata = components['schemas']['models.MediaMetadata'];
+export type SuccessResponse = components['schemas']['models.SuccessResponse'];
 
 // Export namespace for organized access
 export namespace models {
-    export type Media = components['schemas']['Media'];
-    export type MediaMetadata = components['schemas']['MediaMetadata'];
-    export type APIMetadata = components['schemas']['APIMetadata'];
-    export type ErrorResponse = components['schemas']['ErrorResponse'];
-    export type SuccessResponse = components['schemas']['SuccessResponse'];
+    export type APIMetadata = components['schemas']['models.APIMetadata'];
+    export type ErrorResponse = components['schemas']['models.ErrorResponse'];
+    export type Media = components['schemas']['models.Media'];
+    export type MediaMetadata = components['schemas']['models.MediaMetadata'];
+    export type SuccessResponse = components['schemas']['models.SuccessResponse'];
 }

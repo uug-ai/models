@@ -8,7 +8,14 @@ This package provides a unified `Media` struct that represents media files (prim
 
 ## TypeScript Generation
 
-This project automatically generates TypeScript types from Go models using OpenAPI 3.x as an intermediate format.
+This project automatically generates TypeScript types from Go models using **Swagger/OpenAPI** as an intermediate format.
+
+### How it works
+
+1. **`swag`** scans Go code and generates Swagger 2.0 spec from struct definitions
+2. **`swagger2openapi`** converts Swagger 2.0 to OpenAPI 3.x
+3. **`openapi-typescript`** generates TypeScript types from OpenAPI 3.x
+4. **Post-processing script** adds convenient direct exports
 
 ### Usage
 
@@ -19,29 +26,30 @@ To generate TypeScript types from your Go models:
 npm run generate
 
 # Or run steps individually:
-npm run generate:openapi  # Go models → OpenAPI YAML
+npm run generate:openapi  # Go models → OpenAPI 3.x YAML
 npm run generate:types    # OpenAPI YAML → TypeScript types
 ```
 
 ### Generated Files
 
-- `docs/openapi.yaml` - OpenAPI 3.x specification generated from Go models
+- `docs/swagger.yaml` - Swagger 2.0 specification (intermediate)
+- `docs/openapi.yaml` - OpenAPI 3.x specification
 - `src/types.ts` - TypeScript type definitions
 
 ### Adding New Models
 
-1. Add your Go struct to `pkg/models/`
-2. Add the type to the `getModelTypes()` function in `scripts/generate-openapi.go`
-3. Run `npm run generate` to update the TypeScript types
+1. **Add your Go struct** to `pkg/models/`
+2. **Reference it in `cmd/main.go`** (add to the variable declarations or API endpoints)
+3. **Run `npm run generate`** to update the TypeScript types
+
+**No manual script updates needed!** The `swag` tool automatically discovers all referenced models.
 
 ### Example Usage in TypeScript
 
 ```typescript
-import { components } from './src/types';
+import { Media, models } from './src/types';
 
-type Media = components['schemas']['Media'];
-type MediaMetadata = components['schemas']['MediaMetadata'];
-
+// Direct import
 const media: Media = {
   deviceId: "camera-001",
   startTimestamp: 1640995200,
@@ -49,6 +57,9 @@ const media: Media = {
   duration: 3600,
   videoUrl: "https://example.com/video.mp4"
 };
+
+// Namespace import
+const media2: models.Media = { ... };
 ```
 
 ## Media Model

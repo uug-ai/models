@@ -1,10 +1,11 @@
 {
   "scripts": {
-    "generate:openapi": "GOPATH=$HOME/go go run scripts/generate-openapi.go",
+    "generate:openapi": "cd cmd && swag init --output ../docs --parseDependency && cd .. && npx swagger2openapi docs/swagger.yaml --outfile docs/openapi.yaml",
     "generate:types": "npx openapi-typescript docs/openapi.yaml --output src/types.ts && node scripts/add-type-exports.js",
     "generate": "npm run generate:openapi && npm run generate:types"
   },
   "devDependencies": {
-    "openapi-typescript": "^7.8.0"
+    "openapi-typescript": "^7.8.0",
+    "swagger2openapi": "^7.0.8"
   }
 }
