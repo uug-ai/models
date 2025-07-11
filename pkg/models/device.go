@@ -40,50 +40,56 @@ type Device struct {
 	// Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc.
 	// LastSeenTimestamp is used to identify the last time the device was seen online.
 	Status            string `json:"status" bson:"status,omitempty"`                       // e.g. "connected", "idle"
-	LastSeenTimestamp int64  `json:"lastSeenTimestamp" bson:"lastSeenTimestamp,omitempty"` //
+	LastSeenTimestamp int64  `json:"lastSeenTimestamp" bson:"lastSeenTimestamp,omitempty"` // last time the device was seen online (timestamp in milliseconds)
 
 	// Metadata
-	Metadata DeviceMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
+	Metadata *DeviceMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
 
 	// Camera Metadata
-	CameraMetadata DeviceCameraMetadata `json:"cameraMetadata,omitempty" bson:"cameraMetadata,omitempty"`
+	CameraMetadata *DeviceCameraMetadata `json:"cameraMetadata,omitempty" bson:"cameraMetadata,omitempty"`
 
 	// Location metadata
-	LocationMetadata DeviceLocationMetadata `json:"locationMetadata,omitempty" bson:"locationMetadata,omitempty"`
+	LocationMetadata *DeviceLocationMetadata `json:"locationMetadata,omitempty" bson:"locationMetadata,omitempty"`
 
 	// FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.
 	// It is a map of feature names to permissions.
 	// For example, "camera" can have permissions like "read", "write", "delete", etc.
 	// This allows for fine-grained control over what features are accessible by users or groups.
 	// FeaturePermissions can be used to implement Role-Based Access Control (RBAC) for devices.
-	FeaturePermissions DeviceFeaturePermissions `json:"featurePermissions" bson:"featurePermissions"`
+	FeaturePermissions *DeviceFeaturePermissions `json:"featurePermissions" bson:"featurePermissions"`
+
+	// AtRuntimeMetadata contains metadata that is generated at runtime, which can include
+	// more verbose information about the device's current state, capabilities, or configuration.
+	// for example the linked sites details, etc.
+	AtRuntimeMetadata *DeviceAtRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"atRuntimeMetadata,omitempty"`
 }
 
 // We can store additional metadata for media files, such as tags and classifications.
 type DeviceMetadata struct {
-	Mute             int64  `json:"mute" bson:"mute,omitempty"`
-	Color            string `json:"color" bson:"color,omitempty"`
-	Brand            string `json:"brand" bson:"brand,omitempty"`
-	Model            string `json:"model" bson:"model,omitempty"`
-	Description      string `json:"description" bson:"description,omitempty"`
-	LastMaintenance  int64  `json:"lastMaintenance" bson:"lastMaintenance,omitempty"`
-	InstallationDate int64  `json:"installationDate" bson:"installationDate,omitempty"`
+	Mute             bool   `json:"mute" bson:"mute,omitempty"`                         // Mute status, e.g. false for unmuted, true for muted
+	Color            string `json:"color" bson:"color,omitempty"`                       // e.g. "#FF5733" (hex color code)
+	Brand            string `json:"brand" bson:"brand,omitempty"`                       // e.g. "Nest", "Ring"
+	Model            string `json:"model" bson:"model,omitempty"`                       // e.g. "Nest Cam", "Ring Doorbell"
+	Description      string `json:"description" bson:"description,omitempty"`           // e.g. "Outdoor camera with night vision"
+	LastMaintenance  int64  `json:"lastMaintenance" bson:"lastMaintenance,omitempty"`   // Last maintenance date in milliseconds since epoch
+	InstallationDate int64  `json:"installationDate" bson:"installationDate,omitempty"` // Installation date in milliseconds since epoch
 }
 
 // CameraMetadata contains metadata specific to camera devices.
 type DeviceCameraMetadata struct {
-	Resolution string   `json:"resolution" bson:"resolution,omitempty"`
-	FrameRate  int64    `json:"frameRate" bson:"frameRate,omitempty"`
-	Bitrate    int64    `json:"bitrate" bson:"bitrate,omitempty"`
-	Codec      string   `json:"codec" bson:"codec,omitempty"`
+	Resolution string   `json:"resolution" bson:"resolution,omitempty"` // e.g. "1920x1080", "1280x720"
+	FrameRate  int64    `json:"frameRate" bson:"frameRate,omitempty"`   // Frame rate in fps
+	Bitrate    int64    `json:"bitrate" bson:"bitrate,omitempty"`       // Bitrate in kbps
+	Codec      string   `json:"codec" bson:"codec,omitempty"`           // e.g. "H.264", "H.265"
+	HasOnvif   bool     `json:"hasOnvif" bson:"hasOnvif,omitempty"`     // Indicates if the camera supports ONVIF protocol
 	HasAudio   bool     `json:"hasAudio" bson:"hasAudio,omitempty"`     // Indicates if the camera supports audio
 	HasZoom    bool     `json:"hasZoom" bson:"hasZoom,omitempty"`       // Indicates if the camera supports zoom functionality
 	HasPanTilt bool     `json:"hasPanTilt" bson:"hasPanTilt,omitempty"` // Indicates if the camera supports pan and tilt functionality
 	HasPresets bool     `json:"hasPresets" bson:"hasPresets,omitempty"` // Indicates if the camera supports presets
-	Presets    []Preset `json:"presets" bson:"presets,omitempty"`
-	Tours      []Tour   `json:"tours" bson:"tours,omitempty"`
-	HasIO      bool     `json:"hasIO" bson:"hasIO,omitempty"` // Indicates if the camera has input/output capabilities
-	IOs        []IO     `json:"ios" bson:"ios,omitempty"`     // Input/Output capabilities of the camera
+	Presets    []Preset `json:"presets" bson:"presets,omitempty"`       // Presets for the camera, used for quick positioning
+	Tours      []Tour   `json:"tours" bson:"tours,omitempty"`           // Tours for the camera, used for automated movements through presets
+	HasIO      bool     `json:"hasIO" bson:"hasIO,omitempty"`           // Indicates if the camera has input/output capabilities
+	IOs        []IO     `json:"ios" bson:"ios,omitempty"`               // Input/Output capabilities of the camera (such as alarms, relays, etc.)
 }
 
 // LocationMetadata contains metadata about the physical location of the device.
@@ -105,4 +111,13 @@ type DeviceFeaturePermissions struct {
 	FloorPlans   int `json:"floorPlans" bson:"floorPlans"`
 	// Talk..
 	// ...
+}
+
+// DeviceAtRuntimeMetadata contains metadata that is generated at runtime, which can include
+// more verbose information about the device's current state, capabilities, or configuration.
+type DeviceAtRuntimeMetadata struct {
+	// LinkedSites contains details about the sites that the device is linked to.
+	Sites []Sites `json:"sites,omitempty" bson:"sites,omitempty"`
+	// LinkedGroups contains details about the groups that the device is linked to.
+	Groups []Groups `json:"groups,omitempty" bson:"groups,omitempty"`
 }
