@@ -68,3 +68,19 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export type operations = Record<string, never>;
+
+// Convenient type exports for easier access
+export type Media = components['schemas']['Media'];
+export type MediaMetadata = components['schemas']['MediaMetadata'];
+export type APIMetadata = components['schemas']['APIMetadata'];
+export type ErrorResponse = components['schemas']['ErrorResponse'];
+export type SuccessResponse = components['schemas']['SuccessResponse'];
+
+// Export namespace for organized access
+export namespace models {
+    export type Media = components['schemas']['Media'];
+    export type MediaMetadata = components['schemas']['MediaMetadata'];
+    export type APIMetadata = components['schemas']['APIMetadata'];
+    export type ErrorResponse = components['schemas']['ErrorResponse'];
+    export type SuccessResponse = components['schemas']['SuccessResponse'];
+}
