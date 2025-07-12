@@ -22,8 +22,6 @@ type Media struct {
 	// OrganisationId is used to identify the organisation that owns the device.
 	// FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.
 	DeviceId       string `json:"deviceId" bson:"deviceId,omitempty"` // device identifier
-	SiteId         string `json:"siteId" bson:"siteId,omitempty"`
-	GroupId        string `json:"groupId" bson:"groupId,omitempty"`
 	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
 
 	// Media file information (by default "vault", however might change
