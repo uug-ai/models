@@ -17,10 +17,8 @@ type Media struct {
 	Duration       int64 `json:"duration,omitempty" bson:"duration,omitempty"`
 
 	// RBAC information
-	// Note: SiteId is used to identify the site where the device is located.
-	// GroupId is used to identify the group of devices.
+	// DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
 	// OrganisationId is used to identify the organisation that owns the device.
-	// FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.
 	DeviceId       string `json:"deviceId" bson:"deviceId,omitempty"` // device identifier
 	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
 
