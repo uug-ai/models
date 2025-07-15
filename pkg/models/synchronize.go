@@ -4,8 +4,9 @@ type Status string
 
 const (
 	SynchronizeStatusPending    Status = "pending"
-	SynchronizeStatusInProgress Status = "inProgress"
 	SynchronizeStatusSkipped    Status = "skipped"
+	SynchronizeStatusAssigned   Status = "assigned"
+	SynchronizeStatusInProgress Status = "inProgress"
 	SynchronizeStatusCompleted  Status = "completed"
 	SynchronizeStatusFailed     Status = "failed"
 )
