@@ -3,14 +3,15 @@ package models
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 const (
-	MARKER_FOUND           string = "One or more markers where found."
-	MARKER_NOT_FOUND       string = "One or more markers not found, returning empty list."
-	MARKER_ADDED_SUCCESS   string = "Marker added successfully."
-	MARKER_ADDED_FAILED    string = "Failed to add marker, please try again."
-	MARKER_UPDATED_SUCCESS string = "Marker updated successfully."
-	MARKER_UPDATED_FAILED  string = "Failed to update marker, please try again."
-	MARKER_DELETED_SUCCESS string = "Marker deleted successfully."
-	MARKER_DELETED_FAILED  string = "Failed to delete marker, please try again."
+	MARKER_BINDING_FAILED string = "Failed to bind marker from request body"
+	MARKER_FOUND          string = "One or more markers where found"
+	MARKER_NOT_FOUND      string = "One or more markers not found, returning empty list"
+	MARKER_ADD_SUCCESS    string = "Marker added successfully"
+	MARKER_ADD_FAILED     string = "Failed to add marker"
+	MARKER_UPDATE_SUCCESS string = "Marker updated successfully"
+	MARKER_UPDATE_FAILED  string = "Failed to update marker"
+	MARKER_DELETE_SUCCESS string = "Marker deleted successfully"
+	MARKER_DELETE_FAILED  string = "Failed to delete marker"
 )
 
 type Marker struct {
