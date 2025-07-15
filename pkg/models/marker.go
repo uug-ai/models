@@ -22,7 +22,7 @@ type Marker struct {
 	Timestamp  int64    `json:"timestamp,omitempty" bson:"timestamp,omitempty"` // Timestamp of the marker
 	MarkerId   string   `json:"markerId" bson:"markerId,omitempty"`             // unique identifier for the marker
 	MarkerType string   `json:"markerType" bson:"markerType,omitempty"`         // e.g. "event", "alert", "notification"
-	Comments   Comment  `json:"comments,omitempty" bson:"comments,omitempty"`   // Additional comments or description of the marker
+	Comments   *Comment `json:"comments,omitempty" bson:"comments,omitempty"`   // Additional comments or description of the marker
 	Tags       []string `json:"tags,omitempty" bson:"tags,omitempty"`           // Tags associated with the marker for categorization
 
 	// Audit information
