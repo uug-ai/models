@@ -6,12 +6,12 @@ type ErrorResponse struct {
 	StatusCode int      `json:"statusCode,omitempty" bson:"statusCode,omitempty"`
 	RequestId  string   `json:"requestId,omitempty" bson:"requestId,omitempty"`
 	MetaData   Metadata `json:"metaData,omitempty" bson:"metaData,omitempty"`
-	ErrorCode  string   `json:"errorCode,omitempty" bson:"errorCode,omitempty"` // More specific custom error code or type
+	ErrorCode  int      `json:"errorCode,omitempty" bson:"errorCode,omitempty"` // More specific custom error code or type
 	Error      error    `json:"error,omitempty" bson:"error,omitempty"`
 	Message    string   `json:"message,omitempty" bson:"message,omitempty"`
 }
 
-func CreateError(statusCode int, errorCode string, message string, metadata Metadata) ErrorResponse {
+func CreateError(statusCode int, errorCode int, message string, metadata Metadata) ErrorResponse {
 	metadata.Timestamp = time.Now().Unix()
 	return ErrorResponse{
 		StatusCode: statusCode,
