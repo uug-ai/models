@@ -37,6 +37,15 @@ type Marker struct {
 	Comments   *Comment `json:"comments,omitempty" bson:"comments,omitempty"`   // Additional comments or description of the marker
 	Tags       []string `json:"tags,omitempty" bson:"tags,omitempty"`           // Tags associated with the marker for categorization
 
+	// Additional metadata
+	MetaData *MarkerMetadata `json:"metaData,omitempty" bson:"metaData,omitempty"`
+
+	// Synchronize
+	Synchronize Synchronize `json:"synchronize,omitempty" bson:"synchronize,omitempty"` // Synchronization status with external systems
+
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
+}
+
+type MarkerMetadata struct {
 }
