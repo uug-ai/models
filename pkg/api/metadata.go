@@ -6,4 +6,5 @@ type Metadata struct {
 	UserId         string `json:"userId,omitempty" bson:"userId,omitempty"`
 	Timestamp      int64  `json:"timestamp,omitempty" bson:"timestamp,omitempty"`
 	Path           string `json:"path,omitempty" bson:"path,omitempty"`
+	Message        string `json:"message,omitempty" bson:"message,omitempty"`
 }

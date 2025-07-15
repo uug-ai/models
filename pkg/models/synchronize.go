@@ -21,5 +21,4 @@ type SynchronizeEvent struct {
 	Status    Status `json:"status,omitempty" bson:"status,omitempty"`       // Status of synchronization with external systems
 	WorkerId  string `json:"workerId,omitempty" bson:"workerId,omitempty"`   // ID of the worker handling synchronization
 	Message   string `json:"message,omitempty" bson:"message,omitempty"`     // Additional message or error description related to synchronization
-
 }

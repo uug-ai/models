@@ -4,6 +4,8 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 
 const (
 	MARKER_BINDING_FAILED string = "Failed to bind marker from request body"
+	MARKER_NAME_EXISTS    string = "Marker with the same name already exists"
+	MARKER_MISSING_INFO   string = "Marker is missing required information"
 	MARKER_FOUND          string = "One or more markers where found"
 	MARKER_NOT_FOUND      string = "One or more markers not found, returning empty list"
 	MARKER_ADD_SUCCESS    string = "Marker added successfully"
@@ -31,11 +33,12 @@ type Marker struct {
 	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
 
 	// Marker information
-	Timestamp  int64    `json:"timestamp,omitempty" bson:"timestamp,omitempty"` // Timestamp of the marker
-	MarkerId   string   `json:"markerId" bson:"markerId,omitempty"`             // unique identifier for the marker
-	MarkerType string   `json:"markerType" bson:"markerType,omitempty"`         // e.g. "event", "alert", "notification"
-	Comments   *Comment `json:"comments,omitempty" bson:"comments,omitempty"`   // Additional comments or description of the marker
-	Tags       []string `json:"tags,omitempty" bson:"tags,omitempty"`           // Tags associated with the marker for categorization
+	Timestamp   int64    `json:"timestamp,omitempty" bson:"timestamp,omitempty"`     // Timestamp of the marker
+	Name        string   `json:"name,omitempty" bson:"name,omitempty"`               // Name of the marker
+	Description string   `json:"description,omitempty" bson:"description,omitempty"` // Description of the marker
+	Type        string   `json:"type,omitempty" bson:"type,omitempty"`               // Type of the marker, e.g., "alert", "event", etc.
+	Comments    *Comment `json:"comments,omitempty" bson:"comments,omitempty"`       // Additional comments or description of the marker
+	Tags        []string `json:"tags,omitempty" bson:"tags,omitempty"`               // Tags associated with the marker for categorization
 
 	// Additional metadata
 	MetaData *MarkerMetadata `json:"metaData,omitempty" bson:"metaData,omitempty"`
