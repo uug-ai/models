@@ -24,6 +24,7 @@ func CreateSuccess(statusCode int, successCode int, message string, metadata Met
 }
 
 func LogSuccess(logger *logrus.Logger, message string, metadata Metadata) {
+	metadata.Timestamp = time.Now().Unix()
 	logger.WithFields(logrus.Fields{
 		"statusCode":  0,
 		"successCode": StatusSuccess,

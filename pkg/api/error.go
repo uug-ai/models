@@ -24,6 +24,7 @@ func CreateError(statusCode int, errorCode int, message string, metadata Metadat
 }
 
 func LogError(logger *logrus.Logger, message string, metadata Metadata) {
+	metadata.Timestamp = time.Now().Unix()
 	logger.WithFields(logrus.Fields{
 		"statusCode": 0,
 		"errorCode":  StatusError,
