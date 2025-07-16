@@ -6,5 +6,6 @@ type Metadata struct {
 	OrganisationId string `json:"organisationId,omitempty" bson:"organisationId,omitempty"`
 	UserId         string `json:"userId,omitempty" bson:"userId,omitempty"`
 	Path           string `json:"path,omitempty" bson:"path,omitempty"`
+	Function       string `json:"function,omitempty" bson:"function,omitempty"`
 	Error          string `json:"error,omitempty" bson:"error,omitempty"` // Error message if any
 }
