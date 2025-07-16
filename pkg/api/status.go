@@ -16,6 +16,8 @@ const (
 
 // Custom status codes for specific operations
 const (
+	StatusSuccess         int = 0 // General success status (similar to Linux exit code 0)
+	StatusError           int = 1 // General error status (similar to Linux exit code 1)
 	StatusGetSuccess      int = 100
 	StatusGetFailed       int = 101
 	StatusGetSuccessEmpty int = 102

@@ -1,6 +1,10 @@
 package api
 
-import "time"
+import (
+	"time"
+
+	"github.com/sirupsen/logrus"
+)
 
 type SuccessResponse struct {
 	StatusCode  int      `json:"statusCode,omitempty" bson:"statusCode,omitempty"`
@@ -17,4 +21,13 @@ func CreateSuccess(statusCode int, successCode int, message string, metadata Met
 		Message:     message,
 		MetaData:    metadata,
 	}
+}
+
+func LogSuccess(logger *logrus.Logger, message string, metadata Metadata) {
+	logger.WithFields(logrus.Fields{
+		"statusCode":  0,
+		"successCode": StatusSuccess,
+		"message":     message,
+		"metaData":    metadata,
+	}).Info()
 }

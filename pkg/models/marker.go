@@ -32,7 +32,6 @@ type Marker struct {
 	GroupId        string `json:"groupId" bson:"groupId,omitempty"`
 	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
 
-	// Marker information
 	Timestamp   int64    `json:"timestamp,omitempty" bson:"timestamp,omitempty"`     // Timestamp of the marker
 	Name        string   `json:"name,omitempty" bson:"name,omitempty"`               // Name of the marker
 	Description string   `json:"description,omitempty" bson:"description,omitempty"` // Description of the marker

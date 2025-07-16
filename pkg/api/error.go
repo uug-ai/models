@@ -1,6 +1,10 @@
 package api
 
-import "time"
+import (
+	"time"
+
+	"github.com/sirupsen/logrus"
+)
 
 type ErrorResponse struct {
 	StatusCode int      `json:"statusCode,omitempty" bson:"statusCode,omitempty"`
@@ -17,4 +21,13 @@ func CreateError(statusCode int, errorCode int, message string, metadata Metadat
 		Message:    message,
 		MetaData:   metadata,
 	}
+}
+
+func LogError(logger *logrus.Logger, message string, metadata Metadata) {
+	logger.WithFields(logrus.Fields{
+		"statusCode": 0,
+		"errorCode":  StatusError,
+		"message":    message,
+		"metaData":   metadata,
+	}).Error()
 }
