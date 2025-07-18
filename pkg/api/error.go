@@ -1,22 +1,34 @@
 package api
 
-import "time"
+import (
+	"time"
+
+	"github.com/sirupsen/logrus"
+)
 
 type ErrorResponse struct {
 	StatusCode int      `json:"statusCode,omitempty" bson:"statusCode,omitempty"`
-	RequestId  string   `json:"requestId,omitempty" bson:"requestId,omitempty"`
-	MetaData   Metadata `json:"metaData,omitempty" bson:"metaData,omitempty"`
-	ErrorCode  string   `json:"errorCode,omitempty" bson:"errorCode,omitempty"` // More specific custom error code or type
-	Error      error    `json:"error,omitempty" bson:"error,omitempty"`
+	ErrorCode  int      `json:"errorCode,omitempty" bson:"errorCode,omitempty"` // More specific custom error code or type
 	Message    string   `json:"message,omitempty" bson:"message,omitempty"`
+	MetaData   Metadata `json:"metaData,omitempty" bson:"metaData,omitempty"`
 }
 
-func CreateError(statusCode int, errorCode string, message string, metadata Metadata) ErrorResponse {
+func CreateError(statusCode int, errorCode int, message string, metadata Metadata) ErrorResponse {
 	metadata.Timestamp = time.Now().Unix()
 	return ErrorResponse{
 		StatusCode: statusCode,
-		MetaData:   metadata,
 		ErrorCode:  errorCode,
 		Message:    message,
+		MetaData:   metadata,
 	}
+}
+
+func LogError(logger *logrus.Logger, message string, metadata Metadata) {
+	metadata.Timestamp = time.Now().Unix()
+	logger.WithFields(logrus.Fields{
+		"statusCode": 0,
+		"errorCode":  StatusError,
+		"message":    message,
+		"metaData":   metadata,
+	}).Error()
 }
