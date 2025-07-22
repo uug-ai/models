@@ -40,7 +40,7 @@ type Marker struct {
 	MetaData *MarkerMetadata `json:"metaData,omitempty" bson:"metaData,omitempty"` // Metadata associated with the marker, such as comments and tags
 
 	// Synchronize
-	Synchronize Synchronize `json:"synchronize,omitempty" bson:"synchronize,omitempty"` // Synchronization status with external systems
+	Synchronize *Synchronize `json:"synchronize,omitempty" bson:"synchronize,omitempty"` // Synchronization status with external systems
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"` // Audit information for tracking changes to the marker
