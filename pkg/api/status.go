@@ -23,4 +23,5 @@ const (
 	ApplicationStatusGetSuccessEmpty int = 102
 	ApplicationStatusAddSuccess      int = 200
 	ApplicationStatusAddFailed       int = 201
+	ApplicationStatusAddDuplicate    int = 202
 )
