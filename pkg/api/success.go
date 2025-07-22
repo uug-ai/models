@@ -13,11 +13,11 @@ type SuccessResponse struct {
 	MetaData        Metadata `json:"metaData,omitempty" bson:"metaData,omitempty"`
 }
 
-func CreateSuccess(statusCode int, successCode int, message string, metadata Metadata) SuccessResponse {
+func CreateSuccess(httpCode int, applicationCode int, message string, metadata Metadata) SuccessResponse {
 	metadata.Timestamp = time.Now().Unix()
 	return SuccessResponse{
-		HttpCode:        statusCode,
-		ApplicationCode: successCode,
+		HttpCode:        httpCode,
+		ApplicationCode: applicationCode,
 		Message:         message,
 		MetaData:        metadata,
 	}

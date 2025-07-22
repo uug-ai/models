@@ -13,11 +13,11 @@ type ErrorResponse struct {
 	MetaData        Metadata `json:"metaData,omitempty" bson:"metaData,omitempty"`               // Additional metadata about the error, such as timestamps and request IDs
 }
 
-func CreateError(statusCode int, errorCode int, message string, metadata Metadata) ErrorResponse {
+func CreateError(httpCode int, applicationCode int, message string, metadata Metadata) ErrorResponse {
 	metadata.Timestamp = time.Now().Unix()
 	return ErrorResponse{
-		HttpCode:        statusCode,
-		ApplicationCode: errorCode,
+		HttpCode:        httpCode,
+		ApplicationCode: applicationCode,
 		Message:         message,
 		MetaData:        metadata,
 	}
