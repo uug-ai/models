@@ -7,28 +7,28 @@ import (
 )
 
 type SuccessResponse struct {
-	HttpCode        int      `json:"httpCode,omitempty" bson:"httpCode,omitempty"`
-	ApplicationCode int      `json:"applicationCode,omitempty" bson:"applicationCode,omitempty"`
-	Message         string   `json:"message,omitempty" bson:"message,omitempty"`
-	MetaData        Metadata `json:"metaData,omitempty" bson:"metaData,omitempty"`
+	HttpStatusCode        int      `json:"httpStatusCode,omitempty" bson:"httpStatusCode,omitempty"`
+	ApplicationStatusCode int      `json:"applicationStatusCode,omitempty" bson:"applicationStatusCode,omitempty"`
+	Message               string   `json:"message,omitempty" bson:"message,omitempty"`
+	MetaData              Metadata `json:"metaData,omitempty" bson:"metaData,omitempty"`
 }
 
 func CreateSuccess(httpStatusCode int, applicationStatusCode int, message string, metadata Metadata) SuccessResponse {
 	metadata.Timestamp = time.Now().Unix()
 	return SuccessResponse{
-		HttpCode:        httpStatusCode,
-		ApplicationCode: applicationStatusCode,
-		Message:         message,
-		MetaData:        metadata,
+		HttpStatusCode:        httpStatusCode,
+		ApplicationStatusCode: applicationStatusCode,
+		Message:               message,
+		MetaData:              metadata,
 	}
 }
 
 func LogSuccess(logger *logrus.Logger, message string, metadata Metadata) {
 	metadata.Timestamp = time.Now().Unix()
 	logger.WithFields(logrus.Fields{
-		"httpCode":        0,
-		"applicationCode": ApplicationStatusSuccess,
-		"message":         message,
-		"metaData":        metadata,
+		"httpStatusCode":        0,
+		"applicationStatusCode": ApplicationStatusSuccess,
+		"message":               message,
+		"metaData":              metadata,
 	}).Info()
 }
