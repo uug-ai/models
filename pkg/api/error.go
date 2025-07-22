@@ -13,11 +13,11 @@ type ErrorResponse struct {
 	MetaData        Metadata `json:"metaData,omitempty" bson:"metaData,omitempty"`               // Additional metadata about the error, such as timestamps and request IDs
 }
 
-func CreateError(httpCode int, applicationCode int, message string, metadata Metadata) ErrorResponse {
+func CreateError(httpStatusCode int, applicationStatusCode int, message string, metadata Metadata) ErrorResponse {
 	metadata.Timestamp = time.Now().Unix()
 	return ErrorResponse{
-		HttpCode:        httpCode,
-		ApplicationCode: applicationCode,
+		HttpCode:        httpStatusCode,
+		ApplicationCode: applicationStatusCode,
 		Message:         message,
 		MetaData:        metadata,
 	}
@@ -27,7 +27,7 @@ func LogError(logger *logrus.Logger, message string, metadata Metadata) {
 	metadata.Timestamp = time.Now().Unix()
 	logger.WithFields(logrus.Fields{
 		"httpCode":        0,
-		"applicationCode": ApplicationError,
+		"applicationCode": ApplicationStatusError,
 		"message":         message,
 		"metaData":        metadata,
 	}).Error()

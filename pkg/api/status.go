@@ -16,11 +16,11 @@ const (
 
 // Custom status codes for specific operations
 const (
-	ApplicationSuccess         int = 0 // General success status (similar to Linux exit code 0)
-	ApplicationError           int = 1 // General error status (similar to Linux exit code 1)
-	ApplicationGetSuccess      int = 100
-	ApplicationGetFailed       int = 101
-	ApplicationGetSuccessEmpty int = 102
-	ApplicationAddSuccess      int = 200
-	ApplicationAddFailed       int = 201
+	ApplicationStatusSuccess         int = 0 // General success status (similar to Linux exit code 0)
+	ApplicationStatusError           int = 1 // General error status (similar to Linux exit code 1)
+	ApplicationStatusGetSuccess      int = 100
+	ApplicationStatusGetFailed       int = 101
+	ApplicationStatusGetSuccessEmpty int = 102
+	ApplicationStatusAddSuccess      int = 200
+	ApplicationStatusAddFailed       int = 201
 )
