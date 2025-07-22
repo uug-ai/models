@@ -32,9 +32,9 @@ type Marker struct {
 	EndTimestamp   int64 `json:"endTimestamp,omitempty" bson:"endTimestamp,omitempty"`     // End timestamp of the marker in milliseconds since epoch
 	Duration       int64 `json:"duration,omitempty" bson:"duration,omitempty"`             // Duration of the marker in milliseconds
 
-	Name        string `json:"name,omitempty" bson:"name,omitempty"`               // Name of the marker
+	Name        string `json:"name,omitempty" bson:"name,omitempty"`               // Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
+	Type        string `json:"type,omitempty" bson:"type,omitempty"`               // Type of the marker e.g., "alert", "event", "door_opened", "person", "car" etc.
 	Description string `json:"description,omitempty" bson:"description,omitempty"` // Description of the marker
-	Type        string `json:"type,omitempty" bson:"type,omitempty"`               // Type of the marker, e.g., "alert", "event", etc.
 
 	// Additional metadata
 	MetaData *MarkerMetadata `json:"metaData,omitempty" bson:"metaData,omitempty"` // Metadata associated with the marker, such as comments and tags
