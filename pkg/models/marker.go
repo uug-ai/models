@@ -19,13 +19,16 @@ const (
 type Marker struct {
 	Id primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
 
+	// Media information
+	MediaIds []string `json:"mediaIds,omitempty" bson:"mediaIds,omitempty"` // MediaIds is used to link the marker to media items such as images or videos
+
 	// Device information
-	DeviceId string `json:"deviceId" bson:"deviceId,omitempty"` // DeviceId is used to identify the device associated with the marker
+	DeviceId string `json:"deviceId,omitempty" bson:"deviceId,omitempty"` // DeviceId is used to identify the device associated with the marker
 
 	// RBAC information
-	SiteId         string `json:"siteId" bson:"siteId,omitempty"`                 // SiteId is used to identify the site where the marker is located
-	GroupId        string `json:"groupId" bson:"groupId,omitempty"`               // GroupId is used to identify the group of markers
-	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"` // OrganisationId is used to identify the organisation that owns the marker
+	SiteId         string `json:"siteId,omitempty" bson:"siteId,omitempty"`                 // SiteId is used to identify the site where the marker is located
+	GroupId        string `json:"groupId,omitempty" bson:"groupId,omitempty"`               // GroupId is used to identify the group of markers
+	OrganisationId string `json:"organisationId,omitempty" bson:"organisationId,omitempty"` // OrganisationId is used to identify the organisation that owns the marker
 
 	// Timing information
 	StartTimestamp int64 `json:"startTimestamp,omitempty" bson:"startTimestamp,omitempty"` // Start timestamp of the marker in milliseconds since epoch
