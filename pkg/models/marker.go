@@ -19,6 +19,9 @@ const (
 type Marker struct {
 	Id primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
 
+	// Media information
+	MediaId string `json:"mediaId" bson:"mediaId,omitempty"` // MediaId links the marker to a specific media item, such as an image or video
+
 	// Device information
 	DeviceId string `json:"deviceId" bson:"deviceId,omitempty"` // DeviceId is used to identify the device associated with the marker
 
