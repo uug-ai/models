@@ -5,18 +5,32 @@ info:
   title: Models API
   version: "1.0"
 paths:
-  /internal/apimetadata:
+  /internal/audit:
     get:
-      description: Internal endpoint used only to ensure APIMetadata schema is
-        generated in OpenAPI spec
+      description: Internal endpoint used only to ensure Audit schema is generated in
+        OpenAPI spec
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/models.APIMetadata"
-      summary: Get APIMetadata (schema generation only)
+                $ref: "#/components/schemas/models.Audit"
+      summary: Get Audit (schema generation only)
+      tags:
+        - internal
+  /internal/comment:
+    get:
+      description: Internal endpoint used only to ensure Comment schema is generated
+        in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Comment"
+      summary: Get Comment (schema generation only)
       tags:
         - internal
   /internal/device:
@@ -33,9 +47,65 @@ paths:
       summary: Get Device (schema generation only)
       tags:
         - internal
-  /internal/devicemedia:
+  /internal/deviceatruntimemetadata:
     get:
-      description: Internal endpoint used only to ensure DeviceMedia schema is
+      description: Internal endpoint used only to ensure DeviceAtRuntimeMetadata
+        schema is generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.DeviceAtRuntimeMetadata"
+      summary: Get DeviceAtRuntimeMetadata (schema generation only)
+      tags:
+        - internal
+  /internal/devicecamerametadata:
+    get:
+      description: Internal endpoint used only to ensure DeviceCameraMetadata schema
+        is generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.DeviceCameraMetadata"
+      summary: Get DeviceCameraMetadata (schema generation only)
+      tags:
+        - internal
+  /internal/devicefeaturepermissions:
+    get:
+      description: Internal endpoint used only to ensure DeviceFeaturePermissions
+        schema is generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.DeviceFeaturePermissions"
+      summary: Get DeviceFeaturePermissions (schema generation only)
+      tags:
+        - internal
+  /internal/devicelocationmetadata:
+    get:
+      description: Internal endpoint used only to ensure DeviceLocationMetadata schema
+        is generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.DeviceLocationMetadata"
+      summary: Get DeviceLocationMetadata (schema generation only)
+      tags:
+        - internal
+  /internal/devicemetadata:
+    get:
+      description: Internal endpoint used only to ensure DeviceMetadata schema is
         generated in OpenAPI spec
       responses:
         "200":
@@ -43,8 +113,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/models.DeviceMedia"
-      summary: Get DeviceMedia (schema generation only)
+                $ref: "#/components/schemas/models.DeviceMetadata"
+      summary: Get DeviceMetadata (schema generation only)
       tags:
         - internal
   /internal/deviceplacement:
@@ -59,48 +129,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/models.DevicePlacement"
       summary: Get DevicePlacement (schema generation only)
-      tags:
-        - internal
-  /internal/deviceshort:
-    get:
-      description: Internal endpoint used only to ensure DeviceShort schema is
-        generated in OpenAPI spec
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.DeviceShort"
-      summary: Get DeviceShort (schema generation only)
-      tags:
-        - internal
-  /internal/deviceswrapper:
-    get:
-      description: Internal endpoint used only to ensure DevicesWrapper schema is
-        generated in OpenAPI spec
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.DevicesWrapper"
-      summary: Get DevicesWrapper (schema generation only)
-      tags:
-        - internal
-  /internal/devicewrapper:
-    get:
-      description: Internal endpoint used only to ensure DeviceWrapper schema is
-        generated in OpenAPI spec
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.DeviceWrapper"
-      summary: Get DeviceWrapper (schema generation only)
       tags:
         - internal
   /internal/featurepermissions:
@@ -131,46 +159,18 @@ paths:
       summary: Get FloorPlan (schema generation only)
       tags:
         - internal
-  /internal/heartbeat:
+  /internal/io:
     get:
-      description: Internal endpoint used only to ensure Heartbeat schema is generated
-        in OpenAPI spec
+      description: Internal endpoint used only to ensure IO schema is generated in
+        OpenAPI spec
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/models.Heartbeat"
-      summary: Get Heartbeat (schema generation only)
-      tags:
-        - internal
-  /internal/heartbeatold:
-    get:
-      description: Internal endpoint used only to ensure HeartbeatOld schema is
-        generated in OpenAPI spec
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.HeartbeatOld"
-      summary: Get HeartbeatOld (schema generation only)
-      tags:
-        - internal
-  /internal/heartbeatshort:
-    get:
-      description: Internal endpoint used only to ensure HeartbeatShort schema is
-        generated in OpenAPI spec
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.HeartbeatShort"
-      summary: Get HeartbeatShort (schema generation only)
+                $ref: "#/components/schemas/models.IO"
+      summary: Get IO (schema generation only)
       tags:
         - internal
   /internal/location:
@@ -187,9 +187,23 @@ paths:
       summary: Get Location (schema generation only)
       tags:
         - internal
-  /internal/locationgeometry:
+  /internal/marker:
     get:
-      description: Internal endpoint used only to ensure LocationGeometry schema is
+      description: Internal endpoint used only to ensure Marker schema is generated in
+        OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Marker"
+      summary: Get Marker (schema generation only)
+      tags:
+        - internal
+  /internal/markermetadata:
+    get:
+      description: Internal endpoint used only to ensure MarkerMetadata schema is
         generated in OpenAPI spec
       responses:
         "200":
@@ -197,36 +211,22 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/models.LocationGeometry"
-      summary: Get LocationGeometry (schema generation only)
+                $ref: "#/components/schemas/models.MarkerMetadata"
+      summary: Get MarkerMetadata (schema generation only)
       tags:
         - internal
-  /internal/locationgeometrylocation:
+  /internal/mediaatruntimemetadata:
     get:
-      description: Internal endpoint used only to ensure LocationGeometryLocation
-        schema is generated in OpenAPI spec
+      description: Internal endpoint used only to ensure MediaAtRuntimeMetadata schema
+        is generated in OpenAPI spec
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/models.LocationGeometryLocation"
-      summary: Get LocationGeometryLocation (schema generation only)
-      tags:
-        - internal
-  /internal/locationshort:
-    get:
-      description: Internal endpoint used only to ensure LocationShort schema is
-        generated in OpenAPI spec
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.LocationShort"
-      summary: Get LocationShort (schema generation only)
+                $ref: "#/components/schemas/models.MediaAtRuntimeMetadata"
+      summary: Get MediaAtRuntimeMetadata (schema generation only)
       tags:
         - internal
   /internal/mediametadata:
@@ -241,48 +241,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/models.MediaMetadata"
       summary: Get MediaMetadata (schema generation only)
-      tags:
-        - internal
-  /internal/mediashort:
-    get:
-      description: Internal endpoint used only to ensure MediaShort schema is
-        generated in OpenAPI spec
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.MediaShort"
-      summary: Get MediaShort (schema generation only)
-      tags:
-        - internal
-  /internal/mute:
-    get:
-      description: Internal endpoint used only to ensure Mute schema is generated in
-        OpenAPI spec
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.Mute"
-      summary: Get Mute (schema generation only)
-      tags:
-        - internal
-  /internal/onvifevents:
-    get:
-      description: Internal endpoint used only to ensure ONVIFEvents schema is
-        generated in OpenAPI spec
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/models.ONVIFEvents"
-      summary: Get ONVIFEvents (schema generation only)
       tags:
         - internal
   /internal/preset:
@@ -327,23 +285,23 @@ paths:
       summary: Get Site (schema generation only)
       tags:
         - internal
-  /internal/siteshort:
+  /internal/sitelocationmetadata:
     get:
-      description: Internal endpoint used only to ensure SiteShort schema is generated
-        in OpenAPI spec
+      description: Internal endpoint used only to ensure SiteLocationMetadata schema
+        is generated in OpenAPI spec
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/models.SiteShort"
-      summary: Get SiteShort (schema generation only)
+                $ref: "#/components/schemas/models.SiteLocationMetadata"
+      summary: Get SiteLocationMetadata (schema generation only)
       tags:
         - internal
-  /internal/sitewrapper:
+  /internal/sitemetadata:
     get:
-      description: Internal endpoint used only to ensure SiteWrapper schema is
+      description: Internal endpoint used only to ensure SiteMetadata schema is
         generated in OpenAPI spec
       responses:
         "200":
@@ -351,13 +309,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/models.SiteWrapper"
-      summary: Get SiteWrapper (schema generation only)
+                $ref: "#/components/schemas/models.SiteMetadata"
+      summary: Get SiteMetadata (schema generation only)
       tags:
         - internal
-  /internal/timelinevalue:
+  /internal/synchronize:
     get:
-      description: Internal endpoint used only to ensure TimelineValue schema is
+      description: Internal endpoint used only to ensure Synchronize schema is
         generated in OpenAPI spec
       responses:
         "200":
@@ -365,8 +323,22 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/models.TimelineValue"
-      summary: Get TimelineValue (schema generation only)
+                $ref: "#/components/schemas/models.Synchronize"
+      summary: Get Synchronize (schema generation only)
+      tags:
+        - internal
+  /internal/synchronizeevent:
+    get:
+      description: Internal endpoint used only to ensure SynchronizeEvent schema is
+        generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.SynchronizeEvent"
+      summary: Get SynchronizeEvent (schema generation only)
       tags:
         - internal
   /internal/timewindow:
@@ -413,13 +385,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/models.SuccessResponse"
+                $ref: "#/components/schemas/api.SuccessResponse"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/models.ErrorResponse"
+                $ref: "#/components/schemas/api.ErrorResponse"
       summary: Create a new media item
       tags:
         - media
@@ -439,13 +411,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/models.Media"
+                $ref: "#/components/schemas/api.SuccessResponse"
         "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/models.ErrorResponse"
+                $ref: "#/components/schemas/api.ErrorResponse"
       summary: Get a media item
       tags:
         - media
@@ -453,115 +425,320 @@ servers:
   - url: //localhost
 components:
   schemas:
-    models.APIMetadata:
+    api.ErrorResponse:
       properties:
-        error: {}
+        applicationStatusCode:
+          description: Application-specific error code
+          type: integer
+        httpStatusCode:
+          description: HTTP status code for the error
+          type: integer
+        message:
+          description: Error message describing the issue
+          type: string
+        metaData:
+          allOf:
+            - $ref: "#/components/schemas/api.Metadata"
+          description: Additional metadata about the error, such as timestamps and request
+            IDs
+      type: object
+    api.Metadata:
+      properties:
+        error:
+          description: Error message if any
+          type: string
+        function:
+          type: string
+        organisationId:
+          type: string
         path:
           type: string
         timestamp:
           type: integer
-        user_id:
+        traceId:
+          type: string
+        userId:
+          type: string
+      type: object
+    api.SuccessResponse:
+      properties:
+        applicationStatusCode:
+          type: integer
+        httpStatusCode:
+          type: integer
+        message:
+          type: string
+        metaData:
+          $ref: "#/components/schemas/api.Metadata"
+      type: object
+    models.Audit:
+      properties:
+        createdAt:
+          type: integer
+        createdBy:
+          type: string
+        updatedAt:
+          type: integer
+        updatedBy:
+          type: string
+      type: object
+    models.Comment:
+      properties:
+        audit:
+          allOf:
+            - $ref: "#/components/schemas/models.Audit"
+          description: Audit information
+        author:
+          type: string
+        content:
+          type: string
+        deviceId:
+          description: >-
+            RBAC information
+
+            DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
+
+            OrganisationId is used to identify the organisation that owns the device.
+          type: string
+        id:
+          type: string
+        organisationId:
+          type: string
+        parentId:
+          description: ID of the parent comment, if this is a reply
+          type: string
+        timestamps:
+          items:
+            type: integer
+          type: array
+        type:
+          description: Comment information
           type: string
       type: object
     models.Device:
       properties:
-        analytics:
-          items:
-            $ref: "#/components/schemas/models.Heartbeat"
-          type: array
-        brand:
+        atRuntimeMetadata:
+          allOf:
+            - $ref: "#/components/schemas/models.DeviceAtRuntimeMetadata"
+          description: >-
+            AtRuntimeMetadata contains metadata that is generated at runtime,
+            which can include
+
+            more verbose information about the device's current state, capabilities, or configuration.
+
+            for example the linked sites details, etc.
+        audit:
+          allOf:
+            - $ref: "#/components/schemas/models.Audit"
+          description: Audit information
+        cameraMetadata:
+          allOf:
+            - $ref: "#/components/schemas/models.DeviceCameraMetadata"
+          description: Camera Metadata
+        deployment:
+          description: e.g. "factory", "docker", "docker compose", "kubernetes"
           type: string
-        color:
+        deviceId:
           type: string
-        description:
+        deviceType:
+          description: e.g. "camera", "sensor", "access_control"
           type: string
-        enterprise:
-          type: boolean
         featurePermissions:
-          $ref: "#/components/schemas/models.FeaturePermissions"
+          allOf:
+            - $ref: "#/components/schemas/models.DeviceFeaturePermissions"
+          description: >-
+            FeaturePermissions is used to identify the permissions of the
+            device, such as read, write, delete, etc.
+
+            It is a map of feature names to permissions.
+
+            For example, "camera" can have permissions like "read", "write", "delete", etc.
+
+            This allows for fine-grained control over what features are accessible by users or groups.
+
+            FeaturePermissions can be used to implement Role-Based Access Control (RBAC) for devices.
+        groupId:
+          type: string
+        id:
+          type: string
+        lastSeenTimestamp:
+          description: last time the device was seen online (timestamp in milliseconds)
+          type: integer
+        locationMetadata:
+          allOf:
+            - $ref: "#/components/schemas/models.DeviceLocationMetadata"
+          description: Location metadata
+        metadata:
+          allOf:
+            - $ref: "#/components/schemas/models.DeviceMetadata"
+          description: Metadata
+        name:
+          description: >-
+            Device information
+
+            Note: DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
+
+            DeviceType is used to identify the type of device, such as camera, sensor, access control, etc.
+          type: string
+        organisationId:
+          type: string
+        releaseHash:
+          description: e.g. "v1.0.0-abcdef123456"
+          type: string
+        siteId:
+          description: >-
+            RBAC information
+
+            Note: SiteId is used to identify the site where the device is located.
+
+            GroupId is used to identify the group of devices.
+
+            OrganisationId is used to identify the organisation that owns the device.
+
+            FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.
+          type: string
+        status:
+          description: >-
+            Device status
+
+            Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc.
+
+            LastSeenTimestamp is used to identify the last time the device was seen online.
+          type: string
+        version:
+          description: >-
+            Versioning information
+
+            Note: Version is used to identify the version of the device software.
+
+            ReleaseHash is used to identify the release hash of the device software, it can be used to identify the specific build of the device software.
+
+            Deployment is used to identify the deployment type of the device, such as factory, docker, docker compose, kubernetes, etc.
+          type: string
+      type: object
+    models.DeviceAtRuntimeMetadata:
+      type: object
+    models.DeviceCameraMetadata:
+      properties:
+        bitrate:
+          description: Bitrate in kbps
+          type: integer
+        codec:
+          description: e.g. "H.264", "H.265"
+          type: string
+        frameRate:
+          description: Frame rate in fps
+          type: integer
+        hasAudio:
+          description: Indicates if the camera supports audio
+          type: boolean
+        hasIO:
+          description: Indicates if the camera has input/output capabilities
+          type: boolean
+        hasOnvif:
+          description: Indicates if the camera supports ONVIF protocol
+          type: boolean
+        hasPanTilt:
+          description: Indicates if the camera supports pan and tilt functionality
+          type: boolean
+        hasPresets:
+          description: Indicates if the camera supports presets
+          type: boolean
+        hasZoom:
+          description: Indicates if the camera supports zoom functionality
+          type: boolean
+        ios:
+          description: Input/Output capabilities of the camera (such as alarms, relays,
+            etc.)
+          items:
+            $ref: "#/components/schemas/models.IO"
+          type: array
+        presets:
+          description: Presets for the camera, used for quick positioning
+          items:
+            $ref: "#/components/schemas/models.Preset"
+          type: array
+        resolution:
+          description: e.g. "1920x1080", "1280x720"
+          type: string
+        tours:
+          description: Tours for the camera, used for automated movements through presets
+          items:
+            $ref: "#/components/schemas/models.Tour"
+          type: array
+      type: object
+    models.DeviceFeaturePermissions:
+      properties:
+        floorPlans:
+          type: integer
+        io:
+          type: integer
+        liveview:
+          type: integer
+        ptz:
+          type: integer
+        remoteConfig:
+          type: integer
+      type: object
+    models.DeviceLocationMetadata:
+      properties:
         fieldOfView:
           type: number
-        installationDate:
-          type: string
-        isActive:
-          type: boolean
-        key:
-          type: string
-        lastMaintenance:
-          type: string
-        latestMedia:
-          $ref: "#/components/schemas/models.Media"
-        latestMediaTimestamp:
-          type: integer
-        model:
-          type: string
-        mute:
-          type: integer
-        name:
-          type: string
+        location:
+          $ref: "#/components/schemas/models.Location"
         onFloorPlans:
           items:
             type: string
           type: array
-        presets:
-          items:
-            $ref: "#/components/schemas/models.Preset"
-          type: array
-        sites:
-          items:
-            $ref: "#/components/schemas/models.SiteShort"
-          type: array
-        status:
-          type: string
-        tours:
-          items:
-            $ref: "#/components/schemas/models.Tour"
-          type: array
-        user_id:
-          type: string
       type: object
-    models.DeviceMedia:
+    models.DeviceMetadata:
       properties:
-        camera_name:
+        brand:
+          description: e.g. "Nest", "Ring"
           type: string
-        key:
+        color:
+          description: e.g. "#FF5733" (hex color code)
           type: string
-        media_time:
+        description:
+          description: e.g. "Outdoor camera with night vision"
           type: string
-        media_timestamp:
+        installationDate:
+          description: Installation date in milliseconds since epoch
           type: integer
-        media_type:
+        lastMaintenance:
+          description: Last maintenance date in milliseconds since epoch
+          type: integer
+        model:
+          description: e.g. "Nest Cam", "Ring Doorbell"
           type: string
-        media_url:
-          type: string
-        sites:
-          items:
-            $ref: "#/components/schemas/models.SiteShort"
-          type: array
-        sprite_url:
-          type: string
+        mute:
+          description: Mute status, e.g. false for unmuted, true for muted
+          type: boolean
       type: object
     models.DevicePlacement:
       properties:
+        audit:
+          allOf:
+            - $ref: "#/components/schemas/models.Audit"
+          description: Audit information
         color:
+          description: Color to represent the device on the floor plan
           type: string
-        createdBy:
-          type: string
-        createdTime:
-          type: integer
-        deviceKey:
-          type: string
-        deviceName:
-          type: string
-        deviceStatus:
+        deviceId:
+          description: ID of the device being placed
           type: string
         fabricKey:
           type: string
         fieldOfView:
+          description: Field of view in degrees, if applicable
           type: number
+        icon:
+          description: Icon to represent the device on the floor plan
+          type: string
         id:
           type: string
         radius:
+          description: Radius of the device placement circle
           type: number
         relativeX:
           description: X relative to canvas width (0 to 1)
@@ -570,80 +747,20 @@ components:
           description: Y relative to canvas height (0 to 1)
           type: number
         sliceEndAngle:
+          description: End angle of the slice in degrees, if applicable
           type: number
         sliceMiddleAngle:
+          description: Middle angle of the slice in degrees, if applicable
           type: number
         sliceStartAngle:
+          description: Start angle of the slice in degrees, if applicable
           type: number
-        updatedBy:
-          type: string
-        updatedTime:
-          type: integer
         x:
           description: Absolute X coordinate
           type: number
         y:
           description: Absolute Y coordinate
           type: number
-      type: object
-    models.DeviceShort:
-      properties:
-        active:
-          type: boolean
-        analytics:
-          items:
-            $ref: "#/components/schemas/models.HeartbeatShort"
-          type: array
-        enterprise:
-          type: boolean
-        featurePermissions:
-          $ref: "#/components/schemas/models.FeaturePermissions"
-        key:
-          type: string
-        latestMedia:
-          $ref: "#/components/schemas/models.MediaShort"
-        latestMediaTimestamp:
-          type: integer
-        mute:
-          type: integer
-        presets:
-          items:
-            $ref: "#/components/schemas/models.Preset"
-          type: array
-        sites:
-          items:
-            $ref: "#/components/schemas/models.SiteShort"
-          type: array
-        tours:
-          items:
-            $ref: "#/components/schemas/models.Tour"
-          type: array
-      type: object
-    models.DeviceWrapper:
-      properties:
-        device:
-          $ref: "#/components/schemas/models.Device"
-      type: object
-    models.DevicesWrapper:
-      properties:
-        devices:
-          items:
-            $ref: "#/components/schemas/models.Device"
-          type: array
-      type: object
-    models.ErrorResponse:
-      properties:
-        error_code:
-          description: More specific custom error code or type
-          type: string
-        message:
-          type: string
-        meta_data:
-          $ref: "#/components/schemas/models.APIMetadata"
-        request_id:
-          type: string
-        status_code:
-          type: integer
       type: object
     models.FeaturePermissions:
       properties:
@@ -660,282 +777,171 @@ components:
       type: object
     models.FloorPlan:
       properties:
-        created_by:
-          type: string
-        created_time:
-          type: integer
-        devices:
+        audit:
+          allOf:
+            - $ref: "#/components/schemas/models.Audit"
+          description: Audit information
+        devicePlacements:
+          description: List of devices placed on the floor plan
           items:
             $ref: "#/components/schemas/models.DevicePlacement"
           type: array
         height:
+          description: Dimensions of the floor plan in pixels
           type: integer
         id:
           type: string
         image:
+          description: Base64 encoded image of the floor plan
           type: string
         name:
+          description: Name of the floor plan
           type: string
-        updated_by:
-          type: string
-        updated_time:
-          type: integer
         width:
+          description: Dimensions of the floor plan in pixels
           type: integer
       type: object
-    models.Heartbeat:
+    models.IO:
       properties:
-        architecture:
+        audit:
+          allOf:
+            - $ref: "#/components/schemas/models.Audit"
+          description: Audit information
+        deviceId:
+          description: device identifier
           type: string
-        boot_time:
-          type: string
-        cameraConnected:
-          type: string
-        cameraname:
-          type: string
-        cameratype:
-          type: string
-        cloudpublicKey:
-          type: string
-        clouduser:
-          type: string
-        cpuid:
-          type: string
-        docker:
-          type: boolean
-        e2e_encryption:
-          type: string
-        encrypted:
-          type: boolean
-        encryptedData:
-          items:
-            type: integer
-          type: array
-        enterprise:
-          type: boolean
-        freeMemory:
-          type: string
-        hasBackChannel:
-          type: string
-        hash:
-          type: string
-        hostname:
-          type: string
-        hub_encryption:
-          type: string
-        ip_list:
-          items:
-            type: string
-          type: array
-        key:
-          description: -----------
-          type: string
-        kios:
-          type: boolean
-        kubernetes:
-          type: boolean
-        mac_list:
-          items:
-            type: string
-          type: array
-        onvif:
-          type: string
-        onvif_events_list:
-          items:
-            $ref: "#/components/schemas/models.ONVIFEvents"
-          type: array
-        onvif_pantilt:
-          type: string
-        onvif_presets:
-          type: string
-        onvif_presets_list:
-          items:
-            $ref: "#/components/schemas/models.Preset"
-          type: array
-        onvif_zoom:
-          type: string
-        processMemory:
-          type: string
-        raspberrypi:
-          type: boolean
-        release:
-          type: string
-        siteID:
-          type: string
-        timestamp:
-          type: integer
-        totalMemory:
-          type: string
-        uptime:
-          type: string
-        usedMemory:
-          type: string
-        version:
-          type: string
-      type: object
-    models.HeartbeatOld:
-      properties:
-        cameraName:
-          type: string
-        cameraType:
-          type: string
-        cloudPublicKey:
-          type: string
-        cloudUser:
-          type: string
-        cpuId:
-          type: string
-        docker:
-          type: boolean
-        enterprise:
+        external:
           type: boolean
         hash:
           type: string
-        key:
-          type: string
-        kios:
-          type: boolean
-        kubernetes:
-          type: boolean
-        onvif:
-          type: string
-        raspberrypi:
-          type: boolean
-        siteID:
-          type: string
-        timestamp:
-          type: integer
-        uptime:
-          description: >-
-            Board          string `json:"board,omitempty"`
-
-            Disk1Size      string `json:"disk1Size,omitempty" bson:"disk1size,omitempty"`
-
-            Disk3Size      string `json:"disk3Size,omitempty" bson:"disk3size,omitempty"`
-
-            DiskVDASize    string `json:"diskVDASize,omitempty" bson:"diskvdasize,omitempty"`
-
-            NumberOfFiles  string `json:"numberOfFiles,omitempty" bson:"numberoffiles,omitempty"`
-
-            Temperature    string `json:"temperature,omitempty"`
-
-            WifiSSID       string `json:"wifiSSID,omitempty" bson:"wifissid,omitempty"`
-
-            WifiStrength   string `json:"wifiStrength,omitempty" bson:"wifisstrength,omitempty"`
-          type: string
-        version:
-          type: string
-      type: object
-    models.HeartbeatShort:
-      properties:
-        cameraConnected:
-          type: string
-        cameraname:
-          type: string
-        e2e_encryption:
-          type: string
-        enterprise:
-          type: boolean
-        freeMemory:
-          type: string
-        hasBackChannel:
-          type: string
-        hub_encryption:
+        id:
           type: string
         key:
           type: string
-        onvif:
-          type: string
-        onvif_events_list:
-          items:
-            $ref: "#/components/schemas/models.ONVIFEvents"
-          type: array
-        onvif_pantilt:
-          type: string
-        onvif_presets:
-          type: string
-        onvif_presets_list:
-          items:
-            $ref: "#/components/schemas/models.Preset"
-          type: array
-        onvif_zoom:
-          type: string
-        processMemory:
-          type: string
-        release:
-          type: string
-        timestamp:
+        lastSeenTimestamp:
+          description: last time the IO was seen
           type: integer
-        totalMemory:
+        type:
+          description: input or output
           type: string
-        uptime:
-          type: string
-        usedMemory:
-          type: string
-        version:
+        value:
           type: string
       type: object
     models.Location:
       properties:
-        city:
+        address:
+          description: e.g. "123 Main St, Anytown, USA"
           type: string
-        country:
-          type: string
-        country_short:
-          type: string
-        description:
-          type: string
-        formatted_address:
-          type: string
-        geometry:
-          $ref: "#/components/schemas/models.LocationGeometry"
-        postal_code:
-          type: string
-        region:
-          type: string
-        street:
-          type: string
-        street_number:
-          type: string
-      type: object
-    models.LocationGeometry:
-      properties:
-        location:
-          $ref: "#/components/schemas/models.LocationGeometryLocation"
-      type: object
-    models.LocationGeometryLocation:
-      properties:
-        lat:
+        altitude:
+          description: Altitude in meters
           type: number
-        lng:
+        latitude:
+          type: number
+        longitude:
           type: number
       type: object
-    models.LocationShort:
+    models.Marker:
       properties:
+        audit:
+          allOf:
+            - $ref: "#/components/schemas/models.Audit"
+          description: Audit information
         description:
+          description: Description of the marker
           type: string
-        formatted_address:
+        deviceId:
+          description: Device information
           type: string
-        geometry:
-          $ref: "#/components/schemas/models.LocationGeometry"
+        duration:
+          description: Duration of the marker in milliseconds
+          type: integer
+        endTimestamp:
+          description: End timestamp of the marker in milliseconds since epoch
+          type: integer
+        groupId:
+          description: GroupId is used to identify the group of markers
+          type: string
+        id:
+          type: string
+        mediaIds:
+          description: Media information
+          items:
+            type: string
+          type: array
+        metaData:
+          allOf:
+            - $ref: "#/components/schemas/models.MarkerMetadata"
+          description: Additional metadata
+        name:
+          description: Name or identifier for the marker e.g., "a license plate
+            (2-HCP-007), an unique identifier (transaction_id, point of sale),
+            etc."
+          type: string
+        organisationId:
+          description: OrganisationId is used to identify the organisation that owns the
+            marker
+          type: string
+        siteId:
+          description: RBAC information
+          type: string
+        startTimestamp:
+          description: Timing information
+          type: integer
+        synchronize:
+          allOf:
+            - $ref: "#/components/schemas/models.Synchronize"
+          description: Synchronize
+        type:
+          description: Type of the marker e.g., "alert", "event", "door_opened", "person",
+            "car" etc.
+          type: string
+      type: object
+    models.MarkerMetadata:
+      properties:
+        comments:
+          allOf:
+            - $ref: "#/components/schemas/models.Comment"
+          description: Additional comments or description of the marker
+        tags:
+          description: Tags associated with the marker for categorization
+          items:
+            type: string
+          type: array
       type: object
     models.Media:
-      description: Media model
       properties:
+        atRuntimeMetadata:
+          allOf:
+            - $ref: "#/components/schemas/models.MediaAtRuntimeMetadata"
+          description: >-
+            AtRuntimeMetadata contains metadata that is generated at runtime,
+            which can include
+
+            more verbose information about the device's current state, capabilities, or configuration.
+
+            for example the linked sites details, etc.
+        audit:
+          allOf:
+            - $ref: "#/components/schemas/models.Audit"
+          description: Audit information
         deviceId:
-          description: Media file owner
+          description: >-
+            RBAC information
+
+            DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
+
+            OrganisationId is used to identify the organisation that owns the device.
           type: string
         duration:
           type: integer
         endTimestamp:
           type: integer
-        groupId:
+        id:
           type: string
         metadata:
+          allOf:
+            - $ref: "#/components/schemas/models.MediaMetadata"
           description: Metadata
-          items:
-            $ref: "#/components/schemas/models.MediaMetadata"
-          type: array
         organisationId:
           type: string
         spriteFile:
@@ -944,15 +950,12 @@ components:
           type: integer
         spriteProvider:
           type: string
-        spriteUrl:
-          type: string
         startTimestamp:
           description: Time window of media file.
           type: integer
         storageSolution:
           description: >-
-            Media file information (by default Vault (=kstorage), however might
-            change
+            Media file information (by default "vault", however might change
 
             in the future (integration with other storage solutions, next to Vault).
           type: string
@@ -960,14 +963,19 @@ components:
           type: string
         thumbnailProvider:
           type: string
-        thumbnailUrl:
-          type: string
-        userId:
-          type: string
         videoFile:
           description: Media file information
           type: string
         videoProvider:
+          description: Vault provider information (contains where the media is stored on
+            which underlaying cloud storage)
+          type: string
+      type: object
+    models.MediaAtRuntimeMetadata:
+      properties:
+        spriteUrl:
+          type: string
+        thumbnailUrl:
           type: string
         videoUrl:
           type: string
@@ -982,59 +990,6 @@ components:
           items:
             type: string
           type: array
-      type: object
-    models.MediaShort:
-      properties:
-        camera_id:
-          type: string
-        date:
-          type: string
-        key:
-          type: string
-        path:
-          type: string
-        provider:
-          type: string
-        source:
-          type: string
-        sprite_url:
-          type: string
-        spriteFile:
-          type: string
-        spriteInterval:
-          type: integer
-        spriteProvider:
-          type: string
-        src:
-          type: string
-        thumbnail_url:
-          type: string
-        thumbnailFile:
-          type: string
-        thumbnailProvider:
-          type: string
-        time:
-          type: string
-        timestamp:
-          type: integer
-        type:
-          type: string
-      type: object
-    models.Mute:
-      properties:
-        mute:
-          type: integer
-      type: object
-    models.ONVIFEvents:
-      properties:
-        key:
-          type: string
-        timestamp:
-          type: integer
-        type:
-          type: string
-        value:
-          type: string
       type: object
     models.Preset:
       properties:
@@ -1074,32 +1029,15 @@ components:
       type: object
     models.Site:
       properties:
-        access_key:
-          type: string
-        address:
-          $ref: "#/components/schemas/models.Location"
-        all_devices:
-          description: Calculated on the fly!
-          items:
-            type: string
-          type: array
-        color:
-          type: string
-        country:
-          type: string
-        created_by:
-          type: string
-        created_time:
-          type: integer
+        audit:
+          allOf:
+            - $ref: "#/components/schemas/models.Audit"
+          description: Audit information
         description:
           type: string
         devices:
           items:
             type: string
-          type: array
-        floor_plans:
-          items:
-            $ref: "#/components/schemas/models.FloorPlan"
           type: array
         groups:
           items:
@@ -1107,57 +1045,102 @@ components:
           type: array
         id:
           type: string
-        initials:
-          type: string
+        locationMetadata:
+          allOf:
+            - $ref: "#/components/schemas/models.SiteLocationMetadata"
+          description: Location metadata
+        metadata:
+          allOf:
+            - $ref: "#/components/schemas/models.SiteMetadata"
+          description: Metadata
         name:
+          type: string
+        organisationId:
+          description: RBAC information
+          type: string
+        storageSolution:
+          description: >-
+            Media file information (by default "vault", however might change
+
+            in the future (integration with other storage solutions, next to Vault).
+          type: string
+        vaultAccessKey:
+          type: string
+        vaultSecretKey:
+          type: string
+        vaultUri:
+          type: string
+      type: object
+    models.SiteLocationMetadata:
+      properties:
+        location:
+          $ref: "#/components/schemas/models.Location"
+      type: object
+    models.SiteMetadata:
+      properties:
+        color:
+          type: string
+        floorPlans:
+          description: List of floor plans associated with the site
+          items:
+            $ref: "#/components/schemas/models.FloorPlan"
+          type: array
+        initials:
           type: string
         numberOfFloorPlans:
           type: integer
-        secret_key:
+      type: object
+    models.Status:
+      enum:
+        - pending
+        - skipped
+        - assigned
+        - inProgress
+        - completed
+        - failed
+      type: string
+      x-enum-varnames:
+        - SynchronizeStatusPending
+        - SynchronizeStatusSkipped
+        - SynchronizeStatusAssigned
+        - SynchronizeStatusInProgress
+        - SynchronizeStatusCompleted
+        - SynchronizeStatusFailed
+    models.Synchronize:
+      properties:
+        events:
+          description: History of synchronization events
+          items:
+            $ref: "#/components/schemas/models.SynchronizeEvent"
+          type: array
+        message:
+          description: Additional message or error description related to synchronization
           type: string
-        storage_uri:
-          type: string
-        street:
-          type: string
-        updated_by:
-          type: string
-        updated_time:
+        status:
+          allOf:
+            - $ref: "#/components/schemas/models.Status"
+          description: Status of synchronization with external systems
+        timestamp:
+          description: Timestamp of the last synchronization attempt
           type: integer
-        user_id:
-          type: string
-        username:
-          description: added by accident should be removed!
+        workerId:
+          description: ID of the worker handling synchronization
           type: string
       type: object
-    models.SiteShort:
-      properties:
-        address:
-          $ref: "#/components/schemas/models.Location"
-        color:
-          type: string
-        id:
-          type: string
-        initials:
-          type: string
-        name:
-          type: string
-      type: object
-    models.SiteWrapper:
-      properties:
-        site:
-          $ref: "#/components/schemas/models.Site"
-      type: object
-    models.SuccessResponse:
+    models.SynchronizeEvent:
       properties:
         message:
+          description: Additional message or error description related to synchronization
           type: string
-        meta_data:
-          $ref: "#/components/schemas/models.APIMetadata"
-        request_id:
-          type: string
-        status_code:
+        status:
+          allOf:
+            - $ref: "#/components/schemas/models.Status"
+          description: Status of synchronization with external systems
+        timestamp:
+          description: Timestamp of the last synchronization attempt
           type: integer
-        success_code:
+        workerId:
+          description: ID of the worker handling synchronization
           type: string
       type: object
     models.TimeWindow:
@@ -1218,18 +1201,6 @@ components:
           type: number
         timeRange2MinWednesday:
           type: number
-      type: object
-    models.TimelineValue:
-      description: Timeline value model
-      properties:
-        currentScale:
-          type: integer
-        currentTime:
-          type: integer
-        startTime:
-          type: integer
-        timelineZero:
-          type: integer
       type: object
     models.Tour:
       properties:

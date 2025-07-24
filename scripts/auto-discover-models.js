@@ -21,24 +21,28 @@ function extractStructNames(filePath) {
 }
 
 // Function to scan all Go files in pkg/models for structs
-function findAllModelStructs() {
-    const modelsDir = path.join(__dirname, '..', 'pkg', 'models');
-    const files = fs.readdirSync(modelsDir).filter(f => f.endsWith('.go'));
-    
+function findAllModelStructs(package) {
+    const packageDir = path.join(__dirname, '..', 'pkg', package);
+
     let allStructs = [];
     
-    for (const file of files) {
-        const filePath = path.join(modelsDir, file);
-        const structs = extractStructNames(filePath);
-        allStructs = allStructs.concat(structs);
-        console.log(`Found in ${file}: ${structs.join(', ')}`);
+    // Scan pkg/api directory
+    if (fs.existsSync(packageDir)) {
+        const files = fs.readdirSync(packageDir).filter(f => f.endsWith('.go'));
+        
+        for (const file of files) {
+            const filePath = path.join(packageDir, file);
+            const structs = extractStructNames(filePath);
+            allStructs = allStructs.concat(structs);
+            console.log(`Found in ${package}/${file}: ${structs.join(', ')}`);
+        }
     }
     
     return [...new Set(allStructs)]; // Remove duplicates
 }
 
 // Function to generate the cmd/main.go file
-function generateMainFile(structNames) {
+function generateMainFile(package, structNames) {
     // Function to generate dummy endpoints for models not used in real endpoints
     function generateDummyEndpoints(models) {
         // Models that are already used in real endpoints don't need dummy endpoints
@@ -53,7 +57,7 @@ function generateMainFile(structNames) {
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.${model}
+// @Success 200 {object} ${package}.${model}
 // @Router /internal/${model.toLowerCase()} [get]
 func Get${model}() {}`).join('\n');
         
@@ -66,6 +70,7 @@ import (
 \t"fmt"
 
 \t"github.com/uug-ai/models/pkg/models"
+\t"github.com/uug-ai/models/pkg/api"
 )
 
 // @title Models API
@@ -81,6 +86,7 @@ func main() {
 \t
 \t// Keep the import valid - models are used in the API endpoint annotations below
 \t_ = models.Media{}
+\t_ = api.SuccessResponse{}
 }
 
 // GetMedia godoc
@@ -90,8 +96,8 @@ func main() {
 // @Accept json
 // @Produce json
 // @Param id path string true "Media ID"
-// @Success 200 {object} models.Media
-// @Failure 400 {object} models.ErrorResponse
+// @Success 200 {object} api.SuccessResponse
+// @Failure 400 {object} api.ErrorResponse
 // @Router /media/{id} [get]
 func GetMedia() {}
 
@@ -102,8 +108,8 @@ func GetMedia() {}
 // @Accept json
 // @Produce json
 // @Param media body models.Media true "Media object"
-// @Success 201 {object} models.SuccessResponse
-// @Failure 400 {object} models.ErrorResponse
+// @Success 201 {object} api.SuccessResponse
+// @Failure 400 {object} api.ErrorResponse
 // @Router /media [post]
 func CreateMedia() {}
 
@@ -119,8 +125,11 @@ ${generateDummyEndpoints(structNames)}
 
 // Main execution
 console.log('Auto-discovering Go structs in pkg/models...');
-const structNames = findAllModelStructs();
-console.log(`Found ${structNames.length} structs: ${structNames.join(', ')}`);
+const apiStructNames = findAllModelStructs('api');
+const modelsStructNames = findAllModelStructs('models');
+console.log(`Found ${apiStructNames.length} API structs: ${apiStructNames.join(', ')}`);
+console.log(`Found ${modelsStructNames.length} Models structs: ${modelsStructNames.join(', ')}`);
 
-generateMainFile(structNames);
+generateMainFile('api', apiStructNames);
+generateMainFile('models', modelsStructNames);
 console.log('cmd/main.go updated automatically!');

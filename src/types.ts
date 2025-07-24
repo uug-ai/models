@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/internal/apimetadata": {
+    "/internal/audit": {
         parameters: {
             query?: never;
             header?: never;
@@ -12,8 +12,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get APIMetadata (schema generation only)
-         * @description Internal endpoint used only to ensure APIMetadata schema is generated in OpenAPI spec
+         * Get Audit (schema generation only)
+         * @description Internal endpoint used only to ensure Audit schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -30,7 +30,46 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.APIMetadata"];
+                        "application/json": components["schemas"]["models.Audit"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/comment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Comment (schema generation only)
+         * @description Internal endpoint used only to ensure Comment schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Comment"];
                     };
                 };
             };
@@ -82,7 +121,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/devicemedia": {
+    "/internal/deviceatruntimemetadata": {
         parameters: {
             query?: never;
             header?: never;
@@ -90,8 +129,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get DeviceMedia (schema generation only)
-         * @description Internal endpoint used only to ensure DeviceMedia schema is generated in OpenAPI spec
+         * Get DeviceAtRuntimeMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceAtRuntimeMetadata schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -108,7 +147,163 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.DeviceMedia"];
+                        "application/json": components["schemas"]["models.DeviceAtRuntimeMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicecamerametadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceCameraMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceCameraMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceCameraMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicefeaturepermissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceFeaturePermissions (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceFeaturePermissions schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceFeaturePermissions"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicelocationmetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceLocationMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceLocationMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceLocationMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicemetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceMetadata"];
                     };
                 };
             };
@@ -148,123 +343,6 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.DevicePlacement"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/deviceshort": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get DeviceShort (schema generation only)
-         * @description Internal endpoint used only to ensure DeviceShort schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.DeviceShort"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/deviceswrapper": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get DevicesWrapper (schema generation only)
-         * @description Internal endpoint used only to ensure DevicesWrapper schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.DevicesWrapper"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/devicewrapper": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get DeviceWrapper (schema generation only)
-         * @description Internal endpoint used only to ensure DeviceWrapper schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.DeviceWrapper"];
                     };
                 };
             };
@@ -355,7 +433,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/heartbeat": {
+    "/internal/io": {
         parameters: {
             query?: never;
             header?: never;
@@ -363,8 +441,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get Heartbeat (schema generation only)
-         * @description Internal endpoint used only to ensure Heartbeat schema is generated in OpenAPI spec
+         * Get IO (schema generation only)
+         * @description Internal endpoint used only to ensure IO schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -381,85 +459,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.Heartbeat"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/heartbeatold": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get HeartbeatOld (schema generation only)
-         * @description Internal endpoint used only to ensure HeartbeatOld schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.HeartbeatOld"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/heartbeatshort": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get HeartbeatShort (schema generation only)
-         * @description Internal endpoint used only to ensure HeartbeatShort schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.HeartbeatShort"];
+                        "application/json": components["schemas"]["models.IO"];
                     };
                 };
             };
@@ -511,7 +511,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/locationgeometry": {
+    "/internal/marker": {
         parameters: {
             query?: never;
             header?: never;
@@ -519,8 +519,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get LocationGeometry (schema generation only)
-         * @description Internal endpoint used only to ensure LocationGeometry schema is generated in OpenAPI spec
+         * Get Marker (schema generation only)
+         * @description Internal endpoint used only to ensure Marker schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -537,7 +537,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.LocationGeometry"];
+                        "application/json": components["schemas"]["models.Marker"];
                     };
                 };
             };
@@ -550,7 +550,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/locationgeometrylocation": {
+    "/internal/markermetadata": {
         parameters: {
             query?: never;
             header?: never;
@@ -558,8 +558,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get LocationGeometryLocation (schema generation only)
-         * @description Internal endpoint used only to ensure LocationGeometryLocation schema is generated in OpenAPI spec
+         * Get MarkerMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerMetadata schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -576,7 +576,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.LocationGeometryLocation"];
+                        "application/json": components["schemas"]["models.MarkerMetadata"];
                     };
                 };
             };
@@ -589,7 +589,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/locationshort": {
+    "/internal/mediaatruntimemetadata": {
         parameters: {
             query?: never;
             header?: never;
@@ -597,8 +597,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get LocationShort (schema generation only)
-         * @description Internal endpoint used only to ensure LocationShort schema is generated in OpenAPI spec
+         * Get MediaAtRuntimeMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure MediaAtRuntimeMetadata schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -615,7 +615,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.LocationShort"];
+                        "application/json": components["schemas"]["models.MediaAtRuntimeMetadata"];
                     };
                 };
             };
@@ -655,123 +655,6 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.MediaMetadata"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/mediashort": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get MediaShort (schema generation only)
-         * @description Internal endpoint used only to ensure MediaShort schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.MediaShort"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/mute": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Mute (schema generation only)
-         * @description Internal endpoint used only to ensure Mute schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.Mute"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/onvifevents": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get ONVIFEvents (schema generation only)
-         * @description Internal endpoint used only to ensure ONVIFEvents schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.ONVIFEvents"];
                     };
                 };
             };
@@ -901,7 +784,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/siteshort": {
+    "/internal/sitelocationmetadata": {
         parameters: {
             query?: never;
             header?: never;
@@ -909,8 +792,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get SiteShort (schema generation only)
-         * @description Internal endpoint used only to ensure SiteShort schema is generated in OpenAPI spec
+         * Get SiteLocationMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure SiteLocationMetadata schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -927,7 +810,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.SiteShort"];
+                        "application/json": components["schemas"]["models.SiteLocationMetadata"];
                     };
                 };
             };
@@ -940,7 +823,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/sitewrapper": {
+    "/internal/sitemetadata": {
         parameters: {
             query?: never;
             header?: never;
@@ -948,8 +831,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get SiteWrapper (schema generation only)
-         * @description Internal endpoint used only to ensure SiteWrapper schema is generated in OpenAPI spec
+         * Get SiteMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure SiteMetadata schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -966,7 +849,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.SiteWrapper"];
+                        "application/json": components["schemas"]["models.SiteMetadata"];
                     };
                 };
             };
@@ -979,7 +862,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/timelinevalue": {
+    "/internal/synchronize": {
         parameters: {
             query?: never;
             header?: never;
@@ -987,8 +870,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get TimelineValue (schema generation only)
-         * @description Internal endpoint used only to ensure TimelineValue schema is generated in OpenAPI spec
+         * Get Synchronize (schema generation only)
+         * @description Internal endpoint used only to ensure Synchronize schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -1005,7 +888,46 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.TimelineValue"];
+                        "application/json": components["schemas"]["models.Synchronize"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/synchronizeevent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SynchronizeEvent (schema generation only)
+         * @description Internal endpoint used only to ensure SynchronizeEvent schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.SynchronizeEvent"];
                     };
                 };
             };
@@ -1129,7 +1051,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.SuccessResponse"];
+                        "application/json": components["schemas"]["api.SuccessResponse"];
                     };
                 };
                 /** @description Bad Request */
@@ -1138,7 +1060,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.ErrorResponse"];
+                        "application/json": components["schemas"]["api.ErrorResponse"];
                     };
                 };
             };
@@ -1178,7 +1100,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.Media"];
+                        "application/json": components["schemas"]["api.SuccessResponse"];
                     };
                 };
                 /** @description Bad Request */
@@ -1187,7 +1109,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.ErrorResponse"];
+                        "application/json": components["schemas"]["api.ErrorResponse"];
                     };
                 };
             };
@@ -1204,97 +1126,192 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        "models.APIMetadata": {
-            error?: unknown;
+        "api.ErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: number;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.Metadata": {
+            /** @description Error message if any */
+            error?: string;
+            function?: string;
+            organisationId?: string;
             path?: string;
             timestamp?: number;
-            user_id?: string;
+            traceId?: string;
+            userId?: string;
+        };
+        "api.SuccessResponse": {
+            applicationStatusCode?: number;
+            httpStatusCode?: number;
+            message?: string;
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "models.Audit": {
+            createdAt?: number;
+            createdBy?: string;
+            updatedAt?: number;
+            updatedBy?: string;
+        };
+        "models.Comment": {
+            /** @description Audit information */
+            audit?: components["schemas"]["models.Audit"];
+            author?: string;
+            content?: string;
+            /** @description RBAC information
+             *     DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
+             *     OrganisationId is used to identify the organisation that owns the device. */
+            deviceId?: string;
+            id?: string;
+            organisationId?: string;
+            /** @description ID of the parent comment, if this is a reply */
+            parentId?: string;
+            timestamps?: number[];
+            /** @description Comment information */
+            type?: string;
         };
         "models.Device": {
-            analytics?: components["schemas"]["models.Heartbeat"][];
-            brand?: string;
-            color?: string;
-            description?: string;
-            enterprise?: boolean;
-            featurePermissions?: components["schemas"]["models.FeaturePermissions"];
-            fieldOfView?: number;
-            installationDate?: string;
-            isActive?: boolean;
-            key?: string;
-            lastMaintenance?: string;
-            latestMedia?: components["schemas"]["models.Media"];
-            latestMediaTimestamp?: number;
-            model?: string;
-            mute?: number;
+            /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
+             *     more verbose information about the device's current state, capabilities, or configuration.
+             *     for example the linked sites details, etc. */
+            atRuntimeMetadata?: components["schemas"]["models.DeviceAtRuntimeMetadata"];
+            /** @description Audit information */
+            audit?: components["schemas"]["models.Audit"];
+            /** @description Camera Metadata */
+            cameraMetadata?: components["schemas"]["models.DeviceCameraMetadata"];
+            /** @description e.g. "factory", "docker", "docker compose", "kubernetes" */
+            deployment?: string;
+            deviceId?: string;
+            /** @description e.g. "camera", "sensor", "access_control" */
+            deviceType?: string;
+            /** @description FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.
+             *     It is a map of feature names to permissions.
+             *     For example, "camera" can have permissions like "read", "write", "delete", etc.
+             *     This allows for fine-grained control over what features are accessible by users or groups.
+             *     FeaturePermissions can be used to implement Role-Based Access Control (RBAC) for devices. */
+            featurePermissions?: components["schemas"]["models.DeviceFeaturePermissions"];
+            groupId?: string;
+            id?: string;
+            /** @description last time the device was seen online (timestamp in milliseconds) */
+            lastSeenTimestamp?: number;
+            /** @description Location metadata */
+            locationMetadata?: components["schemas"]["models.DeviceLocationMetadata"];
+            /** @description Metadata */
+            metadata?: components["schemas"]["models.DeviceMetadata"];
+            /** @description Device information
+             *     Note: DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
+             *     DeviceType is used to identify the type of device, such as camera, sensor, access control, etc. */
             name?: string;
-            onFloorPlans?: string[];
-            presets?: components["schemas"]["models.Preset"][];
-            sites?: components["schemas"]["models.SiteShort"][];
+            organisationId?: string;
+            /** @description e.g. "v1.0.0-abcdef123456" */
+            releaseHash?: string;
+            /** @description RBAC information
+             *     Note: SiteId is used to identify the site where the device is located.
+             *     GroupId is used to identify the group of devices.
+             *     OrganisationId is used to identify the organisation that owns the device.
+             *     FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc. */
+            siteId?: string;
+            /** @description Device status
+             *     Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc.
+             *     LastSeenTimestamp is used to identify the last time the device was seen online. */
             status?: string;
-            tours?: components["schemas"]["models.Tour"][];
-            user_id?: string;
+            /** @description Versioning information
+             *     Note: Version is used to identify the version of the device software.
+             *     ReleaseHash is used to identify the release hash of the device software, it can be used to identify the specific build of the device software.
+             *     Deployment is used to identify the deployment type of the device, such as factory, docker, docker compose, kubernetes, etc. */
+            version?: string;
         };
-        "models.DeviceMedia": {
-            camera_name?: string;
-            key?: string;
-            media_time?: string;
-            media_timestamp?: number;
-            media_type?: string;
-            media_url?: string;
-            sites?: components["schemas"]["models.SiteShort"][];
-            sprite_url?: string;
+        "models.DeviceAtRuntimeMetadata": Record<string, never>;
+        "models.DeviceCameraMetadata": {
+            /** @description Bitrate in kbps */
+            bitrate?: number;
+            /** @description e.g. "H.264", "H.265" */
+            codec?: string;
+            /** @description Frame rate in fps */
+            frameRate?: number;
+            /** @description Indicates if the camera supports audio */
+            hasAudio?: boolean;
+            /** @description Indicates if the camera has input/output capabilities */
+            hasIO?: boolean;
+            /** @description Indicates if the camera supports ONVIF protocol */
+            hasOnvif?: boolean;
+            /** @description Indicates if the camera supports pan and tilt functionality */
+            hasPanTilt?: boolean;
+            /** @description Indicates if the camera supports presets */
+            hasPresets?: boolean;
+            /** @description Indicates if the camera supports zoom functionality */
+            hasZoom?: boolean;
+            /** @description Input/Output capabilities of the camera (such as alarms, relays, etc.) */
+            ios?: components["schemas"]["models.IO"][];
+            /** @description Presets for the camera, used for quick positioning */
+            presets?: components["schemas"]["models.Preset"][];
+            /** @description e.g. "1920x1080", "1280x720" */
+            resolution?: string;
+            /** @description Tours for the camera, used for automated movements through presets */
+            tours?: components["schemas"]["models.Tour"][];
+        };
+        "models.DeviceFeaturePermissions": {
+            floorPlans?: number;
+            io?: number;
+            liveview?: number;
+            ptz?: number;
+            remoteConfig?: number;
+        };
+        "models.DeviceLocationMetadata": {
+            fieldOfView?: number;
+            location?: components["schemas"]["models.Location"];
+            onFloorPlans?: string[];
+        };
+        "models.DeviceMetadata": {
+            /** @description e.g. "Nest", "Ring" */
+            brand?: string;
+            /** @description e.g. "#FF5733" (hex color code) */
+            color?: string;
+            /** @description e.g. "Outdoor camera with night vision" */
+            description?: string;
+            /** @description Installation date in milliseconds since epoch */
+            installationDate?: number;
+            /** @description Last maintenance date in milliseconds since epoch */
+            lastMaintenance?: number;
+            /** @description e.g. "Nest Cam", "Ring Doorbell" */
+            model?: string;
+            /** @description Mute status, e.g. false for unmuted, true for muted */
+            mute?: boolean;
         };
         "models.DevicePlacement": {
+            /** @description Audit information */
+            audit?: components["schemas"]["models.Audit"];
+            /** @description Color to represent the device on the floor plan */
             color?: string;
-            createdBy?: string;
-            createdTime?: number;
-            deviceKey?: string;
-            deviceName?: string;
-            deviceStatus?: string;
+            /** @description ID of the device being placed */
+            deviceId?: string;
             fabricKey?: string;
+            /** @description Field of view in degrees, if applicable */
             fieldOfView?: number;
+            /** @description Icon to represent the device on the floor plan */
+            icon?: string;
             id?: string;
+            /** @description Radius of the device placement circle */
             radius?: number;
             /** @description X relative to canvas width (0 to 1) */
             relativeX?: number;
             /** @description Y relative to canvas height (0 to 1) */
             relativeY?: number;
+            /** @description End angle of the slice in degrees, if applicable */
             sliceEndAngle?: number;
+            /** @description Middle angle of the slice in degrees, if applicable */
             sliceMiddleAngle?: number;
+            /** @description Start angle of the slice in degrees, if applicable */
             sliceStartAngle?: number;
-            updatedBy?: string;
-            updatedTime?: number;
             /** @description Absolute X coordinate */
             x?: number;
             /** @description Absolute Y coordinate */
             y?: number;
-        };
-        "models.DeviceShort": {
-            active?: boolean;
-            analytics?: components["schemas"]["models.HeartbeatShort"][];
-            enterprise?: boolean;
-            featurePermissions?: components["schemas"]["models.FeaturePermissions"];
-            key?: string;
-            latestMedia?: components["schemas"]["models.MediaShort"];
-            latestMediaTimestamp?: number;
-            mute?: number;
-            presets?: components["schemas"]["models.Preset"][];
-            sites?: components["schemas"]["models.SiteShort"][];
-            tours?: components["schemas"]["models.Tour"][];
-        };
-        "models.DeviceWrapper": {
-            device?: components["schemas"]["models.Device"];
-        };
-        "models.DevicesWrapper": {
-            devices?: components["schemas"]["models.Device"][];
-        };
-        "models.ErrorResponse": {
-            /** @description More specific custom error code or type */
-            error_code?: string;
-            message?: string;
-            meta_data?: components["schemas"]["models.APIMetadata"];
-            request_id?: string;
-            status_code?: number;
         };
         "models.FeaturePermissions": {
             floorPlans?: number;
@@ -1304,191 +1321,120 @@ export interface components {
             remote_config?: number;
         };
         "models.FloorPlan": {
-            created_by?: string;
-            created_time?: number;
-            devices?: components["schemas"]["models.DevicePlacement"][];
+            /** @description Audit information */
+            audit?: components["schemas"]["models.Audit"];
+            /** @description List of devices placed on the floor plan */
+            devicePlacements?: components["schemas"]["models.DevicePlacement"][];
+            /** @description Dimensions of the floor plan in pixels */
             height?: number;
             id?: string;
+            /** @description Base64 encoded image of the floor plan */
             image?: string;
+            /** @description Name of the floor plan */
             name?: string;
-            updated_by?: string;
-            updated_time?: number;
+            /** @description Dimensions of the floor plan in pixels */
             width?: number;
         };
-        "models.Heartbeat": {
-            architecture?: string;
-            boot_time?: string;
-            cameraConnected?: string;
-            cameraname?: string;
-            cameratype?: string;
-            cloudpublicKey?: string;
-            clouduser?: string;
-            cpuid?: string;
-            docker?: boolean;
-            e2e_encryption?: string;
-            encrypted?: boolean;
-            encryptedData?: number[];
-            enterprise?: boolean;
-            freeMemory?: string;
-            hasBackChannel?: string;
+        "models.IO": {
+            /** @description Audit information */
+            audit?: components["schemas"]["models.Audit"];
+            /** @description device identifier */
+            deviceId?: string;
+            external?: boolean;
             hash?: string;
-            hostname?: string;
-            hub_encryption?: string;
-            ip_list?: string[];
-            /** @description ----------- */
+            id?: string;
             key?: string;
-            kios?: boolean;
-            kubernetes?: boolean;
-            mac_list?: string[];
-            onvif?: string;
-            onvif_events_list?: components["schemas"]["models.ONVIFEvents"][];
-            onvif_pantilt?: string;
-            onvif_presets?: string;
-            onvif_presets_list?: components["schemas"]["models.Preset"][];
-            onvif_zoom?: string;
-            processMemory?: string;
-            raspberrypi?: boolean;
-            release?: string;
-            siteID?: string;
-            timestamp?: number;
-            totalMemory?: string;
-            uptime?: string;
-            usedMemory?: string;
-            version?: string;
-        };
-        "models.HeartbeatOld": {
-            cameraName?: string;
-            cameraType?: string;
-            cloudPublicKey?: string;
-            cloudUser?: string;
-            cpuId?: string;
-            docker?: boolean;
-            enterprise?: boolean;
-            hash?: string;
-            key?: string;
-            kios?: boolean;
-            kubernetes?: boolean;
-            onvif?: string;
-            raspberrypi?: boolean;
-            siteID?: string;
-            timestamp?: number;
-            /** @description Board          string `json:"board,omitempty"`
-             *     Disk1Size      string `json:"disk1Size,omitempty" bson:"disk1size,omitempty"`
-             *     Disk3Size      string `json:"disk3Size,omitempty" bson:"disk3size,omitempty"`
-             *     DiskVDASize    string `json:"diskVDASize,omitempty" bson:"diskvdasize,omitempty"`
-             *     NumberOfFiles  string `json:"numberOfFiles,omitempty" bson:"numberoffiles,omitempty"`
-             *     Temperature    string `json:"temperature,omitempty"`
-             *     WifiSSID       string `json:"wifiSSID,omitempty" bson:"wifissid,omitempty"`
-             *     WifiStrength   string `json:"wifiStrength,omitempty" bson:"wifisstrength,omitempty"` */
-            uptime?: string;
-            version?: string;
-        };
-        "models.HeartbeatShort": {
-            cameraConnected?: string;
-            cameraname?: string;
-            e2e_encryption?: string;
-            enterprise?: boolean;
-            freeMemory?: string;
-            hasBackChannel?: string;
-            hub_encryption?: string;
-            key?: string;
-            onvif?: string;
-            onvif_events_list?: components["schemas"]["models.ONVIFEvents"][];
-            onvif_pantilt?: string;
-            onvif_presets?: string;
-            onvif_presets_list?: components["schemas"]["models.Preset"][];
-            onvif_zoom?: string;
-            processMemory?: string;
-            release?: string;
-            timestamp?: number;
-            totalMemory?: string;
-            uptime?: string;
-            usedMemory?: string;
-            version?: string;
+            /** @description last time the IO was seen */
+            lastSeenTimestamp?: number;
+            /** @description input or output */
+            type?: string;
+            value?: string;
         };
         "models.Location": {
-            city?: string;
-            country?: string;
-            country_short?: string;
+            /** @description e.g. "123 Main St, Anytown, USA" */
+            address?: string;
+            /** @description Altitude in meters */
+            altitude?: number;
+            latitude?: number;
+            longitude?: number;
+        };
+        "models.Marker": {
+            /** @description Audit information */
+            audit?: components["schemas"]["models.Audit"];
+            /** @description Description of the marker */
             description?: string;
-            formatted_address?: string;
-            geometry?: components["schemas"]["models.LocationGeometry"];
-            postal_code?: string;
-            region?: string;
-            street?: string;
-            street_number?: string;
+            /** @description Device information */
+            deviceId?: string;
+            /** @description Duration of the marker in milliseconds */
+            duration?: number;
+            /** @description End timestamp of the marker in milliseconds since epoch */
+            endTimestamp?: number;
+            /** @description GroupId is used to identify the group of markers */
+            groupId?: string;
+            id?: string;
+            /** @description Media information */
+            mediaIds?: string[];
+            /** @description Additional metadata */
+            metaData?: components["schemas"]["models.MarkerMetadata"];
+            /** @description Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc." */
+            name?: string;
+            /** @description OrganisationId is used to identify the organisation that owns the marker */
+            organisationId?: string;
+            /** @description RBAC information */
+            siteId?: string;
+            /** @description Timing information */
+            startTimestamp?: number;
+            /** @description Synchronize */
+            synchronize?: components["schemas"]["models.Synchronize"];
+            /** @description Type of the marker e.g., "alert", "event", "door_opened", "person", "car" etc. */
+            type?: string;
         };
-        "models.LocationGeometry": {
-            location?: components["schemas"]["models.LocationGeometryLocation"];
+        "models.MarkerMetadata": {
+            /** @description Additional comments or description of the marker */
+            comments?: components["schemas"]["models.Comment"];
+            /** @description Tags associated with the marker for categorization */
+            tags?: string[];
         };
-        "models.LocationGeometryLocation": {
-            lat?: number;
-            lng?: number;
-        };
-        "models.LocationShort": {
-            description?: string;
-            formatted_address?: string;
-            geometry?: components["schemas"]["models.LocationGeometry"];
-        };
-        /** @description Media model */
         "models.Media": {
-            /** @description Media file owner */
+            /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
+             *     more verbose information about the device's current state, capabilities, or configuration.
+             *     for example the linked sites details, etc. */
+            atRuntimeMetadata?: components["schemas"]["models.MediaAtRuntimeMetadata"];
+            /** @description Audit information */
+            audit?: components["schemas"]["models.Audit"];
+            /** @description RBAC information
+             *     DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
+             *     OrganisationId is used to identify the organisation that owns the device. */
             deviceId?: string;
             duration?: number;
             endTimestamp?: number;
-            groupId?: string;
+            id?: string;
             /** @description Metadata */
-            metadata?: components["schemas"]["models.MediaMetadata"][];
+            metadata?: components["schemas"]["models.MediaMetadata"];
             organisationId?: string;
             spriteFile?: string;
             spriteInterval?: number;
             spriteProvider?: string;
-            spriteUrl?: string;
             /** @description Time window of media file. */
             startTimestamp?: number;
-            /** @description Media file information (by default Vault (=kstorage), however might change
+            /** @description Media file information (by default "vault", however might change
              *     in the future (integration with other storage solutions, next to Vault). */
             storageSolution?: string;
             thumbnailFile?: string;
             thumbnailProvider?: string;
-            thumbnailUrl?: string;
-            userId?: string;
             /** @description Media file information */
             videoFile?: string;
+            /** @description Vault provider information (contains where the media is stored on which underlaying cloud storage) */
             videoProvider?: string;
+        };
+        "models.MediaAtRuntimeMetadata": {
+            spriteUrl?: string;
+            thumbnailUrl?: string;
             videoUrl?: string;
         };
         "models.MediaMetadata": {
             classifications?: string[];
             tags?: string[];
-        };
-        "models.MediaShort": {
-            camera_id?: string;
-            date?: string;
-            key?: string;
-            path?: string;
-            provider?: string;
-            source?: string;
-            sprite_url?: string;
-            spriteFile?: string;
-            spriteInterval?: number;
-            spriteProvider?: string;
-            src?: string;
-            thumbnail_url?: string;
-            thumbnailFile?: string;
-            thumbnailProvider?: string;
-            time?: string;
-            timestamp?: number;
-            type?: string;
-        };
-        "models.Mute": {
-            mute?: number;
-        };
-        "models.ONVIFEvents": {
-            key?: string;
-            timestamp?: number;
-            type?: string;
-            value?: string;
         };
         "models.Preset": {
             name?: string;
@@ -1509,47 +1455,59 @@ export interface components {
             user_id?: string;
         };
         "models.Site": {
-            access_key?: string;
-            address?: components["schemas"]["models.Location"];
-            /** @description Calculated on the fly! */
-            all_devices?: string[];
-            color?: string;
-            country?: string;
-            created_by?: string;
-            created_time?: number;
+            /** @description Audit information */
+            audit?: components["schemas"]["models.Audit"];
             description?: string;
             devices?: string[];
-            floor_plans?: components["schemas"]["models.FloorPlan"][];
             groups?: string[];
             id?: string;
-            initials?: string;
+            /** @description Location metadata */
+            locationMetadata?: components["schemas"]["models.SiteLocationMetadata"];
+            /** @description Metadata */
+            metadata?: components["schemas"]["models.SiteMetadata"];
             name?: string;
-            numberOfFloorPlans?: number;
-            secret_key?: string;
-            storage_uri?: string;
-            street?: string;
-            updated_by?: string;
-            updated_time?: number;
-            user_id?: string;
-            /** @description added by accident should be removed! */
-            username?: string;
+            /** @description RBAC information */
+            organisationId?: string;
+            /** @description Media file information (by default "vault", however might change
+             *     in the future (integration with other storage solutions, next to Vault). */
+            storageSolution?: string;
+            vaultAccessKey?: string;
+            vaultSecretKey?: string;
+            vaultUri?: string;
         };
-        "models.SiteShort": {
-            address?: components["schemas"]["models.Location"];
+        "models.SiteLocationMetadata": {
+            location?: components["schemas"]["models.Location"];
+        };
+        "models.SiteMetadata": {
             color?: string;
-            id?: string;
+            /** @description List of floor plans associated with the site */
+            floorPlans?: components["schemas"]["models.FloorPlan"][];
             initials?: string;
-            name?: string;
+            numberOfFloorPlans?: number;
         };
-        "models.SiteWrapper": {
-            site?: components["schemas"]["models.Site"];
-        };
-        "models.SuccessResponse": {
+        /** @enum {string} */
+        "models.Status": "pending" | "skipped" | "assigned" | "inProgress" | "completed" | "failed";
+        "models.Synchronize": {
+            /** @description History of synchronization events */
+            events?: components["schemas"]["models.SynchronizeEvent"][];
+            /** @description Additional message or error description related to synchronization */
             message?: string;
-            meta_data?: components["schemas"]["models.APIMetadata"];
-            request_id?: string;
-            status_code?: number;
-            success_code?: string;
+            /** @description Status of synchronization with external systems */
+            status?: components["schemas"]["models.Status"];
+            /** @description Timestamp of the last synchronization attempt */
+            timestamp?: number;
+            /** @description ID of the worker handling synchronization */
+            workerId?: string;
+        };
+        "models.SynchronizeEvent": {
+            /** @description Additional message or error description related to synchronization */
+            message?: string;
+            /** @description Status of synchronization with external systems */
+            status?: components["schemas"]["models.Status"];
+            /** @description Timestamp of the last synchronization attempt */
+            timestamp?: number;
+            /** @description ID of the worker handling synchronization */
+            workerId?: string;
         };
         "models.TimeWindow": {
             timeRange1MaxFriday?: number;
@@ -1581,13 +1539,6 @@ export interface components {
             timeRange2MinTuesday?: number;
             timeRange2MinWednesday?: number;
         };
-        /** @description Timeline value model */
-        "models.TimelineValue": {
-            currentScale?: number;
-            currentTime?: number;
-            startTime?: number;
-            timelineZero?: number;
-        };
         "models.Tour": {
             current?: number;
             loop?: boolean;
@@ -1607,69 +1558,65 @@ export type $defs = Record<string, never>;
 export type operations = Record<string, never>;
 
 // Convenient type exports for easier access
-export type APIMetadata = components['schemas']['models.APIMetadata'];
+export type api.ErrorResponse = components['schemas']['api.ErrorResponse'];
+export type api.Metadata = components['schemas']['api.Metadata'];
+export type api.SuccessResponse = components['schemas']['api.SuccessResponse'];
+export type Audit = components['schemas']['models.Audit'];
+export type Comment = components['schemas']['models.Comment'];
 export type Device = components['schemas']['models.Device'];
-export type DeviceMedia = components['schemas']['models.DeviceMedia'];
+export type DeviceCameraMetadata = components['schemas']['models.DeviceCameraMetadata'];
+export type DeviceFeaturePermissions = components['schemas']['models.DeviceFeaturePermissions'];
+export type DeviceLocationMetadata = components['schemas']['models.DeviceLocationMetadata'];
+export type DeviceMetadata = components['schemas']['models.DeviceMetadata'];
 export type DevicePlacement = components['schemas']['models.DevicePlacement'];
-export type DeviceShort = components['schemas']['models.DeviceShort'];
-export type DeviceWrapper = components['schemas']['models.DeviceWrapper'];
-export type DevicesWrapper = components['schemas']['models.DevicesWrapper'];
-export type ErrorResponse = components['schemas']['models.ErrorResponse'];
 export type FeaturePermissions = components['schemas']['models.FeaturePermissions'];
 export type FloorPlan = components['schemas']['models.FloorPlan'];
-export type Heartbeat = components['schemas']['models.Heartbeat'];
-export type HeartbeatOld = components['schemas']['models.HeartbeatOld'];
-export type HeartbeatShort = components['schemas']['models.HeartbeatShort'];
+export type IO = components['schemas']['models.IO'];
 export type Location = components['schemas']['models.Location'];
-export type LocationGeometry = components['schemas']['models.LocationGeometry'];
-export type LocationGeometryLocation = components['schemas']['models.LocationGeometryLocation'];
-export type LocationShort = components['schemas']['models.LocationShort'];
+export type Marker = components['schemas']['models.Marker'];
+export type MarkerMetadata = components['schemas']['models.MarkerMetadata'];
 export type Media = components['schemas']['models.Media'];
+export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
 export type MediaMetadata = components['schemas']['models.MediaMetadata'];
-export type MediaShort = components['schemas']['models.MediaShort'];
-export type Mute = components['schemas']['models.Mute'];
-export type ONVIFEvents = components['schemas']['models.ONVIFEvents'];
 export type Preset = components['schemas']['models.Preset'];
 export type Role = components['schemas']['models.Role'];
 export type Site = components['schemas']['models.Site'];
-export type SiteShort = components['schemas']['models.SiteShort'];
-export type SiteWrapper = components['schemas']['models.SiteWrapper'];
-export type SuccessResponse = components['schemas']['models.SuccessResponse'];
+export type SiteLocationMetadata = components['schemas']['models.SiteLocationMetadata'];
+export type SiteMetadata = components['schemas']['models.SiteMetadata'];
+export type Synchronize = components['schemas']['models.Synchronize'];
+export type SynchronizeEvent = components['schemas']['models.SynchronizeEvent'];
 export type TimeWindow = components['schemas']['models.TimeWindow'];
-export type TimelineValue = components['schemas']['models.TimelineValue'];
 export type Tour = components['schemas']['models.Tour'];
 
 // Export namespace for organized access
 export namespace models {
-    export type APIMetadata = components['schemas']['models.APIMetadata'];
+    export type api.ErrorResponse = components['schemas']['api.ErrorResponse'];
+    export type api.Metadata = components['schemas']['api.Metadata'];
+    export type api.SuccessResponse = components['schemas']['api.SuccessResponse'];
+    export type Audit = components['schemas']['models.Audit'];
+    export type Comment = components['schemas']['models.Comment'];
     export type Device = components['schemas']['models.Device'];
-    export type DeviceMedia = components['schemas']['models.DeviceMedia'];
+    export type DeviceCameraMetadata = components['schemas']['models.DeviceCameraMetadata'];
+    export type DeviceFeaturePermissions = components['schemas']['models.DeviceFeaturePermissions'];
+    export type DeviceLocationMetadata = components['schemas']['models.DeviceLocationMetadata'];
+    export type DeviceMetadata = components['schemas']['models.DeviceMetadata'];
     export type DevicePlacement = components['schemas']['models.DevicePlacement'];
-    export type DeviceShort = components['schemas']['models.DeviceShort'];
-    export type DeviceWrapper = components['schemas']['models.DeviceWrapper'];
-    export type DevicesWrapper = components['schemas']['models.DevicesWrapper'];
-    export type ErrorResponse = components['schemas']['models.ErrorResponse'];
     export type FeaturePermissions = components['schemas']['models.FeaturePermissions'];
     export type FloorPlan = components['schemas']['models.FloorPlan'];
-    export type Heartbeat = components['schemas']['models.Heartbeat'];
-    export type HeartbeatOld = components['schemas']['models.HeartbeatOld'];
-    export type HeartbeatShort = components['schemas']['models.HeartbeatShort'];
+    export type IO = components['schemas']['models.IO'];
     export type Location = components['schemas']['models.Location'];
-    export type LocationGeometry = components['schemas']['models.LocationGeometry'];
-    export type LocationGeometryLocation = components['schemas']['models.LocationGeometryLocation'];
-    export type LocationShort = components['schemas']['models.LocationShort'];
+    export type Marker = components['schemas']['models.Marker'];
+    export type MarkerMetadata = components['schemas']['models.MarkerMetadata'];
     export type Media = components['schemas']['models.Media'];
+    export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
-    export type MediaShort = components['schemas']['models.MediaShort'];
-    export type Mute = components['schemas']['models.Mute'];
-    export type ONVIFEvents = components['schemas']['models.ONVIFEvents'];
     export type Preset = components['schemas']['models.Preset'];
     export type Role = components['schemas']['models.Role'];
     export type Site = components['schemas']['models.Site'];
-    export type SiteShort = components['schemas']['models.SiteShort'];
-    export type SiteWrapper = components['schemas']['models.SiteWrapper'];
-    export type SuccessResponse = components['schemas']['models.SuccessResponse'];
+    export type SiteLocationMetadata = components['schemas']['models.SiteLocationMetadata'];
+    export type SiteMetadata = components['schemas']['models.SiteMetadata'];
+    export type Synchronize = components['schemas']['models.Synchronize'];
+    export type SynchronizeEvent = components['schemas']['models.SynchronizeEvent'];
     export type TimeWindow = components['schemas']['models.TimeWindow'];
-    export type TimelineValue = components['schemas']['models.TimelineValue'];
     export type Tour = components['schemas']['models.Tour'];
 }

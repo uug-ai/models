@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/uug-ai/models/pkg/models"
+	"github.com/uug-ai/models/pkg/api"
 )
 
 // @title Models API
@@ -19,6 +20,7 @@ func main() {
 	
 	// Keep the import valid - models are used in the API endpoint annotations below
 	_ = models.Media{}
+	_ = api.SuccessResponse{}
 }
 
 // GetMedia godoc
@@ -28,8 +30,8 @@ func main() {
 // @Accept json
 // @Produce json
 // @Param id path string true "Media ID"
-// @Success 200 {object} models.Media
-// @Failure 400 {object} models.ErrorResponse
+// @Success 200 {object} api.SuccessResponse
+// @Failure 400 {object} api.ErrorResponse
 // @Router /media/{id} [get]
 func GetMedia() {}
 
@@ -40,43 +42,33 @@ func GetMedia() {}
 // @Accept json
 // @Produce json
 // @Param media body models.Media true "Media object"
-// @Success 201 {object} models.SuccessResponse
-// @Failure 400 {object} models.ErrorResponse
+// @Success 201 {object} api.SuccessResponse
+// @Failure 400 {object} api.ErrorResponse
 // @Router /media [post]
 func CreateMedia() {}
 
 // Dummy endpoints to ensure all models are included in OpenAPI spec
 // These endpoints exist only to force swag to generate schemas for all models
 
-// GetAPIMetadata godoc
-// @Summary Get APIMetadata (schema generation only)
-// @Description Internal endpoint used only to ensure APIMetadata schema is generated in OpenAPI spec
+// GetAudit godoc
+// @Summary Get Audit (schema generation only)
+// @Description Internal endpoint used only to ensure Audit schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.APIMetadata
-// @Router /internal/apimetadata [get]
-func GetAPIMetadata() {}
+// @Success 200 {object} models.Audit
+// @Router /internal/audit [get]
+func GetAudit() {}
 
-// GetDevicesWrapper godoc
-// @Summary Get DevicesWrapper (schema generation only)
-// @Description Internal endpoint used only to ensure DevicesWrapper schema is generated in OpenAPI spec
+// GetComment godoc
+// @Summary Get Comment (schema generation only)
+// @Description Internal endpoint used only to ensure Comment schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.DevicesWrapper
-// @Router /internal/deviceswrapper [get]
-func GetDevicesWrapper() {}
-
-// GetDeviceWrapper godoc
-// @Summary Get DeviceWrapper (schema generation only)
-// @Description Internal endpoint used only to ensure DeviceWrapper schema is generated in OpenAPI spec
-// @Tags internal
-// @Accept json
-// @Produce json
-// @Success 200 {object} models.DeviceWrapper
-// @Router /internal/devicewrapper [get]
-func GetDeviceWrapper() {}
+// @Success 200 {object} models.Comment
+// @Router /internal/comment [get]
+func GetComment() {}
 
 // GetDevice godoc
 // @Summary Get Device (schema generation only)
@@ -88,95 +80,85 @@ func GetDeviceWrapper() {}
 // @Router /internal/device [get]
 func GetDevice() {}
 
-// GetPreset godoc
-// @Summary Get Preset (schema generation only)
-// @Description Internal endpoint used only to ensure Preset schema is generated in OpenAPI spec
+// GetDeviceMetadata godoc
+// @Summary Get DeviceMetadata (schema generation only)
+// @Description Internal endpoint used only to ensure DeviceMetadata schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.Preset
-// @Router /internal/preset [get]
-func GetPreset() {}
+// @Success 200 {object} models.DeviceMetadata
+// @Router /internal/devicemetadata [get]
+func GetDeviceMetadata() {}
 
-// GetONVIFEvents godoc
-// @Summary Get ONVIFEvents (schema generation only)
-// @Description Internal endpoint used only to ensure ONVIFEvents schema is generated in OpenAPI spec
+// GetDeviceCameraMetadata godoc
+// @Summary Get DeviceCameraMetadata (schema generation only)
+// @Description Internal endpoint used only to ensure DeviceCameraMetadata schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.ONVIFEvents
-// @Router /internal/onvifevents [get]
-func GetONVIFEvents() {}
+// @Success 200 {object} models.DeviceCameraMetadata
+// @Router /internal/devicecamerametadata [get]
+func GetDeviceCameraMetadata() {}
 
-// GetTour godoc
-// @Summary Get Tour (schema generation only)
-// @Description Internal endpoint used only to ensure Tour schema is generated in OpenAPI spec
+// GetDeviceLocationMetadata godoc
+// @Summary Get DeviceLocationMetadata (schema generation only)
+// @Description Internal endpoint used only to ensure DeviceLocationMetadata schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.Tour
-// @Router /internal/tour [get]
-func GetTour() {}
+// @Success 200 {object} models.DeviceLocationMetadata
+// @Router /internal/devicelocationmetadata [get]
+func GetDeviceLocationMetadata() {}
 
-// GetDeviceShort godoc
-// @Summary Get DeviceShort (schema generation only)
-// @Description Internal endpoint used only to ensure DeviceShort schema is generated in OpenAPI spec
+// GetDeviceFeaturePermissions godoc
+// @Summary Get DeviceFeaturePermissions (schema generation only)
+// @Description Internal endpoint used only to ensure DeviceFeaturePermissions schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.DeviceShort
-// @Router /internal/deviceshort [get]
-func GetDeviceShort() {}
+// @Success 200 {object} models.DeviceFeaturePermissions
+// @Router /internal/devicefeaturepermissions [get]
+func GetDeviceFeaturePermissions() {}
 
-// GetDeviceMedia godoc
-// @Summary Get DeviceMedia (schema generation only)
-// @Description Internal endpoint used only to ensure DeviceMedia schema is generated in OpenAPI spec
+// GetDeviceAtRuntimeMetadata godoc
+// @Summary Get DeviceAtRuntimeMetadata (schema generation only)
+// @Description Internal endpoint used only to ensure DeviceAtRuntimeMetadata schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.DeviceMedia
-// @Router /internal/devicemedia [get]
-func GetDeviceMedia() {}
+// @Success 200 {object} models.DeviceAtRuntimeMetadata
+// @Router /internal/deviceatruntimemetadata [get]
+func GetDeviceAtRuntimeMetadata() {}
 
-// GetHeartbeat godoc
-// @Summary Get Heartbeat (schema generation only)
-// @Description Internal endpoint used only to ensure Heartbeat schema is generated in OpenAPI spec
+// GetFloorPlan godoc
+// @Summary Get FloorPlan (schema generation only)
+// @Description Internal endpoint used only to ensure FloorPlan schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.Heartbeat
-// @Router /internal/heartbeat [get]
-func GetHeartbeat() {}
+// @Success 200 {object} models.FloorPlan
+// @Router /internal/floorplan [get]
+func GetFloorPlan() {}
 
-// GetHeartbeatShort godoc
-// @Summary Get HeartbeatShort (schema generation only)
-// @Description Internal endpoint used only to ensure HeartbeatShort schema is generated in OpenAPI spec
+// GetDevicePlacement godoc
+// @Summary Get DevicePlacement (schema generation only)
+// @Description Internal endpoint used only to ensure DevicePlacement schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.HeartbeatShort
-// @Router /internal/heartbeatshort [get]
-func GetHeartbeatShort() {}
+// @Success 200 {object} models.DevicePlacement
+// @Router /internal/deviceplacement [get]
+func GetDevicePlacement() {}
 
-// GetHeartbeatOld godoc
-// @Summary Get HeartbeatOld (schema generation only)
-// @Description Internal endpoint used only to ensure HeartbeatOld schema is generated in OpenAPI spec
+// GetIO godoc
+// @Summary Get IO (schema generation only)
+// @Description Internal endpoint used only to ensure IO schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.HeartbeatOld
-// @Router /internal/heartbeatold [get]
-func GetHeartbeatOld() {}
-
-// GetMute godoc
-// @Summary Get Mute (schema generation only)
-// @Description Internal endpoint used only to ensure Mute schema is generated in OpenAPI spec
-// @Tags internal
-// @Accept json
-// @Produce json
-// @Success 200 {object} models.Mute
-// @Router /internal/mute [get]
-func GetMute() {}
+// @Success 200 {object} models.IO
+// @Router /internal/io [get]
+func GetIO() {}
 
 // GetLocation godoc
 // @Summary Get Location (schema generation only)
@@ -188,35 +170,25 @@ func GetMute() {}
 // @Router /internal/location [get]
 func GetLocation() {}
 
-// GetLocationShort godoc
-// @Summary Get LocationShort (schema generation only)
-// @Description Internal endpoint used only to ensure LocationShort schema is generated in OpenAPI spec
+// GetMarker godoc
+// @Summary Get Marker (schema generation only)
+// @Description Internal endpoint used only to ensure Marker schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.LocationShort
-// @Router /internal/locationshort [get]
-func GetLocationShort() {}
+// @Success 200 {object} models.Marker
+// @Router /internal/marker [get]
+func GetMarker() {}
 
-// GetLocationGeometry godoc
-// @Summary Get LocationGeometry (schema generation only)
-// @Description Internal endpoint used only to ensure LocationGeometry schema is generated in OpenAPI spec
+// GetMarkerMetadata godoc
+// @Summary Get MarkerMetadata (schema generation only)
+// @Description Internal endpoint used only to ensure MarkerMetadata schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.LocationGeometry
-// @Router /internal/locationgeometry [get]
-func GetLocationGeometry() {}
-
-// GetLocationGeometryLocation godoc
-// @Summary Get LocationGeometryLocation (schema generation only)
-// @Description Internal endpoint used only to ensure LocationGeometryLocation schema is generated in OpenAPI spec
-// @Tags internal
-// @Accept json
-// @Produce json
-// @Success 200 {object} models.LocationGeometryLocation
-// @Router /internal/locationgeometrylocation [get]
-func GetLocationGeometryLocation() {}
+// @Success 200 {object} models.MarkerMetadata
+// @Router /internal/markermetadata [get]
+func GetMarkerMetadata() {}
 
 // GetMediaMetadata godoc
 // @Summary Get MediaMetadata (schema generation only)
@@ -228,25 +200,35 @@ func GetLocationGeometryLocation() {}
 // @Router /internal/mediametadata [get]
 func GetMediaMetadata() {}
 
-// GetMediaShort godoc
-// @Summary Get MediaShort (schema generation only)
-// @Description Internal endpoint used only to ensure MediaShort schema is generated in OpenAPI spec
+// GetMediaAtRuntimeMetadata godoc
+// @Summary Get MediaAtRuntimeMetadata (schema generation only)
+// @Description Internal endpoint used only to ensure MediaAtRuntimeMetadata schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.MediaShort
-// @Router /internal/mediashort [get]
-func GetMediaShort() {}
+// @Success 200 {object} models.MediaAtRuntimeMetadata
+// @Router /internal/mediaatruntimemetadata [get]
+func GetMediaAtRuntimeMetadata() {}
 
-// GetTimelineValue godoc
-// @Summary Get TimelineValue (schema generation only)
-// @Description Internal endpoint used only to ensure TimelineValue schema is generated in OpenAPI spec
+// GetPreset godoc
+// @Summary Get Preset (schema generation only)
+// @Description Internal endpoint used only to ensure Preset schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.TimelineValue
-// @Router /internal/timelinevalue [get]
-func GetTimelineValue() {}
+// @Success 200 {object} models.Preset
+// @Router /internal/preset [get]
+func GetPreset() {}
+
+// GetTour godoc
+// @Summary Get Tour (schema generation only)
+// @Description Internal endpoint used only to ensure Tour schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.Tour
+// @Router /internal/tour [get]
+func GetTour() {}
 
 // GetRole godoc
 // @Summary Get Role (schema generation only)
@@ -278,16 +260,6 @@ func GetFeaturePermissions() {}
 // @Router /internal/timewindow [get]
 func GetTimeWindow() {}
 
-// GetSiteWrapper godoc
-// @Summary Get SiteWrapper (schema generation only)
-// @Description Internal endpoint used only to ensure SiteWrapper schema is generated in OpenAPI spec
-// @Tags internal
-// @Accept json
-// @Produce json
-// @Success 200 {object} models.SiteWrapper
-// @Router /internal/sitewrapper [get]
-func GetSiteWrapper() {}
-
 // GetSite godoc
 // @Summary Get Site (schema generation only)
 // @Description Internal endpoint used only to ensure Site schema is generated in OpenAPI spec
@@ -298,32 +270,42 @@ func GetSiteWrapper() {}
 // @Router /internal/site [get]
 func GetSite() {}
 
-// GetSiteShort godoc
-// @Summary Get SiteShort (schema generation only)
-// @Description Internal endpoint used only to ensure SiteShort schema is generated in OpenAPI spec
+// GetSiteMetadata godoc
+// @Summary Get SiteMetadata (schema generation only)
+// @Description Internal endpoint used only to ensure SiteMetadata schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.SiteShort
-// @Router /internal/siteshort [get]
-func GetSiteShort() {}
+// @Success 200 {object} models.SiteMetadata
+// @Router /internal/sitemetadata [get]
+func GetSiteMetadata() {}
 
-// GetFloorPlan godoc
-// @Summary Get FloorPlan (schema generation only)
-// @Description Internal endpoint used only to ensure FloorPlan schema is generated in OpenAPI spec
+// GetSiteLocationMetadata godoc
+// @Summary Get SiteLocationMetadata (schema generation only)
+// @Description Internal endpoint used only to ensure SiteLocationMetadata schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.FloorPlan
-// @Router /internal/floorplan [get]
-func GetFloorPlan() {}
+// @Success 200 {object} models.SiteLocationMetadata
+// @Router /internal/sitelocationmetadata [get]
+func GetSiteLocationMetadata() {}
 
-// GetDevicePlacement godoc
-// @Summary Get DevicePlacement (schema generation only)
-// @Description Internal endpoint used only to ensure DevicePlacement schema is generated in OpenAPI spec
+// GetSynchronize godoc
+// @Summary Get Synchronize (schema generation only)
+// @Description Internal endpoint used only to ensure Synchronize schema is generated in OpenAPI spec
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.DevicePlacement
-// @Router /internal/deviceplacement [get]
-func GetDevicePlacement() {}
+// @Success 200 {object} models.Synchronize
+// @Router /internal/synchronize [get]
+func GetSynchronize() {}
+
+// GetSynchronizeEvent godoc
+// @Summary Get SynchronizeEvent (schema generation only)
+// @Description Internal endpoint used only to ensure SynchronizeEvent schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.SynchronizeEvent
+// @Router /internal/synchronizeevent [get]
+func GetSynchronizeEvent() {}

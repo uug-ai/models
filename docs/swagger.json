@@ -9,9 +9,9 @@
     "host": "localhost",
     "basePath": "/",
     "paths": {
-        "/internal/apimetadata": {
+        "/internal/audit": {
             "get": {
-                "description": "Internal endpoint used only to ensure APIMetadata schema is generated in OpenAPI spec",
+                "description": "Internal endpoint used only to ensure Audit schema is generated in OpenAPI spec",
                 "consumes": [
                     "application/json"
                 ],
@@ -21,12 +21,35 @@
                 "tags": [
                     "internal"
                 ],
-                "summary": "Get APIMetadata (schema generation only)",
+                "summary": "Get Audit (schema generation only)",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.APIMetadata"
+                            "$ref": "#/definitions/models.Audit"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/comment": {
+            "get": {
+                "description": "Internal endpoint used only to ensure Comment schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get Comment (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Comment"
                         }
                     }
                 }
@@ -55,9 +78,9 @@
                 }
             }
         },
-        "/internal/devicemedia": {
+        "/internal/deviceatruntimemetadata": {
             "get": {
-                "description": "Internal endpoint used only to ensure DeviceMedia schema is generated in OpenAPI spec",
+                "description": "Internal endpoint used only to ensure DeviceAtRuntimeMetadata schema is generated in OpenAPI spec",
                 "consumes": [
                     "application/json"
                 ],
@@ -67,12 +90,104 @@
                 "tags": [
                     "internal"
                 ],
-                "summary": "Get DeviceMedia (schema generation only)",
+                "summary": "Get DeviceAtRuntimeMetadata (schema generation only)",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.DeviceMedia"
+                            "$ref": "#/definitions/models.DeviceAtRuntimeMetadata"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/devicecamerametadata": {
+            "get": {
+                "description": "Internal endpoint used only to ensure DeviceCameraMetadata schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get DeviceCameraMetadata (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DeviceCameraMetadata"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/devicefeaturepermissions": {
+            "get": {
+                "description": "Internal endpoint used only to ensure DeviceFeaturePermissions schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get DeviceFeaturePermissions (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DeviceFeaturePermissions"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/devicelocationmetadata": {
+            "get": {
+                "description": "Internal endpoint used only to ensure DeviceLocationMetadata schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get DeviceLocationMetadata (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DeviceLocationMetadata"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/devicemetadata": {
+            "get": {
+                "description": "Internal endpoint used only to ensure DeviceMetadata schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get DeviceMetadata (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DeviceMetadata"
                         }
                     }
                 }
@@ -96,75 +211,6 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.DevicePlacement"
-                        }
-                    }
-                }
-            }
-        },
-        "/internal/deviceshort": {
-            "get": {
-                "description": "Internal endpoint used only to ensure DeviceShort schema is generated in OpenAPI spec",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "internal"
-                ],
-                "summary": "Get DeviceShort (schema generation only)",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.DeviceShort"
-                        }
-                    }
-                }
-            }
-        },
-        "/internal/deviceswrapper": {
-            "get": {
-                "description": "Internal endpoint used only to ensure DevicesWrapper schema is generated in OpenAPI spec",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "internal"
-                ],
-                "summary": "Get DevicesWrapper (schema generation only)",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.DevicesWrapper"
-                        }
-                    }
-                }
-            }
-        },
-        "/internal/devicewrapper": {
-            "get": {
-                "description": "Internal endpoint used only to ensure DeviceWrapper schema is generated in OpenAPI spec",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "internal"
-                ],
-                "summary": "Get DeviceWrapper (schema generation only)",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.DeviceWrapper"
                         }
                     }
                 }
@@ -216,9 +262,9 @@
                 }
             }
         },
-        "/internal/heartbeat": {
+        "/internal/io": {
             "get": {
-                "description": "Internal endpoint used only to ensure Heartbeat schema is generated in OpenAPI spec",
+                "description": "Internal endpoint used only to ensure IO schema is generated in OpenAPI spec",
                 "consumes": [
                     "application/json"
                 ],
@@ -228,58 +274,12 @@
                 "tags": [
                     "internal"
                 ],
-                "summary": "Get Heartbeat (schema generation only)",
+                "summary": "Get IO (schema generation only)",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Heartbeat"
-                        }
-                    }
-                }
-            }
-        },
-        "/internal/heartbeatold": {
-            "get": {
-                "description": "Internal endpoint used only to ensure HeartbeatOld schema is generated in OpenAPI spec",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "internal"
-                ],
-                "summary": "Get HeartbeatOld (schema generation only)",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.HeartbeatOld"
-                        }
-                    }
-                }
-            }
-        },
-        "/internal/heartbeatshort": {
-            "get": {
-                "description": "Internal endpoint used only to ensure HeartbeatShort schema is generated in OpenAPI spec",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "internal"
-                ],
-                "summary": "Get HeartbeatShort (schema generation only)",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.HeartbeatShort"
+                            "$ref": "#/definitions/models.IO"
                         }
                     }
                 }
@@ -308,9 +308,9 @@
                 }
             }
         },
-        "/internal/locationgeometry": {
+        "/internal/marker": {
             "get": {
-                "description": "Internal endpoint used only to ensure LocationGeometry schema is generated in OpenAPI spec",
+                "description": "Internal endpoint used only to ensure Marker schema is generated in OpenAPI spec",
                 "consumes": [
                     "application/json"
                 ],
@@ -320,20 +320,20 @@
                 "tags": [
                     "internal"
                 ],
-                "summary": "Get LocationGeometry (schema generation only)",
+                "summary": "Get Marker (schema generation only)",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.LocationGeometry"
+                            "$ref": "#/definitions/models.Marker"
                         }
                     }
                 }
             }
         },
-        "/internal/locationgeometrylocation": {
+        "/internal/markermetadata": {
             "get": {
-                "description": "Internal endpoint used only to ensure LocationGeometryLocation schema is generated in OpenAPI spec",
+                "description": "Internal endpoint used only to ensure MarkerMetadata schema is generated in OpenAPI spec",
                 "consumes": [
                     "application/json"
                 ],
@@ -343,20 +343,20 @@
                 "tags": [
                     "internal"
                 ],
-                "summary": "Get LocationGeometryLocation (schema generation only)",
+                "summary": "Get MarkerMetadata (schema generation only)",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.LocationGeometryLocation"
+                            "$ref": "#/definitions/models.MarkerMetadata"
                         }
                     }
                 }
             }
         },
-        "/internal/locationshort": {
+        "/internal/mediaatruntimemetadata": {
             "get": {
-                "description": "Internal endpoint used only to ensure LocationShort schema is generated in OpenAPI spec",
+                "description": "Internal endpoint used only to ensure MediaAtRuntimeMetadata schema is generated in OpenAPI spec",
                 "consumes": [
                     "application/json"
                 ],
@@ -366,12 +366,12 @@
                 "tags": [
                     "internal"
                 ],
-                "summary": "Get LocationShort (schema generation only)",
+                "summary": "Get MediaAtRuntimeMetadata (schema generation only)",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.LocationShort"
+                            "$ref": "#/definitions/models.MediaAtRuntimeMetadata"
                         }
                     }
                 }
@@ -395,75 +395,6 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.MediaMetadata"
-                        }
-                    }
-                }
-            }
-        },
-        "/internal/mediashort": {
-            "get": {
-                "description": "Internal endpoint used only to ensure MediaShort schema is generated in OpenAPI spec",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "internal"
-                ],
-                "summary": "Get MediaShort (schema generation only)",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.MediaShort"
-                        }
-                    }
-                }
-            }
-        },
-        "/internal/mute": {
-            "get": {
-                "description": "Internal endpoint used only to ensure Mute schema is generated in OpenAPI spec",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "internal"
-                ],
-                "summary": "Get Mute (schema generation only)",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Mute"
-                        }
-                    }
-                }
-            }
-        },
-        "/internal/onvifevents": {
-            "get": {
-                "description": "Internal endpoint used only to ensure ONVIFEvents schema is generated in OpenAPI spec",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "internal"
-                ],
-                "summary": "Get ONVIFEvents (schema generation only)",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.ONVIFEvents"
                         }
                     }
                 }
@@ -538,9 +469,9 @@
                 }
             }
         },
-        "/internal/siteshort": {
+        "/internal/sitelocationmetadata": {
             "get": {
-                "description": "Internal endpoint used only to ensure SiteShort schema is generated in OpenAPI spec",
+                "description": "Internal endpoint used only to ensure SiteLocationMetadata schema is generated in OpenAPI spec",
                 "consumes": [
                     "application/json"
                 ],
@@ -550,20 +481,20 @@
                 "tags": [
                     "internal"
                 ],
-                "summary": "Get SiteShort (schema generation only)",
+                "summary": "Get SiteLocationMetadata (schema generation only)",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.SiteShort"
+                            "$ref": "#/definitions/models.SiteLocationMetadata"
                         }
                     }
                 }
             }
         },
-        "/internal/sitewrapper": {
+        "/internal/sitemetadata": {
             "get": {
-                "description": "Internal endpoint used only to ensure SiteWrapper schema is generated in OpenAPI spec",
+                "description": "Internal endpoint used only to ensure SiteMetadata schema is generated in OpenAPI spec",
                 "consumes": [
                     "application/json"
                 ],
@@ -573,20 +504,20 @@
                 "tags": [
                     "internal"
                 ],
-                "summary": "Get SiteWrapper (schema generation only)",
+                "summary": "Get SiteMetadata (schema generation only)",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.SiteWrapper"
+                            "$ref": "#/definitions/models.SiteMetadata"
                         }
                     }
                 }
             }
         },
-        "/internal/timelinevalue": {
+        "/internal/synchronize": {
             "get": {
-                "description": "Internal endpoint used only to ensure TimelineValue schema is generated in OpenAPI spec",
+                "description": "Internal endpoint used only to ensure Synchronize schema is generated in OpenAPI spec",
                 "consumes": [
                     "application/json"
                 ],
@@ -596,12 +527,35 @@
                 "tags": [
                     "internal"
                 ],
-                "summary": "Get TimelineValue (schema generation only)",
+                "summary": "Get Synchronize (schema generation only)",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.TimelineValue"
+                            "$ref": "#/definitions/models.Synchronize"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/synchronizeevent": {
+            "get": {
+                "description": "Internal endpoint used only to ensure SynchronizeEvent schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get SynchronizeEvent (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SynchronizeEvent"
                         }
                     }
                 }
@@ -681,13 +635,13 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/models.SuccessResponse"
+                            "$ref": "#/definitions/api.SuccessResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/models.ErrorResponse"
+                            "$ref": "#/definitions/api.ErrorResponse"
                         }
                     }
                 }
@@ -719,13 +673,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Media"
+                            "$ref": "#/definitions/api.SuccessResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/models.ErrorResponse"
+                            "$ref": "#/definitions/api.ErrorResponse"
                         }
                     }
                 }
@@ -733,17 +687,131 @@
         }
     },
     "definitions": {
-        "models.APIMetadata": {
+        "api.ErrorResponse": {
             "type": "object",
             "properties": {
-                "error": {},
+                "applicationStatusCode": {
+                    "description": "Application-specific error code",
+                    "type": "integer"
+                },
+                "httpStatusCode": {
+                    "description": "HTTP status code for the error",
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "Error message describing the issue",
+                    "type": "string"
+                },
+                "metaData": {
+                    "description": "Additional metadata about the error, such as timestamps and request IDs",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.Metadata"
+                        }
+                    ]
+                }
+            }
+        },
+        "api.Metadata": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "description": "Error message if any",
+                    "type": "string"
+                },
+                "function": {
+                    "type": "string"
+                },
+                "organisationId": {
+                    "type": "string"
+                },
                 "path": {
                     "type": "string"
                 },
                 "timestamp": {
                     "type": "integer"
                 },
-                "user_id": {
+                "traceId": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.SuccessResponse": {
+            "type": "object",
+            "properties": {
+                "applicationStatusCode": {
+                    "type": "integer"
+                },
+                "httpStatusCode": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "metaData": {
+                    "$ref": "#/definitions/api.Metadata"
+                }
+            }
+        },
+        "models.Audit": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "integer"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "integer"
+                },
+                "updatedBy": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Comment": {
+            "type": "object",
+            "properties": {
+                "audit": {
+                    "description": "Audit information",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Audit"
+                        }
+                    ]
+                },
+                "author": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "deviceId": {
+                    "description": "RBAC information\nDeviceId is a unique identifier for the device, it can be used to identify the device in the system.\nOrganisationId is used to identify the organisation that owns the device.",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "organisationId": {
+                    "type": "string"
+                },
+                "parentId": {
+                    "description": "ID of the parent comment, if this is a reply",
+                    "type": "string"
+                },
+                "timestamps": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "type": {
+                    "description": "Comment information",
                     "type": "string"
                 }
             }
@@ -751,152 +819,274 @@
         "models.Device": {
             "type": "object",
             "properties": {
-                "analytics": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Heartbeat"
-                    }
+                "atRuntimeMetadata": {
+                    "description": "AtRuntimeMetadata contains metadata that is generated at runtime, which can include\nmore verbose information about the device's current state, capabilities, or configuration.\nfor example the linked sites details, etc.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.DeviceAtRuntimeMetadata"
+                        }
+                    ]
                 },
-                "brand": {
+                "audit": {
+                    "description": "Audit information",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Audit"
+                        }
+                    ]
+                },
+                "cameraMetadata": {
+                    "description": "Camera Metadata",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.DeviceCameraMetadata"
+                        }
+                    ]
+                },
+                "deployment": {
+                    "description": "e.g. \"factory\", \"docker\", \"docker compose\", \"kubernetes\"",
                     "type": "string"
                 },
-                "color": {
+                "deviceId": {
                     "type": "string"
                 },
-                "description": {
+                "deviceType": {
+                    "description": "e.g. \"camera\", \"sensor\", \"access_control\"",
                     "type": "string"
-                },
-                "enterprise": {
-                    "type": "boolean"
                 },
                 "featurePermissions": {
-                    "$ref": "#/definitions/models.FeaturePermissions"
+                    "description": "FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.\nIt is a map of feature names to permissions.\nFor example, \"camera\" can have permissions like \"read\", \"write\", \"delete\", etc.\nThis allows for fine-grained control over what features are accessible by users or groups.\nFeaturePermissions can be used to implement Role-Based Access Control (RBAC) for devices.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.DeviceFeaturePermissions"
+                        }
+                    ]
                 },
+                "groupId": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lastSeenTimestamp": {
+                    "description": "last time the device was seen online (timestamp in milliseconds)",
+                    "type": "integer"
+                },
+                "locationMetadata": {
+                    "description": "Location metadata",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.DeviceLocationMetadata"
+                        }
+                    ]
+                },
+                "metadata": {
+                    "description": "Metadata",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.DeviceMetadata"
+                        }
+                    ]
+                },
+                "name": {
+                    "description": "Device information\nNote: DeviceId is a unique identifier for the device, it can be used to identify the device in the system.\nDeviceType is used to identify the type of device, such as camera, sensor, access control, etc.",
+                    "type": "string"
+                },
+                "organisationId": {
+                    "type": "string"
+                },
+                "releaseHash": {
+                    "description": "e.g. \"v1.0.0-abcdef123456\"",
+                    "type": "string"
+                },
+                "siteId": {
+                    "description": "RBAC information\nNote: SiteId is used to identify the site where the device is located.\nGroupId is used to identify the group of devices.\nOrganisationId is used to identify the organisation that owns the device.\nFeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "Device status\nNote: Status is used to identify the status of the device, such as online, offline, maintenance, etc.\nLastSeenTimestamp is used to identify the last time the device was seen online.",
+                    "type": "string"
+                },
+                "version": {
+                    "description": "Versioning information\nNote: Version is used to identify the version of the device software.\nReleaseHash is used to identify the release hash of the device software, it can be used to identify the specific build of the device software.\nDeployment is used to identify the deployment type of the device, such as factory, docker, docker compose, kubernetes, etc.",
+                    "type": "string"
+                }
+            }
+        },
+        "models.DeviceAtRuntimeMetadata": {
+            "type": "object"
+        },
+        "models.DeviceCameraMetadata": {
+            "type": "object",
+            "properties": {
+                "bitrate": {
+                    "description": "Bitrate in kbps",
+                    "type": "integer"
+                },
+                "codec": {
+                    "description": "e.g. \"H.264\", \"H.265\"",
+                    "type": "string"
+                },
+                "frameRate": {
+                    "description": "Frame rate in fps",
+                    "type": "integer"
+                },
+                "hasAudio": {
+                    "description": "Indicates if the camera supports audio",
+                    "type": "boolean"
+                },
+                "hasIO": {
+                    "description": "Indicates if the camera has input/output capabilities",
+                    "type": "boolean"
+                },
+                "hasOnvif": {
+                    "description": "Indicates if the camera supports ONVIF protocol",
+                    "type": "boolean"
+                },
+                "hasPanTilt": {
+                    "description": "Indicates if the camera supports pan and tilt functionality",
+                    "type": "boolean"
+                },
+                "hasPresets": {
+                    "description": "Indicates if the camera supports presets",
+                    "type": "boolean"
+                },
+                "hasZoom": {
+                    "description": "Indicates if the camera supports zoom functionality",
+                    "type": "boolean"
+                },
+                "ios": {
+                    "description": "Input/Output capabilities of the camera (such as alarms, relays, etc.)",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.IO"
+                    }
+                },
+                "presets": {
+                    "description": "Presets for the camera, used for quick positioning",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Preset"
+                    }
+                },
+                "resolution": {
+                    "description": "e.g. \"1920x1080\", \"1280x720\"",
+                    "type": "string"
+                },
+                "tours": {
+                    "description": "Tours for the camera, used for automated movements through presets",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tour"
+                    }
+                }
+            }
+        },
+        "models.DeviceFeaturePermissions": {
+            "type": "object",
+            "properties": {
+                "floorPlans": {
+                    "type": "integer"
+                },
+                "io": {
+                    "type": "integer"
+                },
+                "liveview": {
+                    "type": "integer"
+                },
+                "ptz": {
+                    "type": "integer"
+                },
+                "remoteConfig": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.DeviceLocationMetadata": {
+            "type": "object",
+            "properties": {
                 "fieldOfView": {
                     "type": "number"
                 },
-                "installationDate": {
-                    "type": "string"
-                },
-                "isActive": {
-                    "type": "boolean"
-                },
-                "key": {
-                    "type": "string"
-                },
-                "lastMaintenance": {
-                    "type": "string"
-                },
-                "latestMedia": {
-                    "$ref": "#/definitions/models.Media"
-                },
-                "latestMediaTimestamp": {
-                    "type": "integer"
-                },
-                "model": {
-                    "type": "string"
-                },
-                "mute": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
+                "location": {
+                    "$ref": "#/definitions/models.Location"
                 },
                 "onFloorPlans": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
-                },
-                "presets": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Preset"
-                    }
-                },
-                "sites": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.SiteShort"
-                    }
-                },
-                "status": {
-                    "type": "string"
-                },
-                "tours": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Tour"
-                    }
-                },
-                "user_id": {
-                    "type": "string"
                 }
             }
         },
-        "models.DeviceMedia": {
+        "models.DeviceMetadata": {
             "type": "object",
             "properties": {
-                "camera_name": {
+                "brand": {
+                    "description": "e.g. \"Nest\", \"Ring\"",
                     "type": "string"
                 },
-                "key": {
+                "color": {
+                    "description": "e.g. \"#FF5733\" (hex color code)",
                     "type": "string"
                 },
-                "media_time": {
+                "description": {
+                    "description": "e.g. \"Outdoor camera with night vision\"",
                     "type": "string"
                 },
-                "media_timestamp": {
+                "installationDate": {
+                    "description": "Installation date in milliseconds since epoch",
                     "type": "integer"
                 },
-                "media_type": {
+                "lastMaintenance": {
+                    "description": "Last maintenance date in milliseconds since epoch",
+                    "type": "integer"
+                },
+                "model": {
+                    "description": "e.g. \"Nest Cam\", \"Ring Doorbell\"",
                     "type": "string"
                 },
-                "media_url": {
-                    "type": "string"
-                },
-                "sites": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.SiteShort"
-                    }
-                },
-                "sprite_url": {
-                    "type": "string"
+                "mute": {
+                    "description": "Mute status, e.g. false for unmuted, true for muted",
+                    "type": "boolean"
                 }
             }
         },
         "models.DevicePlacement": {
             "type": "object",
             "properties": {
+                "audit": {
+                    "description": "Audit information",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Audit"
+                        }
+                    ]
+                },
                 "color": {
+                    "description": "Color to represent the device on the floor plan",
                     "type": "string"
                 },
-                "createdBy": {
-                    "type": "string"
-                },
-                "createdTime": {
-                    "type": "integer"
-                },
-                "deviceKey": {
-                    "type": "string"
-                },
-                "deviceName": {
-                    "type": "string"
-                },
-                "deviceStatus": {
+                "deviceId": {
+                    "description": "ID of the device being placed",
                     "type": "string"
                 },
                 "fabricKey": {
                     "type": "string"
                 },
                 "fieldOfView": {
+                    "description": "Field of view in degrees, if applicable",
                     "type": "number"
+                },
+                "icon": {
+                    "description": "Icon to represent the device on the floor plan",
+                    "type": "string"
                 },
                 "id": {
                     "type": "string"
                 },
                 "radius": {
+                    "description": "Radius of the device placement circle",
                     "type": "number"
                 },
                 "relativeX": {
@@ -908,19 +1098,16 @@
                     "type": "number"
                 },
                 "sliceEndAngle": {
+                    "description": "End angle of the slice in degrees, if applicable",
                     "type": "number"
                 },
                 "sliceMiddleAngle": {
+                    "description": "Middle angle of the slice in degrees, if applicable",
                     "type": "number"
                 },
                 "sliceStartAngle": {
+                    "description": "Start angle of the slice in degrees, if applicable",
                     "type": "number"
-                },
-                "updatedBy": {
-                    "type": "string"
-                },
-                "updatedTime": {
-                    "type": "integer"
                 },
                 "x": {
                     "description": "Absolute X coordinate",
@@ -929,96 +1116,6 @@
                 "y": {
                     "description": "Absolute Y coordinate",
                     "type": "number"
-                }
-            }
-        },
-        "models.DeviceShort": {
-            "type": "object",
-            "properties": {
-                "active": {
-                    "type": "boolean"
-                },
-                "analytics": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.HeartbeatShort"
-                    }
-                },
-                "enterprise": {
-                    "type": "boolean"
-                },
-                "featurePermissions": {
-                    "$ref": "#/definitions/models.FeaturePermissions"
-                },
-                "key": {
-                    "type": "string"
-                },
-                "latestMedia": {
-                    "$ref": "#/definitions/models.MediaShort"
-                },
-                "latestMediaTimestamp": {
-                    "type": "integer"
-                },
-                "mute": {
-                    "type": "integer"
-                },
-                "presets": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Preset"
-                    }
-                },
-                "sites": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.SiteShort"
-                    }
-                },
-                "tours": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Tour"
-                    }
-                }
-            }
-        },
-        "models.DeviceWrapper": {
-            "type": "object",
-            "properties": {
-                "device": {
-                    "$ref": "#/definitions/models.Device"
-                }
-            }
-        },
-        "models.DevicesWrapper": {
-            "type": "object",
-            "properties": {
-                "devices": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Device"
-                    }
-                }
-            }
-        },
-        "models.ErrorResponse": {
-            "type": "object",
-            "properties": {
-                "error_code": {
-                    "description": "More specific custom error code or type",
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                },
-                "meta_data": {
-                    "$ref": "#/definitions/models.APIMetadata"
-                },
-                "request_id": {
-                    "type": "string"
-                },
-                "status_code": {
-                    "type": "integer"
                 }
             }
         },
@@ -1045,303 +1142,78 @@
         "models.FloorPlan": {
             "type": "object",
             "properties": {
-                "created_by": {
-                    "type": "string"
+                "audit": {
+                    "description": "Audit information",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Audit"
+                        }
+                    ]
                 },
-                "created_time": {
-                    "type": "integer"
-                },
-                "devices": {
+                "devicePlacements": {
+                    "description": "List of devices placed on the floor plan",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/models.DevicePlacement"
                     }
                 },
                 "height": {
+                    "description": "Dimensions of the floor plan in pixels",
                     "type": "integer"
                 },
                 "id": {
                     "type": "string"
                 },
                 "image": {
+                    "description": "Base64 encoded image of the floor plan",
                     "type": "string"
                 },
                 "name": {
+                    "description": "Name of the floor plan",
                     "type": "string"
-                },
-                "updated_by": {
-                    "type": "string"
-                },
-                "updated_time": {
-                    "type": "integer"
                 },
                 "width": {
+                    "description": "Dimensions of the floor plan in pixels",
                     "type": "integer"
                 }
             }
         },
-        "models.Heartbeat": {
+        "models.IO": {
             "type": "object",
             "properties": {
-                "architecture": {
+                "audit": {
+                    "description": "Audit information",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Audit"
+                        }
+                    ]
+                },
+                "deviceId": {
+                    "description": "device identifier",
                     "type": "string"
                 },
-                "boot_time": {
-                    "type": "string"
-                },
-                "cameraConnected": {
-                    "type": "string"
-                },
-                "cameraname": {
-                    "type": "string"
-                },
-                "cameratype": {
-                    "type": "string"
-                },
-                "cloudpublicKey": {
-                    "type": "string"
-                },
-                "clouduser": {
-                    "type": "string"
-                },
-                "cpuid": {
-                    "type": "string"
-                },
-                "docker": {
-                    "type": "boolean"
-                },
-                "e2e_encryption": {
-                    "type": "string"
-                },
-                "encrypted": {
-                    "type": "boolean"
-                },
-                "encryptedData": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
-                },
-                "enterprise": {
-                    "type": "boolean"
-                },
-                "freeMemory": {
-                    "type": "string"
-                },
-                "hasBackChannel": {
-                    "type": "string"
-                },
-                "hash": {
-                    "type": "string"
-                },
-                "hostname": {
-                    "type": "string"
-                },
-                "hub_encryption": {
-                    "type": "string"
-                },
-                "ip_list": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "key": {
-                    "description": "-----------",
-                    "type": "string"
-                },
-                "kios": {
-                    "type": "boolean"
-                },
-                "kubernetes": {
-                    "type": "boolean"
-                },
-                "mac_list": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "onvif": {
-                    "type": "string"
-                },
-                "onvif_events_list": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.ONVIFEvents"
-                    }
-                },
-                "onvif_pantilt": {
-                    "type": "string"
-                },
-                "onvif_presets": {
-                    "type": "string"
-                },
-                "onvif_presets_list": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Preset"
-                    }
-                },
-                "onvif_zoom": {
-                    "type": "string"
-                },
-                "processMemory": {
-                    "type": "string"
-                },
-                "raspberrypi": {
-                    "type": "boolean"
-                },
-                "release": {
-                    "type": "string"
-                },
-                "siteID": {
-                    "type": "string"
-                },
-                "timestamp": {
-                    "type": "integer"
-                },
-                "totalMemory": {
-                    "type": "string"
-                },
-                "uptime": {
-                    "type": "string"
-                },
-                "usedMemory": {
-                    "type": "string"
-                },
-                "version": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.HeartbeatOld": {
-            "type": "object",
-            "properties": {
-                "cameraName": {
-                    "type": "string"
-                },
-                "cameraType": {
-                    "type": "string"
-                },
-                "cloudPublicKey": {
-                    "type": "string"
-                },
-                "cloudUser": {
-                    "type": "string"
-                },
-                "cpuId": {
-                    "type": "string"
-                },
-                "docker": {
-                    "type": "boolean"
-                },
-                "enterprise": {
+                "external": {
                     "type": "boolean"
                 },
                 "hash": {
                     "type": "string"
                 },
-                "key": {
-                    "type": "string"
-                },
-                "kios": {
-                    "type": "boolean"
-                },
-                "kubernetes": {
-                    "type": "boolean"
-                },
-                "onvif": {
-                    "type": "string"
-                },
-                "raspberrypi": {
-                    "type": "boolean"
-                },
-                "siteID": {
-                    "type": "string"
-                },
-                "timestamp": {
-                    "type": "integer"
-                },
-                "uptime": {
-                    "description": "Board          string `json:\"board,omitempty\"`\nDisk1Size      string `json:\"disk1Size,omitempty\" bson:\"disk1size,omitempty\"`\nDisk3Size      string `json:\"disk3Size,omitempty\" bson:\"disk3size,omitempty\"`\nDiskVDASize    string `json:\"diskVDASize,omitempty\" bson:\"diskvdasize,omitempty\"`\nNumberOfFiles  string `json:\"numberOfFiles,omitempty\" bson:\"numberoffiles,omitempty\"`\nTemperature    string `json:\"temperature,omitempty\"`\nWifiSSID       string `json:\"wifiSSID,omitempty\" bson:\"wifissid,omitempty\"`\nWifiStrength   string `json:\"wifiStrength,omitempty\" bson:\"wifisstrength,omitempty\"`",
-                    "type": "string"
-                },
-                "version": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.HeartbeatShort": {
-            "type": "object",
-            "properties": {
-                "cameraConnected": {
-                    "type": "string"
-                },
-                "cameraname": {
-                    "type": "string"
-                },
-                "e2e_encryption": {
-                    "type": "string"
-                },
-                "enterprise": {
-                    "type": "boolean"
-                },
-                "freeMemory": {
-                    "type": "string"
-                },
-                "hasBackChannel": {
-                    "type": "string"
-                },
-                "hub_encryption": {
+                "id": {
                     "type": "string"
                 },
                 "key": {
                     "type": "string"
                 },
-                "onvif": {
-                    "type": "string"
-                },
-                "onvif_events_list": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.ONVIFEvents"
-                    }
-                },
-                "onvif_pantilt": {
-                    "type": "string"
-                },
-                "onvif_presets": {
-                    "type": "string"
-                },
-                "onvif_presets_list": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Preset"
-                    }
-                },
-                "onvif_zoom": {
-                    "type": "string"
-                },
-                "processMemory": {
-                    "type": "string"
-                },
-                "release": {
-                    "type": "string"
-                },
-                "timestamp": {
+                "lastSeenTimestamp": {
+                    "description": "last time the IO was seen",
                     "type": "integer"
                 },
-                "totalMemory": {
+                "type": {
+                    "description": "input or output",
                     "type": "string"
                 },
-                "uptime": {
-                    "type": "string"
-                },
-                "usedMemory": {
-                    "type": "string"
-                },
-                "version": {
+                "value": {
                     "type": "string"
                 }
             }
@@ -1349,77 +1221,142 @@
         "models.Location": {
             "type": "object",
             "properties": {
-                "city": {
+                "address": {
+                    "description": "e.g. \"123 Main St, Anytown, USA\"",
                     "type": "string"
                 },
-                "country": {
-                    "type": "string"
-                },
-                "country_short": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "formatted_address": {
-                    "type": "string"
-                },
-                "geometry": {
-                    "$ref": "#/definitions/models.LocationGeometry"
-                },
-                "postal_code": {
-                    "type": "string"
-                },
-                "region": {
-                    "type": "string"
-                },
-                "street": {
-                    "type": "string"
-                },
-                "street_number": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.LocationGeometry": {
-            "type": "object",
-            "properties": {
-                "location": {
-                    "$ref": "#/definitions/models.LocationGeometryLocation"
-                }
-            }
-        },
-        "models.LocationGeometryLocation": {
-            "type": "object",
-            "properties": {
-                "lat": {
+                "altitude": {
+                    "description": "Altitude in meters",
                     "type": "number"
                 },
-                "lng": {
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
                     "type": "number"
                 }
             }
         },
-        "models.LocationShort": {
+        "models.Marker": {
             "type": "object",
             "properties": {
+                "audit": {
+                    "description": "Audit information",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Audit"
+                        }
+                    ]
+                },
                 "description": {
+                    "description": "Description of the marker",
                     "type": "string"
                 },
-                "formatted_address": {
+                "deviceId": {
+                    "description": "Device information",
                     "type": "string"
                 },
-                "geometry": {
-                    "$ref": "#/definitions/models.LocationGeometry"
+                "duration": {
+                    "description": "Duration of the marker in milliseconds",
+                    "type": "integer"
+                },
+                "endTimestamp": {
+                    "description": "End timestamp of the marker in milliseconds since epoch",
+                    "type": "integer"
+                },
+                "groupId": {
+                    "description": "GroupId is used to identify the group of markers",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "mediaIds": {
+                    "description": "Media information",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "metaData": {
+                    "description": "Additional metadata",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.MarkerMetadata"
+                        }
+                    ]
+                },
+                "name": {
+                    "description": "Name or identifier for the marker e.g., \"a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc.\"",
+                    "type": "string"
+                },
+                "organisationId": {
+                    "description": "OrganisationId is used to identify the organisation that owns the marker",
+                    "type": "string"
+                },
+                "siteId": {
+                    "description": "RBAC information",
+                    "type": "string"
+                },
+                "startTimestamp": {
+                    "description": "Timing information",
+                    "type": "integer"
+                },
+                "synchronize": {
+                    "description": "Synchronize",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Synchronize"
+                        }
+                    ]
+                },
+                "type": {
+                    "description": "Type of the marker e.g., \"alert\", \"event\", \"door_opened\", \"person\", \"car\" etc.",
+                    "type": "string"
+                }
+            }
+        },
+        "models.MarkerMetadata": {
+            "type": "object",
+            "properties": {
+                "comments": {
+                    "description": "Additional comments or description of the marker",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Comment"
+                        }
+                    ]
+                },
+                "tags": {
+                    "description": "Tags associated with the marker for categorization",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
         "models.Media": {
-            "description": "Media model",
             "type": "object",
             "properties": {
+                "atRuntimeMetadata": {
+                    "description": "AtRuntimeMetadata contains metadata that is generated at runtime, which can include\nmore verbose information about the device's current state, capabilities, or configuration.\nfor example the linked sites details, etc.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.MediaAtRuntimeMetadata"
+                        }
+                    ]
+                },
+                "audit": {
+                    "description": "Audit information",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Audit"
+                        }
+                    ]
+                },
                 "deviceId": {
-                    "description": "Media file owner",
+                    "description": "RBAC information\nDeviceId is a unique identifier for the device, it can be used to identify the device in the system.\nOrganisationId is used to identify the organisation that owns the device.",
                     "type": "string"
                 },
                 "duration": {
@@ -1428,15 +1365,16 @@
                 "endTimestamp": {
                     "type": "integer"
                 },
-                "groupId": {
+                "id": {
                     "type": "string"
                 },
                 "metadata": {
                     "description": "Metadata",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.MediaMetadata"
-                    }
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.MediaMetadata"
+                        }
+                    ]
                 },
                 "organisationId": {
                     "type": "string"
@@ -1450,15 +1388,12 @@
                 "spriteProvider": {
                     "type": "string"
                 },
-                "spriteUrl": {
-                    "type": "string"
-                },
                 "startTimestamp": {
                     "description": "Time window of media file.",
                     "type": "integer"
                 },
                 "storageSolution": {
-                    "description": "Media file information (by default Vault (=kstorage), however might change\nin the future (integration with other storage solutions, next to Vault).",
+                    "description": "Media file information (by default \"vault\", however might change\nin the future (integration with other storage solutions, next to Vault).",
                     "type": "string"
                 },
                 "thumbnailFile": {
@@ -1467,17 +1402,23 @@
                 "thumbnailProvider": {
                     "type": "string"
                 },
-                "thumbnailUrl": {
-                    "type": "string"
-                },
-                "userId": {
-                    "type": "string"
-                },
                 "videoFile": {
                     "description": "Media file information",
                     "type": "string"
                 },
                 "videoProvider": {
+                    "description": "Vault provider information (contains where the media is stored on which underlaying cloud storage)",
+                    "type": "string"
+                }
+            }
+        },
+        "models.MediaAtRuntimeMetadata": {
+            "type": "object",
+            "properties": {
+                "spriteUrl": {
+                    "type": "string"
+                },
+                "thumbnailUrl": {
                     "type": "string"
                 },
                 "videoUrl": {
@@ -1499,87 +1440,6 @@
                     "items": {
                         "type": "string"
                     }
-                }
-            }
-        },
-        "models.MediaShort": {
-            "type": "object",
-            "properties": {
-                "camera_id": {
-                    "type": "string"
-                },
-                "date": {
-                    "type": "string"
-                },
-                "key": {
-                    "type": "string"
-                },
-                "path": {
-                    "type": "string"
-                },
-                "provider": {
-                    "type": "string"
-                },
-                "source": {
-                    "type": "string"
-                },
-                "spriteFile": {
-                    "type": "string"
-                },
-                "spriteInterval": {
-                    "type": "integer"
-                },
-                "spriteProvider": {
-                    "type": "string"
-                },
-                "sprite_url": {
-                    "type": "string"
-                },
-                "src": {
-                    "type": "string"
-                },
-                "thumbnailFile": {
-                    "type": "string"
-                },
-                "thumbnailProvider": {
-                    "type": "string"
-                },
-                "thumbnail_url": {
-                    "type": "string"
-                },
-                "time": {
-                    "type": "string"
-                },
-                "timestamp": {
-                    "type": "integer"
-                },
-                "type": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.Mute": {
-            "type": "object",
-            "properties": {
-                "mute": {
-                    "type": "integer"
-                }
-            }
-        },
-        "models.ONVIFEvents": {
-            "type": "object",
-            "properties": {
-                "key": {
-                    "type": "string"
-                },
-                "timestamp": {
-                    "type": "integer"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "value": {
-                    "type": "string"
                 }
             }
         },
@@ -1641,30 +1501,13 @@
         "models.Site": {
             "type": "object",
             "properties": {
-                "access_key": {
-                    "type": "string"
-                },
-                "address": {
-                    "$ref": "#/definitions/models.Location"
-                },
-                "all_devices": {
-                    "description": "Calculated on the fly!",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "color": {
-                    "type": "string"
-                },
-                "country": {
-                    "type": "string"
-                },
-                "created_by": {
-                    "type": "string"
-                },
-                "created_time": {
-                    "type": "integer"
+                "audit": {
+                    "description": "Audit information",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Audit"
+                        }
+                    ]
                 },
                 "description": {
                     "type": "string"
@@ -1673,12 +1516,6 @@
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
-                },
-                "floor_plans": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.FloorPlan"
                     }
                 },
                 "groups": {
@@ -1690,83 +1527,145 @@
                 "id": {
                     "type": "string"
                 },
-                "initials": {
-                    "type": "string"
+                "locationMetadata": {
+                    "description": "Location metadata",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.SiteLocationMetadata"
+                        }
+                    ]
+                },
+                "metadata": {
+                    "description": "Metadata",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.SiteMetadata"
+                        }
+                    ]
                 },
                 "name": {
+                    "type": "string"
+                },
+                "organisationId": {
+                    "description": "RBAC information",
+                    "type": "string"
+                },
+                "storageSolution": {
+                    "description": "Media file information (by default \"vault\", however might change\nin the future (integration with other storage solutions, next to Vault).",
+                    "type": "string"
+                },
+                "vaultAccessKey": {
+                    "type": "string"
+                },
+                "vaultSecretKey": {
+                    "type": "string"
+                },
+                "vaultUri": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.SiteLocationMetadata": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "$ref": "#/definitions/models.Location"
+                }
+            }
+        },
+        "models.SiteMetadata": {
+            "type": "object",
+            "properties": {
+                "color": {
+                    "type": "string"
+                },
+                "floorPlans": {
+                    "description": "List of floor plans associated with the site",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.FloorPlan"
+                    }
+                },
+                "initials": {
                     "type": "string"
                 },
                 "numberOfFloorPlans": {
                     "type": "integer"
+                }
+            }
+        },
+        "models.Status": {
+            "type": "string",
+            "enum": [
+                "pending",
+                "skipped",
+                "assigned",
+                "inProgress",
+                "completed",
+                "failed"
+            ],
+            "x-enum-varnames": [
+                "SynchronizeStatusPending",
+                "SynchronizeStatusSkipped",
+                "SynchronizeStatusAssigned",
+                "SynchronizeStatusInProgress",
+                "SynchronizeStatusCompleted",
+                "SynchronizeStatusFailed"
+            ]
+        },
+        "models.Synchronize": {
+            "type": "object",
+            "properties": {
+                "events": {
+                    "description": "History of synchronization events",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SynchronizeEvent"
+                    }
                 },
-                "secret_key": {
+                "message": {
+                    "description": "Additional message or error description related to synchronization",
                     "type": "string"
                 },
-                "storage_uri": {
-                    "type": "string"
+                "status": {
+                    "description": "Status of synchronization with external systems",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Status"
+                        }
+                    ]
                 },
-                "street": {
-                    "type": "string"
-                },
-                "updated_by": {
-                    "type": "string"
-                },
-                "updated_time": {
+                "timestamp": {
+                    "description": "Timestamp of the last synchronization attempt",
                     "type": "integer"
                 },
-                "user_id": {
-                    "type": "string"
-                },
-                "username": {
-                    "description": "added by accident should be removed!",
+                "workerId": {
+                    "description": "ID of the worker handling synchronization",
                     "type": "string"
                 }
             }
         },
-        "models.SiteShort": {
-            "type": "object",
-            "properties": {
-                "address": {
-                    "$ref": "#/definitions/models.Location"
-                },
-                "color": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "initials": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.SiteWrapper": {
-            "type": "object",
-            "properties": {
-                "site": {
-                    "$ref": "#/definitions/models.Site"
-                }
-            }
-        },
-        "models.SuccessResponse": {
+        "models.SynchronizeEvent": {
             "type": "object",
             "properties": {
                 "message": {
+                    "description": "Additional message or error description related to synchronization",
                     "type": "string"
                 },
-                "meta_data": {
-                    "$ref": "#/definitions/models.APIMetadata"
+                "status": {
+                    "description": "Status of synchronization with external systems",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Status"
+                        }
+                    ]
                 },
-                "request_id": {
-                    "type": "string"
-                },
-                "status_code": {
+                "timestamp": {
+                    "description": "Timestamp of the last synchronization attempt",
                     "type": "integer"
                 },
-                "success_code": {
+                "workerId": {
+                    "description": "ID of the worker handling synchronization",
                     "type": "string"
                 }
             }
@@ -1857,24 +1756,6 @@
                 },
                 "timeRange2MinWednesday": {
                     "type": "number"
-                }
-            }
-        },
-        "models.TimelineValue": {
-            "description": "Timeline value model",
-            "type": "object",
-            "properties": {
-                "currentScale": {
-                    "type": "integer"
-                },
-                "currentTime": {
-                    "type": "integer"
-                },
-                "startTime": {
-                    "type": "integer"
-                },
-                "timelineZero": {
-                    "type": "integer"
                 }
             }
         },
