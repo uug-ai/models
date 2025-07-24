@@ -45,13 +45,24 @@ jobs:
         working-directory: ./src/typescript
         run: |
           if [ "${{ github.event_name }}" = "release" ]; then
+            # Use release tag version
             RELEASE_VERSION=${GITHUB_REF#refs/tags/}
             RELEASE_VERSION=${RELEASE_VERSION#v}
+            echo "Setting version from release tag: $RELEASE_VERSION"
+            npm version $RELEASE_VERSION --no-git-tag-version
           else
-            RELEASE_VERSION="${{ github.event.inputs.version }}"
+            # Manual dispatch - check if it's a semver bump or specific version
+            VERSION_INPUT="${{ github.event.inputs.version_bump }}"
+            if [[ "$VERSION_INPUT" =~ ^[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then
+              # Specific version provided
+              echo "Setting specific version: $VERSION_INPUT"
+              npm version $VERSION_INPUT --no-git-tag-version
+            else
+              # Semver bump (patch, minor, major)
+              echo "Bumping version: $VERSION_INPUT"
+              npm version $VERSION_INPUT --no-git-tag-version
+            fi
           fi
-          echo "Setting version to: $RELEASE_VERSION"
-          npm version $RELEASE_VERSION --no-git-tag-version
           
       - name: Authenticate with NPM
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_ACCESS_TOKEN }}" > ~/.npmrc
