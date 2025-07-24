@@ -1,0 +1,24 @@
+{
+  "name": "@uug-ai/models",
+  "version": "1.0.8",
+  "description": "TypeScript type definitions for Go models",
+  "main": "dist/typescript/types.js",
+  "types": "dist/typescript/types.d.ts",
+  "files": [
+    "dist/**/*",
+    "src/**/*"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["models", "typescript", "api"],
+  "author": "UUG AI",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

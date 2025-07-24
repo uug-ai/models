@@ -34,7 +34,7 @@ npm run generate:types    # OpenAPI YAML → TypeScript types
 
 - `docs/swagger.yaml` - Swagger 2.0 specification (intermediate)
 - `docs/openapi.yaml` - OpenAPI 3.x specification
-- `src/types.ts` - TypeScript type definitions
+- `src/typescript/types.ts` - TypeScript type definitions
 
 ### Adding New Models
 

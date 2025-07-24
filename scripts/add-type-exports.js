@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Read the generated types file
-const typesPath = path.join(__dirname, '..', 'src', 'types.ts');
+const typesPath = path.join(__dirname, '..', 'src', 'typescript', 'types.ts');
 let content = fs.readFileSync(typesPath, 'utf8');
 
 // Extract schema names from the components interface
