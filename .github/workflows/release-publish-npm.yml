@@ -50,6 +50,7 @@ jobs:
           else
             RELEASE_VERSION="${{ github.event.inputs.version }}"
           fi
+          echo "Setting version to: $RELEASE_VERSION"
           npm version $RELEASE_VERSION --no-git-tag-version
           
       - name: Authenticate with NPM

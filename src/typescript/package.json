@@ -2,11 +2,10 @@
   "name": "@uug-ai/models",
   "version": "1.0.8",
   "description": "TypeScript type definitions for Go models",
-  "main": "dist/typescript/types.js",
-  "types": "dist/typescript/types.d.ts",
+  "main": "dist/types.js",
+  "types": "dist/types.d.ts",
   "files": [
-    "dist/**/*",
-    "src/**/*"
+    "dist/**/*"
   ],
   "scripts": {
     "build": "tsc",
