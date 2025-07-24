@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/uug-ai/models/pkg/api"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -61,23 +60,4 @@ type MediaAtRuntimeMetadata struct {
 	VideoUrl     string `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
 	SpriteUrl    string `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
-}
-
-type GetMediaByDayAndDeviceRequest struct {
-	Day       string `json:"day" bson:"day,omitempty"`             // Day in YYYY-MM-DD format
-	DeviceKey string `json:"deviceKey" bson:"deviceKey,omitempty"` // Device key to filter media by device
-}
-
-type GetMediaByDayAndDeviceResponse struct {
-	Device Device  `json:"device"`
-	Media  []Media `json:"media"`
-}
-
-type GetMediaByDayAndDeviceSuccessResponse struct {
-	api.SuccessResponse
-	Data GetMediaByDayAndDeviceResponse `json:"data"`
-}
-
-type GetMediaByDayAndDeviceErrorResponse struct {
-	api.ErrorResponse
 }
