@@ -65,8 +65,9 @@ jobs:
           fi
           
       - name: Authenticate with NPM
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_ACCESS_TOKEN }}" > ~/.npmrc
-           
+        working-directory: ./src/typescript
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_ACCESS_TOKEN }}" > .npmrc
+
       - name: Publish to NPM
         working-directory: ./src/typescript
         run: npm publish
