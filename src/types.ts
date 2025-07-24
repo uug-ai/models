@@ -1557,42 +1557,8 @@ export interface components {
 export type $defs = Record<string, never>;
 export type operations = Record<string, never>;
 
-// Convenient type exports for easier access
-export type api.ErrorResponse = components['schemas']['api.ErrorResponse'];
-export type api.Metadata = components['schemas']['api.Metadata'];
-export type api.SuccessResponse = components['schemas']['api.SuccessResponse'];
-export type Audit = components['schemas']['models.Audit'];
-export type Comment = components['schemas']['models.Comment'];
-export type Device = components['schemas']['models.Device'];
-export type DeviceCameraMetadata = components['schemas']['models.DeviceCameraMetadata'];
-export type DeviceFeaturePermissions = components['schemas']['models.DeviceFeaturePermissions'];
-export type DeviceLocationMetadata = components['schemas']['models.DeviceLocationMetadata'];
-export type DeviceMetadata = components['schemas']['models.DeviceMetadata'];
-export type DevicePlacement = components['schemas']['models.DevicePlacement'];
-export type FeaturePermissions = components['schemas']['models.FeaturePermissions'];
-export type FloorPlan = components['schemas']['models.FloorPlan'];
-export type IO = components['schemas']['models.IO'];
-export type Location = components['schemas']['models.Location'];
-export type Marker = components['schemas']['models.Marker'];
-export type MarkerMetadata = components['schemas']['models.MarkerMetadata'];
-export type Media = components['schemas']['models.Media'];
-export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
-export type MediaMetadata = components['schemas']['models.MediaMetadata'];
-export type Preset = components['schemas']['models.Preset'];
-export type Role = components['schemas']['models.Role'];
-export type Site = components['schemas']['models.Site'];
-export type SiteLocationMetadata = components['schemas']['models.SiteLocationMetadata'];
-export type SiteMetadata = components['schemas']['models.SiteMetadata'];
-export type Synchronize = components['schemas']['models.Synchronize'];
-export type SynchronizeEvent = components['schemas']['models.SynchronizeEvent'];
-export type TimeWindow = components['schemas']['models.TimeWindow'];
-export type Tour = components['schemas']['models.Tour'];
-
-// Export namespace for organized access
+// Export namespaces for organized access
 export namespace models {
-    export type api.ErrorResponse = components['schemas']['api.ErrorResponse'];
-    export type api.Metadata = components['schemas']['api.Metadata'];
-    export type api.SuccessResponse = components['schemas']['api.SuccessResponse'];
     export type Audit = components['schemas']['models.Audit'];
     export type Comment = components['schemas']['models.Comment'];
     export type Device = components['schemas']['models.Device'];
@@ -1619,4 +1585,10 @@ export namespace models {
     export type SynchronizeEvent = components['schemas']['models.SynchronizeEvent'];
     export type TimeWindow = components['schemas']['models.TimeWindow'];
     export type Tour = components['schemas']['models.Tour'];
+}
+
+export namespace api {
+    export type ErrorResponse = components['schemas']['api.ErrorResponse'];
+    export type Metadata = components['schemas']['api.Metadata'];
+    export type SuccessResponse = components['schemas']['api.SuccessResponse'];
 }
