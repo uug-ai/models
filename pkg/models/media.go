@@ -64,6 +64,8 @@ type MediaAtRuntimeMetadata struct {
 }
 
 type GetMediaByDayAndDeviceRequest struct {
+	Day       string `json:"day" bson:"day,omitempty"`             // Day in YYYY-MM-DD format
+	DeviceKey string `json:"deviceKey" bson:"deviceKey,omitempty"` // Device key to filter media by device
 }
 
 type GetMediaByDayAndDeviceResponse struct {
