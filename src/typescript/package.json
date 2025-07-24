@@ -1,6 +1,6 @@
 {
   "name": "@uug-ai/models",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "TypeScript type definitions for Go models",
   "main": "dist/types.js",
   "types": "dist/types.d.ts",
