@@ -6,6 +6,62 @@ A Go package defining data models for media file management and metadata handlin
 
 This package provides a unified `Media` struct that represents media files (primarily video) along with their associated metadata, storage information, and processed assets like thumbnails and sprites.
 
+## TypeScript Generation
+
+This project automatically generates TypeScript types from Go models using **Swagger/OpenAPI** as an intermediate format.
+
+### How it works
+
+1. **`swag`** scans Go code and generates Swagger 2.0 spec from struct definitions
+2. **`swagger2openapi`** converts Swagger 2.0 to OpenAPI 3.x
+3. **`openapi-typescript`** generates TypeScript types from OpenAPI 3.x
+4. **Post-processing script** adds convenient direct exports
+
+### Usage
+
+To generate TypeScript types from your Go models:
+
+```bash
+# Generate both OpenAPI spec and TypeScript types
+npm run generate
+
+# Or run steps individually:
+npm run generate:openapi  # Go models → OpenAPI 3.x YAML
+npm run generate:types    # OpenAPI YAML → TypeScript types
+```
+
+### Generated Files
+
+- `docs/swagger.yaml` - Swagger 2.0 specification (intermediate)
+- `docs/openapi.yaml` - OpenAPI 3.x specification
+- `src/types.ts` - TypeScript type definitions
+
+### Adding New Models
+
+1. **Add your Go struct** to `pkg/models/`
+2. **Reference it in `cmd/main.go`** (add to the variable declarations or API endpoints)
+3. **Run `npm run generate`** to update the TypeScript types
+
+**No manual script updates needed!** The `swag` tool automatically discovers all referenced models.
+
+### Example Usage in TypeScript
+
+```typescript
+import { Media, models } from './src/types';
+
+// Direct import
+const media: Media = {
+  deviceId: "camera-001",
+  startTimestamp: 1640995200,
+  endTimestamp: 1640998800,
+  duration: 3600,
+  videoUrl: "https://example.com/video.mp4"
+};
+
+// Namespace import
+const media2: models.Media = { ... };
+```
+
 ## Media Model
 
 The `Media` struct is designed to handle comprehensive media file information including:
