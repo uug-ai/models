@@ -2,6 +2,12 @@ name: Publish to NPM
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 1.2.3)'
+        required: true
+        type: string
 
 jobs:
   publish:
@@ -42,8 +48,9 @@ jobs:
           RELEASE_VERSION=${RELEASE_VERSION#v}
           npm version $RELEASE_VERSION --no-git-tag-version
           
+      - name: Authenticate with NPM
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_ACCESS_TOKEN }}" > ~/.npmrc
+           
       - name: Publish to NPM
         working-directory: ./src/typescript
         run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
