@@ -1,5 +1,7 @@
 package api
 
+import "github.com/uug-ai/models/pkg/models"
+
 // MediaStatus represents specific status codes for media operations
 type MediaStatus string
 
@@ -69,4 +71,23 @@ type GetMediaByDayAndDeviceFilteredErrorResponse struct {
 type GetMediaByDayAndDeviceFilteredSuccessResponse struct {
 	SuccessResponse
 	Data GetMediaByDayAndDeviceFilteredResponse `json:"data"`
+}
+
+// GetMediaByDayAndDevice
+// @Router /media/day/{day}/device/{deviceId} [get]
+type GetMediaByDayAndDeviceRequest struct {
+}
+
+type GetMediaByDayAndDeviceResponse struct {
+	Device models.Device  `json:"device"`
+	Media  []models.Media `json:"media"`
+}
+
+type GetMediaByDayAndDeviceSuccessResponse struct {
+	SuccessResponse
+	Data GetMediaByDayAndDeviceResponse `json:"data"`
+}
+
+type GetMediaByDayAndDeviceErrorResponse struct {
+	ErrorResponse
 }
