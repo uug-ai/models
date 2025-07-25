@@ -59,6 +59,23 @@ func (ms MediaStatus) Translate(lang string) string {
 	return ms.String()
 }
 
+type Filter struct {
+	LastMedia       int64            `json:"lastMedia" bson:"lastMedia"`
+	GlobalSearch    bool             `json:"globalSearch" bson:"globalSearch"`
+	Dates           []string         `json:"dates" bson:"dates"`
+	Instances       []string         `json:"instances" bson:"instances"`
+	Regions         []models.Region  `json:"regions" bson:"regions"`
+	Classifications []string         `json:"classifications" bson:"classifications"`
+	Sort            string           `json:"sort" bson:"sort"`
+	Favourite       bool             `json:"favourite" bson:"favourite"`
+	HasLabel        bool             `json:"hasLabel" bson:"hasLabel"`
+	HourRange       models.HourRange `json:"hourRange" bson:"hourRange"`
+	Markers         []models.Marker  `json:"markers" bson:"markers"`
+	ViewStyle       string           `json:"viewStyle" bson:"viewStyle"`
+	Offset          int64            `json:"offset" bson:"offset"`
+	Limit           int64            `json:"limit" bson:"limit"`
+}
+
 // GetMediaByDayAndDeviceFiltered
 // @Router /media/day/{day}/device/{deviceId} [post]
 type GetMediaByDayAndDeviceFilteredRequest struct {

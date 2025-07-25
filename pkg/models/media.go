@@ -61,3 +61,21 @@ type MediaAtRuntimeMetadata struct {
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
 	SpriteUrl    string `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
 }
+
+type Region struct {
+	Id           string  `json:"id" bson:"id"`
+	Device       string  `json:"device" bson:"device"`
+	Width        int     `json:"width" bson:"width"`
+	Height       int     `json:"height" bson:"height"`
+	RegionPoints []Point `json:"regionPoints" bson:"regionPoints"`
+}
+
+type Point struct {
+	X float64 `json:"x" bson:"x"`
+	Y float64 `json:"y" bson:"y"`
+}
+
+type HourRange struct {
+	Start int64 `json:"start" bson:"start"`
+	End   int64 `json:"end" bson:"end"`
+}
