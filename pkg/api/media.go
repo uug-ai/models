@@ -59,52 +59,36 @@ func (ms MediaStatus) Translate(lang string) string {
 	return ms.String()
 }
 
-type Filter struct {
+type MediaFilter struct {
 	LastMedia       int64            `json:"lastMedia" bson:"lastMedia"`
 	GlobalSearch    bool             `json:"globalSearch" bson:"globalSearch"`
 	Dates           []string         `json:"dates" bson:"dates"`
-	Instances       []string         `json:"instances" bson:"instances"`
+	Devices         []string         `json:"devices" bson:"devices"`
 	Regions         []models.Region  `json:"regions" bson:"regions"`
 	Classifications []string         `json:"classifications" bson:"classifications"`
 	Sort            string           `json:"sort" bson:"sort"`
 	Favourite       bool             `json:"favourite" bson:"favourite"`
 	HasLabel        bool             `json:"hasLabel" bson:"hasLabel"`
 	HourRange       models.HourRange `json:"hourRange" bson:"hourRange"`
-	Markers         []models.Marker  `json:"markers" bson:"markers"`
+	Markers         []string         `json:"markers" bson:"markers"`
 	ViewStyle       string           `json:"viewStyle" bson:"viewStyle"`
 	Offset          int64            `json:"offset" bson:"offset"`
 	Limit           int64            `json:"limit" bson:"limit"`
 }
 
-// GetMediaByDayAndDeviceFiltered
-// @Router /media/day/{day}/device/{deviceId} [post]
-type GetMediaByDayAndDeviceFilteredRequest struct {
+// GetTimeline
+// @Router /timeline/{deviceId} [post]
+type GetTimelineRequest struct {
+	Filter MediaFilter `json:"filter" bson:"filter"`
 }
-type GetMediaByDayAndDeviceFilteredResponse struct {
-}
-type GetMediaByDayAndDeviceFilteredErrorResponse struct {
-	ErrorResponse
-}
-type GetMediaByDayAndDeviceFilteredSuccessResponse struct {
-	SuccessResponse
-	Data GetMediaByDayAndDeviceFilteredResponse `json:"data"`
-}
-
-// GetMediaByDayAndDevice
-// @Router /media/day/{day}/device/{deviceId} [get]
-type GetMediaByDayAndDeviceRequest struct {
-}
-
-type GetMediaByDayAndDeviceResponse struct {
+type GetTimelineResponse struct {
 	Device models.Device  `json:"device"`
 	Media  []models.Media `json:"media"`
 }
-
-type GetMediaByDayAndDeviceSuccessResponse struct {
-	SuccessResponse
-	Data GetMediaByDayAndDeviceResponse `json:"data"`
-}
-
-type GetMediaByDayAndDeviceErrorResponse struct {
+type GetTimelineErrorResponse struct {
 	ErrorResponse
+}
+type GetTimelineSuccessResponse struct {
+	SuccessResponse
+	Data GetTimelineResponse `json:"data"`
 }
