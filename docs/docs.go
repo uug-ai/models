@@ -15,6 +15,98 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/internal/addmarkererrorresponse": {
+            "get": {
+                "description": "Internal endpoint used only to ensure AddMarkerErrorResponse schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get AddMarkerErrorResponse (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.AddMarkerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/addmarkerrequest": {
+            "get": {
+                "description": "Internal endpoint used only to ensure AddMarkerRequest schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get AddMarkerRequest (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.AddMarkerRequest"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/addmarkerresponse": {
+            "get": {
+                "description": "Internal endpoint used only to ensure AddMarkerResponse schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get AddMarkerResponse (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.AddMarkerResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/addmarkersuccessresponse": {
+            "get": {
+                "description": "Internal endpoint used only to ensure AddMarkerSuccessResponse schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get AddMarkerSuccessResponse (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.AddMarkerSuccessResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/internal/audit": {
             "get": {
                 "description": "Internal endpoint used only to ensure Audit schema is generated in OpenAPI spec",
@@ -222,6 +314,27 @@ const docTemplate = `{
                 }
             }
         },
+        "/internal/entitystatus": {
+            "get": {
+                "description": "Internal endpoint used only to ensure EntityStatus schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get EntityStatus (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {}
+                    }
+                }
+            }
+        },
         "/internal/featurepermissions": {
             "get": {
                 "description": "Internal endpoint used only to ensure FeaturePermissions schema is generated in OpenAPI spec",
@@ -263,6 +376,213 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.FloorPlan"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/getmarkerserrorresponse": {
+            "get": {
+                "description": "Internal endpoint used only to ensure GetMarkersErrorResponse schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get GetMarkersErrorResponse (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.GetMarkersErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/getmarkersrequest": {
+            "get": {
+                "description": "Internal endpoint used only to ensure GetMarkersRequest schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get GetMarkersRequest (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.GetMarkersRequest"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/getmarkersresponse": {
+            "get": {
+                "description": "Internal endpoint used only to ensure GetMarkersResponse schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get GetMarkersResponse (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.GetMarkersResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/getmarkerssuccessresponse": {
+            "get": {
+                "description": "Internal endpoint used only to ensure GetMarkersSuccessResponse schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get GetMarkersSuccessResponse (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.GetMarkersSuccessResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/gettimelineerrorresponse": {
+            "get": {
+                "description": "Internal endpoint used only to ensure GetTimelineErrorResponse schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get GetTimelineErrorResponse (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.GetTimelineErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/gettimelinerequest": {
+            "get": {
+                "description": "Internal endpoint used only to ensure GetTimelineRequest schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get GetTimelineRequest (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.GetTimelineRequest"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/gettimelineresponse": {
+            "get": {
+                "description": "Internal endpoint used only to ensure GetTimelineResponse schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get GetTimelineResponse (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.GetTimelineResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/gettimelinesuccessresponse": {
+            "get": {
+                "description": "Internal endpoint used only to ensure GetTimelineSuccessResponse schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get GetTimelineSuccessResponse (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.GetTimelineSuccessResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/hourrange": {
+            "get": {
+                "description": "Internal endpoint used only to ensure HourRange schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get HourRange (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.HourRange"
                         }
                     }
                 }
@@ -383,6 +703,29 @@ const docTemplate = `{
                 }
             }
         },
+        "/internal/mediafilter": {
+            "get": {
+                "description": "Internal endpoint used only to ensure MediaFilter schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get MediaFilter (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.MediaFilter"
+                        }
+                    }
+                }
+            }
+        },
         "/internal/mediametadata": {
             "get": {
                 "description": "Internal endpoint used only to ensure MediaMetadata schema is generated in OpenAPI spec",
@@ -406,6 +749,52 @@ const docTemplate = `{
                 }
             }
         },
+        "/internal/metadata": {
+            "get": {
+                "description": "Internal endpoint used only to ensure Metadata schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get Metadata (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Metadata"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/point": {
+            "get": {
+                "description": "Internal endpoint used only to ensure Point schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get Point (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Point"
+                        }
+                    }
+                }
+            }
+        },
         "/internal/preset": {
             "get": {
                 "description": "Internal endpoint used only to ensure Preset schema is generated in OpenAPI spec",
@@ -424,6 +813,29 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.Preset"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/region": {
+            "get": {
+                "description": "Internal endpoint used only to ensure Region schema is generated in OpenAPI spec",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "internal"
+                ],
+                "summary": "Get Region (schema generation only)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Region"
                         }
                     }
                 }
@@ -693,12 +1105,16 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "api.ErrorResponse": {
+        "api.AddMarkerErrorResponse": {
             "type": "object",
             "properties": {
                 "applicationStatusCode": {
                     "description": "Application-specific error code",
-                    "type": "integer"
+                    "type": "string"
+                },
+                "entityStatusCode": {
+                    "description": "Entity-specific error code",
+                    "type": "string"
                 },
                 "httpStatusCode": {
                     "description": "HTTP status code for the error",
@@ -718,6 +1134,303 @@ const docTemplate = `{
                 }
             }
         },
+        "api.AddMarkerRequest": {
+            "type": "object",
+            "properties": {
+                "marker": {
+                    "$ref": "#/definitions/models.Marker"
+                }
+            }
+        },
+        "api.AddMarkerResponse": {
+            "type": "object",
+            "properties": {
+                "marker": {
+                    "$ref": "#/definitions/models.Marker"
+                }
+            }
+        },
+        "api.AddMarkerSuccessResponse": {
+            "type": "object",
+            "properties": {
+                "applicationStatusCode": {
+                    "description": "Application-specific status code",
+                    "type": "string"
+                },
+                "data": {
+                    "$ref": "#/definitions/api.AddMarkerResponse"
+                },
+                "entityStatusCode": {
+                    "description": "Entity-specific status code",
+                    "type": "string"
+                },
+                "httpStatusCode": {
+                    "description": "HTTP status code for the response",
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "Success message describing the operation",
+                    "type": "string"
+                },
+                "metaData": {
+                    "description": "Additional metadata about the response, such as timestamps and request IDs",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.Metadata"
+                        }
+                    ]
+                }
+            }
+        },
+        "api.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "applicationStatusCode": {
+                    "description": "Application-specific error code",
+                    "type": "string"
+                },
+                "entityStatusCode": {
+                    "description": "Entity-specific error code",
+                    "type": "string"
+                },
+                "httpStatusCode": {
+                    "description": "HTTP status code for the error",
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "Error message describing the issue",
+                    "type": "string"
+                },
+                "metaData": {
+                    "description": "Additional metadata about the error, such as timestamps and request IDs",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.Metadata"
+                        }
+                    ]
+                }
+            }
+        },
+        "api.GetMarkersErrorResponse": {
+            "type": "object",
+            "properties": {
+                "applicationStatusCode": {
+                    "description": "Application-specific error code",
+                    "type": "string"
+                },
+                "entityStatusCode": {
+                    "description": "Entity-specific error code",
+                    "type": "string"
+                },
+                "httpStatusCode": {
+                    "description": "HTTP status code for the error",
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "Error message describing the issue",
+                    "type": "string"
+                },
+                "metaData": {
+                    "description": "Additional metadata about the error, such as timestamps and request IDs",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.Metadata"
+                        }
+                    ]
+                }
+            }
+        },
+        "api.GetMarkersRequest": {
+            "type": "object"
+        },
+        "api.GetMarkersResponse": {
+            "type": "object",
+            "properties": {
+                "markers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Marker"
+                    }
+                }
+            }
+        },
+        "api.GetMarkersSuccessResponse": {
+            "type": "object",
+            "properties": {
+                "applicationStatusCode": {
+                    "description": "Application-specific status code",
+                    "type": "string"
+                },
+                "data": {
+                    "$ref": "#/definitions/api.GetMarkersResponse"
+                },
+                "entityStatusCode": {
+                    "description": "Entity-specific status code",
+                    "type": "string"
+                },
+                "httpStatusCode": {
+                    "description": "HTTP status code for the response",
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "Success message describing the operation",
+                    "type": "string"
+                },
+                "metaData": {
+                    "description": "Additional metadata about the response, such as timestamps and request IDs",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.Metadata"
+                        }
+                    ]
+                }
+            }
+        },
+        "api.GetTimelineErrorResponse": {
+            "type": "object",
+            "properties": {
+                "applicationStatusCode": {
+                    "description": "Application-specific error code",
+                    "type": "string"
+                },
+                "entityStatusCode": {
+                    "description": "Entity-specific error code",
+                    "type": "string"
+                },
+                "httpStatusCode": {
+                    "description": "HTTP status code for the error",
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "Error message describing the issue",
+                    "type": "string"
+                },
+                "metaData": {
+                    "description": "Additional metadata about the error, such as timestamps and request IDs",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.Metadata"
+                        }
+                    ]
+                }
+            }
+        },
+        "api.GetTimelineRequest": {
+            "type": "object",
+            "properties": {
+                "filter": {
+                    "$ref": "#/definitions/api.MediaFilter"
+                }
+            }
+        },
+        "api.GetTimelineResponse": {
+            "type": "object",
+            "properties": {
+                "device": {
+                    "$ref": "#/definitions/models.Device"
+                },
+                "media": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Media"
+                    }
+                }
+            }
+        },
+        "api.GetTimelineSuccessResponse": {
+            "type": "object",
+            "properties": {
+                "applicationStatusCode": {
+                    "description": "Application-specific status code",
+                    "type": "string"
+                },
+                "data": {
+                    "$ref": "#/definitions/api.GetTimelineResponse"
+                },
+                "entityStatusCode": {
+                    "description": "Entity-specific status code",
+                    "type": "string"
+                },
+                "httpStatusCode": {
+                    "description": "HTTP status code for the response",
+                    "type": "integer"
+                },
+                "message": {
+                    "description": "Success message describing the operation",
+                    "type": "string"
+                },
+                "metaData": {
+                    "description": "Additional metadata about the response, such as timestamps and request IDs",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.Metadata"
+                        }
+                    ]
+                }
+            }
+        },
+        "api.MediaFilter": {
+            "type": "object",
+            "properties": {
+                "classifications": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "dates": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "devices": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "favourite": {
+                    "type": "boolean"
+                },
+                "globalSearch": {
+                    "type": "boolean"
+                },
+                "hasLabel": {
+                    "type": "boolean"
+                },
+                "hourRange": {
+                    "$ref": "#/definitions/models.HourRange"
+                },
+                "lastMedia": {
+                    "type": "integer"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "markers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "regions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Region"
+                    }
+                },
+                "sort": {
+                    "type": "string"
+                },
+                "viewStyle": {
+                    "type": "string"
+                }
+            }
+        },
         "api.Metadata": {
             "type": "object",
             "properties": {
@@ -726,21 +1439,38 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "function": {
+                    "description": "Function name where the response was generated",
                     "type": "string"
                 },
+                "language": {
+                    "description": "Language of the response, if applicable",
+                    "type": "string"
+                },
+                "missingFields": {
+                    "description": "List of missing fields in the request",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "organisationId": {
+                    "description": "Organisation ID for the request",
                     "type": "string"
                 },
                 "path": {
+                    "description": "Path of the request",
                     "type": "string"
                 },
                 "timestamp": {
+                    "description": "Timestamp of the request or response",
                     "type": "integer"
                 },
                 "traceId": {
+                    "description": "Trace ID for tracking requests",
                     "type": "string"
                 },
                 "userId": {
+                    "description": "User ID of the user making the request",
                     "type": "string"
                 }
             }
@@ -749,16 +1479,28 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "applicationStatusCode": {
-                    "type": "integer"
+                    "description": "Application-specific status code",
+                    "type": "string"
+                },
+                "entityStatusCode": {
+                    "description": "Entity-specific status code",
+                    "type": "string"
                 },
                 "httpStatusCode": {
+                    "description": "HTTP status code for the response",
                     "type": "integer"
                 },
                 "message": {
+                    "description": "Success message describing the operation",
                     "type": "string"
                 },
                 "metaData": {
-                    "$ref": "#/definitions/api.Metadata"
+                    "description": "Additional metadata about the response, such as timestamps and request IDs",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/api.Metadata"
+                        }
+                    ]
                 }
             }
         },
@@ -1184,6 +1926,17 @@ const docTemplate = `{
                 }
             }
         },
+        "models.HourRange": {
+            "type": "object",
+            "properties": {
+                "end": {
+                    "type": "integer"
+                },
+                "start": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.IO": {
             "type": "object",
             "properties": {
@@ -1449,6 +2202,17 @@ const docTemplate = `{
                 }
             }
         },
+        "models.Point": {
+            "type": "object",
+            "properties": {
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
+                }
+            }
+        },
         "models.Preset": {
             "type": "object",
             "properties": {
@@ -1466,6 +2230,29 @@ const docTemplate = `{
                 },
                 "z": {
                     "type": "number"
+                }
+            }
+        },
+        "models.Region": {
+            "type": "object",
+            "properties": {
+                "device": {
+                    "type": "string"
+                },
+                "height": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "regionPoints": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Point"
+                    }
+                },
+                "width": {
+                    "type": "integer"
                 }
             }
         },

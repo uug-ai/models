@@ -50,6 +50,160 @@ func CreateMedia() {}
 // Dummy endpoints to ensure all models are included in OpenAPI spec
 // These endpoints exist only to force swag to generate schemas for all models
 
+// API package models
+
+// GetMetadata godoc
+// @Summary Get Metadata (schema generation only)
+// @Description Internal endpoint used only to ensure Metadata schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.Metadata
+// @Router /internal/metadata [get]
+func GetMetadata() {}
+
+// GetEntityStatus godoc
+// @Summary Get EntityStatus (schema generation only)
+// @Description Internal endpoint used only to ensure EntityStatus schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.EntityStatus
+// @Router /internal/entitystatus [get]
+func GetEntityStatus() {}
+
+// GetGetMarkersRequest godoc
+// @Summary Get GetMarkersRequest (schema generation only)
+// @Description Internal endpoint used only to ensure GetMarkersRequest schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.GetMarkersRequest
+// @Router /internal/getmarkersrequest [get]
+func GetGetMarkersRequest() {}
+
+// GetGetMarkersResponse godoc
+// @Summary Get GetMarkersResponse (schema generation only)
+// @Description Internal endpoint used only to ensure GetMarkersResponse schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.GetMarkersResponse
+// @Router /internal/getmarkersresponse [get]
+func GetGetMarkersResponse() {}
+
+// GetGetMarkersSuccessResponse godoc
+// @Summary Get GetMarkersSuccessResponse (schema generation only)
+// @Description Internal endpoint used only to ensure GetMarkersSuccessResponse schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.GetMarkersSuccessResponse
+// @Router /internal/getmarkerssuccessresponse [get]
+func GetGetMarkersSuccessResponse() {}
+
+// GetGetMarkersErrorResponse godoc
+// @Summary Get GetMarkersErrorResponse (schema generation only)
+// @Description Internal endpoint used only to ensure GetMarkersErrorResponse schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.GetMarkersErrorResponse
+// @Router /internal/getmarkerserrorresponse [get]
+func GetGetMarkersErrorResponse() {}
+
+// GetAddMarkerRequest godoc
+// @Summary Get AddMarkerRequest (schema generation only)
+// @Description Internal endpoint used only to ensure AddMarkerRequest schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.AddMarkerRequest
+// @Router /internal/addmarkerrequest [get]
+func GetAddMarkerRequest() {}
+
+// GetAddMarkerResponse godoc
+// @Summary Get AddMarkerResponse (schema generation only)
+// @Description Internal endpoint used only to ensure AddMarkerResponse schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.AddMarkerResponse
+// @Router /internal/addmarkerresponse [get]
+func GetAddMarkerResponse() {}
+
+// GetAddMarkerSuccessResponse godoc
+// @Summary Get AddMarkerSuccessResponse (schema generation only)
+// @Description Internal endpoint used only to ensure AddMarkerSuccessResponse schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.AddMarkerSuccessResponse
+// @Router /internal/addmarkersuccessresponse [get]
+func GetAddMarkerSuccessResponse() {}
+
+// GetAddMarkerErrorResponse godoc
+// @Summary Get AddMarkerErrorResponse (schema generation only)
+// @Description Internal endpoint used only to ensure AddMarkerErrorResponse schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.AddMarkerErrorResponse
+// @Router /internal/addmarkererrorresponse [get]
+func GetAddMarkerErrorResponse() {}
+
+// GetMediaFilter godoc
+// @Summary Get MediaFilter (schema generation only)
+// @Description Internal endpoint used only to ensure MediaFilter schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.MediaFilter
+// @Router /internal/mediafilter [get]
+func GetMediaFilter() {}
+
+// GetGetTimelineRequest godoc
+// @Summary Get GetTimelineRequest (schema generation only)
+// @Description Internal endpoint used only to ensure GetTimelineRequest schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.GetTimelineRequest
+// @Router /internal/gettimelinerequest [get]
+func GetGetTimelineRequest() {}
+
+// GetGetTimelineResponse godoc
+// @Summary Get GetTimelineResponse (schema generation only)
+// @Description Internal endpoint used only to ensure GetTimelineResponse schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.GetTimelineResponse
+// @Router /internal/gettimelineresponse [get]
+func GetGetTimelineResponse() {}
+
+// GetGetTimelineErrorResponse godoc
+// @Summary Get GetTimelineErrorResponse (schema generation only)
+// @Description Internal endpoint used only to ensure GetTimelineErrorResponse schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.GetTimelineErrorResponse
+// @Router /internal/gettimelineerrorresponse [get]
+func GetGetTimelineErrorResponse() {}
+
+// GetGetTimelineSuccessResponse godoc
+// @Summary Get GetTimelineSuccessResponse (schema generation only)
+// @Description Internal endpoint used only to ensure GetTimelineSuccessResponse schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} api.GetTimelineSuccessResponse
+// @Router /internal/gettimelinesuccessresponse [get]
+func GetGetTimelineSuccessResponse() {}
+
+// Models package models
+
 // GetAudit godoc
 // @Summary Get Audit (schema generation only)
 // @Description Internal endpoint used only to ensure Audit schema is generated in OpenAPI spec
@@ -209,6 +363,36 @@ func GetMediaMetadata() {}
 // @Success 200 {object} models.MediaAtRuntimeMetadata
 // @Router /internal/mediaatruntimemetadata [get]
 func GetMediaAtRuntimeMetadata() {}
+
+// GetRegion godoc
+// @Summary Get Region (schema generation only)
+// @Description Internal endpoint used only to ensure Region schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.Region
+// @Router /internal/region [get]
+func GetRegion() {}
+
+// GetPoint godoc
+// @Summary Get Point (schema generation only)
+// @Description Internal endpoint used only to ensure Point schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.Point
+// @Router /internal/point [get]
+func GetPoint() {}
+
+// GetHourRange godoc
+// @Summary Get HourRange (schema generation only)
+// @Description Internal endpoint used only to ensure HourRange schema is generated in OpenAPI spec
+// @Tags internal
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.HourRange
+// @Router /internal/hourrange [get]
+func GetHourRange() {}
 
 // GetPreset godoc
 // @Summary Get Preset (schema generation only)

@@ -5,6 +5,62 @@ info:
   title: Models API
   version: "1.0"
 paths:
+  /internal/addmarkererrorresponse:
+    get:
+      description: Internal endpoint used only to ensure AddMarkerErrorResponse schema
+        is generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.AddMarkerErrorResponse"
+      summary: Get AddMarkerErrorResponse (schema generation only)
+      tags:
+        - internal
+  /internal/addmarkerrequest:
+    get:
+      description: Internal endpoint used only to ensure AddMarkerRequest schema is
+        generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.AddMarkerRequest"
+      summary: Get AddMarkerRequest (schema generation only)
+      tags:
+        - internal
+  /internal/addmarkerresponse:
+    get:
+      description: Internal endpoint used only to ensure AddMarkerResponse schema is
+        generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.AddMarkerResponse"
+      summary: Get AddMarkerResponse (schema generation only)
+      tags:
+        - internal
+  /internal/addmarkersuccessresponse:
+    get:
+      description: Internal endpoint used only to ensure AddMarkerSuccessResponse
+        schema is generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.AddMarkerSuccessResponse"
+      summary: Get AddMarkerSuccessResponse (schema generation only)
+      tags:
+        - internal
   /internal/audit:
     get:
       description: Internal endpoint used only to ensure Audit schema is generated in
@@ -131,6 +187,19 @@ paths:
       summary: Get DevicePlacement (schema generation only)
       tags:
         - internal
+  /internal/entitystatus:
+    get:
+      description: Internal endpoint used only to ensure EntityStatus schema is
+        generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: {}
+      summary: Get EntityStatus (schema generation only)
+      tags:
+        - internal
   /internal/featurepermissions:
     get:
       description: Internal endpoint used only to ensure FeaturePermissions schema is
@@ -157,6 +226,132 @@ paths:
               schema:
                 $ref: "#/components/schemas/models.FloorPlan"
       summary: Get FloorPlan (schema generation only)
+      tags:
+        - internal
+  /internal/getmarkerserrorresponse:
+    get:
+      description: Internal endpoint used only to ensure GetMarkersErrorResponse
+        schema is generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.GetMarkersErrorResponse"
+      summary: Get GetMarkersErrorResponse (schema generation only)
+      tags:
+        - internal
+  /internal/getmarkersrequest:
+    get:
+      description: Internal endpoint used only to ensure GetMarkersRequest schema is
+        generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.GetMarkersRequest"
+      summary: Get GetMarkersRequest (schema generation only)
+      tags:
+        - internal
+  /internal/getmarkersresponse:
+    get:
+      description: Internal endpoint used only to ensure GetMarkersResponse schema is
+        generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.GetMarkersResponse"
+      summary: Get GetMarkersResponse (schema generation only)
+      tags:
+        - internal
+  /internal/getmarkerssuccessresponse:
+    get:
+      description: Internal endpoint used only to ensure GetMarkersSuccessResponse
+        schema is generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.GetMarkersSuccessResponse"
+      summary: Get GetMarkersSuccessResponse (schema generation only)
+      tags:
+        - internal
+  /internal/gettimelineerrorresponse:
+    get:
+      description: Internal endpoint used only to ensure GetTimelineErrorResponse
+        schema is generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.GetTimelineErrorResponse"
+      summary: Get GetTimelineErrorResponse (schema generation only)
+      tags:
+        - internal
+  /internal/gettimelinerequest:
+    get:
+      description: Internal endpoint used only to ensure GetTimelineRequest schema is
+        generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.GetTimelineRequest"
+      summary: Get GetTimelineRequest (schema generation only)
+      tags:
+        - internal
+  /internal/gettimelineresponse:
+    get:
+      description: Internal endpoint used only to ensure GetTimelineResponse schema is
+        generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.GetTimelineResponse"
+      summary: Get GetTimelineResponse (schema generation only)
+      tags:
+        - internal
+  /internal/gettimelinesuccessresponse:
+    get:
+      description: Internal endpoint used only to ensure GetTimelineSuccessResponse
+        schema is generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.GetTimelineSuccessResponse"
+      summary: Get GetTimelineSuccessResponse (schema generation only)
+      tags:
+        - internal
+  /internal/hourrange:
+    get:
+      description: Internal endpoint used only to ensure HourRange schema is generated
+        in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.HourRange"
+      summary: Get HourRange (schema generation only)
       tags:
         - internal
   /internal/io:
@@ -229,6 +424,20 @@ paths:
       summary: Get MediaAtRuntimeMetadata (schema generation only)
       tags:
         - internal
+  /internal/mediafilter:
+    get:
+      description: Internal endpoint used only to ensure MediaFilter schema is
+        generated in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.MediaFilter"
+      summary: Get MediaFilter (schema generation only)
+      tags:
+        - internal
   /internal/mediametadata:
     get:
       description: Internal endpoint used only to ensure MediaMetadata schema is
@@ -243,6 +452,34 @@ paths:
       summary: Get MediaMetadata (schema generation only)
       tags:
         - internal
+  /internal/metadata:
+    get:
+      description: Internal endpoint used only to ensure Metadata schema is generated
+        in OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.Metadata"
+      summary: Get Metadata (schema generation only)
+      tags:
+        - internal
+  /internal/point:
+    get:
+      description: Internal endpoint used only to ensure Point schema is generated in
+        OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Point"
+      summary: Get Point (schema generation only)
+      tags:
+        - internal
   /internal/preset:
     get:
       description: Internal endpoint used only to ensure Preset schema is generated in
@@ -255,6 +492,20 @@ paths:
               schema:
                 $ref: "#/components/schemas/models.Preset"
       summary: Get Preset (schema generation only)
+      tags:
+        - internal
+  /internal/region:
+    get:
+      description: Internal endpoint used only to ensure Region schema is generated in
+        OpenAPI spec
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/models.Region"
+      summary: Get Region (schema generation only)
       tags:
         - internal
   /internal/role:
@@ -425,11 +676,14 @@ servers:
   - url: //localhost
 components:
   schemas:
-    api.ErrorResponse:
+    api.AddMarkerErrorResponse:
       properties:
         applicationStatusCode:
           description: Application-specific error code
-          type: integer
+          type: string
+        entityStatusCode:
+          description: Entity-specific error code
+          type: string
         httpStatusCode:
           description: HTTP status code for the error
           type: integer
@@ -442,34 +696,257 @@ components:
           description: Additional metadata about the error, such as timestamps and request
             IDs
       type: object
+    api.AddMarkerRequest:
+      properties:
+        marker:
+          $ref: "#/components/schemas/models.Marker"
+      type: object
+    api.AddMarkerResponse:
+      properties:
+        marker:
+          $ref: "#/components/schemas/models.Marker"
+      type: object
+    api.AddMarkerSuccessResponse:
+      properties:
+        applicationStatusCode:
+          description: Application-specific status code
+          type: string
+        data:
+          $ref: "#/components/schemas/api.AddMarkerResponse"
+        entityStatusCode:
+          description: Entity-specific status code
+          type: string
+        httpStatusCode:
+          description: HTTP status code for the response
+          type: integer
+        message:
+          description: Success message describing the operation
+          type: string
+        metaData:
+          allOf:
+            - $ref: "#/components/schemas/api.Metadata"
+          description: Additional metadata about the response, such as timestamps and
+            request IDs
+      type: object
+    api.ErrorResponse:
+      properties:
+        applicationStatusCode:
+          description: Application-specific error code
+          type: string
+        entityStatusCode:
+          description: Entity-specific error code
+          type: string
+        httpStatusCode:
+          description: HTTP status code for the error
+          type: integer
+        message:
+          description: Error message describing the issue
+          type: string
+        metaData:
+          allOf:
+            - $ref: "#/components/schemas/api.Metadata"
+          description: Additional metadata about the error, such as timestamps and request
+            IDs
+      type: object
+    api.GetMarkersErrorResponse:
+      properties:
+        applicationStatusCode:
+          description: Application-specific error code
+          type: string
+        entityStatusCode:
+          description: Entity-specific error code
+          type: string
+        httpStatusCode:
+          description: HTTP status code for the error
+          type: integer
+        message:
+          description: Error message describing the issue
+          type: string
+        metaData:
+          allOf:
+            - $ref: "#/components/schemas/api.Metadata"
+          description: Additional metadata about the error, such as timestamps and request
+            IDs
+      type: object
+    api.GetMarkersRequest:
+      type: object
+    api.GetMarkersResponse:
+      properties:
+        markers:
+          items:
+            $ref: "#/components/schemas/models.Marker"
+          type: array
+      type: object
+    api.GetMarkersSuccessResponse:
+      properties:
+        applicationStatusCode:
+          description: Application-specific status code
+          type: string
+        data:
+          $ref: "#/components/schemas/api.GetMarkersResponse"
+        entityStatusCode:
+          description: Entity-specific status code
+          type: string
+        httpStatusCode:
+          description: HTTP status code for the response
+          type: integer
+        message:
+          description: Success message describing the operation
+          type: string
+        metaData:
+          allOf:
+            - $ref: "#/components/schemas/api.Metadata"
+          description: Additional metadata about the response, such as timestamps and
+            request IDs
+      type: object
+    api.GetTimelineErrorResponse:
+      properties:
+        applicationStatusCode:
+          description: Application-specific error code
+          type: string
+        entityStatusCode:
+          description: Entity-specific error code
+          type: string
+        httpStatusCode:
+          description: HTTP status code for the error
+          type: integer
+        message:
+          description: Error message describing the issue
+          type: string
+        metaData:
+          allOf:
+            - $ref: "#/components/schemas/api.Metadata"
+          description: Additional metadata about the error, such as timestamps and request
+            IDs
+      type: object
+    api.GetTimelineRequest:
+      properties:
+        filter:
+          $ref: "#/components/schemas/api.MediaFilter"
+      type: object
+    api.GetTimelineResponse:
+      properties:
+        device:
+          $ref: "#/components/schemas/models.Device"
+        media:
+          items:
+            $ref: "#/components/schemas/models.Media"
+          type: array
+      type: object
+    api.GetTimelineSuccessResponse:
+      properties:
+        applicationStatusCode:
+          description: Application-specific status code
+          type: string
+        data:
+          $ref: "#/components/schemas/api.GetTimelineResponse"
+        entityStatusCode:
+          description: Entity-specific status code
+          type: string
+        httpStatusCode:
+          description: HTTP status code for the response
+          type: integer
+        message:
+          description: Success message describing the operation
+          type: string
+        metaData:
+          allOf:
+            - $ref: "#/components/schemas/api.Metadata"
+          description: Additional metadata about the response, such as timestamps and
+            request IDs
+      type: object
+    api.MediaFilter:
+      properties:
+        classifications:
+          items:
+            type: string
+          type: array
+        dates:
+          items:
+            type: string
+          type: array
+        devices:
+          items:
+            type: string
+          type: array
+        favourite:
+          type: boolean
+        globalSearch:
+          type: boolean
+        hasLabel:
+          type: boolean
+        hourRange:
+          $ref: "#/components/schemas/models.HourRange"
+        lastMedia:
+          type: integer
+        limit:
+          type: integer
+        markers:
+          items:
+            type: string
+          type: array
+        offset:
+          type: integer
+        regions:
+          items:
+            $ref: "#/components/schemas/models.Region"
+          type: array
+        sort:
+          type: string
+        viewStyle:
+          type: string
+      type: object
     api.Metadata:
       properties:
         error:
           description: Error message if any
           type: string
         function:
+          description: Function name where the response was generated
           type: string
+        language:
+          description: Language of the response, if applicable
+          type: string
+        missingFields:
+          description: List of missing fields in the request
+          items:
+            type: string
+          type: array
         organisationId:
+          description: Organisation ID for the request
           type: string
         path:
+          description: Path of the request
           type: string
         timestamp:
+          description: Timestamp of the request or response
           type: integer
         traceId:
+          description: Trace ID for tracking requests
           type: string
         userId:
+          description: User ID of the user making the request
           type: string
       type: object
     api.SuccessResponse:
       properties:
         applicationStatusCode:
-          type: integer
+          description: Application-specific status code
+          type: string
+        entityStatusCode:
+          description: Entity-specific status code
+          type: string
         httpStatusCode:
+          description: HTTP status code for the response
           type: integer
         message:
+          description: Success message describing the operation
           type: string
         metaData:
-          $ref: "#/components/schemas/api.Metadata"
+          allOf:
+            - $ref: "#/components/schemas/api.Metadata"
+          description: Additional metadata about the response, such as timestamps and
+            request IDs
       type: object
     models.Audit:
       properties:
@@ -801,6 +1278,13 @@ components:
           description: Dimensions of the floor plan in pixels
           type: integer
       type: object
+    models.HourRange:
+      properties:
+        end:
+          type: integer
+        start:
+          type: integer
+      type: object
     models.IO:
       properties:
         audit:
@@ -991,6 +1475,13 @@ components:
             type: string
           type: array
       type: object
+    models.Point:
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+      type: object
     models.Preset:
       properties:
         name:
@@ -1003,6 +1494,21 @@ components:
           type: number
         z:
           type: number
+      type: object
+    models.Region:
+      properties:
+        device:
+          type: string
+        height:
+          type: integer
+        id:
+          type: string
+        regionPoints:
+          items:
+            $ref: "#/components/schemas/models.Point"
+          type: array
+        width:
+          type: integer
       type: object
     models.Role:
       properties:
