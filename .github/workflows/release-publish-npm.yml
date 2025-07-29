@@ -34,10 +34,6 @@ jobs:
         working-directory: ./src/typescript
         run: npm ci
              
-      - name: Install dependencies
-        working-directory: ./src/typescript
-        run: npm ci
-             
       - name: Generate openapi
         working-directory: ./src/typescript
         run: npm run generate:openapi

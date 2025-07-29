@@ -143,9 +143,34 @@ ${generateDummyEndpoints(apiStructNames, 'api')}
 ${generateDummyEndpoints(modelsStructNames, 'models')}
 `;
 
-    const mainFilePath = path.join(__dirname, '..', 'cmd', 'main.go');
-    fs.writeFileSync(mainFilePath, mainContent);
-    console.log(`Generated cmd/main.go with ${apiStructNames.length + modelsStructNames.length} model references`);
+    const cmdDir = path.join(__dirname, '..', 'cmd');
+    const mainFilePath = path.join(cmdDir, 'main.go');
+
+    try {
+        // Ensure cmd directory exists
+        if (!fs.existsSync(cmdDir)) {
+            console.log('Creating cmd directory...');
+            fs.mkdirSync(cmdDir, { recursive: true });
+        }
+        
+        // Write the main.go file
+        fs.writeFileSync(mainFilePath, mainContent);
+        console.log(`Generated cmd/main.go with ${apiStructNames.length + modelsStructNames.length} model references`);
+        
+        // Verify the file was created
+        if (fs.existsSync(mainFilePath)) {
+            const stats = fs.statSync(mainFilePath);
+            console.log(`File created successfully: ${mainFilePath} (${stats.size} bytes)`);
+        } else {
+            console.error('ERROR: File was not created despite no errors!');
+        }
+    } catch (error) {
+        console.error('ERROR: Failed to create cmd/main.go:', error.message);
+        console.error('Current working directory:', process.cwd());
+        console.error('Target directory:', cmdDir);
+        console.error('Target file path:', mainFilePath);
+        throw error;
+    }
 }
 
 // Main execution
