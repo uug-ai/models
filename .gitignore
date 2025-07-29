@@ -3,10 +3,9 @@ node_modules/
 
 # Build outputs
 dist/
-docs/docs.go
-docs/swagger.json
-docs/swagger.yaml
-docs/openapi.yaml
+docs/
+cmd/cmd
+cmd/main.go
 
 # IDE
 .vscode/
