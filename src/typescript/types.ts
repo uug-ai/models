@@ -4,6 +4,162 @@
  */
 
 export interface paths {
+    "/internal/addmarkererrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddMarkerErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddMarkerErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddMarkerErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addmarkerrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddMarkerRequest (schema generation only)
+         * @description Internal endpoint used only to ensure AddMarkerRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddMarkerRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addmarkerresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddMarkerResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddMarkerResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddMarkerResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addmarkersuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddMarkerSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddMarkerSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddMarkerSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/audit": {
         parameters: {
             query?: never;
@@ -355,6 +511,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/entitystatus": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get EntityStatus (schema generation only)
+         * @description Internal endpoint used only to ensure EntityStatus schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/featurepermissions": {
         parameters: {
             query?: never;
@@ -421,6 +616,357 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.FloorPlan"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkerserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkersErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkersErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkersErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkersrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkersRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkersRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkersRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkersresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkersResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkersResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkersResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkerssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkersSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkersSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkersSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettimelineerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTimelineErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTimelineErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTimelineErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettimelinerequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTimelineRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetTimelineRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTimelineRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettimelineresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTimelineResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTimelineResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTimelineResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettimelinesuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTimelineSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTimelineSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTimelineSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/hourrange": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get HourRange (schema generation only)
+         * @description Internal endpoint used only to ensure HourRange schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.HourRange"];
                     };
                 };
             };
@@ -628,6 +1174,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/mediafilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MediaFilter (schema generation only)
+         * @description Internal endpoint used only to ensure MediaFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.MediaFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/mediametadata": {
         parameters: {
             query?: never;
@@ -667,6 +1252,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/metadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Metadata (schema generation only)
+         * @description Internal endpoint used only to ensure Metadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.Metadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/point": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Point (schema generation only)
+         * @description Internal endpoint used only to ensure Point schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Point"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/preset": {
         parameters: {
             query?: never;
@@ -694,6 +1357,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Preset"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/region": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Region (schema generation only)
+         * @description Internal endpoint used only to ensure Region schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Region"];
                     };
                 };
             };
@@ -1126,9 +1828,11 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        "api.ErrorResponse": {
+        "api.AddMarkerErrorResponse": {
             /** @description Application-specific error code */
-            applicationStatusCode?: number;
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
             /** @description HTTP status code for the error */
             httpStatusCode?: number;
             /** @description Error message describing the issue */
@@ -1136,20 +1840,144 @@ export interface components {
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metaData?: components["schemas"]["api.Metadata"];
         };
+        "api.AddMarkerRequest": {
+            marker?: components["schemas"]["models.Marker"];
+        };
+        "api.AddMarkerResponse": {
+            marker?: components["schemas"]["models.Marker"];
+        };
+        "api.AddMarkerSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.AddMarkerResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.ErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetMarkersErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetMarkersRequest": Record<string, never>;
+        "api.GetMarkersResponse": {
+            markers?: components["schemas"]["models.Marker"][];
+        };
+        "api.GetMarkersSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetMarkersResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTimelineErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTimelineRequest": {
+            filter?: components["schemas"]["api.MediaFilter"];
+        };
+        "api.GetTimelineResponse": {
+            device?: components["schemas"]["models.Device"];
+            media?: components["schemas"]["models.Media"][];
+        };
+        "api.GetTimelineSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetTimelineResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.MediaFilter": {
+            classifications?: string[];
+            dates?: string[];
+            devices?: string[];
+            favourite?: boolean;
+            globalSearch?: boolean;
+            hasLabel?: boolean;
+            hourRange?: components["schemas"]["models.HourRange"];
+            lastMedia?: number;
+            limit?: number;
+            markers?: string[];
+            offset?: number;
+            regions?: components["schemas"]["models.Region"][];
+            sort?: string;
+            viewStyle?: string;
+        };
         "api.Metadata": {
             /** @description Error message if any */
             error?: string;
+            /** @description Function name where the response was generated */
             function?: string;
+            /** @description Language of the response, if applicable */
+            language?: string;
+            /** @description List of missing fields in the request */
+            missingFields?: string[];
+            /** @description Organisation ID for the request */
             organisationId?: string;
+            /** @description Path of the request */
             path?: string;
+            /** @description Timestamp of the request or response */
             timestamp?: number;
+            /** @description Trace ID for tracking requests */
             traceId?: string;
+            /** @description User ID of the user making the request */
             userId?: string;
         };
         "api.SuccessResponse": {
-            applicationStatusCode?: number;
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
             httpStatusCode?: number;
+            /** @description Success message describing the operation */
             message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
             metaData?: components["schemas"]["api.Metadata"];
         };
         "models.Audit": {
@@ -1335,6 +2163,10 @@ export interface components {
             /** @description Dimensions of the floor plan in pixels */
             width?: number;
         };
+        "models.HourRange": {
+            end?: number;
+            start?: number;
+        };
         "models.IO": {
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
@@ -1436,12 +2268,23 @@ export interface components {
             classifications?: string[];
             tags?: string[];
         };
+        "models.Point": {
+            x?: number;
+            y?: number;
+        };
         "models.Preset": {
             name?: string;
             token?: string;
             x?: number;
             y?: number;
             z?: number;
+        };
+        "models.Region": {
+            device?: string;
+            height?: number;
+            id?: string;
+            regionPoints?: components["schemas"]["models.Point"][];
+            width?: number;
         };
         "models.Role": {
             featurePermissions?: components["schemas"]["models.FeaturePermissions"];
@@ -1569,6 +2412,7 @@ export namespace models {
     export type DevicePlacement = components['schemas']['models.DevicePlacement'];
     export type FeaturePermissions = components['schemas']['models.FeaturePermissions'];
     export type FloorPlan = components['schemas']['models.FloorPlan'];
+    export type HourRange = components['schemas']['models.HourRange'];
     export type IO = components['schemas']['models.IO'];
     export type Location = components['schemas']['models.Location'];
     export type Marker = components['schemas']['models.Marker'];
@@ -1576,7 +2420,9 @@ export namespace models {
     export type Media = components['schemas']['models.Media'];
     export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
+    export type Point = components['schemas']['models.Point'];
     export type Preset = components['schemas']['models.Preset'];
+    export type Region = components['schemas']['models.Region'];
     export type Role = components['schemas']['models.Role'];
     export type Site = components['schemas']['models.Site'];
     export type SiteLocationMetadata = components['schemas']['models.SiteLocationMetadata'];
@@ -1588,7 +2434,19 @@ export namespace models {
 }
 
 export namespace api {
+    export type AddMarkerErrorResponse = components['schemas']['api.AddMarkerErrorResponse'];
+    export type AddMarkerRequest = components['schemas']['api.AddMarkerRequest'];
+    export type AddMarkerResponse = components['schemas']['api.AddMarkerResponse'];
+    export type AddMarkerSuccessResponse = components['schemas']['api.AddMarkerSuccessResponse'];
     export type ErrorResponse = components['schemas']['api.ErrorResponse'];
+    export type GetMarkersErrorResponse = components['schemas']['api.GetMarkersErrorResponse'];
+    export type GetMarkersResponse = components['schemas']['api.GetMarkersResponse'];
+    export type GetMarkersSuccessResponse = components['schemas']['api.GetMarkersSuccessResponse'];
+    export type GetTimelineErrorResponse = components['schemas']['api.GetTimelineErrorResponse'];
+    export type GetTimelineRequest = components['schemas']['api.GetTimelineRequest'];
+    export type GetTimelineResponse = components['schemas']['api.GetTimelineResponse'];
+    export type GetTimelineSuccessResponse = components['schemas']['api.GetTimelineSuccessResponse'];
+    export type MediaFilter = components['schemas']['api.MediaFilter'];
     export type Metadata = components['schemas']['api.Metadata'];
     export type SuccessResponse = components['schemas']['api.SuccessResponse'];
 }
