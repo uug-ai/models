@@ -35,8 +35,11 @@ jobs:
         run: npm ci
              
       - name: Generate types
-        run: npm run generate
-        
+        run: | 
+          mkdir -p ./cmd
+          touch ./cmd/main.go
+          npm run generate
+
       - name: Build TypeScript
         working-directory: ./src/typescript
         run: npm run build
