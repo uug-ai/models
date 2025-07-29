@@ -17,6 +17,26 @@ function extractStructNames(filePath) {
         structNames.push(match[1]);
     }
     
+    // Match empty structs and type aliases: "type StructName struct{}" or "type StructName TypeAlias"
+    const emptyStructRegex = /type\s+([A-Z]\w*)\s+(?:struct\s*\{\s*\}|[A-Z]\w*)/g;
+    let emptyMatch;
+    
+    while ((emptyMatch = emptyStructRegex.exec(content)) !== null) {
+        if (!structNames.includes(emptyMatch[1])) {
+            structNames.push(emptyMatch[1]);
+        }
+    }
+    
+    // Match interface declarations: "type InterfaceName interface"
+    const interfaceRegex = /type\s+([A-Z]\w*)\s+interface/g;
+    let interfaceMatch;
+    
+    while ((interfaceMatch = interfaceRegex.exec(content)) !== null) {
+        if (!structNames.includes(interfaceMatch[1])) {
+            structNames.push(interfaceMatch[1]);
+        }
+    }
+    
     return structNames;
 }
 
@@ -26,7 +46,7 @@ function findAllModelStructs(package) {
 
     let allStructs = [];
     
-    // Scan pkg/api directory
+    // Scan package directory
     if (fs.existsSync(packageDir)) {
         const files = fs.readdirSync(packageDir).filter(f => f.endsWith('.go'));
         
@@ -42,9 +62,9 @@ function findAllModelStructs(package) {
 }
 
 // Function to generate the cmd/main.go file
-function generateMainFile(package, structNames) {
+function generateMainFile(apiStructNames, modelsStructNames) {
     // Function to generate dummy endpoints for models not used in real endpoints
-    function generateDummyEndpoints(models) {
+    function generateDummyEndpoints(models, packageName) {
         // Models that are already used in real endpoints don't need dummy endpoints
         const usedInEndpoints = new Set(['Media', 'ErrorResponse', 'SuccessResponse']);
         
@@ -57,7 +77,7 @@ function generateMainFile(package, structNames) {
 // @Tags internal
 // @Accept json
 // @Produce json
-// @Success 200 {object} ${package}.${model}
+// @Success 200 {object} ${packageName}.${model}
 // @Router /internal/${model.toLowerCase()} [get]
 func Get${model}() {}`).join('\n');
         
@@ -115,12 +135,17 @@ func CreateMedia() {}
 
 // Dummy endpoints to ensure all models are included in OpenAPI spec
 // These endpoints exist only to force swag to generate schemas for all models
-${generateDummyEndpoints(structNames)}
+
+// API package models
+${generateDummyEndpoints(apiStructNames, 'api')}
+
+// Models package models
+${generateDummyEndpoints(modelsStructNames, 'models')}
 `;
 
     const mainFilePath = path.join(__dirname, '..', 'cmd', 'main.go');
     fs.writeFileSync(mainFilePath, mainContent);
-    console.log(`Generated cmd/main.go with ${structNames.length} model references`);
+    console.log(`Generated cmd/main.go with ${apiStructNames.length + modelsStructNames.length} model references`);
 }
 
 // Main execution
@@ -130,6 +155,6 @@ const modelsStructNames = findAllModelStructs('models');
 console.log(`Found ${apiStructNames.length} API structs: ${apiStructNames.join(', ')}`);
 console.log(`Found ${modelsStructNames.length} Models structs: ${modelsStructNames.join(', ')}`);
 
-generateMainFile('api', apiStructNames);
-generateMainFile('models', modelsStructNames);
+// Generate single main.go file with both API and Models structs
+generateMainFile(apiStructNames, modelsStructNames);
 console.log('cmd/main.go updated automatically!');
