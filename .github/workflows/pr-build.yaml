@@ -57,10 +57,6 @@ jobs:
               npm version $VERSION_INPUT --no-git-tag-version
             fi
           fi
-          
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout repository
-        uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -69,6 +65,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          
       # Build the Docker image with the latest tag and the release tag
       - name: Build and push Docker image with latest tag
         uses: docker/build-push-action@v2
