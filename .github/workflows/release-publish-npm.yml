@@ -36,7 +36,7 @@ jobs:
              
       - name: Generate types
         run: npm run generate
-        
+
       - name: Build TypeScript
         working-directory: ./src/typescript
         run: npm run build

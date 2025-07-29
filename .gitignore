@@ -4,7 +4,9 @@ node_modules/
 # Build outputs
 dist/
 docs/
-cmd/
+cmd/cmd
+cmd/main.go
+
 
 # IDE
 .vscode/

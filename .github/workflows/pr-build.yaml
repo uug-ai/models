@@ -10,9 +10,57 @@ jobs:
       COMMIT_SHA: ${{ github.sha }}
       TAG: models-pr${{ github.event.number }}-${{ github.sha }}
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+          
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.24'
+
+      - name: Install swag
+        run: go install github.com/swaggo/swag/cmd/swag@latest  
+          
+      - name: Install dependencies
+        working-directory: ./src/typescript
+        run: npm ci
+             
+      - name: Generate types
+        run: npm run generate
+
+      - name: Build TypeScript
+        working-directory: ./src/typescript
+        run: npm run build
+        
+      - name: Update package version
+        working-directory: ./src/typescript
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            # Use release tag version
+            RELEASE_VERSION=${GITHUB_REF#refs/tags/}
+            RELEASE_VERSION=${RELEASE_VERSION#v}
+            echo "Setting version from release tag: $RELEASE_VERSION"
+            npm version $RELEASE_VERSION --no-git-tag-version
+          else
+            # Manual dispatch - check if it's a semver bump or specific version
+            VERSION_INPUT="${{ github.event.inputs.version_bump }}"
+            if [[ "$VERSION_INPUT" =~ ^[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then
+              # Specific version provided
+              echo "Setting specific version: $VERSION_INPUT"
+              npm version $VERSION_INPUT --no-git-tag-version
+            else
+              # Semver bump (patch, minor, major)
+              echo "Bumping version: $VERSION_INPUT"
+              npm version $VERSION_INPUT --no-git-tag-version
+            fi
+          fi
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Log in to Docker Hub
@@ -20,6 +68,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
       # Build the Docker image with the latest tag and the release tag
       - name: Build and push Docker image with latest tag
         uses: docker/build-push-action@v2
