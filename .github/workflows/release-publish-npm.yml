@@ -35,15 +35,12 @@ jobs:
         run: npm ci
              
       - name: Generate openapi
-        working-directory: ./src/typescript
         run: npm run generate:openapi
 
       - name: Generate types
-        working-directory: ./src/typescript
         run: npm run generate:types
 
       - name: Build TypeScript
-        working-directory: ./src/typescript
         run: npm run build
         
       - name: Update package version
