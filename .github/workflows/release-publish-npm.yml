@@ -51,17 +51,10 @@ jobs:
             echo "Setting version from release tag: $RELEASE_VERSION"
             npm version $RELEASE_VERSION --no-git-tag-version
           else
-            # Manual dispatch - check if it's a semver bump or specific version
-            VERSION_INPUT="${{ github.event.inputs.version_bump }}"
-            if [[ "$VERSION_INPUT" =~ ^[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then
-              # Specific version provided
-              echo "Setting specific version: $VERSION_INPUT"
-              npm version $VERSION_INPUT --no-git-tag-version
-            else
-              # Semver bump (patch, minor, major)
-              echo "Bumping version: $VERSION_INPUT"
-              npm version $VERSION_INPUT --no-git-tag-version
-            fi
+            # Manual dispatch - use the version input
+            VERSION_INPUT="${{ github.event.inputs.version }}"
+            echo "Setting specific version: $VERSION_INPUT"
+            npm version $VERSION_INPUT --no-git-tag-version
           fi
           
       - name: Authenticate with NPM
