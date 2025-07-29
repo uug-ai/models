@@ -34,9 +34,17 @@ jobs:
         working-directory: ./src/typescript
         run: npm ci
              
+      - name: Install dependencies
+        working-directory: ./src/typescript
+        run: npm ci
+             
       - name: Generate types
         run: npm run generate
 
+      - name: Build TypeScript
+        working-directory: ./src/typescript
+        run: npm run build
+        
       - name: Build TypeScript
         working-directory: ./src/typescript
         run: npm run build
