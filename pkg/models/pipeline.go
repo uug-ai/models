@@ -13,8 +13,9 @@ package models
 // 5. throttler
 // 6. notification
 
-type Pipeline struct {
-	Events             []string        `json:"events,omitempty"`
+type PipelineEvent struct {
+	Stages []string `json:"events,omitempty"` // Stages of the pipeline, e.g., event, monitor, sequence, analysis, throttler, notification
+
 	Provider           string          `json:"provider,omitempty"`
 	SecondaryProviders []string        `json:"secondary_providers,omitempty"`
 	Source             string          `json:"source,omitempty"`
@@ -34,12 +35,12 @@ type Pipeline struct {
 }
 
 type PipelinePayload struct {
-	FileName         string             `json:"key,omitempty"`
-	FileSize         int64              `json:"fileSize,omitempty"`
-	MetaData         PipelineMetadata   `json:"metadata,omitempty"`
-	IsFragmented     bool               `json:"is_fragmented" bson:"is_fragmented"`
-	BytesRanges      string             `json:"bytes_ranges" bson:"bytes_ranges"`
-	BytesRangeOnTime []BytesRangeOnTime `json:"bytes_range_on_time" bson:"bytes_range_on_time"`
+	FileName         string                       `json:"key,omitempty"`
+	FileSize         int64                        `json:"fileSize,omitempty"`
+	MetaData         PipelineMetadata             `json:"metadata,omitempty"`
+	IsFragmented     bool                         `json:"is_fragmented" bson:"is_fragmented"`
+	BytesRanges      string                       `json:"bytes_ranges" bson:"bytes_ranges"`
+	BytesRangeOnTime []FragmentedBytesRangeOnTime `json:"bytes_range_on_time" bson:"bytes_range_on_time"`
 }
 
 type PipelineMetadata struct {
@@ -53,10 +54,4 @@ type PipelineMetadata struct {
 	RegionCoordinates string `json:"event-regioncoordinates,omitempty"`
 	Timestamp         string `json:"event-timestamp,omitempty"`
 	PublicKey         string `json:"publickey,omitempty"`
-}
-
-type BytesRangeOnTime struct {
-	Duration string `json:"duration" bson:"duration"`
-	Time     string `json:"time" bson:"time"`
-	Range    string `json:"range" bson:"range"`
 }
