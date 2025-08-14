@@ -4,10 +4,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// --------------------------------------------------------------------
-// Data model for Media
-//
-// This is the main struct for Media
 type Media struct {
 	Id primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
 
@@ -78,4 +74,59 @@ type Point struct {
 type HourRange struct {
 	Start int64 `json:"start" bson:"start"`
 	End   int64 `json:"end" bson:"end"`
+}
+
+/*
+Media object as used in Vault, should be more aligned with how we store in Hub
+*/
+
+type VaultMedia struct {
+	Timestamp         int64              `json:"timestamp" bson:"timestamp"`
+	FileName          string             `json:"filename" bson:"filename"`
+	FileSize          int64              `json:"filesize" bson:"filesize"`
+	Device            string             `json:"device" bson:"device"`
+	Account           string             `json:"account" bson:"account"`
+	Provider          string             `json:"provider" bson:"provider"`
+	Status            string             `json:"status" bson:"status"`
+	Finished          bool               `json:"finished" bson:"finished"`
+	Temporary         bool               `json:"temporary" bson:"temporary"`
+	Forwarded         bool               `json:"forwarded" bson:"forwarded"`
+	ToBeForwarded     bool               `json:"to_be_forwarded" bson:"to_be_forwarded"`
+	Uploaded          bool               `json:"uploaded" bson:"uploaded"`
+	ForwarderId       string             `json:"forwarder_id" bson:"forwarder_id"`
+	ForwarderType     string             `json:"forwarder_type" bson:"forwarder_type"`
+	ForwarderWorker   string             `json:"forwarder_worker" bson:"forwarder_worker"`
+	ForwardTimestamp  int64              `json:"forward_timestamp" bson:"forward_timestamp"`
+	Events            []VaultMediaEvent  `json:"events" bson:"events"`
+	MainProvider      bool               `json:"main_provider" bson:"main_provider"`
+	SecondaryProvider bool               `json:"secondary_provider" bson:"secondary_provider"`
+	Metadata          VaultMediaMetadata `json:"metadata" bson:"metadata"`
+	UriExpiryTime     string             `json:"uriExpiryTime" bson:"uriExpiryTime"`
+}
+
+type VaultMediaMetadata struct {
+	BytesRanges      string                       `json:"bytes_ranges" bson:"bytes_ranges"`
+	BytesRangeOnTime []FragmentedBytesRangeOnTime `json:"bytes_range_on_time" bson:"bytes_range_on_time"`
+	IsFragmented     bool                         `json:"is_fragmented" bson:"is_fragmented"`
+	Duration         uint64                       `json:"duration" bson:"duration"`
+	Timescale        uint32                       `json:"timescale" bson:"timescale"`
+}
+
+type VaultMediaEvent struct {
+	Timestamp   int64  `json:"timestamp" bson:"timestamp"`
+	Title       string `json:"title" bson:"title"`
+	Description string `json:"description" bson:"description"`
+}
+
+type VaultMediaFragmentCollection struct {
+	Key              string                       `json:"key" bson:"key"`
+	FileName         string                       `json:"filename" bson:"filename"`
+	CameraId         string                       `json:"camera_id" bson:"camera_id"`
+	Timestamp        int64                        `json:"timestamp" bson:"timestamp"`
+	Url              string                       `json:"url" bson:"url"`
+	Start            float64                      `json:"start" bson:"start"`
+	End              float64                      `json:"end" bson:"end"`
+	Duration         float64                      `json:"duration" bson:"duration"`
+	BytesRanges      string                       `json:"bytes_ranges" bson:"bytes_ranges"`
+	BytesRangeOnTime []FragmentedBytesRangeOnTime `json:"bytes_range_on_time" bson:"bytes_range_on_time"`
 }
