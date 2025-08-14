@@ -115,3 +115,8 @@ type AddMarkerSuccessResponse struct {
 type AddMarkerErrorResponse struct {
 	ErrorResponse
 }
+
+type MarkerOptions struct {
+	Names []string
+	Types []string
+}

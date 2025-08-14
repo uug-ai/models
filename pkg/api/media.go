@@ -71,6 +71,7 @@ type MediaFilter struct {
 	HasLabel        bool             `json:"hasLabel" bson:"hasLabel"`
 	HourRange       models.HourRange `json:"hourRange" bson:"hourRange"`
 	Markers         []string         `json:"markers" bson:"markers"`
+	Events          []string         `json:"events" bson:"events"`
 	ViewStyle       string           `json:"viewStyle" bson:"viewStyle"`
 	Offset          int64            `json:"offset" bson:"offset"`
 	Limit           int64            `json:"limit" bson:"limit"`
