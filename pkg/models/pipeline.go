@@ -37,6 +37,9 @@ type PipelinePayload struct {
 	FileSize  int64  `json:"fileSize,omitempty"`
 	Duration  string `json:"duration,omitempty"`
 
+	// Signed URL
+	SignedURL string `json:"signedUrl,omitempty"`
+
 	// RBAC
 	OrganisationId string `json:"organisationId,omitempty"`
 	DeviceId       string `json:"deviceId,omitempty"`
@@ -52,17 +55,17 @@ type PipelinePayload struct {
 }
 
 type PipelineMetadata struct {
+	Timestamp       string `json:"event-timestamp,omitempty"`
+	Duration        string `json:"duration,omitempty"`
+	NumberOfChanges string `json:"event-numberofchanges,omitempty"`
 
-	// Duration of the recording
-	Duration          string `json:"duration,omitempty"`
-	NumberOfChanges   string `json:"event-numberofchanges,omitempty"`
-	UploadTime        string `json:"uploadtime,omitempty"`
-	MicroSeconds      string `json:"event-microseconds,omitempty"`
-	DeviceId          string `json:"productid,omitempty"`
-	DeviceName        string `json:"event-instancename,omitempty"`
+	UploadTime   string `json:"uploadtime,omitempty"`
+	MicroSeconds string `json:"event-microseconds,omitempty"`
+
+	DeviceId   string `json:"productid,omitempty"`
+	DeviceName string `json:"event-instancename,omitempty"`
+
 	RegionCoordinates string `json:"event-regioncoordinates,omitempty"`
-	Timestamp         string `json:"event-timestamp,omitempty"`
-	PublicKey         string `json:"publickey,omitempty"`
 }
 
 // As defined above we have multiple stages, each with its own set of data and processing logic.
