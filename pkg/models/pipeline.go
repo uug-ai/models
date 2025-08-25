@@ -105,7 +105,7 @@ type MonitorStage struct {
 // Constructor function for MonitorStage
 func NewMonitorStage() MonitorStage {
 	return MonitorStage{
-		Name: "monitor"
+		Name: "monitor",
 	}
 }
 func (m MonitorStage) GetName() string { return m.Name }
