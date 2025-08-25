@@ -27,7 +27,7 @@ type PipelineEvent struct {
 	FileName     string          `json:"fileName,omitempty"`
 	Payload      PipelinePayload `json:"payload,omitempty"`
 
-	Stage map[string]Stage       `json:"stage,omitempty"`
+	Stage map[string]*Stage       `json:"stage,omitempty"`
 	Data  map[string]interface{} `json:"data,omitempty"` // We should get rid of this and use the stage map
 }
 
