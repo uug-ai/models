@@ -27,7 +27,7 @@ type PipelineEvent struct {
 	FileName     string          `json:"fileName,omitempty"`
 	Payload      PipelinePayload `json:"payload,omitempty"`
 
-	Stage map[string]Stage       `json:"stage,omitempty"`
+	Stage map[string]*Stage       `json:"stage,omitempty"`
 	Data  map[string]interface{} `json:"data,omitempty"` // We should get rid of this and use the stage map
 }
 
@@ -83,15 +83,35 @@ type EventStage struct {
 	// Add more fields as needed
 }
 
+// Constructor function for EventStage
+func NewEventStage() EventStage {
+	return EventStage{
+		Name: "event",
+	}
+}
 func (e EventStage) GetName() string { return e.Name }
+
 
 type MonitorStage struct {
 	Name        string
 	MonitorData string // Add fields relevant to monitor stage
+
 	// Add more fields as needed
+	User         User
+	HighUpload   HighUpload
+	Activity     Activity
 }
 
+// Constructor function for MonitorStage
+func NewMonitorStage() MonitorStage {
+	return MonitorStage{
+		Name: "monitor",
+	}
+}
 func (m MonitorStage) GetName() string { return m.Name }
+func (m MonitorStage) GetUser() User { return m.User }
+func (m MonitorStage) GetHighUpload() HighUpload { return m.HighUpload }
+func (m MonitorStage) GetActivity() Activity { return m.Activity }
 
 type SequenceStage struct {
 	Name       string
@@ -99,6 +119,12 @@ type SequenceStage struct {
 	// Add more fields as needed
 }
 
+// Constructor function for SequenceStage
+func NewSequenceStage() SequenceStage {
+	return SequenceStage{
+		Name: "sequence",
+	}
+}
 func (s SequenceStage) GetName() string { return s.Name }
 
 type AnalysisStage struct {
@@ -107,6 +133,12 @@ type AnalysisStage struct {
 	// Add more fields as needed
 }
 
+// Constructor function for AnalysisStage
+func NewAnalysisStage() AnalysisStage {
+	return AnalysisStage{
+		Name: "analysis",
+	}
+}
 func (a AnalysisStage) GetName() string { return a.Name }
 
 type ThrottlerStage struct {
@@ -115,6 +147,12 @@ type ThrottlerStage struct {
 	// Add more fields as needed
 }
 
+// Constructor function for ThrottlerStage
+func NewThrottlerStage() ThrottlerStage {
+	return ThrottlerStage{
+		Name: "throttler",
+	}
+}	
 func (t ThrottlerStage) GetName() string { return t.Name }
 
 type NotificationStage struct {
@@ -123,4 +161,10 @@ type NotificationStage struct {
 	// Add more fields as needed
 }
 
+// Constructor function for NotificationStage
+func NewNotificationStage() NotificationStage {
+	return NotificationStage{
+		Name: "notification",
+	}
+}
 func (n NotificationStage) GetName() string { return n.Name }
