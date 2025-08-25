@@ -1,5 +1,7 @@
 package models
 
+import "go.mongodb.org/mongo-driver/bson/primitive"
+
 const (
 	USER_FOUND     string = "One or more users were found"
 	USER_NOT_FOUND string = "One or more users not found, returning empty list"
