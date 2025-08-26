@@ -14,21 +14,23 @@ package models
 // 6. notification
 
 type PipelineEvent struct {
-	Request      string   `json:"request,omitempty"`
-	CurrentStage string   `json:"operation,omitempty"`
-	Stages       []string `json:"events,omitempty"` // Stages of the pipeline, e.g., event, monitor, sequence, analysis, throttler, notification
+	Request      string            `json:"request,omitempty"` // ondemand, persist
+	CurrentStage string            `json:"operation,omitempty"`
+	Stages       []string          `json:"events,omitempty"` // Stages of the pipeline, e.g., event, monitor, sequence, analysis, throttler, notification
+	Stage        map[string]*Stage `json:"stage,omitempty"`
 
+	Storage            string   `json:"provider,omitempty"`
+	Provider           string   `json:"source,omitempty"`
 	SecondaryProviders []string `json:"secondary_providers,omitempty"`
 
-	Storage      string          `json:"provider,omitempty"`
-	Provider     string          `json:"source,omitempty"`
-	ReceiveCount int64           `json:"receivecount,omitempty"`
-	Timestamp    int64           `json:"date,omitempty"`
-	FileName     string          `json:"fileName,omitempty"`
-	Payload      PipelinePayload `json:"payload,omitempty"`
+	TraceId      string `json:"traceId,omitempty"`
+	ReceiveCount int64  `json:"receivecount,omitempty"`
 
-	Stage map[string]*Stage       `json:"stage,omitempty"`
-	Data  map[string]interface{} `json:"data,omitempty"` // We should get rid of this and use the stage map
+	Timestamp int64           `json:"date,omitempty"`
+	FileName  string          `json:"fileName,omitempty"`
+	Payload   PipelinePayload `json:"payload,omitempty"`
+
+	Data map[string]interface{} `json:"data,omitempty"` // We should get rid of this and use the stage map
 }
 
 type PipelinePayload struct {
@@ -91,17 +93,16 @@ func NewEventStage() EventStage {
 }
 func (e EventStage) GetName() string { return e.Name }
 
-
 type MonitorStage struct {
 	Name        string `json:"name,omitempty"`
 	MonitorData string `json:"monitorData,omitempty"` // Add fields relevant to monitor stage
 
 	// Add more fields as needed
-	User         User   `json:"user,omitempty"`
-	Subscription Subscription `json:"subscription,omitempty"`
+	User         User                   `json:"user,omitempty"`
+	Subscription Subscription           `json:"subscription,omitempty"`
 	Plans        map[string]interface{} `json:"plans,omitempty"`
-	HighUpload   HighUpload `json:"highUpload,omitempty"`
-	Activity     Activity   `json:"activity,omitempty"`
+	HighUpload   HighUpload             `json:"highUpload,omitempty"`
+	Activity     Activity               `json:"activity,omitempty"`
 }
 
 // Constructor function for MonitorStage
@@ -110,10 +111,10 @@ func NewMonitorStage() MonitorStage {
 		Name: "monitor",
 	}
 }
-func (m MonitorStage) GetName() string { return m.Name }
-func (m MonitorStage) GetUser() User { return m.User }
+func (m MonitorStage) GetName() string           { return m.Name }
+func (m MonitorStage) GetUser() User             { return m.User }
 func (m MonitorStage) GetHighUpload() HighUpload { return m.HighUpload }
-func (m MonitorStage) GetActivity() Activity { return m.Activity }
+func (m MonitorStage) GetActivity() Activity     { return m.Activity }
 
 type SequenceStage struct {
 	Name       string `json:"name,omitempty"`
@@ -154,7 +155,7 @@ func NewThrottlerStage() ThrottlerStage {
 	return ThrottlerStage{
 		Name: "throttler",
 	}
-}	
+}
 func (t ThrottlerStage) GetName() string { return t.Name }
 
 type NotificationStage struct {
