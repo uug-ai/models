@@ -78,8 +78,8 @@ type Stage interface {
 }
 
 type EventStage struct {
-	Name      string
-	EventData string // Add fields relevant to event stage
+	Name      string `json:"name,omitempty"`
+	EventData string `json:"eventData,omitempty"` // Add fields relevant to event stage
 	// Add more fields as needed
 }
 
@@ -93,15 +93,15 @@ func (e EventStage) GetName() string { return e.Name }
 
 
 type MonitorStage struct {
-	Name        string
-	MonitorData string // Add fields relevant to monitor stage
+	Name        string `json:"name,omitempty"`
+	MonitorData string `json:"monitorData,omitempty"` // Add fields relevant to monitor stage
 
 	// Add more fields as needed
-	User         User
-	Subscription Subscription
-	Plans        map[string]interface{}
-	HighUpload   HighUpload
-	Activity     Activity
+	User         User   `json:"user,omitempty"`
+	Subscription Subscription `json:"subscription,omitempty"`
+	Plans        map[string]interface{} `json:"plans,omitempty"`
+	HighUpload   HighUpload `json:"highUpload,omitempty"`
+	Activity     Activity   `json:"activity,omitempty"`
 }
 
 // Constructor function for MonitorStage
@@ -116,8 +116,8 @@ func (m MonitorStage) GetHighUpload() HighUpload { return m.HighUpload }
 func (m MonitorStage) GetActivity() Activity { return m.Activity }
 
 type SequenceStage struct {
-	Name       string
-	SequenceId int64 // Add fields relevant to sequence stage
+	Name       string `json:"name,omitempty"`
+	SequenceId int64  `json:"sequenceId,omitempty"` // Add fields relevant to sequence stage
 	// Add more fields as needed
 }
 
@@ -130,8 +130,8 @@ func NewSequenceStage() SequenceStage {
 func (s SequenceStage) GetName() string { return s.Name }
 
 type AnalysisStage struct {
-	Name           string
-	AnalysisResult string // Add fields relevant to analysis stage
+	Name           string `json:"name,omitempty"`
+	AnalysisResult string `json:"analysisResult,omitempty"` // Add fields relevant to analysis stage
 	// Add more fields as needed
 }
 
@@ -144,8 +144,8 @@ func NewAnalysisStage() AnalysisStage {
 func (a AnalysisStage) GetName() string { return a.Name }
 
 type ThrottlerStage struct {
-	Name          string
-	ThrottleLimit int // Add fields relevant to throttler stage
+	Name          string `json:"name,omitempty"`
+	ThrottleLimit int    `json:"throttleLimit,omitempty"` // Add fields relevant to throttler stage
 	// Add more fields as needed
 }
 
@@ -158,8 +158,8 @@ func NewThrottlerStage() ThrottlerStage {
 func (t ThrottlerStage) GetName() string { return t.Name }
 
 type NotificationStage struct {
-	Name             string
-	NotificationType string // Add fields relevant to notification stage
+	Name             string `json:"name,omitempty"`
+	NotificationType string `json:"notificationType,omitempty"` // Add fields relevant to notification stage
 	// Add more fields as needed
 }
 
