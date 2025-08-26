@@ -20,13 +20,13 @@ type PipelineEvent struct {
 	// Stages of the pipeline, e.g., event, monitor, sequence, analysis, throttler, notification
 	// Idea is that we persist relevant data in each stage, so we have a good understanding what is used
 	// or computed at which stage.
-	Stages            []string          `json:"events,omitempty"`
-	EventStage        EventStage        `json:"eventStage,omitempty"`
-	MonitorStage      MonitorStage      `json:"monitorStage,omitempty"`
-	SequenceStage     SequenceStage     `json:"sequenceStage,omitempty"`
-	AnalysisStage     AnalysisStage     `json:"analysisStage,omitempty"`
-	ThrottlerStage    ThrottlerStage    `json:"throttlerStage,omitempty"`
-	NotificationStage NotificationStage `json:"notificationStage,omitempty"`
+	Stages            []string           `json:"events,omitempty"`
+	EventStage        *EventStage        `json:"eventStage,omitempty"`
+	MonitorStage      *MonitorStage      `json:"monitorStage,omitempty"`
+	SequenceStage     *SequenceStage     `json:"sequenceStage,omitempty"`
+	AnalysisStage     *AnalysisStage     `json:"analysisStage,omitempty"`
+	ThrottlerStage    *ThrottlerStage    `json:"throttlerStage,omitempty"`
+	NotificationStage *NotificationStage `json:"notificationStage,omitempty"`
 
 	Storage            string   `json:"provider,omitempty"`
 	Provider           string   `json:"source,omitempty"`
