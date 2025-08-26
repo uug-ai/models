@@ -14,17 +14,28 @@ package models
 // 6. notification
 
 type PipelineEvent struct {
-	Request      string            `json:"request,omitempty"` // ondemand, persist
-	CurrentStage string            `json:"operation,omitempty"`
-	Stages       []string          `json:"events,omitempty"` // Stages of the pipeline, e.g., event, monitor, sequence, analysis, throttler, notification
-	Stage        map[string]*Stage `json:"stage,omitempty"`
+	Request   string `json:"request,omitempty"` // ondemand, persist
+	Operation string `json:"operation,omitempty"`
+
+	// Stages of the pipeline, e.g., event, monitor, sequence, analysis, throttler, notification
+	// Idea is that we persist relevant data in each stage, so we have a good understanding what is used
+	// or computed at which stage.
+	Stages            []string          `json:"events,omitempty"`
+	EventStage        EventStage        `json:"eventStage,omitempty"`
+	MonitorStage      MonitorStage      `json:"monitorStage,omitempty"`
+	SequenceStage     SequenceStage     `json:"sequenceStage,omitempty"`
+	AnalysisStage     AnalysisStage     `json:"analysisStage,omitempty"`
+	ThrottlerStage    ThrottlerStage    `json:"throttlerStage,omitempty"`
+	NotificationStage NotificationStage `json:"notificationStage,omitempty"`
 
 	Storage            string   `json:"provider,omitempty"`
 	Provider           string   `json:"source,omitempty"`
 	SecondaryProviders []string `json:"secondary_providers,omitempty"`
 
-	TraceId      string `json:"traceId,omitempty"`
-	ReceiveCount int64  `json:"receivecount,omitempty"`
+	// We are using OpenTelemetry, so we can observe the pipeline more easily.
+	TraceId string `json:"traceId,omitempty"`
+
+	ReceiveCount int64 `json:"receivecount,omitempty"`
 
 	Timestamp int64           `json:"date,omitempty"`
 	FileName  string          `json:"fileName,omitempty"`
@@ -77,6 +88,7 @@ type PipelineMetadata struct {
 
 type Stage interface {
 	GetName() string
+	UnmarshalJSON([]byte) error
 }
 
 type EventStage struct {
