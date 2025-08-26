@@ -98,6 +98,8 @@ type MonitorStage struct {
 
 	// Add more fields as needed
 	User         User
+	Subscription Subscription
+	Plans        map[string]interface{}
 	HighUpload   HighUpload
 	Activity     Activity
 }
