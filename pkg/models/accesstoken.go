@@ -1,19 +1,5 @@
 package models
 
-const (
-	ACCESSTOKEN_BINDING_FAILED string = "Failed to bind access token from request body"
-	ACCESSTOKEN_NAME_EXISTS    string = "Access token with the same name already exists"
-	ACCESSTOKEN_MISSING_INFO   string = "Access token is missing required information"
-	ACCESSTOKEN_FOUND          string = "One or more access tokens where found"
-	ACCESSTOKEN_NOT_FOUND      string = "One or more access tokens not found, returning empty list"
-	ACCESSTOKEN_ADD_SUCCESS    string = "Access token added successfully"
-	ACCESSTOKEN_ADD_FAILED     string = "Failed to add access token"
-	ACCESSTOKEN_UPDATE_SUCCESS string = "Access token updated successfully"
-	ACCESSTOKEN_UPDATE_FAILED  string = "Failed to update access token"
-	ACCESSTOKEN_DELETE_SUCCESS string = "Access token deleted successfully"
-	ACCESSTOKEN_DELETE_FAILED  string = "Failed to delete access token"
-)
-
 type AccessToken struct {
 	Name        string   `json:"name" bson:"name,omitempty"`
 	Description string   `json:"description,omitempty" bson:"description,omitempty"` // Description of the access token
@@ -27,4 +13,19 @@ type AccessToken struct {
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"` // Audit information for tracking changes to the access token
+}
+
+// GetAccessTokens
+// @Router /profile/token [get]
+type GetAccessTokensRequest struct {
+}
+type GetAccessTokensResponse struct {
+	AccessTokens []models.AccessToken `json:"access_tokens"`
+}
+type GetAccessTokensSuccessResponse struct {
+	SuccessResponse
+	Data GetAccessTokensResponse `json:"data"`
+}
+type GetAccessTokensErrorResponse struct {
+	ErrorResponse
 }
