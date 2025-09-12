@@ -1,5 +1,7 @@
 package api
 
+import "github.com/uug-ai/models/pkg/models"
+
 // AccessTokenStatus represents specific status codes for access token operations
 type AccessTokenStatus string
 
