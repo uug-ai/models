@@ -6,17 +6,17 @@ import "github.com/uug-ai/models/pkg/models"
 type AccessTokenStatus string
 
 const (
-	ACCESSTOKEN_BINDING_FAILED AccessTokenStatus = "accesstoken_binding_failed"
-	ACCESSTOKEN_NAME_EXISTS    AccessTokenStatus = "accesstoken_name_exists"
-	ACCESSTOKEN_MISSING_INFO   AccessTokenStatus = "accesstoken_missing_info"
-	ACCESSTOKEN_FOUND          AccessTokenStatus = "accesstoken_found"
-	ACCESSTOKEN_NOT_FOUND      AccessTokenStatus = "accesstoken_not_found"
-	ACCESSTOKEN_ADD_SUCCESS    AccessTokenStatus = "accesstoken_add_success"
-	ACCESSTOKEN_ADD_FAILED     AccessTokenStatus = "accesstoken_add_failed"
-	ACCESSTOKEN_UPDATE_SUCCESS AccessTokenStatus = "accesstoken_update_success"
-	ACCESSTOKEN_UPDATE_FAILED  AccessTokenStatus = "accesstoken_update_failed"
-	ACCESSTOKEN_DELETE_SUCCESS AccessTokenStatus = "accesstoken_delete_success"
-	ACCESSTOKEN_DELETE_FAILED  AccessTokenStatus = "accesstoken_delete_failed"
+	AccessTokenBindingFailed AccessTokenStatus = "accesstoken_binding_failed"
+	AccessTokenNameExists    AccessTokenStatus = "accesstoken_name_exists"
+	AccessTokenMissingInfo   AccessTokenStatus = "accesstoken_missing_info"
+	AccessTokenFound         AccessTokenStatus = "accesstoken_found"
+	AccessTokenNotFound     AccessTokenStatus = "accesstoken_not_found"
+	AccessTokenAddSuccess    AccessTokenStatus = "accesstoken_add_success"
+	AccessTokenAddFailed     AccessTokenStatus = "accesstoken_add_failed"
+	AccessTokenUpdateSuccess AccessTokenStatus = "accesstoken_update_success"
+	AccessTokenUpdateFailed  AccessTokenStatus = "accesstoken_update_failed"
+	AccessTokenDeleteSuccess AccessTokenStatus = "accesstoken_delete_success"
+	AccessTokenDeleteFailed  AccessTokenStatus = "accesstoken_delete_failed"
 )
 
 // String returns the string representation of the access token status
@@ -28,17 +28,17 @@ func (ds AccessTokenStatus) String() string {
 func (ds AccessTokenStatus) Translate(lang string) string {
 	translations := map[string]map[AccessTokenStatus]string{
 		"en": {
-			ACCESSTOKEN_BINDING_FAILED: "Access token binding failed",
-			ACCESSTOKEN_NAME_EXISTS:    "Access token with the same name already exists",
-			ACCESSTOKEN_MISSING_INFO:   "Access token is missing required information",
-			ACCESSTOKEN_FOUND:          "Access token found",
-			ACCESSTOKEN_NOT_FOUND:      "Access token not found",
-			ACCESSTOKEN_ADD_SUCCESS:    "Access token added successfully",
-			ACCESSTOKEN_ADD_FAILED:     "Failed to add access token",
-			ACCESSTOKEN_UPDATE_SUCCESS: "Access token updated successfully",
-			ACCESSTOKEN_UPDATE_FAILED:  "Failed to update access token",
-			ACCESSTOKEN_DELETE_SUCCESS: "Access token deleted successfully",
-			ACCESSTOKEN_DELETE_FAILED:  "Failed to delete access token",
+			AccessTokenBindingFailed: "Access token binding failed",
+			AccessTokenNameExists:    "Access token with the same name already exists",
+			AccessTokenMissingInfo:   "Access token is missing required information",
+			AccessTokenFound:         "Access token found",
+			AccessTokenNotFound:     "Access token not found",
+			AccessTokenAddSuccess:    "Access token added successfully",
+			AccessTokenAddFailed:     "Failed to add access token",
+			AccessTokenUpdateSuccess: "Access token updated successfully",
+			AccessTokenUpdateFailed:  "Failed to update access token",
+			AccessTokenDeleteSuccess: "Access token deleted successfully",
+			AccessTokenDeleteFailed:  "Failed to delete access token",
 		},
 	}
 
