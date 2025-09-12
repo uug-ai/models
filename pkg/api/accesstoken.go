@@ -1,4 +1,4 @@
-package models
+package api
 
 // AccessTokenStatus represents specific status codes for access token operations
 type AccessTokenStatus string
@@ -57,3 +57,17 @@ func (ds AccessTokenStatus) Translate(lang string) string {
 	return ds.String()
 }
 
+// GetAccessTokens
+// @Router /profile/token [get]
+type GetAccessTokensRequest struct {
+}
+type GetAccessTokensResponse struct {
+	AccessTokens []models.AccessToken `json:"access_tokens"`
+}
+type GetAccessTokensSuccessResponse struct {
+	SuccessResponse
+	Data GetAccessTokensResponse `json:"data"`
+}
+type GetAccessTokensErrorResponse struct {
+	ErrorResponse
+}

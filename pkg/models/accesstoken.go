@@ -14,18 +14,3 @@ type AccessToken struct {
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"` // Audit information for tracking changes to the access token
 }
-
-// GetAccessTokens
-// @Router /profile/token [get]
-type GetAccessTokensRequest struct {
-}
-type GetAccessTokensResponse struct {
-	AccessTokens []models.AccessToken `json:"access_tokens"`
-}
-type GetAccessTokensSuccessResponse struct {
-	SuccessResponse
-	Data GetAccessTokensResponse `json:"data"`
-}
-type GetAccessTokensErrorResponse struct {
-	ErrorResponse
-}
