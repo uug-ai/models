@@ -16,7 +16,7 @@ const (
 	AccessTokenUpdateSuccess AccessTokenStatus = "accesstoken_update_success"
 	AccessTokenUpdateFailed  AccessTokenStatus = "accesstoken_update_failed"
 	AccessTokenDeleteSuccess AccessTokenStatus = "accesstoken_delete_success"
-	AccessTokenDeleteFailed  AccessTokenStatus = "accesstoken_delete_failed"
+	AccessTokenDeleteFailed  AccessTokenStatus = "accesstoken_1delete_failed"
 )
 
 // String returns the string representation of the access token status
@@ -71,5 +71,37 @@ type GetAccessTokensSuccessResponse struct {
 	Data GetAccessTokensResponse `json:"data"`
 }
 type GetAccessTokensErrorResponse struct {
+	ErrorResponse
+}
+
+// AddAccessToken
+// @Router /profile/token [post]
+type AddAccessTokenRequest struct {
+	Token models.AccessToken `json:"token"`
+}
+type AddAccessTokenResponse struct {
+	Token models.AccessToken `json:"token"`
+}
+type AddAccessTokenSuccessResponse struct {
+	SuccessResponse
+	Data AddAccessTokenResponse `json:"data"`
+}
+type AddAccessTokenErrorResponse struct {
+	ErrorResponse
+}
+
+// UpdateAccessToken
+// @Router /profile/token/{id} [put]
+type UpdateAccessTokenRequest struct {
+	Token models.AccessToken `json:"token"`
+}
+type UpdateAccessTokenResponse struct {
+	Token models.AccessToken `json:"token"`
+}
+type UpdateAccessTokenSuccessResponse struct {
+	SuccessResponse
+	Data UpdateAccessTokenResponse `json:"data"`
+}
+type UpdateAccessTokenErrorResponse struct {
 	ErrorResponse
 }
