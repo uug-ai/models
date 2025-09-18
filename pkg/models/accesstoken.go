@@ -8,7 +8,8 @@ const (
 )
 
 type AccessToken struct {
-	Name        string             `json:"name" bson:"name,omitempty"`
+	Id          string             `json:"id" bson:"_id,omitempty"`                            // Unique identifier for the access token
+	Name        string             `json:"name" bson:"name,omitempty"`                         // Name of the access token
 	Description string             `json:"description,omitempty" bson:"description,omitempty"` // Description of the access token
 	Expiration  int64              `json:"expiration,omitempty" bson:"expiration,omitempty"`   // Expiration timestamp of the access token in seconds since epoch
 	Scopes      []AccessTokenScope `json:"scopes,omitempty" bson:"scopes,omitempty"`           // List of scopes associated with the access token
