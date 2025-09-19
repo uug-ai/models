@@ -10,7 +10,7 @@ const (
 	AccessTokenNameExists    AccessTokenStatus = "accesstoken_name_exists"
 	AccessTokenMissingInfo   AccessTokenStatus = "accesstoken_missing_info"
 	AccessTokenFound         AccessTokenStatus = "accesstoken_found"
-	AccessTokenNotFound     AccessTokenStatus = "accesstoken_not_found"
+	AccessTokenNotFound      AccessTokenStatus = "accesstoken_not_found"
 	AccessTokenAddSuccess    AccessTokenStatus = "accesstoken_add_success"
 	AccessTokenAddFailed     AccessTokenStatus = "accesstoken_add_failed"
 	AccessTokenUpdateSuccess AccessTokenStatus = "accesstoken_update_success"
@@ -32,7 +32,7 @@ func (ds AccessTokenStatus) Translate(lang string) string {
 			AccessTokenNameExists:    "Access token with the same name already exists",
 			AccessTokenMissingInfo:   "Access token is missing required information",
 			AccessTokenFound:         "Access token found",
-			AccessTokenNotFound:     "Access token not found",
+			AccessTokenNotFound:      "Access token not found",
 			AccessTokenAddSuccess:    "Access token added successfully",
 			AccessTokenAddFailed:     "Failed to add access token",
 			AccessTokenUpdateSuccess: "Access token updated successfully",
@@ -103,5 +103,19 @@ type UpdateAccessTokenSuccessResponse struct {
 	Data UpdateAccessTokenResponse `json:"data"`
 }
 type UpdateAccessTokenErrorResponse struct {
+	ErrorResponse
+}
+
+// DeleteAccessToken
+// @Router /profile/token/{id} [delete]
+type DeleteAccessTokenRequest struct {
+}
+type DeleteAccessTokenResponse struct {
+}
+type DeleteAccessTokenSuccessResponse struct {
+	SuccessResponse
+	Data DeleteAccessTokenResponse `json:"data"`
+}
+type DeleteAccessTokenErrorResponse struct {
 	ErrorResponse
 }
