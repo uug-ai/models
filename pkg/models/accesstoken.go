@@ -8,7 +8,8 @@ const (
 )
 
 type AccessToken struct {
-	Id          string             `json:"id" bson:"_id,omitempty"`                            // Unique identifier for the access token
+	Id primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+
 	Name        string             `json:"name" bson:"name,omitempty"`                         // Name of the access token
 	Description string             `json:"description,omitempty" bson:"description,omitempty"` // Description of the access token
 	Expiration  int64              `json:"expiration,omitempty" bson:"expiration,omitempty"`   // Expiration timestamp of the access token in seconds since epoch

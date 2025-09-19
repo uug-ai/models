@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/go:1.4.3-1.24-bookworm
+FROM mcr.microsoft.com/devcontainers/go:1.24-bookworm
 
 # Add nodejs and npm
 RUN apt-get update && \
