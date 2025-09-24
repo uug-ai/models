@@ -4681,11 +4681,11 @@ export interface components {
         };
         "api.SaveFaceRedactionRequest": {
             analysisId?: string;
-            redaction?: components["schemas"]["models.FaceRedaction"];
+            faceRedaction?: components["schemas"]["models.FaceRedaction"];
         };
         "api.SaveFaceRedactionResponse": {
             analysisId?: string;
-            redaction?: components["schemas"]["models.FaceRedaction"];
+            faceRedaction?: components["schemas"]["models.FaceRedaction"];
         };
         "api.SaveFaceRedactionSuccessResponse": {
             /** @description Application-specific status code */
@@ -5086,8 +5086,8 @@ export interface components {
             name?: string;
         };
         "models.FaceRedaction": {
-            faceRedactionTracks?: components["schemas"]["models.FaceRedactionTrack"][];
             id?: string;
+            tracks?: components["schemas"]["models.FaceRedactionTrack"][];
         };
         "models.FaceRedactionTrack": {
             classified?: string;

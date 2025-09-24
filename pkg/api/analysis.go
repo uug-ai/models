@@ -77,12 +77,12 @@ func (as AnalysisStatus) Translate(lang string) string {
 // SaveFaceRedaction
 // @Router /analysis/save-face-redaction [patch]
 type SaveFaceRedactionRequest struct {
-	AnalysisId string               `json:"analysisId"`
-	Redaction  models.FaceRedaction `json:"redaction"`
+	AnalysisId    string               `json:"analysisId"`
+	FaceRedaction models.FaceRedaction `json:"faceRedaction"`
 }
 type SaveFaceRedactionResponse struct {
-	AnalysisId string               `json:"analysisId"`
-	Redaction  models.FaceRedaction `json:"redaction"`
+	AnalysisId    string               `json:"analysisId"`
+	FaceRedaction models.FaceRedaction `json:"faceRedaction"`
 }
 type SaveFaceRedactionSuccessResponse struct {
 	SuccessResponse

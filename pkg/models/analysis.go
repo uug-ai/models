@@ -151,6 +151,6 @@ type FaceRedactionTrack struct {
 }
 
 type FaceRedaction struct {
-	Id                  primitive.ObjectID   `json:"id" bson:"_id,omitempty"`
-	FaceRedactionTracks []FaceRedactionTrack `json:"faceRedactionTracks" bson:"faceRedactionTracks"`
+	Id     primitive.ObjectID   `json:"id" bson:"_id,omitempty"`
+	Tracks []FaceRedactionTrack `json:"tracks" bson:"tracks"`
 }
