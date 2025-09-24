@@ -4,6 +4,240 @@
  */
 
 export interface paths {
+    "/internal/accesstoken": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AccessToken (schema generation only)
+         * @description Internal endpoint used only to ensure AccessToken schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AccessToken"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/activity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Activity (schema generation only)
+         * @description Internal endpoint used only to ensure Activity schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Activity"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addaccesstokenerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddAccessTokenErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddAccessTokenErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddAccessTokenErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addaccesstokenrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddAccessTokenRequest (schema generation only)
+         * @description Internal endpoint used only to ensure AddAccessTokenRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddAccessTokenRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addaccesstokenresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddAccessTokenResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddAccessTokenResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddAccessTokenResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addaccesstokensuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddAccessTokenSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddAccessTokenSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddAccessTokenSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/addmarkererrorresponse": {
         parameters: {
             query?: never;
@@ -160,6 +394,201 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/analysis": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Analysis (schema generation only)
+         * @description Internal endpoint used only to ensure Analysis schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Analysis"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/analysisfilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalysisFilter (schema generation only)
+         * @description Internal endpoint used only to ensure AnalysisFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalysisFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/analysisshort": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalysisShort (schema generation only)
+         * @description Internal endpoint used only to ensure AnalysisShort schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalysisShort"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/analysisstage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalysisStage (schema generation only)
+         * @description Internal endpoint used only to ensure AnalysisStage schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalysisStage"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/analysiswrapper": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalysisWrapper (schema generation only)
+         * @description Internal endpoint used only to ensure AnalysisWrapper schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalysisWrapper"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/audit": {
         parameters: {
             query?: never;
@@ -199,6 +628,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/classify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Classify (schema generation only)
+         * @description Internal endpoint used only to ensure Classify schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Classify"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/classifydetails": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ClassifyDetails (schema generation only)
+         * @description Internal endpoint used only to ensure ClassifyDetails schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ClassifyDetails"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/color": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Color (schema generation only)
+         * @description Internal endpoint used only to ensure Color schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Color"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/comment": {
         parameters: {
             query?: never;
@@ -226,6 +772,279 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Comment"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/counting": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Counting (schema generation only)
+         * @description Internal endpoint used only to ensure Counting schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Counting"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/countingdetail": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CountingDetail (schema generation only)
+         * @description Internal endpoint used only to ensure CountingDetail schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CountingDetail"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/countingrecord": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CountingRecord (schema generation only)
+         * @description Internal endpoint used only to ensure CountingRecord schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CountingRecord"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteaccesstokenerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteAccessTokenErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteAccessTokenErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteAccessTokenErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteaccesstokenrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteAccessTokenRequest (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteAccessTokenRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteAccessTokenRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteaccesstokenresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteAccessTokenResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteAccessTokenResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteAccessTokenResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteaccesstokensuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteAccessTokenSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteAccessTokenSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteAccessTokenSuccessResponse"];
                     };
                 };
             };
@@ -511,6 +1330,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/dominantcolor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DominantColor (schema generation only)
+         * @description Internal endpoint used only to ensure DominantColor schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DominantColor"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/entitystatus": {
         parameters: {
             query?: never;
@@ -538,6 +1396,123 @@ export interface paths {
                     };
                     content: {
                         "application/json": unknown;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/eventstage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get EventStage (schema generation only)
+         * @description Internal endpoint used only to ensure EventStage schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.EventStage"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/faceredaction": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get FaceRedaction (schema generation only)
+         * @description Internal endpoint used only to ensure FaceRedaction schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.FaceRedaction"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/faceredactiontrack": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get FaceRedactionTrack (schema generation only)
+         * @description Internal endpoint used only to ensure FaceRedactionTrack schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.FaceRedactionTrack"];
                     };
                 };
             };
@@ -616,6 +1591,357 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.FloorPlan"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/fragmentedbytesrangeontime": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get FragmentedBytesRangeOnTime (schema generation only)
+         * @description Internal endpoint used only to ensure FragmentedBytesRangeOnTime schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.FragmentedBytesRangeOnTime"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getaccesstokenserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAccessTokensErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAccessTokensErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAccessTokensErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getaccesstokensrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAccessTokensRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetAccessTokensRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAccessTokensRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getaccesstokensresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAccessTokensResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAccessTokensResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAccessTokensResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getaccesstokenssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAccessTokensSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAccessTokensSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAccessTokensSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getanalysiserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAnalysisErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAnalysisErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAnalysisErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getanalysisrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAnalysisRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetAnalysisRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAnalysisRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getanalysisresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAnalysisResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAnalysisResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAnalysisResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getanalysissuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAnalysisSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAnalysisSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAnalysisSuccessResponse"];
                     };
                 };
             };
@@ -940,6 +2266,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/highupload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get HighUpload (schema generation only)
+         * @description Internal endpoint used only to ensure HighUpload schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.HighUpload"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/hourrange": {
         parameters: {
             query?: never;
@@ -1135,6 +2500,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/markeroptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerOptions (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerOptions schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.MarkerOptions"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/mediaatruntimemetadata": {
         parameters: {
             query?: never;
@@ -1279,6 +2683,201 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.Metadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/monitorstage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MonitorStage (schema generation only)
+         * @description Internal endpoint used only to ensure MonitorStage schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MonitorStage"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/notificationstage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get NotificationStage (schema generation only)
+         * @description Internal endpoint used only to ensure NotificationStage schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.NotificationStage"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/pipelineevent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PipelineEvent (schema generation only)
+         * @description Internal endpoint used only to ensure PipelineEvent schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.PipelineEvent"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/pipelinemetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PipelineMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure PipelineMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.PipelineMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/pipelinepayload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PipelinePayload (schema generation only)
+         * @description Internal endpoint used only to ensure PipelinePayload schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.PipelinePayload"];
                     };
                 };
             };
@@ -1447,6 +3046,201 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/savefaceredactionerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SaveFaceRedactionErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SaveFaceRedactionErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SaveFaceRedactionErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/savefaceredactionrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SaveFaceRedactionRequest (schema generation only)
+         * @description Internal endpoint used only to ensure SaveFaceRedactionRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SaveFaceRedactionRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/savefaceredactionresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SaveFaceRedactionResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SaveFaceRedactionResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SaveFaceRedactionResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/savefaceredactionsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SaveFaceRedactionSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SaveFaceRedactionSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SaveFaceRedactionSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/sequencestage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SequenceStage (schema generation only)
+         * @description Internal endpoint used only to ensure SequenceStage schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.SequenceStage"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/site": {
         parameters: {
             query?: never;
@@ -1564,6 +3358,318 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/sprite": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Sprite (schema generation only)
+         * @description Internal endpoint used only to ensure Sprite schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Sprite"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/stage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Stage (schema generation only)
+         * @description Internal endpoint used only to ensure Stage schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/storage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Storage (schema generation only)
+         * @description Internal endpoint used only to ensure Storage schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Storage"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/submitfaceredactionerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SubmitFaceRedactionErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SubmitFaceRedactionErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SubmitFaceRedactionErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/submitfaceredactionrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SubmitFaceRedactionRequest (schema generation only)
+         * @description Internal endpoint used only to ensure SubmitFaceRedactionRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SubmitFaceRedactionRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/submitfaceredactionresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SubmitFaceRedactionResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SubmitFaceRedactionResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SubmitFaceRedactionResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/submitfaceredactionsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SubmitFaceRedactionSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SubmitFaceRedactionSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SubmitFaceRedactionSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/subscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Subscription (schema generation only)
+         * @description Internal endpoint used only to ensure Subscription schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Subscription"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/synchronize": {
         parameters: {
             query?: never;
@@ -1642,6 +3748,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/throttlerstage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ThrottlerStage (schema generation only)
+         * @description Internal endpoint used only to ensure ThrottlerStage schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ThrottlerStage"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/thumbnail": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Thumbnail (schema generation only)
+         * @description Internal endpoint used only to ensure Thumbnail schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Thumbnail"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/thumby": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Thumby (schema generation only)
+         * @description Internal endpoint used only to ensure Thumby schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Thumby"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/timewindow": {
         parameters: {
             query?: never;
@@ -1708,6 +3931,357 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Tour"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateaccesstokenerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAccessTokenErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAccessTokenErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateAccessTokenErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateaccesstokenrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAccessTokenRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAccessTokenRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateAccessTokenRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateaccesstokenresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAccessTokenResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAccessTokenResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateAccessTokenResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateaccesstokensuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAccessTokenSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAccessTokenSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateAccessTokenSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/user": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get User (schema generation only)
+         * @description Internal endpoint used only to ensure User schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.User"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/vaultmedia": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get VaultMedia (schema generation only)
+         * @description Internal endpoint used only to ensure VaultMedia schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.VaultMedia"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/vaultmediaevent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get VaultMediaEvent (schema generation only)
+         * @description Internal endpoint used only to ensure VaultMediaEvent schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.VaultMediaEvent"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/vaultmediafragmentcollection": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get VaultMediaFragmentCollection (schema generation only)
+         * @description Internal endpoint used only to ensure VaultMediaFragmentCollection schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.VaultMediaFragmentCollection"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/vaultmediametadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get VaultMediaMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure VaultMediaMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.VaultMediaMetadata"];
                     };
                 };
             };
@@ -1828,6 +4402,37 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        "api.AddAccessTokenErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.AddAccessTokenRequest": {
+            token?: components["schemas"]["models.AccessToken"];
+        };
+        "api.AddAccessTokenResponse": {
+            token?: components["schemas"]["models.AccessToken"];
+        };
+        "api.AddAccessTokenSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.AddAccessTokenResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
         "api.AddMarkerErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -1859,6 +4464,35 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metaData?: components["schemas"]["api.Metadata"];
         };
+        /** @enum {string} */
+        "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_not_found" | "analysis_found" | "analysisId_missing";
+        "api.DeleteAccessTokenErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteAccessTokenRequest": Record<string, never>;
+        "api.DeleteAccessTokenResponse": Record<string, never>;
+        "api.DeleteAccessTokenSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.DeleteAccessTokenResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
         "api.ErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -1869,6 +4503,66 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAccessTokensErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAccessTokensRequest": Record<string, never>;
+        "api.GetAccessTokensResponse": {
+            access_tokens?: components["schemas"]["models.AccessToken"][];
+        };
+        "api.GetAccessTokensSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAccessTokensResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAnalysisErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAnalysisRequest": {
+            analysisId?: string;
+        };
+        "api.GetAnalysisResponse": {
+            analysis?: components["schemas"]["models.Analysis"];
+        };
+        "api.GetAnalysisSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAnalysisResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
             metaData?: components["schemas"]["api.Metadata"];
         };
         "api.GetMarkersErrorResponse": {
@@ -1932,10 +4626,15 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metaData?: components["schemas"]["api.Metadata"];
         };
+        "api.MarkerOptions": {
+            names?: string[];
+            types?: string[];
+        };
         "api.MediaFilter": {
             classifications?: string[];
             dates?: string[];
             devices?: string[];
+            events?: string[];
             favourite?: boolean;
             globalSearch?: boolean;
             hasLabel?: boolean;
@@ -1968,6 +4667,71 @@ export interface components {
             /** @description User ID of the user making the request */
             userId?: string;
         };
+        "api.SaveFaceRedactionErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.SaveFaceRedactionRequest": {
+            analysisId?: string;
+            redaction?: components["schemas"]["models.FaceRedaction"];
+        };
+        "api.SaveFaceRedactionResponse": {
+            analysisId?: string;
+            redaction?: components["schemas"]["models.FaceRedaction"];
+        };
+        "api.SaveFaceRedactionSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.SaveFaceRedactionResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.SubmitFaceRedactionErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.SubmitFaceRedactionRequest": {
+            analysisId?: string;
+        };
+        "api.SubmitFaceRedactionResponse": {
+            analysisId?: string;
+            status?: components["schemas"]["api.AnalysisStatus"];
+        };
+        "api.SubmitFaceRedactionSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.SubmitFaceRedactionResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
         "api.SuccessResponse": {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
@@ -1980,11 +4744,155 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metaData?: components["schemas"]["api.Metadata"];
         };
+        "api.UpdateAccessTokenErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateAccessTokenRequest": {
+            token?: components["schemas"]["models.AccessToken"];
+        };
+        "api.UpdateAccessTokenResponse": {
+            token?: components["schemas"]["models.AccessToken"];
+        };
+        "api.UpdateAccessTokenSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateAccessTokenResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metaData?: components["schemas"]["api.Metadata"];
+        };
+        "models.AccessToken": {
+            /** @description Audit information */
+            audit?: components["schemas"]["models.Audit"];
+            /** @description Description of the access token */
+            description?: string;
+            /** @description Expiration timestamp of the access token in seconds since epoch */
+            expiration?: number;
+            id?: string;
+            /** @description Name of the access token */
+            name?: string;
+            /** @description RBAC information */
+            organisationId?: string;
+            /** @description List of scopes associated with the access token */
+            scopes?: components["schemas"]["models.AccessTokenScope"][];
+            /** @description The actual access token value, should be kept secret (will be trimmed before saving) */
+            token?: string;
+            /** @description UserId is used to identify the user that created the marker */
+            userId?: string;
+        };
+        /** @enum {string} */
+        "models.AccessTokenScope": "markers:write" | "markers:read";
+        "models.Activity": {
+            day?: string;
+            devices?: {
+                [key: string]: number;
+            };
+            images?: number;
+            requests?: number;
+            timestamp?: number;
+            usage?: number;
+            videos?: number;
+        };
+        "models.Analysis": {
+            classify?: components["schemas"]["models.Classify"];
+            counting?: components["schemas"]["models.Counting"];
+            dominantcolor?: components["schemas"]["models.DominantColor"];
+            faceRedaction?: components["schemas"]["models.FaceRedaction"][];
+            sprite?: components["schemas"]["models.Sprite"];
+            thumby?: components["schemas"]["models.Thumby"];
+        };
+        "models.AnalysisFilter": {
+            limit?: number;
+            operations?: string[];
+            sort?: string;
+            start?: number;
+        };
+        "models.AnalysisShort": {
+            data?: components["schemas"]["models.Analysis"];
+            device_id?: string;
+            favourite?: boolean;
+            id?: string;
+            key?: string;
+            provider?: string;
+            source?: string;
+            src?: string;
+            start?: number;
+            thumbnail_file?: string;
+            thumbnail_provider?: string;
+            thumbnail_src?: string;
+            timestamp?: number;
+            user_id?: string;
+        };
+        "models.AnalysisStage": {
+            /** @description Add fields relevant to analysis stage */
+            analysisResult?: string;
+            name?: string;
+        };
+        "models.AnalysisWrapper": {
+            asyncOperations?: string[];
+            data?: components["schemas"]["models.Analysis"];
+            device_id?: string;
+            end?: number;
+            favourite?: boolean;
+            id?: string;
+            in_process?: number;
+            key?: string;
+            provider?: string;
+            requiredOperations?: string[];
+            resolvedOperations?: string[];
+            source?: string;
+            start?: number;
+            timestamp?: number;
+            user_id?: string;
+        };
         "models.Audit": {
             createdAt?: number;
             createdBy?: string;
             updatedAt?: number;
             updatedBy?: string;
+        };
+        "models.Classify": {
+            details?: components["schemas"]["models.ClassifyDetails"][];
+            properties?: string[];
+        };
+        "models.ClassifyDetails": {
+            classified?: string;
+            colorStr?: string[];
+            distance?: number;
+            frame?: number;
+            frameHeight?: number;
+            frameWidth?: number;
+            frames?: number[];
+            h?: number;
+            id?: string;
+            isStatic?: boolean;
+            meanColor?: number;
+            occurence?: number;
+            staticDistance?: number;
+            traject?: number[][];
+            trajectCentroids?: number[][];
+            valid?: boolean;
+            w?: number;
+            x?: number;
+            y?: number;
+        };
+        "models.Color": {
+            count?: number;
+            name?: string;
         };
         "models.Comment": {
             /** @description Audit information */
@@ -2002,6 +4910,33 @@ export interface components {
             timestamps?: number[];
             /** @description Comment information */
             type?: string;
+        };
+        "models.Counting": {
+            detail?: components["schemas"]["models.CountingDetail"][];
+            records?: components["schemas"]["models.CountingRecord"][];
+            regions?: components["schemas"]["models.Region"][];
+        };
+        "models.CountingDetail": {
+            deviceId?: string;
+            objectId?: string;
+            objectName?: string;
+            position?: number[];
+            segment?: string;
+            timestamp?: string;
+            videoHeight?: number;
+            videoWidth?: number;
+        };
+        "models.CountingRecord": {
+            alert_id?: string;
+            alert_name?: string;
+            count?: number;
+            deviceId?: string;
+            duration?: number;
+            objectName?: string;
+            segmentId?: string;
+            timestamp?: string;
+            type?: string;
+            username?: string;
         };
         "models.Device": {
             /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
@@ -2141,6 +5076,28 @@ export interface components {
             /** @description Absolute Y coordinate */
             y?: number;
         };
+        "models.DominantColor": {
+            hexs?: string[];
+            rgbs?: number[][];
+        };
+        "models.EventStage": {
+            /** @description Add fields relevant to event stage */
+            eventData?: string;
+            name?: string;
+        };
+        "models.FaceRedaction": {
+            faceRedactionTracks?: components["schemas"]["models.FaceRedactionTrack"][];
+            id?: string;
+        };
+        "models.FaceRedactionTrack": {
+            classified?: string;
+            colorStr?: string[];
+            frames?: number[];
+            id?: string;
+            selected?: boolean;
+            /** @description [x1, y1, x2, y2, frame] */
+            traject?: number[][];
+        };
         "models.FeaturePermissions": {
             floorPlans?: number;
             io?: number;
@@ -2162,6 +5119,16 @@ export interface components {
             name?: string;
             /** @description Dimensions of the floor plan in pixels */
             width?: number;
+        };
+        "models.FragmentedBytesRangeOnTime": {
+            duration?: string;
+            range?: string;
+            time?: string;
+        };
+        "models.HighUpload": {
+            notification?: number;
+            requests?: number;
+            start_timestamp?: number;
         };
         "models.HourRange": {
             end?: number;
@@ -2193,38 +5160,85 @@ export interface components {
         "models.Marker": {
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
-            /** @description Description of the marker */
+            /**
+             * @description Description of the marker
+             * @example Person forcably opened a door
+             */
             description?: string;
-            /** @description Device information */
+            /**
+             * @description Device information
+             * @example 686a906345c1df594939f9j25f4
+             */
             deviceId?: string;
-            /** @description Duration of the marker in milliseconds */
+            /**
+             * @description Duration of the marker in seconds
+             * @example 11
+             */
             duration?: number;
-            /** @description End timestamp of the marker in milliseconds since epoch */
+            /**
+             * @description End timestamp of the marker in seconds since epoch
+             * @example 1752482079
+             */
             endTimestamp?: number;
-            /** @description GroupId is used to identify the group of markers */
+            /**
+             * @description GroupId is used to identify the group of markers
+             * @example 686a906345c1df594pmt41w4
+             */
             groupId?: string;
+            /**
+             * @description Unique identifier for the marker, generated automatically§§§
+             * @example 507f1f77bcf86cd799439011
+             */
             id?: string;
-            /** @description Media information */
+            /**
+             * @description Media information
+             * @example [
+             *       "[\"img_20230918_001.jpg\"",
+             *       " \"vid_20230918_002.mp4\"]"
+             *     ]
+             */
             mediaIds?: string[];
             /** @description Additional metadata */
             metaData?: components["schemas"]["models.MarkerMetadata"];
-            /** @description Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc." */
+            /**
+             * @description Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
+             * @example 2-HCP-007
+             */
             name?: string;
-            /** @description OrganisationId is used to identify the organisation that owns the marker */
+            /**
+             * @description OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+             * @example 686a906345c1df594pad69f0
+             */
             organisationId?: string;
-            /** @description RBAC information */
+            /**
+             * @description RBAC information
+             * @example 686a906345c1df594pcsr3r45
+             */
             siteId?: string;
-            /** @description Timing information */
+            /**
+             * @description Timing information (all timestamps are in seconds)
+             * @example 1752482068
+             */
             startTimestamp?: number;
             /** @description Synchronize */
             synchronize?: components["schemas"]["models.Synchronize"];
-            /** @description Type of the marker e.g., "alert", "event", "door_opened", "person", "car" etc. */
+            /**
+             * @description Type of the marker e.g., "alert", "event", "door_opened", "person", etc.
+             * @example door-forced
+             */
             type?: string;
         };
         "models.MarkerMetadata": {
             /** @description Additional comments or description of the marker */
             comments?: components["schemas"]["models.Comment"];
-            /** @description Tags associated with the marker for categorization */
+            /**
+             * @description Tags associated with the marker for categorization
+             * @example [
+             *       "[\"vehicle\"",
+             *       "\"license plate\"",
+             *       "\"security\"]"
+             *     ]
+             */
             tags?: string[];
         };
         "models.Media": {
@@ -2268,6 +5282,80 @@ export interface components {
             classifications?: string[];
             tags?: string[];
         };
+        "models.MonitorStage": {
+            activity?: components["schemas"]["models.Activity"];
+            highUpload?: components["schemas"]["models.HighUpload"];
+            /** @description Add fields relevant to monitor stage */
+            monitorData?: string;
+            name?: string;
+            plans?: {
+                [key: string]: unknown;
+            };
+            subscription?: components["schemas"]["models.Subscription"];
+            /** @description Add more fields as needed */
+            user?: components["schemas"]["models.User"];
+        };
+        "models.NotificationStage": {
+            name?: string;
+            /** @description Add fields relevant to notification stage */
+            notificationType?: string;
+        };
+        "models.PipelineEvent": {
+            analysisStage?: components["schemas"]["models.AnalysisStage"];
+            /** @description We should get rid of this and use the stage map */
+            data?: {
+                [key: string]: unknown;
+            };
+            date?: number;
+            eventStage?: components["schemas"]["models.EventStage"];
+            /** @description Stages of the pipeline, e.g., event, monitor, sequence, analysis, throttler, notification
+             *     Idea is that we persist relevant data in each stage, so we have a good understanding what is used
+             *     or computed at which stage. */
+            events?: string[];
+            fileName?: string;
+            monitorStage?: components["schemas"]["models.MonitorStage"];
+            notificationStage?: components["schemas"]["models.NotificationStage"];
+            operation?: string;
+            payload?: components["schemas"]["models.PipelinePayload"];
+            provider?: string;
+            receivecount?: number;
+            /** @description ondemand, persist */
+            request?: string;
+            secondary_providers?: string[];
+            sequenceStage?: components["schemas"]["models.SequenceStage"];
+            source?: string;
+            throttlerStage?: components["schemas"]["models.ThrottlerStage"];
+            /** @description We are using OpenTelemetry, so we can observe the pipeline more easily. */
+            traceId?: string;
+        };
+        "models.PipelineMetadata": {
+            duration?: string;
+            "event-instancename"?: string;
+            "event-microseconds"?: string;
+            "event-numberofchanges"?: string;
+            "event-regioncoordinates"?: string;
+            "event-timestamp"?: string;
+            productid?: string;
+            uploadtime?: string;
+        };
+        "models.PipelinePayload": {
+            bytes_range_on_time?: components["schemas"]["models.FragmentedBytesRangeOnTime"][];
+            bytes_ranges?: string;
+            deviceId?: string;
+            deviceName?: string;
+            duration?: string;
+            fileSize?: number;
+            /** @description MP4 fragmentation */
+            is_fragmented?: boolean;
+            key?: string;
+            /** @description Metadata */
+            metadata?: components["schemas"]["models.PipelineMetadata"];
+            /** @description RBAC */
+            organisationId?: string;
+            /** @description Signed URL */
+            signedUrl?: string;
+            timestamp?: number;
+        };
         "models.Point": {
             x?: number;
             y?: number;
@@ -2296,6 +5384,11 @@ export interface components {
             timeWindow?: components["schemas"]["models.TimeWindow"];
             timeWindowActive?: number;
             user_id?: string;
+        };
+        "models.SequenceStage": {
+            name?: string;
+            /** @description Add fields relevant to sequence stage */
+            sequenceId?: number;
         };
         "models.Site": {
             /** @description Audit information */
@@ -2328,8 +5421,25 @@ export interface components {
             initials?: string;
             numberOfFloorPlans?: number;
         };
+        "models.Sprite": {
+            filename?: string;
+            interval?: number;
+            provider?: string;
+        };
         /** @enum {string} */
         "models.Status": "pending" | "skipped" | "assigned" | "inProgress" | "completed" | "failed";
+        "models.Storage": {
+            access_key?: string;
+            secret_key?: string;
+            uri?: string;
+        };
+        "models.Subscription": {
+            ends_at?: string;
+            id?: string;
+            name?: string;
+            stripe_plan?: string;
+            user_id?: string;
+        };
         "models.Synchronize": {
             /** @description History of synchronization events */
             events?: components["schemas"]["models.SynchronizeEvent"][];
@@ -2351,6 +5461,22 @@ export interface components {
             timestamp?: number;
             /** @description ID of the worker handling synchronization */
             workerId?: string;
+        };
+        "models.ThrottlerStage": {
+            name?: string;
+            /** @description Add fields relevant to throttler stage */
+            throttleLimit?: number;
+        };
+        "models.Thumbnail": {
+            key?: string;
+            thumbnailFile?: string;
+        };
+        "models.Thumby": {
+            base64?: string;
+            filename?: string;
+            /** @description Only for sprites (Hacky) */
+            interval?: number;
+            provider?: string;
         };
         "models.TimeWindow": {
             timeRange1MaxFriday?: number;
@@ -2390,6 +5516,95 @@ export interface components {
             running?: boolean;
             speed?: number;
         };
+        "models.User": {
+            activity?: {
+                [key: string]: unknown;
+            }[];
+            amazon_access_key_id?: string;
+            amazon_secret_access_key?: string;
+            channels?: {
+                [key: string]: {
+                    [key: string]: unknown;
+                };
+            };
+            custom_analysis_limit?: number;
+            custom_day_limit?: number;
+            /** @description We can override the subscription settings if needed. */
+            custom_usage_limit?: number;
+            dates?: string[];
+            devices?: {
+                [key: string]: unknown;
+            }[];
+            email?: string;
+            error?: boolean;
+            highupload?: components["schemas"]["models.HighUpload"];
+            id?: string;
+            instances?: string[];
+            notificationSettings?: {
+                [key: string]: {
+                    [key: string]: unknown;
+                };
+            };
+            pushbullet_api_key?: string;
+            reachedLimit?: boolean;
+            reachedLimitTimestamp?: number;
+            settings?: {
+                [key: string]: unknown;
+            };
+            storage?: components["schemas"]["models.Storage"];
+            throttler?: {
+                [key: string]: unknown;
+            };
+            timezone?: string;
+            username?: string;
+        };
+        "models.VaultMedia": {
+            account?: string;
+            device?: string;
+            events?: components["schemas"]["models.VaultMediaEvent"][];
+            filename?: string;
+            filesize?: number;
+            finished?: boolean;
+            forward_timestamp?: number;
+            forwarded?: boolean;
+            forwarder_id?: string;
+            forwarder_type?: string;
+            forwarder_worker?: string;
+            main_provider?: boolean;
+            metadata?: components["schemas"]["models.VaultMediaMetadata"];
+            provider?: string;
+            secondary_provider?: boolean;
+            status?: string;
+            temporary?: boolean;
+            timestamp?: number;
+            to_be_forwarded?: boolean;
+            uploaded?: boolean;
+            uriExpiryTime?: string;
+        };
+        "models.VaultMediaEvent": {
+            description?: string;
+            timestamp?: number;
+            title?: string;
+        };
+        "models.VaultMediaFragmentCollection": {
+            bytes_range_on_time?: components["schemas"]["models.FragmentedBytesRangeOnTime"][];
+            bytes_ranges?: string;
+            camera_id?: string;
+            duration?: number;
+            end?: number;
+            filename?: string;
+            key?: string;
+            start?: number;
+            timestamp?: number;
+            url?: string;
+        };
+        "models.VaultMediaMetadata": {
+            bytes_range_on_time?: components["schemas"]["models.FragmentedBytesRangeOnTime"][];
+            bytes_ranges?: string;
+            duration?: number;
+            is_fragmented?: boolean;
+            timescale?: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -2402,16 +5617,35 @@ export type operations = Record<string, never>;
 
 // Export namespaces for organized access
 export namespace models {
+    export type AccessToken = components['schemas']['models.AccessToken'];
+    export type Activity = components['schemas']['models.Activity'];
+    export type Analysis = components['schemas']['models.Analysis'];
+    export type AnalysisFilter = components['schemas']['models.AnalysisFilter'];
+    export type AnalysisShort = components['schemas']['models.AnalysisShort'];
+    export type AnalysisStage = components['schemas']['models.AnalysisStage'];
+    export type AnalysisWrapper = components['schemas']['models.AnalysisWrapper'];
     export type Audit = components['schemas']['models.Audit'];
+    export type Classify = components['schemas']['models.Classify'];
+    export type ClassifyDetails = components['schemas']['models.ClassifyDetails'];
+    export type Color = components['schemas']['models.Color'];
     export type Comment = components['schemas']['models.Comment'];
+    export type Counting = components['schemas']['models.Counting'];
+    export type CountingDetail = components['schemas']['models.CountingDetail'];
+    export type CountingRecord = components['schemas']['models.CountingRecord'];
     export type Device = components['schemas']['models.Device'];
     export type DeviceCameraMetadata = components['schemas']['models.DeviceCameraMetadata'];
     export type DeviceFeaturePermissions = components['schemas']['models.DeviceFeaturePermissions'];
     export type DeviceLocationMetadata = components['schemas']['models.DeviceLocationMetadata'];
     export type DeviceMetadata = components['schemas']['models.DeviceMetadata'];
     export type DevicePlacement = components['schemas']['models.DevicePlacement'];
+    export type DominantColor = components['schemas']['models.DominantColor'];
+    export type EventStage = components['schemas']['models.EventStage'];
+    export type FaceRedaction = components['schemas']['models.FaceRedaction'];
+    export type FaceRedactionTrack = components['schemas']['models.FaceRedactionTrack'];
     export type FeaturePermissions = components['schemas']['models.FeaturePermissions'];
     export type FloorPlan = components['schemas']['models.FloorPlan'];
+    export type FragmentedBytesRangeOnTime = components['schemas']['models.FragmentedBytesRangeOnTime'];
+    export type HighUpload = components['schemas']['models.HighUpload'];
     export type HourRange = components['schemas']['models.HourRange'];
     export type IO = components['schemas']['models.IO'];
     export type Location = components['schemas']['models.Location'];
@@ -2420,25 +5654,55 @@ export namespace models {
     export type Media = components['schemas']['models.Media'];
     export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
+    export type MonitorStage = components['schemas']['models.MonitorStage'];
+    export type NotificationStage = components['schemas']['models.NotificationStage'];
+    export type PipelineEvent = components['schemas']['models.PipelineEvent'];
+    export type PipelineMetadata = components['schemas']['models.PipelineMetadata'];
+    export type PipelinePayload = components['schemas']['models.PipelinePayload'];
     export type Point = components['schemas']['models.Point'];
     export type Preset = components['schemas']['models.Preset'];
     export type Region = components['schemas']['models.Region'];
     export type Role = components['schemas']['models.Role'];
+    export type SequenceStage = components['schemas']['models.SequenceStage'];
     export type Site = components['schemas']['models.Site'];
     export type SiteLocationMetadata = components['schemas']['models.SiteLocationMetadata'];
     export type SiteMetadata = components['schemas']['models.SiteMetadata'];
+    export type Sprite = components['schemas']['models.Sprite'];
+    export type Storage = components['schemas']['models.Storage'];
+    export type Subscription = components['schemas']['models.Subscription'];
     export type Synchronize = components['schemas']['models.Synchronize'];
     export type SynchronizeEvent = components['schemas']['models.SynchronizeEvent'];
+    export type ThrottlerStage = components['schemas']['models.ThrottlerStage'];
+    export type Thumbnail = components['schemas']['models.Thumbnail'];
+    export type Thumby = components['schemas']['models.Thumby'];
     export type TimeWindow = components['schemas']['models.TimeWindow'];
     export type Tour = components['schemas']['models.Tour'];
+    export type User = components['schemas']['models.User'];
+    export type VaultMedia = components['schemas']['models.VaultMedia'];
+    export type VaultMediaEvent = components['schemas']['models.VaultMediaEvent'];
+    export type VaultMediaFragmentCollection = components['schemas']['models.VaultMediaFragmentCollection'];
+    export type VaultMediaMetadata = components['schemas']['models.VaultMediaMetadata'];
 }
 
 export namespace api {
+    export type AddAccessTokenErrorResponse = components['schemas']['api.AddAccessTokenErrorResponse'];
+    export type AddAccessTokenRequest = components['schemas']['api.AddAccessTokenRequest'];
+    export type AddAccessTokenResponse = components['schemas']['api.AddAccessTokenResponse'];
+    export type AddAccessTokenSuccessResponse = components['schemas']['api.AddAccessTokenSuccessResponse'];
     export type AddMarkerErrorResponse = components['schemas']['api.AddMarkerErrorResponse'];
     export type AddMarkerRequest = components['schemas']['api.AddMarkerRequest'];
     export type AddMarkerResponse = components['schemas']['api.AddMarkerResponse'];
     export type AddMarkerSuccessResponse = components['schemas']['api.AddMarkerSuccessResponse'];
+    export type DeleteAccessTokenErrorResponse = components['schemas']['api.DeleteAccessTokenErrorResponse'];
+    export type DeleteAccessTokenSuccessResponse = components['schemas']['api.DeleteAccessTokenSuccessResponse'];
     export type ErrorResponse = components['schemas']['api.ErrorResponse'];
+    export type GetAccessTokensErrorResponse = components['schemas']['api.GetAccessTokensErrorResponse'];
+    export type GetAccessTokensResponse = components['schemas']['api.GetAccessTokensResponse'];
+    export type GetAccessTokensSuccessResponse = components['schemas']['api.GetAccessTokensSuccessResponse'];
+    export type GetAnalysisErrorResponse = components['schemas']['api.GetAnalysisErrorResponse'];
+    export type GetAnalysisRequest = components['schemas']['api.GetAnalysisRequest'];
+    export type GetAnalysisResponse = components['schemas']['api.GetAnalysisResponse'];
+    export type GetAnalysisSuccessResponse = components['schemas']['api.GetAnalysisSuccessResponse'];
     export type GetMarkersErrorResponse = components['schemas']['api.GetMarkersErrorResponse'];
     export type GetMarkersResponse = components['schemas']['api.GetMarkersResponse'];
     export type GetMarkersSuccessResponse = components['schemas']['api.GetMarkersSuccessResponse'];
@@ -2446,7 +5710,20 @@ export namespace api {
     export type GetTimelineRequest = components['schemas']['api.GetTimelineRequest'];
     export type GetTimelineResponse = components['schemas']['api.GetTimelineResponse'];
     export type GetTimelineSuccessResponse = components['schemas']['api.GetTimelineSuccessResponse'];
+    export type MarkerOptions = components['schemas']['api.MarkerOptions'];
     export type MediaFilter = components['schemas']['api.MediaFilter'];
     export type Metadata = components['schemas']['api.Metadata'];
+    export type SaveFaceRedactionErrorResponse = components['schemas']['api.SaveFaceRedactionErrorResponse'];
+    export type SaveFaceRedactionRequest = components['schemas']['api.SaveFaceRedactionRequest'];
+    export type SaveFaceRedactionResponse = components['schemas']['api.SaveFaceRedactionResponse'];
+    export type SaveFaceRedactionSuccessResponse = components['schemas']['api.SaveFaceRedactionSuccessResponse'];
+    export type SubmitFaceRedactionErrorResponse = components['schemas']['api.SubmitFaceRedactionErrorResponse'];
+    export type SubmitFaceRedactionRequest = components['schemas']['api.SubmitFaceRedactionRequest'];
+    export type SubmitFaceRedactionResponse = components['schemas']['api.SubmitFaceRedactionResponse'];
+    export type SubmitFaceRedactionSuccessResponse = components['schemas']['api.SubmitFaceRedactionSuccessResponse'];
     export type SuccessResponse = components['schemas']['api.SuccessResponse'];
+    export type UpdateAccessTokenErrorResponse = components['schemas']['api.UpdateAccessTokenErrorResponse'];
+    export type UpdateAccessTokenRequest = components['schemas']['api.UpdateAccessTokenRequest'];
+    export type UpdateAccessTokenResponse = components['schemas']['api.UpdateAccessTokenResponse'];
+    export type UpdateAccessTokenSuccessResponse = components['schemas']['api.UpdateAccessTokenSuccessResponse'];
 }
