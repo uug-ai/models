@@ -1486,6 +1486,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/faceredactionmessage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get FaceRedactionMessage (schema generation only)
+         * @description Internal endpoint used only to ensure FaceRedactionMessage schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.FaceRedactionMessage"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/faceredactiontrack": {
         parameters: {
             query?: never;
@@ -4505,6 +4544,13 @@ export interface components {
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metaData?: components["schemas"]["api.Metadata"];
         };
+        "api.FaceRedactionMessage": {
+            data?: {
+                [key: string]: unknown;
+            };
+            events?: string[];
+            user?: components["schemas"]["models.User"];
+        };
         "api.GetAccessTokensErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -4714,9 +4760,11 @@ export interface components {
         };
         "api.SubmitFaceRedactionRequest": {
             analysisId?: string;
+            faceRedaction?: components["schemas"]["models.FaceRedaction"];
         };
         "api.SubmitFaceRedactionResponse": {
             analysisId?: string;
+            faceRedaction?: components["schemas"]["models.FaceRedaction"];
             status?: components["schemas"]["api.AnalysisStatus"];
         };
         "api.SubmitFaceRedactionSuccessResponse": {
@@ -5696,6 +5744,7 @@ export namespace api {
     export type DeleteAccessTokenErrorResponse = components['schemas']['api.DeleteAccessTokenErrorResponse'];
     export type DeleteAccessTokenSuccessResponse = components['schemas']['api.DeleteAccessTokenSuccessResponse'];
     export type ErrorResponse = components['schemas']['api.ErrorResponse'];
+    export type FaceRedactionMessage = components['schemas']['api.FaceRedactionMessage'];
     export type GetAccessTokensErrorResponse = components['schemas']['api.GetAccessTokensErrorResponse'];
     export type GetAccessTokensResponse = components['schemas']['api.GetAccessTokensResponse'];
     export type GetAccessTokensSuccessResponse = components['schemas']['api.GetAccessTokensSuccessResponse'];

@@ -95,11 +95,13 @@ type SaveFaceRedactionErrorResponse struct {
 // SubmitFaceRedaction
 // @Router /analysis/submit-face-redaction [post]
 type SubmitFaceRedactionRequest struct {
-	AnalysisId string `json:"analysisId"`
+	AnalysisId    string               `json:"analysisId"`
+	FaceRedaction models.FaceRedaction `json:"faceRedaction"`
 }
 type SubmitFaceRedactionResponse struct {
-	AnalysisId string         `json:"analysisId"`
-	Status     AnalysisStatus `json:"status"`
+	AnalysisId    string               `json:"analysisId"`
+	FaceRedaction models.FaceRedaction `json:"faceRedaction"`
+	Status        AnalysisStatus       `json:"status"`
 }
 type SubmitFaceRedactionSuccessResponse struct {
 	SuccessResponse
@@ -107,6 +109,12 @@ type SubmitFaceRedactionSuccessResponse struct {
 }
 type SubmitFaceRedactionErrorResponse struct {
 	ErrorResponse
+}
+
+type FaceRedactionMessage struct {
+	Events []string               `json:"events,omitempty"`
+	User   models.User            `json:"user,omitempty"`
+	Data   map[string]interface{} `json:"data,omitempty"`
 }
 
 // GetAnalysis
