@@ -142,12 +142,13 @@ type Thumbnail struct {
 }
 
 type FaceRedactionTrack struct {
-	Id          string      `json:"id" bson:"id"`
-	Classified  string      `json:"classified" bson:"classified"`
-	Traject     [][]float64 `json:"traject" bson:"traject"` // [x1, y1, x2, y2, frame]
-	Frames      []int64     `json:"frames" bson:"frames"`
-	ColorString []string    `json:"colorStr,omitempty" bson:"colorStr,omitempty"`
-	Selected    bool        `json:"selected,omitempty" bson:"selected,omitempty"`
+	Id               string              `json:"id" bson:"id"`
+	Classified       string              `json:"classified" bson:"classified"`
+	Traject          [][]float64         `json:"traject" bson:"traject"` // [x1, y1, x2, y2, frame]
+	Frames           []int64             `json:"frames" bson:"frames"`
+	ColorString      []string            `json:"colorStr,omitempty" bson:"colorStr,omitempty"`
+	Selected         bool                `json:"selected,omitempty" bson:"selected,omitempty"`
+	FrameCoordinates map[int64][]float64 `json:"frameCoordinates,omitempty" bson:"frameCoordinates,omitempty"` // frame -> [x1, y1, x2, y2]
 }
 
 type FaceRedaction struct {

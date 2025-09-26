@@ -4504,7 +4504,7 @@ export interface components {
             metaData?: components["schemas"]["api.Metadata"];
         };
         /** @enum {string} */
-        "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_not_found" | "analysis_found" | "analysisId_missing";
+        "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_signed_url_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing";
         "api.DeleteAccessTokenErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -4761,6 +4761,7 @@ export interface components {
         "api.SubmitFaceRedactionRequest": {
             analysisId?: string;
             faceRedaction?: components["schemas"]["models.FaceRedaction"];
+            signedUrl?: string;
         };
         "api.SubmitFaceRedactionResponse": {
             analysisId?: string;
@@ -5140,6 +5141,10 @@ export interface components {
         "models.FaceRedactionTrack": {
             classified?: string;
             colorStr?: string[];
+            /** @description frame -> [x1, y1, x2, y2] */
+            frameCoordinates?: {
+                [key: string]: number[];
+            };
             frames?: number[];
             id?: string;
             selected?: boolean;

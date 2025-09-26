@@ -12,6 +12,8 @@ const (
 	AnalysisSubmitRedactionSuccess     AnalysisStatus = "analysis_submit_redaction_success"
 	AnalysisSubmitRedactionFailed      AnalysisStatus = "analysis_submit_redaction_failed"
 
+	AnalysisSignedUrlMissing AnalysisStatus = "analysis_signed_url_missing"
+
 	AnalysisNotFound  AnalysisStatus = "analysis_not_found"
 	AnalysisFound     AnalysisStatus = "analysis_found"
 	AnalysisIdMissing AnalysisStatus = "analysisId_missing"
@@ -31,6 +33,7 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisSaveRedactionFailed:        "Failed to save face redaction",
 			AnalysisSubmitRedactionSuccess:     "Face redaction submitted successfully",
 			AnalysisSubmitRedactionFailed:      "Failed to submit face redaction",
+			AnalysisSignedUrlMissing:           "Signed URL is missing",
 			AnalysisNotFound:                   "Analysis not found",
 			AnalysisFound:                      "Analysis found",
 			AnalysisIdMissing:                  "Analysis ID is missing",
@@ -41,6 +44,7 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisSaveRedactionFailed:        "Error al guardar la redacción facial",
 			AnalysisSubmitRedactionSuccess:     "Redacción facial enviada con éxito",
 			AnalysisSubmitRedactionFailed:      "Error al enviar la redacción facial",
+			AnalysisSignedUrlMissing:           "Falta la URL firmada",
 			AnalysisNotFound:                   "Análisis no encontrado",
 			AnalysisFound:                      "Análisis encontrado",
 			AnalysisIdMissing:                  "Falta el ID del análisis",
@@ -51,6 +55,7 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisSaveRedactionFailed:        "Échec de l'enregistrement de la rédaction du visage",
 			AnalysisSubmitRedactionSuccess:     "Rédaction du visage soumise avec succès",
 			AnalysisSubmitRedactionFailed:      "Échec de la soumission de la rédaction du visage",
+			AnalysisSignedUrlMissing:           "URL signée manquante",
 			AnalysisNotFound:                   "Analyse non trouvée",
 			AnalysisFound:                      "Analyse trouvée",
 			AnalysisIdMissing:                  "ID d'analyse manquant",
@@ -96,6 +101,7 @@ type SaveFaceRedactionErrorResponse struct {
 // @Router /analysis/submit-face-redaction [post]
 type SubmitFaceRedactionRequest struct {
 	AnalysisId    string               `json:"analysisId"`
+	SignedUrl     string               `json:"signedUrl"`
 	FaceRedaction models.FaceRedaction `json:"faceRedaction"`
 }
 type SubmitFaceRedactionResponse struct {
