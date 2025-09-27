@@ -130,3 +130,20 @@ type VaultMediaFragmentCollection struct {
 	BytesRanges      string                       `json:"bytes_ranges" bson:"bytes_ranges"`
 	BytesRangeOnTime []FragmentedBytesRangeOnTime `json:"bytes_range_on_time" bson:"bytes_range_on_time"`
 }
+
+/*
+Media object as used in Agent, should be more aligned with how we store in Hub
+*/
+
+type AgentMedia struct {
+	FileName               string `json:"filename" bson:"filename"`
+	Timestamp              int64  `json:"timestamp" bson:"timestamp"`
+	MillisecondsWithLength string `json:"millisecondsWithLength" bson:"millisecondsWithLength"`
+	DeviceName             string `json:"deviceName" bson:"deviceName"`
+	RegionCoordinates      string `json:"regionCoordinates" bson:"regionCoordinates"`
+	Token                  string `json:"token" bson:"token"`
+	Duration               int64  `json:"duration" bson:"duration"`
+	FramesPerSecond        int    `json:"framesPerSecond" bson:"framesPerSecond"`
+	CameraResolution       string `json:"cameraResolution" bson:"cameraResolution"`
+	Account                string `json:"account" bson:"account"`
+}
