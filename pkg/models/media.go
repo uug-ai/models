@@ -145,5 +145,20 @@ type AgentMedia struct {
 	Duration               int64  `json:"duration" bson:"duration"`
 	FramesPerSecond        int    `json:"framesPerSecond" bson:"framesPerSecond"`
 	CameraResolution       string `json:"cameraResolution" bson:"cameraResolution"`
-	Account                string `json:"account" bson:"account"`
+}
+
+func NewAgentMedia(fileName string, timestamp int64, millisecondsWithLength string,
+				   deviceName string, regionCoordinates string, token string, 
+				   duration int64, framesPerSecond int, cameraResolution string) *AgentMedia {
+	return &AgentMedia{
+		FileName:               fileName,
+		Timestamp:              timestamp,
+		MillisecondsWithLength: millisecondsWithLength,
+		DeviceName:             deviceName,
+		RegionCoordinates:      regionCoordinates,
+		Token:                  token,
+		Duration:               duration,
+		FramesPerSecond:        framesPerSecond,
+		CameraResolution:       cameraResolution,
+	}
 }
