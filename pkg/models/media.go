@@ -147,18 +147,54 @@ type AgentMedia struct {
 	CameraResolution       string `json:"cameraResolution" bson:"cameraResolution"`
 }
 
-func NewAgentMedia(fileName string, timestamp int64, millisecondsWithLength string,
-				   deviceName string, regionCoordinates string, token string, 
-				   duration int64, framesPerSecond int, cameraResolution string) *AgentMedia {
-	return &AgentMedia{
-		FileName:               fileName,
-		Timestamp:              timestamp,
-		MillisecondsWithLength: millisecondsWithLength,
-		DeviceName:             deviceName,
-		RegionCoordinates:      regionCoordinates,
-		Token:                  token,
-		Duration:               duration,
-		FramesPerSecond:        framesPerSecond,
-		CameraResolution:       cameraResolution,
+// AgentMediaOption is a functional option for configuring an AgentMedia value.
+type AgentMediaOption func(*AgentMedia)
+
+// NewAgentMediaWithOptions constructs an AgentMedia using functional options.
+// Example:
+//
+//	m := NewAgentMediaWithOptions(WithName("file.mp4"), WithStartTime(ts), WithDuration(1000))
+func NewAgentMediaWithOptions(opts ...AgentMediaOption) *AgentMedia {
+	m := &AgentMedia{}
+	for _, o := range opts {
+		if o != nil {
+			o(m)
+		}
+	}
+	return m
+}
+
+// WithName sets the AgentMedia FileName.
+func WithName(name string) AgentMediaOption {
+	return func(a *AgentMedia) {
+		a.FileName = name
+	}
+}
+
+// WithDuration sets the AgentMedia Duration (milliseconds or as used in the project).
+func WithDuration(d int64) AgentMediaOption {
+	return func(a *AgentMedia) {
+		a.Duration = d
+	}
+}
+
+// WithStartTime sets the AgentMedia Timestamp.
+func WithStartTime(ts int64) AgentMediaOption {
+	return func(a *AgentMedia) {
+		a.Timestamp = ts
+	}
+}
+
+// WithFPS sets the AgentMedia FramesPerSecond.
+func WithFPS(fps int) AgentMediaOption {
+	return func(a *AgentMedia) {
+		a.FramesPerSecond = fps
+	}
+}
+
+// WithResolution sets the AgentMedia CameraResolution.
+func WithResolution(res string) AgentMediaOption {
+	return func(a *AgentMedia) {
+		a.CameraResolution = res
 	}
 }
