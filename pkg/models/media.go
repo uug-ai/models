@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -145,6 +147,14 @@ type AgentMedia struct {
 	Duration               int64  `json:"duration" bson:"duration"`
 	FramesPerSecond        int    `json:"framesPerSecond" bson:"framesPerSecond"`
 	CameraResolution       string `json:"cameraResolution" bson:"cameraResolution"`
+}
+
+func (a *AgentMedia) String() string {
+	return "AgentMedia{FileName:" + a.FileName +
+		", Timestamp:" + fmt.Sprintf("%d", a.Timestamp) +
+		", Duration:" + fmt.Sprintf("%d", a.Duration) +
+		", FramesPerSecond:" + fmt.Sprintf("%d", a.FramesPerSecond) +
+		", CameraResolution:" + a.CameraResolution + "}"
 }
 
 // AgentMediaOption is a functional option for configuring an AgentMedia value.
