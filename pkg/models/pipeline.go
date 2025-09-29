@@ -69,6 +69,8 @@ type PipelinePayload struct {
 
 type PipelineMetadata struct {
 	Timestamp       string `json:"event-timestamp,omitempty"`
+	FPS             string `json:"fps,omitempty"`
+	Resolution      string `json:"resolution,omitempty"`
 	Duration        string `json:"duration,omitempty"`
 	NumberOfChanges string `json:"event-numberofchanges,omitempty"`
 
