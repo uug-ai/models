@@ -60,21 +60,30 @@ func (ms MediaStatus) Translate(lang string) string {
 }
 
 type MediaFilter struct {
-	LastMedia       int64            `json:"lastMedia" bson:"lastMedia"`
-	GlobalSearch    bool             `json:"globalSearch" bson:"globalSearch"`
-	Dates           []string         `json:"dates" bson:"dates"`
-	Devices         []string         `json:"devices" bson:"devices"`
-	Regions         []models.Region  `json:"regions" bson:"regions"`
-	Classifications []string         `json:"classifications" bson:"classifications"`
-	Sort            string           `json:"sort" bson:"sort"`
-	Favourite       bool             `json:"favourite" bson:"favourite"`
-	HasLabel        bool             `json:"hasLabel" bson:"hasLabel"`
-	HourRange       models.HourRange `json:"hourRange" bson:"hourRange"`
-	Markers         []string         `json:"markers" bson:"markers"`
-	Events          []string         `json:"events" bson:"events"`
-	ViewStyle       string           `json:"viewStyle" bson:"viewStyle"`
-	Offset          int64            `json:"offset" bson:"offset"`
-	Limit           int64            `json:"limit" bson:"limit"`
+	LastMedia              int64            `json:"lastMedia" bson:"lastMedia"`
+	GlobalSearch           bool             `json:"globalSearch" bson:"globalSearch"`
+	Dates                  []string         `json:"dates" bson:"dates"`
+	Devices                []string         `json:"devices" bson:"devices"`
+	Regions                []models.Region  `json:"regions" bson:"regions"`
+	Classifications        []string         `json:"classifications" bson:"classifications"`
+	Sort                   string           `json:"sort" bson:"sort"`
+	Favourite              bool             `json:"favourite" bson:"favourite"`
+	HasLabel               bool             `json:"hasLabel" bson:"hasLabel"`
+	HourRange              models.HourRange `json:"hourRange" bson:"hourRange"`
+	Markers                []string         `json:"markers" bson:"markers"`
+	Events                 []string         `json:"events" bson:"events"`
+	ViewStyle              string           `json:"viewStyle" bson:"viewStyle"`
+	Offset                 int64            `json:"offset" bson:"offset"`
+	Limit                  int64            `json:"limit" bson:"limit"`
+	TimelineStartTimestamp int64            `json:"timelineStartTimestamp" bson:"timelineStartTimestamp"`
+	TimelineEndTimestamp   int64            `json:"timelineEndTimestamp" bson:"timelineEndTimestamp"`
+}
+
+type MediaGroup struct {
+	StartTimestamp int64          `json:"startTimestamp" bson:"startTimestamp"`
+	EndTimestamp   int64          `json:"endTimestamp" bson:"endTimestamp"`
+	Count          int64          `json:"count" bson:"count"`
+	Media          []models.Media `json:"media" bson:"media"`
 }
 
 // GetTimeline
@@ -83,8 +92,8 @@ type GetTimelineRequest struct {
 	Filter MediaFilter `json:"filter" bson:"filter"`
 }
 type GetTimelineResponse struct {
-	Device models.Device  `json:"device"`
-	Media  []models.Media `json:"media"`
+	Device models.Device `json:"device"`
+	Media  []MediaGroup  `json:"media"`
 }
 type GetTimelineErrorResponse struct {
 	ErrorResponse
