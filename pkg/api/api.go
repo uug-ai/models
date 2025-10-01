@@ -43,15 +43,16 @@ type EntityStatus interface {
 // Metadata holds additional information about the request or response.
 // It can include timestamps, trace IDs, organisation IDs, user IDs, and other relevant data
 type Metadata struct {
-	Timestamp      int64    `json:"timestamp,omitempty" bson:"timestamp,omitempty"`           // Timestamp of the request or response
-	TraceId        string   `json:"traceId,omitempty" bson:"traceId,omitempty"`               // Trace ID for tracking requests
-	OrganisationId string   `json:"organisationId,omitempty" bson:"organisationId,omitempty"` // Organisation ID for the request
-	UserId         string   `json:"userId,omitempty" bson:"userId,omitempty"`                 // User ID of the user making the request
-	Path           string   `json:"path,omitempty" bson:"path,omitempty"`                     // Path of the request
-	Function       string   `json:"function,omitempty" bson:"function,omitempty"`             // Function name where the response was generated
-	Error          string   `json:"error,omitempty" bson:"error,omitempty"`                   // Error message if any
-	MissingFields  []string `json:"missingFields,omitempty" bson:"missingFields,omitempty"`   // List of missing fields in the request
-	Language       string   `json:"language,omitempty" bson:"language,omitempty"`             // Language of the response, if applicable
+	Timestamp      int64          `json:"timestamp,omitempty" bson:"timestamp,omitempty"`           // Timestamp of the request or response
+	TraceId        string         `json:"traceId,omitempty" bson:"traceId,omitempty"`               // Trace ID for tracking requests
+	OrganisationId string         `json:"organisationId,omitempty" bson:"organisationId,omitempty"` // Organisation ID for the request
+	UserId         string         `json:"userId,omitempty" bson:"userId,omitempty"`                 // User ID of the user making the request
+	Path           string         `json:"path,omitempty" bson:"path,omitempty"`                     // Path of the request
+	Function       string         `json:"function,omitempty" bson:"function,omitempty"`             // Function name where the response was generated
+	Error          string         `json:"error,omitempty" bson:"error,omitempty"`                   // Error message if any
+	MissingFields  []string       `json:"missingFields,omitempty" bson:"missingFields,omitempty"`   // List of missing fields in the request
+	Language       string         `json:"language,omitempty" bson:"language,omitempty"`             // Language of the response, if applicable
+	Data           map[string]any `json:"data,omitempty" bson:"data,omitempty"`                     // Additional data relevant to the request or response, this can be free-format
 }
 
 // SuccessResponse represents a standard success response structure.
@@ -95,35 +96,35 @@ func CreateError(httpStatusCode int, applicationStatusCode string, entityStatusC
 }
 
 // Logging functions for success and error responses
-func LogSuccess(logger *logrus.Logger, message string, metadata Metadata) {
+func LogInfo(logger *logrus.Logger, entityStatusCode EntityStatus, metadata Metadata) {
 	metadata.Timestamp = time.Now().Unix()
 	logger.WithFields(logrus.Fields{
 		"httpStatusCode":        0,
 		"applicationStatusCode": ApplicationStatusSuccess,
-		"entityStatusCode":      "",
-		"message":               message,
+		"entityStatusCode":      entityStatusCode.String(),
+		"message":               entityStatusCode.Translate(metadata.Language),
 		"metaData":              metadata,
 	}).Info()
 }
 
-func LogError(logger *logrus.Logger, message string, metadata Metadata) {
+func LogError(logger *logrus.Logger, entityStatusCode EntityStatus, metadata Metadata) {
 	metadata.Timestamp = time.Now().Unix()
 	logger.WithFields(logrus.Fields{
 		"httpStatusCode":        0,
 		"applicationStatusCode": ApplicationStatusError,
-		"entityStatusCode":      "",
-		"message":               message,
+		"entityStatusCode":      entityStatusCode.String(),
+		"message":               entityStatusCode.Translate(metadata.Language),
 		"metaData":              metadata,
 	}).Error()
 }
 
-func LogDebug(logger *logrus.Logger, message string, metadata Metadata) {
+func LogDebug(logger *logrus.Logger, entityStatusCode EntityStatus, metadata Metadata) {
 	metadata.Timestamp = time.Now().Unix()
 	logger.WithFields(logrus.Fields{
 		"httpStatusCode":        0,
 		"applicationStatusCode": ApplicationStatusSuccess,
-		"entityStatusCode":      "",
-		"message":               message,
+		"entityStatusCode":      entityStatusCode.String(),
+		"message":               entityStatusCode.Translate(metadata.Language),
 		"metaData":              metadata,
 	}).Debug()
 }
