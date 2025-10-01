@@ -142,13 +142,24 @@ type Thumbnail struct {
 }
 
 type FaceRedactionTrack struct {
-	Id               string              `json:"id" bson:"id"`
-	Classified       string              `json:"classified" bson:"classified"`
-	Traject          [][]float64         `json:"traject" bson:"traject"` // [x1, y1, x2, y2, frame]
-	Frames           []int64             `json:"frames" bson:"frames"`
-	ColorString      []string            `json:"colorStr,omitempty" bson:"colorStr,omitempty"`
-	Selected         bool                `json:"selected,omitempty" bson:"selected,omitempty"`
-	FrameCoordinates map[int64][]float64 `json:"frameCoordinates,omitempty" bson:"frameCoordinates,omitempty"` // frame -> [x1, y1, x2, y2]
+	Id               string             `json:"id" bson:"id"`
+	Classified       string             `json:"classified" bson:"classified"`
+	Frames           []int64            `json:"frames" bson:"frames"`
+	Traject          [][]float64        `json:"traject" bson:"traject"` // [x1, y1, x2, y2, frame]
+	ColorString      []string           `json:"colorStr,omitempty" bson:"colorStr,omitempty"`
+	Selected         bool               `json:"selected" bson:"selected"`
+	DeletedFrames    []int64            `json:"deletedFrames,omitempty" bson:"deletedFrames,omitempty"`
+	FrameCoordinates map[int64]TrackBox `json:"frameCoordinates,omitempty" bson:"frameCoordinates,omitempty"` // frame -> [x1, y1, x2, y2]
+}
+
+type TrackBox struct {
+	X1       float64 `json:"x1" bson:"x1"`
+	Y1       float64 `json:"y1" bson:"y1"`
+	X2       float64 `json:"x2" bson:"x2"`
+	Y2       float64 `json:"y2" bson:"y2"`
+	TrackId  string  `json:"trackId,omitempty" bson:"trackId,omitempty"`
+	Smoothed bool    `json:"smoothed" bson:"smoothed"`
+	Edited   bool    `json:"edited" bson:"edited"`
 }
 
 type FaceRedaction struct {

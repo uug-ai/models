@@ -12,7 +12,9 @@ const (
 	AnalysisSubmitRedactionSuccess     AnalysisStatus = "analysis_submit_redaction_success"
 	AnalysisSubmitRedactionFailed      AnalysisStatus = "analysis_submit_redaction_failed"
 
-	AnalysisSignedUrlMissing AnalysisStatus = "analysis_signed_url_missing"
+	AnalysisFileNameMissing            AnalysisStatus = "analysis_file_name_missing"
+	AnalysisSignedUrlMissing           AnalysisStatus = "analysis_signed_url_missing"
+	AnalysisAllFrameCoordinatesMissing AnalysisStatus = "analysis_all_frame_coordinates_missing"
 
 	AnalysisNotFound  AnalysisStatus = "analysis_not_found"
 	AnalysisFound     AnalysisStatus = "analysis_found"
@@ -37,6 +39,8 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisNotFound:                   "Analysis not found",
 			AnalysisFound:                      "Analysis found",
 			AnalysisIdMissing:                  "Analysis ID is missing",
+			AnalysisAllFrameCoordinatesMissing: "All frame coordinates map are missing",
+			AnalysisFileNameMissing:            "File name is missing",
 		},
 		"es": {
 			AnalysisFaceRedactionBindingFailed: "Error al vincular la redacción facial",
@@ -48,6 +52,8 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisNotFound:                   "Análisis no encontrado",
 			AnalysisFound:                      "Análisis encontrado",
 			AnalysisIdMissing:                  "Falta el ID del análisis",
+			AnalysisFileNameMissing:            "Falta el nombre del archivo",
+			AnalysisAllFrameCoordinatesMissing: "Faltan el mapa de coordenadas de todos los fotogramas",
 		},
 		"fr": {
 			AnalysisFaceRedactionBindingFailed: "Échec de la liaison de la rédaction faciale",
@@ -59,6 +65,8 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisNotFound:                   "Analyse non trouvée",
 			AnalysisFound:                      "Analyse trouvée",
 			AnalysisIdMissing:                  "ID d'analyse manquant",
+			AnalysisFileNameMissing:            "Nom de fichier manquant",
+			AnalysisAllFrameCoordinatesMissing: "Map de toutes les coordonnées des images sont manquantes",
 		},
 	}
 
@@ -100,9 +108,11 @@ type SaveFaceRedactionErrorResponse struct {
 // SubmitFaceRedaction
 // @Router /analysis/submit-face-redaction [post]
 type SubmitFaceRedactionRequest struct {
-	AnalysisId    string               `json:"analysisId"`
-	SignedUrl     string               `json:"signedUrl"`
-	FaceRedaction models.FaceRedaction `json:"faceRedaction"`
+	AnalysisId          string                        `json:"analysisId"`
+	SignedUrl           string                        `json:"signedUrl"`
+	FileName            string                        `json:"fileName"`
+	AllFrameCoordinates map[string][]*models.TrackBox `json:"allFrameCoordinates,omitempty"`
+	FaceRedaction       *models.FaceRedaction         `json:"faceRedaction,omitempty"`
 }
 type SubmitFaceRedactionResponse struct {
 	AnalysisId    string               `json:"analysisId"`
