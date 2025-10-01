@@ -4,6 +4,18 @@ package api
 type RedactionStatus string
 
 const (
+	// Queu status codes
+	RedactionQueueSubscribed RedactionStatus = "redaction_queue_subscribed"
+	RedactionQueueStarted    RedactionStatus = "redaction_queue_started"
+	RedactionQueueCompleted  RedactionStatus = "redaction_queue_completed"
+	RedactionQueueFailed     RedactionStatus = "redaction_queue_failed"
+
+	// Trace status codes
+	RedactionTracingStarted   RedactionStatus = "redaction_tracing_started"
+	RedactionTracingCompleted RedactionStatus = "redaction_tracing_completed"
+	RedactionTracingFailed    RedactionStatus = "redaction_tracing_failed"
+
+	// Stage status codes
 	RedactionStageStart         RedactionStatus = "redaction_stage_start"
 	RedactionStageEnd           RedactionStatus = "redaction_stage_end"
 	RedactionDownloadStart      RedactionStatus = "redaction_download_start"
@@ -29,6 +41,18 @@ func (rs RedactionStatus) String() string {
 func (rs RedactionStatus) Translate(lang string) string {
 	translations := map[string]map[RedactionStatus]string{
 		"en": {
+			// Queue status codes
+			RedactionQueueSubscribed: "Subscribed to redaction queue",
+			RedactionQueueStarted:    "Redaction queue processing started",
+			RedactionQueueCompleted:  "Redaction queue processing completed",
+			RedactionQueueFailed:     "Redaction queue processing failed",
+
+			// Tracing status codes
+			RedactionTracingStarted:   "Redaction tracing started",
+			RedactionTracingCompleted: "Redaction tracing completed",
+			RedactionTracingFailed:    "Redaction tracing failed",
+
+			// Stage status codes
 			RedactionStageStart:         "Starting redaction stage",
 			RedactionStageEnd:           "Redaction stage completed",
 			RedactionDownloadStart:      "Starting download for redaction",
