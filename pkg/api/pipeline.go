@@ -5,10 +5,10 @@ type RedactionStatus string
 
 const (
 	// Queu status codes
-	RedactionQueueSubscribed RedactionStatus = "redaction_queue_subscribed"
 	RedactionQueueStarted    RedactionStatus = "redaction_queue_started"
-	RedactionQueueCompleted  RedactionStatus = "redaction_queue_completed"
+	RedactionQueueSubscribed RedactionStatus = "redaction_queue_subscribed"
 	RedactionQueueFailed     RedactionStatus = "redaction_queue_failed"
+	RedactionQueueCompleted  RedactionStatus = "redaction_queue_completed"
 
 	// Trace status codes
 	RedactionTracingStarted   RedactionStatus = "redaction_tracing_started"
@@ -42,10 +42,10 @@ func (rs RedactionStatus) Translate(lang string) string {
 	translations := map[string]map[RedactionStatus]string{
 		"en": {
 			// Queue status codes
-			RedactionQueueSubscribed: "Subscribed to redaction queue",
 			RedactionQueueStarted:    "Redaction queue processing started",
-			RedactionQueueCompleted:  "Redaction queue processing completed",
+			RedactionQueueSubscribed: "Subscribed to redaction queue",
 			RedactionQueueFailed:     "Redaction queue processing failed",
+			RedactionQueueCompleted:  "Redaction queue processing completed",
 
 			// Tracing status codes
 			RedactionTracingStarted:   "Redaction tracing started",
