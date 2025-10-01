@@ -2656,6 +2656,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/mediagroup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MediaGroup (schema generation only)
+         * @description Internal endpoint used only to ensure MediaGroup schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.MediaGroup"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/mediametadata": {
         parameters: {
             query?: never;
@@ -3982,6 +4021,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/trackbox": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TrackBox (schema generation only)
+         * @description Internal endpoint used only to ensure TrackBox schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.TrackBox"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/updateaccesstokenerrorresponse": {
         parameters: {
             query?: never;
@@ -4504,7 +4582,7 @@ export interface components {
             metaData?: components["schemas"]["api.Metadata"];
         };
         /** @enum {string} */
-        "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_signed_url_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing";
+        "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_file_name_missing" | "analysis_signed_url_missing" | "analysis_all_frame_coordinates_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing";
         "api.DeleteAccessTokenErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -4657,7 +4735,7 @@ export interface components {
         };
         "api.GetTimelineResponse": {
             device?: components["schemas"]["models.Device"];
-            media?: components["schemas"]["models.Media"][];
+            media?: components["schemas"]["api.MediaGroup"][];
         };
         "api.GetTimelineSuccessResponse": {
             /** @description Application-specific status code */
@@ -4691,7 +4769,15 @@ export interface components {
             offset?: number;
             regions?: components["schemas"]["models.Region"][];
             sort?: string;
+            timelineEndTimestamp?: number;
+            timelineStartTimestamp?: number;
             viewStyle?: string;
+        };
+        "api.MediaGroup": {
+            count?: number;
+            endTimestamp?: number;
+            media?: components["schemas"]["models.Media"][];
+            startTimestamp?: number;
         };
         "api.Metadata": {
             /** @description Error message if any */
@@ -4759,8 +4845,12 @@ export interface components {
             metaData?: components["schemas"]["api.Metadata"];
         };
         "api.SubmitFaceRedactionRequest": {
+            allFrameCoordinates?: {
+                [key: string]: components["schemas"]["models.TrackBox"][];
+            };
             analysisId?: string;
             faceRedaction?: components["schemas"]["models.FaceRedaction"];
+            fileName?: string;
             signedUrl?: string;
         };
         "api.SubmitFaceRedactionResponse": {
@@ -5141,9 +5231,10 @@ export interface components {
         "models.FaceRedactionTrack": {
             classified?: string;
             colorStr?: string[];
+            deletedFrames?: number[];
             /** @description frame -> [x1, y1, x2, y2] */
             frameCoordinates?: {
-                [key: string]: number[];
+                [key: string]: components["schemas"]["models.TrackBox"];
             };
             frames?: number[];
             id?: string;
@@ -5569,6 +5660,15 @@ export interface components {
             running?: boolean;
             speed?: number;
         };
+        "models.TrackBox": {
+            edited?: boolean;
+            smoothed?: boolean;
+            trackId?: string;
+            x1?: number;
+            x2?: number;
+            y1?: number;
+            y2?: number;
+        };
         "models.User": {
             activity?: {
                 [key: string]: unknown;
@@ -5730,6 +5830,7 @@ export namespace models {
     export type Thumby = components['schemas']['models.Thumby'];
     export type TimeWindow = components['schemas']['models.TimeWindow'];
     export type Tour = components['schemas']['models.Tour'];
+    export type TrackBox = components['schemas']['models.TrackBox'];
     export type User = components['schemas']['models.User'];
     export type VaultMedia = components['schemas']['models.VaultMedia'];
     export type VaultMediaEvent = components['schemas']['models.VaultMediaEvent'];
@@ -5766,6 +5867,7 @@ export namespace api {
     export type GetTimelineSuccessResponse = components['schemas']['api.GetTimelineSuccessResponse'];
     export type MarkerOptions = components['schemas']['api.MarkerOptions'];
     export type MediaFilter = components['schemas']['api.MediaFilter'];
+    export type MediaGroup = components['schemas']['api.MediaGroup'];
     export type Metadata = components['schemas']['api.Metadata'];
     export type SaveFaceRedactionErrorResponse = components['schemas']['api.SaveFaceRedactionErrorResponse'];
     export type SaveFaceRedactionRequest = components['schemas']['api.SaveFaceRedactionRequest'];
