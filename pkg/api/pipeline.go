@@ -1,5 +1,58 @@
 package api
 
+type RabbitMQStatus string
+
+const (
+	RabbitMQConnected            RabbitMQStatus = "rabbitmq_connected"
+	RabbitMQConnectionFailed     RabbitMQStatus = "rabbitmq_connection_failed"
+	RabbitMQDisconnected         RabbitMQStatus = "rabbitmq_disconnected"
+	RabbitMQMessageBindingFailed RabbitMQStatus = "rabbitmq_message_binding_failed"
+	RabbitMQAcknowledged         RabbitMQStatus = "rabbitmq_acknowledged"
+	RabbitMQNotAcknowledged      RabbitMQStatus = "rabbitmq_not_acknowledged"
+	RabbitMQChannelDoesNotExist  RabbitMQStatus = "rabbitmq_channel_does_not_exist"
+	RabbitMQFailedToConsume      RabbitMQStatus = "rabbitmq_failed_to_consume"
+	RabbitMQFailedToPublish      RabbitMQStatus = "rabbitmq_failed_to_publish"
+	RabbitMMessagePublished      RabbitMQStatus = "rabbitmq_message_published"
+)
+
+// String returns the string representation of the RabbitMQ status
+func (rs RabbitMQStatus) String() string {
+	return string(rs)
+}
+
+// Translate returns the translated string representation of the RabbitMQ status in the specified language
+func (rs RabbitMQStatus) Translate(lang string) string {
+	translations := map[string]map[RabbitMQStatus]string{
+		"en": {
+			RabbitMQConnected:            "RabbitMQ connected",
+			RabbitMQConnectionFailed:     "RabbitMQ connection failed",
+			RabbitMQDisconnected:         "RabbitMQ disconnected",
+			RabbitMQMessageBindingFailed: "RabbitMQ message binding failed",
+			RabbitMQAcknowledged:         "RabbitMQ message acknowledged",
+			RabbitMQNotAcknowledged:      "RabbitMQ message not acknowledged",
+			RabbitMQChannelDoesNotExist:  "RabbitMQ channel does not exist",
+			RabbitMQFailedToConsume:      "RabbitMQ failed to consume message",
+			RabbitMQFailedToPublish:      "RabbitMQ failed to publish message",
+		},
+	}
+
+	if langTranslations, exists := translations[lang]; exists {
+		if translation, exists := langTranslations[rs]; exists {
+			return translation
+		}
+	}
+
+	// Default to English if language not found or translation doesn't exist
+	if enTranslations, exists := translations["en"]; exists {
+		if translation, exists := enTranslations[rs]; exists {
+			return translation
+		}
+	}
+
+	// Fallback to the string representation
+	return rs.String()
+}
+
 // RedactionStatus represents specific status codes for redaction operations
 type RedactionStatus string
 
