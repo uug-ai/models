@@ -3046,6 +3046,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/redactionevent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RedactionEvent (schema generation only)
+         * @description Internal endpoint used only to ensure RedactionEvent schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RedactionEvent"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/region": {
         parameters: {
             query?: never;
@@ -4780,6 +4819,10 @@ export interface components {
             startTimestamp?: number;
         };
         "api.Metadata": {
+            /** @description Additional data relevant to the request or response, this can be free-format */
+            data?: {
+                [key: string]: unknown;
+            };
             /** @description Error message if any */
             error?: string;
             /** @description Function name where the response was generated */
@@ -4798,6 +4841,11 @@ export interface components {
             traceId?: string;
             /** @description User ID of the user making the request */
             userId?: string;
+        };
+        "api.RedactionEvent": {
+            allFrameCoordinates?: {
+                [key: string]: components["schemas"]["models.TrackBox"][];
+            };
         };
         "api.SaveFaceRedactionErrorResponse": {
             /** @description Application-specific error code */
@@ -5869,6 +5917,7 @@ export namespace api {
     export type MediaFilter = components['schemas']['api.MediaFilter'];
     export type MediaGroup = components['schemas']['api.MediaGroup'];
     export type Metadata = components['schemas']['api.Metadata'];
+    export type RedactionEvent = components['schemas']['api.RedactionEvent'];
     export type SaveFaceRedactionErrorResponse = components['schemas']['api.SaveFaceRedactionErrorResponse'];
     export type SaveFaceRedactionRequest = components['schemas']['api.SaveFaceRedactionRequest'];
     export type SaveFaceRedactionResponse = components['schemas']['api.SaveFaceRedactionResponse'];
