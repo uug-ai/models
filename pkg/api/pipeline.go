@@ -1,5 +1,7 @@
 package api
 
+import "github.com/uug-ai/models/pkg/models"
+
 type RabbitMQStatus string
 
 const (
@@ -138,4 +140,8 @@ func (rs RedactionStatus) Translate(lang string) string {
 
 	// Fallback to the string representation
 	return rs.String()
+}
+
+type RedactionEvent struct {
+	AllFrameCoordinates map[string][]models.TrackBox `json:"allFrameCoordinates"`
 }
