@@ -108,16 +108,16 @@ type SaveFaceRedactionErrorResponse struct {
 // SubmitFaceRedaction
 // @Router /analysis/submit-face-redaction [post]
 type SubmitFaceRedactionRequest struct {
-	AnalysisId          string                       `json:"analysisId"`
-	SignedUrl           string                       `json:"signedUrl"`
-	FileName            string                       `json:"fileName"`
-	AllFrameCoordinates map[string][]models.TrackBox `json:"allFrameCoordinates,omitempty"`
-	FaceRedaction       models.FaceRedaction         `json:"faceRedaction,omitempty"`
+	AnalysisId          string                        `json:"analysisId"`
+	SignedUrl           string                        `json:"signedUrl"`
+	FileName            string                        `json:"fileName"`
+	AllFrameCoordinates map[string][]*models.TrackBox `json:"allFrameCoordinates,omitempty"`
+	FaceRedaction       *models.FaceRedaction         `json:"faceRedaction,omitempty"`
 }
 type SubmitFaceRedactionResponse struct {
-	AnalysisId    string               `json:"analysisId"`
-	FaceRedaction models.FaceRedaction `json:"faceRedaction"`
-	Status        AnalysisStatus       `json:"status"`
+	AnalysisId    string                `json:"analysisId"`
+	FaceRedaction *models.FaceRedaction `json:"faceRedaction"`
+	Status        AnalysisStatus        `json:"status"`
 }
 type SubmitFaceRedactionSuccessResponse struct {
 	SuccessResponse
