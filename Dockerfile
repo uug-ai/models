@@ -37,3 +37,45 @@ RUN cd /go/src/github.com/uug-ai/models && \
     go mod download && \
     go build -tags timetzdata,netgo --ldflags '-s -w -extldflags "-static -latomic"' cmd/main.go && \
     rm -rf /go/src/github.com
+
+####################################
+# Let's create a /dist folder containing just the files necessary for runtime.
+# Later, it will be copied as the / (root) of the output image.
+
+WORKDIR /dist
+RUN cp -r /models ./
+RUN /dist/models/main models
+
+FROM alpine:latest
+
+#################################
+# Copy files from previous images
+
+COPY --chown=0:0 --from=builder /dist /
+
+############################
+# Move directory to /var/lib
+
+RUN apk update && apk add ca-certificates curl libstdc++ libc6-compat --no-cache && rm -rf /var/cache/apk/*
+
+##################
+# Try running hub api
+
+RUN mv /models/* /home/models
+RUN /home/models/main main
+
+###########################
+# Grant the necessary root capabilities to the process trying to bind to the privileged port
+RUN apk add libcap && setcap 'cap_net_bind_service=+ep' /home/models/main
+
+###################
+# Run non-root user
+
+USER models
+
+###################################################
+# Leeeeettttt'ssss goooooo!!!
+# Run the shizzle from the right working directory.
+
+WORKDIR /home/models
+CMD ["./main"]
