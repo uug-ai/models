@@ -63,7 +63,7 @@ RUN apk update && apk add ca-certificates curl libstdc++ libc6-compat --no-cache
 # Try running hub api
 
 RUN mv /models/* /home/models
-RUN /home/models/main main
+RUN /home/models/main
 
 ###########################
 # Grant the necessary root capabilities to the process trying to bind to the privileged port
