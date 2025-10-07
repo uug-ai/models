@@ -45,7 +45,7 @@ RUN cd /go/src/github.com/uug-ai/models && \
 
 WORKDIR /dist
 RUN cp -r /models ./
-RUN /dist/models/main models
+RUN /dist/models/main
 
 FROM alpine:latest
 
@@ -60,8 +60,9 @@ COPY --chown=0:0 --from=builder /dist /
 RUN apk update && apk add ca-certificates curl libstdc++ libc6-compat --no-cache && rm -rf /var/cache/apk/*
 
 ##################
-# Try running hub api
+# Try running models
 
+RUN mkdir -p /home/models
 RUN mv /models/* /home/models
 RUN /home/models/main
 
