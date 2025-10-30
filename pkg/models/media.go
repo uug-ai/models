@@ -48,7 +48,7 @@ type Media struct {
 	AnalysisId string `json:"analysisId,omitempty" bson:"analysisId,omitempty"`
 
 	Description    string   `json:"description,omitempty" bson:"description,omitempty"`
-	Detection      []string `json:"detections,omitempty" bson:"detections,omitempty"`
+	Detections     []string `json:"detections,omitempty" bson:"detections,omitempty"`
 	DominantColors []string `json:"dominantColors,omitempty" bson:"dominantColors,omitempty"`
 	Count          int64    `json:"count,omitempty" bson:"count,omitempty"`
 	Tags           []string `json:"tags,omitempty" bson:"tags,omitempty"`
