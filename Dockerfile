@@ -54,7 +54,7 @@ FROM alpine:latest
 ############################
 # Protect by non-root user.
 
-RUN addgroup -S kerberosio && adduser -S hub -G kerberosio && addgroup hub video
+RUN addgroup -S kerberosio && adduser -S models -G kerberosio && addgroup models video
 
 #################################
 # Copy files from previous images
@@ -67,9 +67,11 @@ COPY --chown=0:0 --from=builder /dist /
 RUN apk update && apk add ca-certificates curl libstdc++ libc6-compat --no-cache && rm -rf /var/cache/apk/*
 
 ##################
-# Try running hub api
+# Create models directory and move files
 
+RUN mkdir -p /home/models
 RUN mv /models/* /home/models/
+RUN chown -R models:kerberosio /home/models
 RUN /home/models/main
 
 ###########################
@@ -81,19 +83,9 @@ RUN apk add libcap && setcap 'cap_net_bind_service=+ep' /home/models/main
 
 USER models
 
-######################################
-# By default the app runs on port 80
-
-EXPOSE 8081
-
-######################################
-# Check if vault is still running
-
-HEALTHCHECK CMD curl --fail http://localhost:8081 || exit 1   
-
 ###################################################
 # Leeeeettttt'ssss goooooo!!!
 # Run the shizzle from the right working directory.
 
 WORKDIR /home/models
-CMD ["./main", "serve"]
+CMD ["./main"]
