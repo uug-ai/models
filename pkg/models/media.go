@@ -5,6 +5,7 @@ import (
 )
 
 type Media struct {
+	// Unique identifier for the media file
 	Id primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
 
 	// Time window of media file.
@@ -16,22 +17,17 @@ type Media struct {
 	// DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
 	// OrganisationId is used to identify the organisation that owns the device.
 	DeviceId       string `json:"deviceId" bson:"deviceId,omitempty"` // device identifier
+	GroupId        string `json:"groupId" bson:"groupId,omitempty"`
+	SiteId         string `json:"siteId" bson:"siteId,omitempty"`
 	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
 
 	// Media file information (by default "vault", however might change
 	// in the future (integration with other storage solutions, next to Vault).
 	StorageSolution string `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`
-
-	// Vault provider information (contains where the media is stored on which underlaying cloud storage)
-	VideoProvider     string `json:"videoProvider,omitempty" bson:"videoProvider,omitempty"`
-	ThumbnailProvider string `json:"thumbnailProvider,omitempty" bson:"thumbnailProvider,omitempty"`
-	SpriteProvider    string `json:"spriteProvider,omitempty" bson:"spriteProvider,omitempty"`
-
-	// Media file information
-	VideoFile      string `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
-	ThumbnailFile  string `json:"thumbnailFile,omitempty" bson:"thumbnailFile,omitempty"`
-	SpriteFile     string `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
-	SpriteInterval int    `json:"spriteInterval,omitempty" bson:"spriteInterval,omitempty"`
+	VideoFile       string `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
+	ThumbnailFile   string `json:"thumbnailFile,omitempty" bson:"thumbnailFile,omitempty"`
+	SpriteFile      string `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
+	RedactionFile   string `json:"redactionFile,omitempty" bson:"redactionFile,omitempty"`
 
 	// Metadata
 	Metadata *MediaMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
@@ -43,23 +39,31 @@ type Media struct {
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
-
-	// Analysis data
-	AnalysisId string `json:"analysisId,omitempty" bson:"analysisId,omitempty"`
-
-	Description    string   `json:"description,omitempty" bson:"description,omitempty"`
-	Detections     []string `json:"detections,omitempty" bson:"detections,omitempty"`
-	DominantColors []string `json:"dominantColors,omitempty" bson:"dominantColors,omitempty"`
-	Count          int64    `json:"count,omitempty" bson:"count,omitempty"`
-	Tags           []string `json:"tags,omitempty" bson:"tags,omitempty"`
-
-	// Embeddings
 }
 
 // We can store additional metadata for media files, such as tags and classifications.
 type MediaMetadata struct {
-	Tags            []string `json:"tags,omitempty" bson:"tags,omitempty"`
+	// Media containers related information
+	Container  string `json:"containerType,omitempty" bson:"containerType,omitempty"` // e.g., mp4, mkv, avi
+	Resolution string `json:"resolution,omitempty" bson:"resolution,omitempty"`       // e.g., 1920x1080
+	Codec      string `json:"codec,omitempty" bson:"codec,omitempty"`                 // e.g., H.264, VP9
+	Bitrate    int    `json:"bitrate,omitempty" bson:"bitrate,omitempty"`             // in kbps
+	FPS        int    `json:"fps,omitempty" bson:"fps,omitempty"`                     // frames per second
+
+	// Tags associated to give some context about the media file
+	Tags []string `json:"tags,omitempty" bson:"tags,omitempty"`
+
+	// Sprite interval in seconds
+	SpriteInterval int `json:"spriteInterval,omitempty" bson:"spriteInterval,omitempty"`
+
+	// Analysis data (we keep a reference to the original analysis, and cache some data here)
+	AnalysisId      string   `json:"analysisId,omitempty" bson:"analysisId,omitempty"`
 	Classifications []string `json:"classifications,omitempty" bson:"classifications,omitempty"`
+	Description     string   `json:"description,omitempty" bson:"description,omitempty"`
+	Detections      []string `json:"detections,omitempty" bson:"detections,omitempty"`
+	DominantColors  []string `json:"dominantColors,omitempty" bson:"dominantColors,omitempty"`
+	Count           int64    `json:"count,omitempty" bson:"count,omitempty"`
+	Embedding       []int    `json:"embedding,omitempty" bson:"embedding,omitempty"`
 }
 
 // MediaAtRuntimeMetadata contains metadata that is generated at runtime, which can include
@@ -67,6 +71,7 @@ type MediaAtRuntimeMetadata struct {
 	VideoUrl     string `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
 	SpriteUrl    string `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
+	RedactionUrl string `json:"redactionUrl,omitempty" bson:"redactionUrl,omitempty"`
 }
 
 type Region struct {
