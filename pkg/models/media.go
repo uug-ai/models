@@ -43,6 +43,13 @@ type Media struct {
 
 // We can store additional metadata for media files, such as tags and classifications.
 type MediaMetadata struct {
+	// Media containers related information
+	Container  string `json:"containerType,omitempty" bson:"containerType,omitempty"` // e.g., mp4, mkv, avi
+	Resolution string `json:"resolution,omitempty" bson:"resolution,omitempty"`       // e.g., 1920x1080
+	Codec      string `json:"codec,omitempty" bson:"codec,omitempty"`                 // e.g., H.264, VP9
+	Bitrate    int    `json:"bitrate,omitempty" bson:"bitrate,omitempty"`             // in kbps
+	FPS        int    `json:"fps,omitempty" bson:"fps,omitempty"`                     // frames per second
+
 	// Tags associated to give some context about the media file
 	Tags []string `json:"tags,omitempty" bson:"tags,omitempty"`
 
