@@ -11,7 +11,7 @@ type Media struct {
 	// Time window of media file.
 	StartTimestamp int64 `json:"startTimestamp,omitempty" bson:"startTimestamp,omitempty"`
 	EndTimestamp   int64 `json:"endTimestamp,omitempty" bson:"endTimestamp,omitempty"`
-	Duration       int64 `json:"duration,omitempty" bson:"duration,omitempty"`
+	Duration       int   `json:"duration,omitempty" bson:"duration,omitempty"`
 
 	// RBAC information
 	// DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
@@ -62,16 +62,17 @@ type MediaMetadata struct {
 	Description     string   `json:"description,omitempty" bson:"description,omitempty"`
 	Detections      []string `json:"detections,omitempty" bson:"detections,omitempty"`
 	DominantColors  []string `json:"dominantColors,omitempty" bson:"dominantColors,omitempty"`
-	Count           int64    `json:"count,omitempty" bson:"count,omitempty"`
+	Count           int      `json:"count,omitempty" bson:"count,omitempty"`
 	Embedding       []int    `json:"embedding,omitempty" bson:"embedding,omitempty"`
 }
 
 // MediaAtRuntimeMetadata contains metadata that is generated at runtime, which can include
 type MediaAtRuntimeMetadata struct {
-	VideoUrl     string `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
-	ThumbnailUrl string `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
-	SpriteUrl    string `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
-	RedactionUrl string `json:"redactionUrl,omitempty" bson:"redactionUrl,omitempty"`
+	CacheTimestamp int64  `json:"cacheTimestamp,omitempty" bson:"cacheTimestamp,omitempty"` // Timestamp when the runtime metadata was cached.
+	VideoUrl       string `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
+	ThumbnailUrl   string `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
+	SpriteUrl      string `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
+	RedactionUrl   string `json:"redactionUrl,omitempty" bson:"redactionUrl,omitempty"`
 }
 
 type Region struct {

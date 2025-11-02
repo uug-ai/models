@@ -6,6 +6,8 @@ A Go package defining data models for media file management and metadata handlin
 
 This package provides a unified `Media` struct that represents media files (primarily video) along with their associated metadata, storage information, and processed assets like thumbnails and sprites.
 
+📋 **[Best Practices Guide](./BEST_PRACTICES.md)** - Comprehensive guidelines for defining Go types in this repository
+
 ## TypeScript Generation
 
 This project automatically generates TypeScript types from Go models using **Swagger/OpenAPI** as an intermediate format.
