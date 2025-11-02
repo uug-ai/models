@@ -34,6 +34,16 @@ This document outlines the best practices for defining Go types in the models re
 - Use pointers for optional complex types
 - Consider backward compatibility when modifying existing types
 
+### 4. Integer Type Selection
+
+
+Use `int` by default, use `int64` when you need large or cross-platform stable numbers, and use fixed-size types when you're interfacing with external systems.
+
+- **`int`** - Default choice for counters, lengths, and general numeric values
+- **`int64`** - For timestamps, large numbers, or when you need consistent size across platforms
+- **`int32`, `int16`, `int8`** - When interfacing with external APIs or systems that require specific sizes
+- **`uint` variants** - Only when you specifically need unsigned values (avoid unless necessary)
+
 ## Struct Definition
 
 ### Basic Structure
@@ -411,7 +421,7 @@ type Good struct {
 }
 
 // Be specific about data types
-type Good struct {
+type Good struct {a
     Settings map[string]string `json:"settings,omitempty"`
     Tags     []string         `json:"tags,omitempty"`
 }
