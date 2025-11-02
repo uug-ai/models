@@ -5,6 +5,7 @@ import (
 )
 
 type Media struct {
+	// Unique identifier for the media file
 	Id primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
 
 	// Time window of media file.
