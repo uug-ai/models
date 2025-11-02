@@ -43,6 +43,17 @@ type Media struct {
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
+
+	// Analysis data
+	AnalysisId string `json:"analysisId,omitempty" bson:"analysisId,omitempty"`
+
+	Description    string   `json:"description,omitempty" bson:"description,omitempty"`
+	Detections     []string `json:"detections,omitempty" bson:"detections,omitempty"`
+	DominantColors []string `json:"dominantColors,omitempty" bson:"dominantColors,omitempty"`
+	Count          int64    `json:"count,omitempty" bson:"count,omitempty"`
+	Tags           []string `json:"tags,omitempty" bson:"tags,omitempty"`
+
+	// Embeddings
 }
 
 // We can store additional metadata for media files, such as tags and classifications.

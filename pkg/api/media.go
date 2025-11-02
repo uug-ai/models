@@ -102,3 +102,19 @@ type GetTimelineSuccessResponse struct {
 	SuccessResponse
 	Data GetTimelineResponse `json:"data"`
 }
+
+// GetMedia
+// @Router /media/ [post]
+type GetMediaRequest struct {
+	Filter MediaFilter `json:"filter" bson:"filter"`
+}
+type GetMediaResponse struct {
+	Media []models.Media `json:"media"`
+}
+type GetMediaSuccessResponse struct {
+	SuccessResponse
+	Data GetMediaResponse `json:"data"`
+}
+type GetMediaErrorResponse struct {
+	ErrorResponse
+}
