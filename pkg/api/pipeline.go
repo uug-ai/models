@@ -55,6 +55,51 @@ func (rs RabbitMQStatus) Translate(lang string) string {
 	return rs.String()
 }
 
+// MonitorStage represents the initial stage of media processing
+type MonitorStage string
+
+const (
+	MonitorStageStart           MonitorStage = "monitor_stage_start"
+	MonitorStageEnd             MonitorStage = "monitor_stage_end"
+	MonitorStageMissing         MonitorStage = "monitor_stage_missing"
+	MonitorStageUserNotFound    MonitorStage = "monitor_stage_user_not_found"
+	MonitorOrganizationNotFound MonitorStage = "monitor_stage_organization_not_found"
+)
+
+// String returns the string representation of the monitor stage
+func (ms MonitorStage) String() string {
+	return string(ms)
+}
+
+// Translate returns the translated string representation of the monitor stage in the specified language
+func (ms MonitorStage) Translate(lang string) string {
+	translations := map[string]map[MonitorStage]string{
+		"en": {
+			MonitorStageStart:           "Starting monitor stage",
+			MonitorStageEnd:             "Monitor stage completed",
+			MonitorStageMissing:         "Monitor stage missing",
+			MonitorStageUserNotFound:    "User not found during monitor stage",
+			MonitorOrganizationNotFound: "Organization not found during monitor stage",
+		},
+	}
+
+	if langTranslations, exists := translations[lang]; exists {
+		if translation, exists := langTranslations[ms]; exists {
+			return translation
+		}
+	}
+
+	// Default to English if language not found or translation doesn't exist
+	if enTranslations, exists := translations["en"]; exists {
+		if translation, exists := enTranslations[ms]; exists {
+			return translation
+		}
+	}
+
+	// Fallback to the string representation
+	return ms.String()
+}
+
 // RedactionStatus represents specific status codes for redaction operations
 type RedactionStatus string
 
