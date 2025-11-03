@@ -74,8 +74,8 @@ const (
 	MonitorStageStart           MonitorStatus = "monitor_stage_start"
 	MonitorStageEnd             MonitorStatus = "monitor_stage_end"
 	MonitorStageMissing         MonitorStatus = "monitor_stage_missing"
-	MonitorStageUserNotFound    MonitorStatus = "monitor_stage_user_not_found"
-	MonitorOrganizationNotFound MonitorStatus = "monitor_stage_organization_not_found"
+	MonitorUserNotFound         MonitorStatus = "monitor_user_not_found"
+	MonitorOrganizationNotFound MonitorStatus = "monitor_organization_not_found"
 )
 
 // String returns the string representation of the monitor status
@@ -90,7 +90,7 @@ func (ms MonitorStatus) Translate(lang string) string {
 			MonitorStageStart:           "Starting monitor stage",
 			MonitorStageEnd:             "Monitor stage completed",
 			MonitorStageMissing:         "Monitor stage missing",
-			MonitorStageUserNotFound:    "User not found during monitor stage",
+			MonitorUserNotFound:         "User not found during monitor stage",
 			MonitorOrganizationNotFound: "Organization not found during monitor stage",
 		},
 	}
