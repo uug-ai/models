@@ -56,24 +56,36 @@ func (rs RabbitMQStatus) Translate(lang string) string {
 }
 
 // MonitorStage represents the initial stage of media processing
-type MonitorStage string
+type MonitorStatus string
 
 const (
-	MonitorStageStart           MonitorStage = "monitor_stage_start"
-	MonitorStageEnd             MonitorStage = "monitor_stage_end"
-	MonitorStageMissing         MonitorStage = "monitor_stage_missing"
-	MonitorStageUserNotFound    MonitorStage = "monitor_stage_user_not_found"
-	MonitorOrganizationNotFound MonitorStage = "monitor_stage_organization_not_found"
+	// Queue status codes
+	MonitorQueueStarted    MonitorStatus = "monitor_queue_started"
+	MonitorQueueSubscribed MonitorStatus = "monitor_queue_subscribed"
+	MonitorQueueFailed     MonitorStatus = "monitor_queue_failed"
+	MonitorQueueCompleted  MonitorStatus = "monitor_queue_completed"
+
+	// Trace status codes
+	MonitorTracingStarted   MonitorStatus = "monitor_tracing_started"
+	MonitorTracingCompleted MonitorStatus = "monitor_tracing_completed"
+	MonitorTracingFailed    MonitorStatus = "monitor_tracing_failed"
+
+	// Stage status codes
+	MonitorStageStart           MonitorStatus = "monitor_stage_start"
+	MonitorStageEnd             MonitorStatus = "monitor_stage_end"
+	MonitorStageMissing         MonitorStatus = "monitor_stage_missing"
+	MonitorStageUserNotFound    MonitorStatus = "monitor_stage_user_not_found"
+	MonitorOrganizationNotFound MonitorStatus = "monitor_stage_organization_not_found"
 )
 
-// String returns the string representation of the monitor stage
-func (ms MonitorStage) String() string {
+// String returns the string representation of the monitor status
+func (ms MonitorStatus) String() string {
 	return string(ms)
 }
 
-// Translate returns the translated string representation of the monitor stage in the specified language
-func (ms MonitorStage) Translate(lang string) string {
-	translations := map[string]map[MonitorStage]string{
+// Translate returns the translated string representation of the monitor status in the specified language
+func (ms MonitorStatus) Translate(lang string) string {
+	translations := map[string]map[MonitorStatus]string{
 		"en": {
 			MonitorStageStart:           "Starting monitor stage",
 			MonitorStageEnd:             "Monitor stage completed",
