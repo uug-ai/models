@@ -61,14 +61,14 @@ type MonitorStatus string
 const (
 	// Queue status codes
 	MonitorQueueStarted    MonitorStatus = "monitor_queue_started"
-	MonitorQueueSubscribed MonitorStatus = "redaction_queue_subscribed"
-	MonitorQueueFailed     MonitorStatus = "redaction_queue_failed"
-	MonitorQueueCompleted  MonitorStatus = "redaction_queue_completed"
+	MonitorQueueSubscribed MonitorStatus = "monitor_queue_subscribed"
+	MonitorQueueFailed     MonitorStatus = "monitor_queue_failed"
+	MonitorQueueCompleted  MonitorStatus = "monitor_queue_completed"
 
 	// Trace status codes
-	MonitorTracingStarted   MonitorStatus = "redaction_tracing_started"
-	MonitorTracingCompleted MonitorStatus = "redaction_tracing_completed"
-	MonitorTracingFailed    MonitorStatus = "redaction_tracing_failed"
+	MonitorTracingStarted   MonitorStatus = "monitor_tracing_started"
+	MonitorTracingCompleted MonitorStatus = "monitor_tracing_completed"
+	MonitorTracingFailed    MonitorStatus = "monitor_tracing_failed"
 
 	// Stage status codes
 	MonitorStageStart           MonitorStatus = "monitor_stage_start"
