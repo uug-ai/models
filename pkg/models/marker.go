@@ -21,9 +21,10 @@ type Marker struct {
 	EndTimestamp   int64 `json:"endTimestamp" bson:"endTimestamp" example:"1752482079" required:"true"`     // End timestamp of the marker in seconds since epoch
 	Duration       int64 `json:"duration" bson:"duration" example:"11" required:"true"`                     // Duration of the marker in seconds
 
-	Name        string `json:"name" bson:"name" example:"2-HCP-007" required:"true"`                                       // Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
-	Type        string `json:"type,omitempty" bson:"type,omitempty" example:"door-forced"`                                 // Type of the marker e.g., "alert", "event", "door_opened", "person", etc.
-	Description string `json:"description,omitempty" bson:"description,omitempty" example:"Person forcably opened a door"` // Description of the marker
+	Name        string        `json:"name" bson:"name" example:"2-HCP-007" required:"true"`                                       // Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
+	Type        string        `json:"type,omitempty" bson:"type,omitempty" example:"door-forced"`                                 // Type of the marker e.g., "alert", "event", "door_opened", "person", etc.
+	Events      []MarkerEvent `json:"events,omitempty" bson:"events,omitempty"`                                                   // Events associated with the marker, such as motion detected, sound detected, etc.
+	Description string        `json:"description,omitempty" bson:"description,omitempty" example:"Person forcably opened a door"` // Description of the marker
 
 	// Additional metadata
 	MetaData *MarkerMetadata `json:"metaData,omitempty" bson:"metaData,omitempty"` // Metadata associated with the marker, such as comments and tags
@@ -38,4 +39,11 @@ type Marker struct {
 type MarkerMetadata struct {
 	Comments *Comment `json:"comments,omitempty" bson:"comments,omitempty"`                                                // Additional comments or description of the marker
 	Tags     []string `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"vehicle\",\"license plate\",\"security\"]"` // Tags associated with the marker for categorization
+}
+
+type MarkerEvent struct {
+	Timestamp   int64    `json:"timestamp" bson:"timestamp" example:"1752482070" required:"true"`                                // Timestamp of the event in seconds since epoch
+	Name        string   `json:"name,omitempty" bson:"name,omitempty" example:"Motion Detected"`                                 // Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
+	Description string   `json:"description,omitempty" bson:"description,omitempty" example:"Motion detected in the lobby area"` // Description of the event
+	Tags        []string `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"urgent\",\"review-needed\"]"`                  // Tags associated with the event for categorization
 }
