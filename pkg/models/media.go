@@ -68,11 +68,11 @@ type MediaMetadata struct {
 
 // MediaAtRuntimeMetadata contains metadata that is generated at runtime, which can include
 type MediaAtRuntimeMetadata struct {
-	CacheTimestamp int64  `json:"cacheTimestamp,omitempty" bson:"cacheTimestamp,omitempty"` // Timestamp when the runtime metadata was cached.
-	VideoUrl       string `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
-	ThumbnailUrl   string `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
-	SpriteUrl      string `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
-	RedactionUrl   string `json:"redactionUrl,omitempty" bson:"redactionUrl,omitempty"`
+	CachedTimestamp int64  `json:"cachedTimestamp,omitempty" bson:"cachedTimestamp,omitempty"` // Timestamp when the runtime metadata was cached.
+	VideoUrl        string `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
+	ThumbnailUrl    string `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
+	SpriteUrl       string `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
+	RedactionUrl    string `json:"redactionUrl,omitempty" bson:"redactionUrl,omitempty"`
 }
 
 type Region struct {

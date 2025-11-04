@@ -23,9 +23,6 @@ type Site struct {
 	// Metadata
 	Metadata *SiteMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
 
-	// Location metadata
-	LocationMetadata *SiteLocationMetadata `json:"locationMetadata,omitempty" bson:"locationMetadata,omitempty"`
-
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
 }
@@ -36,9 +33,5 @@ type SiteMetadata struct {
 	Color              string      `json:"color" bson:"color,omitempty"`
 	FloorPlans         []FloorPlan `json:"floorPlans" bson:"floorPlans,omitempty"` // List of floor plans associated with the site
 	NumberOfFloorPlans int         `json:"numberOfFloorPlans" bson:"numberOfFloorPlans,omitempty"`
-}
-
-// SiteLocationMetadata contains metadata about the physical location of the site.
-type SiteLocationMetadata struct {
-	Location Location `json:"location" bson:"location,omitempty"`
+	Location           Location    `json:"location" bson:"location,omitempty"`
 }
