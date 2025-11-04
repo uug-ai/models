@@ -1,11 +1,3 @@
-# GitHub Copilot Instructions for UUG AI Models Repository
-
-## Project Context
-This is a Go package that defines data models for media file management and metadata handling in the UUG AI ecosystem. The repository includes:
-- Go model definitions in `pkg/models/`
-- API response structures in `pkg/api/`
-- Automatic TypeScript type generation from Go models
-- Support for MongoDB (BSON) and REST APIs (JSON)
 
 ## Commit Message Format
 
