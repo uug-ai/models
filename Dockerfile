@@ -1,4 +1,4 @@
-FROM golang:1.24.4-bullseye AS builder
+FROM mcr.microsoft.com/devcontainers/go:1.24-bookworm AS builder
 LABEL AUTHOR=uug.ai
 
 ENV GOROOT=/usr/local/go
