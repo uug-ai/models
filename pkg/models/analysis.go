@@ -166,3 +166,19 @@ type FaceRedaction struct {
 	Id     primitive.ObjectID   `json:"id" bson:"_id,omitempty"`
 	Tracks []FaceRedactionTrack `json:"tracks" bson:"tracks"`
 }
+
+type MediaFilter struct {
+	TimeRanges []*TimeRange `json:"timeRanges,omitempty" bson:"timeRanges,omitempty"`
+	Sites      []*string    `json:"sites,omitempty" bson:"sites,omitempty"`
+	Devices    []*string    `json:"devices,omitempty" bson:"devices,omitempty"`
+	Markers    []*string    `json:"markers,omitempty" bson:"markers,omitempty"`
+	Events     []*string    `json:"events,omitempty" bson:"events,omitempty"`
+	Regions    []*string    `json:"regions,omitempty" bson:"regions,omitempty"`
+	Starred    *bool        `json:"starred,omitempty" bson:"starred,omitempty"`
+	SortBy     *string      `json:"sortBy,omitempty" bson:"sortBy,omitempty"`
+}
+
+type TimeRange struct {
+	Start int64 `json:"start,omitempty" bson:"start,omitempty"`
+	End   int64 `json:"end,omitempty" bson:"end,omitempty"`
+}
