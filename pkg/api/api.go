@@ -52,7 +52,9 @@ type Metadata struct {
 	Error          string         `json:"error,omitempty" bson:"error,omitempty"`                   // Error message if any
 	MissingFields  []string       `json:"missingFields,omitempty" bson:"missingFields,omitempty"`   // List of missing fields in the request
 	Language       string         `json:"language,omitempty" bson:"language,omitempty"`             // Language of the response, if applicable
-	Data           map[string]any `json:"data,omitempty" bson:"data,omitempty"`                     // Additional data relevant to the request or response, this can be free-format
+	Data           map[string]any `json:"data,omitempty" bson:"data,omitempty"`
+	// Additional data relevant to the request or response, this can be free-format
+	Pagination *CursorPagination `json:"pagination,omitempty" bson:"pagination,omitempty"`
 }
 
 // SuccessResponse represents a standard success response structure.
@@ -61,7 +63,7 @@ type SuccessResponse struct {
 	ApplicationStatusCode string   `json:"applicationStatusCode,omitempty" bson:"applicationStatusCode,omitempty"` // Application-specific status code
 	EntityStatusCode      string   `json:"entityStatusCode,omitempty" bson:"entityStatusCode,omitempty"`           // Entity-specific status code
 	Message               string   `json:"message,omitempty" bson:"message,omitempty"`                             // Success message describing the operation
-	MetaData              Metadata `json:"metaData,omitempty" bson:"metaData,omitempty"`                           // Additional metadata about the response, such as timestamps and request IDs
+	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the response, such as timestamps and request IDs
 }
 
 func CreateSuccess(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) SuccessResponse {
@@ -71,7 +73,7 @@ func CreateSuccess(httpStatusCode int, applicationStatusCode string, entityStatu
 		ApplicationStatusCode: applicationStatusCode,
 		EntityStatusCode:      entityStatusCode.String(),
 		Message:               entityStatusCode.Translate(metadata.Language),
-		MetaData:              metadata,
+		Metadata:              metadata,
 	}
 }
 
@@ -81,7 +83,7 @@ type ErrorResponse struct {
 	ApplicationStatusCode string   `json:"applicationStatusCode,omitempty" bson:"applicationStatusCode,omitempty"` // Application-specific error code
 	EntityStatusCode      string   `json:"entityStatusCode,omitempty" bson:"entityStatusCode,omitempty"`           // Entity-specific error code
 	Message               string   `json:"message,omitempty" bson:"message,omitempty"`                             // Error message describing the issue
-	MetaData              Metadata `json:"metaData,omitempty" bson:"metaData,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
+	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
 }
 
 func CreateError(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) ErrorResponse {
@@ -91,7 +93,7 @@ func CreateError(httpStatusCode int, applicationStatusCode string, entityStatusC
 		ApplicationStatusCode: applicationStatusCode,
 		EntityStatusCode:      entityStatusCode.String(),
 		Message:               entityStatusCode.Translate(metadata.Language),
-		MetaData:              metadata,
+		Metadata:              metadata,
 	}
 }
 
@@ -103,7 +105,7 @@ func LogInfo(logger *logrus.Logger, entityStatusCode EntityStatus, metadata Meta
 		"applicationStatusCode": ApplicationStatusSuccess,
 		"entityStatusCode":      entityStatusCode.String(),
 		"message":               entityStatusCode.Translate(metadata.Language),
-		"metaData":              metadata,
+		"metadata":              metadata,
 	}).Info()
 }
 
@@ -114,7 +116,7 @@ func LogError(logger *logrus.Logger, entityStatusCode EntityStatus, metadata Met
 		"applicationStatusCode": ApplicationStatusError,
 		"entityStatusCode":      entityStatusCode.String(),
 		"message":               entityStatusCode.Translate(metadata.Language),
-		"metaData":              metadata,
+		"metadata":              metadata,
 	}).Error()
 }
 
@@ -125,6 +127,6 @@ func LogDebug(logger *logrus.Logger, entityStatusCode EntityStatus, metadata Met
 		"applicationStatusCode": ApplicationStatusSuccess,
 		"entityStatusCode":      entityStatusCode.String(),
 		"message":               entityStatusCode.Translate(metadata.Language),
-		"metaData":              metadata,
+		"metadata":              metadata,
 	}).Debug()
 }

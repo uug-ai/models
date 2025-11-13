@@ -126,8 +126,7 @@ type GetMediaRequest struct {
 	Pagination CursorPagination `json:"pagination" bson:"pagination"`
 }
 type GetMediaResponse struct {
-	Media      []models.Media   `json:"media"`
-	Pagination CursorPagination `json:"pagination"`
+	Media []models.Media `json:"media"`
 }
 type GetMediaSuccessResponse struct {
 	SuccessResponse

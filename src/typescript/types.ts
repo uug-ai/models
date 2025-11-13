@@ -4958,7 +4958,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.AddAccessTokenRequest": {
             token?: components["schemas"]["models.AccessToken"];
@@ -4977,7 +4977,7 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.AddMarkerErrorResponse": {
             /** @description Application-specific error code */
@@ -4989,7 +4989,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.AddMarkerRequest": {
             marker?: components["schemas"]["models.Marker"];
@@ -5008,7 +5008,7 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         /** @enum {string} */
         "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_file_name_missing" | "analysis_signed_url_missing" | "analysis_all_frame_coordinates_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing";
@@ -5035,7 +5035,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.DeleteAccessTokenRequest": Record<string, never>;
         "api.DeleteAccessTokenResponse": Record<string, never>;
@@ -5050,7 +5050,7 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.ErrorResponse": {
             /** @description Application-specific error code */
@@ -5062,7 +5062,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.FaceRedactionMessage": {
             data?: {
@@ -5081,7 +5081,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetAccessTokensRequest": Record<string, never>;
         "api.GetAccessTokensResponse": {
@@ -5098,7 +5098,7 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetAnalysisErrorResponse": {
             /** @description Application-specific error code */
@@ -5110,7 +5110,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetAnalysisRequest": {
             analysisId?: string;
@@ -5129,7 +5129,7 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetMarkersErrorResponse": {
             /** @description Application-specific error code */
@@ -5141,7 +5141,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetMarkersRequest": Record<string, never>;
         "api.GetMarkersResponse": {
@@ -5158,7 +5158,7 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetMediaErrorResponse": {
             /** @description Application-specific error code */
@@ -5170,7 +5170,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetMediaRequest": {
             filter?: components["schemas"]["api.Media2Filter"];
@@ -5178,7 +5178,6 @@ export interface components {
         };
         "api.GetMediaResponse": {
             media?: components["schemas"]["models.Media"][];
-            pagination?: components["schemas"]["api.CursorPagination"];
         };
         "api.GetMediaSuccessResponse": {
             /** @description Application-specific status code */
@@ -5191,7 +5190,7 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetTimelineErrorResponse": {
             /** @description Application-specific error code */
@@ -5203,7 +5202,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetTimelineRequest": {
             filter?: components["schemas"]["api.MediaFilter"];
@@ -5223,7 +5222,7 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.MarkerOptions": {
             names?: string[];
@@ -5265,7 +5264,6 @@ export interface components {
             startTimestamp?: number;
         };
         "api.Metadata": {
-            /** @description Additional data relevant to the request or response, this can be free-format */
             data?: {
                 [key: string]: unknown;
             };
@@ -5279,6 +5277,8 @@ export interface components {
             missingFields?: string[];
             /** @description Organisation ID for the request */
             organisationId?: string;
+            /** @description Additional data relevant to the request or response, this can be free-format */
+            pagination?: components["schemas"]["api.CursorPagination"];
             /** @description Path of the request */
             path?: string;
             /** @description Timestamp of the request or response */
@@ -5303,7 +5303,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.SaveFaceRedactionRequest": {
             analysisId?: string;
@@ -5324,7 +5324,7 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.SubmitFaceRedactionErrorResponse": {
             /** @description Application-specific error code */
@@ -5336,7 +5336,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.SubmitFaceRedactionRequest": {
             allFrameCoordinates?: {
@@ -5363,7 +5363,7 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.SuccessResponse": {
             /** @description Application-specific status code */
@@ -5375,7 +5375,7 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.TimeRange": {
             end?: number;
@@ -5391,7 +5391,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.UpdateAccessTokenRequest": {
             token?: components["schemas"]["models.AccessToken"];
@@ -5410,7 +5410,7 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "models.AccessToken": {
             /** @description Audit information */
@@ -5850,7 +5850,7 @@ export interface components {
              */
             mediaIds?: string[];
             /** @description Additional metadata */
-            metaData?: components["schemas"]["models.MarkerMetadata"];
+            metadata?: components["schemas"]["models.MarkerMetadata"];
             /**
              * @description Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
              * @example 2-HCP-007

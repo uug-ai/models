@@ -15,3 +15,5 @@ type CursorPagination struct {
 	PageSize int64 `json:"pageSize,omitempty" bson:"pageSize,omitempty"`
 	Total    int64 `json:"total,omitempty" bson:"total,omitempty"`
 }
+
+// PaginationRequest/response ?

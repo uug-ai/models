@@ -64,7 +64,7 @@ type PipelinePayload struct {
 	BytesRangeOnTime []FragmentedBytesRangeOnTime `json:"bytes_range_on_time" bson:"bytes_range_on_time"`
 
 	// Metadata
-	MetaData PipelineMetadata `json:"metadata,omitempty"`
+	Metadata PipelineMetadata `json:"metadata,omitempty"`
 }
 
 type PipelineMetadata struct {
