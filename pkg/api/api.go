@@ -54,7 +54,6 @@ type Metadata struct {
 	Language       string         `json:"language,omitempty" bson:"language,omitempty"`             // Language of the response, if applicable
 	Data           map[string]any `json:"data,omitempty" bson:"data,omitempty"`
 	// Additional data relevant to the request or response, this can be free-format
-	Pagination *CursorPagination `json:"pagination,omitempty" bson:"pagination,omitempty"`
 }
 
 // SuccessResponse represents a standard success response structure.
