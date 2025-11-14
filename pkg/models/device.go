@@ -67,6 +67,13 @@ type Device struct {
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
 }
 
+type DeviceSummary struct {
+	Id    primitive.ObjectID `bson:"_id" json:"id"`
+	Key   string             `bson:"key" json:"key"`
+	Name  string             `bson:"name" json:"name"`
+	Sites []string           `json:"sites"`
+}
+
 // We can store additional metadata for media files, such as tags and classifications.
 type DeviceMetadata struct {
 	Mute             bool   `json:"mute" bson:"mute,omitempty"`                         // Mute status, e.g. false for unmuted, true for muted

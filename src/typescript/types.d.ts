@@ -1133,7 +1133,7 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.Metadata": {
             /** @description Error message if any */
@@ -1149,7 +1149,7 @@ export interface components {
             applicationStatusCode?: number;
             httpStatusCode?: number;
             message?: string;
-            metaData?: components["schemas"]["api.Metadata"];
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "models.Audit": {
             createdAt?: number;
@@ -1374,7 +1374,7 @@ export interface components {
             /** @description Media information */
             mediaIds?: string[];
             /** @description Additional metadata */
-            metaData?: components["schemas"]["models.MarkerMetadata"];
+            metadata?: components["schemas"]["models.MarkerMetadata"];
             /** @description Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc." */
             name?: string;
             /** @description OrganisationId is used to identify the organisation that owns the marker */

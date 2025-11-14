@@ -79,6 +79,22 @@ type MediaFilter struct {
 	TimelineEndTimestamp   int64            `json:"timelineEndTimestamp" bson:"timelineEndTimestamp"`
 }
 
+type Media2Filter struct {
+	TimeRanges []TimeRange `json:"timeRanges,omitempty" bson:"timeRanges,omitempty"`
+	Sites      []string    `json:"sites,omitempty" bson:"sites,omitempty"`
+	Devices    []string    `json:"devices,omitempty" bson:"devices,omitempty"`
+	Markers    []string    `json:"markers,omitempty" bson:"markers,omitempty"`
+	Events     []string    `json:"events,omitempty" bson:"events,omitempty"`
+	Regions    []string    `json:"regions,omitempty" bson:"regions,omitempty"`
+	Starred    *bool       `json:"starred,omitempty" bson:"starred,omitempty"`
+	SortBy     *string     `json:"sortBy,omitempty" bson:"sortBy,omitempty"`
+}
+
+type TimeRange struct {
+	Start int64 `json:"start,omitempty" bson:"start,omitempty"`
+	End   int64 `json:"end,omitempty" bson:"end,omitempty"`
+}
+
 type MediaGroup struct {
 	StartTimestamp int64          `json:"startTimestamp" bson:"startTimestamp"`
 	EndTimestamp   int64          `json:"endTimestamp" bson:"endTimestamp"`
@@ -106,7 +122,8 @@ type GetTimelineSuccessResponse struct {
 // GetMedia
 // @Router /media/ [post]
 type GetMediaRequest struct {
-	Filter MediaFilter `json:"filter" bson:"filter"`
+	Filter     Media2Filter     `json:"filter" bson:"filter"`
+	Pagination CursorPagination `json:"pagination" bson:"pagination"`
 }
 type GetMediaResponse struct {
 	Media []models.Media `json:"media"`
