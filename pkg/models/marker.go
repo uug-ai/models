@@ -27,7 +27,7 @@ type Marker struct {
 	Description string        `json:"description,omitempty" bson:"description,omitempty" example:"Person forcably opened a door"` // Description of the marker
 
 	// Additional metadata
-	MetaData *MarkerMetadata `json:"metaData,omitempty" bson:"metaData,omitempty"` // Metadata associated with the marker, such as comments and tags
+	Metadata *MarkerMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"` // Metadata associated with the marker, such as comments and tags
 
 	// Synchronize
 	Synchronize *Synchronize `json:"synchronize,omitempty" bson:"synchronize,omitempty"` // Synchronization status with external systems
