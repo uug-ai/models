@@ -1330,6 +1330,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/devicefilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceFilter (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeviceFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/devicelocationmetadata": {
         parameters: {
             query?: never;
@@ -1435,6 +1474,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.DevicePlacement"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicesummary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceSummary (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceSummary schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceSummary"];
                     };
                 };
             };
@@ -2098,6 +2176,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetAnalysisSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdevicesummarieserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceSummariesErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceSummariesErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceSummariesErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdevicesummariesrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceSummariesRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceSummariesRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceSummariesRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdevicesummariesresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceSummariesResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceSummariesResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceSummariesResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdevicesummariessuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceSummariesSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceSummariesSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceSummariesSuccessResponse"];
                     };
                 };
             };
@@ -5052,6 +5286,10 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.DeviceFilter": {
+            deviceIds?: string[];
+            sites?: string[];
+        };
         "api.ErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -5122,6 +5360,38 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetAnalysisResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetDeviceSummariesErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetDeviceSummariesRequest": {
+            filter?: components["schemas"]["api.DeviceFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetDeviceSummariesResponse": {
+            devices?: components["schemas"]["models.DeviceSummary"][];
+        };
+        "api.GetDeviceSummariesSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetDeviceSummariesResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -5719,6 +5989,12 @@ export interface components {
             x?: number;
             /** @description Absolute Y coordinate */
             y?: number;
+        };
+        "models.DeviceSummary": {
+            id?: string;
+            key?: string;
+            name?: string;
+            sites?: string[];
         };
         "models.DominantColor": {
             hexs?: string[];
@@ -6364,6 +6640,7 @@ export namespace models {
     export type DeviceLocationMetadata = components['schemas']['models.DeviceLocationMetadata'];
     export type DeviceMetadata = components['schemas']['models.DeviceMetadata'];
     export type DevicePlacement = components['schemas']['models.DevicePlacement'];
+    export type DeviceSummary = components['schemas']['models.DeviceSummary'];
     export type DominantColor = components['schemas']['models.DominantColor'];
     export type EventStage = components['schemas']['models.EventStage'];
     export type FaceRedaction = components['schemas']['models.FaceRedaction'];
@@ -6424,6 +6701,7 @@ export namespace api {
     export type CursorPagination = components['schemas']['api.CursorPagination'];
     export type DeleteAccessTokenErrorResponse = components['schemas']['api.DeleteAccessTokenErrorResponse'];
     export type DeleteAccessTokenSuccessResponse = components['schemas']['api.DeleteAccessTokenSuccessResponse'];
+    export type DeviceFilter = components['schemas']['api.DeviceFilter'];
     export type ErrorResponse = components['schemas']['api.ErrorResponse'];
     export type FaceRedactionMessage = components['schemas']['api.FaceRedactionMessage'];
     export type GetAccessTokensErrorResponse = components['schemas']['api.GetAccessTokensErrorResponse'];
@@ -6433,6 +6711,10 @@ export namespace api {
     export type GetAnalysisRequest = components['schemas']['api.GetAnalysisRequest'];
     export type GetAnalysisResponse = components['schemas']['api.GetAnalysisResponse'];
     export type GetAnalysisSuccessResponse = components['schemas']['api.GetAnalysisSuccessResponse'];
+    export type GetDeviceSummariesErrorResponse = components['schemas']['api.GetDeviceSummariesErrorResponse'];
+    export type GetDeviceSummariesRequest = components['schemas']['api.GetDeviceSummariesRequest'];
+    export type GetDeviceSummariesResponse = components['schemas']['api.GetDeviceSummariesResponse'];
+    export type GetDeviceSummariesSuccessResponse = components['schemas']['api.GetDeviceSummariesSuccessResponse'];
     export type GetMarkersErrorResponse = components['schemas']['api.GetMarkersErrorResponse'];
     export type GetMarkersResponse = components['schemas']['api.GetMarkersResponse'];
     export type GetMarkersSuccessResponse = components['schemas']['api.GetMarkersSuccessResponse'];
