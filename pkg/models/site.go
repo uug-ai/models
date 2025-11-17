@@ -36,7 +36,7 @@ type SiteMetadata struct {
 	Location           Location    `json:"location" bson:"location,omitempty"`
 }
 
-type SiteSummary struct {
+type SiteOption struct {
 	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
 	Name        string             `json:"name" bson:"name,omitempty"`
 	Description string             `json:"description" bson:"description,omitempty"`

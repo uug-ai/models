@@ -68,17 +68,17 @@ type SiteFilter struct {
 	Name    string   `json:"name,omitempty" bson:"name,omitempty"`
 }
 
-type GetSiteListOptionsRequest struct {
+type GetSiteOptionsRequest struct {
 	Filter     *SiteFilter       `json:"filter,omitempty" bson:"filter,omitempty"`
 	Pagination *CursorPagination `json:"pagination,omitempty" bson:"pagination,omitempty"`
 }
-type GetSiteListOptionsResponse struct {
-	Sites []models.ListOption `json:"sites,omitempty" bson:"sites,omitempty"`
+type GetSiteOptionsResponse struct {
+	Sites []models.SiteOption `json:"sites,omitempty" bson:"sites,omitempty"`
 }
-type GetSiteListOptionsSuccessResponse struct {
+type GetSiteOptionsSuccessResponse struct {
 	SuccessResponse
-	Data GetSiteListOptionsResponse `json:"data,omitempty" bson:"data,omitempty"`
+	Data GetSiteOptionsResponse `json:"data,omitempty" bson:"data,omitempty"`
 }
-type GetSiteListOptionsErrorResponse struct {
+type GetSiteOptionsErrorResponse struct {
 	ErrorResponse
 }

@@ -67,7 +67,7 @@ type Device struct {
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
 }
 
-type DeviceSummary struct {
+type DeviceOption struct {
 	Id    primitive.ObjectID `bson:"_id" json:"id"`
 	Key   string             `bson:"key" json:"key"`
 	Name  string             `bson:"name" json:"name"`

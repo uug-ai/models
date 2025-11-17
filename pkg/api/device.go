@@ -6,18 +6,19 @@ import "github.com/uug-ai/models/pkg/models"
 type DeviceStatus string
 
 const (
-	DeviceBindingFailed   DeviceStatus = "device_binding_failed"
-	DeviceDuplicateName   DeviceStatus = "device_duplicate_name"
-	DeviceMissingInfo     DeviceStatus = "device_missing_info"
-	DeviceRetrievalFailed DeviceStatus = "device_retrieval_failed"
-	DeviceFound           DeviceStatus = "device_found"
-	DeviceNotFound        DeviceStatus = "device_not_found"
-	DeviceAddSuccess      DeviceStatus = "device_add_success"
-	DeviceAddFailed       DeviceStatus = "device_add_failed"
-	DeviceUpdateSuccess   DeviceStatus = "device_update_success"
-	DeviceUpdateFailed    DeviceStatus = "device_update_failed"
-	DeviceDeleteSuccess   DeviceStatus = "device_delete_success"
-	DeviceDeleteFailed    DeviceStatus = "device_delete_failed"
+	DeviceBindingFailed    DeviceStatus = "device_binding_failed"
+	DeviceDuplicateName    DeviceStatus = "device_duplicate_name"
+	DeviceMissingInfo      DeviceStatus = "device_missing_info"
+	DeviceRetrievalSuccess DeviceStatus = "device_retrieval_success"
+	DeviceRetrievalFailed  DeviceStatus = "device_retrieval_failed"
+	DeviceFound            DeviceStatus = "device_found"
+	DeviceNotFound         DeviceStatus = "device_not_found"
+	DeviceAddSuccess       DeviceStatus = "device_add_success"
+	DeviceAddFailed        DeviceStatus = "device_add_failed"
+	DeviceUpdateSuccess    DeviceStatus = "device_update_success"
+	DeviceUpdateFailed     DeviceStatus = "device_update_failed"
+	DeviceDeleteSuccess    DeviceStatus = "device_delete_success"
+	DeviceDeleteFailed     DeviceStatus = "device_delete_failed"
 )
 
 // String returns the string representation of the device status
@@ -67,17 +68,17 @@ type DeviceFilter struct {
 	Sites     []string `json:"sites,omitempty" bson:"sites,omitempty"`
 }
 
-type GetDeviceSummariesRequest struct {
+type GetDeviceOptionsRequest struct {
 	Filter     *DeviceFilter     `json:"filter,omitempty" bson:"filter,omitempty"`
 	Pagination *CursorPagination `json:"pagination,omitempty" bson:"pagination,omitempty"`
 }
-type GetDeviceSummariesResponse struct {
-	Devices []models.DeviceSummary `json:"devices,omitempty" bson:"devices,omitempty"`
+type GetDeviceOptionsResponse struct {
+	Devices []models.DeviceOption `json:"devices,omitempty" bson:"devices,omitempty"`
 }
-type GetDeviceSummariesSuccessResponse struct {
+type GetDeviceOptionsSuccessResponse struct {
 	SuccessResponse
-	Data GetDeviceSummariesResponse `json:"data,omitempty" bson:"data,omitempty"`
+	Data GetDeviceOptionsResponse `json:"data,omitempty" bson:"data,omitempty"`
 }
-type GetDeviceSummariesErrorResponse struct {
+type GetDeviceOptionsErrorResponse struct {
 	ErrorResponse
 }
