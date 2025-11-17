@@ -706,84 +706,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/auditcreate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get AuditCreate (schema generation only)
-         * @description Internal endpoint used only to ensure AuditCreate schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.AuditCreate"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/auditupdate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get AuditUpdate (schema generation only)
-         * @description Internal endpoint used only to ensure AuditUpdate schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.AuditUpdate"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/classify": {
         parameters: {
             query?: never;
@@ -2734,7 +2656,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/getmediaerrorresponse": {
+    "/internal/getsitesummarieserrorresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -2742,8 +2664,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get GetMediaErrorResponse (schema generation only)
-         * @description Internal endpoint used only to ensure GetMediaErrorResponse schema is generated in OpenAPI spec
+         * Get GetSiteSummariesErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetSiteSummariesErrorResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -2760,7 +2682,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.GetMediaErrorResponse"];
+                        "application/json": components["schemas"]["api.GetSiteSummariesErrorResponse"];
                     };
                 };
             };
@@ -2773,7 +2695,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/getmediarequest": {
+    "/internal/getsitesummariesrequest": {
         parameters: {
             query?: never;
             header?: never;
@@ -2781,8 +2703,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get GetMediaRequest (schema generation only)
-         * @description Internal endpoint used only to ensure GetMediaRequest schema is generated in OpenAPI spec
+         * Get GetSiteSummariesRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetSiteSummariesRequest schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -2799,7 +2721,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.GetMediaRequest"];
+                        "application/json": components["schemas"]["api.GetSiteSummariesRequest"];
                     };
                 };
             };
@@ -2812,7 +2734,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/getmediaresponse": {
+    "/internal/getsitesummariesresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -2820,8 +2742,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get GetMediaResponse (schema generation only)
-         * @description Internal endpoint used only to ensure GetMediaResponse schema is generated in OpenAPI spec
+         * Get GetSiteSummariesResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetSiteSummariesResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -2838,7 +2760,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.GetMediaResponse"];
+                        "application/json": components["schemas"]["api.GetSiteSummariesResponse"];
                     };
                 };
             };
@@ -2851,7 +2773,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/getmediasuccessresponse": {
+    "/internal/getsitesummariessuccessresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -2859,8 +2781,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get GetMediaSuccessResponse (schema generation only)
-         * @description Internal endpoint used only to ensure GetMediaSuccessResponse schema is generated in OpenAPI spec
+         * Get GetSiteSummariesSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetSiteSummariesSuccessResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -2877,7 +2799,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.GetMediaSuccessResponse"];
+                        "application/json": components["schemas"]["api.GetSiteSummariesSuccessResponse"];
                     };
                 };
             };
@@ -3280,45 +3202,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/markerevent": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get MarkerEvent (schema generation only)
-         * @description Internal endpoint used only to ensure MarkerEvent schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.MarkerEvent"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/markermetadata": {
         parameters: {
             query?: never;
@@ -3619,45 +3502,6 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.Metadata"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/model": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Model (schema generation only)
-         * @description Internal endpoint used only to ensure Model schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.Model"];
                     };
                 };
             };
@@ -4333,6 +4177,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/sitefilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SiteFilter (schema generation only)
+         * @description Internal endpoint used only to ensure SiteFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SiteFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/sitemetadata": {
         parameters: {
             query?: never;
@@ -4360,6 +4243,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.SiteMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/sitesummary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SiteSummary (schema generation only)
+         * @description Internal endpoint used only to ensure SiteSummary schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.SiteSummary"];
                     };
                 };
             };
@@ -5505,7 +5427,6 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
-            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.AddAccessTokenRequest": {
             token?: components["schemas"]["models.AccessToken"];
@@ -5525,7 +5446,6 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
-            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.AddMarkerErrorResponse": {
             /** @description Application-specific error code */
@@ -5537,7 +5457,6 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metadata?: components["schemas"]["api.Metadata"];
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.AddMarkerRequest": {
@@ -5557,7 +5476,6 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metadata?: components["schemas"]["api.Metadata"];
             metadata?: components["schemas"]["api.Metadata"];
         };
         /** @enum {string} */
@@ -5586,7 +5504,6 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
-            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.DeleteAccessTokenRequest": Record<string, never>;
         "api.DeleteAccessTokenResponse": Record<string, never>;
@@ -5605,6 +5522,7 @@ export interface components {
         };
         "api.DeviceFilter": {
             deviceIds?: string[];
+            name?: string;
             sites?: string[];
         };
         "api.ErrorResponse": {
@@ -5617,7 +5535,6 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metadata?: components["schemas"]["api.Metadata"];
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.FaceRedactionMessage": {
@@ -5638,7 +5555,6 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
-            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetAccessTokensRequest": Record<string, never>;
         "api.GetAccessTokensResponse": {
@@ -5656,7 +5572,6 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
-            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetAnalysisErrorResponse": {
             /** @description Application-specific error code */
@@ -5668,7 +5583,6 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metadata?: components["schemas"]["api.Metadata"];
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetAnalysisRequest": {
@@ -5733,7 +5647,6 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
-            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetMarkersRequest": Record<string, never>;
         "api.GetMarkersResponse": {
@@ -5784,7 +5697,7 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.GetTimelineErrorResponse": {
+        "api.GetSiteSummariesErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
             /** @description Entity-specific error code */
@@ -5795,6 +5708,37 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetSiteSummariesRequest": {
+            filter?: components["schemas"]["api.SiteFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetSiteSummariesResponse": {
+            sites?: components["schemas"]["models.SiteSummary"][];
+        };
+        "api.GetSiteSummariesSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetSiteSummariesResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTimelineErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetTimelineRequest": {
@@ -5815,7 +5759,6 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metadata?: components["schemas"]["api.Metadata"];
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.MarkerOptions": {
@@ -5898,7 +5841,6 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
-            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.SaveFaceRedactionRequest": {
             analysisId?: string;
@@ -5920,7 +5862,10 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
-            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.SiteFilter": {
+            name?: string;
+            siteIds?: string[];
         };
         "api.SubmitFaceRedactionErrorResponse": {
             /** @description Application-specific error code */
@@ -5932,7 +5877,6 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metadata?: components["schemas"]["api.Metadata"];
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.SubmitFaceRedactionRequest": {
@@ -5960,7 +5904,6 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metadata?: components["schemas"]["api.Metadata"];
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.SuccessResponse": {
@@ -5990,7 +5933,6 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
-            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.UpdateAccessTokenRequest": {
             token?: components["schemas"]["models.AccessToken"];
@@ -6009,7 +5951,6 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metadata?: components["schemas"]["api.Metadata"];
             metadata?: components["schemas"]["api.Metadata"];
         };
         "models.AccessToken": {
@@ -6102,15 +6043,8 @@ export interface components {
             updateHistory?: components["schemas"]["models.AuditUpdate"][];
         };
         "models.AuditCreate": {
-            create?: components["schemas"]["models.AuditCreate"];
-            /** @description UpdateHistory is a chronological list of updates, ordered by UpdatedAt. */
-            updateHistory?: components["schemas"]["models.AuditUpdate"][];
-        };
-        "models.AuditCreate": {
             createdAt?: number;
             createdBy?: string;
-        };
-        "models.AuditUpdate": {
         };
         "models.AuditUpdate": {
             updatedAt?: number;
@@ -6444,8 +6378,6 @@ export interface components {
             endTimestamp?: number;
             /** @description Events associated with the marker, such as motion detected, sound detected, etc. */
             events?: components["schemas"]["models.MarkerEvent"][];
-            /** @description Events associated with the marker, such as motion detected, sound detected, etc. */
-            events?: components["schemas"]["models.MarkerEvent"][];
             /**
              * @description GroupId is used to identify the group of markers
              * @example 686a906345c1df594pmt41w4
@@ -6465,7 +6397,6 @@ export interface components {
              */
             mediaIds?: string[];
             /** @description Additional metadata */
-            metadata?: components["schemas"]["models.MarkerMetadata"];
             metadata?: components["schemas"]["models.MarkerMetadata"];
             /**
              * @description Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
@@ -6520,31 +6451,6 @@ export interface components {
              */
             timestamp?: number;
         };
-        "models.MarkerEvent": {
-            /**
-             * @description Description of the event
-             * @example Motion detected in the lobby area
-             */
-            description?: string;
-            /**
-             * @description Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
-             * @example Motion Detected
-             */
-            name?: string;
-            /**
-             * @description Tags associated with the event for categorization
-             * @example [
-             *       "[\"urgent\"",
-             *       "\"review-needed\"]"
-             *     ]
-             */
-            tags?: string[];
-            /**
-             * @description Timestamp of the event in seconds since epoch
-             * @example 1752482070
-             */
-            timestamp?: number;
-        };
         "models.MarkerMetadata": {
             /** @description Additional comments or description of the marker */
             comments?: components["schemas"]["models.Comment"];
@@ -6573,14 +6479,10 @@ export interface components {
             endTimestamp?: number;
             groupId?: string;
             /** @description Unique identifier for the media file */
-            groupId?: string;
-            /** @description Unique identifier for the media file */
             id?: string;
             /** @description Metadata */
             metadata?: components["schemas"]["models.MediaMetadata"];
             organisationId?: string;
-            redactionFile?: string;
-            siteId?: string;
             redactionFile?: string;
             siteId?: string;
             spriteFile?: string;
@@ -6596,18 +6498,11 @@ export interface components {
             /** @description Timestamp when the runtime metadata was cached. */
             cachedTimestamp?: number;
             redactionUrl?: string;
-            /** @description Timestamp when the runtime metadata was cached. */
-            cachedTimestamp?: number;
-            redactionUrl?: string;
             spriteUrl?: string;
             thumbnailUrl?: string;
             videoUrl?: string;
         };
         "models.MediaMetadata": {
-            /** @description Analysis data (we keep a reference to the original analysis, and cache some data here) */
-            analysisId?: string;
-            /** @description in kbps */
-            bitrate?: number;
             /** @description Analysis data (we keep a reference to the original analysis, and cache some data here) */
             analysisId?: string;
             /** @description in kbps */
@@ -6629,45 +6524,7 @@ export interface components {
             /** @description Sprite interval in seconds */
             spriteInterval?: number;
             /** @description Tags associated to give some context about the media file */
-            /** @description e.g., H.264, VP9 */
-            codec?: string;
-            /** @description Media containers related information */
-            containerType?: string;
-            count?: number;
-            description?: string;
-            detections?: string[];
-            dominantColors?: string[];
-            embedding?: number[];
-            /** @description frames per second */
-            fps?: number;
-            /** @description e.g., 1920x1080 */
-            resolution?: string;
-            /** @description Sprite interval in seconds */
-            spriteInterval?: number;
-            /** @description Tags associated to give some context about the media file */
             tags?: string[];
-        };
-        "models.Model": {
-            /** @description AtRuntimeMetadata are computed or dynamic information about the model that is relevant during its usage or processing.
-             *     This information is generated at run time and is not stored into the database. All other information of the model is persisted into the database.
-             *     and is not altered during runtime.
-             *     e.g.
-             *     Media model -> signed URLS for accessing the media, processing status, etc.
-             *     Device model -> current status (active, inactive), etc. */
-            atRuntimeMetadata?: components["schemas"]["models.MediaAtRuntimeMetadata"];
-            /** @description Audit information: every model should have audit information to track its creation and modification history.
-             *     This is important for maintaining data integrity and accountability. */
-            audit?: components["schemas"]["models.Audit"];
-            /** @description Unique identifier for the model, this is used to retrieve the model from the database by its unique ID. */
-            id?: string;
-            /** @description Metadata is additional information about the model that is not critical for its primary function,
-             *     but can provide useful context or details.
-             *     e.g.
-             *     User model -> profile information, preferences, etc.
-             *     Device model -> location, installation date, etc.
-             *     Media model -> tags, description, etc.
-             *     Marker model -> comments, tags, etc. */
-            metadata?: components["schemas"]["models.MediaMetadata"];
         };
         "models.Model": {
             /** @description AtRuntimeMetadata are computed or dynamic information about the model that is relevant during its usage or processing.
@@ -6824,8 +6681,14 @@ export interface components {
             floorPlans?: components["schemas"]["models.FloorPlan"][];
             initials?: string;
             location?: components["schemas"]["models.Location"];
-            location?: components["schemas"]["models.Location"];
             numberOfFloorPlans?: number;
+        };
+        "models.SiteSummary": {
+            description?: string;
+            devices?: string[];
+            groups?: string[];
+            id?: string;
+            name?: string;
         };
         "models.Sprite": {
             filename?: string;
@@ -7042,8 +6905,6 @@ export namespace models {
     export type Audit = components['schemas']['models.Audit'];
     export type AuditCreate = components['schemas']['models.AuditCreate'];
     export type AuditUpdate = components['schemas']['models.AuditUpdate'];
-    export type AuditCreate = components['schemas']['models.AuditCreate'];
-    export type AuditUpdate = components['schemas']['models.AuditUpdate'];
     export type Classify = components['schemas']['models.Classify'];
     export type ClassifyDetails = components['schemas']['models.ClassifyDetails'];
     export type Color = components['schemas']['models.Color'];
@@ -7071,12 +6932,10 @@ export namespace models {
     export type Location = components['schemas']['models.Location'];
     export type Marker = components['schemas']['models.Marker'];
     export type MarkerEvent = components['schemas']['models.MarkerEvent'];
-    export type MarkerEvent = components['schemas']['models.MarkerEvent'];
     export type MarkerMetadata = components['schemas']['models.MarkerMetadata'];
     export type Media = components['schemas']['models.Media'];
     export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
-    export type Model = components['schemas']['models.Model'];
     export type Model = components['schemas']['models.Model'];
     export type MonitorStage = components['schemas']['models.MonitorStage'];
     export type NotificationStage = components['schemas']['models.NotificationStage'];
@@ -7090,6 +6949,7 @@ export namespace models {
     export type SequenceStage = components['schemas']['models.SequenceStage'];
     export type Site = components['schemas']['models.Site'];
     export type SiteMetadata = components['schemas']['models.SiteMetadata'];
+    export type SiteSummary = components['schemas']['models.SiteSummary'];
     export type Sprite = components['schemas']['models.Sprite'];
     export type Storage = components['schemas']['models.Storage'];
     export type Subscription = components['schemas']['models.Subscription'];
@@ -7141,10 +7001,10 @@ export namespace api {
     export type GetMediaRequest = components['schemas']['api.GetMediaRequest'];
     export type GetMediaResponse = components['schemas']['api.GetMediaResponse'];
     export type GetMediaSuccessResponse = components['schemas']['api.GetMediaSuccessResponse'];
-    export type GetMediaErrorResponse = components['schemas']['api.GetMediaErrorResponse'];
-    export type GetMediaRequest = components['schemas']['api.GetMediaRequest'];
-    export type GetMediaResponse = components['schemas']['api.GetMediaResponse'];
-    export type GetMediaSuccessResponse = components['schemas']['api.GetMediaSuccessResponse'];
+    export type GetSiteSummariesErrorResponse = components['schemas']['api.GetSiteSummariesErrorResponse'];
+    export type GetSiteSummariesRequest = components['schemas']['api.GetSiteSummariesRequest'];
+    export type GetSiteSummariesResponse = components['schemas']['api.GetSiteSummariesResponse'];
+    export type GetSiteSummariesSuccessResponse = components['schemas']['api.GetSiteSummariesSuccessResponse'];
     export type GetTimelineErrorResponse = components['schemas']['api.GetTimelineErrorResponse'];
     export type GetTimelineRequest = components['schemas']['api.GetTimelineRequest'];
     export type GetTimelineResponse = components['schemas']['api.GetTimelineResponse'];
@@ -7159,6 +7019,7 @@ export namespace api {
     export type SaveFaceRedactionRequest = components['schemas']['api.SaveFaceRedactionRequest'];
     export type SaveFaceRedactionResponse = components['schemas']['api.SaveFaceRedactionResponse'];
     export type SaveFaceRedactionSuccessResponse = components['schemas']['api.SaveFaceRedactionSuccessResponse'];
+    export type SiteFilter = components['schemas']['api.SiteFilter'];
     export type SubmitFaceRedactionErrorResponse = components['schemas']['api.SubmitFaceRedactionErrorResponse'];
     export type SubmitFaceRedactionRequest = components['schemas']['api.SubmitFaceRedactionRequest'];
     export type SubmitFaceRedactionResponse = components['schemas']['api.SubmitFaceRedactionResponse'];

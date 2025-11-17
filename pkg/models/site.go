@@ -35,3 +35,12 @@ type SiteMetadata struct {
 	NumberOfFloorPlans int         `json:"numberOfFloorPlans" bson:"numberOfFloorPlans,omitempty"`
 	Location           Location    `json:"location" bson:"location,omitempty"`
 }
+
+type SiteSummary struct {
+	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	Name        string             `json:"name" bson:"name,omitempty"`
+	Description string             `json:"description" bson:"description,omitempty"`
+
+	Devices []string `json:"devices" bson:"devices"`
+	Groups  []string `json:"groups" bson:"groups"`
+}

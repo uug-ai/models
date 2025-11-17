@@ -63,6 +63,7 @@ func (ds DeviceStatus) Translate(lang string) string {
 
 type DeviceFilter struct {
 	DeviceIds []string `json:"deviceIds,omitempty" bson:"deviceIds,omitempty"`
+	Name      string   `json:"name,omitempty" bson:"name,omitempty"`
 	Sites     []string `json:"sites,omitempty" bson:"sites,omitempty"`
 }
 
