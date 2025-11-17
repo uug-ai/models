@@ -2656,7 +2656,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/getsitesummarieserrorresponse": {
+    "/internal/getsitelistoptions": {
         parameters: {
             query?: never;
             header?: never;
@@ -2664,8 +2664,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get GetSiteSummariesErrorResponse (schema generation only)
-         * @description Internal endpoint used only to ensure GetSiteSummariesErrorResponse schema is generated in OpenAPI spec
+         * Get GetSiteListOptions (schema generation only)
+         * @description Internal endpoint used only to ensure GetSiteListOptions schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -2682,7 +2682,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.GetSiteSummariesErrorResponse"];
+                        "application/json": components["schemas"]["api.GetSiteListOptions"];
                     };
                 };
             };
@@ -2695,7 +2695,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/getsitesummariesrequest": {
+    "/internal/getsitelistoptionserrorresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -2703,8 +2703,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get GetSiteSummariesRequest (schema generation only)
-         * @description Internal endpoint used only to ensure GetSiteSummariesRequest schema is generated in OpenAPI spec
+         * Get GetSiteListOptionsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetSiteListOptionsErrorResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -2721,7 +2721,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.GetSiteSummariesRequest"];
+                        "application/json": components["schemas"]["api.GetSiteListOptionsErrorResponse"];
                     };
                 };
             };
@@ -2734,7 +2734,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/getsitesummariesresponse": {
+    "/internal/getsitelistoptionsresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -2742,8 +2742,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get GetSiteSummariesResponse (schema generation only)
-         * @description Internal endpoint used only to ensure GetSiteSummariesResponse schema is generated in OpenAPI spec
+         * Get GetSiteListOptionsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetSiteListOptionsResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -2760,7 +2760,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.GetSiteSummariesResponse"];
+                        "application/json": components["schemas"]["api.GetSiteListOptionsResponse"];
                     };
                 };
             };
@@ -2773,7 +2773,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/getsitesummariessuccessresponse": {
+    "/internal/getsitelistoptionssuccessresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -2781,8 +2781,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get GetSiteSummariesSuccessResponse (schema generation only)
-         * @description Internal endpoint used only to ensure GetSiteSummariesSuccessResponse schema is generated in OpenAPI spec
+         * Get GetSiteListOptionsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetSiteListOptionsSuccessResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -2799,7 +2799,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.GetSiteSummariesSuccessResponse"];
+                        "application/json": components["schemas"]["api.GetSiteListOptionsSuccessResponse"];
                     };
                 };
             };
@@ -3073,6 +3073,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.IO"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/listoption": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ListOption (schema generation only)
+         * @description Internal endpoint used only to ensure ListOption schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ListOption"];
                     };
                 };
             };
@@ -5621,7 +5660,7 @@ export interface components {
             pagination?: components["schemas"]["api.CursorPagination"];
         };
         "api.GetDeviceSummariesResponse": {
-            devices?: components["schemas"]["models.DeviceSummary"][];
+            devices?: components["schemas"]["models.ListOption"][];
         };
         "api.GetDeviceSummariesSuccessResponse": {
             /** @description Application-specific status code */
@@ -5697,7 +5736,11 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.GetSiteSummariesErrorResponse": {
+        "api.GetSiteListOptions": {
+            filter?: components["schemas"]["api.SiteFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetSiteListOptionsErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
             /** @description Entity-specific error code */
@@ -5709,17 +5752,13 @@ export interface components {
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.GetSiteSummariesRequest": {
-            filter?: components["schemas"]["api.SiteFilter"];
-            pagination?: components["schemas"]["api.CursorPagination"];
+        "api.GetSiteListOptionsResponse": {
+            sites?: components["schemas"]["models.ListOption"][];
         };
-        "api.GetSiteSummariesResponse": {
-            sites?: components["schemas"]["models.SiteSummary"][];
-        };
-        "api.GetSiteSummariesSuccessResponse": {
+        "api.GetSiteListOptionsSuccessResponse": {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
-            data?: components["schemas"]["api.GetSiteSummariesResponse"];
+            data?: components["schemas"]["api.GetSiteListOptionsResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -6345,6 +6384,10 @@ export interface components {
             type?: string;
             value?: string;
         };
+        "models.ListOption": {
+            text?: string;
+            value?: string;
+        };
         "models.Location": {
             /** @description e.g. "123 Main St, Anytown, USA" */
             address?: string;
@@ -6929,6 +6972,7 @@ export namespace models {
     export type HighUpload = components['schemas']['models.HighUpload'];
     export type HourRange = components['schemas']['models.HourRange'];
     export type IO = components['schemas']['models.IO'];
+    export type ListOption = components['schemas']['models.ListOption'];
     export type Location = components['schemas']['models.Location'];
     export type Marker = components['schemas']['models.Marker'];
     export type MarkerEvent = components['schemas']['models.MarkerEvent'];
@@ -7001,10 +7045,10 @@ export namespace api {
     export type GetMediaRequest = components['schemas']['api.GetMediaRequest'];
     export type GetMediaResponse = components['schemas']['api.GetMediaResponse'];
     export type GetMediaSuccessResponse = components['schemas']['api.GetMediaSuccessResponse'];
-    export type GetSiteSummariesErrorResponse = components['schemas']['api.GetSiteSummariesErrorResponse'];
-    export type GetSiteSummariesRequest = components['schemas']['api.GetSiteSummariesRequest'];
-    export type GetSiteSummariesResponse = components['schemas']['api.GetSiteSummariesResponse'];
-    export type GetSiteSummariesSuccessResponse = components['schemas']['api.GetSiteSummariesSuccessResponse'];
+    export type GetSiteListOptions = components['schemas']['api.GetSiteListOptions'];
+    export type GetSiteListOptionsErrorResponse = components['schemas']['api.GetSiteListOptionsErrorResponse'];
+    export type GetSiteListOptionsResponse = components['schemas']['api.GetSiteListOptionsResponse'];
+    export type GetSiteListOptionsSuccessResponse = components['schemas']['api.GetSiteListOptionsSuccessResponse'];
     export type GetTimelineErrorResponse = components['schemas']['api.GetTimelineErrorResponse'];
     export type GetTimelineRequest = components['schemas']['api.GetTimelineRequest'];
     export type GetTimelineResponse = components['schemas']['api.GetTimelineResponse'];
