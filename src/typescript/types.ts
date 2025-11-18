@@ -3085,45 +3085,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/listoption": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get ListOption (schema generation only)
-         * @description Internal endpoint used only to ensure ListOption schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.ListOption"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/location": {
         parameters: {
             query?: never;
@@ -5753,7 +5714,7 @@ export interface components {
             pagination?: components["schemas"]["api.CursorPagination"];
         };
         "api.GetSiteOptionsResponse": {
-            sites?: components["schemas"]["models.ListOption"][];
+            sites?: components["schemas"]["models.SiteOption"][];
         };
         "api.GetSiteOptionsSuccessResponse": {
             /** @description Application-specific status code */
@@ -6271,10 +6232,8 @@ export interface components {
             mute?: boolean;
         };
         "models.DeviceOption": {
-            id?: string;
-            key?: string;
-            name?: string;
-            sites?: string[];
+            text?: string;
+            value?: string;
         };
         "models.DevicePlacement": {
             /** @description Audit information */
@@ -6382,10 +6341,6 @@ export interface components {
             lastSeenTimestamp?: number;
             /** @description input or output */
             type?: string;
-            value?: string;
-        };
-        "models.ListOption": {
-            text?: string;
             value?: string;
         };
         "models.Location": {
@@ -6727,11 +6682,10 @@ export interface components {
             numberOfFloorPlans?: number;
         };
         "models.SiteOption": {
-            description?: string;
             devices?: string[];
             groups?: string[];
-            id?: string;
-            name?: string;
+            text?: string;
+            value?: string;
         };
         "models.Sprite": {
             filename?: string;
@@ -6972,7 +6926,6 @@ export namespace models {
     export type HighUpload = components['schemas']['models.HighUpload'];
     export type HourRange = components['schemas']['models.HourRange'];
     export type IO = components['schemas']['models.IO'];
-    export type ListOption = components['schemas']['models.ListOption'];
     export type Location = components['schemas']['models.Location'];
     export type Marker = components['schemas']['models.Marker'];
     export type MarkerEvent = components['schemas']['models.MarkerEvent'];

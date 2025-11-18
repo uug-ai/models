@@ -68,10 +68,8 @@ type Device struct {
 }
 
 type DeviceOption struct {
-	Id    primitive.ObjectID `bson:"_id" json:"id"`
-	Key   string             `bson:"key" json:"key"`
-	Name  string             `bson:"name" json:"name"`
-	Sites []string           `json:"sites"`
+	Value string `bson:"value" json:"value"`
+	Text  string `bson:"text" json:"text"`
 }
 
 // We can store additional metadata for media files, such as tags and classifications.

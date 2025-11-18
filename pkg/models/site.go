@@ -37,9 +37,8 @@ type SiteMetadata struct {
 }
 
 type SiteOption struct {
-	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
-	Name        string             `json:"name" bson:"name,omitempty"`
-	Description string             `json:"description" bson:"description,omitempty"`
+	Value string `json:"value" bson:"value"`
+	Text  string `json:"text" bson:"text"`
 
 	Devices []string `json:"devices" bson:"devices"`
 	Groups  []string `json:"groups" bson:"groups"`
