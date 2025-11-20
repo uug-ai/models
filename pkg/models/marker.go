@@ -1,6 +1,9 @@
 package models
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"github.com/uug-ai/models/pkg/api"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type Marker struct {
 	Id primitive.ObjectID `json:"id" bson:"_id" example:"507f1f77bcf86cd799439011" required:"true"` // Unique identifier for the marker, generated automatically§§§
@@ -22,7 +25,6 @@ type Marker struct {
 	Duration       int64 `json:"duration" bson:"duration" example:"11" required:"true"`                     // Duration of the marker in seconds
 
 	Name        string        `json:"name" bson:"name" example:"2-HCP-007" required:"true"`                                       // Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
-	Type        string        `json:"type,omitempty" bson:"type,omitempty" example:"door-forced"`                                 // Type of the marker e.g., "alert", "event", "door_opened", "person", etc.
 	Events      []MarkerEvent `json:"events,omitempty" bson:"events,omitempty"`                                                   // Events associated with the marker, such as motion detected, sound detected, etc.
 	Description string        `json:"description,omitempty" bson:"description,omitempty" example:"Person forcably opened a door"` // Description of the marker
 
@@ -42,8 +44,27 @@ type MarkerMetadata struct {
 }
 
 type MarkerEvent struct {
-	Timestamp   int64    `json:"timestamp" bson:"timestamp" example:"1752482070" required:"true"`                                // Timestamp of the event in seconds since epoch
-	Name        string   `json:"name,omitempty" bson:"name,omitempty" example:"Motion Detected"`                                 // Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
-	Description string   `json:"description,omitempty" bson:"description,omitempty" example:"Motion detected in the lobby area"` // Description of the event
-	Tags        []string `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"urgent\",\"review-needed\"]"`                  // Tags associated with the event for categorization
+	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty" example:"507f1f77bcf86cd799439012"`                                     // Unique identifier for the event, generated automatically
+	Timestamp   int64              `json:"timestamp" bson:"timestamp" example:"1752482070" required:"true"`                                // Timestamp of the event in seconds since epoch
+	Type        MarkerEventType    `json:"type" bson:"type" required:"true"`                                                               // Type of the event, linked to MarkerEventType
+	Name        string             `json:"name,omitempty" bson:"name,omitempty" example:"Motion Detected"`                                 // Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
+	Description string             `json:"description,omitempty" bson:"description,omitempty" example:"Motion detected in the lobby area"` // Description of the event
+	Tags        []string           `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"urgent\",\"review-needed\"]"`                  // Tags associated with the event for categorization
+}
+
+type MarkerEventType struct {
+	Id   primitive.ObjectID `json:"id" bson:"_id,omitempty" example:"507f1f77bcf86cd799439013"` // Unique identifier for the event type, generated automatically
+	Name string             `json:"name" bson:"name" example:"Motion Detected" required:"true"` // Name of the event type e.g., "Motion Detected", "Sound Detected", etc.
+}
+
+type MarkerEventTypeOption struct {
+	Value string `bson:"value" json:"value"`
+	Text  string `bson:"text" json:"text"`
+}
+
+type MarkerOption struct {
+	Value      string          `bson:"value" json:"value"`
+	Text       string          `bson:"text" json:"text"`
+	TimeRanges []api.TimeRange `bson:"timeRange" json:"timeRange"`
+	DeviceIds  []string        `bson:"deviceIds" json:"deviceIds"`
 }

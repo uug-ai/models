@@ -2344,6 +2344,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getmarkeroptionserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerOptionsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerOptionsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerOptionsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkeroptionsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerOptionsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerOptionsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerOptionsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkeroptionsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerOptionsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerOptionsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerOptionsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkeroptionssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerOptionsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerOptionsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerOptionsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getmarkerserrorresponse": {
         parameters: {
             query?: never;
@@ -3202,6 +3358,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/markerfilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerFilter (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.MarkerFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/markermetadata": {
         parameters: {
             query?: never;
@@ -3241,7 +3436,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/markeroptions": {
+    "/internal/markeroption": {
         parameters: {
             query?: never;
             header?: never;
@@ -3249,8 +3444,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get MarkerOptions (schema generation only)
-         * @description Internal endpoint used only to ensure MarkerOptions schema is generated in OpenAPI spec
+         * Get MarkerOption (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerOption schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -3267,7 +3462,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.MarkerOptions"];
+                        "application/json": components["schemas"]["models.MarkerOption"];
                     };
                 };
             };
@@ -5636,6 +5831,38 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetMarkerOptionsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetMarkerOptionsRequest": {
+            filter?: components["schemas"]["api.MarkerFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetMarkerOptionsResponse": {
+            markers?: components["schemas"]["models.MarkerOption"][];
+        };
+        "api.GetMarkerOptionsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetMarkerOptionsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetMarkersErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -5761,7 +5988,7 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.MarkerOptions": {
+        "api.MarkerFilter": {
             names?: string[];
             types?: string[];
         };
@@ -6462,6 +6689,10 @@ export interface components {
              */
             tags?: string[];
         };
+        "models.MarkerOption": {
+            text?: string;
+            value?: string;
+        };
         "models.Media": {
             /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
              *     more verbose information about the device's current state, capabilities, or configuration.
@@ -6930,6 +7161,7 @@ export namespace models {
     export type Marker = components['schemas']['models.Marker'];
     export type MarkerEvent = components['schemas']['models.MarkerEvent'];
     export type MarkerMetadata = components['schemas']['models.MarkerMetadata'];
+    export type MarkerOption = components['schemas']['models.MarkerOption'];
     export type Media = components['schemas']['models.Media'];
     export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
@@ -6991,6 +7223,10 @@ export namespace api {
     export type GetDeviceOptionsRequest = components['schemas']['api.GetDeviceOptionsRequest'];
     export type GetDeviceOptionsResponse = components['schemas']['api.GetDeviceOptionsResponse'];
     export type GetDeviceOptionsSuccessResponse = components['schemas']['api.GetDeviceOptionsSuccessResponse'];
+    export type GetMarkerOptionsErrorResponse = components['schemas']['api.GetMarkerOptionsErrorResponse'];
+    export type GetMarkerOptionsRequest = components['schemas']['api.GetMarkerOptionsRequest'];
+    export type GetMarkerOptionsResponse = components['schemas']['api.GetMarkerOptionsResponse'];
+    export type GetMarkerOptionsSuccessResponse = components['schemas']['api.GetMarkerOptionsSuccessResponse'];
     export type GetMarkersErrorResponse = components['schemas']['api.GetMarkersErrorResponse'];
     export type GetMarkersResponse = components['schemas']['api.GetMarkersResponse'];
     export type GetMarkersSuccessResponse = components['schemas']['api.GetMarkersSuccessResponse'];
@@ -7006,7 +7242,7 @@ export namespace api {
     export type GetTimelineRequest = components['schemas']['api.GetTimelineRequest'];
     export type GetTimelineResponse = components['schemas']['api.GetTimelineResponse'];
     export type GetTimelineSuccessResponse = components['schemas']['api.GetTimelineSuccessResponse'];
-    export type MarkerOptions = components['schemas']['api.MarkerOptions'];
+    export type MarkerFilter = components['schemas']['api.MarkerFilter'];
     export type Media2Filter = components['schemas']['api.Media2Filter'];
     export type MediaFilter = components['schemas']['api.MediaFilter'];
     export type MediaGroup = components['schemas']['api.MediaGroup'];
