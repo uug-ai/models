@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/uug-ai/models/pkg/api"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -63,8 +62,8 @@ type MarkerEventTypeOption struct {
 }
 
 type MarkerOption struct {
-	Value      string          `bson:"value" json:"value"`
-	Text       string          `bson:"text" json:"text"`
-	TimeRanges []api.TimeRange `bson:"timeRange" json:"timeRange"`
-	DeviceIds  []string        `bson:"deviceIds" json:"deviceIds"`
+	Value      string      `bson:"value" json:"value"`
+	Text       string      `bson:"text" json:"text"`
+	TimeRanges []TimeRange `bson:"timeRange" json:"timeRange"`
+	DeviceIds  []string    `bson:"deviceIds" json:"deviceIds"`
 }
