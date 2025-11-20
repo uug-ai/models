@@ -979,6 +979,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/cursorpagination": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CursorPagination (schema generation only)
+         * @description Internal endpoint used only to ensure CursorPagination schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CursorPagination"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/deleteaccesstokenerrorresponse": {
         parameters: {
             query?: never;
@@ -1291,6 +1330,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/devicefilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceFilter (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeviceFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/devicelocationmetadata": {
         parameters: {
             query?: never;
@@ -1357,6 +1435,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.DeviceMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deviceoption": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceOption (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceOption schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceOption"];
                     };
                 };
             };
@@ -2071,6 +2188,318 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getdeviceoptionserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceOptionsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceOptionsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceOptionsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdeviceoptionsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceOptionsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceOptionsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceOptionsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdeviceoptionsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceOptionsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceOptionsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceOptionsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdeviceoptionssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceOptionsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceOptionsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceOptionsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkeroptionserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerOptionsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerOptionsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerOptionsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkeroptionsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerOptionsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerOptionsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerOptionsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkeroptionsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerOptionsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerOptionsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerOptionsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkeroptionssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerOptionsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerOptionsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerOptionsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getmarkerserrorresponse": {
         parameters: {
             query?: never;
@@ -2371,6 +2800,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetMediaSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getsiteoptionserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetSiteOptionsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetSiteOptionsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetSiteOptionsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getsiteoptionsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetSiteOptionsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetSiteOptionsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetSiteOptionsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getsiteoptionsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetSiteOptionsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetSiteOptionsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetSiteOptionsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getsiteoptionssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetSiteOptionsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetSiteOptionsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetSiteOptionsSuccessResponse"];
                     };
                 };
             };
@@ -2773,6 +3358,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/markerfilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerFilter (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.MarkerFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/markermetadata": {
         parameters: {
             query?: never;
@@ -2812,7 +3436,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/markeroptions": {
+    "/internal/markeroption": {
         parameters: {
             query?: never;
             header?: never;
@@ -2820,8 +3444,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get MarkerOptions (schema generation only)
-         * @description Internal endpoint used only to ensure MarkerOptions schema is generated in OpenAPI spec
+         * Get MarkerOption (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerOption schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -2838,7 +3462,46 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.MarkerOptions"];
+                        "application/json": components["schemas"]["models.MarkerOption"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/media2filter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Media2Filter (schema generation only)
+         * @description Internal endpoint used only to ensure Media2Filter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.Media2Filter"];
                     };
                 };
             };
@@ -3709,6 +4372,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/sitefilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SiteFilter (schema generation only)
+         * @description Internal endpoint used only to ensure SiteFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SiteFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/sitemetadata": {
         parameters: {
             query?: never;
@@ -3736,6 +4438,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.SiteMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/siteoption": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SiteOption (schema generation only)
+         * @description Internal endpoint used only to ensure SiteOption schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.SiteOption"];
                     };
                 };
             };
@@ -4243,6 +4984,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Thumby"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/timerange": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TimeRange (schema generation only)
+         * @description Internal endpoint used only to ensure TimeRange schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.TimeRange"];
                     };
                 };
             };
@@ -4895,6 +5675,19 @@ export interface components {
         };
         /** @enum {string} */
         "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_file_name_missing" | "analysis_signed_url_missing" | "analysis_all_frame_coordinates_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing";
+        "api.CursorPagination": {
+            /** @description Request fields (sent by client) */
+            cursor?: string;
+            hasMore?: boolean;
+            limit?: number;
+            /** @description Response fields (returned by server) */
+            nextCursor?: string;
+            /** @description Optional numbered pagination support */
+            page?: number;
+            pageSize?: number;
+            prevCursor?: string;
+            total?: number;
+        };
         "api.DeleteAccessTokenErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -4921,6 +5714,11 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeviceFilter": {
+            deviceIds?: string[];
+            name?: string;
+            sites?: string[];
         };
         "api.ErrorResponse": {
             /** @description Application-specific error code */
@@ -5001,6 +5799,70 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetDeviceOptionsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetDeviceOptionsRequest": {
+            filter?: components["schemas"]["api.DeviceFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetDeviceOptionsResponse": {
+            devices?: components["schemas"]["models.DeviceOption"][];
+        };
+        "api.GetDeviceOptionsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetDeviceOptionsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetMarkerOptionsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetMarkerOptionsRequest": {
+            filter?: components["schemas"]["api.MarkerFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetMarkerOptionsResponse": {
+            markers?: components["schemas"]["models.MarkerOption"][];
+        };
+        "api.GetMarkerOptionsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetMarkerOptionsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetMarkersErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -5043,7 +5905,8 @@ export interface components {
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetMediaRequest": {
-            filter?: components["schemas"]["api.MediaFilter"];
+            filter?: components["schemas"]["api.Media2Filter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
         };
         "api.GetMediaResponse": {
             media?: components["schemas"]["models.Media"][];
@@ -5052,6 +5915,38 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetMediaResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetSiteOptionsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetSiteOptionsRequest": {
+            filter?: components["schemas"]["api.SiteFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetSiteOptionsResponse": {
+            sites?: components["schemas"]["models.SiteOption"][];
+        };
+        "api.GetSiteOptionsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetSiteOptionsResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -5093,9 +5988,19 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.MarkerOptions": {
+        "api.MarkerFilter": {
             names?: string[];
             types?: string[];
+        };
+        "api.Media2Filter": {
+            devices?: string[];
+            events?: string[];
+            markers?: string[];
+            regions?: string[];
+            sites?: string[];
+            sortBy?: string;
+            starred?: boolean;
+            timeRanges?: components["schemas"]["api.TimeRange"][];
         };
         "api.MediaFilter": {
             classifications?: string[];
@@ -5136,6 +6041,8 @@ export interface components {
             missingFields?: string[];
             /** @description Organisation ID for the request */
             organisationId?: string;
+            /** @description Additional data relevant to the request or response, this can be free-format */
+            pagination?: components["schemas"]["api.CursorPagination"];
             /** @description Path of the request */
             path?: string;
             /** @description Timestamp of the request or response */
@@ -5182,6 +6089,10 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.SiteFilter": {
+            name?: string;
+            siteIds?: string[];
         };
         "api.SubmitFaceRedactionErrorResponse": {
             /** @description Application-specific error code */
@@ -5233,6 +6144,10 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.TimeRange": {
+            end?: number;
+            start?: number;
         };
         "api.UpdateAccessTokenErrorResponse": {
             /** @description Application-specific error code */
@@ -5543,6 +6458,10 @@ export interface components {
             /** @description Mute status, e.g. false for unmuted, true for muted */
             mute?: boolean;
         };
+        "models.DeviceOption": {
+            text?: string;
+            value?: string;
+        };
         "models.DevicePlacement": {
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
@@ -5770,6 +6689,10 @@ export interface components {
              */
             tags?: string[];
         };
+        "models.MarkerOption": {
+            text?: string;
+            value?: string;
+        };
         "models.Media": {
             /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
              *     more verbose information about the device's current state, capabilities, or configuration.
@@ -5988,6 +6911,12 @@ export interface components {
             initials?: string;
             location?: components["schemas"]["models.Location"];
             numberOfFloorPlans?: number;
+        };
+        "models.SiteOption": {
+            devices?: string[];
+            groups?: string[];
+            text?: string;
+            value?: string;
         };
         "models.Sprite": {
             filename?: string;
@@ -6216,6 +7145,7 @@ export namespace models {
     export type DeviceFeaturePermissions = components['schemas']['models.DeviceFeaturePermissions'];
     export type DeviceLocationMetadata = components['schemas']['models.DeviceLocationMetadata'];
     export type DeviceMetadata = components['schemas']['models.DeviceMetadata'];
+    export type DeviceOption = components['schemas']['models.DeviceOption'];
     export type DevicePlacement = components['schemas']['models.DevicePlacement'];
     export type DominantColor = components['schemas']['models.DominantColor'];
     export type EventStage = components['schemas']['models.EventStage'];
@@ -6231,6 +7161,7 @@ export namespace models {
     export type Marker = components['schemas']['models.Marker'];
     export type MarkerEvent = components['schemas']['models.MarkerEvent'];
     export type MarkerMetadata = components['schemas']['models.MarkerMetadata'];
+    export type MarkerOption = components['schemas']['models.MarkerOption'];
     export type Media = components['schemas']['models.Media'];
     export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
@@ -6247,6 +7178,7 @@ export namespace models {
     export type SequenceStage = components['schemas']['models.SequenceStage'];
     export type Site = components['schemas']['models.Site'];
     export type SiteMetadata = components['schemas']['models.SiteMetadata'];
+    export type SiteOption = components['schemas']['models.SiteOption'];
     export type Sprite = components['schemas']['models.Sprite'];
     export type Storage = components['schemas']['models.Storage'];
     export type Subscription = components['schemas']['models.Subscription'];
@@ -6274,8 +7206,10 @@ export namespace api {
     export type AddMarkerRequest = components['schemas']['api.AddMarkerRequest'];
     export type AddMarkerResponse = components['schemas']['api.AddMarkerResponse'];
     export type AddMarkerSuccessResponse = components['schemas']['api.AddMarkerSuccessResponse'];
+    export type CursorPagination = components['schemas']['api.CursorPagination'];
     export type DeleteAccessTokenErrorResponse = components['schemas']['api.DeleteAccessTokenErrorResponse'];
     export type DeleteAccessTokenSuccessResponse = components['schemas']['api.DeleteAccessTokenSuccessResponse'];
+    export type DeviceFilter = components['schemas']['api.DeviceFilter'];
     export type ErrorResponse = components['schemas']['api.ErrorResponse'];
     export type FaceRedactionMessage = components['schemas']['api.FaceRedactionMessage'];
     export type GetAccessTokensErrorResponse = components['schemas']['api.GetAccessTokensErrorResponse'];
@@ -6285,6 +7219,14 @@ export namespace api {
     export type GetAnalysisRequest = components['schemas']['api.GetAnalysisRequest'];
     export type GetAnalysisResponse = components['schemas']['api.GetAnalysisResponse'];
     export type GetAnalysisSuccessResponse = components['schemas']['api.GetAnalysisSuccessResponse'];
+    export type GetDeviceOptionsErrorResponse = components['schemas']['api.GetDeviceOptionsErrorResponse'];
+    export type GetDeviceOptionsRequest = components['schemas']['api.GetDeviceOptionsRequest'];
+    export type GetDeviceOptionsResponse = components['schemas']['api.GetDeviceOptionsResponse'];
+    export type GetDeviceOptionsSuccessResponse = components['schemas']['api.GetDeviceOptionsSuccessResponse'];
+    export type GetMarkerOptionsErrorResponse = components['schemas']['api.GetMarkerOptionsErrorResponse'];
+    export type GetMarkerOptionsRequest = components['schemas']['api.GetMarkerOptionsRequest'];
+    export type GetMarkerOptionsResponse = components['schemas']['api.GetMarkerOptionsResponse'];
+    export type GetMarkerOptionsSuccessResponse = components['schemas']['api.GetMarkerOptionsSuccessResponse'];
     export type GetMarkersErrorResponse = components['schemas']['api.GetMarkersErrorResponse'];
     export type GetMarkersResponse = components['schemas']['api.GetMarkersResponse'];
     export type GetMarkersSuccessResponse = components['schemas']['api.GetMarkersSuccessResponse'];
@@ -6292,11 +7234,16 @@ export namespace api {
     export type GetMediaRequest = components['schemas']['api.GetMediaRequest'];
     export type GetMediaResponse = components['schemas']['api.GetMediaResponse'];
     export type GetMediaSuccessResponse = components['schemas']['api.GetMediaSuccessResponse'];
+    export type GetSiteOptionsErrorResponse = components['schemas']['api.GetSiteOptionsErrorResponse'];
+    export type GetSiteOptionsRequest = components['schemas']['api.GetSiteOptionsRequest'];
+    export type GetSiteOptionsResponse = components['schemas']['api.GetSiteOptionsResponse'];
+    export type GetSiteOptionsSuccessResponse = components['schemas']['api.GetSiteOptionsSuccessResponse'];
     export type GetTimelineErrorResponse = components['schemas']['api.GetTimelineErrorResponse'];
     export type GetTimelineRequest = components['schemas']['api.GetTimelineRequest'];
     export type GetTimelineResponse = components['schemas']['api.GetTimelineResponse'];
     export type GetTimelineSuccessResponse = components['schemas']['api.GetTimelineSuccessResponse'];
-    export type MarkerOptions = components['schemas']['api.MarkerOptions'];
+    export type MarkerFilter = components['schemas']['api.MarkerFilter'];
+    export type Media2Filter = components['schemas']['api.Media2Filter'];
     export type MediaFilter = components['schemas']['api.MediaFilter'];
     export type MediaGroup = components['schemas']['api.MediaGroup'];
     export type Metadata = components['schemas']['api.Metadata'];
@@ -6305,11 +7252,13 @@ export namespace api {
     export type SaveFaceRedactionRequest = components['schemas']['api.SaveFaceRedactionRequest'];
     export type SaveFaceRedactionResponse = components['schemas']['api.SaveFaceRedactionResponse'];
     export type SaveFaceRedactionSuccessResponse = components['schemas']['api.SaveFaceRedactionSuccessResponse'];
+    export type SiteFilter = components['schemas']['api.SiteFilter'];
     export type SubmitFaceRedactionErrorResponse = components['schemas']['api.SubmitFaceRedactionErrorResponse'];
     export type SubmitFaceRedactionRequest = components['schemas']['api.SubmitFaceRedactionRequest'];
     export type SubmitFaceRedactionResponse = components['schemas']['api.SubmitFaceRedactionResponse'];
     export type SubmitFaceRedactionSuccessResponse = components['schemas']['api.SubmitFaceRedactionSuccessResponse'];
     export type SuccessResponse = components['schemas']['api.SuccessResponse'];
+    export type TimeRange = components['schemas']['api.TimeRange'];
     export type UpdateAccessTokenErrorResponse = components['schemas']['api.UpdateAccessTokenErrorResponse'];
     export type UpdateAccessTokenRequest = components['schemas']['api.UpdateAccessTokenRequest'];
     export type UpdateAccessTokenResponse = components['schemas']['api.UpdateAccessTokenResponse'];

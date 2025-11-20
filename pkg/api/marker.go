@@ -6,17 +6,19 @@ import "github.com/uug-ai/models/pkg/models"
 type MarkerStatus string
 
 const (
-	MarkerBindingFailed MarkerStatus = "marker_binding_failed"
-	MarkerDuplicateName MarkerStatus = "marker_duplicate_name"
-	MarkerMissingInfo   MarkerStatus = "marker_missing_info"
-	MarkerFound         MarkerStatus = "marker_found"
-	MarkerNotFound      MarkerStatus = "marker_not_found"
-	MarkerAddSuccess    MarkerStatus = "marker_add_success"
-	MarkerAddFailed     MarkerStatus = "marker_add_failed"
-	MarkerUpdateSuccess MarkerStatus = "marker_update_success"
-	MarkerUpdateFailed  MarkerStatus = "marker_update_failed"
-	MarkerDeleteSuccess MarkerStatus = "marker_delete_success"
-	MarkerDeleteFailed  MarkerStatus = "marker_delete_failed"
+	MarkerBindingFailed    MarkerStatus = "marker_binding_failed"
+	MarkerDuplicateName    MarkerStatus = "marker_duplicate_name"
+	MarkerMissingInfo      MarkerStatus = "marker_missing_info"
+	MarkerFound            MarkerStatus = "marker_found"
+	MarkerNotFound         MarkerStatus = "marker_not_found"
+	MarkerAddSuccess       MarkerStatus = "marker_add_success"
+	MarkerAddFailed        MarkerStatus = "marker_add_failed"
+	MarkerUpdateSuccess    MarkerStatus = "marker_update_success"
+	MarkerUpdateFailed     MarkerStatus = "marker_update_failed"
+	MarkerDeleteSuccess    MarkerStatus = "marker_delete_success"
+	MarkerDeleteFailed     MarkerStatus = "marker_delete_failed"
+	MarkerRetrievalSuccess MarkerStatus = "marker_retrieval_success"
+	MarkerRetrievalFailed  MarkerStatus = "marker_retrieval_failed"
 )
 
 // String returns the string representation of the marker status
@@ -28,43 +30,49 @@ func (ms MarkerStatus) String() string {
 func (ms MarkerStatus) Translate(lang string) string {
 	translations := map[string]map[MarkerStatus]string{
 		"en": {
-			MarkerBindingFailed: "Marker binding failed",
-			MarkerDuplicateName: "Marker duplicate name",
-			MarkerMissingInfo:   "Marker missing information",
-			MarkerFound:         "Marker found",
-			MarkerNotFound:      "Marker not found",
-			MarkerAddSuccess:    "Marker added successfully",
-			MarkerAddFailed:     "Marker failed to add",
-			MarkerUpdateSuccess: "Marker updated successfully",
-			MarkerUpdateFailed:  "Marker failed to update",
-			MarkerDeleteSuccess: "Marker deleted successfully",
-			MarkerDeleteFailed:  "Marker failed to delete",
+			MarkerBindingFailed:    "Marker binding failed",
+			MarkerDuplicateName:    "Marker duplicate name",
+			MarkerMissingInfo:      "Marker missing information",
+			MarkerFound:            "Marker found",
+			MarkerNotFound:         "Marker not found",
+			MarkerAddSuccess:       "Marker added successfully",
+			MarkerAddFailed:        "Marker failed to add",
+			MarkerUpdateSuccess:    "Marker updated successfully",
+			MarkerUpdateFailed:     "Marker failed to update",
+			MarkerDeleteSuccess:    "Marker deleted successfully",
+			MarkerDeleteFailed:     "Marker failed to delete",
+			MarkerRetrievalSuccess: "Marker retrieved successfully",
+			MarkerRetrievalFailed:  "Marker retrieval failed",
 		},
 		"es": {
-			MarkerBindingFailed: "Error al vincular el marcador",
-			MarkerDuplicateName: "Nombre de marcador duplicado",
-			MarkerMissingInfo:   "Información del marcador faltante",
-			MarkerFound:         "Marcador encontrado",
-			MarkerNotFound:      "Marcador no encontrado",
-			MarkerAddSuccess:    "Marcador agregado con éxito",
-			MarkerAddFailed:     "Error al agregar el marcador",
-			MarkerUpdateSuccess: "Marcador actualizado con éxito",
-			MarkerUpdateFailed:  "Error al actualizar el marcador",
-			MarkerDeleteSuccess: "Marcador eliminado con éxito",
-			MarkerDeleteFailed:  "Error al eliminar el marcador",
+			MarkerBindingFailed:    "Error al vincular el marcador",
+			MarkerDuplicateName:    "Nombre de marcador duplicado",
+			MarkerMissingInfo:      "Información del marcador faltante",
+			MarkerFound:            "Marcador encontrado",
+			MarkerNotFound:         "Marcador no encontrado",
+			MarkerAddSuccess:       "Marcador agregado con éxito",
+			MarkerAddFailed:        "Error al agregar el marcador",
+			MarkerUpdateSuccess:    "Marcador actualizado con éxito",
+			MarkerUpdateFailed:     "Error al actualizar el marcador",
+			MarkerDeleteSuccess:    "Marcador eliminado con éxito",
+			MarkerDeleteFailed:     "Error al eliminar el marcador",
+			MarkerRetrievalSuccess: "Marcador recuperado con éxito",
+			MarkerRetrievalFailed:  "Error al recuperar el marcador",
 		},
 		"fr": {
-			MarkerBindingFailed: "Échec de la liaison du marqueur",
-			MarkerDuplicateName: "Nom de marqueur dupliqué",
-			MarkerMissingInfo:   "Informations manquantes sur le marqueur",
-			MarkerFound:         "Marqueur trouvé",
-			MarkerNotFound:      "Marqueur non trouvé",
-			MarkerAddSuccess:    "Marqueur ajouté avec succès",
-			MarkerAddFailed:     "Échec de l'ajout du marqueur",
-			MarkerUpdateSuccess: "Marqueur mis à jour avec succès",
-			MarkerUpdateFailed:  "Échec de la mise à jour du marqueur",
-			MarkerDeleteSuccess: "Marqueur supprimé avec succès",
-			MarkerDeleteFailed:  "Échec de la suppression du marqueur",
+			MarkerBindingFailed:    "Échec de la liaison du marqueur",
+			MarkerDuplicateName:    "Nom de marqueur dupliqué",
+			MarkerMissingInfo:      "Informations manquantes sur le marqueur",
+			MarkerFound:            "Marqueur trouvé",
+			MarkerNotFound:         "Marqueur non trouvé",
+			MarkerAddSuccess:       "Marqueur ajouté avec succès",
+			MarkerAddFailed:        "Échec de l'ajout du marqueur",
+			MarkerUpdateSuccess:    "Marqueur mis à jour avec succès",
+			MarkerUpdateFailed:     "Échec de la mise à jour du marqueur",
+			MarkerDeleteSuccess:    "Marqueur supprimé avec succès",
+			MarkerDeleteFailed:     "Échec de la suppression du marqueur",
+			MarkerRetrievalSuccess: "Marqueur récupéré avec succès",
+			MarkerRetrievalFailed:  "Échec de la récupération du marqueur",
 		},
 	}
 
@@ -83,6 +91,19 @@ func (ms MarkerStatus) Translate(lang string) string {
 
 	// Fallback to the string representation
 	return ms.String()
+}
+
+type MarkerFilter struct {
+	MarkerIds []string
+	Names     []string
+	Name      string
+	Types     []string
+}
+
+type MarkerEventFilter struct {
+	MarkerEventIds []string
+	Names          []string
+	Name           string
 }
 
 // GetMarkers
@@ -116,7 +137,36 @@ type AddMarkerErrorResponse struct {
 	ErrorResponse
 }
 
-type MarkerOptions struct {
-	Names []string
-	Types []string
+// GetMarkerOptions
+// @Router /markers/options [post]
+type GetMarkerOptionsRequest struct {
+	Filter     MarkerFilter     `json:"filter"`
+	Pagination CursorPagination `json:"pagination"`
+}
+type GetMarkerOptionsResponse struct {
+	Markers []models.MarkerOption `json:"markers"`
+}
+type GetMarkerOptionsSuccessResponse struct {
+	SuccessResponse
+	Data GetMarkerOptionsResponse `json:"data"`
+}
+type GetMarkerOptionsErrorResponse struct {
+	ErrorResponse
+}
+
+// GetMarkerEventOptions
+// @Router /markers/events/options [post]
+type GetMarkerEventOptionsRequest struct {
+	Filter     MarkerEventFilter `json:"filter"`
+	Pagination CursorPagination  `json:"pagination"`
+}
+type GetMarkerEventOptionsResponse struct {
+	MarkerEvents []models.MarkerEventOption `json:"markerEvents"`
+}
+type GetMarkerEventOptionsSuccessResponse struct {
+	SuccessResponse
+	Data GetMarkerEventOptionsResponse `json:"data"`
+}
+type GetMarkerEventOptionsErrorResponse struct {
+	ErrorResponse
 }

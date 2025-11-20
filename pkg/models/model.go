@@ -40,3 +40,8 @@ type Model struct {
 	// This is important for maintaining data integrity and accountability.
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
 }
+
+type ModelOption struct {
+	Value string `bson:"value" json:"value"`
+	Text  string `bson:"text" json:"text"`
+}
