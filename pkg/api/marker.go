@@ -161,7 +161,7 @@ type GetMarkerEventOptionsRequest struct {
 	Pagination CursorPagination  `json:"pagination"`
 }
 type GetMarkerEventOptionsResponse struct {
-	MarkerEvents []models.MarkerEventOption `json:"markerEvents"`
+	MarkerEvents []models.MarkerEventTypeOption `json:"markerEvents"`
 }
 type GetMarkerEventOptionsSuccessResponse struct {
 	SuccessResponse

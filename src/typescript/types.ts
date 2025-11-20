@@ -2344,6 +2344,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getmarkereventoptionserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerEventOptionsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerEventOptionsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerEventOptionsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkereventoptionsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerEventOptionsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerEventOptionsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerEventOptionsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkereventoptionsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerEventOptionsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerEventOptionsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerEventOptionsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkereventoptionssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerEventOptionsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerEventOptionsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerEventOptionsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getmarkeroptionserrorresponse": {
         parameters: {
             query?: never;
@@ -3358,6 +3514,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/markereventfilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerEventFilter (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerEventFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.MarkerEventFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/markereventtype": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerEventType (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerEventType schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MarkerEventType"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/markereventtypeoption": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerEventTypeOption (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerEventTypeOption schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MarkerEventTypeOption"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/markerfilter": {
         parameters: {
             query?: never;
@@ -3736,6 +4009,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Model"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/modeloption": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ModelOption (schema generation only)
+         * @description Internal endpoint used only to ensure ModelOption schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ModelOption"];
                     };
                 };
             };
@@ -5831,6 +6143,38 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetMarkerEventOptionsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetMarkerEventOptionsRequest": {
+            filter?: components["schemas"]["api.MarkerEventFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetMarkerEventOptionsResponse": {
+            markerEvents?: components["schemas"]["models.MarkerEventTypeOption"][];
+        };
+        "api.GetMarkerEventOptionsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetMarkerEventOptionsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetMarkerOptionsErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -5988,7 +6332,14 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.MarkerEventFilter": {
+            markerEventIds?: string[];
+            name?: string;
+            names?: string[];
+        };
         "api.MarkerFilter": {
+            markerIds?: string[];
+            name?: string;
             names?: string[];
             types?: string[];
         };
@@ -6645,11 +6996,6 @@ export interface components {
             startTimestamp?: number;
             /** @description Synchronize */
             synchronize?: components["schemas"]["models.Synchronize"];
-            /**
-             * @description Type of the marker e.g., "alert", "event", "door_opened", "person", etc.
-             * @example door-forced
-             */
-            type?: string;
         };
         "models.MarkerEvent": {
             /**
@@ -6657,6 +7003,11 @@ export interface components {
              * @example Motion detected in the lobby area
              */
             description?: string;
+            /**
+             * @description Unique identifier for the event, generated automatically
+             * @example 507f1f77bcf86cd799439012
+             */
+            id?: string;
             /**
              * @description Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
              * @example Motion Detected
@@ -6675,6 +7026,24 @@ export interface components {
              * @example 1752482070
              */
             timestamp?: number;
+            /** @description Type of the event, linked to MarkerEventType */
+            type?: components["schemas"]["models.MarkerEventType"];
+        };
+        "models.MarkerEventType": {
+            /**
+             * @description Unique identifier for the event type, generated automatically
+             * @example 507f1f77bcf86cd799439013
+             */
+            id?: string;
+            /**
+             * @description Name of the event type e.g., "Motion Detected", "Sound Detected", etc.
+             * @example Motion Detected
+             */
+            name?: string;
+        };
+        "models.MarkerEventTypeOption": {
+            text?: string;
+            value?: string;
         };
         "models.MarkerMetadata": {
             /** @description Additional comments or description of the marker */
@@ -6690,7 +7059,9 @@ export interface components {
             tags?: string[];
         };
         "models.MarkerOption": {
+            deviceIds?: string[];
             text?: string;
+            timeRange?: components["schemas"]["api.TimeRange"][];
             value?: string;
         };
         "models.Media": {
@@ -6776,6 +7147,10 @@ export interface components {
              *     Media model -> tags, description, etc.
              *     Marker model -> comments, tags, etc. */
             metadata?: components["schemas"]["models.MediaMetadata"];
+        };
+        "models.ModelOption": {
+            text?: string;
+            value?: string;
         };
         "models.MonitorStage": {
             activity?: components["schemas"]["models.Activity"];
@@ -7160,12 +7535,15 @@ export namespace models {
     export type Location = components['schemas']['models.Location'];
     export type Marker = components['schemas']['models.Marker'];
     export type MarkerEvent = components['schemas']['models.MarkerEvent'];
+    export type MarkerEventType = components['schemas']['models.MarkerEventType'];
+    export type MarkerEventTypeOption = components['schemas']['models.MarkerEventTypeOption'];
     export type MarkerMetadata = components['schemas']['models.MarkerMetadata'];
     export type MarkerOption = components['schemas']['models.MarkerOption'];
     export type Media = components['schemas']['models.Media'];
     export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
     export type Model = components['schemas']['models.Model'];
+    export type ModelOption = components['schemas']['models.ModelOption'];
     export type MonitorStage = components['schemas']['models.MonitorStage'];
     export type NotificationStage = components['schemas']['models.NotificationStage'];
     export type PipelineEvent = components['schemas']['models.PipelineEvent'];
@@ -7223,6 +7601,10 @@ export namespace api {
     export type GetDeviceOptionsRequest = components['schemas']['api.GetDeviceOptionsRequest'];
     export type GetDeviceOptionsResponse = components['schemas']['api.GetDeviceOptionsResponse'];
     export type GetDeviceOptionsSuccessResponse = components['schemas']['api.GetDeviceOptionsSuccessResponse'];
+    export type GetMarkerEventOptionsErrorResponse = components['schemas']['api.GetMarkerEventOptionsErrorResponse'];
+    export type GetMarkerEventOptionsRequest = components['schemas']['api.GetMarkerEventOptionsRequest'];
+    export type GetMarkerEventOptionsResponse = components['schemas']['api.GetMarkerEventOptionsResponse'];
+    export type GetMarkerEventOptionsSuccessResponse = components['schemas']['api.GetMarkerEventOptionsSuccessResponse'];
     export type GetMarkerOptionsErrorResponse = components['schemas']['api.GetMarkerOptionsErrorResponse'];
     export type GetMarkerOptionsRequest = components['schemas']['api.GetMarkerOptionsRequest'];
     export type GetMarkerOptionsResponse = components['schemas']['api.GetMarkerOptionsResponse'];
@@ -7242,6 +7624,7 @@ export namespace api {
     export type GetTimelineRequest = components['schemas']['api.GetTimelineRequest'];
     export type GetTimelineResponse = components['schemas']['api.GetTimelineResponse'];
     export type GetTimelineSuccessResponse = components['schemas']['api.GetTimelineSuccessResponse'];
+    export type MarkerEventFilter = components['schemas']['api.MarkerEventFilter'];
     export type MarkerFilter = components['schemas']['api.MarkerFilter'];
     export type Media2Filter = components['schemas']['api.Media2Filter'];
     export type MediaFilter = components['schemas']['api.MediaFilter'];

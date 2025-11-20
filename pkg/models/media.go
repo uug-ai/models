@@ -147,3 +147,8 @@ type VaultMediaFragmentCollection struct {
 	BytesRanges      string                       `json:"bytes_ranges" bson:"bytes_ranges"`
 	BytesRangeOnTime []FragmentedBytesRangeOnTime `json:"bytes_range_on_time" bson:"bytes_range_on_time"`
 }
+
+type TimeRange struct {
+	Start int64 `json:"start,omitempty" bson:"start,omitempty"`
+	End   int64 `json:"end,omitempty" bson:"end,omitempty"`
+}
