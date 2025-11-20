@@ -140,8 +140,8 @@ type AddMarkerErrorResponse struct {
 // GetMarkerOptions
 // @Router /markers/options [post]
 type GetMarkerOptionsRequest struct {
-	Filter     MarkerFilter     `json:"filter"`
-	Pagination CursorPagination `json:"pagination"`
+	Filter     *MarkerFilter     `json:"filter"`
+	Pagination *CursorPagination `json:"pagination"`
 }
 type GetMarkerOptionsResponse struct {
 	Markers []models.MarkerOption `json:"markers"`
@@ -157,8 +157,8 @@ type GetMarkerOptionsErrorResponse struct {
 // GetMarkerEventOptions
 // @Router /markers/events/options [post]
 type GetMarkerEventOptionsRequest struct {
-	Filter     MarkerEventFilter `json:"filter"`
-	Pagination CursorPagination  `json:"pagination"`
+	Filter     *MarkerEventFilter `json:"filter"`
+	Pagination *CursorPagination  `json:"pagination"`
 }
 type GetMarkerEventOptionsResponse struct {
 	MarkerEvents []models.MarkerEventTypeOption `json:"markerEvents"`

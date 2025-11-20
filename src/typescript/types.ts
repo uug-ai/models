@@ -5334,7 +5334,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.TimeRange"];
+                        "application/json": components["schemas"]["models.TimeRange"];
                     };
                 };
             };
@@ -6351,7 +6351,7 @@ export interface components {
             sites?: string[];
             sortBy?: string;
             starred?: boolean;
-            timeRanges?: components["schemas"]["api.TimeRange"][];
+            timeRanges?: components["schemas"]["models.TimeRange"][];
         };
         "api.MediaFilter": {
             classifications?: string[];
@@ -6495,10 +6495,6 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
-        };
-        "api.TimeRange": {
-            end?: number;
-            start?: number;
         };
         "api.UpdateAccessTokenErrorResponse": {
             /** @description Application-specific error code */
@@ -7061,7 +7057,7 @@ export interface components {
         "models.MarkerOption": {
             deviceIds?: string[];
             text?: string;
-            timeRange?: components["schemas"]["api.TimeRange"][];
+            timeRange?: components["schemas"]["models.TimeRange"][];
             value?: string;
         };
         "models.Media": {
@@ -7350,6 +7346,10 @@ export interface components {
             interval?: number;
             provider?: string;
         };
+        "models.TimeRange": {
+            end?: number;
+            start?: number;
+        };
         "models.TimeWindow": {
             timeRange1MaxFriday?: number;
             timeRange1MaxMonday?: number;
@@ -7565,6 +7565,7 @@ export namespace models {
     export type ThrottlerStage = components['schemas']['models.ThrottlerStage'];
     export type Thumbnail = components['schemas']['models.Thumbnail'];
     export type Thumby = components['schemas']['models.Thumby'];
+    export type TimeRange = components['schemas']['models.TimeRange'];
     export type TimeWindow = components['schemas']['models.TimeWindow'];
     export type Tour = components['schemas']['models.Tour'];
     export type TrackBox = components['schemas']['models.TrackBox'];
@@ -7641,7 +7642,6 @@ export namespace api {
     export type SubmitFaceRedactionResponse = components['schemas']['api.SubmitFaceRedactionResponse'];
     export type SubmitFaceRedactionSuccessResponse = components['schemas']['api.SubmitFaceRedactionSuccessResponse'];
     export type SuccessResponse = components['schemas']['api.SuccessResponse'];
-    export type TimeRange = components['schemas']['api.TimeRange'];
     export type UpdateAccessTokenErrorResponse = components['schemas']['api.UpdateAccessTokenErrorResponse'];
     export type UpdateAccessTokenRequest = components['schemas']['api.UpdateAccessTokenRequest'];
     export type UpdateAccessTokenResponse = components['schemas']['api.UpdateAccessTokenResponse'];
