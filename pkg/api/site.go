@@ -64,8 +64,8 @@ func (ds SiteStatus) Translate(lang string) string {
 }
 
 type SiteFilter struct {
-	SiteIds []string `json:"siteIds,omitempty" bson:"siteIds,omitempty"`
-	Name    string   `json:"name,omitempty" bson:"name,omitempty"`
+	SiteIds []*string `json:"siteIds,omitempty" bson:"siteIds,omitempty"`
+	Name    *string   `json:"name,omitempty" bson:"name,omitempty"`
 }
 
 type GetSiteOptionsRequest struct {

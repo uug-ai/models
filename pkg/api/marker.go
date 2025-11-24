@@ -94,16 +94,16 @@ func (ms MarkerStatus) Translate(lang string) string {
 }
 
 type MarkerFilter struct {
-	MarkerIds []string
-	Names     []string
-	Name      string
-	Types     []string
+	MarkerIds []*string
+	Names     []*string
+	Name      *string
+	Types     []*string
 }
 
 type MarkerEventFilter struct {
-	MarkerEventIds []string
-	Names          []string
-	Name           string
+	MarkerEventIds []*string
+	Names          []*string
+	Name           *string
 }
 
 // GetMarkers
@@ -161,7 +161,7 @@ type GetMarkerEventOptionsRequest struct {
 	Pagination *CursorPagination  `json:"pagination"`
 }
 type GetMarkerEventOptionsResponse struct {
-	MarkerEvents []models.MarkerEventTypeOption `json:"markerEvents"`
+	MarkerEvents []models.MarkerEventOption `json:"markerEvents"`
 }
 type GetMarkerEventOptionsSuccessResponse struct {
 	SuccessResponse
