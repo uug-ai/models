@@ -23,11 +23,10 @@ type Marker struct {
 	EndTimestamp   int64 `json:"endTimestamp" bson:"endTimestamp" example:"1752482079" required:"true"`     // End timestamp of the marker in seconds since epoch
 	Duration       int64 `json:"duration" bson:"duration" example:"11" required:"true"`                     // Duration of the marker in seconds
 
-	Name string `json:"name" bson:"name" example:"2-HCP-007" required:"true"`           // Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
-	Tag  string `json:"tag,omitempty" bson:"tag,omitempty" example:"entrance-camera-1"` // Tag associated with the marker for categorization e.g., "entrance-camera-1", "lobby-area", etc.
-
-	Events      []MarkerEvent `json:"events,omitempty" bson:"events,omitempty"`                                                   // Events associated with the marker, such as motion detected, sound detected, etc.
-	Description string        `json:"description,omitempty" bson:"description,omitempty" example:"Person forcably opened a door"` // Description of the marker
+	Name        string        `json:"name" bson:"name" example:"2-HCP-007" required:"true"`                                        // Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
+	Events      []MarkerEvent `json:"events,omitempty" bson:"events,omitempty"`                                                    // Events associated with the marker, such as motion detected, sound detected, etc.
+	Tags        []MarkerTag   `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"vehicle\",\"license plate\",\"security\"]"` // Tags associated with the marker for categorization
+	Description string        `json:"description,omitempty" bson:"description,omitempty" example:"Person forcably opened a door"`  // Description of the marker
 
 	// Additional metadata
 	Metadata *MarkerMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"` // Metadata associated with the marker, such as comments and tags
@@ -37,51 +36,73 @@ type Marker struct {
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"` // Audit information for tracking changes to the marker
-
-	Tags []string `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"vehicle\",\"license plate\",\"security\"]"` // Tags associated with the marker for categorization
 }
 
 type MarkerMetadata struct {
-	Comments *Comment `json:"comments,omitempty" bson:"comments,omitempty"`                                                // Additional comments or description of the marker
-	Tags     []string `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"vehicle\",\"license plate\",\"security\"]"` // Tags associated with the marker for categorization
+	Comments *Comment `json:"comments,omitempty" bson:"comments,omitempty"` // Additional comments or description of the marker
 }
 
-type MarkerEvent struct {
-	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty" example:"507f1f77bcf86cd799439012"`                                     // Unique identifier for the event, generated automatically
-	Timestamp   int64              `json:"timestamp" bson:"timestamp" example:"1752482070" required:"true"`                                // Timestamp of the event in seconds since epoch
-	Type        MarkerEventType    `json:"type" bson:"type" required:"true"`                                                               // Type of the event, linked to MarkerEventType
-	Name        string             `json:"name,omitempty" bson:"name,omitempty" example:"Motion Detected"`                                 // Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
-	Description string             `json:"description,omitempty" bson:"description,omitempty" example:"Motion detected in the lobby area"` // Description of the event
-	Tags        []string           `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"urgent\",\"review-needed\"]"`                  // Tags associated with the event for categorization
-}
-
-type MarkerEventType struct {
-	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty" example:"507f1f77bcf86cd799439013"`                                   // Unique identifier for the event type, generated automatically
-	Name        string             `json:"name" bson:"name" example:"Motion Detected" required:"true"`                                   // Name of the event type e.g., "Motion Detected", "Sound Detected", etc.
-	Description string             `json:"description,omitempty" bson:"description,omitempty" example:"Event type for motion detection"` // Description of the event type
-}
-
-type MarkerEventTypeOption struct {
-	Value      string            `bson:"value" json:"value"`
-	Text       string            `bson:"text" json:"text"`
-	TimeRanges []MarkerTimeRange `bson:"timeRange" json:"timeRange"`
-}
-
-type MarkerTagOptions struct {
-	Value      string            `bson:"value" json:"value"`
-	Text       string            `bson:"text" json:"text"`
-	TimeRanges []MarkerTimeRange `bson:"timeRange" json:"timeRange"`
-}
-
+/* Marker options */
 type MarkerOption struct {
-	Value      string            `bson:"value" json:"value"`
-	Text       string            `bson:"text" json:"text"`
-	TimeRanges []MarkerTimeRange `bson:"timeRange" json:"timeRange"`
+	Value     string `bson:"value" json:"value"`
+	Text      string `bson:"text" json:"text"`
+	CreatedAt int64  `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt int64  `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
 }
 
-type MarkerTimeRange struct {
-	Start    int64   `json:"start,omitempty" bson:"start,omitempty"`
-	End      int64   `json:"end,omitempty" bson:"end,omitempty"`
-	Name     *string `json:"name,omitempty" bson:"name,omitempty"`
-	DeviceId *string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
+type MarkerOptionTimeRange struct {
+	Value     string `bson:"value" json:"value"`
+	Text      string `bson:"text" json:"text"`
+	Start     int64  `json:"start,omitempty" bson:"start,omitempty"`
+	End       int64  `json:"end,omitempty" bson:"end,omitempty"`
+	DeviceId  string `bson:"deviceId" json:"deviceId"` // Tags associated with the event for categorization
+	CreatedAt int64  `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt int64  `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+}
+
+/* Marker Event */
+type MarkerEvent struct { // Unique identifier for the event, generated automatically
+	Timestamp   int64    `json:"timestamp" bson:"timestamp" example:"1752482070" required:"true"`                                // Timestamp of the event in seconds since epoch
+	Name        string   `json:"name,omitempty" bson:"name,omitempty" example:"Motion Detected"`                                 // Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
+	Description string   `json:"description,omitempty" bson:"description,omitempty" example:"Motion detected in the lobby area"` // Description of the event
+	Tags        []string `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"urgent\",\"review-needed\"]"`                  // Tags associated with the event for categorization
+}
+
+type MarkerEventOption struct {
+	Value     string `bson:"value" json:"value"`
+	Text      string `bson:"text" json:"text"`
+	CreatedAt int64  `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt int64  `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+}
+
+type MarkerEventTimeRange struct {
+	Value     string `bson:"value" json:"value"`
+	Text      string `bson:"text" json:"text"`
+	Start     int64  `json:"start,omitempty" bson:"start,omitempty"`
+	End       int64  `json:"end,omitempty" bson:"end,omitempty"`
+	DeviceId  string `bson:"deviceId" json:"deviceId"`
+	CreatedAt int64  `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt int64  `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+}
+
+/* Marker Tag */
+type MarkerTag struct {
+	Name string `json:"name,omitempty" bson:"name,omitempty" example:"Motion Detected"`
+}
+
+type MarkerTagOption struct {
+	Value     string `bson:"value" json:"value"`
+	Text      string `bson:"text" json:"text"`
+	CreatedAt int64  `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt int64  `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+}
+
+type MarkerTagTimeRange struct {
+	Value     string `bson:"value" json:"value"`
+	Text      string `bson:"text" json:"text"`
+	Start     int64  `json:"start,omitempty" bson:"start,omitempty"`
+	End       int64  `json:"end,omitempty" bson:"end,omitempty"`
+	DeviceId  string `bson:"deviceId" json:"deviceId"`
+	CreatedAt int64  `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt int64  `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
 }
