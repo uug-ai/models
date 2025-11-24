@@ -7,16 +7,11 @@ import (
 type Marker struct {
 	Id primitive.ObjectID `json:"id" bson:"_id" example:"507f1f77bcf86cd799439011" required:"true"` // Unique identifier for the marker, generated automatically§§§
 
-	// Media information
-	MediaIds []string `json:"mediaIds" bson:"mediaIds" example:"[\"img_20230918_001.jpg\", \"vid_20230918_002.mp4\"]" required:"true"` // MediaIds is used to link the marker to media items such as images or videos
-
-	// Device information
-	DeviceId string `json:"deviceId" bson:"deviceId" example:"686a906345c1df594939f9j25f4" required:"true"` // DeviceId is used to identify the device associated with the marker
-
 	// RBAC information
-	SiteId         string `json:"siteId,omitempty" bson:"siteId,omitempty" example:"686a906345c1df594pcsr3r45"`  // SiteId is used to identify the site where the marker is located
-	GroupId        string `json:"groupId,omitempty" bson:"groupId,omitempty" example:"686a906345c1df594pmt41w4"` // GroupId is used to identify the group of markers
-	OrganisationId string `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"`       // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+	DeviceId       string `json:"deviceId" bson:"deviceId" example:"686a906345c1df594939f9j25f4" required:"true"` // DeviceId is used to identify the device associated with the marker
+	SiteId         string `json:"siteId,omitempty" bson:"siteId,omitempty" example:"686a906345c1df594pcsr3r45"`   // SiteId is used to identify the site where the marker is located
+	GroupId        string `json:"groupId,omitempty" bson:"groupId,omitempty" example:"686a906345c1df594pmt41w4"`  // GroupId is used to identify the group of markers
+	OrganisationId string `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"`        // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
 
 	// Timing information (all timestamps are in seconds)
 	StartTimestamp int64 `json:"startTimestamp" bson:"startTimestamp" example:"1752482068" required:"true"` // Start timestamp of the marker in seconds since epoch
