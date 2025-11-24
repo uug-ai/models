@@ -26,6 +26,11 @@ type Marker struct {
 	// Additional metadata
 	Metadata *MarkerMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"` // Metadata associated with the marker, such as comments and tags
 
+	// AtRuntimeMetadata contains metadata that is generated at runtime, which can include
+	// more verbose information about the device's current state, capabilities, or configuration.
+	// for example the linked sites details, etc.
+	AtRuntimeMetadata *MarkerAtRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"atRuntimeMetadata,omitempty"`
+
 	// Synchronize
 	Synchronize *Synchronize `json:"synchronize,omitempty" bson:"synchronize,omitempty"` // Synchronization status with external systems
 
@@ -35,6 +40,9 @@ type Marker struct {
 
 type MarkerMetadata struct {
 	Comments *Comment `json:"comments,omitempty" bson:"comments,omitempty"` // Additional comments or description of the marker
+}
+
+type MarkerAtRuntimeMetadata struct {
 }
 
 /* Marker options */
