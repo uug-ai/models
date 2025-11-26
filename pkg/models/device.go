@@ -68,6 +68,7 @@ type Device struct {
 }
 
 type DeviceOption struct {
+	Id    string `bson:"id" json:"id"`
 	Value string `bson:"value" json:"value"`
 	Text  string `bson:"text" json:"text"`
 }

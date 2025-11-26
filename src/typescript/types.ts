@@ -2188,6 +2188,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getdeviceidsformarkerserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceIdsForMarkersErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceIdsForMarkersErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceIdsForMarkersErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdeviceidsformarkersrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceIdsForMarkersRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceIdsForMarkersRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceIdsForMarkersRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdeviceidsformarkersresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceIdsForMarkersResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceIdsForMarkersResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceIdsForMarkersResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdeviceidsformarkerssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceIdsForMarkersSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceIdsForMarkersSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceIdsForMarkersSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getdeviceoptionserrorresponse": {
         parameters: {
             query?: never;
@@ -6502,6 +6658,37 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetDeviceIdsForMarkersErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetDeviceIdsForMarkersRequest": {
+            markerIds?: string[];
+        };
+        "api.GetDeviceIdsForMarkersResponse": {
+            deviceIds?: string[];
+        };
+        "api.GetDeviceIdsForMarkersSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetDeviceIdsForMarkersResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetDeviceOptionsErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -7234,6 +7421,7 @@ export interface components {
             mute?: boolean;
         };
         "models.DeviceOption": {
+            id?: string;
             text?: string;
             value?: string;
         };
@@ -8111,6 +8299,10 @@ export namespace api {
     export type GetAnalysisRequest = components['schemas']['api.GetAnalysisRequest'];
     export type GetAnalysisResponse = components['schemas']['api.GetAnalysisResponse'];
     export type GetAnalysisSuccessResponse = components['schemas']['api.GetAnalysisSuccessResponse'];
+    export type GetDeviceIdsForMarkersErrorResponse = components['schemas']['api.GetDeviceIdsForMarkersErrorResponse'];
+    export type GetDeviceIdsForMarkersRequest = components['schemas']['api.GetDeviceIdsForMarkersRequest'];
+    export type GetDeviceIdsForMarkersResponse = components['schemas']['api.GetDeviceIdsForMarkersResponse'];
+    export type GetDeviceIdsForMarkersSuccessResponse = components['schemas']['api.GetDeviceIdsForMarkersSuccessResponse'];
     export type GetDeviceOptionsErrorResponse = components['schemas']['api.GetDeviceOptionsErrorResponse'];
     export type GetDeviceOptionsRequest = components['schemas']['api.GetDeviceOptionsRequest'];
     export type GetDeviceOptionsResponse = components['schemas']['api.GetDeviceOptionsResponse'];
