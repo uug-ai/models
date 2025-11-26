@@ -18,10 +18,10 @@ type Marker struct {
 	EndTimestamp   int64 `json:"endTimestamp" bson:"endTimestamp" example:"1752482079" required:"true"`     // End timestamp of the marker in seconds since epoch
 	Duration       int64 `json:"duration" bson:"duration" example:"11" required:"true"`                     // Duration of the marker in seconds
 
-	Name        string        `json:"name" bson:"name" example:"2-HCP-007" required:"true"`                                        // Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
-	Events      []MarkerEvent `json:"events,omitempty" bson:"events,omitempty"`                                                    // Events associated with the marker, such as motion detected, sound detected, etc.
-	Tags        []MarkerTag   `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"vehicle\",\"license plate\",\"security\"]"` // Tags associated with the marker for categorization
-	Description string        `json:"description,omitempty" bson:"description,omitempty" example:"Person forcably opened a door"`  // Description of the marker
+	Name        string        `json:"name" bson:"name" example:"2-HCP-007" required:"true"`                                       // Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
+	Events      []MarkerEvent `json:"events,omitempty" bson:"events,omitempty"`                                                   // Events associated with the marker, such as motion detected, sound detected, etc.
+	Tags        []MarkerTag   `json:"tags,omitempty" bson:"tags,omitempty"`                                                       // Tags associated with the marker for categorization
+	Description string        `json:"description,omitempty" bson:"description,omitempty" example:"Person forcably opened a door"` // Description of the marker
 
 	// Additional metadata
 	Metadata *MarkerMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"` // Metadata associated with the marker, such as comments and tags
@@ -43,6 +43,9 @@ type MarkerMetadata struct {
 }
 
 type MarkerAtRuntimeMetadata struct {
+	MarkerRanges []MarkerOptionTimeRange `json:"markerRanges,omitempty" bson:"markerRanges,omitempty"`
+	TagRanges    []MarkerTagTimeRange    `json:"tagRanges,omitempty" bson:"tagRanges,omitempty"`
+	EventRanges  []MarkerEventTimeRange  `json:"eventRanges,omitempty" bson:"eventRanges,omitempty"`
 }
 
 /* Marker options */

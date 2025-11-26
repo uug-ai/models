@@ -2812,6 +2812,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getmarkertagoptionserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerTagOptionsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerTagOptionsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerTagOptionsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkertagoptionsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerTagOptionsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerTagOptionsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerTagOptionsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkertagoptionsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerTagOptionsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerTagOptionsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerTagOptionsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkertagoptionssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerTagOptionsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerTagOptionsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerTagOptionsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getmediaerrorresponse": {
         parameters: {
             query?: never;
@@ -3475,6 +3631,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/markeratruntimemetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerAtRuntimeMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerAtRuntimeMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MarkerAtRuntimeMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/markerevent": {
         parameters: {
             query?: never;
@@ -3553,7 +3748,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/markereventtype": {
+    "/internal/markereventoption": {
         parameters: {
             query?: never;
             header?: never;
@@ -3561,8 +3756,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get MarkerEventType (schema generation only)
-         * @description Internal endpoint used only to ensure MarkerEventType schema is generated in OpenAPI spec
+         * Get MarkerEventOption (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerEventOption schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -3579,7 +3774,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.MarkerEventType"];
+                        "application/json": components["schemas"]["models.MarkerEventOption"];
                     };
                 };
             };
@@ -3592,7 +3787,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/markereventtypeoption": {
+    "/internal/markereventtimerange": {
         parameters: {
             query?: never;
             header?: never;
@@ -3600,8 +3795,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get MarkerEventTypeOption (schema generation only)
-         * @description Internal endpoint used only to ensure MarkerEventTypeOption schema is generated in OpenAPI spec
+         * Get MarkerEventTimeRange (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerEventTimeRange schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -3618,7 +3813,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.MarkerEventTypeOption"];
+                        "application/json": components["schemas"]["models.MarkerEventTimeRange"];
                     };
                 };
             };
@@ -3736,6 +3931,201 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.MarkerOption"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/markeroptiontimerange": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerOptionTimeRange (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerOptionTimeRange schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MarkerOptionTimeRange"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/markertag": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerTag (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerTag schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MarkerTag"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/markertagfilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerTagFilter (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerTagFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.MarkerTagFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/markertagoption": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerTagOption (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerTagOption schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MarkerTagOption"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/markertagtimerange": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerTagTimeRange (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerTagTimeRange schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MarkerTagTimeRange"];
                     };
                 };
             };
@@ -6029,6 +6419,7 @@ export interface components {
         };
         "api.DeviceFilter": {
             deviceIds?: string[];
+            markers?: string[];
             name?: string;
             sites?: string[];
         };
@@ -6160,7 +6551,7 @@ export interface components {
             pagination?: components["schemas"]["api.CursorPagination"];
         };
         "api.GetMarkerEventOptionsResponse": {
-            markerEvents?: components["schemas"]["models.MarkerEventTypeOption"][];
+            markerEvents?: components["schemas"]["models.MarkerEventOption"][];
         };
         "api.GetMarkerEventOptionsSuccessResponse": {
             /** @description Application-specific status code */
@@ -6198,6 +6589,38 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetMarkerOptionsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetMarkerTagOptionsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetMarkerTagOptionsRequest": {
+            filter?: components["schemas"]["api.MarkerTagFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetMarkerTagOptionsResponse": {
+            markerTags?: components["schemas"]["models.MarkerTagOption"][];
+        };
+        "api.GetMarkerTagOptionsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetMarkerTagOptionsResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -6343,6 +6766,10 @@ export interface components {
             names?: string[];
             types?: string[];
         };
+        "api.MarkerTagFilter": {
+            name?: string;
+            names?: string[];
+        };
         "api.Media2Filter": {
             devices?: string[];
             events?: string[];
@@ -6351,6 +6778,7 @@ export interface components {
             sites?: string[];
             sortBy?: string;
             starred?: boolean;
+            tags?: string[];
             timeRanges?: components["schemas"]["models.TimeRange"][];
         };
         "api.MediaFilter": {
@@ -6926,6 +7354,10 @@ export interface components {
             longitude?: number;
         };
         "models.Marker": {
+            /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
+             *     more verbose information about the device's current state, capabilities, or configuration.
+             *     for example the linked sites details, etc. */
+            atRuntimeMetadata?: components["schemas"]["models.MarkerAtRuntimeMetadata"];
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
             /**
@@ -6934,7 +7366,7 @@ export interface components {
              */
             description?: string;
             /**
-             * @description Device information
+             * @description RBAC information
              * @example 686a906345c1df594939f9j25f4
              */
             deviceId?: string;
@@ -6960,14 +7392,6 @@ export interface components {
              * @example 507f1f77bcf86cd799439011
              */
             id?: string;
-            /**
-             * @description Media information
-             * @example [
-             *       "[\"img_20230918_001.jpg\"",
-             *       " \"vid_20230918_002.mp4\"]"
-             *     ]
-             */
-            mediaIds?: string[];
             /** @description Additional metadata */
             metadata?: components["schemas"]["models.MarkerMetadata"];
             /**
@@ -6981,7 +7405,7 @@ export interface components {
              */
             organisationId?: string;
             /**
-             * @description RBAC information
+             * @description SiteId is used to identify the site where the marker is located
              * @example 686a906345c1df594pcsr3r45
              */
             siteId?: string;
@@ -6992,6 +7416,13 @@ export interface components {
             startTimestamp?: number;
             /** @description Synchronize */
             synchronize?: components["schemas"]["models.Synchronize"];
+            /** @description Tags associated with the marker for categorization */
+            tags?: components["schemas"]["models.MarkerTag"][];
+        };
+        "models.MarkerAtRuntimeMetadata": {
+            eventRanges?: components["schemas"]["models.MarkerEventTimeRange"][];
+            markerRanges?: components["schemas"]["models.MarkerOptionTimeRange"][];
+            tagRanges?: components["schemas"]["models.MarkerTagTimeRange"][];
         };
         "models.MarkerEvent": {
             /**
@@ -7000,15 +7431,15 @@ export interface components {
              */
             description?: string;
             /**
-             * @description Unique identifier for the event, generated automatically
-             * @example 507f1f77bcf86cd799439012
-             */
-            id?: string;
-            /**
              * @description Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
              * @example Motion Detected
              */
             name?: string;
+            /**
+             * @description OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+             * @example 686a906345c1df594pad69f0
+             */
+            organisationId?: string;
             /**
              * @description Tags associated with the event for categorization
              * @example [
@@ -7022,42 +7453,119 @@ export interface components {
              * @example 1752482070
              */
             timestamp?: number;
-            /** @description Type of the event, linked to MarkerEventType */
-            type?: components["schemas"]["models.MarkerEventType"];
         };
-        "models.MarkerEventType": {
+        "models.MarkerEventOption": {
+            createdAt?: number;
             /**
-             * @description Unique identifier for the event type, generated automatically
-             * @example 507f1f77bcf86cd799439013
+             * @description Unique identifier for the marker, generated automatically§§§
+             * @example 507f1f77bcf86cd799439011
              */
             id?: string;
             /**
-             * @description Name of the event type e.g., "Motion Detected", "Sound Detected", etc.
-             * @example Motion Detected
+             * @description OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+             * @example 686a906345c1df594pad69f0
              */
-            name?: string;
-        };
-        "models.MarkerEventTypeOption": {
+            organisationId?: string;
             text?: string;
+            updatedAt?: number;
+            value?: string;
+        };
+        "models.MarkerEventTimeRange": {
+            createdAt?: number;
+            deviceId?: string;
+            end?: number;
+            /**
+             * @description Unique identifier for the marker, generated automatically§§§
+             * @example 507f1f77bcf86cd799439011
+             */
+            id?: string;
+            /**
+             * @description OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+             * @example 686a906345c1df594pad69f0
+             */
+            organisationId?: string;
+            start?: number;
+            text?: string;
+            updatedAt?: number;
             value?: string;
         };
         "models.MarkerMetadata": {
             /** @description Additional comments or description of the marker */
             comments?: components["schemas"]["models.Comment"];
-            /**
-             * @description Tags associated with the marker for categorization
-             * @example [
-             *       "[\"vehicle\"",
-             *       "\"license plate\"",
-             *       "\"security\"]"
-             *     ]
-             */
-            tags?: string[];
         };
         "models.MarkerOption": {
-            deviceIds?: string[];
+            createdAt?: number;
+            /**
+             * @description Unique identifier for the marker, generated automatically§§§
+             * @example 507f1f77bcf86cd799439011
+             */
+            id?: string;
+            /**
+             * @description OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+             * @example 686a906345c1df594pad69f0
+             */
+            organisationId?: string;
             text?: string;
-            timeRange?: components["schemas"]["models.TimeRange"][];
+            updatedAt?: number;
+            value?: string;
+        };
+        "models.MarkerOptionTimeRange": {
+            createdAt?: number;
+            /** @description Tags associated with the event for categorization */
+            deviceId?: string;
+            end?: number;
+            /**
+             * @description Unique identifier for the marker, generated automatically§§§
+             * @example 507f1f77bcf86cd799439011
+             */
+            id?: string;
+            /**
+             * @description OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+             * @example 686a906345c1df594pad69f0
+             */
+            organisationId?: string;
+            start?: number;
+            text?: string;
+            updatedAt?: number;
+            value?: string;
+        };
+        "models.MarkerTag": {
+            /** @example Motion Detected */
+            name?: string;
+        };
+        "models.MarkerTagOption": {
+            createdAt?: number;
+            /**
+             * @description Unique identifier for the marker, generated automatically§§§
+             * @example 507f1f77bcf86cd799439011
+             */
+            id?: string;
+            /**
+             * @description OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+             * @example 686a906345c1df594pad69f0
+             */
+            organisationId?: string;
+            text?: string;
+            updatedAt?: number;
+            value?: string;
+        };
+        "models.MarkerTagTimeRange": {
+            createdAt?: number;
+            deviceId?: string;
+            end?: number;
+            /**
+             * @description Unique identifier for the marker, generated automatically§§§
+             * @example 507f1f77bcf86cd799439011
+             */
+            id?: string;
+            /**
+             * @description OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+             * @example 686a906345c1df594pad69f0
+             */
+            organisationId?: string;
+            start?: number;
+            text?: string;
+            updatedAt?: number;
             value?: string;
         };
         "models.Media": {
@@ -7534,11 +8042,16 @@ export namespace models {
     export type IO = components['schemas']['models.IO'];
     export type Location = components['schemas']['models.Location'];
     export type Marker = components['schemas']['models.Marker'];
+    export type MarkerAtRuntimeMetadata = components['schemas']['models.MarkerAtRuntimeMetadata'];
     export type MarkerEvent = components['schemas']['models.MarkerEvent'];
-    export type MarkerEventType = components['schemas']['models.MarkerEventType'];
-    export type MarkerEventTypeOption = components['schemas']['models.MarkerEventTypeOption'];
+    export type MarkerEventOption = components['schemas']['models.MarkerEventOption'];
+    export type MarkerEventTimeRange = components['schemas']['models.MarkerEventTimeRange'];
     export type MarkerMetadata = components['schemas']['models.MarkerMetadata'];
     export type MarkerOption = components['schemas']['models.MarkerOption'];
+    export type MarkerOptionTimeRange = components['schemas']['models.MarkerOptionTimeRange'];
+    export type MarkerTag = components['schemas']['models.MarkerTag'];
+    export type MarkerTagOption = components['schemas']['models.MarkerTagOption'];
+    export type MarkerTagTimeRange = components['schemas']['models.MarkerTagTimeRange'];
     export type Media = components['schemas']['models.Media'];
     export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
@@ -7610,6 +8123,10 @@ export namespace api {
     export type GetMarkerOptionsRequest = components['schemas']['api.GetMarkerOptionsRequest'];
     export type GetMarkerOptionsResponse = components['schemas']['api.GetMarkerOptionsResponse'];
     export type GetMarkerOptionsSuccessResponse = components['schemas']['api.GetMarkerOptionsSuccessResponse'];
+    export type GetMarkerTagOptionsErrorResponse = components['schemas']['api.GetMarkerTagOptionsErrorResponse'];
+    export type GetMarkerTagOptionsRequest = components['schemas']['api.GetMarkerTagOptionsRequest'];
+    export type GetMarkerTagOptionsResponse = components['schemas']['api.GetMarkerTagOptionsResponse'];
+    export type GetMarkerTagOptionsSuccessResponse = components['schemas']['api.GetMarkerTagOptionsSuccessResponse'];
     export type GetMarkersErrorResponse = components['schemas']['api.GetMarkersErrorResponse'];
     export type GetMarkersResponse = components['schemas']['api.GetMarkersResponse'];
     export type GetMarkersSuccessResponse = components['schemas']['api.GetMarkersSuccessResponse'];
@@ -7627,6 +8144,7 @@ export namespace api {
     export type GetTimelineSuccessResponse = components['schemas']['api.GetTimelineSuccessResponse'];
     export type MarkerEventFilter = components['schemas']['api.MarkerEventFilter'];
     export type MarkerFilter = components['schemas']['api.MarkerFilter'];
+    export type MarkerTagFilter = components['schemas']['api.MarkerTagFilter'];
     export type Media2Filter = components['schemas']['api.Media2Filter'];
     export type MediaFilter = components['schemas']['api.MediaFilter'];
     export type MediaGroup = components['schemas']['api.MediaGroup'];

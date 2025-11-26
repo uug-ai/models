@@ -19,6 +19,14 @@ const (
 	MarkerDeleteFailed     MarkerStatus = "marker_delete_failed"
 	MarkerRetrievalSuccess MarkerStatus = "marker_retrieval_success"
 	MarkerRetrievalFailed  MarkerStatus = "marker_retrieval_failed"
+
+	MarkerEventBindingFailed    MarkerStatus = "marker_event_binding_failed"
+	MarkerEventRetrievalFailed  MarkerStatus = "marker_event_retrieval_failed"
+	MarkerEventRetrievalSuccess MarkerStatus = "marker_event_retrieval_success"
+
+	MarkerTagBindingFailed    MarkerStatus = "marker_tag_binding_failed"
+	MarkerTagRetrievalFailed  MarkerStatus = "marker_tag_retrieval_failed"
+	MarkerTagRetrievalSuccess MarkerStatus = "marker_tag_retrieval_success"
 )
 
 // String returns the string representation of the marker status
@@ -30,49 +38,67 @@ func (ms MarkerStatus) String() string {
 func (ms MarkerStatus) Translate(lang string) string {
 	translations := map[string]map[MarkerStatus]string{
 		"en": {
-			MarkerBindingFailed:    "Marker binding failed",
-			MarkerDuplicateName:    "Marker duplicate name",
-			MarkerMissingInfo:      "Marker missing information",
-			MarkerFound:            "Marker found",
-			MarkerNotFound:         "Marker not found",
-			MarkerAddSuccess:       "Marker added successfully",
-			MarkerAddFailed:        "Marker failed to add",
-			MarkerUpdateSuccess:    "Marker updated successfully",
-			MarkerUpdateFailed:     "Marker failed to update",
-			MarkerDeleteSuccess:    "Marker deleted successfully",
-			MarkerDeleteFailed:     "Marker failed to delete",
-			MarkerRetrievalSuccess: "Marker retrieved successfully",
-			MarkerRetrievalFailed:  "Marker retrieval failed",
+			MarkerBindingFailed:         "Marker binding failed",
+			MarkerDuplicateName:         "Marker duplicate name",
+			MarkerMissingInfo:           "Marker missing information",
+			MarkerFound:                 "Marker found",
+			MarkerNotFound:              "Marker not found",
+			MarkerAddSuccess:            "Marker added successfully",
+			MarkerAddFailed:             "Marker failed to add",
+			MarkerUpdateSuccess:         "Marker updated successfully",
+			MarkerUpdateFailed:          "Marker failed to update",
+			MarkerDeleteSuccess:         "Marker deleted successfully",
+			MarkerDeleteFailed:          "Marker failed to delete",
+			MarkerRetrievalSuccess:      "Marker retrieved successfully",
+			MarkerRetrievalFailed:       "Marker retrieval failed",
+			MarkerEventBindingFailed:    "Marker event binding failed",
+			MarkerEventRetrievalFailed:  "Marker event retrieval failed",
+			MarkerEventRetrievalSuccess: "Marker event retrieved successfully",
+			MarkerTagBindingFailed:      "Marker tag binding failed",
+			MarkerTagRetrievalFailed:    "Marker tag retrieval failed",
+			MarkerTagRetrievalSuccess:   "Marker tag retrieved successfully",
 		},
 		"es": {
-			MarkerBindingFailed:    "Error al vincular el marcador",
-			MarkerDuplicateName:    "Nombre de marcador duplicado",
-			MarkerMissingInfo:      "Información del marcador faltante",
-			MarkerFound:            "Marcador encontrado",
-			MarkerNotFound:         "Marcador no encontrado",
-			MarkerAddSuccess:       "Marcador agregado con éxito",
-			MarkerAddFailed:        "Error al agregar el marcador",
-			MarkerUpdateSuccess:    "Marcador actualizado con éxito",
-			MarkerUpdateFailed:     "Error al actualizar el marcador",
-			MarkerDeleteSuccess:    "Marcador eliminado con éxito",
-			MarkerDeleteFailed:     "Error al eliminar el marcador",
-			MarkerRetrievalSuccess: "Marcador recuperado con éxito",
-			MarkerRetrievalFailed:  "Error al recuperar el marcador",
+			MarkerBindingFailed:         "Error al vincular el marcador",
+			MarkerDuplicateName:         "Nombre de marcador duplicado",
+			MarkerMissingInfo:           "Información del marcador faltante",
+			MarkerFound:                 "Marcador encontrado",
+			MarkerNotFound:              "Marcador no encontrado",
+			MarkerAddSuccess:            "Marcador agregado con éxito",
+			MarkerAddFailed:             "Error al agregar el marcador",
+			MarkerUpdateSuccess:         "Marcador actualizado con éxito",
+			MarkerUpdateFailed:          "Error al actualizar el marcador",
+			MarkerDeleteSuccess:         "Marcador eliminado con éxito",
+			MarkerDeleteFailed:          "Error al eliminar el marcador",
+			MarkerRetrievalSuccess:      "Marcador recuperado con éxito",
+			MarkerRetrievalFailed:       "Error al recuperar el marcador",
+			MarkerEventBindingFailed:    "Error al vincular el evento del marcador",
+			MarkerEventRetrievalFailed:  "Error al recuperar el evento del marcador",
+			MarkerEventRetrievalSuccess: "Evento del marcador recuperado con éxito",
+			MarkerTagBindingFailed:      "Error al vincular la etiqueta del marcador",
+			MarkerTagRetrievalFailed:    "Error al recuperar la etiqueta del marcador",
+			MarkerTagRetrievalSuccess:   "Etiqueta del marcador recuperada con éxito",
 		},
 		"fr": {
-			MarkerBindingFailed:    "Échec de la liaison du marqueur",
-			MarkerDuplicateName:    "Nom de marqueur dupliqué",
-			MarkerMissingInfo:      "Informations manquantes sur le marqueur",
-			MarkerFound:            "Marqueur trouvé",
-			MarkerNotFound:         "Marqueur non trouvé",
-			MarkerAddSuccess:       "Marqueur ajouté avec succès",
-			MarkerAddFailed:        "Échec de l'ajout du marqueur",
-			MarkerUpdateSuccess:    "Marqueur mis à jour avec succès",
-			MarkerUpdateFailed:     "Échec de la mise à jour du marqueur",
-			MarkerDeleteSuccess:    "Marqueur supprimé avec succès",
-			MarkerDeleteFailed:     "Échec de la suppression du marqueur",
-			MarkerRetrievalSuccess: "Marqueur récupéré avec succès",
-			MarkerRetrievalFailed:  "Échec de la récupération du marqueur",
+			MarkerBindingFailed:         "Échec de la liaison du marqueur",
+			MarkerDuplicateName:         "Nom de marqueur dupliqué",
+			MarkerMissingInfo:           "Informations manquantes sur le marqueur",
+			MarkerFound:                 "Marqueur trouvé",
+			MarkerNotFound:              "Marqueur non trouvé",
+			MarkerAddSuccess:            "Marqueur ajouté avec succès",
+			MarkerAddFailed:             "Échec de l'ajout du marqueur",
+			MarkerUpdateSuccess:         "Marqueur mis à jour avec succès",
+			MarkerUpdateFailed:          "Échec de la mise à jour du marqueur",
+			MarkerDeleteSuccess:         "Marqueur supprimé avec succès",
+			MarkerDeleteFailed:          "Échec de la suppression du marqueur",
+			MarkerRetrievalSuccess:      "Marqueur récupéré avec succès",
+			MarkerRetrievalFailed:       "Échec de la récupération du marqueur",
+			MarkerEventBindingFailed:    "Échec de la liaison de l'événement du marqueur",
+			MarkerEventRetrievalFailed:  "Échec de la récupération de l'événement du marqueur",
+			MarkerEventRetrievalSuccess: "Événement du marqueur récupéré avec succès",
+			MarkerTagBindingFailed:      "Échec de la liaison de la balise du marqueur",
+			MarkerTagRetrievalFailed:    "Échec de la récupération de la balise du marqueur",
+			MarkerTagRetrievalSuccess:   "Balise du marqueur récupérée avec succès",
 		},
 	}
 
@@ -104,6 +130,11 @@ type MarkerEventFilter struct {
 	MarkerEventIds []*string
 	Names          []*string
 	Name           *string
+}
+
+type MarkerTagFilter struct {
+	Names []*string
+	Name  *string
 }
 
 // GetMarkers
@@ -168,5 +199,22 @@ type GetMarkerEventOptionsSuccessResponse struct {
 	Data GetMarkerEventOptionsResponse `json:"data"`
 }
 type GetMarkerEventOptionsErrorResponse struct {
+	ErrorResponse
+}
+
+// GetMarkerTagOptions
+// @Router /markers/tags/options [post]
+type GetMarkerTagOptionsRequest struct {
+	Filter     *MarkerTagFilter  `json:"filter"`
+	Pagination *CursorPagination `json:"pagination"`
+}
+type GetMarkerTagOptionsResponse struct {
+	MarkerTags []models.MarkerTagOption `json:"markerTags"`
+}
+type GetMarkerTagOptionsSuccessResponse struct {
+	SuccessResponse
+	Data GetMarkerTagOptionsResponse `json:"data"`
+}
+type GetMarkerTagOptionsErrorResponse struct {
 	ErrorResponse
 }
