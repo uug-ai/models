@@ -74,7 +74,6 @@ type MarkerOptionTimeRange struct {
 type MarkerEvent struct { // Unique identifier for the event, generated automatically
 	Timestamp      int64    `json:"timestamp" bson:"timestamp" example:"1752482070" required:"true"`                                // Timestamp of the event in seconds since epoch
 	Name           string   `json:"name,omitempty" bson:"name,omitempty" example:"Motion Detected"`                                 // Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
-	OrganisationId string   `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"`                        // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
 	Description    string   `json:"description,omitempty" bson:"description,omitempty" example:"Motion detected in the lobby area"` // Description of the event
 	Tags           []string `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"urgent\",\"review-needed\"]"`                  // Tags associated with the event for categorization
 }
