@@ -7,16 +7,11 @@ import (
 type Marker struct {
 	Id primitive.ObjectID `json:"id" bson:"_id" example:"507f1f77bcf86cd799439011" required:"true"` // Unique identifier for the marker, generated automatically§§§
 
-	// Media information
-	MediaIds []string `json:"mediaIds" bson:"mediaIds" example:"[\"img_20230918_001.jpg\", \"vid_20230918_002.mp4\"]" required:"true"` // MediaIds is used to link the marker to media items such as images or videos
-
-	// Device information
-	DeviceId string `json:"deviceId" bson:"deviceId" example:"686a906345c1df594939f9j25f4" required:"true"` // DeviceId is used to identify the device associated with the marker
-
 	// RBAC information
-	SiteId         string `json:"siteId,omitempty" bson:"siteId,omitempty" example:"686a906345c1df594pcsr3r45"`  // SiteId is used to identify the site where the marker is located
-	GroupId        string `json:"groupId,omitempty" bson:"groupId,omitempty" example:"686a906345c1df594pmt41w4"` // GroupId is used to identify the group of markers
-	OrganisationId string `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"`       // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+	DeviceId       string `json:"deviceId" bson:"deviceId" example:"686a906345c1df594939f9j25f4" required:"true"` // DeviceId is used to identify the device associated with the marker
+	SiteId         string `json:"siteId,omitempty" bson:"siteId,omitempty" example:"686a906345c1df594pcsr3r45"`   // SiteId is used to identify the site where the marker is located
+	GroupId        string `json:"groupId,omitempty" bson:"groupId,omitempty" example:"686a906345c1df594pmt41w4"`  // GroupId is used to identify the group of markers
+	OrganisationId string `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"`        // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
 
 	// Timing information (all timestamps are in seconds)
 	StartTimestamp int64 `json:"startTimestamp" bson:"startTimestamp" example:"1752482068" required:"true"` // Start timestamp of the marker in seconds since epoch
@@ -25,10 +20,16 @@ type Marker struct {
 
 	Name        string        `json:"name" bson:"name" example:"2-HCP-007" required:"true"`                                       // Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
 	Events      []MarkerEvent `json:"events,omitempty" bson:"events,omitempty"`                                                   // Events associated with the marker, such as motion detected, sound detected, etc.
+	Tags        []MarkerTag   `json:"tags,omitempty" bson:"tags,omitempty"`                                                       // Tags associated with the marker for categorization
 	Description string        `json:"description,omitempty" bson:"description,omitempty" example:"Person forcably opened a door"` // Description of the marker
 
 	// Additional metadata
 	Metadata *MarkerMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"` // Metadata associated with the marker, such as comments and tags
+
+	// AtRuntimeMetadata contains metadata that is generated at runtime, which can include
+	// more verbose information about the device's current state, capabilities, or configuration.
+	// for example the linked sites details, etc.
+	AtRuntimeMetadata *MarkerAtRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"atRuntimeMetadata,omitempty"`
 
 	// Synchronize
 	Synchronize *Synchronize `json:"synchronize,omitempty" bson:"synchronize,omitempty"` // Synchronization status with external systems
@@ -38,32 +39,89 @@ type Marker struct {
 }
 
 type MarkerMetadata struct {
-	Comments *Comment `json:"comments,omitempty" bson:"comments,omitempty"`                                                // Additional comments or description of the marker
-	Tags     []string `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"vehicle\",\"license plate\",\"security\"]"` // Tags associated with the marker for categorization
+	Comments *Comment `json:"comments,omitempty" bson:"comments,omitempty"` // Additional comments or description of the marker
 }
 
-type MarkerEvent struct {
-	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty" example:"507f1f77bcf86cd799439012"`                                     // Unique identifier for the event, generated automatically
-	Timestamp   int64              `json:"timestamp" bson:"timestamp" example:"1752482070" required:"true"`                                // Timestamp of the event in seconds since epoch
-	Type        MarkerEventType    `json:"type" bson:"type" required:"true"`                                                               // Type of the event, linked to MarkerEventType
-	Name        string             `json:"name,omitempty" bson:"name,omitempty" example:"Motion Detected"`                                 // Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
-	Description string             `json:"description,omitempty" bson:"description,omitempty" example:"Motion detected in the lobby area"` // Description of the event
-	Tags        []string           `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"urgent\",\"review-needed\"]"`                  // Tags associated with the event for categorization
+type MarkerAtRuntimeMetadata struct {
+	MarkerRanges []MarkerOptionTimeRange `json:"markerRanges,omitempty" bson:"markerRanges,omitempty"`
+	TagRanges    []MarkerTagTimeRange    `json:"tagRanges,omitempty" bson:"tagRanges,omitempty"`
+	EventRanges  []MarkerEventTimeRange  `json:"eventRanges,omitempty" bson:"eventRanges,omitempty"`
 }
 
-type MarkerEventType struct {
-	Id   primitive.ObjectID `json:"id" bson:"_id,omitempty" example:"507f1f77bcf86cd799439013"` // Unique identifier for the event type, generated automatically
-	Name string             `json:"name" bson:"name" example:"Motion Detected" required:"true"` // Name of the event type e.g., "Motion Detected", "Sound Detected", etc.
-}
-
-type MarkerEventTypeOption struct {
-	Value string `bson:"value" json:"value"`
-	Text  string `bson:"text" json:"text"`
-}
-
+/* Marker options */
 type MarkerOption struct {
-	Value      string      `bson:"value" json:"value"`
-	Text       string      `bson:"text" json:"text"`
-	TimeRanges []TimeRange `bson:"timeRange" json:"timeRange"`
-	DeviceIds  []string    `bson:"deviceIds" json:"deviceIds"`
+	Id             primitive.ObjectID `json:"id" bson:"_id" example:"507f1f77bcf86cd799439011" required:"true"`        // Unique identifier for the marker, generated automatically§§§
+	OrganisationId string             `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"` // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+	Value          string             `bson:"value" json:"value"`
+	Text           string             `bson:"text" json:"text"`
+	CreatedAt      int64              `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt      int64              `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+}
+
+type MarkerOptionTimeRange struct {
+	Id             primitive.ObjectID `json:"id" bson:"_id" example:"507f1f77bcf86cd799439011" required:"true"` // Unique identifier for the marker, generated automatically§§§
+	Value          string             `bson:"value" json:"value"`
+	Text           string             `bson:"text" json:"text"`
+	OrganisationId string             `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"` // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+	Start          int64              `json:"start,omitempty" bson:"start,omitempty"`
+	End            int64              `json:"end,omitempty" bson:"end,omitempty"`
+	DeviceId       string             `bson:"deviceId" json:"deviceId"` // Tags associated with the event for categorization
+	CreatedAt      int64              `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt      int64              `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+}
+
+/* Marker Event */
+type MarkerEvent struct { // Unique identifier for the event, generated automatically
+	Timestamp      int64    `json:"timestamp" bson:"timestamp" example:"1752482070" required:"true"`                                // Timestamp of the event in seconds since epoch
+	Name           string   `json:"name,omitempty" bson:"name,omitempty" example:"Motion Detected"`                                 // Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
+	OrganisationId string   `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"`                        // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+	Description    string   `json:"description,omitempty" bson:"description,omitempty" example:"Motion detected in the lobby area"` // Description of the event
+	Tags           []string `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"urgent\",\"review-needed\"]"`                  // Tags associated with the event for categorization
+}
+
+type MarkerEventOption struct {
+	Id             primitive.ObjectID `json:"id" bson:"_id" example:"507f1f77bcf86cd799439011" required:"true"` // Unique identifier for the marker, generated automatically§§§
+	Value          string             `bson:"value" json:"value"`
+	Text           string             `bson:"text" json:"text"`
+	OrganisationId string             `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"` // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+	CreatedAt      int64              `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt      int64              `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+}
+
+type MarkerEventTimeRange struct {
+	Id             primitive.ObjectID `json:"id" bson:"_id" example:"507f1f77bcf86cd799439011" required:"true"` // Unique identifier for the marker, generated automatically§§§
+	Value          string             `bson:"value" json:"value"`
+	Text           string             `bson:"text" json:"text"`
+	OrganisationId string             `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"` // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+	Start          int64              `json:"start,omitempty" bson:"start,omitempty"`
+	End            int64              `json:"end,omitempty" bson:"end,omitempty"`
+	DeviceId       string             `bson:"deviceId" json:"deviceId"`
+	CreatedAt      int64              `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt      int64              `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+}
+
+/* Marker Tag */
+type MarkerTag struct {
+	Name string `json:"name,omitempty" bson:"name,omitempty" example:"Motion Detected"`
+}
+
+type MarkerTagOption struct {
+	Id             primitive.ObjectID `json:"id" bson:"_id" example:"507f1f77bcf86cd799439011" required:"true"` // Unique identifier for the marker, generated automatically§§§
+	Value          string             `bson:"value" json:"value"`
+	Text           string             `bson:"text" json:"text"`
+	OrganisationId string             `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"` // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+	CreatedAt      int64              `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt      int64              `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+}
+
+type MarkerTagTimeRange struct {
+	Id             primitive.ObjectID `json:"id" bson:"_id" example:"507f1f77bcf86cd799439011" required:"true"` // Unique identifier for the marker, generated automatically§§§
+	Value          string             `bson:"value" json:"value"`
+	Text           string             `bson:"text" json:"text"`
+	OrganisationId string             `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"` // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+	Start          int64              `json:"start,omitempty" bson:"start,omitempty"`
+	End            int64              `json:"end,omitempty" bson:"end,omitempty"`
+	DeviceId       string             `bson:"deviceId" json:"deviceId"`
+	CreatedAt      int64              `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt      int64              `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
 }
