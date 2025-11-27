@@ -19,10 +19,6 @@ const (
 	DeviceUpdateFailed     DeviceStatus = "device_update_failed"
 	DeviceDeleteSuccess    DeviceStatus = "device_delete_success"
 	DeviceDeleteFailed     DeviceStatus = "device_delete_failed"
-
-	GetDeviceIdsForMarkersBindingFailed DeviceStatus = "get_device_ids_for_markers_binding_failed"
-	GetDeviceIdsForMarkersError         DeviceStatus = "get_device_ids_for_markers_error"
-	GetDeviceIdsForMarkersSuccess       DeviceStatus = "get_device_ids_for_markers_success"
 )
 
 // String returns the string representation of the device status
@@ -46,10 +42,6 @@ func (ds DeviceStatus) Translate(lang string) string {
 			DeviceUpdateFailed:    "Device failed to update",
 			DeviceDeleteSuccess:   "Device deleted successfully",
 			DeviceDeleteFailed:    "Device failed to delete",
-
-			GetDeviceIdsForMarkersBindingFailed: "Get device IDs for markers binding failed",
-			GetDeviceIdsForMarkersError:         "Get device IDs for markers error",
-			GetDeviceIdsForMarkersSuccess:       "Get device IDs for markers succeeded",
 		},
 	}
 
@@ -89,20 +81,5 @@ type GetDeviceOptionsSuccessResponse struct {
 	Data GetDeviceOptionsResponse `json:"data,omitempty" bson:"data,omitempty"`
 }
 type GetDeviceOptionsErrorResponse struct {
-	ErrorResponse
-}
-
-// GetDeviceIdsForMarkers
-type GetDeviceIdsForMarkersRequest struct {
-	MarkerNames []string `json:"markerIds,omitempty" bson:"markerIds,omitempty"`
-}
-type GetDeviceIdsForMarkersResponse struct {
-	DeviceIds []string `json:"deviceIds,omitempty" bson:"deviceIds,omitempty"`
-}
-type GetDeviceIdsForMarkersSuccessResponse struct {
-	SuccessResponse
-	Data GetDeviceIdsForMarkersResponse `json:"data,omitempty" bson:"data,omitempty"`
-}
-type GetDeviceIdsForMarkersErrorResponse struct {
 	ErrorResponse
 }
