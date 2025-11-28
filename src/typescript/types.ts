@@ -3436,6 +3436,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/group": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Group (schema generation only)
+         * @description Internal endpoint used only to ensure Group schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Group"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/groupmetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GroupMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure GroupMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GroupMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/groupoption": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GroupOption (schema generation only)
+         * @description Internal endpoint used only to ensure GroupOption schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GroupOption"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/highupload": {
         parameters: {
             query?: never;
@@ -7322,6 +7439,40 @@ export interface components {
             range?: string;
             time?: string;
         };
+        "models.Group": {
+            /** @description Audit information */
+            audit?: components["schemas"]["models.Audit"];
+            description?: string;
+            devices?: string[];
+            /** @description Nested groups */
+            groups?: string[];
+            id?: string;
+            /** @description Metadata */
+            metadata?: components["schemas"]["models.GroupMetadata"];
+            name?: string;
+            /** @description RBAC information */
+            organisationId?: string;
+            /** @description Media file information (by default "vault", however might change
+             *     in the future (integration with other storage solutions, next to Vault). */
+            storageSolution?: string;
+            vaultAccessKey?: string;
+            vaultSecretKey?: string;
+            vaultUri?: string;
+        };
+        "models.GroupMetadata": {
+            color?: string;
+            /** @description List of floor plans associated with the group */
+            floorPlans?: components["schemas"]["models.FloorPlan"][];
+            initials?: string;
+            location?: components["schemas"]["models.Location"];
+            numberOfFloorPlans?: number;
+        };
+        "models.GroupOption": {
+            devices?: string[];
+            groups?: string[];
+            text?: string;
+            value?: string;
+        };
         "models.HighUpload": {
             notification?: number;
             requests?: number;
@@ -7436,11 +7587,6 @@ export interface components {
              * @example Motion Detected
              */
             name?: string;
-            /**
-             * @description OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
-             * @example 686a906345c1df594pad69f0
-             */
-            organisationId?: string;
             /**
              * @description Tags associated with the event for categorization
              * @example [
@@ -8038,6 +8184,9 @@ export namespace models {
     export type FeaturePermissions = components['schemas']['models.FeaturePermissions'];
     export type FloorPlan = components['schemas']['models.FloorPlan'];
     export type FragmentedBytesRangeOnTime = components['schemas']['models.FragmentedBytesRangeOnTime'];
+    export type Group = components['schemas']['models.Group'];
+    export type GroupMetadata = components['schemas']['models.GroupMetadata'];
+    export type GroupOption = components['schemas']['models.GroupOption'];
     export type HighUpload = components['schemas']['models.HighUpload'];
     export type HourRange = components['schemas']['models.HourRange'];
     export type IO = components['schemas']['models.IO'];
