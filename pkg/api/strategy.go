@@ -1,5 +1,7 @@
 package api
 
+import "github.com/uug-ai/models/pkg/models"
+
 // StrategyStatus represents specific status codes for device operations
 type StrategyStatus string
 
@@ -59,4 +61,65 @@ func (ds StrategyStatus) Translate(lang string) string {
 
 	// Fallback to the string representation
 	return ds.String()
+}
+
+// GetStrategiesRequest represents the request to get strategies
+// @Router /strategies [get]
+type GetStrategiesRequest struct {
+}
+type GetStrategiesResponse struct {
+	Strategies []models.Strategy `json:"strategies"`
+}
+type GetStrategiesSuccessResponse struct {
+	SuccessResponse
+	Data GetStrategiesResponse `json:"data"`
+}
+type GetStrategiesErrorResponse struct {
+	ErrorResponse
+}
+
+// AddStrategyRequest represents the request to create a strategy
+// @Router /strategies [post]
+type AddStrategyRequest struct {
+	Strategy models.Strategy `json:"strategy" binding:"required"`
+}
+type AddStrategyResponse struct {
+	Strategy models.Strategy `json:"strategy"`
+}
+type AddStrategySuccessResponse struct {
+	SuccessResponse
+	Data AddStrategyResponse `json:"data"`
+}
+type AddStrategyErrorResponse struct {
+	ErrorResponse
+}
+
+// UpdateStrategyRequest represents the request to update a strategy
+// @Router /strategies/{strategyId} [put]
+type UpdateStrategyRequest struct {
+	Strategy models.Strategy `json:"strategy" binding:"required"`
+}
+type UpdateStrategyResponse struct {
+	Strategy models.Strategy `json:"strategy"`
+}
+type UpdateStrategySuccessResponse struct {
+	SuccessResponse
+	Data UpdateStrategyResponse `json:"data"`
+}
+type UpdateStrategyErrorResponse struct {
+	ErrorResponse
+}
+
+// DeleteStrategyRequest represents the request to delete a strategy
+// @Router /strategies/{strategyId} [delete]
+type DeleteStrategyRequest struct {
+}
+type DeleteStrategyResponse struct {
+}
+type DeleteStrategySuccessResponse struct {
+	SuccessResponse
+	Data DeleteStrategyResponse `json:"data"`
+}
+type DeleteStrategyErrorResponse struct {
+	ErrorResponse
 }
