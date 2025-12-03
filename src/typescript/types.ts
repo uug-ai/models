@@ -6731,6 +6731,7 @@ export interface components {
         };
         "api.DeviceFilter": {
             deviceIds?: string[];
+            groups?: string[];
             markers?: string[];
             name?: string;
             sites?: string[];
