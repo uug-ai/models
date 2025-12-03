@@ -18,11 +18,11 @@ type Marker struct {
 	EndTimestamp   int64 `json:"endTimestamp" bson:"endTimestamp" example:"1752482079" required:"true"`     // End timestamp of the marker in seconds since epoch
 	Duration       int64 `json:"duration" bson:"duration" example:"11" required:"true"`                     // Duration of the marker in seconds
 
-	Name        string        `json:"name" bson:"name" example:"2-HCP-007" required:"true"`                                       // Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
-	Events      []MarkerEvent `json:"events,omitempty" bson:"events,omitempty"`                                                   // Events associated with the marker, such as motion detected, sound detected, etc.
-	Tags        []MarkerTag   `json:"tags,omitempty" bson:"tags,omitempty"`                                                       // Tags associated with the marker for categorization
-	Description string        `json:"description,omitempty" bson:"description,omitempty" example:"Person forcably opened a door"` // Description of the marker
-	Category    string        `json:"category,omitempty" bson:"category,omitempty" example:"security"`                            // Category of the marker e.g., "security", "access control", "intrusion", etc.
+	Name        string           `json:"name" bson:"name" example:"2-HCP-007" required:"true"`                                       // Name or identifier for the marker e.g., "a license plate (2-HCP-007), an unique identifier (transaction_id, point of sale), etc."
+	Events      []MarkerEvent    `json:"events,omitempty" bson:"events,omitempty"`                                                   // Events associated with the marker, such as motion detected, sound detected, etc.
+	Tags        []MarkerTag      `json:"tags,omitempty" bson:"tags,omitempty"`                                                       // Tags associated with the marker for categorization
+	Description string           `json:"description,omitempty" bson:"description,omitempty" example:"Person forcably opened a door"` // Description of the marker
+	Categories  []MarkerCategory `json:"categories,omitempty" bson:"categories,omitempty" example:"security"`                        // Category of the marker e.g., "security", "access control", "intrusion", etc.
 
 	// Additional metadata
 	Metadata *MarkerMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"` // Metadata associated with the marker, such as comments and tags
@@ -122,6 +122,19 @@ type MarkerTagTimeRange struct {
 	Start          int64              `json:"start,omitempty" bson:"start,omitempty"`
 	End            int64              `json:"end,omitempty" bson:"end,omitempty"`
 	DeviceId       string             `bson:"deviceId" json:"deviceId"`
+	CreatedAt      int64              `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	UpdatedAt      int64              `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+}
+
+type MarkerCategory struct {
+	Name string `json:"name,omitempty" bson:"name,omitempty" example:"security"`
+}
+
+type MarkerCategoryOption struct {
+	Id             primitive.ObjectID `json:"id" bson:"_id" example:"507f1f77bcf86cd799439011" required:"true"` // Unique identifier for the marker, generated automatically§§§
+	Value          string             `bson:"value" json:"value"`
+	Text           string             `bson:"text" json:"text"`
+	OrganisationId string             `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"` // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
 	CreatedAt      int64              `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
 	UpdatedAt      int64              `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
 }

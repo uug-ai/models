@@ -27,6 +27,10 @@ const (
 	MarkerTagBindingFailed    MarkerStatus = "marker_tag_binding_failed"
 	MarkerTagRetrievalFailed  MarkerStatus = "marker_tag_retrieval_failed"
 	MarkerTagRetrievalSuccess MarkerStatus = "marker_tag_retrieval_success"
+
+	MarkerCategoryBindingFailed    MarkerStatus = "marker_category_binding_failed"
+	MarkerCategoryRetrievalFailed  MarkerStatus = "marker_category_retrieval_failed"
+	MarkerCategoryRetrievalSuccess MarkerStatus = "marker_category_retrieval_success"
 )
 
 // String returns the string representation of the marker status
@@ -137,6 +141,11 @@ type MarkerTagFilter struct {
 	Name  *string
 }
 
+type MarkerCategoryFilter struct {
+	Names []*string
+	Name  *string
+}
+
 // GetMarkers
 // @Router /markers [get]
 type GetMarkersRequest struct {
@@ -216,5 +225,22 @@ type GetMarkerTagOptionsSuccessResponse struct {
 	Data GetMarkerTagOptionsResponse `json:"data"`
 }
 type GetMarkerTagOptionsErrorResponse struct {
+	ErrorResponse
+}
+
+// GetMarkerCategoryOptions
+// @Router /markers/categories/options [post]
+type GetMarkerCategoryOptionsRequest struct {
+	Filter     *MarkerCategoryFilter `json:"filter"`
+	Pagination *CursorPagination     `json:"pagination"`
+}
+type GetMarkerCategoryOptionsResponse struct {
+	MarkerCategories []models.MarkerCategoryOption `json:"markerCategories"`
+}
+type GetMarkerCategoryOptionsSuccessResponse struct {
+	SuccessResponse
+	Data GetMarkerCategoryOptionsResponse `json:"data"`
+}
+type GetMarkerCategoryOptionsErrorResponse struct {
 	ErrorResponse
 }
