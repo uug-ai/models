@@ -6,11 +6,13 @@ type Group struct {
 	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
 	Name        string             `json:"name" bson:"name,omitempty"`
 	Description string             `json:"description" bson:"description,omitempty"`
+	GroupType   string             `json:"group_type" bson:"group_type,omitempty"`
 
 	// RBAC information
 	OrganisationId string   `json:"organisationId" bson:"organisationId,omitempty"`
 	Devices        []string `json:"devices" bson:"devices"`
 	Groups         []string `json:"groups" bson:"groups"` // Nested groups
+	Sites          []string `json:"sites" bson:"sites"`   // Nested sites
 
 	// Media file information (by default "vault", however might change
 	// in the future (integration with other storage solutions, next to Vault).
@@ -42,4 +44,5 @@ type GroupOption struct {
 
 	Devices []string `json:"devices" bson:"devices"`
 	Groups  []string `json:"groups" bson:"groups"`
+	Sites   []string `json:"sites" bson:"sites"`
 }

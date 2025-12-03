@@ -120,10 +120,10 @@ func (ms MarkerStatus) Translate(lang string) string {
 }
 
 type MarkerFilter struct {
-	MarkerIds []*string
-	Names     []*string
-	Name      *string
-	Types     []*string
+	MarkerIds  []*string
+	Names      []*string
+	Name       *string
+	Categories []*string
 }
 
 type MarkerEventFilter struct {
