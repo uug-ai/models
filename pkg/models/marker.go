@@ -55,6 +55,7 @@ type MarkerOption struct {
 	OrganisationId string             `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"` // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
 	Value          string             `bson:"value" json:"value"`
 	Text           string             `bson:"text" json:"text"`
+	Categories     []string           `json:"categories,omitempty" bson:"categories,omitempty"`
 	CreatedAt      int64              `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
 	UpdatedAt      int64              `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
 }
