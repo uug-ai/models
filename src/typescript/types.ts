@@ -2344,6 +2344,318 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getgroupoptionserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetGroupOptionsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetGroupOptionsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetGroupOptionsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getgroupoptionsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetGroupOptionsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetGroupOptionsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetGroupOptionsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getgroupoptionsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetGroupOptionsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetGroupOptionsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetGroupOptionsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getgroupoptionssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetGroupOptionsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetGroupOptionsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetGroupOptionsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkercategoryoptionserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerCategoryOptionsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerCategoryOptionsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerCategoryOptionsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkercategoryoptionsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerCategoryOptionsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerCategoryOptionsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerCategoryOptionsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkercategoryoptionsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerCategoryOptionsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerCategoryOptionsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerCategoryOptionsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmarkercategoryoptionssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMarkerCategoryOptionsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMarkerCategoryOptionsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMarkerCategoryOptionsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getmarkereventoptionserrorresponse": {
         parameters: {
             query?: never;
@@ -3475,6 +3787,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/groupfilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GroupFilter (schema generation only)
+         * @description Internal endpoint used only to ensure GroupFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GroupFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/groupmetadata": {
         parameters: {
             query?: never;
@@ -3775,6 +4126,84 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.MarkerAtRuntimeMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/markercategoryfilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerCategoryFilter (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerCategoryFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.MarkerCategoryFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/markercategoryoption": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerCategoryOption (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerCategoryOption schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MarkerCategoryOption"];
                     };
                 };
             };
@@ -6536,6 +6965,7 @@ export interface components {
         };
         "api.DeviceFilter": {
             deviceIds?: string[];
+            groups?: string[];
             markers?: string[];
             name?: string;
             sites?: string[];
@@ -6642,6 +7072,70 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetDeviceOptionsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetGroupOptionsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetGroupOptionsRequest": {
+            filter?: components["schemas"]["api.GroupFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetGroupOptionsResponse": {
+            groups?: components["schemas"]["models.GroupOption"][];
+        };
+        "api.GetGroupOptionsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetGroupOptionsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetMarkerCategoryOptionsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetMarkerCategoryOptionsRequest": {
+            filter?: components["schemas"]["api.MarkerCategoryFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetMarkerCategoryOptionsResponse": {
+            markerCategories?: components["schemas"]["models.MarkerCategoryOption"][];
+        };
+        "api.GetMarkerCategoryOptionsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetMarkerCategoryOptionsResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -6872,16 +7366,24 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GroupFilter": {
+            groupIds?: string[];
+            name?: string;
+        };
+        "api.MarkerCategoryFilter": {
+            name?: string;
+            names?: string[];
+        };
         "api.MarkerEventFilter": {
             markerEventIds?: string[];
             name?: string;
             names?: string[];
         };
         "api.MarkerFilter": {
+            categories?: string[];
             markerIds?: string[];
             name?: string;
             names?: string[];
-            types?: string[];
         };
         "api.MarkerTagFilter": {
             name?: string;
@@ -6890,6 +7392,7 @@ export interface components {
         "api.Media2Filter": {
             devices?: string[];
             events?: string[];
+            groups?: string[];
             markers?: string[];
             regions?: string[];
             sites?: string[];
@@ -7444,6 +7947,7 @@ export interface components {
             audit?: components["schemas"]["models.Audit"];
             description?: string;
             devices?: string[];
+            group_type?: string;
             /** @description Nested groups */
             groups?: string[];
             id?: string;
@@ -7452,6 +7956,8 @@ export interface components {
             name?: string;
             /** @description RBAC information */
             organisationId?: string;
+            /** @description Nested sites */
+            sites?: string[];
             /** @description Media file information (by default "vault", however might change
              *     in the future (integration with other storage solutions, next to Vault). */
             storageSolution?: string;
@@ -7470,6 +7976,7 @@ export interface components {
         "models.GroupOption": {
             devices?: string[];
             groups?: string[];
+            sites?: string[];
             text?: string;
             value?: string;
         };
@@ -7512,6 +8019,11 @@ export interface components {
             atRuntimeMetadata?: components["schemas"]["models.MarkerAtRuntimeMetadata"];
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
+            /**
+             * @description Category of the marker e.g., "security", "access control", "intrusion", etc.
+             * @example security
+             */
+            categories?: string;
             /**
              * @description Description of the marker
              * @example Person forcably opened a door
@@ -7575,6 +8087,22 @@ export interface components {
             eventRanges?: components["schemas"]["models.MarkerEventTimeRange"][];
             markerRanges?: components["schemas"]["models.MarkerOptionTimeRange"][];
             tagRanges?: components["schemas"]["models.MarkerTagTimeRange"][];
+        };
+        "models.MarkerCategoryOption": {
+            createdAt?: number;
+            /**
+             * @description Unique identifier for the marker, generated automatically§§§
+             * @example 507f1f77bcf86cd799439011
+             */
+            id?: string;
+            /**
+             * @description OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
+             * @example 686a906345c1df594pad69f0
+             */
+            organisationId?: string;
+            text?: string;
+            updatedAt?: number;
+            value?: string;
         };
         "models.MarkerEvent": {
             /**
@@ -7658,7 +8186,6 @@ export interface components {
         };
         "models.MarkerOptionTimeRange": {
             createdAt?: number;
-            /** @description Tags associated with the event for categorization */
             deviceId?: string;
             end?: number;
             /**
@@ -8193,6 +8720,7 @@ export namespace models {
     export type Location = components['schemas']['models.Location'];
     export type Marker = components['schemas']['models.Marker'];
     export type MarkerAtRuntimeMetadata = components['schemas']['models.MarkerAtRuntimeMetadata'];
+    export type MarkerCategoryOption = components['schemas']['models.MarkerCategoryOption'];
     export type MarkerEvent = components['schemas']['models.MarkerEvent'];
     export type MarkerEventOption = components['schemas']['models.MarkerEventOption'];
     export type MarkerEventTimeRange = components['schemas']['models.MarkerEventTimeRange'];
@@ -8265,6 +8793,14 @@ export namespace api {
     export type GetDeviceOptionsRequest = components['schemas']['api.GetDeviceOptionsRequest'];
     export type GetDeviceOptionsResponse = components['schemas']['api.GetDeviceOptionsResponse'];
     export type GetDeviceOptionsSuccessResponse = components['schemas']['api.GetDeviceOptionsSuccessResponse'];
+    export type GetGroupOptionsErrorResponse = components['schemas']['api.GetGroupOptionsErrorResponse'];
+    export type GetGroupOptionsRequest = components['schemas']['api.GetGroupOptionsRequest'];
+    export type GetGroupOptionsResponse = components['schemas']['api.GetGroupOptionsResponse'];
+    export type GetGroupOptionsSuccessResponse = components['schemas']['api.GetGroupOptionsSuccessResponse'];
+    export type GetMarkerCategoryOptionsErrorResponse = components['schemas']['api.GetMarkerCategoryOptionsErrorResponse'];
+    export type GetMarkerCategoryOptionsRequest = components['schemas']['api.GetMarkerCategoryOptionsRequest'];
+    export type GetMarkerCategoryOptionsResponse = components['schemas']['api.GetMarkerCategoryOptionsResponse'];
+    export type GetMarkerCategoryOptionsSuccessResponse = components['schemas']['api.GetMarkerCategoryOptionsSuccessResponse'];
     export type GetMarkerEventOptionsErrorResponse = components['schemas']['api.GetMarkerEventOptionsErrorResponse'];
     export type GetMarkerEventOptionsRequest = components['schemas']['api.GetMarkerEventOptionsRequest'];
     export type GetMarkerEventOptionsResponse = components['schemas']['api.GetMarkerEventOptionsResponse'];
@@ -8292,6 +8828,8 @@ export namespace api {
     export type GetTimelineRequest = components['schemas']['api.GetTimelineRequest'];
     export type GetTimelineResponse = components['schemas']['api.GetTimelineResponse'];
     export type GetTimelineSuccessResponse = components['schemas']['api.GetTimelineSuccessResponse'];
+    export type GroupFilter = components['schemas']['api.GroupFilter'];
+    export type MarkerCategoryFilter = components['schemas']['api.MarkerCategoryFilter'];
     export type MarkerEventFilter = components['schemas']['api.MarkerEventFilter'];
     export type MarkerFilter = components['schemas']['api.MarkerFilter'];
     export type MarkerTagFilter = components['schemas']['api.MarkerTagFilter'];
