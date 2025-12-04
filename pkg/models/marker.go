@@ -22,7 +22,7 @@ type Marker struct {
 	Events      []MarkerEvent    `json:"events,omitempty" bson:"events,omitempty"`                                                   // Events associated with the marker, such as motion detected, sound detected, etc.
 	Tags        []MarkerTag      `json:"tags,omitempty" bson:"tags,omitempty"`                                                       // Tags associated with the marker for categorization
 	Description string           `json:"description,omitempty" bson:"description,omitempty" example:"Person forcably opened a door"` // Description of the marker
-	Categories  []MarkerCategory `json:"categories,omitempty" bson:"categories,omitempty" example:"security"`                        // Category of the marker e.g., "security", "access control", "intrusion", etc.
+	Categories  []MarkerCategory `json:"categories,omitempty" bson:"categories,omitempty"`                                           // Category of the marker e.g., "security", "object", "alert", etc.
 
 	// Additional metadata
 	Metadata *MarkerMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"` // Metadata associated with the marker, such as comments and tags
