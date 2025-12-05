@@ -64,6 +64,8 @@ type MediaMetadata struct {
 	DominantColors  []string `json:"dominantColors,omitempty" bson:"dominantColors,omitempty"`
 	Count           int      `json:"count,omitempty" bson:"count,omitempty"`
 	Embedding       []int    `json:"embedding,omitempty" bson:"embedding,omitempty"`
+
+	DeviceName string `json:"deviceName,omitempty" bson:"deviceName,omitempty"`
 }
 
 // MediaAtRuntimeMetadata contains metadata that is generated at runtime, which can include
