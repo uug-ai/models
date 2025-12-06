@@ -1,12 +1,12 @@
 package models
 
-
 type Health struct {
 
+	// Health status fields
 	Description string `json:"description,omitempty" bson:"description,omitempty"`
-	Database	string `json:"database,omitempty" bson:"database,omitempty"`
-	Queue		string `json:"queue,omitempty" bson:"queue,omitempty"`
-	License		string `json:"license,omitempty" bson:"license,omitempty"`
+	Database    bool   `json:"database,omitempty" bson:"database,omitempty"`
+	Queue       bool   `json:"queue,omitempty" bson:"queue,omitempty"`
+	License     bool   `json:"license,omitempty" bson:"license,omitempty"`
 
 	// Additional metadata
 	Metadata *HealthMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"` // Metadata associated with the health, such as comments and tags
@@ -28,5 +28,4 @@ type HealthMetadata struct {
 }
 
 type HealthAtRuntimeMetadata struct {
-	
 }
