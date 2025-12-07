@@ -9,9 +9,9 @@ env:
   ORGANIZATION: uug-ai
   PROJECT: ${{ github.event.repository.name }}
   GO_VERSION: "1.24"
+  GO_DIR : "./"
   NODE_VERSION: "18"
   NODE_REGISTRY_URL: "https://registry.npmjs.org/"
-  GO_DIR : "./"
 
 jobs:
 
