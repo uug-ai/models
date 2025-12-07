@@ -97,36 +97,64 @@ func CreateError(httpStatusCode int, applicationStatusCode string, entityStatusC
 	}
 }
 
-// Logging functions for success and error responses
-func LogInfo(logger *logrus.Logger, entityStatusCode EntityStatus, metadata Metadata) {
-	metadata.Timestamp = time.Now().Unix()
-	logger.WithFields(logrus.Fields{
-		"httpStatusCode":        0,
+func CreateSuccessLog(logger *logrus.Logger, successResponse SuccessResponse, data interface{}) logrus.Fields {
+	data = redactDataForLogging(data)
+	return logrus.Fields{
+		"httpStatusCode":        successResponse.HttpStatusCode,
 		"applicationStatusCode": ApplicationStatusSuccess,
-		"entityStatusCode":      entityStatusCode.String(),
-		"message":               entityStatusCode.Translate(metadata.Language),
-		"metadata":              metadata,
-	}).Info()
+		"entityStatusCode":      successResponse.EntityStatusCode,
+		"message":               successResponse.Message,
+		"metadata":              successResponse.Metadata,
+		"data":                  data,
+	}
 }
 
-func LogError(logger *logrus.Logger, entityStatusCode EntityStatus, metadata Metadata) {
-	metadata.Timestamp = time.Now().Unix()
-	logger.WithFields(logrus.Fields{
-		"httpStatusCode":        0,
+func CreateErrorLog(logger *logrus.Logger, errorResponse ErrorResponse) logrus.Fields {
+	return logrus.Fields{
+		"httpStatusCode":        errorResponse.HttpStatusCode,
 		"applicationStatusCode": ApplicationStatusError,
-		"entityStatusCode":      entityStatusCode.String(),
-		"message":               entityStatusCode.Translate(metadata.Language),
-		"metadata":              metadata,
-	}).Error()
+		"entityStatusCode":      errorResponse.EntityStatusCode,
+		"message":               errorResponse.Message,
+		"metadata":              errorResponse.Metadata,
+	}
 }
 
-func LogDebug(logger *logrus.Logger, entityStatusCode EntityStatus, metadata Metadata) {
-	metadata.Timestamp = time.Now().Unix()
-	logger.WithFields(logrus.Fields{
-		"httpStatusCode":        0,
-		"applicationStatusCode": ApplicationStatusSuccess,
-		"entityStatusCode":      entityStatusCode.String(),
-		"message":               entityStatusCode.Translate(metadata.Language),
-		"metadata":              metadata,
-	}).Debug()
+// Logging functions for success and error responses
+func LogInfo(logger *logrus.Logger, successResponse SuccessResponse, data interface{}) {
+	logger.WithFields(CreateSuccessLog(logger, successResponse, data)).Info()
+}
+
+func LogDebug(logger *logrus.Logger, successResponse SuccessResponse, data interface{}) {
+	logger.WithFields(CreateSuccessLog(logger, successResponse, data)).Debug()
+}
+
+func LogError(logger *logrus.Logger, errorResponse ErrorResponse) {
+	logger.WithFields(CreateErrorLog(logger, errorResponse)).Error()
+}
+
+// redactDataForLogging truncates strings longer than 50 characters to prevent excessive logging
+func redactDataForLogging(data interface{}) interface{} {
+	const maxLength = 50
+
+	switch v := data.(type) {
+	case string:
+		if len(v) > maxLength {
+			return v[:maxLength] + "... [REDACTED]"
+		}
+		return v
+	case map[string]interface{}:
+		redacted := make(map[string]interface{})
+		for key, val := range v {
+			redacted[key] = redactDataForLogging(val)
+		}
+		return redacted
+	case []interface{}:
+		redacted := make([]interface{}, len(v))
+		for i, val := range v {
+			redacted[i] = redactDataForLogging(val)
+		}
+		return redacted
+	default:
+		return v
+	}
 }
