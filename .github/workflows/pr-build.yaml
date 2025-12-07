@@ -30,14 +30,14 @@ jobs:
           cache-dependency-path: |
             go.sum
 
+      - name: Install swag
+        run: go install github.com/swaggo/swag/cmd/swag@latest  
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '${{ env.NODE_VERSION }}'
           registry-url: '${{ env.NODE_REGISTRY_URL }}'
-          
-      - name: Install swag
-        run: go install github.com/swaggo/swag/cmd/swag@latest  
           
       - name: Install dependencies
         working-directory: ./src/typescript
@@ -95,49 +95,6 @@ jobs:
           cache-dependency-path: |
             go.sum
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '${{ env.NODE_VERSION }}'
-          registry-url: '${{ env.NODE_REGISTRY_URL }}'
-          
-      - name: Install swag
-        run: go install github.com/swaggo/swag/cmd/swag@latest  
-          
-      - name: Install dependencies
-        working-directory: ./src/typescript
-        run: npm ci
-             
-      - name: Generate types
-        run: npm run generate
-
-      - name: Build TypeScript
-        working-directory: ./src/typescript
-        run: npm run build
-        
-      - name: Update package version
-        working-directory: ./src/typescript
-        run: |
-          if [ "${{ github.event_name }}" = "release" ]; then
-            # Use release tag version
-            RELEASE_VERSION=${GITHUB_REF#refs/tags/}
-            RELEASE_VERSION=${RELEASE_VERSION#v}
-            echo "Setting version from release tag: $RELEASE_VERSION"
-            npm version $RELEASE_VERSION --no-git-tag-version
-          else
-            # Manual dispatch - check if it's a semver bump or specific version
-            VERSION_INPUT="${{ github.event.inputs.version_bump }}"
-            if [[ "$VERSION_INPUT" =~ ^[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then
-              # Specific version provided
-              echo "Setting specific version: $VERSION_INPUT"
-              npm version $VERSION_INPUT --no-git-tag-version
-            else
-              # Semver bump (patch, minor, major)
-              echo "Bumping version: $VERSION_INPUT"
-              npm version $VERSION_INPUT --no-git-tag-version
-            fi
-          fi
-
       # Test the Golang application
       - name: Test Golang application
         run: |
@@ -145,11 +102,11 @@ jobs:
           go fmt $(go list ./... | grep -v /vendor/)
           go vet $(go list ./... | grep -v /vendor/)
           go test -race $(go list ./... | grep -v /vendor/)
-      # Build the Golang application to the dist folder
+      # Build the Golang application 
       - name: Build Golang application
         run: |
           git config --global url."https://${{ secrets.USERNAME }}:${{ secrets.TOKEN }}@github.com/".insteadOf "https://github.com/"
-          go build -o main
+          go build cmd/main.go
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
         with:
