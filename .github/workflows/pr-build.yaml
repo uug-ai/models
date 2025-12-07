@@ -106,7 +106,7 @@ jobs:
       - name: Build Golang application
         run: |
           git config --global url."https://${{ secrets.USERNAME }}:${{ secrets.TOKEN }}@github.com/".insteadOf "https://github.com/"
-          go build cmd/main.go
+          go build -o main
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
         with:
