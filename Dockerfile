@@ -1,5 +1,4 @@
 FROM mcr.microsoft.com/devcontainers/go:1.24-bookworm AS builder
-LABEL AUTHOR=uug.ai
 
 ENV GOROOT=/usr/local/go
 ENV GOPATH=/go
@@ -50,6 +49,8 @@ RUN /dist/models/main
 # Final image stage
 
 FROM alpine:latest
+LABEL org.opencontainers.image.source https://github.com/uug-ai/models
+LABEL AUTHOR=uug.ai
 
 ############################
 # Protect by non-root user.
