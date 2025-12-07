@@ -14,7 +14,8 @@ const (
 	RabbitMQChannelDoesNotExist  RabbitMQStatus = "rabbitmq_channel_does_not_exist"
 	RabbitMQFailedToConsume      RabbitMQStatus = "rabbitmq_failed_to_consume"
 	RabbitMQFailedToPublish      RabbitMQStatus = "rabbitmq_failed_to_publish"
-	RabbitMMessagePublished      RabbitMQStatus = "rabbitmq_message_published"
+	RabbitMQMessagePublished     RabbitMQStatus = "rabbitmq_message_published"
+	RabbitMQFailedToDeclareQueue RabbitMQStatus = "rabbitmq_failed_to_declare_queue"
 )
 
 // String returns the string representation of the RabbitMQ status
@@ -35,6 +36,7 @@ func (rs RabbitMQStatus) Translate(lang string) string {
 			RabbitMQChannelDoesNotExist:  "RabbitMQ channel does not exist",
 			RabbitMQFailedToConsume:      "RabbitMQ failed to consume message",
 			RabbitMQFailedToPublish:      "RabbitMQ failed to publish message",
+			RabbitMQFailedToDeclareQueue: "RabbitMQ failed to declare queue",
 		},
 	}
 

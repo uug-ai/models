@@ -1,0 +1,123 @@
+name: Create a new release
+on:
+  release:
+    types: [created]
+
+env:
+
+  # Build variables
+  ORGANIZATION: uug-ai
+  PROJECT: ${{ github.event.repository.name }}
+  GO_VERSION: "1.24"
+  GO_DIR : "./"
+
+jobs:
+
+  build-golang:
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: write
+      packages: write
+    strategy:
+      matrix:
+        include:
+          - architecture: amd64
+            runner: ubuntu-24.04
+          - architecture: arm64
+            runner: sh-ubuntu-24.04-arm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.TOKEN }}
+      - name: Run Build
+        run: |
+          docker build -t ${{matrix.architecture}} \
+          --build-arg github_username=${{ secrets.USERNAME }} \
+          --build-arg github_token=${{ secrets.TOKEN }} .
+
+      - name: Build and push Docker image
+        run: |
+          docker tag ${{matrix.architecture}} ghcr.io/$ORGANIZATION/$PROJECT-platform:${{matrix.architecture}}-${{github.event.inputs.tag || github.ref_name}}
+          docker push ghcr.io/$ORGANIZATION/$PROJECT-platform:${{matrix.architecture}}-${{github.event.inputs.tag || github.ref_name}}
+
+  create-manifest:
+    runs-on: ubuntu-24.04
+    needs: [build-golang]
+    permissions:
+      packages: write
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.TOKEN }}
+      - name: Wait for image propagation
+        run: sleep 10
+      - name: Create and push multi-arch manifest
+        run: |
+          docker manifest create ghcr.io/$ORGANIZATION/$PROJECT:${{ github.event.inputs.tag || github.ref_name }} \
+            ghcr.io/$ORGANIZATION/$PROJECT-platform:amd64-${{github.event.inputs.tag || github.ref_name}} \
+            ghcr.io/$ORGANIZATION/$PROJECT-platform:arm64-${{github.event.inputs.tag || github.ref_name}}
+          docker manifest push ghcr.io/$ORGANIZATION/$PROJECT:${{ github.event.inputs.tag || github.ref_name }}
+      - name: Create and push latest manifest
+        run: |
+          docker manifest create ghcr.io/$ORGANIZATION/$PROJECT:latest \
+            ghcr.io/$ORGANIZATION/$PROJECT-platform:amd64-${{github.event.inputs.tag || github.ref_name}} \
+            ghcr.io/$ORGANIZATION/$PROJECT-platform:arm64-${{github.event.inputs.tag || github.ref_name}}
+          docker manifest push ghcr.io/$ORGANIZATION/$PROJECT:latest
+
+  publish-npm:
+    runs-on: ubuntu-24.04
+    needs: [create-manifest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+          
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Install swag
+        run: go install github.com/swaggo/swag/cmd/swag@latest  
+          
+      - name: Install dependencies
+        working-directory: ./src/typescript
+        run: npm ci
+             
+      - name: Generate openapi
+        run: npm run generate:openapi
+
+      - name: Generate types
+        run: npm run generate:types
+
+      - name: Build TypeScript
+        run: npm run build
+        
+      - name: Update package version
+        working-directory: ./src/typescript
+        run: |
+          RELEASE_VERSION=${GITHUB_REF#refs/tags/}
+          RELEASE_VERSION=${RELEASE_VERSION#v}
+          echo "Setting version from release tag: $RELEASE_VERSION"
+          npm version $RELEASE_VERSION --no-git-tag-version
+          
+      - name: Authenticate with NPM
+        working-directory: ./src/typescript
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_ACCESS_TOKEN }}" > .npmrc
+
+      - name: Publish to NPM
+        working-directory: ./src/typescript
+        run: npm publish

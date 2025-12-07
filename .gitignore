@@ -16,3 +16,4 @@ cmd/main.go
 .DS_Store
 Thumbs.db
 
+main 
