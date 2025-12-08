@@ -74,8 +74,11 @@ type MarkerOptionTimeRange struct {
 
 /* Marker Event */
 type MarkerEvent struct { // Unique identifier for the event, generated automatically
-	Timestamp   int64    `json:"timestamp" bson:"timestamp" example:"1752482070" required:"true"`                                // Timestamp of the event in seconds since epoch
-	Name        string   `json:"name,omitempty" bson:"name,omitempty" example:"Motion Detected"`                                 // Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
+		StartTimestamp int64 `json:"startTimestamp" bson:"startTimestamp" example:"1752482068" required:"true"` // Start timestamp of the marker in seconds since epoch
+	EndTimestamp   int64 `json:"endTimestamp" bson:"endTimestamp" example:"1752482079" required:"true"`     // End timestamp of the marker in seconds since epoch
+	Duration       int64 `json:"duration" bson:"duration" example:"11" required:"true"`                     // Duration of the marker in seconds
+Name        string   `json:"name,omitempty" bson:"name,omitempty" example:"Motion Detected"`                                 // Name or identifier for the event e.g., "Motion Detected", "Sound Detected", etc.
+
 	Description string   `json:"description,omitempty" bson:"description,omitempty" example:"Motion detected in the lobby area"` // Description of the event
 	Tags        []string `json:"tags,omitempty" bson:"tags,omitempty" example:"[\"urgent\",\"review-needed\"]"`                  // Tags associated with the event for categorization
 }
