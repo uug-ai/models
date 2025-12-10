@@ -87,7 +87,7 @@ type Media2Filter struct {
 	Markers    []*string           `json:"markers,omitempty" bson:"markers,omitempty"`
 	Events     []*string           `json:"events,omitempty" bson:"events,omitempty"`
 	Tags       []*string           `json:"tags,omitempty" bson:"tags,omitempty"`
-	Regions    []*string           `json:"regions,omitempty" bson:"regions,omitempty"`
+	Regions    []*models.Region    `json:"regions,omitempty" bson:"regions,omitempty"`
 	Starred    *bool               `json:"starred,omitempty" bson:"starred,omitempty"`
 	SortBy     *string             `json:"sortBy,omitempty" bson:"sortBy,omitempty"`
 }

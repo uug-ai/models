@@ -12,7 +12,8 @@
 			"extensions": [
 				"GitHub.copilot",
 				"ms-azuretools.vscode-docker",
-				"mongodb.mongodb-vscode"
+				"mongodb.mongodb-vscode",
+				"eamodio.gitlens"
 			]
 		}
 	}
