@@ -128,17 +128,23 @@ type MarkerFilter struct {
 	Names      []*string
 	Name       *string
 	Categories []*string
+	DeviceKeys []*string
+	TimeRanges []*models.TimeRange
 }
 
 type MarkerEventFilter struct {
 	MarkerEventIds []*string
 	Names          []*string
 	Name           *string
+	DeviceKeys     []*string
+	TimeRanges     []*models.TimeRange
 }
 
 type MarkerTagFilter struct {
-	Names []*string
-	Name  *string
+	Names      []*string
+	Name       *string
+	DeviceKeys []*string
+	TimeRanges []*models.TimeRange
 }
 
 type MarkerCategoryFilter struct {
