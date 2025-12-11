@@ -9108,9 +9108,11 @@ export interface components {
             names?: string[];
         };
         "api.MarkerEventFilter": {
+            deviceKeys?: string[];
             markerEventIds?: string[];
             name?: string;
             names?: string[];
+            timeRanges?: components["schemas"]["models.TimeRange"][];
         };
         "api.MarkerFilter": {
             categories?: string[];
@@ -9118,10 +9120,13 @@ export interface components {
             markerIds?: string[];
             name?: string;
             names?: string[];
+            timeRanges?: components["schemas"]["models.TimeRange"][];
         };
         "api.MarkerTagFilter": {
+            deviceKeys?: string[];
             name?: string;
             names?: string[];
+            timeRanges?: components["schemas"]["models.TimeRange"][];
         };
         "api.Media2Filter": {
             devices?: string[];

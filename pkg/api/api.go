@@ -9,12 +9,15 @@ import (
 
 // https://pkg.go.dev/net/http#pkg-constants
 const (
+	HttpNoStatus                  int = 0
 	HttpStatusOK                  int = http.StatusOK
 	HttpStatusCreated             int = http.StatusCreated
 	HttpStatusUnauthorized        int = http.StatusUnauthorized
 	HttpStatusBadRequest          int = http.StatusBadRequest
 	HttpStatusInternalServerError int = http.StatusInternalServerError
 	HttpStatusNotFound            int = http.StatusNotFound
+	HttpStatusServiceUnavailable  int = http.StatusServiceUnavailable
+	HttpStatusGone                int = http.StatusGone
 )
 
 // Custom status codes for specific operations
@@ -77,6 +80,23 @@ func CreateSuccess(httpStatusCode int, applicationStatusCode string, entityStatu
 	}
 }
 
+func CreateSuccessLog(logger *logrus.Logger, successResponse SuccessResponse, data interface{}) logrus.Fields {
+	data = redactDataForLogging(data)
+	return logrus.Fields{
+		"httpStatusCode":        successResponse.HttpStatusCode,
+		"applicationStatusCode": successResponse.ApplicationStatusCode,
+		"entityStatusCode":      successResponse.EntityStatusCode,
+		"message":               successResponse.Message,
+		"metadata":              successResponse.Metadata,
+		"data":                  data,
+	}
+}
+
+// Logging functions for success and error responses
+func LogInfo(logger *logrus.Logger, successResponse SuccessResponse, data interface{}) {
+	logger.WithFields(CreateSuccessLog(logger, successResponse, data)).Info()
+}
+
 // ErrorResponse represents a standard error response structure.
 type ErrorResponse struct {
 	HttpStatusCode        int      `json:"httpStatusCode,omitempty" bson:"httpStatusCode,omitempty"`               // HTTP status code for the error
@@ -97,18 +117,6 @@ func CreateError(httpStatusCode int, applicationStatusCode string, entityStatusC
 	}
 }
 
-func CreateSuccessLog(logger *logrus.Logger, successResponse SuccessResponse, data interface{}) logrus.Fields {
-	data = redactDataForLogging(data)
-	return logrus.Fields{
-		"httpStatusCode":        successResponse.HttpStatusCode,
-		"applicationStatusCode": ApplicationStatusSuccess,
-		"entityStatusCode":      successResponse.EntityStatusCode,
-		"message":               successResponse.Message,
-		"metadata":              successResponse.Metadata,
-		"data":                  data,
-	}
-}
-
 func CreateErrorLog(logger *logrus.Logger, errorResponse ErrorResponse) logrus.Fields {
 	return logrus.Fields{
 		"httpStatusCode":        errorResponse.HttpStatusCode,
@@ -119,17 +127,182 @@ func CreateErrorLog(logger *logrus.Logger, errorResponse ErrorResponse) logrus.F
 	}
 }
 
-// Logging functions for success and error responses
-func LogInfo(logger *logrus.Logger, successResponse SuccessResponse, data interface{}) {
-	logger.WithFields(CreateSuccessLog(logger, successResponse, data)).Info()
-}
-
-func LogDebug(logger *logrus.Logger, successResponse SuccessResponse, data interface{}) {
-	logger.WithFields(CreateSuccessLog(logger, successResponse, data)).Debug()
-}
-
 func LogError(logger *logrus.Logger, errorResponse ErrorResponse) {
 	logger.WithFields(CreateErrorLog(logger, errorResponse)).Error()
+}
+
+// Debug
+type DebugResponse struct {
+	HttpStatusCode        int      `json:"httpStatusCode,omitempty" bson:"httpStatusCode,omitempty"`               // HTTP status code for the error
+	ApplicationStatusCode string   `json:"applicationStatusCode,omitempty" bson:"applicationStatusCode,omitempty"` // Application-specific error code
+	EntityStatusCode      string   `json:"entityStatusCode,omitempty" bson:"entityStatusCode,omitempty"`           // Entity-specific error code
+	Message               string   `json:"message,omitempty" bson:"message,omitempty"`                             // Error message describing the issue
+	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
+}
+
+func CreateDebug(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) DebugResponse {
+	metadata.Timestamp = time.Now().Unix()
+	return DebugResponse{
+		HttpStatusCode:        httpStatusCode,
+		ApplicationStatusCode: applicationStatusCode,
+		EntityStatusCode:      entityStatusCode.String(),
+		Message:               entityStatusCode.Translate(metadata.Language),
+		Metadata:              metadata,
+	}
+}
+
+func CreateDebugLog(logger *logrus.Logger, debugResponse DebugResponse) logrus.Fields {
+	return logrus.Fields{
+		"httpStatusCode":        debugResponse.HttpStatusCode,
+		"applicationStatusCode": debugResponse.ApplicationStatusCode,
+		"entityStatusCode":      debugResponse.EntityStatusCode,
+		"message":               debugResponse.Message,
+		"metadata":              debugResponse.Metadata,
+	}
+}
+
+func LogDebug(logger *logrus.Logger, debugResponse DebugResponse, data interface{}) {
+	logger.WithFields(CreateDebugLog(logger, debugResponse)).Debug()
+}
+
+// Trace
+
+type TraceResponse struct {
+	HttpStatusCode        int      `json:"httpStatusCode,omitempty" bson:"httpStatusCode,omitempty"`               // HTTP status code for the error
+	ApplicationStatusCode string   `json:"applicationStatusCode,omitempty" bson:"applicationStatusCode,omitempty"` // Application-specific error code
+	EntityStatusCode      string   `json:"entityStatusCode,omitempty" bson:"entityStatusCode,omitempty"`           // Entity-specific error code
+	Message               string   `json:"message,omitempty" bson:"message,omitempty"`                             // Error message describing the issue
+	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
+}
+
+func CreateTrace(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) TraceResponse {
+	metadata.Timestamp = time.Now().Unix()
+	return TraceResponse{
+		HttpStatusCode:        httpStatusCode,
+		ApplicationStatusCode: applicationStatusCode,
+		EntityStatusCode:      entityStatusCode.String(),
+		Message:               entityStatusCode.Translate(metadata.Language),
+		Metadata:              metadata,
+	}
+}
+
+func CreateTraceLog(logger *logrus.Logger, traceResponse TraceResponse) logrus.Fields {
+	return logrus.Fields{
+		"httpStatusCode":        traceResponse.HttpStatusCode,
+		"applicationStatusCode": traceResponse.ApplicationStatusCode,
+		"entityStatusCode":      traceResponse.EntityStatusCode,
+		"message":               traceResponse.Message,
+		"metadata":              traceResponse.Metadata,
+	}
+}
+
+func LogTrace(logger *logrus.Logger, traceResponse TraceResponse, data interface{}) {
+	logger.WithFields(CreateTraceLog(logger, traceResponse)).Trace()
+}
+
+// Warning
+
+type WarningResponse struct {
+	HttpStatusCode        int      `json:"httpStatusCode,omitempty" bson:"httpStatusCode,omitempty"`               // HTTP status code for the error
+	ApplicationStatusCode string   `json:"applicationStatusCode,omitempty" bson:"applicationStatusCode,omitempty"` // Application-specific error code
+	EntityStatusCode      string   `json:"entityStatusCode,omitempty" bson:"entityStatusCode,omitempty"`           // Entity-specific error code
+	Message               string   `json:"message,omitempty" bson:"message,omitempty"`                             // Error message describing the issue
+	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
+}
+
+func CreateWarning(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) WarningResponse {
+	metadata.Timestamp = time.Now().Unix()
+	return WarningResponse{
+		HttpStatusCode:        httpStatusCode,
+		ApplicationStatusCode: applicationStatusCode,
+		EntityStatusCode:      entityStatusCode.String(),
+		Message:               entityStatusCode.Translate(metadata.Language),
+		Metadata:              metadata,
+	}
+}
+
+func CreateWarningLog(logger *logrus.Logger, warningResponse WarningResponse) logrus.Fields {
+	return logrus.Fields{
+		"httpStatusCode":        warningResponse.HttpStatusCode,
+		"applicationStatusCode": warningResponse.ApplicationStatusCode,
+		"entityStatusCode":      warningResponse.EntityStatusCode,
+		"message":               warningResponse.Message,
+		"metadata":              warningResponse.Metadata,
+	}
+}
+
+func LogWarning(logger *logrus.Logger, warningResponse WarningResponse, data interface{}) {
+	logger.WithFields(CreateWarningLog(logger, warningResponse)).Warning()
+}
+
+// Fatal
+
+type FatalResponse struct {
+	HttpStatusCode        int      `json:"httpStatusCode,omitempty" bson:"httpStatusCode,omitempty"`               // HTTP status code for the error
+	ApplicationStatusCode string   `json:"applicationStatusCode,omitempty" bson:"applicationStatusCode,omitempty"` // Application-specific error code
+	EntityStatusCode      string   `json:"entityStatusCode,omitempty" bson:"entityStatusCode,omitempty"`           // Entity-specific error code
+	Message               string   `json:"message,omitempty" bson:"message,omitempty"`                             // Error message describing the issue
+	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
+}
+
+func CreateFatal(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) FatalResponse {
+	metadata.Timestamp = time.Now().Unix()
+	return FatalResponse{
+		HttpStatusCode:        httpStatusCode,
+		ApplicationStatusCode: applicationStatusCode,
+		EntityStatusCode:      entityStatusCode.String(),
+		Message:               entityStatusCode.Translate(metadata.Language),
+		Metadata:              metadata,
+	}
+}
+
+func CreateFatalLog(logger *logrus.Logger, fatalResponse FatalResponse) logrus.Fields {
+	return logrus.Fields{
+		"httpStatusCode":        fatalResponse.HttpStatusCode,
+		"applicationStatusCode": fatalResponse.ApplicationStatusCode,
+		"entityStatusCode":      fatalResponse.EntityStatusCode,
+		"message":               fatalResponse.Message,
+		"metadata":              fatalResponse.Metadata,
+	}
+}
+
+func LogFatal(logger *logrus.Logger, fatalResponse FatalResponse, data interface{}) {
+	logger.WithFields(CreateFatalLog(logger, fatalResponse)).Fatal()
+}
+
+// Panic
+
+type PanicResponse struct {
+	HttpStatusCode        int      `json:"httpStatusCode,omitempty" bson:"httpStatusCode,omitempty"`               // HTTP status code for the error
+	ApplicationStatusCode string   `json:"applicationStatusCode,omitempty" bson:"applicationStatusCode,omitempty"` // Application-specific error code
+	EntityStatusCode      string   `json:"entityStatusCode,omitempty" bson:"entityStatusCode,omitempty"`           // Entity-specific error code
+	Message               string   `json:"message,omitempty" bson:"message,omitempty"`                             // Error message describing the issue
+	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
+}
+
+func CreatePanic(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) PanicResponse {
+	metadata.Timestamp = time.Now().Unix()
+	return PanicResponse{
+		HttpStatusCode:        httpStatusCode,
+		ApplicationStatusCode: applicationStatusCode,
+		EntityStatusCode:      entityStatusCode.String(),
+		Message:               entityStatusCode.Translate(metadata.Language),
+		Metadata:              metadata,
+	}
+}
+
+func CreatePanicLog(logger *logrus.Logger, panicResponse PanicResponse) logrus.Fields {
+	return logrus.Fields{
+		"httpStatusCode":        panicResponse.HttpStatusCode,
+		"applicationStatusCode": panicResponse.ApplicationStatusCode,
+		"entityStatusCode":      panicResponse.EntityStatusCode,
+		"message":               panicResponse.Message,
+		"metadata":              panicResponse.Metadata,
+	}
+}
+
+func LogPanic(logger *logrus.Logger, panicResponse PanicResponse, data interface{}) {
+	logger.WithFields(CreatePanicLog(logger, panicResponse)).Panic()
 }
 
 // redactDataForLogging truncates strings longer than 50 characters to prevent excessive logging

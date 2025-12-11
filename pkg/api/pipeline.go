@@ -2,6 +2,23 @@ package api
 
 import "github.com/uug-ai/models/pkg/models"
 
+const (
+	PipelineStarted         string = "pipeline_started"
+	PipelineInProgress      string = "pipeline_in_progress"
+	PipelineCompleted       string = "pipeline_completed"
+	PipelineFailed          string = "pipeline_failed"
+	PipelineCancelled       string = "pipeline_cancelled"
+	PipelinePending         string = "pipeline_pending"
+	PipelineRetrying        string = "pipeline_retrying"
+	PipelinePaused          string = "pipeline_paused"
+	PipelineResumed         string = "pipeline_resumed"
+	PipelineValidationError string = "pipeline_validation_error"
+	PipelineError           string = "pipeline_error"
+	PipelineInfo            string = "pipeline_info"
+	PipelineDebug           string = "pipeline_debug"
+	PipelineWarning         string = "pipeline_warning"
+)
+
 type RabbitMQStatus string
 
 const (
@@ -203,4 +220,125 @@ func (rs RedactionStatus) Translate(lang string) string {
 
 type RedactionEvent struct {
 	AllFrameCoordinates map[string][]models.TrackBox `json:"allFrameCoordinates"`
+}
+
+// --- NOTIFICATIONS ---
+
+type NotificationStatus string
+
+const (
+	// Queue status codes
+	NotificationQueueStarted    NotificationStatus = "Notification_queue_started"
+	NotificationQueueSubscribed NotificationStatus = "Notification_queue_subscribed"
+	NotificationQueueFailed     NotificationStatus = "Notification_queue_failed"
+	NotificationQueueCompleted  NotificationStatus = "Notification_queue_completed"
+
+	// Trace status codes
+	NotificationTracingStarted   NotificationStatus = "Notification_tracing_started"
+	NotificationTracingCompleted NotificationStatus = "Notification_tracing_completed"
+	NotificationTracingFailed    NotificationStatus = "Notification_tracing_failed"
+
+	// Stage status codes
+	NotificationStageStart           NotificationStatus = "Notification_stage_start"
+	NotificationStageEnd             NotificationStatus = "Notification_stage_end"
+	NotificationStageMissing         NotificationStatus = "Notification_stage_missing"
+	NotificationUserNotFound         NotificationStatus = "Notification_user_not_found"
+	NotificationOrganizationNotFound NotificationStatus = "Notification_organization_not_found"
+	NotificationMonitorStageMissing  NotificationStatus = "Notification_monitor_stage_missing"
+
+	// Internal status codes
+	NotificationExpired                  NotificationStatus = "Notification_expired"
+	NotificationSequenceDecodeFailed     NotificationStatus = "Notification_sequence_decode_failed"
+	NotificationDecodeFailed             NotificationStatus = "Notification_decode_failed"
+	NotificationAlreadySent              NotificationStatus = "Notification_already_sent"
+	NotificationSiteNotFound             NotificationStatus = "Notification_site_not_found"
+	NotificationSiteDecodeFailed         NotificationStatus = "Notification_site_decode_failed"
+	NotificationGroupNotFound            NotificationStatus = "Notification_group_not_found"
+	NotificationGroupDecodeFailed        NotificationStatus = "Notification_group_decode_failed"
+	NotificationAlertNotFound            NotificationStatus = "Notification_alert_not_found"
+	NotificationAlertDecodeFailed        NotificationStatus = "Notification_alert_decode_failed"
+	NotificationFindingCustomAlerts      NotificationStatus = "Notification_finding_custom_alerts"
+	NotificationProcessingCustomAlert    NotificationStatus = "Notification_processing_custom_alert"
+	NotificationAlertDisabled            NotificationStatus = "Notification_alert_disabled"
+	NotificationMediaInSequenceNotFound  NotificationStatus = "Notification_media_in_sequence_not_found"
+	NotificationSelectedIONotActive      NotificationStatus = "Notification_selected_io_not_active"
+	NotificationInvalidClassification    NotificationStatus = "Notification_invalid_classification"
+	NotificationInvalidTimeInterval      NotificationStatus = "Notification_invalid_time_interval"
+	NotificationNoFrameDimensionsDefined NotificationStatus = "Notification_no_frame_dimensions_defined"
+	NotificationNotClassifyOperation     NotificationStatus = "Notification_not_classify_operation"
+	NotificationNoDeviceSelected         NotificationStatus = "Notification_no_device_selected"
+	NotificationNoRegionMatched          NotificationStatus = "Notification_no_region_matched"
+	NotificationNoValidCountingFound     NotificationStatus = "Notification_no_valid_counting_found"
+	NotificationSkippingInvalidCounting  NotificationStatus = "Notification_skipping_invalid_counting"
+	NotificationSendingNotification      NotificationStatus = "Notification_sending_notification"
+	NotificationSendingToChannels        NotificationStatus = "Notification_sending_to_channels"
+	NotificationUpdateSequenceFailed     NotificationStatus = "Notification_update_sequence_failed"
+	NotificationCustomAlertCompleted     NotificationStatus = "Notification_custom_alert_completed"
+	NotificationStartingGenericAlerts    NotificationStatus = "Notification_starting_generic_alerts"
+	NotificationGenericAlertNotEnabled   NotificationStatus = "Notification_generic_alert_not_enabled"
+)
+
+// String returns the string representation of the Notification status
+func (ms NotificationStatus) String() string {
+	return string(ms)
+}
+
+// Translate returns the translated string representation of the Notification status in the specified language
+func (ms NotificationStatus) Translate(lang string) string {
+	translations := map[string]map[NotificationStatus]string{
+		"en": {
+			NotificationStageStart:           "Starting Notification stage",
+			NotificationStageEnd:             "Notification stage completed",
+			NotificationStageMissing:         "Notification stage missing",
+			NotificationUserNotFound:         "User not found during Notification stage",
+			NotificationOrganizationNotFound: "Organization not found during Notification stage",
+
+			NotificationMonitorStageMissing:      "Monitor stage missing during Notification stage",
+			NotificationExpired:                  "Notification too old, has expired",
+			NotificationSequenceDecodeFailed:     "Failed to decode notification sequence",
+			NotificationDecodeFailed:             "Failed to decode notification",
+			NotificationAlreadySent:              "Notification has already been sent",
+			NotificationSiteNotFound:             "Site not found during Notification stage",
+			NotificationSiteDecodeFailed:         "Failed to decode site information",
+			NotificationGroupNotFound:            "Group not found during Notification stage",
+			NotificationGroupDecodeFailed:        "Failed to decode group information",
+			NotificationAlertNotFound:            "Alert not found during Notification stage",
+			NotificationAlertDecodeFailed:        "Failed to decode alert information",
+			NotificationFindingCustomAlerts:      "Finding custom alerts for notification",
+			NotificationProcessingCustomAlert:    "Processing custom alert for notification",
+			NotificationAlertDisabled:            "Alert is disabled, notification not sent",
+			NotificationMediaInSequenceNotFound:  "Media in sequence not found during Notification stage",
+			NotificationSelectedIONotActive:      "Selected IO is not active during Notification stage",
+			NotificationInvalidClassification:    "Invalid classification for notification",
+			NotificationInvalidTimeInterval:      "Invalid time interval for notification",
+			NotificationNoFrameDimensionsDefined: "No frameWidth/frameHeight defined make sure the Kerberos Hub detector is running the right version.",
+			NotificationNotClassifyOperation:     "Operation is not a classify operation for notification",
+			NotificationNoDeviceSelected:         "No device selected or device was not in the selection.",
+			NotificationNoRegionMatched:          "No region matched for notification",
+			NotificationNoValidCountingFound:     "No valid counting found for notification",
+			NotificationSkippingInvalidCounting:  "Skipping invalid counting for notification",
+			NotificationSendingNotification:      "Sending notification",
+			NotificationSendingToChannels:        "Sending notification to channels",
+			NotificationUpdateSequenceFailed:     "Failed to update notification sequence",
+			NotificationCustomAlertCompleted:     "Custom alert notification completed",
+			NotificationStartingGenericAlerts:    "Starting generic alerts for notification",
+			NotificationGenericAlertNotEnabled:   "Generic alert not enabled for notification",
+		},
+	}
+
+	if langTranslations, exists := translations[lang]; exists {
+		if translation, exists := langTranslations[ms]; exists {
+			return translation
+		}
+	}
+
+	// Default to English if language not found or translation doesn't exist
+	if enTranslations, exists := translations["en"]; exists {
+		if translation, exists := enTranslations[ms]; exists {
+			return translation
+		}
+	}
+
+	// Fallback to the string representation
+	return ms.String()
 }
