@@ -238,6 +238,8 @@ const (
 	NotificationTracingCompleted NotificationStatus = "Notification_tracing_completed"
 	NotificationTracingFailed    NotificationStatus = "Notification_tracing_failed"
 
+	NotificationMetricsEnabled NotificationStatus = "Notification_metrics_enabled"
+
 	// Stage status codes
 	NotificationStageStart           NotificationStatus = "Notification_stage_start"
 	NotificationStageEnd             NotificationStatus = "Notification_stage_end"
@@ -287,6 +289,7 @@ func (ms NotificationStatus) String() string {
 func (ms NotificationStatus) Translate(lang string) string {
 	translations := map[string]map[NotificationStatus]string{
 		"en": {
+			NotificationMetricsEnabled:       "Notification metrics enabled",
 			NotificationStageStart:           "Starting Notification stage",
 			NotificationStageEnd:             "Notification stage completed",
 			NotificationStageMissing:         "Notification stage missing",
