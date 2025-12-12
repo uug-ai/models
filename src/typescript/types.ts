@@ -550,6 +550,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/alertfeatures": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AlertFeatures (schema generation only)
+         * @description Internal endpoint used only to ensure AlertFeatures schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AlertFeatures"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/analysis": {
         parameters: {
             query?: never;
@@ -862,6 +901,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/callerinfo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CallerInfo (schema generation only)
+         * @description Internal endpoint used only to ensure CallerInfo schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CallerInfo"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/classify": {
         parameters: {
             query?: never;
@@ -1162,6 +1240,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.CursorPagination"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/customalert": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CustomAlert (schema generation only)
+         * @description Internal endpoint used only to ensure CustomAlert schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CustomAlert"];
                     };
                 };
             };
@@ -1708,6 +1825,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.DeviceFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicekey": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceKey (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceKey schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceKey"];
                     };
                 };
             };
@@ -8670,6 +8826,11 @@ export interface components {
         };
         /** @enum {string} */
         "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_file_name_missing" | "analysis_signed_url_missing" | "analysis_all_frame_coordinates_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing";
+        "api.CallerInfo": {
+            file?: string;
+            function?: string;
+            line?: number;
+        };
         "api.CursorPagination": {
             /** @description Request fields (sent by client) */
             cursor?: string;
@@ -9388,12 +9549,18 @@ export interface components {
             data?: {
                 [key: string]: unknown;
             };
+            /** @description Device key involved in the request */
+            deviceKey?: string;
             /** @description Error message if any */
             error?: string;
             /** @description Function name where the response was generated */
             function?: string;
             /** @description Language of the response, if applicable */
             language?: string;
+            /** @description Line number in the code where the response was generated */
+            line?: number;
+            /** @description Name of the media file involved in the request */
+            mediaFileName?: string;
             /** @description List of missing fields in the request */
             missingFields?: string[];
             /** @description Organisation ID for the request */
@@ -9632,6 +9799,9 @@ export interface components {
             usage?: number;
             videos?: number;
         };
+        "models.AlertFeatures": {
+            createMarker?: boolean;
+        };
         "models.Analysis": {
             classify?: components["schemas"]["models.Classify"];
             counting?: components["schemas"]["models.Counting"];
@@ -9770,6 +9940,48 @@ export interface components {
             type?: string;
             username?: string;
         };
+        "models.CustomAlert": {
+            alexa_token?: string;
+            channelsAll?: boolean;
+            channelsList?: string[];
+            classificationAll?: boolean;
+            classificationList?: string[];
+            countingDevicesAll?: boolean;
+            countingDevicesList?: components["schemas"]["models.DeviceKey"][];
+            countingLines?: components["schemas"]["models.Region"][];
+            description?: string;
+            devicesAll?: boolean;
+            devicesList?: components["schemas"]["models.DeviceKey"][];
+            email_email?: string;
+            enabled?: boolean;
+            features?: components["schemas"]["models.AlertFeatures"];
+            id?: string;
+            ifttt_token?: string;
+            inputList?: string[];
+            inputsAND?: boolean;
+            master_user_id?: string;
+            motionRegions?: components["schemas"]["models.Region"][];
+            outputList?: string[];
+            pushbullet_apikey?: string;
+            pushover_apikey?: string;
+            pushover_sendto?: string;
+            slack_botname?: string;
+            slack_hook?: string;
+            sms_accountsid?: string;
+            sms_authtoken?: string;
+            sms_telfrom?: string;
+            sms_telto?: string;
+            telegram_channel?: string;
+            telegram_token?: string;
+            timeAdvanced?: boolean;
+            timeRange1Max?: number;
+            timeRange1Min?: number;
+            timeRange2Max?: number;
+            timeRange2Min?: number;
+            title?: string;
+            user_id?: string;
+            webhook_url?: string;
+        };
         "models.Device": {
             /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
              *     more verbose information about the device's current state, capabilities, or configuration.
@@ -9856,6 +10068,10 @@ export interface components {
             liveview?: number;
             ptz?: number;
             remoteConfig?: number;
+        };
+        "models.DeviceKey": {
+            key?: string;
+            name?: string;
         };
         "models.DeviceLocationMetadata": {
             fieldOfView?: number;
@@ -10808,6 +11024,7 @@ export type operations = Record<string, never>;
 export namespace models {
     export type AccessToken = components['schemas']['models.AccessToken'];
     export type Activity = components['schemas']['models.Activity'];
+    export type AlertFeatures = components['schemas']['models.AlertFeatures'];
     export type Analysis = components['schemas']['models.Analysis'];
     export type AnalysisFilter = components['schemas']['models.AnalysisFilter'];
     export type AnalysisShort = components['schemas']['models.AnalysisShort'];
@@ -10823,9 +11040,11 @@ export namespace models {
     export type Counting = components['schemas']['models.Counting'];
     export type CountingDetail = components['schemas']['models.CountingDetail'];
     export type CountingRecord = components['schemas']['models.CountingRecord'];
+    export type CustomAlert = components['schemas']['models.CustomAlert'];
     export type Device = components['schemas']['models.Device'];
     export type DeviceCameraMetadata = components['schemas']['models.DeviceCameraMetadata'];
     export type DeviceFeaturePermissions = components['schemas']['models.DeviceFeaturePermissions'];
+    export type DeviceKey = components['schemas']['models.DeviceKey'];
     export type DeviceLocationMetadata = components['schemas']['models.DeviceLocationMetadata'];
     export type DeviceMetadata = components['schemas']['models.DeviceMetadata'];
     export type DeviceOption = components['schemas']['models.DeviceOption'];
@@ -10910,6 +11129,7 @@ export namespace api {
     export type AddStrategyRequest = components['schemas']['api.AddStrategyRequest'];
     export type AddStrategyResponse = components['schemas']['api.AddStrategyResponse'];
     export type AddStrategySuccessResponse = components['schemas']['api.AddStrategySuccessResponse'];
+    export type CallerInfo = components['schemas']['api.CallerInfo'];
     export type CursorPagination = components['schemas']['api.CursorPagination'];
     export type DebugResponse = components['schemas']['api.DebugResponse'];
     export type DeleteAccessTokenErrorResponse = components['schemas']['api.DeleteAccessTokenErrorResponse'];
