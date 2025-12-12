@@ -89,21 +89,24 @@ func CreateSuccess(httpStatusCode int, applicationStatusCode string, entityStatu
 	}
 }
 
-func CreateSuccessLog(logger *logrus.Logger, successResponse SuccessResponse, data any) logrus.Fields {
-	data = redactDataForLogging(data)
+func CreateSuccessLog(logger *logrus.Logger, successResponse SuccessResponse, data ...any) logrus.Fields {
+	var payload any
+	if len(data) > 0 {
+		payload = redactDataForLogging(data[0])
+	}
 	return logrus.Fields{
 		"httpStatusCode":        successResponse.HttpStatusCode,
 		"applicationStatusCode": successResponse.ApplicationStatusCode,
 		"entityStatusCode":      successResponse.EntityStatusCode,
 		"message":               successResponse.Message,
 		"metadata":              successResponse.Metadata,
-		"data":                  data,
+		"data":                  payload,
 	}
 }
 
 // Logging functions for success and error responses
-func LogInfo(logger *logrus.Logger, successResponse SuccessResponse, data any) {
-	logger.WithFields(CreateSuccessLog(logger, successResponse, data)).Info()
+func LogInfo(logger *logrus.Logger, successResponse SuccessResponse, data ...any) {
+	logger.WithFields(CreateSuccessLog(logger, successResponse, data...)).Info()
 }
 
 // ErrorResponse represents a standard error response structure.
@@ -130,18 +133,23 @@ func CreateError(httpStatusCode int, applicationStatusCode string, entityStatusC
 	}
 }
 
-func CreateErrorLog(logger *logrus.Logger, errorResponse ErrorResponse) logrus.Fields {
+func CreateErrorLog(logger *logrus.Logger, errorResponse ErrorResponse, data ...any) logrus.Fields {
+	var payload any
+	if len(data) > 0 {
+		payload = redactDataForLogging(data[0])
+	}
 	return logrus.Fields{
 		"httpStatusCode":        errorResponse.HttpStatusCode,
 		"applicationStatusCode": ApplicationStatusError,
 		"entityStatusCode":      errorResponse.EntityStatusCode,
 		"message":               errorResponse.Message,
 		"metadata":              errorResponse.Metadata,
+		"data":                  payload,
 	}
 }
 
-func LogError(logger *logrus.Logger, errorResponse ErrorResponse) {
-	logger.WithFields(CreateErrorLog(logger, errorResponse)).Error()
+func LogError(logger *logrus.Logger, errorResponse ErrorResponse, data ...any) {
+	logger.WithFields(CreateErrorLog(logger, errorResponse, data...)).Error()
 }
 
 // Debug
@@ -169,19 +177,23 @@ func CreateDebug(httpStatusCode int, applicationStatusCode string, entityStatusC
 	}
 }
 
-func CreateDebugLog(logger *logrus.Logger, debugResponse DebugResponse, data any) logrus.Fields {
+func CreateDebugLog(logger *logrus.Logger, debugResponse DebugResponse, data ...any) logrus.Fields {
+	var payload any
+	if len(data) > 0 {
+		payload = redactDataForLogging(data[0])
+	}
 	return logrus.Fields{
 		"httpStatusCode":        debugResponse.HttpStatusCode,
 		"applicationStatusCode": debugResponse.ApplicationStatusCode,
 		"entityStatusCode":      debugResponse.EntityStatusCode,
 		"message":               debugResponse.Message,
 		"metadata":              debugResponse.Metadata,
-		"data":                  redactDataForLogging(data),
+		"data":                  payload,
 	}
 }
 
-func LogDebug(logger *logrus.Logger, debugResponse DebugResponse, data any) {
-	logger.WithFields(CreateDebugLog(logger, debugResponse, data)).Debug()
+func LogDebug(logger *logrus.Logger, debugResponse DebugResponse, data ...any) {
+	logger.WithFields(CreateDebugLog(logger, debugResponse, data...)).Debug()
 }
 
 // Trace
@@ -209,19 +221,23 @@ func CreateTrace(httpStatusCode int, applicationStatusCode string, entityStatusC
 	}
 }
 
-func CreateTraceLog(logger *logrus.Logger, traceResponse TraceResponse, data any) logrus.Fields {
+func CreateTraceLog(logger *logrus.Logger, traceResponse TraceResponse, data ...any) logrus.Fields {
+	var payload any
+	if len(data) > 0 {
+		payload = redactDataForLogging(data[0])
+	}
 	return logrus.Fields{
 		"httpStatusCode":        traceResponse.HttpStatusCode,
 		"applicationStatusCode": traceResponse.ApplicationStatusCode,
 		"entityStatusCode":      traceResponse.EntityStatusCode,
 		"message":               traceResponse.Message,
 		"metadata":              traceResponse.Metadata,
-		"data":                  redactDataForLogging(data),
+		"data":                  payload,
 	}
 }
 
-func LogTrace(logger *logrus.Logger, traceResponse TraceResponse, data any) {
-	logger.WithFields(CreateTraceLog(logger, traceResponse, data)).Trace()
+func LogTrace(logger *logrus.Logger, traceResponse TraceResponse, data ...any) {
+	logger.WithFields(CreateTraceLog(logger, traceResponse, data...)).Trace()
 }
 
 // Warning
@@ -249,19 +265,23 @@ func CreateWarning(httpStatusCode int, applicationStatusCode string, entityStatu
 	}
 }
 
-func CreateWarningLog(logger *logrus.Logger, warningResponse WarningResponse, data any) logrus.Fields {
+func CreateWarningLog(logger *logrus.Logger, warningResponse WarningResponse, data ...any) logrus.Fields {
+	var payload any
+	if len(data) > 0 {
+		payload = redactDataForLogging(data[0])
+	}
 	return logrus.Fields{
 		"httpStatusCode":        warningResponse.HttpStatusCode,
 		"applicationStatusCode": warningResponse.ApplicationStatusCode,
 		"entityStatusCode":      warningResponse.EntityStatusCode,
 		"message":               warningResponse.Message,
 		"metadata":              warningResponse.Metadata,
-		"data":                  redactDataForLogging(data),
+		"data":                  payload,
 	}
 }
 
-func LogWarning(logger *logrus.Logger, warningResponse WarningResponse, data any) {
-	logger.WithFields(CreateWarningLog(logger, warningResponse, data)).Warning()
+func LogWarning(logger *logrus.Logger, warningResponse WarningResponse, data ...any) {
+	logger.WithFields(CreateWarningLog(logger, warningResponse, data...)).Warning()
 }
 
 // Fatal
@@ -289,19 +309,23 @@ func CreateFatal(httpStatusCode int, applicationStatusCode string, entityStatusC
 	}
 }
 
-func CreateFatalLog(logger *logrus.Logger, fatalResponse FatalResponse, data any) logrus.Fields {
+func CreateFatalLog(logger *logrus.Logger, fatalResponse FatalResponse, data ...any) logrus.Fields {
+	var payload any
+	if len(data) > 0 {
+		payload = redactDataForLogging(data[0])
+	}
 	return logrus.Fields{
 		"httpStatusCode":        fatalResponse.HttpStatusCode,
 		"applicationStatusCode": fatalResponse.ApplicationStatusCode,
 		"entityStatusCode":      fatalResponse.EntityStatusCode,
 		"message":               fatalResponse.Message,
 		"metadata":              fatalResponse.Metadata,
-		"data":                  redactDataForLogging(data),
+		"data":                  payload,
 	}
 }
 
-func LogFatal(logger *logrus.Logger, fatalResponse FatalResponse, data any) {
-	logger.WithFields(CreateFatalLog(logger, fatalResponse, data)).Fatal()
+func LogFatal(logger *logrus.Logger, fatalResponse FatalResponse, data ...any) {
+	logger.WithFields(CreateFatalLog(logger, fatalResponse, data...)).Fatal()
 }
 
 // Panic
@@ -329,19 +353,23 @@ func CreatePanic(httpStatusCode int, applicationStatusCode string, entityStatusC
 	}
 }
 
-func CreatePanicLog(logger *logrus.Logger, panicResponse PanicResponse, data any) logrus.Fields {
+func CreatePanicLog(logger *logrus.Logger, panicResponse PanicResponse, data ...any) logrus.Fields {
+	var payload any
+	if len(data) > 0 {
+		payload = redactDataForLogging(data[0])
+	}
 	return logrus.Fields{
 		"httpStatusCode":        panicResponse.HttpStatusCode,
 		"applicationStatusCode": panicResponse.ApplicationStatusCode,
 		"entityStatusCode":      panicResponse.EntityStatusCode,
 		"message":               panicResponse.Message,
 		"metadata":              panicResponse.Metadata,
-		"data":                  redactDataForLogging(data),
+		"data":                  payload,
 	}
 }
 
-func LogPanic(logger *logrus.Logger, panicResponse PanicResponse, data any) {
-	logger.WithFields(CreatePanicLog(logger, panicResponse, data)).Panic()
+func LogPanic(logger *logrus.Logger, panicResponse PanicResponse, data ...any) {
+	logger.WithFields(CreatePanicLog(logger, panicResponse, data...)).Panic()
 }
 
 // redactDataForLogging truncates strings longer than 50 characters to prevent excessive logging
