@@ -67,6 +67,11 @@ type Device struct {
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
 }
 
+type DeviceKey struct {
+	Key  string `json:"key" bson:"key,omitempty"`
+	Name string `json:"name" bson:"name,omitempty"`
+}
+
 type DeviceOption struct {
 	Id    string `bson:"id" json:"id"`
 	Value string `bson:"value" json:"value"`

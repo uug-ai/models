@@ -280,6 +280,10 @@ const (
 	NotificationGenericAlertNotEnabled   NotificationStatus = "notification_generic_alert_not_enabled"
 	NotificationChannelsToBeTriggered    NotificationStatus = "notification_channels_to_be_triggered"
 	NotificationComposedMessage          NotificationStatus = "notification_composed_message"
+	NotificationProcessingStart          NotificationStatus = "notification_processing_start"
+	NotificationProcessingEnd            NotificationStatus = "notification_processing_end"
+	NotificationMarkerCreationFailed     NotificationStatus = "notification_marker_creation_failed"
+	NotificationMarkerCreated            NotificationStatus = "notification_marker_created"
 )
 
 // String returns the string representation of the Notification status
@@ -330,6 +334,10 @@ func (ms NotificationStatus) Translate(lang string) string {
 			NotificationGenericAlertNotEnabled:   "Generic alert not enabled for notification",
 			NotificationChannelsToBeTriggered:    "Channels to be triggered for notification",
 			NotificationComposedMessage:          "Composed notification message",
+			NotificationProcessingStart:          "Starting processing for notification",
+			NotificationProcessingEnd:            "Notification processing completed",
+			NotificationMarkerCreationFailed:     "Failed to create marker during Notification stage",
+			NotificationMarkerCreated:            "Marker created during Notification stage",
 		},
 	}
 
