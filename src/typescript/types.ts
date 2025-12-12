@@ -1174,6 +1174,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/debugresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DebugResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DebugResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DebugResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/deleteaccesstokenerrorresponse": {
         parameters: {
             query?: never;
@@ -2059,6 +2098,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.FaceRedactionTrack"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/fatalresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get FatalResponse (schema generation only)
+         * @description Internal endpoint used only to ensure FatalResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.FatalResponse"];
                     };
                 };
             };
@@ -6322,6 +6400,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/panicresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PanicResponse (schema generation only)
+         * @description Internal endpoint used only to ensure PanicResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.PanicResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/pipelineevent": {
         parameters: {
             query?: never;
@@ -7726,6 +7843,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/traceresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TraceResponse (schema generation only)
+         * @description Internal endpoint used only to ensure TraceResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.TraceResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/trackbox": {
         parameters: {
             query?: never;
@@ -8272,6 +8428,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/warningresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WarningResponse (schema generation only)
+         * @description Internal endpoint used only to ensure WarningResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.WarningResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/media": {
         parameters: {
             query?: never;
@@ -8488,6 +8683,18 @@ export interface components {
             prevCursor?: string;
             total?: number;
         };
+        "api.DebugResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.DeleteAccessTokenErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -8567,6 +8774,18 @@ export interface components {
             };
             events?: string[];
             user?: components["schemas"]["models.User"];
+        };
+        "api.FatalResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetAccessTokensErrorResponse": {
             /** @description Application-specific error code */
@@ -9190,6 +9409,18 @@ export interface components {
             /** @description User ID of the user making the request */
             userId?: string;
         };
+        "api.PanicResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.RedactionEvent": {
             allFrameCoordinates?: {
                 [key: string]: components["schemas"]["models.TrackBox"][];
@@ -9283,6 +9514,18 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.TraceResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.UpdateAccessTokenErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -9343,6 +9586,18 @@ export interface components {
             /** @description Success message describing the operation */
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.WarningResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
         "models.AccessToken": {
@@ -10656,6 +10911,7 @@ export namespace api {
     export type AddStrategyResponse = components['schemas']['api.AddStrategyResponse'];
     export type AddStrategySuccessResponse = components['schemas']['api.AddStrategySuccessResponse'];
     export type CursorPagination = components['schemas']['api.CursorPagination'];
+    export type DebugResponse = components['schemas']['api.DebugResponse'];
     export type DeleteAccessTokenErrorResponse = components['schemas']['api.DeleteAccessTokenErrorResponse'];
     export type DeleteAccessTokenSuccessResponse = components['schemas']['api.DeleteAccessTokenSuccessResponse'];
     export type DeleteStrategyErrorResponse = components['schemas']['api.DeleteStrategyErrorResponse'];
@@ -10663,6 +10919,7 @@ export namespace api {
     export type DeviceFilter = components['schemas']['api.DeviceFilter'];
     export type ErrorResponse = components['schemas']['api.ErrorResponse'];
     export type FaceRedactionMessage = components['schemas']['api.FaceRedactionMessage'];
+    export type FatalResponse = components['schemas']['api.FatalResponse'];
     export type GetAccessTokensErrorResponse = components['schemas']['api.GetAccessTokensErrorResponse'];
     export type GetAccessTokensResponse = components['schemas']['api.GetAccessTokensResponse'];
     export type GetAccessTokensSuccessResponse = components['schemas']['api.GetAccessTokensSuccessResponse'];
@@ -10736,6 +10993,7 @@ export namespace api {
     export type MediaFilter = components['schemas']['api.MediaFilter'];
     export type MediaGroup = components['schemas']['api.MediaGroup'];
     export type Metadata = components['schemas']['api.Metadata'];
+    export type PanicResponse = components['schemas']['api.PanicResponse'];
     export type RedactionEvent = components['schemas']['api.RedactionEvent'];
     export type SaveFaceRedactionErrorResponse = components['schemas']['api.SaveFaceRedactionErrorResponse'];
     export type SaveFaceRedactionRequest = components['schemas']['api.SaveFaceRedactionRequest'];
@@ -10747,6 +11005,7 @@ export namespace api {
     export type SubmitFaceRedactionResponse = components['schemas']['api.SubmitFaceRedactionResponse'];
     export type SubmitFaceRedactionSuccessResponse = components['schemas']['api.SubmitFaceRedactionSuccessResponse'];
     export type SuccessResponse = components['schemas']['api.SuccessResponse'];
+    export type TraceResponse = components['schemas']['api.TraceResponse'];
     export type UpdateAccessTokenErrorResponse = components['schemas']['api.UpdateAccessTokenErrorResponse'];
     export type UpdateAccessTokenRequest = components['schemas']['api.UpdateAccessTokenRequest'];
     export type UpdateAccessTokenResponse = components['schemas']['api.UpdateAccessTokenResponse'];
@@ -10755,4 +11014,5 @@ export namespace api {
     export type UpdateStrategyRequest = components['schemas']['api.UpdateStrategyRequest'];
     export type UpdateStrategyResponse = components['schemas']['api.UpdateStrategyResponse'];
     export type UpdateStrategySuccessResponse = components['schemas']['api.UpdateStrategySuccessResponse'];
+    export type WarningResponse = components['schemas']['api.WarningResponse'];
 }

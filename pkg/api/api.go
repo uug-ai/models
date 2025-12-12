@@ -2,6 +2,8 @@ package api
 
 import (
 	"net/http"
+	"runtime"
+	"strings"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -50,8 +52,10 @@ type Metadata struct {
 	TraceId        string         `json:"traceId,omitempty" bson:"traceId,omitempty"`               // Trace ID for tracking requests
 	OrganisationId string         `json:"organisationId,omitempty" bson:"organisationId,omitempty"` // Organisation ID for the request
 	UserId         string         `json:"userId,omitempty" bson:"userId,omitempty"`                 // User ID of the user making the request
+	MediaFileName  string         `json:"mediaFileName,omitempty" bson:"mediaFileName,omitempty"`   // Name of the media file involved in the request
 	Path           string         `json:"path,omitempty" bson:"path,omitempty"`                     // Path of the request
 	Function       string         `json:"function,omitempty" bson:"function,omitempty"`             // Function name where the response was generated
+	Line           int            `json:"line,omitempty" bson:"line,omitempty"`                     // Line number in the code where the response was generated
 	Error          string         `json:"error,omitempty" bson:"error,omitempty"`                   // Error message if any
 	MissingFields  []string       `json:"missingFields,omitempty" bson:"missingFields,omitempty"`   // List of missing fields in the request
 	Language       string         `json:"language,omitempty" bson:"language,omitempty"`             // Language of the response, if applicable
@@ -71,6 +75,10 @@ type SuccessResponse struct {
 
 func CreateSuccess(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) SuccessResponse {
 	metadata.Timestamp = time.Now().Unix()
+	callerInfo := GetCallerInfo(2)
+	metadata.Path = callerInfo.File
+	metadata.Function = callerInfo.Function
+	metadata.Line = callerInfo.Line
 	return SuccessResponse{
 		HttpStatusCode:        httpStatusCode,
 		ApplicationStatusCode: applicationStatusCode,
@@ -80,7 +88,7 @@ func CreateSuccess(httpStatusCode int, applicationStatusCode string, entityStatu
 	}
 }
 
-func CreateSuccessLog(logger *logrus.Logger, successResponse SuccessResponse, data interface{}) logrus.Fields {
+func CreateSuccessLog(logger *logrus.Logger, successResponse SuccessResponse, data any) logrus.Fields {
 	data = redactDataForLogging(data)
 	return logrus.Fields{
 		"httpStatusCode":        successResponse.HttpStatusCode,
@@ -93,7 +101,7 @@ func CreateSuccessLog(logger *logrus.Logger, successResponse SuccessResponse, da
 }
 
 // Logging functions for success and error responses
-func LogInfo(logger *logrus.Logger, successResponse SuccessResponse, data interface{}) {
+func LogInfo(logger *logrus.Logger, successResponse SuccessResponse, data any) {
 	logger.WithFields(CreateSuccessLog(logger, successResponse, data)).Info()
 }
 
@@ -108,6 +116,10 @@ type ErrorResponse struct {
 
 func CreateError(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) ErrorResponse {
 	metadata.Timestamp = time.Now().Unix()
+	callerInfo := GetCallerInfo(1)
+	metadata.Path = callerInfo.File
+	metadata.Function = callerInfo.Function
+	metadata.Line = callerInfo.Line
 	return ErrorResponse{
 		HttpStatusCode:        httpStatusCode,
 		ApplicationStatusCode: applicationStatusCode,
@@ -142,6 +154,11 @@ type DebugResponse struct {
 
 func CreateDebug(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) DebugResponse {
 	metadata.Timestamp = time.Now().Unix()
+	callerInfo := GetCallerInfo(1)
+	metadata.Path = callerInfo.File
+	metadata.Function = callerInfo.Function
+	metadata.Line = callerInfo.Line
+
 	return DebugResponse{
 		HttpStatusCode:        httpStatusCode,
 		ApplicationStatusCode: applicationStatusCode,
@@ -151,18 +168,19 @@ func CreateDebug(httpStatusCode int, applicationStatusCode string, entityStatusC
 	}
 }
 
-func CreateDebugLog(logger *logrus.Logger, debugResponse DebugResponse) logrus.Fields {
+func CreateDebugLog(logger *logrus.Logger, debugResponse DebugResponse, data any) logrus.Fields {
 	return logrus.Fields{
 		"httpStatusCode":        debugResponse.HttpStatusCode,
 		"applicationStatusCode": debugResponse.ApplicationStatusCode,
 		"entityStatusCode":      debugResponse.EntityStatusCode,
 		"message":               debugResponse.Message,
 		"metadata":              debugResponse.Metadata,
+		"data":                  redactDataForLogging(data),
 	}
 }
 
-func LogDebug(logger *logrus.Logger, debugResponse DebugResponse, data interface{}) {
-	logger.WithFields(CreateDebugLog(logger, debugResponse)).Debug()
+func LogDebug(logger *logrus.Logger, debugResponse DebugResponse, data any) {
+	logger.WithFields(CreateDebugLog(logger, debugResponse, data)).Debug()
 }
 
 // Trace
@@ -177,6 +195,10 @@ type TraceResponse struct {
 
 func CreateTrace(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) TraceResponse {
 	metadata.Timestamp = time.Now().Unix()
+	callerInfo := GetCallerInfo(1)
+	metadata.Path = callerInfo.File
+	metadata.Function = callerInfo.Function
+	metadata.Line = callerInfo.Line
 	return TraceResponse{
 		HttpStatusCode:        httpStatusCode,
 		ApplicationStatusCode: applicationStatusCode,
@@ -186,18 +208,19 @@ func CreateTrace(httpStatusCode int, applicationStatusCode string, entityStatusC
 	}
 }
 
-func CreateTraceLog(logger *logrus.Logger, traceResponse TraceResponse) logrus.Fields {
+func CreateTraceLog(logger *logrus.Logger, traceResponse TraceResponse, data any) logrus.Fields {
 	return logrus.Fields{
 		"httpStatusCode":        traceResponse.HttpStatusCode,
 		"applicationStatusCode": traceResponse.ApplicationStatusCode,
 		"entityStatusCode":      traceResponse.EntityStatusCode,
 		"message":               traceResponse.Message,
 		"metadata":              traceResponse.Metadata,
+		"data":                  redactDataForLogging(data),
 	}
 }
 
-func LogTrace(logger *logrus.Logger, traceResponse TraceResponse, data interface{}) {
-	logger.WithFields(CreateTraceLog(logger, traceResponse)).Trace()
+func LogTrace(logger *logrus.Logger, traceResponse TraceResponse, data any) {
+	logger.WithFields(CreateTraceLog(logger, traceResponse, data)).Trace()
 }
 
 // Warning
@@ -212,6 +235,10 @@ type WarningResponse struct {
 
 func CreateWarning(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) WarningResponse {
 	metadata.Timestamp = time.Now().Unix()
+	callerInfo := GetCallerInfo(1)
+	metadata.Path = callerInfo.File
+	metadata.Function = callerInfo.Function
+	metadata.Line = callerInfo.Line
 	return WarningResponse{
 		HttpStatusCode:        httpStatusCode,
 		ApplicationStatusCode: applicationStatusCode,
@@ -221,18 +248,19 @@ func CreateWarning(httpStatusCode int, applicationStatusCode string, entityStatu
 	}
 }
 
-func CreateWarningLog(logger *logrus.Logger, warningResponse WarningResponse) logrus.Fields {
+func CreateWarningLog(logger *logrus.Logger, warningResponse WarningResponse, data any) logrus.Fields {
 	return logrus.Fields{
 		"httpStatusCode":        warningResponse.HttpStatusCode,
 		"applicationStatusCode": warningResponse.ApplicationStatusCode,
 		"entityStatusCode":      warningResponse.EntityStatusCode,
 		"message":               warningResponse.Message,
 		"metadata":              warningResponse.Metadata,
+		"data":                  redactDataForLogging(data),
 	}
 }
 
-func LogWarning(logger *logrus.Logger, warningResponse WarningResponse, data interface{}) {
-	logger.WithFields(CreateWarningLog(logger, warningResponse)).Warning()
+func LogWarning(logger *logrus.Logger, warningResponse WarningResponse, data any) {
+	logger.WithFields(CreateWarningLog(logger, warningResponse, data)).Warning()
 }
 
 // Fatal
@@ -247,6 +275,10 @@ type FatalResponse struct {
 
 func CreateFatal(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) FatalResponse {
 	metadata.Timestamp = time.Now().Unix()
+	callerInfo := GetCallerInfo(1)
+	metadata.Path = callerInfo.File
+	metadata.Function = callerInfo.Function
+	metadata.Line = callerInfo.Line
 	return FatalResponse{
 		HttpStatusCode:        httpStatusCode,
 		ApplicationStatusCode: applicationStatusCode,
@@ -256,18 +288,19 @@ func CreateFatal(httpStatusCode int, applicationStatusCode string, entityStatusC
 	}
 }
 
-func CreateFatalLog(logger *logrus.Logger, fatalResponse FatalResponse) logrus.Fields {
+func CreateFatalLog(logger *logrus.Logger, fatalResponse FatalResponse, data any) logrus.Fields {
 	return logrus.Fields{
 		"httpStatusCode":        fatalResponse.HttpStatusCode,
 		"applicationStatusCode": fatalResponse.ApplicationStatusCode,
 		"entityStatusCode":      fatalResponse.EntityStatusCode,
 		"message":               fatalResponse.Message,
 		"metadata":              fatalResponse.Metadata,
+		"data":                  redactDataForLogging(data),
 	}
 }
 
-func LogFatal(logger *logrus.Logger, fatalResponse FatalResponse, data interface{}) {
-	logger.WithFields(CreateFatalLog(logger, fatalResponse)).Fatal()
+func LogFatal(logger *logrus.Logger, fatalResponse FatalResponse, data any) {
+	logger.WithFields(CreateFatalLog(logger, fatalResponse, data)).Fatal()
 }
 
 // Panic
@@ -282,6 +315,10 @@ type PanicResponse struct {
 
 func CreatePanic(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) PanicResponse {
 	metadata.Timestamp = time.Now().Unix()
+	callerInfo := GetCallerInfo(1)
+	metadata.Path = callerInfo.File
+	metadata.Function = callerInfo.Function
+	metadata.Line = callerInfo.Line
 	return PanicResponse{
 		HttpStatusCode:        httpStatusCode,
 		ApplicationStatusCode: applicationStatusCode,
@@ -291,22 +328,23 @@ func CreatePanic(httpStatusCode int, applicationStatusCode string, entityStatusC
 	}
 }
 
-func CreatePanicLog(logger *logrus.Logger, panicResponse PanicResponse) logrus.Fields {
+func CreatePanicLog(logger *logrus.Logger, panicResponse PanicResponse, data any) logrus.Fields {
 	return logrus.Fields{
 		"httpStatusCode":        panicResponse.HttpStatusCode,
 		"applicationStatusCode": panicResponse.ApplicationStatusCode,
 		"entityStatusCode":      panicResponse.EntityStatusCode,
 		"message":               panicResponse.Message,
 		"metadata":              panicResponse.Metadata,
+		"data":                  redactDataForLogging(data),
 	}
 }
 
-func LogPanic(logger *logrus.Logger, panicResponse PanicResponse, data interface{}) {
-	logger.WithFields(CreatePanicLog(logger, panicResponse)).Panic()
+func LogPanic(logger *logrus.Logger, panicResponse PanicResponse, data any) {
+	logger.WithFields(CreatePanicLog(logger, panicResponse, data)).Panic()
 }
 
 // redactDataForLogging truncates strings longer than 50 characters to prevent excessive logging
-func redactDataForLogging(data interface{}) interface{} {
+func redactDataForLogging(data any) interface{} {
 	const maxLength = 50
 
 	switch v := data.(type) {
@@ -330,4 +368,33 @@ func redactDataForLogging(data interface{}) interface{} {
 	default:
 		return v
 	}
+}
+
+type CallerInfo struct {
+	File     string
+	Line     int
+	Function string
+}
+
+func GetCallerInfo(skipFrames int) CallerInfo {
+	pcs := make([]uintptr, 32)
+	n := runtime.Callers(skipFrames, pcs)
+	frames := runtime.CallersFrames(pcs[:n])
+
+	for {
+		frame, more := frames.Next()
+		// Filter out internal logging helpers (adjust package path as needed)
+		if !strings.Contains(frame.Function, "github.com/uug-ai/models/pkg/api.Log") &&
+			!strings.Contains(frame.Function, "github.com/uug-ai/models/pkg/api.Create") {
+			return CallerInfo{
+				File:     frame.File,
+				Line:     frame.Line,
+				Function: frame.Function,
+			}
+		}
+		if !more {
+			break
+		}
+	}
+	return CallerInfo{}
 }
