@@ -228,56 +228,58 @@ type NotificationStatus string
 
 const (
 	// Queue status codes
-	NotificationQueueStarted    NotificationStatus = "Notification_queue_started"
-	NotificationQueueSubscribed NotificationStatus = "Notification_queue_subscribed"
-	NotificationQueueFailed     NotificationStatus = "Notification_queue_failed"
-	NotificationQueueCompleted  NotificationStatus = "Notification_queue_completed"
+	NotificationQueueStarted    NotificationStatus = "notification_queue_started"
+	NotificationQueueSubscribed NotificationStatus = "notification_queue_subscribed"
+	NotificationQueueFailed     NotificationStatus = "notification_queue_failed"
+	NotificationQueueCompleted  NotificationStatus = "notification_queue_completed"
 
 	// Trace status codes
-	NotificationTracingStarted   NotificationStatus = "Notification_tracing_started"
-	NotificationTracingCompleted NotificationStatus = "Notification_tracing_completed"
-	NotificationTracingFailed    NotificationStatus = "Notification_tracing_failed"
+	NotificationTracingStarted   NotificationStatus = "notification_tracing_started"
+	NotificationTracingCompleted NotificationStatus = "notification_tracing_completed"
+	NotificationTracingFailed    NotificationStatus = "notification_tracing_failed"
 
-	NotificationMetricsEnabled NotificationStatus = "Notification_metrics_enabled"
+	NotificationMetricsEnabled NotificationStatus = "notification_metrics_enabled"
 
 	// Stage status codes
-	NotificationStageStart           NotificationStatus = "Notification_stage_start"
-	NotificationStageEnd             NotificationStatus = "Notification_stage_end"
-	NotificationStageMissing         NotificationStatus = "Notification_stage_missing"
-	NotificationUserNotFound         NotificationStatus = "Notification_user_not_found"
-	NotificationOrganizationNotFound NotificationStatus = "Notification_organization_not_found"
-	NotificationMonitorStageMissing  NotificationStatus = "Notification_monitor_stage_missing"
+	NotificationStageStart           NotificationStatus = "notification_stage_start"
+	NotificationStageEnd             NotificationStatus = "notification_stage_end"
+	NotificationStageMissing         NotificationStatus = "notification_stage_missing"
+	NotificationUserNotFound         NotificationStatus = "notification_user_not_found"
+	NotificationOrganizationNotFound NotificationStatus = "notification_organization_not_found"
+	NotificationMonitorStageMissing  NotificationStatus = "notification_monitor_stage_missing"
 
 	// Internal status codes
-	NotificationExpired                  NotificationStatus = "Notification_expired"
-	NotificationSequenceDecodeFailed     NotificationStatus = "Notification_sequence_decode_failed"
-	NotificationDecodeFailed             NotificationStatus = "Notification_decode_failed"
-	NotificationAlreadySent              NotificationStatus = "Notification_already_sent"
-	NotificationSiteNotFound             NotificationStatus = "Notification_site_not_found"
-	NotificationSiteDecodeFailed         NotificationStatus = "Notification_site_decode_failed"
-	NotificationGroupNotFound            NotificationStatus = "Notification_group_not_found"
-	NotificationGroupDecodeFailed        NotificationStatus = "Notification_group_decode_failed"
-	NotificationAlertNotFound            NotificationStatus = "Notification_alert_not_found"
-	NotificationAlertDecodeFailed        NotificationStatus = "Notification_alert_decode_failed"
-	NotificationFindingCustomAlerts      NotificationStatus = "Notification_finding_custom_alerts"
-	NotificationProcessingCustomAlert    NotificationStatus = "Notification_processing_custom_alert"
-	NotificationAlertDisabled            NotificationStatus = "Notification_alert_disabled"
-	NotificationMediaInSequenceNotFound  NotificationStatus = "Notification_media_in_sequence_not_found"
-	NotificationSelectedIONotActive      NotificationStatus = "Notification_selected_io_not_active"
-	NotificationInvalidClassification    NotificationStatus = "Notification_invalid_classification"
-	NotificationInvalidTimeInterval      NotificationStatus = "Notification_invalid_time_interval"
-	NotificationNoFrameDimensionsDefined NotificationStatus = "Notification_no_frame_dimensions_defined"
-	NotificationNotClassifyOperation     NotificationStatus = "Notification_not_classify_operation"
-	NotificationNoDeviceSelected         NotificationStatus = "Notification_no_device_selected"
-	NotificationNoRegionMatched          NotificationStatus = "Notification_no_region_matched"
-	NotificationNoValidCountingFound     NotificationStatus = "Notification_no_valid_counting_found"
-	NotificationSkippingInvalidCounting  NotificationStatus = "Notification_skipping_invalid_counting"
-	NotificationSendingNotification      NotificationStatus = "Notification_sending_notification"
-	NotificationSendingToChannels        NotificationStatus = "Notification_sending_to_channels"
-	NotificationUpdateSequenceFailed     NotificationStatus = "Notification_update_sequence_failed"
-	NotificationCustomAlertCompleted     NotificationStatus = "Notification_custom_alert_completed"
-	NotificationStartingGenericAlerts    NotificationStatus = "Notification_starting_generic_alerts"
-	NotificationGenericAlertNotEnabled   NotificationStatus = "Notification_generic_alert_not_enabled"
+	NotificationExpired                  NotificationStatus = "notification_expired"
+	NotificationSequenceDecodeFailed     NotificationStatus = "notification_sequence_decode_failed"
+	NotificationDecodeFailed             NotificationStatus = "notification_decode_failed"
+	NotificationAlreadySent              NotificationStatus = "notification_already_sent"
+	NotificationSiteNotFound             NotificationStatus = "notification_site_not_found"
+	NotificationSiteDecodeFailed         NotificationStatus = "notification_site_decode_failed"
+	NotificationGroupNotFound            NotificationStatus = "notification_group_not_found"
+	NotificationGroupDecodeFailed        NotificationStatus = "notification_group_decode_failed"
+	NotificationAlertNotFound            NotificationStatus = "notification_alert_not_found"
+	NotificationAlertDecodeFailed        NotificationStatus = "notification_alert_decode_failed"
+	NotificationFindingCustomAlerts      NotificationStatus = "notification_finding_custom_alerts"
+	NotificationProcessingCustomAlert    NotificationStatus = "notification_processing_custom_alert"
+	NotificationAlertDisabled            NotificationStatus = "notification_alert_disabled"
+	NotificationMediaInSequenceNotFound  NotificationStatus = "notification_media_in_sequence_not_found"
+	NotificationSelectedIONotActive      NotificationStatus = "notification_selected_io_not_active"
+	NotificationInvalidClassification    NotificationStatus = "notification_invalid_classification"
+	NotificationInvalidTimeInterval      NotificationStatus = "notification_invalid_time_interval"
+	NotificationNoFrameDimensionsDefined NotificationStatus = "notification_no_frame_dimensions_defined"
+	NotificationNotClassifyOperation     NotificationStatus = "notification_not_classify_operation"
+	NotificationNoDeviceSelected         NotificationStatus = "notification_no_device_selected"
+	NotificationNoRegionMatched          NotificationStatus = "notification_no_region_matched"
+	NotificationNoValidCountingFound     NotificationStatus = "notification_no_valid_counting_found"
+	NotificationSkippingInvalidCounting  NotificationStatus = "notification_skipping_invalid_counting"
+	NotificationSendingNotification      NotificationStatus = "notification_sending_notification"
+	NotificationSendingToChannels        NotificationStatus = "notification_sending_to_channels"
+	NotificationUpdateSequenceFailed     NotificationStatus = "notification_update_sequence_failed"
+	NotificationCustomAlertCompleted     NotificationStatus = "notification_custom_alert_completed"
+	NotificationStartingGenericAlerts    NotificationStatus = "notification_starting_generic_alerts"
+	NotificationGenericAlertNotEnabled   NotificationStatus = "notification_generic_alert_not_enabled"
+	NotificationChannelsToBeTriggered    NotificationStatus = "notification_channels_to_be_triggered"
+	NotificationComposedMessage          NotificationStatus = "notification_composed_message"
 )
 
 // String returns the string representation of the Notification status
@@ -326,6 +328,8 @@ func (ms NotificationStatus) Translate(lang string) string {
 			NotificationCustomAlertCompleted:     "Custom alert notification completed",
 			NotificationStartingGenericAlerts:    "Starting generic alerts for notification",
 			NotificationGenericAlertNotEnabled:   "Generic alert not enabled for notification",
+			NotificationChannelsToBeTriggered:    "Channels to be triggered for notification",
+			NotificationComposedMessage:          "Composed notification message",
 		},
 	}
 

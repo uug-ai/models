@@ -53,6 +53,7 @@ type Metadata struct {
 	OrganisationId string         `json:"organisationId,omitempty" bson:"organisationId,omitempty"` // Organisation ID for the request
 	UserId         string         `json:"userId,omitempty" bson:"userId,omitempty"`                 // User ID of the user making the request
 	MediaFileName  string         `json:"mediaFileName,omitempty" bson:"mediaFileName,omitempty"`   // Name of the media file involved in the request
+	DeviceKey      string         `json:"deviceKey,omitempty" bson:"deviceKey,omitempty"`           // Device key involved in the request
 	Path           string         `json:"path,omitempty" bson:"path,omitempty"`                     // Path of the request
 	Function       string         `json:"function,omitempty" bson:"function,omitempty"`             // Function name where the response was generated
 	Line           int            `json:"line,omitempty" bson:"line,omitempty"`                     // Line number in the code where the response was generated
