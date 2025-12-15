@@ -19,6 +19,46 @@ const (
 	PipelineWarning         string = "pipeline_warning"
 )
 
+type PipelineStatus string
+
+const (
+	UserMissing                   PipelineStatus = "user_missing"
+	TraceIdMissing                PipelineStatus = "trace_id_missing"
+	UserNotificationSettingsEmpty PipelineStatus = "user_notification_settings_empty"
+	UserEmailEmpty                PipelineStatus = "user_email_empty"
+)
+
+func (ps PipelineStatus) String() string {
+	return string(ps)
+}
+
+func (ps PipelineStatus) Translate(lang string) string {
+	translations := map[string]map[PipelineStatus]string{
+		"en": {
+			UserMissing:                   "User is missing",
+			TraceIdMissing:                "Trace ID is missing",
+			UserNotificationSettingsEmpty: "User notification settings are empty",
+			UserEmailEmpty:                "User email is empty",
+		},
+	}
+
+	if langTranslations, exists := translations[lang]; exists {
+		if translation, exists := langTranslations[ps]; exists {
+			return translation
+		}
+	}
+
+	// Default to English if language not found or translation doesn't exist
+	if enTranslations, exists := translations["en"]; exists {
+		if translation, exists := enTranslations[ps]; exists {
+			return translation
+		}
+	}
+
+	// Fallback to the string representation
+	return ps.String()
+}
+
 type RabbitMQStatus string
 
 const (
