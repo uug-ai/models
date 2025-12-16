@@ -22,15 +22,15 @@ const (
 type PipelineStatus string
 
 const (
-	UserMissing                   PipelineStatus = "user_missing"
-	TraceIdMissing                PipelineStatus = "trace_id_missing"
-	UserNotificationSettingsEmpty PipelineStatus = "user_notification_settings_empty"
-	UserEmailEmpty                PipelineStatus = "user_email_empty"
-	MediaMissing                  PipelineStatus = "media_missing"
-	IONotFound                    PipelineStatus = "io_not_found"
-	IODecodeError                 PipelineStatus = "io_decode_error"
-	SignedUrlFailed               PipelineStatus = "signed_url_failed"
-	ThumbnailMissing              PipelineStatus = "thumbnail_missing"
+	UserMissing         PipelineStatus = "user_missing"
+	TraceIdMissing      PipelineStatus = "trace_id_missing"
+	UserEmailEmpty      PipelineStatus = "user_email_empty"
+	MediaMissing        PipelineStatus = "media_missing"
+	IONotFound          PipelineStatus = "io_not_found"
+	IODecodeError       PipelineStatus = "io_decode_error"
+	SignedUrlFailed     PipelineStatus = "signed_url_failed"
+	ThumbnailMissing    PipelineStatus = "thumbnail_missing"
+	QueueCreationFailed PipelineStatus = "queue_creation_failed"
 )
 
 func (ps PipelineStatus) String() string {
@@ -40,15 +40,15 @@ func (ps PipelineStatus) String() string {
 func (ps PipelineStatus) Translate(lang string) string {
 	translations := map[string]map[PipelineStatus]string{
 		"en": {
-			UserMissing:                   "User is missing",
-			TraceIdMissing:                "Trace ID is missing",
-			UserNotificationSettingsEmpty: "User notification settings are empty",
-			UserEmailEmpty:                "User email is empty",
-			MediaMissing:                  "Media is missing",
-			IONotFound:                    "IO not found",
-			IODecodeError:                 "Error decoding IO information",
-			SignedUrlFailed:               "Failed to generate signed URL",
-			ThumbnailMissing:              "Thumbnail is missing",
+			UserMissing:         "User is missing",
+			TraceIdMissing:      "Trace ID is missing",
+			UserEmailEmpty:      "User email is empty",
+			MediaMissing:        "Media is missing",
+			IONotFound:          "IO not found",
+			IODecodeError:       "Error decoding IO information",
+			SignedUrlFailed:     "Failed to generate signed URL",
+			ThumbnailMissing:    "Thumbnail is missing",
+			QueueCreationFailed: "Failed to create queue",
 		},
 	}
 
@@ -338,6 +338,9 @@ const (
 	NotificationNoChannelsToSend         NotificationStatus = "notification_no_channels_to_send"
 	NotificationSendNotificationFailed   NotificationStatus = "notification_send_notification_failed"
 	NotificationCreateMarkerFailed       NotificationStatus = "notification_create_marker_failed"
+
+	NotificationUserNotificationSettingsEmpty NotificationStatus = "notification_user_notification_settings_empty"
+	NotificationUserChannelsEmpty             NotificationStatus = "notification_user_channels_empty"
 )
 
 // String returns the string representation of the Notification status
@@ -396,6 +399,9 @@ func (ms NotificationStatus) Translate(lang string) string {
 			NotificationNoChannelsToSend:         "No channels to send notification to",
 			NotificationSendNotificationFailed:   "Failed to send notification",
 			NotificationCreateMarkerFailed:       "Failed to create marker for notification",
+
+			NotificationUserNotificationSettingsEmpty: "User notification settings are empty",
+			NotificationUserChannelsEmpty:             "User channels are empty",
 		},
 	}
 

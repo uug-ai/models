@@ -8,6 +8,7 @@ const (
 	TracingStatusDisconnected     TracingStatus = "tracing_status_disconnected"
 	TracingStatusDataSent         TracingStatus = "tracing_status_data_sent"
 	TracingStatusDataSendFailed   TracingStatus = "tracing_status_data_send_failed"
+	TraceCreationFailed           TracingStatus = "trace_creation_failed"
 )
 
 // String returns the string representation of the Tracing status
