@@ -26,6 +26,9 @@ const (
 	TraceIdMissing                PipelineStatus = "trace_id_missing"
 	UserNotificationSettingsEmpty PipelineStatus = "user_notification_settings_empty"
 	UserEmailEmpty                PipelineStatus = "user_email_empty"
+	MediaMissing                  PipelineStatus = "media_missing"
+	IONotFound                    PipelineStatus = "io_not_found"
+	IODecodeError                 PipelineStatus = "io_decode_error"
 )
 
 func (ps PipelineStatus) String() string {
@@ -39,6 +42,9 @@ func (ps PipelineStatus) Translate(lang string) string {
 			TraceIdMissing:                "Trace ID is missing",
 			UserNotificationSettingsEmpty: "User notification settings are empty",
 			UserEmailEmpty:                "User email is empty",
+			MediaMissing:                  "Media is missing",
+			IONotFound:                    "IO not found",
+			IODecodeError:                 "Error decoding IO information",
 		},
 	}
 
