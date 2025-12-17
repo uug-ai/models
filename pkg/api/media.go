@@ -17,6 +17,7 @@ const (
 	MediaUpdateFailed  MediaStatus = "media_update_failed"
 	MediaDeleteSuccess MediaStatus = "media_delete_success"
 	MediaDeleteFailed  MediaStatus = "media_delete_failed"
+	MediaIdMissing     MediaStatus = "media_id_missing"
 )
 
 // String returns the string representation of the media status
@@ -39,6 +40,7 @@ func (ms MediaStatus) Translate(lang string) string {
 			MediaUpdateFailed:  "Media failed to update",
 			MediaDeleteSuccess: "Media deleted successfully",
 			MediaDeleteFailed:  "Media failed to delete",
+			MediaIdMissing:     "Media ID is missing",
 		},
 	}
 
@@ -130,5 +132,21 @@ type GetMediaSuccessResponse struct {
 	Data GetMediaResponse `json:"data"`
 }
 type GetMediaErrorResponse struct {
+	ErrorResponse
+}
+
+// GetMediaById
+// @Router /media/{mediaId} [get]
+type GetMediaByIdRequest struct {
+	MediaId string `json:"mediaId" bson:"mediaId"`
+}
+type GetMediaByIdResponse struct {
+	Media models.Media `json:"media"`
+}
+type GetMediaByIdSuccessResponse struct {
+	SuccessResponse
+	Data GetMediaByIdResponse `json:"data"`
+}
+type GetMediaByIdErrorResponse struct {
 	ErrorResponse
 }
