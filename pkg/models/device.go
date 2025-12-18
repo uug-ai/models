@@ -91,19 +91,49 @@ type DeviceMetadata struct {
 
 // CameraMetadata contains metadata specific to camera devices.
 type DeviceCameraMetadata struct {
-	Resolution string   `json:"resolution" bson:"resolution,omitempty"` // e.g. "1920x1080", "1280x720"
-	FrameRate  int64    `json:"frameRate" bson:"frameRate,omitempty"`   // Frame rate in fps
-	Bitrate    int64    `json:"bitrate" bson:"bitrate,omitempty"`       // Bitrate in kbps
-	Codec      string   `json:"codec" bson:"codec,omitempty"`           // e.g. "H.264", "H.265"
-	HasOnvif   bool     `json:"hasOnvif" bson:"hasOnvif,omitempty"`     // Indicates if the camera supports ONVIF protocol
-	HasAudio   bool     `json:"hasAudio" bson:"hasAudio,omitempty"`     // Indicates if the camera supports audio
-	HasZoom    bool     `json:"hasZoom" bson:"hasZoom,omitempty"`       // Indicates if the camera supports zoom functionality
-	HasPanTilt bool     `json:"hasPanTilt" bson:"hasPanTilt,omitempty"` // Indicates if the camera supports pan and tilt functionality
-	HasPresets bool     `json:"hasPresets" bson:"hasPresets,omitempty"` // Indicates if the camera supports presets
-	Presets    []Preset `json:"presets" bson:"presets,omitempty"`       // Presets for the camera, used for quick positioning
-	Tours      []Tour   `json:"tours" bson:"tours,omitempty"`           // Tours for the camera, used for automated movements through presets
-	HasIO      bool     `json:"hasIO" bson:"hasIO,omitempty"`           // Indicates if the camera has input/output capabilities
-	IOs        []IO     `json:"ios" bson:"ios,omitempty"`               // Input/Output capabilities of the camera (such as alarms, relays, etc.)
+	Resolution     string   `json:"resolution" bson:"resolution,omitempty"`         // e.g. "1920x1080", "1280x720"
+	FrameRate      int64    `json:"frameRate" bson:"frameRate,omitempty"`           // Frame rate in fps
+	Bitrate        int64    `json:"bitrate" bson:"bitrate,omitempty"`               // Bitrate in kbps
+	Codec          string   `json:"codec" bson:"codec,omitempty"`                   // e.g. "H.264", "H.265"
+	HasOnvif       bool     `json:"hasOnvif" bson:"hasOnvif,omitempty"`             // Indicates if the camera supports ONVIF protocol
+	HasAudio       bool     `json:"hasAudio" bson:"hasAudio,omitempty"`             // Indicates if the camera supports audio
+	HasZoom        bool     `json:"hasZoom" bson:"hasZoom,omitempty"`               // Indicates if the camera supports zoom functionality
+	HasBackChannel bool     `json:"hasBackChannel" bson:"hasBackChannel,omitempty"` // Indicates if the camera supports backchannel audio
+	HasPanTilt     bool     `json:"hasPanTilt" bson:"hasPanTilt,omitempty"`         // Indicates if the camera supports pan and tilt functionality
+	HasPresets     bool     `json:"hasPresets" bson:"hasPresets,omitempty"`         // Indicates if the camera supports presets
+	Presets        []Preset `json:"presets" bson:"presets,omitempty"`               // Presets for the camera, used for quick positioning
+	Tours          []Tour   `json:"tours" bson:"tours,omitempty"`                   // Tours for the camera, used for automated movements through presets
+	HasIO          bool     `json:"hasIO" bson:"hasIO,omitempty"`                   // Indicates if the camera has input/output capabilities
+	IOs            []IO     `json:"ios" bson:"ios,omitempty"`
+
+	CloudPublicKey  string   `json:"cloudPublicKey" bson:"cloudPublicKey,omitempty"`
+	Encrypted       bool     `json:"encrypted" bson:"encrypted,omitempty"`
+	EncryptedData   []byte   `json:"encryptedData" bson:"encryptedData,omitempty"`
+	DeviceKey       string   `json:"deviceKey" bson:"deviceKey,omitempty"`
+	HubEncryption   string   `json:"hubEncryption" bson:"hubEncryption,omitempty"`
+	E2EEncryption   string   `json:"e2eEncryption" bson:"e2eEncryption,omitempty"`
+	Enterprise      bool     `json:"enterprise" bson:"enterprise,omitempty"`
+	Hash            string   `json:"hash" bson:"hash,omitempty"`
+	Version         string   `json:"version" bson:"version,omitempty"`
+	Release         string   `json:"release" bson:"release,omitempty"`
+	MacList         []string `json:"macList" bson:"macList,omitempty"`
+	IPList          []string `json:"ipList" bson:"ipList,omitempty"`
+	CameraName      string   `json:"cameraName" bson:"cameraName,omitempty"`
+	CameraType      string   `json:"cameraType" bson:"cameraType,omitempty"`
+	Architecture    string   `json:"architecture" bson:"architecture,omitempty"`
+	Hostname        string   `json:"hostname" bson:"hostname,omitempty"`
+	FreeMemory      string   `json:"freeMemory" bson:"freeMemory,omitempty"`
+	TotalMemory     string   `json:"totalMemory" bson:"totalMemory,omitempty"`
+	UsedMemory      string   `json:"usedMemory" bson:"usedMemory,omitempty"`
+	ProcessMemory   string   `json:"processMemory" bson:"processMemory,omitempty"`
+	Kubernetes      bool     `json:"kubernetes" bson:"kubernetes,omitempty"`
+	Docker          bool     `json:"docker" bson:"docker,omitempty"`
+	Kios            bool     `json:"kios" bson:"kios,omitempty"`
+	RaspberryPi     bool     `json:"raspberryPi" bson:"raspberryPi,omitempty"`
+	Uptime          string   `json:"uptime" bson:"uptime,omitempty"`
+	BootTime        string   `json:"bootTime" bson:"bootTime,omitempty"`
+	Timestamp       int64    `json:"timestamp" bson:"timestamp,omitempty"`
+	CameraConnected string   `json:"cameraConnected" bson:"cameraConnected,omitempty"` // Input/Output capabilities of the camera (such as alarms, relays, etc.)
 }
 
 // LocationMetadata contains metadata about the physical location of the device.
