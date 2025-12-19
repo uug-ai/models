@@ -940,6 +940,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/camerametadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CameraMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure CameraMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CameraMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/camerapreset": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CameraPreset (schema generation only)
+         * @description Internal endpoint used only to ensure CameraPreset schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CameraPreset"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/cameratour": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CameraTour (schema generation only)
+         * @description Internal endpoint used only to ensure CameraTour schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CameraTour"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/classify": {
         parameters: {
             query?: never;
@@ -1720,45 +1837,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/devicecamerametadata": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get DeviceCameraMetadata (schema generation only)
-         * @description Internal endpoint used only to ensure DeviceCameraMetadata schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.DeviceCameraMetadata"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/devicefeaturepermissions": {
         parameters: {
             query?: never;
@@ -1864,45 +1942,6 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.DeviceKey"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/devicelocationmetadata": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get DeviceLocationMetadata (schema generation only)
-         * @description Internal endpoint used only to ensure DeviceLocationMetadata schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.DeviceLocationMetadata"];
                     };
                 };
             };
@@ -5230,6 +5269,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/gpsmetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GPSMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure GPSMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GPSMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/group": {
         parameters: {
             query?: never;
@@ -5581,6 +5659,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/humiditysensormetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get HumiditySensorMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure HumiditySensorMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.HumiditySensorMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/io": {
         parameters: {
             query?: never;
@@ -5608,6 +5725,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.IO"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/lightsensormetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get LightSensorMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure LightSensorMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.LightSensorMetadata"];
                     };
                 };
             };
@@ -6907,45 +7063,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/preset": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Preset (schema generation only)
-         * @description Internal endpoint used only to ensure Preset schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.Preset"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/redactionevent": {
         parameters: {
             query?: never;
@@ -8104,45 +8221,6 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.TimeWindow"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/tour": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Tour (schema generation only)
-         * @description Internal endpoint used only to ensure Tour schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.Tour"];
                     };
                 };
             };
@@ -10054,6 +10132,51 @@ export interface components {
             updatedAt?: number;
             updatedBy?: string;
         };
+        "models.CameraMetadata": {
+            /** @description Bitrate in kbps */
+            bitrate?: number;
+            /** @description e.g. "H.264", "H.265" */
+            codec?: string;
+            fieldOfView?: number;
+            /** @description Frame rate in fps */
+            frameRate?: number;
+            /** @description Indicates if the camera supports audio */
+            hasAudio?: boolean;
+            /** @description Indicates if the camera supports backchannel audio */
+            hasBackChannel?: boolean;
+            /** @description Indicates if the camera has input/output capabilities */
+            hasIO?: boolean;
+            /** @description Camera ONVIF and PTZ capabilities */
+            hasOnvif?: boolean;
+            /** @description Indicates if the camera supports pan and tilt functionality */
+            hasPanTilt?: boolean;
+            /** @description Indicates if the camera supports presets */
+            hasPresets?: boolean;
+            /** @description Indicates if the camera supports zoom functionality */
+            hasZoom?: boolean;
+            ios?: components["schemas"]["models.IO"][];
+            /** @description Presets for the camera, used for quick positioning */
+            presets?: components["schemas"]["models.CameraPreset"][];
+            /** @description e.g. "1920x1080", "1280x720" */
+            resolution?: string;
+            /** @description Tours for the camera, used for automated movements through presets */
+            tours?: components["schemas"]["models.CameraTour"][];
+        };
+        "models.CameraPreset": {
+            name?: string;
+            token?: string;
+            x?: number;
+            y?: number;
+            z?: number;
+        };
+        "models.CameraTour": {
+            current?: number;
+            loop?: boolean;
+            name?: string;
+            presets?: components["schemas"]["models.CameraPreset"][];
+            running?: boolean;
+            speed?: number;
+        };
         "models.Classify": {
             details?: components["schemas"]["models.ClassifyDetails"][];
             properties?: string[];
@@ -10170,116 +10293,115 @@ export interface components {
             webhook_url?: string;
         };
         "models.Device": {
+            /** @description last time the agent reported being online (timestamp in milliseconds) */
+            agentLastSeen?: number;
             /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
              *     more verbose information about the device's current state, capabilities, or configuration.
              *     for example the linked sites details, etc. */
             atRuntimeMetadata?: components["schemas"]["models.DeviceAtRuntimeMetadata"];
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
-            /** @description Camera Metadata */
-            cameraMetadata?: components["schemas"]["models.DeviceCameraMetadata"];
-            /** @description e.g. "factory", "docker", "docker compose", "kubernetes" */
+            /** @description Device Specific Metadata */
+            cameraMetadata?: components["schemas"]["models.CameraMetadata"];
+            /** @description Device status
+             *     Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc.
+             *     LastSeenTimestamp is used to identify the last time the device was seen online. */
+            connectionStart?: number;
+            /** @description Type of deployment used e.g. "factory", "docker", "docker compose", "kubernetes" */
             deployment?: string;
-            deviceId?: string;
-            /** @description e.g. "camera", "sensor", "access_control" */
-            deviceType?: string;
+            /** @description last time the device itself reported being online (timestamp in milliseconds) */
+            deviceLastSeen?: number;
+            /** @description threshold in milliseconds to consider a device offline, based on agentLastSeen */
+            disconnectedThreshold?: number;
             /** @description FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.
              *     It is a map of feature names to permissions.
              *     For example, "camera" can have permissions like "read", "write", "delete", etc.
              *     This allows for fine-grained control over what features are accessible by users or groups.
              *     FeaturePermissions can be used to implement Role-Based Access Control (RBAC) for devices. */
             featurePermissions?: components["schemas"]["models.DeviceFeaturePermissions"];
-            groupId?: string;
+            gpsMetadata?: components["schemas"]["models.GPSMetadata"];
+            groupIds?: string[];
+            /** @description threshold in milliseconds to consider a device healthy, based on agentLastSeen */
+            healthyThreshold?: number;
+            humiditySensorMetadata?: components["schemas"]["models.HumiditySensorMetadata"];
             id?: string;
-            /** @description last time the device was seen online (timestamp in milliseconds) */
-            lastSeenTimestamp?: number;
-            /** @description Location metadata */
-            locationMetadata?: components["schemas"]["models.DeviceLocationMetadata"];
-            /** @description Metadata */
-            metadata?: components["schemas"]["models.DeviceMetadata"];
+            /** @description threshold in milliseconds to consider a device idle, based on deviceLastSeen */
+            idleThreshold?: number;
             /** @description Device information
              *     Note: DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
              *     DeviceType is used to identify the type of device, such as camera, sensor, access control, etc. */
+            key?: string;
+            lightSensorMetadata?: components["schemas"]["models.LightSensorMetadata"];
+            /** @description Location of the device, not real time postion. e.g. "Office 1st Floor", "Lobby", "Kilian's Car", etc. */
+            location?: components["schemas"]["models.Location"];
+            /** @description Metadata */
+            metadata?: components["schemas"]["models.DeviceMetadata"];
+            /** @description e.g. "Front Door Camera" */
             name?: string;
-            organisationId?: string;
-            /** @description e.g. "v1.0.0-abcdef123456" */
-            releaseHash?: string;
             /** @description RBAC information
              *     Note: SiteId is used to identify the site where the device is located.
              *     GroupId is used to identify the group of devices.
              *     OrganisationId is used to identify the organisation that owns the device.
              *     FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc. */
-            siteId?: string;
-            /** @description Device status
-             *     Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc.
-             *     LastSeenTimestamp is used to identify the last time the device was seen online. */
-            status?: string;
+            organisationId?: string;
             /** @description Versioning information
              *     Note: Version is used to identify the version of the device software.
              *     ReleaseHash is used to identify the release hash of the device software, it can be used to identify the specific build of the device software.
              *     Deployment is used to identify the deployment type of the device, such as factory, docker, docker compose, kubernetes, etc. */
+            repository?: string;
+            siteIds?: string[];
+            /** @description Type of device e.g. "camera", "sensor", "access_control" */
+            type?: string;
+            /** @description Version of the agent, injected on build. Reflects the release tag of the agent. */
             version?: string;
         };
-        "models.DeviceAtRuntimeMetadata": Record<string, never>;
-        "models.DeviceCameraMetadata": {
-            /** @description Bitrate in kbps */
-            bitrate?: number;
-            /** @description e.g. "H.264", "H.265" */
-            codec?: string;
-            /** @description Frame rate in fps */
-            frameRate?: number;
-            /** @description Indicates if the camera supports audio */
-            hasAudio?: boolean;
-            /** @description Indicates if the camera has input/output capabilities */
-            hasIO?: boolean;
-            /** @description Indicates if the camera supports ONVIF protocol */
-            hasOnvif?: boolean;
-            /** @description Indicates if the camera supports pan and tilt functionality */
-            hasPanTilt?: boolean;
-            /** @description Indicates if the camera supports presets */
-            hasPresets?: boolean;
-            /** @description Indicates if the camera supports zoom functionality */
-            hasZoom?: boolean;
-            /** @description Input/Output capabilities of the camera (such as alarms, relays, etc.) */
-            ios?: components["schemas"]["models.IO"][];
-            /** @description Presets for the camera, used for quick positioning */
-            presets?: components["schemas"]["models.Preset"][];
-            /** @description e.g. "1920x1080", "1280x720" */
-            resolution?: string;
-            /** @description Tours for the camera, used for automated movements through presets */
-            tours?: components["schemas"]["models.Tour"][];
+        "models.DeviceAtRuntimeMetadata": {
+            /** @description Status is derived from the last seen timestamps and thresholds. */
+            status?: string;
         };
         "models.DeviceFeaturePermissions": {
-            floorPlans?: number;
-            io?: number;
-            liveview?: number;
-            ptz?: number;
-            remoteConfig?: number;
+            floorPlans?: components["schemas"]["models.PermissionLevel"];
+            io?: components["schemas"]["models.PermissionLevel"];
+            liveview?: components["schemas"]["models.PermissionLevel"];
+            ptz?: components["schemas"]["models.PermissionLevel"];
+            remoteConfig?: components["schemas"]["models.PermissionLevel"];
         };
         "models.DeviceKey": {
             key?: string;
             name?: string;
         };
-        "models.DeviceLocationMetadata": {
-            fieldOfView?: number;
-            location?: components["schemas"]["models.Location"];
-            onFloorPlans?: string[];
-        };
         "models.DeviceMetadata": {
+            architecture?: string;
+            bootTime?: string;
             /** @description e.g. "Nest", "Ring" */
             brand?: string;
             /** @description e.g. "#FF5733" (hex color code) */
             color?: string;
             /** @description e.g. "Outdoor camera with night vision" */
             description?: string;
+            e2eEncryption?: string;
+            encrypted?: boolean;
+            encryptedData?: number[];
+            freeMemory?: string;
+            /** @description Indicates if the device is hidden from UI */
+            hidden?: boolean;
+            hostname?: string;
+            hubEncryption?: string;
             /** @description Installation date in milliseconds since epoch */
             installationDate?: number;
+            /** @description e.g. "192.168.1.1" */
+            ipAddress?: string;
             /** @description Last maintenance date in milliseconds since epoch */
             lastMaintenance?: number;
+            /** @description e.g. "00:1A:2B:3C:4D:5E" */
+            macAddress?: string;
             /** @description e.g. "Nest Cam", "Ring Doorbell" */
             model?: string;
-            /** @description Mute status, e.g. false for unmuted, true for muted */
-            mute?: boolean;
+            /** @description Floor plans this device is associated with */
+            onFloorPlans?: string[];
+            processMemory?: string;
+            totalMemory?: string;
+            usedMemory?: string;
         };
         "models.DeviceOption": {
             id?: string;
@@ -10370,6 +10492,22 @@ export interface components {
             range?: string;
             time?: string;
         };
+        "models.GPSMetadata": {
+            /** @description Accuracy is the accuracy of the GPS reading in meters. */
+            accuracy?: number;
+            /** @description Altitude is the current altitude of the device in meters. */
+            altitude?: number;
+            /** @description Heading is the direction of movement in degrees. */
+            heading?: number;
+            /** @description Latitude is the current latitude of the device. */
+            latitude?: number;
+            /** @description Longitude is the current longitude of the device. */
+            longitude?: number;
+            /** @description Speed is the current speed of the device in meters per second. */
+            speed?: number;
+            /** @description Timestamp is the time when the GPS data was recorded (milliseconds since epoch). */
+            timestamp?: number;
+        };
         "models.Group": {
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
@@ -10438,6 +10576,16 @@ export interface components {
             end?: number;
             start?: number;
         };
+        "models.HumiditySensorMetadata": {
+            /** @description CurrentHumidity is the latest measured humidity level in percentage */
+            currentHumidity?: number;
+            /** @description HumidityRange specifies the measurable range in percentage (e.g. "0-100") */
+            humidityRange?: string;
+            /** @description Sensitivity indicates the sensitivity level of the humidity sensor (e.g. 1-100) */
+            sensitivity?: number;
+            /** @description Unit is the measurement unit, typically "%" */
+            unit?: string;
+        };
         "models.IO": {
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
@@ -10453,6 +10601,16 @@ export interface components {
             type?: string;
             value?: string;
         };
+        "models.LightSensorMetadata": {
+            /** @description CurrentLux is the latest measured light level in lux */
+            currentLux?: number;
+            /** @description LuxRange specifies the measurable range in lux (e.g. "0-10000") */
+            luxRange?: string;
+            /** @description Sensitivity indicates the sensitivity level of the light sensor (e.g. 1-100) */
+            sensitivity?: number;
+            /** @description Unit is the measurement unit, typically "lux" */
+            unit?: string;
+        };
         "models.Location": {
             /** @description e.g. "123 Main St, Anytown, USA" */
             address?: string;
@@ -10460,6 +10618,8 @@ export interface components {
             altitude?: number;
             latitude?: number;
             longitude?: number;
+            /** @description e.g. "Warehouse Aisle 3" */
+            name?: string;
         };
         "models.Marker": {
             /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
@@ -10714,6 +10874,8 @@ export interface components {
              *     DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
              *     OrganisationId is used to identify the organisation that owns the device. */
             deviceId?: string;
+            /** @description Name of the device that uploaded media */
+            deviceName?: string;
             duration?: number;
             endTimestamp?: number;
             groupId?: string;
@@ -10734,9 +10896,10 @@ export interface components {
             videoFile?: string;
         };
         "models.MediaAtRuntimeMetadata": {
-            analysis?: components["schemas"]["models.Analysis"];
+            analysis?: components["schemas"]["models.AnalysisWrapper"];
             /** @description Timestamp when the runtime metadata was cached. */
             cachedTimestamp?: number;
+            device?: unknown;
             redactionUrl?: string;
             spriteUrl?: string;
             thumbnailUrl?: string;
@@ -10755,7 +10918,6 @@ export interface components {
             count?: number;
             description?: string;
             detections?: string[];
-            deviceName?: string;
             dominantColors?: string[];
             embedding?: number[];
             /** @description frames per second */
@@ -10811,6 +10973,8 @@ export interface components {
             /** @description Add fields relevant to notification stage */
             notificationType?: string;
         };
+        /** @enum {integer} */
+        "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.PipelineEvent": {
             analysisStage?: components["schemas"]["models.AnalysisStage"];
             /** @description We should get rid of this and use the stage map */
@@ -10870,13 +11034,6 @@ export interface components {
         "models.Point": {
             x?: number;
             y?: number;
-        };
-        "models.Preset": {
-            name?: string;
-            token?: string;
-            x?: number;
-            y?: number;
-            z?: number;
         };
         "models.Region": {
             device?: string;
@@ -11092,14 +11249,6 @@ export interface components {
             timeRange2MinTuesday?: number;
             timeRange2MinWednesday?: number;
         };
-        "models.Tour": {
-            current?: number;
-            loop?: boolean;
-            name?: string;
-            presets?: components["schemas"]["models.Preset"][];
-            running?: boolean;
-            speed?: number;
-        };
         "models.TrackBox": {
             edited?: boolean;
             smoothed?: boolean;
@@ -11221,6 +11370,9 @@ export namespace models {
     export type Audit = components['schemas']['models.Audit'];
     export type AuditCreate = components['schemas']['models.AuditCreate'];
     export type AuditUpdate = components['schemas']['models.AuditUpdate'];
+    export type CameraMetadata = components['schemas']['models.CameraMetadata'];
+    export type CameraPreset = components['schemas']['models.CameraPreset'];
+    export type CameraTour = components['schemas']['models.CameraTour'];
     export type Classify = components['schemas']['models.Classify'];
     export type ClassifyDetails = components['schemas']['models.ClassifyDetails'];
     export type Color = components['schemas']['models.Color'];
@@ -11230,10 +11382,9 @@ export namespace models {
     export type CountingRecord = components['schemas']['models.CountingRecord'];
     export type CustomAlert = components['schemas']['models.CustomAlert'];
     export type Device = components['schemas']['models.Device'];
-    export type DeviceCameraMetadata = components['schemas']['models.DeviceCameraMetadata'];
+    export type DeviceAtRuntimeMetadata = components['schemas']['models.DeviceAtRuntimeMetadata'];
     export type DeviceFeaturePermissions = components['schemas']['models.DeviceFeaturePermissions'];
     export type DeviceKey = components['schemas']['models.DeviceKey'];
-    export type DeviceLocationMetadata = components['schemas']['models.DeviceLocationMetadata'];
     export type DeviceMetadata = components['schemas']['models.DeviceMetadata'];
     export type DeviceOption = components['schemas']['models.DeviceOption'];
     export type DevicePlacement = components['schemas']['models.DevicePlacement'];
@@ -11244,6 +11395,7 @@ export namespace models {
     export type FeaturePermissions = components['schemas']['models.FeaturePermissions'];
     export type FloorPlan = components['schemas']['models.FloorPlan'];
     export type FragmentedBytesRangeOnTime = components['schemas']['models.FragmentedBytesRangeOnTime'];
+    export type GPSMetadata = components['schemas']['models.GPSMetadata'];
     export type Group = components['schemas']['models.Group'];
     export type GroupMetadata = components['schemas']['models.GroupMetadata'];
     export type GroupOption = components['schemas']['models.GroupOption'];
@@ -11251,7 +11403,9 @@ export namespace models {
     export type HealthMetadata = components['schemas']['models.HealthMetadata'];
     export type HighUpload = components['schemas']['models.HighUpload'];
     export type HourRange = components['schemas']['models.HourRange'];
+    export type HumiditySensorMetadata = components['schemas']['models.HumiditySensorMetadata'];
     export type IO = components['schemas']['models.IO'];
+    export type LightSensorMetadata = components['schemas']['models.LightSensorMetadata'];
     export type Location = components['schemas']['models.Location'];
     export type Marker = components['schemas']['models.Marker'];
     export type MarkerAtRuntimeMetadata = components['schemas']['models.MarkerAtRuntimeMetadata'];
@@ -11277,7 +11431,6 @@ export namespace models {
     export type PipelineMetadata = components['schemas']['models.PipelineMetadata'];
     export type PipelinePayload = components['schemas']['models.PipelinePayload'];
     export type Point = components['schemas']['models.Point'];
-    export type Preset = components['schemas']['models.Preset'];
     export type Region = components['schemas']['models.Region'];
     export type Role = components['schemas']['models.Role'];
     export type SequenceStage = components['schemas']['models.SequenceStage'];
@@ -11295,7 +11448,6 @@ export namespace models {
     export type Thumby = components['schemas']['models.Thumby'];
     export type TimeRange = components['schemas']['models.TimeRange'];
     export type TimeWindow = components['schemas']['models.TimeWindow'];
-    export type Tour = components['schemas']['models.Tour'];
     export type TrackBox = components['schemas']['models.TrackBox'];
     export type User = components['schemas']['models.User'];
     export type VaultMedia = components['schemas']['models.VaultMedia'];
