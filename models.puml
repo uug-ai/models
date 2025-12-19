@@ -1,32 +1,1107 @@
 @startuml
-namespace main {
-    class Media << (S,Aquamarine) >> {
+namespace models {
+    class "AccessToken" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Name string
+        + Description string
+        + Expiration int64
+        + Scopes []AccessTokenScope
+        + Token string
+        + OrganisationId string
+        + UserId string
+        + Audit *Audit
+
+    }
+    class "Activity" << (S,Aquamarine) >> {
+        + Day string
+        + Requests int64
+        + Videos int64
+        + Images int64
+        + Usage int64
+        + Timestamp int64
+        + Devices <font color=blue>map</font>[string]int64
+
+    }
+    class "AlertFeatures" << (S,Aquamarine) >> {
+        + CreateMarker bool
+
+    }
+    class "Analysis" << (S,Aquamarine) >> {
+        + Classify Classify
+        + Counting Counting
+        + DominantColor DominantColor
+        + Thumby Thumby
+        + Sprite Sprite
+        + FaceRedaction []FaceRedaction
+
+    }
+    class "AnalysisFilter" << (S,Aquamarine) >> {
+        + Start int64
+        + Limit int64
+        + Sort string
+        + Operations []string
+
+    }
+    class "AnalysisShort" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Key string
+        + Provider string
+        + Source string
+        + FileUrl string
+        + Timestamp int64
+        + Start int64
+        + UserId string
+        + DeviceId string
+        + ThumbnaiFile string
+        + ThumbnailProvider string
+        + ThumbnailUrl string
+        + Favourite bool
+        + Data *Analysis
+
+    }
+    class "AnalysisStage" << (S,Aquamarine) >> {
+        + Name string
+        + AnalysisResult string
+
+        + GetName() string
+
+    }
+    class "AnalysisWrapper" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Key string
+        + Provider string
+        + Source string
+        + InProcess int64
+        + Timestamp int64
+        + Start int64
+        + End int64
+        + UserId string
+        + DeviceId string
+        + AsyncOperations []string
+        + RequiredOperations []string
+        + ResolvedOperations []string
+        + Favourite bool
+        + Data Analysis
+
+    }
+    class "Audit" << (S,Aquamarine) >> {
+        + Create AuditCreate
+        + UpdateHistory []AuditUpdate
+
+    }
+    class "AuditCreate" << (S,Aquamarine) >> {
+        + CreatedBy string
+        + CreatedAt int64
+
+    }
+    class "AuditUpdate" << (S,Aquamarine) >> {
+        + UpdatedBy string
+        + UpdatedAt int64
+
+    }
+    class "Classify" << (S,Aquamarine) >> {
+        + Properties []string
+        + Details []ClassifyDetails
+
+    }
+    class "ClassifyDetails" << (S,Aquamarine) >> {
+        + Id string
+        + X float64
+        + Y float64
+        + W float64
+        + H float64
+        + FrameWidth float64
+        + FrameHeight float64
+        + MeanColor float64
+        + Frame float64
+        + Occurence float64
+        + Distance float64
+        + Valid bool
+        + Classified string
+        + Traject [][]float64
+        + ColorString []string
+        + IsStatic bool
+        + Frames []int64
+        + StaticDistance float64
+        + TrajectCentroids [][]float64
+
+    }
+    class "Color" << (S,Aquamarine) >> {
+        + Name string
+        + Count int
+
+    }
+    class "Comment" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + DeviceId string
+        + OrganisationId string
+        + Type string
+        + Author string
+        + Content string
+        + Timestamps []int64
+        + ParentId string
+        + Audit *Audit
+
+    }
+    class "Counting" << (S,Aquamarine) >> {
+        + Details []CountingDetail
+        + Regions []Region
+        + Records []CountingRecord
+
+    }
+    class "CountingDetail" << (S,Aquamarine) >> {
+        + DeviceID string
+        + ObjectName string
+        + Timestamp string
+        + VideoWidth float64
+        + VideoHeight float64
+        + Segment string
+        + ObjectId string
+        + Position []float64
+
+    }
+    class "CountingRecord" << (S,Aquamarine) >> {
+        + Type string
+        + SegmentId string
+        + Username string
+        + AlertId string
+        + AlertName string
+        + Timestamp string
+        + DeviceId string
+        + ObjectName string
+        + Count int
+        + Duration float64
+
+    }
+    class "CustomAlert" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Enabled bool
+        + Title string
+        + Description string
+        + ChannelsAll bool
+        + ChannelsList []string
+        + DevicesAll bool
+        + DevicesList []DeviceKey
+        + CountingDevicesAll bool
+        + CountingDevicesList []DeviceKey
+        + ClassificationAll bool
+        + ClassificationList []string
+        + TimeAdvanced bool
+        + TimeRange1Max int32
+        + TimeRange1Min int32
+        + TimeRange2Max int32
+        + TimeRange2Min int32
+        + UserId string
+        + MasterUserId string
+        + EmailEmail string
+        + SlackHook string
+        + SlackBotname string
+        + PushbulletApikey string
+        + TelegramToken string
+        + TelegramChannel string
+        + AlexaToken string
+        + WebhookUrl string
+        + IftttToken string
+        + SMSAccountsid string
+        + SMSAuthtoken string
+        + SMSTelfrom string
+        + SMSTelto string
+        + PushoverApikey string
+        + PushoverSendto string
+        + MotionRegions []Region
+        + CountingLines []Region
+        + InputList []string
+        + InputsAND bool
+        + OutputList []string
+        + Features *AlertFeatures
+
+    }
+    class "Device" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Name string
+        + DeviceId string
+        + DeviceType string
+        + Version string
+        + ReleaseHash string
+        + Deployment string
+        + SiteId string
+        + GroupId string
+        + OrganisationId string
+        + Status string
+        + LastSeenTimestamp int64
+        + Metadata *DeviceMetadata
+        + CameraMetadata *DeviceCameraMetadata
+        + LocationMetadata *DeviceLocationMetadata
+        + FeaturePermissions *DeviceFeaturePermissions
+        + AtRuntimeMetadata *DeviceAtRuntimeMetadata
+        + Audit *Audit
+
+    }
+    class "DeviceAtRuntimeMetadata" << (S,Aquamarine) >> {
+    }
+    class "DeviceCameraMetadata" << (S,Aquamarine) >> {
+        + Resolution string
+        + FrameRate int64
+        + Bitrate int64
+        + Codec string
+        + HasOnvif bool
+        + HasAudio bool
+        + HasZoom bool
+        + HasPanTilt bool
+        + HasPresets bool
+        + Presets []Preset
+        + Tours []Tour
+        + HasIO bool
+        + IOs []IO
+
+    }
+    class "DeviceFeaturePermissions" << (S,Aquamarine) >> {
+        + PTZ int
+        + Liveview int
+        + RemoteConfig int
+        + IO int
+        + FloorPlans int
+
+    }
+    class "DeviceKey" << (S,Aquamarine) >> {
+        + Key string
+        + Name string
+
+    }
+    class "DeviceLocationMetadata" << (S,Aquamarine) >> {
+        + Location Location
+        + OnFloorPlans []string
+        + FieldOfView float64
+
+    }
+    class "DeviceMetadata" << (S,Aquamarine) >> {
+        + Mute bool
+        + Color string
+        + Brand string
+        + Model string
+        + Description string
+        + LastMaintenance int64
+        + InstallationDate int64
+
+    }
+    class "DeviceOption" << (S,Aquamarine) >> {
+        + Id string
+        + Value string
+        + Text string
+
+    }
+    class "DevicePlacement" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + DeviceId string
+        + FabricKey string
+        + X float64
+        + Y float64
+        + RelativeX float64
+        + RelativeY float64
+        + Radius float64
+        + FieldOfView float64
+        + SliceStartAngle float64
+        + SliceEndAngle float64
+        + SliceMiddleAngle float64
+        + Color string
+        + Icon string
+        + Audit *Audit
+
+    }
+    class "DominantColor" << (S,Aquamarine) >> {
+        + Rgbs [][]float64
+        + Hexs []string
+
+    }
+    class "EventStage" << (S,Aquamarine) >> {
+        + Name string
+        + EventData string
+
+        + GetName() string
+
+    }
+    class "FaceRedaction" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Tracks []FaceRedactionTrack
+
+    }
+    class "FaceRedactionTrack" << (S,Aquamarine) >> {
+        + Id string
+        + Classified string
+        + Frames []int64
+        + Traject [][]float64
+        + ColorString []string
+        + Selected bool
+        + DeletedFrames []int64
+        + FrameCoordinates <font color=blue>map</font>[int64]TrackBox
+
+    }
+    class "FeaturePermissions" << (S,Aquamarine) >> {
+        + PTZ int
+        + Liveview int
+        + RemoteConfig int
+        + IO int
+        + FloorPlans int
+
+    }
+    class "FloorPlan" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Name string
+        + Image string
+        + Width int
+        + Height int
+        + DevicePlacements []DevicePlacement
+        + Audit *Audit
+
+    }
+    class "FragmentedBytesRangeOnTime" << (S,Aquamarine) >> {
+        + Duration string
+        + Time string
+        + Range string
+
+    }
+    class "Group" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Name string
+        + Description string
+        + GroupType string
+        + OrganisationId string
+        + Devices []string
+        + Groups []string
+        + Sites []string
+        + StorageSolution string
+        + VaultAccessKey string
+        + VaultSecretKey string
+        + VaultUri string
+        + Metadata *GroupMetadata
+        + Audit *Audit
+
+    }
+    class "GroupMetadata" << (S,Aquamarine) >> {
+        + Initials string
+        + Color string
+        + FloorPlans []FloorPlan
+        + NumberOfFloorPlans int
+        + Location Location
+
+    }
+    class "GroupOption" << (S,Aquamarine) >> {
+        + Value string
+        + Text string
+        + Devices []string
+        + Groups []string
+        + Sites []string
+
+    }
+    class "Health" << (S,Aquamarine) >> {
+        + Description string
+        + Database bool
+        + Queue bool
+        + License bool
+        + Metadata *HealthMetadata
+        + AtRuntimeMetadata *HealthAtRuntimeMetadata
+        + Synchronize *Synchronize
+        + Audit *Audit
+
+    }
+    class "HealthAtRuntimeMetadata" << (S,Aquamarine) >> {
+    }
+    class "HealthMetadata" << (S,Aquamarine) >> {
+        + LicenseExpiryDate string
+
+    }
+    class "HighUpload" << (S,Aquamarine) >> {
+        + Requests int64
+        + StartTimestamp int64
+        + Notification int64
+
+    }
+    class "HourRange" << (S,Aquamarine) >> {
+        + Start int64
+        + End int64
+
+    }
+    class "IO" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Hash string
+        + DeviceId string
+        + Type string
+        + Key string
+        + Value string
+        + LastSeenTimestamp int64
+        + External bool
+        + Audit *Audit
+
+    }
+    class "Location" << (S,Aquamarine) >> {
+        + Latitude float64
+        + Longitude float64
+        + Altitude float64
+        + Address string
+
+    }
+    class "Marker" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + DeviceId string
+        + SiteId string
+        + GroupId string
+        + OrganisationId string
         + StartTimestamp int64
         + EndTimestamp int64
         + Duration int64
+        + Name string
+        + Events []MarkerEvent
+        + Tags []MarkerTag
+        + Description string
+        + Categories []MarkerCategory
+        + Metadata *MarkerMetadata
+        + AtRuntimeMetadata *MarkerAtRuntimeMetadata
+        + Synchronize *Synchronize
+        + Audit *Audit
+
+    }
+    class "MarkerAtRuntimeMetadata" << (S,Aquamarine) >> {
+        + MarkerRanges []MarkerOptionTimeRange
+        + TagRanges []MarkerTagTimeRange
+        + EventRanges []MarkerEventTimeRange
+
+    }
+    class "MarkerCategory" << (S,Aquamarine) >> {
+        + Name string
+
+    }
+    class "MarkerCategoryOption" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Value string
+        + Text string
+        + OrganisationId string
+        + CreatedAt int64
+        + UpdatedAt int64
+
+    }
+    class "MarkerEvent" << (S,Aquamarine) >> {
+        + StartTimestamp int64
+        + EndTimestamp int64
+        + Duration int64
+        + Name string
+        + Description string
+        + Tags []string
+
+    }
+    class "MarkerEventOption" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Value string
+        + Text string
+        + OrganisationId string
+        + CreatedAt int64
+        + UpdatedAt int64
+
+    }
+    class "MarkerEventTimeRange" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Value string
+        + Text string
+        + OrganisationId string
+        + Start int64
+        + End int64
+        + DeviceId string
+        + CreatedAt int64
+        + UpdatedAt int64
+
+    }
+    class "MarkerMetadata" << (S,Aquamarine) >> {
+        + Comments *Comment
+
+    }
+    class "MarkerOption" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + OrganisationId string
+        + Value string
+        + Text string
+        + Categories []string
+        + CreatedAt int64
+        + UpdatedAt int64
+
+    }
+    class "MarkerOptionTimeRange" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Value string
+        + Text string
+        + OrganisationId string
+        + Start int64
+        + End int64
+        + DeviceId string
+        + CreatedAt int64
+        + UpdatedAt int64
+
+    }
+    class "MarkerTag" << (S,Aquamarine) >> {
+        + Name string
+
+    }
+    class "MarkerTagOption" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Value string
+        + Text string
+        + OrganisationId string
+        + CreatedAt int64
+        + UpdatedAt int64
+
+    }
+    class "MarkerTagTimeRange" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Value string
+        + Text string
+        + OrganisationId string
+        + Start int64
+        + End int64
+        + DeviceId string
+        + CreatedAt int64
+        + UpdatedAt int64
+
+    }
+    class "Media" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + StartTimestamp int64
+        + EndTimestamp int64
+        + Duration int
         + DeviceId string
         + GroupId string
-        + UserId string
+        + SiteId string
+        + OrganisationId string
         + StorageSolution string
         + VideoFile string
-        + VideoUrl string
-        + VideoProvider string
-        + ThumbnailUrl string
         + ThumbnailFile string
-        + ThumbnailProvider string
-        + SpriteUrl string
         + SpriteFile string
-        + SpriteProvider string
-        + SpriteInterval int
-        + Metadata []MediaMetadata
+        + RedactionFile string
+        + Metadata *MediaMetadata
+        + AtRuntimeMetadata *MediaAtRuntimeMetadata
+        + Audit *Audit
 
     }
-    class MediaMetadata << (S,Aquamarine) >> {
-        + Tags []string
-        + Classifications []string
+    class "MediaAtRuntimeMetadata" << (S,Aquamarine) >> {
+        + CachedTimestamp int64
+        + VideoUrl string
+        + ThumbnailUrl string
+        + SpriteUrl string
+        + RedactionUrl string
 
+    }
+    class "MediaMetadata" << (S,Aquamarine) >> {
+        + Container string
+        + Resolution string
+        + Codec string
+        + Bitrate int
+        + FPS int
+        + Tags []string
+        + SpriteInterval int
+        + AnalysisId string
+        + Classifications []string
+        + Description string
+        + Detections []string
+        + DominantColors []string
+        + Count int
+        + Embedding []int
+        + DeviceName string
+
+    }
+    class "Model" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Metadata *MediaMetadata
+        + AtRuntimeMetadata *MediaAtRuntimeMetadata
+        + Audit *Audit
+
+    }
+    class "ModelOption" << (S,Aquamarine) >> {
+        + Value string
+        + Text string
+
+    }
+    class "MonitorStage" << (S,Aquamarine) >> {
+        + Name string
+        + MonitorData string
+        + User User
+        + Subscription Subscription
+        + Plans <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+        + HighUpload HighUpload
+        + Activity Activity
+
+        + GetName() string
+        + GetUser() User
+        + GetHighUpload() HighUpload
+        + GetActivity() Activity
+
+    }
+    class "NotificationStage" << (S,Aquamarine) >> {
+        + Name string
+        + NotificationType string
+
+        + GetName() string
+
+    }
+    class "PipelineEvent" << (S,Aquamarine) >> {
+        + Request string
+        + Operation string
+        + Stages []string
+        + EventStage *EventStage
+        + MonitorStage *MonitorStage
+        + SequenceStage *SequenceStage
+        + AnalysisStage *AnalysisStage
+        + ThrottlerStage *ThrottlerStage
+        + NotificationStage *NotificationStage
+        + Storage string
+        + Provider string
+        + SecondaryProviders []string
+        + TraceId string
+        + ReceiveCount int64
+        + Timestamp int64
+        + FileName string
+        + Payload PipelinePayload
+        + Data <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+
+    }
+    class "PipelineMetadata" << (S,Aquamarine) >> {
+        + Timestamp string
+        + Duration string
+        + NumberOfChanges string
+        + UploadTime string
+        + MicroSeconds string
+        + DeviceId string
+        + DeviceName string
+        + RegionCoordinates string
+
+    }
+    class "PipelinePayload" << (S,Aquamarine) >> {
+        + Timestamp int64
+        + FileName string
+        + FileSize int64
+        + Duration string
+        + SignedURL string
+        + OrganisationId string
+        + DeviceId string
+        + DeviceName string
+        + IsFragmented bool
+        + BytesRanges string
+        + BytesRangeOnTime []FragmentedBytesRangeOnTime
+        + Metadata PipelineMetadata
+
+    }
+    class "Point" << (S,Aquamarine) >> {
+        + X float64
+        + Y float64
+
+    }
+    class "Preset" << (S,Aquamarine) >> {
+        + Name string
+        + Token string
+        + X float64
+        + Y float64
+        + Z float64
+
+    }
+    class "Region" << (S,Aquamarine) >> {
+        + Id string
+        + Device string
+        + Width int
+        + Height int
+        + RegionPoints []Point
+
+    }
+    class "Role" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Name string
+        + ParentRole string
+        + Pages []string
+        + TimeWindow TimeWindow
+        + UserId string
+        + IsActive int
+        + FeaturePermissions FeaturePermissions
+        + TimeWindowActive int
+
+    }
+    class "SequenceStage" << (S,Aquamarine) >> {
+        + Name string
+        + SequenceId int64
+
+        + GetName() string
+
+    }
+    class "Site" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Name string
+        + Description string
+        + OrganisationId string
+        + Devices []string
+        + Groups []string
+        + StorageSolution string
+        + VaultAccessKey string
+        + VaultSecretKey string
+        + VaultUri string
+        + Metadata *SiteMetadata
+        + Audit *Audit
+
+    }
+    class "SiteMetadata" << (S,Aquamarine) >> {
+        + Initials string
+        + Color string
+        + FloorPlans []FloorPlan
+        + NumberOfFloorPlans int
+        + Location Location
+
+    }
+    class "SiteOption" << (S,Aquamarine) >> {
+        + Value string
+        + Text string
+        + Devices []string
+        + Groups []string
+
+    }
+    class "Sprite" << (S,Aquamarine) >> {
+        + SpriteFile string
+        + Provider string
+        + Interval int
+
+    }
+    interface "Stage"  {
+        + GetName() string
+        + UnmarshalJSON( []byte) error
+
+    }
+    class "Storage" << (S,Aquamarine) >> {
+        + Uri string
+        + AccessKey string
+        + Secret string
+
+    }
+    class "Strategy" << (S,Aquamarine) >> {
+        + Id string
+        + Name string
+        + Description string
+        + DeviceId string
+        + SiteId string
+        + GroupId string
+        + OrganisationId string
+        + StartTimestamp int64
+        + EndTimestamp int64
+        + Duration int
+        + Active bool
+        + Metadata *StrategyMetadata
+        + AtRuntimeMetadata *StrategyAtRuntimeMetadata
+        + Audit *Audit
+
+    }
+    class "StrategyAtRuntimeMetadata" << (S,Aquamarine) >> {
+    }
+    class "StrategyMetadata" << (S,Aquamarine) >> {
+    }
+    class "Subscription" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Name string
+        + UserId string
+        + Plan string
+        + Ends string
+
+    }
+    class "Synchronize" << (S,Aquamarine) >> {
+        + Timestamp int64
+        + Status Status
+        + WorkerId string
+        + Message string
+        + Events []SynchronizeEvent
+
+    }
+    class "SynchronizeEvent" << (S,Aquamarine) >> {
+        + Timestamp int64
+        + Status Status
+        + WorkerId string
+        + Message string
+
+    }
+    class "ThrottlerStage" << (S,Aquamarine) >> {
+        + Name string
+        + ThrottleLimit int
+
+        + GetName() string
+
+    }
+    class "Thumbnail" << (S,Aquamarine) >> {
+        + Key string
+        + ThumbnailFile string
+
+    }
+    class "Thumby" << (S,Aquamarine) >> {
+        + ThumbnailFile string
+        + Provider string
+        + Base64 string
+        + Interval int
+
+    }
+    class "TimeRange" << (S,Aquamarine) >> {
+        + Start int64
+        + End int64
+
+    }
+    class "TimeWindow" << (S,Aquamarine) >> {
+        + TimeRange1MinMonday float64
+        + TimeRange1MaxMonday float64
+        + TimeRange2MinMonday float64
+        + TimeRange2MaxMonday float64
+        + TimeRange1MinTuesday float64
+        + TimeRange1MaxTuesday float64
+        + TimeRange2MinTuesday float64
+        + TimeRange2MaxTuesday float64
+        + TimeRange1MinWednesday float64
+        + TimeRange1MaxWednesday float64
+        + TimeRange2MinWednesday float64
+        + TimeRange2MaxWednesday float64
+        + TimeRange1MinThursday float64
+        + TimeRange1MaxThursday float64
+        + TimeRange2MinThursday float64
+        + TimeRange2MaxThursday float64
+        + TimeRange1MinFriday float64
+        + TimeRange1MaxFriday float64
+        + TimeRange2MinFriday float64
+        + TimeRange2MaxFriday float64
+        + TimeRange1MinSaturday float64
+        + TimeRange1MaxSaturday float64
+        + TimeRange2MinSaturday float64
+        + TimeRange2MaxSaturday float64
+        + TimeRange1MinSunday float64
+        + TimeRange1MaxSunday float64
+        + TimeRange2MinSunday float64
+        + TimeRange2MaxSunday float64
+
+    }
+    class "Tour" << (S,Aquamarine) >> {
+        + Name string
+        + Presets []Preset
+        + Current int
+        + Running bool
+        + Loop bool
+        + Speed float64
+
+    }
+    class "TrackBox" << (S,Aquamarine) >> {
+        + X1 float64
+        + Y1 float64
+        + X2 float64
+        + Y2 float64
+        + TrackId string
+        + Smoothed bool
+        + Edited bool
+
+    }
+    class "User" << (S,Aquamarine) >> {
+        + Id primitive.ObjectID
+        + Username string
+        + Email string
+        + Error bool
+        + ReachedLimit bool
+        + ReachedLimitTimestamp int64
+        + Timezone string
+        + Dates []string
+        + Instances []string
+        + PublicKey string
+        + PrivateKey string
+        + Pushbullet string
+        + Settings <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+        + Throttler <font color=blue>map</font>[string]<font color=blue>interface</font>{}
+        + Activity []<font color=blue>map</font>[string]<font color=blue>interface</font>{}
+        + HighUpload HighUpload
+        + Devices []<font color=blue>map</font>[string]<font color=blue>interface</font>{}
+        + NotificationSettings <font color=blue>map</font>[string]<font color=blue>map</font>[string]<font color=blue>interface</font>{}
+        + Channels <font color=blue>map</font>[string]<font color=blue>map</font>[string]<font color=blue>interface</font>{}
+        + Storage Storage
+        + CustomUsageLimit int
+        + CustomDayLimit int
+        + CustomAnalysisLimit int
+
+    }
+    class "VaultMedia" << (S,Aquamarine) >> {
+        + Timestamp int64
+        + FileName string
+        + FileSize int64
+        + Device string
+        + Account string
+        + Provider string
+        + Status string
+        + Finished bool
+        + Temporary bool
+        + Forwarded bool
+        + ToBeForwarded bool
+        + Uploaded bool
+        + ForwarderId string
+        + ForwarderType string
+        + ForwarderWorker string
+        + ForwardTimestamp int64
+        + Events []VaultMediaEvent
+        + MainProvider bool
+        + SecondaryProvider bool
+        + Metadata VaultMediaMetadata
+        + UriExpiryTime string
+
+    }
+    class "VaultMediaEvent" << (S,Aquamarine) >> {
+        + Timestamp int64
+        + Title string
+        + Description string
+
+    }
+    class "VaultMediaFragmentCollection" << (S,Aquamarine) >> {
+        + Key string
+        + FileName string
+        + CameraId string
+        + Timestamp int64
+        + Url string
+        + Start float64
+        + End float64
+        + Duration float64
+        + BytesRanges string
+        + BytesRangeOnTime []FragmentedBytesRangeOnTime
+
+    }
+    class "VaultMediaMetadata" << (S,Aquamarine) >> {
+        + BytesRanges string
+        + BytesRangeOnTime []FragmentedBytesRangeOnTime
+        + IsFragmented bool
+        + Duration uint64
+        + Timescale uint32
+
+    }
+    class "models.AccessTokenScope" << (T, #FF7700) >>  {
+    }
+    class "models.Status" << (T, #FF7700) >>  {
     }
 }
+
+' Relationships
+AccessToken o-- Audit : has
+Activity --> "map[string]int64" : devices
+
+Analysis *-- Classify : contains
+Analysis *-- Counting : contains
+Analysis *-- DominantColor : contains
+Analysis *-- Thumby : contains
+Analysis *-- Sprite : contains
+Analysis *-- "FaceRedaction[]" : contains
+
+AnalysisShort o-- Analysis : data
+AnalysisWrapper o-- Analysis : data
+AnalysisWrapper o-- "[]string" : operations
+
+Audit *-- AuditCreate : create
+Audit *-- "[]AuditUpdate" : history
+
+Classify *-- "[]ClassifyDetails" : details
+ClassifyDetails o-- "[][]float64" : traject
+ClassifyDetails o-- "[]string" : colorString
+
+Comment o-- Audit : has
+Counting *-- "[]CountingDetail" : details
+Counting *-- "[]Region" : regions
+Counting *-- "[]CountingRecord" : records
+
+CustomAlert o-- "[]DeviceKey" : devices
+CustomAlert o-- "[]DeviceKey" : countingDevices
+CustomAlert o-- "[]Region" : motionRegions
+CustomAlert o-- "[]Region" : countingLines
+
+Device o-- DeviceMetadata : metadata
+Device o-- DeviceCameraMetadata : cameraMetadata
+Device o-- DeviceLocationMetadata : locationMetadata
+Device o-- DeviceFeaturePermissions : featurePermissions
+Device o-- DeviceAtRuntimeMetadata : atRuntimeMetadata
+Device o-- Audit : audit
+
+DeviceCameraMetadata o-- "[]Preset" : presets
+DeviceCameraMetadata o-- "[]Tour" : tours
+DeviceCameraMetadata o-- "[]IO" : ios
+
+DeviceLocationMetadata o-- Location : location
+DeviceLocationMetadata o-- "[]string" : floorPlans
+
+DevicePlacement o-- Audit : audit
+
+FloorPlan o-- "[]DevicePlacement" : placements
+FloorPlan o-- Audit : audit
+
+Group o-- GroupMetadata : metadata
+Group o-- Audit : audit
+GroupMetadata o-- "[]FloorPlan" : floorPlans
+GroupMetadata o-- Location : location
+
+Health o-- HealthMetadata : metadata
+Health o-- HealthAtRuntimeMetadata : atRuntimeMetadata
+Health o-- Synchronize : synchronize
+Health o-- Audit : audit
+
+IO o-- Audit : audit
+
+Marker o-- "[]MarkerEvent" : events
+Marker o-- "[]MarkerTag" : tags
+Marker o-- "[]MarkerCategory" : categories
+Marker o-- MarkerMetadata : metadata
+Marker o-- MarkerAtRuntimeMetadata : atRuntimeMetadata
+Marker o-- Synchronize : synchronize
+Marker o-- Audit : audit
+
+MarkerAtRuntimeMetadata o-- "[]MarkerOptionTimeRange" : markerRanges
+MarkerAtRuntimeMetadata o-- "[]MarkerTagTimeRange" : tagRanges
+MarkerAtRuntimeMetadata o-- "[]MarkerEventTimeRange" : eventRanges
+
+MarkerMetadata o-- Comment : comments
+
+Media o-- MediaMetadata : metadata
+Media o-- MediaAtRuntimeMetadata : atRuntimeMetadata
+Media o-- Audit : audit
+
+Model o-- MediaMetadata : metadata
+Model o-- MediaAtRuntimeMetadata : atRuntimeMetadata
+Model o-- Audit : audit
+
+MonitorStage --> User : user
+MonitorStage --> Subscription : subscription
+MonitorStage --> HighUpload : highUpload
+MonitorStage --> Activity : activity
+MonitorStage --> "map[string]interface{}" : plans
+
+PipelineEvent o-- EventStage : eventStage
+PipelineEvent o-- MonitorStage : monitorStage
+PipelineEvent o-- SequenceStage : sequenceStage
+PipelineEvent o-- AnalysisStage : analysisStage
+PipelineEvent o-- ThrottlerStage : throttlerStage
+PipelineEvent o-- NotificationStage : notificationStage
+PipelineEvent o-- PipelinePayload : payload
+PipelineEvent o-- "map[string]interface{}" : data
+
+PipelinePayload o-- "[]FragmentedBytesRangeOnTime" : bytesRangeOnTime
+PipelinePayload o-- PipelineMetadata : metadata
+
+Role o-- TimeWindow : timeWindow
+Role o-- FeaturePermissions : featurePermissions
+
+Site o-- SiteMetadata : metadata
+Site o-- Audit : audit
+SiteMetadata o-- "[]FloorPlan" : floorPlans
+SiteMetadata o-- Location : location
+
+Strategy o-- StrategyMetadata : metadata
+Strategy o-- StrategyAtRuntimeMetadata : atRuntimeMetadata
+Strategy o-- Audit : audit
+
+Synchronize o-- "[]SynchronizeEvent" : events
+
+User o-- HighUpload : highUpload
+User o-- Storage : storage
+
+VaultMedia o-- "[]VaultMediaEvent" : events
+VaultMedia o-- VaultMediaMetadata : metadata
+
+VaultMediaMetadata o-- "[]FragmentedBytesRangeOnTime" : bytesRangeOnTime
+
+"__builtin__.string" #.. "models.AccessTokenScope"
+"__builtin__.string" #.. "models.Status"
+
 
 
 @enduml
