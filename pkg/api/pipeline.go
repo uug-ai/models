@@ -289,8 +289,9 @@ const (
 	ThumbnailTracingFailed    ThumbnailStatus = "thumbnail_tracing_failed"
 
 	// Stage status codes
-	ThumbnailStageStart ThumbnailStatus = "thumbnail_stage_start"
-	ThumbnailStageEnd   ThumbnailStatus = "thumbnail_stage_end"
+	ThumbnailStageStart     ThumbnailStatus = "thumbnail_stage_start"
+	ThumbnailStageEnd       ThumbnailStatus = "thumbnail_stage_end"
+	ThumbnailCreationFailed ThumbnailStatus = "thumbnail_creation_failed"
 )
 
 // String returns the string representation of the Thumbnail status
@@ -302,8 +303,9 @@ func (ms ThumbnailStatus) String() string {
 func (ms ThumbnailStatus) Translate(lang string) string {
 	translations := map[string]map[ThumbnailStatus]string{
 		"en": {
-			ThumbnailStageStart: "Starting Thumbnail stage",
-			ThumbnailStageEnd:   "Thumbnail stage completed",
+			ThumbnailStageStart:     "Starting Thumbnail stage",
+			ThumbnailStageEnd:       "Thumbnail stage completed",
+			ThumbnailCreationFailed: "Thumbnail creation failed",
 		},
 	}
 
