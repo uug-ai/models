@@ -973,6 +973,132 @@ namespace models {
     class "models.Status" << (T, #FF7700) >>  {
     }
 }
+
+' Relationships
+AccessToken o-- Audit : has
+Activity --> "map[string]int64" : devices
+
+Analysis *-- Classify : contains
+Analysis *-- Counting : contains
+Analysis *-- DominantColor : contains
+Analysis *-- Thumby : contains
+Analysis *-- Sprite : contains
+Analysis *-- "FaceRedaction[]" : contains
+
+AnalysisShort o-- Analysis : data
+AnalysisWrapper o-- Analysis : data
+AnalysisWrapper o-- "[]string" : operations
+
+Audit *-- AuditCreate : create
+Audit *-- "[]AuditUpdate" : history
+
+Classify *-- "[]ClassifyDetails" : details
+ClassifyDetails o-- "[][]float64" : traject
+ClassifyDetails o-- "[]string" : colorString
+
+Comment o-- Audit : has
+Counting *-- "[]CountingDetail" : details
+Counting *-- "[]Region" : regions
+Counting *-- "[]CountingRecord" : records
+
+CustomAlert o-- "[]DeviceKey" : devices
+CustomAlert o-- "[]DeviceKey" : countingDevices
+CustomAlert o-- "[]Region" : motionRegions
+CustomAlert o-- "[]Region" : countingLines
+
+Device o-- DeviceMetadata : metadata
+Device o-- DeviceCameraMetadata : cameraMetadata
+Device o-- DeviceLocationMetadata : locationMetadata
+Device o-- DeviceFeaturePermissions : featurePermissions
+Device o-- DeviceAtRuntimeMetadata : atRuntimeMetadata
+Device o-- Audit : audit
+
+DeviceCameraMetadata o-- "[]Preset" : presets
+DeviceCameraMetadata o-- "[]Tour" : tours
+DeviceCameraMetadata o-- "[]IO" : ios
+
+DeviceLocationMetadata o-- Location : location
+DeviceLocationMetadata o-- "[]string" : floorPlans
+
+DevicePlacement o-- Audit : audit
+
+FloorPlan o-- "[]DevicePlacement" : placements
+FloorPlan o-- Audit : audit
+
+Group o-- GroupMetadata : metadata
+Group o-- Audit : audit
+GroupMetadata o-- "[]FloorPlan" : floorPlans
+GroupMetadata o-- Location : location
+
+Health o-- HealthMetadata : metadata
+Health o-- HealthAtRuntimeMetadata : atRuntimeMetadata
+Health o-- Synchronize : synchronize
+Health o-- Audit : audit
+
+IO o-- Audit : audit
+
+Marker o-- "[]MarkerEvent" : events
+Marker o-- "[]MarkerTag" : tags
+Marker o-- "[]MarkerCategory" : categories
+Marker o-- MarkerMetadata : metadata
+Marker o-- MarkerAtRuntimeMetadata : atRuntimeMetadata
+Marker o-- Synchronize : synchronize
+Marker o-- Audit : audit
+
+MarkerAtRuntimeMetadata o-- "[]MarkerOptionTimeRange" : markerRanges
+MarkerAtRuntimeMetadata o-- "[]MarkerTagTimeRange" : tagRanges
+MarkerAtRuntimeMetadata o-- "[]MarkerEventTimeRange" : eventRanges
+
+MarkerMetadata o-- Comment : comments
+
+Media o-- MediaMetadata : metadata
+Media o-- MediaAtRuntimeMetadata : atRuntimeMetadata
+Media o-- Audit : audit
+
+Model o-- MediaMetadata : metadata
+Model o-- MediaAtRuntimeMetadata : atRuntimeMetadata
+Model o-- Audit : audit
+
+MonitorStage --> User : user
+MonitorStage --> Subscription : subscription
+MonitorStage --> HighUpload : highUpload
+MonitorStage --> Activity : activity
+MonitorStage --> "map[string]interface{}" : plans
+
+PipelineEvent o-- EventStage : eventStage
+PipelineEvent o-- MonitorStage : monitorStage
+PipelineEvent o-- SequenceStage : sequenceStage
+PipelineEvent o-- AnalysisStage : analysisStage
+PipelineEvent o-- ThrottlerStage : throttlerStage
+PipelineEvent o-- NotificationStage : notificationStage
+PipelineEvent o-- PipelinePayload : payload
+PipelineEvent o-- "map[string]interface{}" : data
+
+PipelinePayload o-- "[]FragmentedBytesRangeOnTime" : bytesRangeOnTime
+PipelinePayload o-- PipelineMetadata : metadata
+
+Role o-- TimeWindow : timeWindow
+Role o-- FeaturePermissions : featurePermissions
+
+Site o-- SiteMetadata : metadata
+Site o-- Audit : audit
+SiteMetadata o-- "[]FloorPlan" : floorPlans
+SiteMetadata o-- Location : location
+
+Strategy o-- StrategyMetadata : metadata
+Strategy o-- StrategyAtRuntimeMetadata : atRuntimeMetadata
+Strategy o-- Audit : audit
+
+Synchronize o-- "[]SynchronizeEvent" : events
+
+User o-- HighUpload : highUpload
+User o-- Storage : storage
+
+VaultMedia o-- "[]VaultMediaEvent" : events
+VaultMedia o-- VaultMediaMetadata : metadata
+
+VaultMediaMetadata o-- "[]FragmentedBytesRangeOnTime" : bytesRangeOnTime
+
 "__builtin__.string" #.. "models.AccessTokenScope"
 "__builtin__.string" #.. "models.Status"
 
