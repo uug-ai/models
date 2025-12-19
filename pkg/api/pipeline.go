@@ -272,6 +272,58 @@ type RedactionEvent struct {
 	AllFrameCoordinates map[string][]models.TrackBox `json:"allFrameCoordinates"`
 }
 
+// --- THUMBNAILS ---
+
+type ThumbnailStatus string
+
+const (
+	// Queue status codes
+	ThumbnailQueueStarted    ThumbnailStatus = "thumbnail_queue_started"
+	ThumbnailQueueSubscribed ThumbnailStatus = "thumbnail_queue_subscribed"
+	ThumbnailQueueFailed     ThumbnailStatus = "thumbnail_queue_failed"
+	ThumbnailQueueCompleted  ThumbnailStatus = "thumbnail_queue_completed"
+
+	// Trace status codes
+	ThumbnailTracingStarted   ThumbnailStatus = "thumbnail_tracing_started"
+	ThumbnailTracingCompleted ThumbnailStatus = "thumbnail_tracing_completed"
+	ThumbnailTracingFailed    ThumbnailStatus = "thumbnail_tracing_failed"
+
+	// Stage status codes
+	ThumbnailStageStart ThumbnailStatus = "thumbnail_stage_start"
+	ThumbnailStageEnd   ThumbnailStatus = "thumbnail_stage_end"
+)
+
+// String returns the string representation of the Thumbnail status
+func (ms ThumbnailStatus) String() string {
+	return string(ms)
+}
+
+// Translate returns the translated string representation of the Thumbnail status in the specified language
+func (ms ThumbnailStatus) Translate(lang string) string {
+	translations := map[string]map[ThumbnailStatus]string{
+		"en": {
+			ThumbnailStageStart: "Starting Thumbnail stage",
+			ThumbnailStageEnd:   "Thumbnail stage completed",
+		},
+	}
+
+	if langTranslations, exists := translations[lang]; exists {
+		if translation, exists := langTranslations[ms]; exists {
+			return translation
+		}
+	}
+
+	// Default to English if language not found or translation doesn't exist
+	if enTranslations, exists := translations["en"]; exists {
+		if translation, exists := enTranslations[ms]; exists {
+			return translation
+		}
+	}
+
+	// Fallback to the string representation
+	return ms.String()
+}
+
 // --- NOTIFICATIONS ---
 
 type NotificationStatus string
@@ -288,6 +340,7 @@ const (
 	NotificationTracingCompleted NotificationStatus = "notification_tracing_completed"
 	NotificationTracingFailed    NotificationStatus = "notification_tracing_failed"
 
+	// Metrics status codes
 	NotificationMetricsEnabled NotificationStatus = "notification_metrics_enabled"
 
 	// Stage status codes
