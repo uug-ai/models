@@ -10899,7 +10899,7 @@ export interface components {
             analysis?: components["schemas"]["models.AnalysisWrapper"];
             /** @description Timestamp when the runtime metadata was cached. */
             cachedTimestamp?: number;
-            device?: unknown;
+            device?: components["schemas"]["models.Device"];
             redactionUrl?: string;
             spriteUrl?: string;
             thumbnailUrl?: string;
