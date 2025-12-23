@@ -36,10 +36,3 @@ type Message struct {
 	DataUsage         string            `json:"data_usage,omitempty" bson:"data_usage,omitempty"`
 	Data              map[string]string `json:"data,omitempty" bson:"data,omitempty"`
 }
-type Media struct {
-	Timestamp    int64  `json:"timestamp,omitempty" bson:"timestamp,omitempty"`
-	Type         string `json:"type,omitempty" bson:"type,omitempty"`
-	Url          string `json:"url,omitempty" bson:"url,omitempty"`
-	ThumbnailUrl string `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`
-	SpriteUrl    string `json:"sprite_url,omitempty" bson:"sprite_url,omitempty"`
-}
