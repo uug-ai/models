@@ -29,6 +29,9 @@ type Media struct {
 	SpriteFile      string `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
 	RedactionFile   string `json:"redactionFile,omitempty" bson:"redactionFile,omitempty"`
 
+	// Name of the device that uploaded media
+	DeviceName string `json:"deviceName,omitempty" bson:"deviceName,omitempty"`
+
 	// Metadata
 	Metadata *MediaMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
 
@@ -64,17 +67,17 @@ type MediaMetadata struct {
 	DominantColors  []string `json:"dominantColors,omitempty" bson:"dominantColors,omitempty"`
 	Count           int      `json:"count,omitempty" bson:"count,omitempty"`
 	Embedding       []int    `json:"embedding,omitempty" bson:"embedding,omitempty"`
-
-	DeviceName string `json:"deviceName,omitempty" bson:"deviceName,omitempty"`
 }
 
 // MediaAtRuntimeMetadata contains metadata that is generated at runtime, which can include
 type MediaAtRuntimeMetadata struct {
-	CachedTimestamp int64  `json:"cachedTimestamp,omitempty" bson:"cachedTimestamp,omitempty"` // Timestamp when the runtime metadata was cached.
-	VideoUrl        string `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
-	ThumbnailUrl    string `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
-	SpriteUrl       string `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
-	RedactionUrl    string `json:"redactionUrl,omitempty" bson:"redactionUrl,omitempty"`
+	CachedTimestamp int64            `json:"cachedTimestamp,omitempty" bson:"cachedTimestamp,omitempty"` // Timestamp when the runtime metadata was cached.
+	VideoUrl        string           `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
+	ThumbnailUrl    string           `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
+	SpriteUrl       string           `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
+	RedactionUrl    string           `json:"redactionUrl,omitempty" bson:"redactionUrl,omitempty"`
+	Analysis        *AnalysisWrapper `json:"analysis,omitempty" bson:"analysis,omitempty"`
+	Device          *Device          `json:"device,omitempty" bson:"device,omitempty"`
 }
 
 type Region struct {
