@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/uug-ai/models/pkg/models"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -78,7 +77,7 @@ type MediaAtRuntimeMetadata struct {
 	SpriteUrl       string           `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
 	RedactionUrl    string           `json:"redactionUrl,omitempty" bson:"redactionUrl,omitempty"`
 	Analysis        *AnalysisWrapper `json:"analysis,omitempty" bson:"analysis,omitempty"`
-	Device          models.Device    `json:"device,omitempty" bson:"device,omitempty"`
+	Device          *Device          `json:"device,omitempty" bson:"device,omitempty"`
 }
 
 type Region struct {

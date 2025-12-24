@@ -101,6 +101,14 @@ type MediaGroup struct {
 	Media          []models.Media `json:"media" bson:"media"`
 }
 
+type MediaPatch struct {
+	Metadata *mediaMetadataPatch `json:"metadata,omitempty" bson:"metadata,omitempty"`
+}
+
+type mediaMetadataPatch struct {
+	Description *string `json:"description,omitempty" bson:"description,omitempty"`
+}
+
 // GetTimeline
 // @Router /timeline/{deviceId} [post]
 type GetTimelineRequest struct {
@@ -148,5 +156,21 @@ type GetMediaByIdSuccessResponse struct {
 	Data GetMediaByIdResponse `json:"data"`
 }
 type GetMediaByIdErrorResponse struct {
+	ErrorResponse
+}
+
+// UpdateMedia
+// @Router /media/{mediaId} [patch]
+type UpdateMediaRequest struct {
+	MediaPatch MediaPatch `json:"mediaPatch" bson:"mediaPatch"`
+}
+type UpdateMediaResponse struct {
+	Media models.Media `json:"media"`
+}
+type UpdateMediaSuccessResponse struct {
+	SuccessResponse
+	Data UpdateMediaResponse `json:"data"`
+}
+type UpdateMediaErrorResponse struct {
 	ErrorResponse
 }
