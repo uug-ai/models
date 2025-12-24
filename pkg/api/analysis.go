@@ -16,9 +16,13 @@ const (
 	AnalysisSignedUrlMissing           AnalysisStatus = "analysis_signed_url_missing"
 	AnalysisAllFrameCoordinatesMissing AnalysisStatus = "analysis_all_frame_coordinates_missing"
 
-	AnalysisNotFound  AnalysisStatus = "analysis_not_found"
-	AnalysisFound     AnalysisStatus = "analysis_found"
-	AnalysisIdMissing AnalysisStatus = "analysisId_missing"
+	AnalysisNotFound            AnalysisStatus = "analysis_not_found"
+	AnalysisFound               AnalysisStatus = "analysis_found"
+	AnalysisIdMissing           AnalysisStatus = "analysisId_missing"
+	AnalysisStarted             AnalysisStatus = "analysis_started"
+	AnalysisQueueSubscribed     AnalysisStatus = "analysis_queue_subscribed"
+	AnalysisStageMonitorMissing AnalysisStatus = "analysis_stage_monitor_missing"
+	AnalysisCompleted           AnalysisStatus = "analysis_completed"
 )
 
 // String returns the string representation of the analysis status
@@ -41,6 +45,10 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisIdMissing:                  "Analysis ID is missing",
 			AnalysisAllFrameCoordinatesMissing: "All frame coordinates map are missing",
 			AnalysisFileNameMissing:            "File name is missing",
+			AnalysisStageMonitorMissing:        "Stage monitor is missing",
+			AnalysisStarted:                    "Analysis started",
+			AnalysisQueueSubscribed:            "Analysis queue subscribed",
+			AnalysisCompleted:                  "Analysis completed",
 		},
 		"es": {
 			AnalysisFaceRedactionBindingFailed: "Error al vincular la redacción facial",
@@ -54,6 +62,10 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisIdMissing:                  "Falta el ID del análisis",
 			AnalysisFileNameMissing:            "Falta el nombre del archivo",
 			AnalysisAllFrameCoordinatesMissing: "Faltan el mapa de coordenadas de todos los fotogramas",
+			AnalysisStageMonitorMissing:        "Falta el monitor de etapa",
+			AnalysisStarted:                    "Análisis iniciado",
+			AnalysisQueueSubscribed:            "Cola de análisis suscrita",
+			AnalysisCompleted:                  "Análisis completado",
 		},
 		"fr": {
 			AnalysisFaceRedactionBindingFailed: "Échec de la liaison de la rédaction faciale",
@@ -67,6 +79,10 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisIdMissing:                  "ID d'analyse manquant",
 			AnalysisFileNameMissing:            "Nom de fichier manquant",
 			AnalysisAllFrameCoordinatesMissing: "Map de toutes les coordonnées des images sont manquantes",
+			AnalysisStageMonitorMissing:        "Moniteur de stade manquant",
+			AnalysisStarted:                    "Analyse démarrée",
+			AnalysisQueueSubscribed:            "File d'attente d'analyse souscrite",
+			AnalysisCompleted:                  "Analyse terminée",
 		},
 	}
 
