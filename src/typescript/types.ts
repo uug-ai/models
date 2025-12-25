@@ -6673,6 +6673,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/mediapatch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MediaPatch (schema generation only)
+         * @description Internal endpoint used only to ensure MediaPatch schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.MediaPatch"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/message": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Message (schema generation only)
+         * @description Internal endpoint used only to ensure Message schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Message"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/metadata": {
         parameters: {
             query?: never;
@@ -8467,6 +8545,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/updatemediaerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateMediaErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateMediaErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateMediaErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatemediarequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateMediaRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateMediaRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateMediaRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatemediaresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateMediaResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateMediaResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateMediaResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatemediasuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateMediaSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateMediaSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateMediaSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/updatestrategyerrorresponse": {
         parameters: {
             query?: never;
@@ -9059,7 +9293,7 @@ export interface components {
             metadata?: components["schemas"]["api.Metadata"];
         };
         /** @enum {string} */
-        "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_file_name_missing" | "analysis_signed_url_missing" | "analysis_all_frame_coordinates_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing";
+        "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_file_name_missing" | "analysis_signed_url_missing" | "analysis_all_frame_coordinates_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing" | "analysis_started" | "analysis_queue_subscribed" | "analysis_stage_monitor_missing" | "analysis_completed" | "analysis_decode_error";
         "api.CallerInfo": {
             file?: string;
             function?: string;
@@ -9810,6 +10044,9 @@ export interface components {
             media?: components["schemas"]["models.Media"][];
             startTimestamp?: number;
         };
+        "api.MediaPatch": {
+            metadata?: components["schemas"]["api.mediaMetadataPatch"];
+        };
         "api.Metadata": {
             data?: {
                 [key: string]: unknown;
@@ -9989,6 +10226,37 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.UpdateMediaErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateMediaRequest": {
+            mediaPatch?: components["schemas"]["api.MediaPatch"];
+        };
+        "api.UpdateMediaResponse": {
+            media?: components["schemas"]["models.Media"];
+        };
+        "api.UpdateMediaSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateMediaResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.UpdateStrategyErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -10031,6 +10299,9 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.mediaMetadataPatch": {
+            description?: string;
         };
         "models.AccessToken": {
             /** @description Audit information */
@@ -10929,6 +11200,45 @@ export interface components {
             /** @description Tags associated to give some context about the media file */
             tags?: string[];
         };
+        "models.Message": {
+            alert_id?: string;
+            alert_master_user?: string;
+            alert_name?: string;
+            alert_user?: string;
+            body?: string;
+            classifications?: string[];
+            data?: {
+                [key: string]: string;
+            };
+            data_usage?: string;
+            device_id?: string;
+            device_name?: string;
+            email?: string;
+            groups?: components["schemas"]["models.Group"][];
+            id?: string;
+            media?: components["schemas"]["models.Media"][];
+            media_key?: string;
+            media_provider?: string;
+            media_source?: string;
+            /** @description generic, counting, region */
+            notification_type?: string;
+            number_of_media?: string;
+            sequence_id?: string;
+            sites?: components["schemas"]["models.Site"][];
+            spriteFile?: string;
+            spriteInterval?: number;
+            spriteProvider?: string;
+            thumbnail?: string;
+            thumbnailFile?: string;
+            thumbnailProvider?: string;
+            timestamp?: number;
+            timezone?: string;
+            title?: string;
+            type?: string;
+            unread?: boolean;
+            user?: string;
+            userid?: string;
+        };
         "models.Model": {
             /** @description AtRuntimeMetadata are computed or dynamic information about the model that is relevant during its usage or processing.
              *     This information is generated at run time and is not stored into the database. All other information of the model is persisted into the database.
@@ -11423,6 +11733,7 @@ export namespace models {
     export type Media = components['schemas']['models.Media'];
     export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
+    export type Message = components['schemas']['models.Message'];
     export type Model = components['schemas']['models.Model'];
     export type ModelOption = components['schemas']['models.ModelOption'];
     export type MonitorStage = components['schemas']['models.MonitorStage'];
@@ -11556,6 +11867,7 @@ export namespace api {
     export type Media2Filter = components['schemas']['api.Media2Filter'];
     export type MediaFilter = components['schemas']['api.MediaFilter'];
     export type MediaGroup = components['schemas']['api.MediaGroup'];
+    export type MediaPatch = components['schemas']['api.MediaPatch'];
     export type Metadata = components['schemas']['api.Metadata'];
     export type PanicResponse = components['schemas']['api.PanicResponse'];
     export type RedactionEvent = components['schemas']['api.RedactionEvent'];
@@ -11574,9 +11886,14 @@ export namespace api {
     export type UpdateAccessTokenRequest = components['schemas']['api.UpdateAccessTokenRequest'];
     export type UpdateAccessTokenResponse = components['schemas']['api.UpdateAccessTokenResponse'];
     export type UpdateAccessTokenSuccessResponse = components['schemas']['api.UpdateAccessTokenSuccessResponse'];
+    export type UpdateMediaErrorResponse = components['schemas']['api.UpdateMediaErrorResponse'];
+    export type UpdateMediaRequest = components['schemas']['api.UpdateMediaRequest'];
+    export type UpdateMediaResponse = components['schemas']['api.UpdateMediaResponse'];
+    export type UpdateMediaSuccessResponse = components['schemas']['api.UpdateMediaSuccessResponse'];
     export type UpdateStrategyErrorResponse = components['schemas']['api.UpdateStrategyErrorResponse'];
     export type UpdateStrategyRequest = components['schemas']['api.UpdateStrategyRequest'];
     export type UpdateStrategyResponse = components['schemas']['api.UpdateStrategyResponse'];
     export type UpdateStrategySuccessResponse = components['schemas']['api.UpdateStrategySuccessResponse'];
     export type WarningResponse = components['schemas']['api.WarningResponse'];
+    export type mediaMetadataPatch = components['schemas']['api.mediaMetadataPatch'];
 }

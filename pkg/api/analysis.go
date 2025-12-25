@@ -23,6 +23,13 @@ const (
 	AnalysisQueueSubscribed     AnalysisStatus = "analysis_queue_subscribed"
 	AnalysisStageMonitorMissing AnalysisStatus = "analysis_stage_monitor_missing"
 	AnalysisCompleted           AnalysisStatus = "analysis_completed"
+
+	AnalysisDecodeFailed             AnalysisStatus = "analysis_decode_failed"
+	AnalysisInsertFailed             AnalysisStatus = "analysis_insert_failed"
+	AnalysisUpdateFailed             AnalysisStatus = "analysis_update_failed"
+	AnalysisNotificationUpdateFailed AnalysisStatus = "analysis_notification_update_failed"
+	AnalysisSequenceUpdateFailed     AnalysisStatus = "analysis_sequence_update_failed"
+	AnalysisTaskUpdateFailed         AnalysisStatus = "analysis_task_update_failed"
 )
 
 // String returns the string representation of the analysis status
@@ -49,6 +56,12 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisStarted:                    "Analysis started",
 			AnalysisQueueSubscribed:            "Analysis queue subscribed",
 			AnalysisCompleted:                  "Analysis completed",
+			AnalysisDecodeFailed:               "Failed to decode analysis",
+			AnalysisInsertFailed:               "Failed to insert analysis",
+			AnalysisUpdateFailed:               "Failed to update analysis",
+			AnalysisNotificationUpdateFailed:   "Failed to update analysis notification settings",
+			AnalysisSequenceUpdateFailed:       "Failed to update analysis sequence information",
+			AnalysisTaskUpdateFailed:           "Failed to update analysis task information",
 		},
 		"es": {
 			AnalysisFaceRedactionBindingFailed: "Error al vincular la redacción facial",
@@ -66,6 +79,12 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisStarted:                    "Análisis iniciado",
 			AnalysisQueueSubscribed:            "Cola de análisis suscrita",
 			AnalysisCompleted:                  "Análisis completado",
+			AnalysisDecodeFailed:               "Error al decodificar el análisis",
+			AnalysisInsertFailed:               "Error al insertar el análisis",
+			AnalysisUpdateFailed:               "Error al actualizar el análisis",
+			AnalysisNotificationUpdateFailed:   "Error al actualizar la configuración de notificaciones del análisis",
+			AnalysisSequenceUpdateFailed:       "Error al actualizar la información de la secuencia del análisis",
+			AnalysisTaskUpdateFailed:           "Error al actualizar la información de la tarea del análisis",
 		},
 		"fr": {
 			AnalysisFaceRedactionBindingFailed: "Échec de la liaison de la rédaction faciale",
@@ -83,6 +102,12 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisStarted:                    "Analyse démarrée",
 			AnalysisQueueSubscribed:            "File d'attente d'analyse souscrite",
 			AnalysisCompleted:                  "Analyse terminée",
+			AnalysisDecodeFailed:               "Échec du décodage de l'analyse",
+			AnalysisInsertFailed:               "Échec de l'insertion de l'analyse",
+			AnalysisUpdateFailed:               "Échec de la mise à jour de l'analyse",
+			AnalysisNotificationUpdateFailed:   "Échec de la mise à jour des paramètres de notification de l'analyse",
+			AnalysisSequenceUpdateFailed:       "Échec de la mise à jour des informations de séquence d'analyse",
+			AnalysisTaskUpdateFailed:           "Échec de la mise à jour des informations de tâche d'analyse",
 		},
 	}
 
