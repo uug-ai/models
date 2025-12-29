@@ -22,15 +22,18 @@ const (
 type PipelineStatus string
 
 const (
-	UserMissing         PipelineStatus = "user_missing"
-	TraceIdMissing      PipelineStatus = "trace_id_missing"
-	UserEmailEmpty      PipelineStatus = "user_email_empty"
-	MediaMissing        PipelineStatus = "media_missing"
-	IONotFound          PipelineStatus = "io_not_found"
-	IODecodeError       PipelineStatus = "io_decode_error"
-	SignedUrlFailed     PipelineStatus = "signed_url_failed"
-	ThumbnailMissing    PipelineStatus = "thumbnail_missing"
-	QueueCreationFailed PipelineStatus = "queue_creation_failed"
+	UserMissing                PipelineStatus = "user_missing"
+	TraceIdMissing             PipelineStatus = "trace_id_missing"
+	UserEmailEmpty             PipelineStatus = "user_email_empty"
+	MediaMissing               PipelineStatus = "media_missing"
+	IONotFound                 PipelineStatus = "io_not_found"
+	IODecodeError              PipelineStatus = "io_decode_error"
+	SignedUrlFailed            PipelineStatus = "signed_url_failed"
+	ThumbnailMissing           PipelineStatus = "thumbnail_missing"
+	QueueCreationFailed        PipelineStatus = "queue_creation_failed"
+	PanicRecovered             PipelineStatus = "panic_recovered"
+	DeadLetterQueueSendSuccess PipelineStatus = "dead_letter_queue_send_success"
+	DeadLetterQueueSendFailed  PipelineStatus = "dead_letter_queue_send_failed"
 )
 
 func (ps PipelineStatus) String() string {
