@@ -105,7 +105,7 @@ func GetMediaFromEvent(pipelineEvent PipelineEvent) (Media, error) {
 			return media, fmt.Errorf("invalid path format: %s", pipelineEvent.Payload.FileName) // Return empty media if path format is invalid
 		}
 		// @TODO Fix for users with a . in the username.
-		// Could be the case that there is an dot in the username.
+		// Could be the case that there is a dot in the username.
 		fileName := pathParts[1]
 		fileNamePieces := strings.Split(fileName, ".")
 		if len(fileNamePieces) < 2 {
