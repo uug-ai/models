@@ -124,7 +124,11 @@ func GetMediaFromEvent(pipelineEvent PipelineEvent) (Media, error) {
 			media.StartTimestamp = startTimestamp
 			media.DeviceName = attributes[2]
 			media.DeviceId = attributes[2]
-			media.Metadata.MotionPixels, _ = strconv.Atoi(attributes[4])
+			motionPixels, err := strconv.Atoi(attributes[4])
+			if err != nil {
+				return media, fmt.Errorf("invalid motion pixels format: %s", attributes[4])
+			}
+			media.Metadata.MotionPixels = motionPixels
 			duration, err := strconv.ParseInt(attributes[5], 10, 64)
 			if err != nil {
 				return media, fmt.Errorf("invalid duration format: %s", attributes[5])
