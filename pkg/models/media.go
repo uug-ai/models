@@ -59,6 +59,10 @@ type MediaMetadata struct {
 	// Sprite interval in seconds
 	SpriteInterval int `json:"spriteInterval,omitempty" bson:"spriteInterval,omitempty"`
 
+	// Motion information
+	MotionPixels     int     `json:"motionPixels,omitempty" bson:"motionPixels,omitempty"`
+	MotionPercentage float64 `json:"motionPercentage,omitempty" bson:"motionPercentage,omitempty"`
+
 	// Analysis data (we keep a reference to the original analysis, and cache some data here)
 	AnalysisId      string   `json:"analysisId,omitempty" bson:"analysisId,omitempty"`
 	Classifications []string `json:"classifications,omitempty" bson:"classifications,omitempty"`
