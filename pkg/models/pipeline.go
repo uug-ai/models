@@ -129,11 +129,6 @@ func GetMediaFromEvent(pipelineEvent PipelineEvent) (Media, error) {
 
 		// If DeviceId is set in metadata, we expect the new format, and can extract more data from the event object.
 	} else {
-
-		pathParts := strings.Split(pipelineEvent.Payload.FileName, "/")
-		if len(pathParts) < 2 {
-			return media, fmt.Errorf("invalid path format: %s", pipelineEvent.Payload.FileName)
-		}
 		media.VideoFile = pipelineEvent.Payload.FileName
 		startTimestamp, err := strconv.ParseInt(pipelineEvent.Payload.Metadata.Timestamp, 10, 64)
 		if err != nil {
