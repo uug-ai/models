@@ -87,7 +87,14 @@ type PipelineMetadata struct {
 	RegionCoordinates string `json:"event-regioncoordinates,omitempty"`
 }
 
-// This function extracts Media information from a PipelineEvent.
+// GetMediaFromEvent extracts a Media instance from the provided PipelineEvent.
+// It supports two parsing modes:
+//   - Legacy format: when Payload.Metadata.DeviceId is empty, media fields are derived by
+//     parsing the Payload.FileName path and filename components.
+//   - New format: when Payload.Metadata.DeviceId is set, media fields are populated from
+//     the structured payload and metadata present on the event.
+// The function returns a zero-value Media and a non-nil error if the event data or filename
+// do not conform to the expected formats required to populate the Media fields.
 func GetMediaFromEvent(pipelineEvent PipelineEvent) (Media, error) {
 	media := Media{}
 
