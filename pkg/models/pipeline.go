@@ -12,12 +12,20 @@ import (
 // The initial pipeline object is expanded with each stage of processing.
 //
 // Pipeline stages:
-// 1. event
-// 2. monitor
-// 3. sequence
-// 4. analysis
-// 5. throttler
-// 6. notification
+//
+//     event
+//       ↓
+//    monitor
+//       ↓
+//    sequence
+//       ↓
+//    analysis
+//       ↓
+//    throttler
+//       ↓
+//    notification
+//
+// Data flows through each stage sequentially, with relevant information persisted at each step.
 
 type PipelineEvent struct {
 	Request   string `json:"request,omitempty"` // ondemand, persist
