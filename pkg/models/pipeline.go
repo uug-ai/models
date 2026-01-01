@@ -95,6 +95,29 @@ type PipelineMetadata struct {
 	RegionCoordinates string `json:"event-regioncoordinates,omitempty"`
 }
 
+// HandlerResult represents the result of message handling
+type PipelineAction string
+
+const (
+	// Forward indicates the message should be forwarded to the next stage
+	Forward PipelineAction = "forward"
+	// Cancel indicates the message processing should be cancelled
+	Cancel PipelineAction = "cancel"
+	// Retry indicates the message should be retried
+	Retry PipelineAction = "retry"
+	// Error indicates an error occurred during message processing
+	Error PipelineAction = "error"
+)
+
+// PipelineMetrics represents processing metrics for a pipeline event
+type PipelineMetrics struct {
+	ProcessingTime float64 `json:"processingTime,omitempty"`
+}
+
+// MessageHandler is a function type for handling pipeline events
+type MessageHandler func(PipelineEvent, ...any) (PipelineAction, PipelineEvent, int)
+type PrometheusHandler func(PipelineMetrics)
+
 // As defined above we have multiple stages, each with its own set of data and processing logic.
 // 1. event, 2. monitor, 3. sequence, 4. analysis, 5. throttler, 6. notification
 // We'll define a custom struct for each stage's data, however we should be able to use the stage type
