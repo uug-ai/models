@@ -1,17 +1,31 @@
 package models
 
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
+
 // --------------------------------------------------------------------------------------------------------------------------------
 // Pipeline represents a data processing pipeline that can handle various stages of data processing.
 // The idea of the pipeline is to process data in a series of steps, where the output of one step becomes the input for the next.
 // The initial pipeline object is expanded with each stage of processing.
 //
 // Pipeline stages:
-// 1. event
-// 2. monitor
-// 3. sequence
-// 4. analysis
-// 5. throttler
-// 6. notification
+//
+//     event
+//       ↓
+//    monitor
+//       ↓
+//    sequence
+//       ↓
+//    analysis
+//       ↓
+//    throttler
+//       ↓
+//    notification
+//
+// Data flows through each stage sequentially, with relevant information persisted at each step.
 
 type PipelineEvent struct {
 	Request   string `json:"request,omitempty"` // ondemand, persist
@@ -80,6 +94,29 @@ type PipelineMetadata struct {
 
 	RegionCoordinates string `json:"event-regioncoordinates,omitempty"`
 }
+
+// HandlerResult represents the result of message handling
+type PipelineAction string
+
+const (
+	// Forward indicates the message should be forwarded to the next stage
+	Forward PipelineAction = "forward"
+	// Cancel indicates the message processing should be cancelled
+	Cancel PipelineAction = "cancel"
+	// Retry indicates the message should be retried
+	Retry PipelineAction = "retry"
+	// Error indicates an error occurred during message processing
+	Error PipelineAction = "error"
+)
+
+// PipelineMetrics represents processing metrics for a pipeline event
+type PipelineMetrics struct {
+	ProcessingTime float64 `json:"processingTime,omitempty"`
+}
+
+// MessageHandler is a function type for handling pipeline events
+type MessageHandler func(PipelineEvent, ...any) (PipelineAction, PipelineEvent, int)
+type PrometheusHandler func(PipelineMetrics)
 
 // As defined above we have multiple stages, each with its own set of data and processing logic.
 // 1. event, 2. monitor, 3. sequence, 4. analysis, 5. throttler, 6. notification
@@ -183,3 +220,79 @@ func NewNotificationStage() NotificationStage {
 	}
 }
 func (n NotificationStage) GetName() string { return n.Name }
+
+// GetMediaFromPipelineEvent extracts a Media instance from the provided PipelineEvent.
+// It supports two parsing modes:
+//   - Legacy format: when Payload.Metadata.DeviceId is empty, media fields are derived by
+//     parsing the Payload.FileName path and filename components.
+//   - New format: when Payload.Metadata.DeviceId is set, media fields are populated from
+//     the structured payload and metadata present on the event.
+//
+// The function returns a zero-value Media and a non-nil error if the event data or filename
+// do not conform to the expected formats required to populate the Media fields.
+
+func GetMediaFromPipelineEvent(pipelineEvent PipelineEvent) (Media, error) {
+	media := Media{}
+
+	// If DeviceId is not set in metadata, try to parse from filename (this is the legacy way)
+	if pipelineEvent.Payload.Metadata.DeviceId == "" {
+		pathParts := strings.Split(pipelineEvent.Payload.FileName, "/")
+		if len(pathParts) < 2 {
+			return media, fmt.Errorf("invalid path format: %s", pipelineEvent.Payload.FileName) // Return empty media if path format is invalid
+		}
+		// @TODO Fix for users with a . in the username.
+		// Could be the case that there is a dot in the username.
+		fileName := pathParts[1]
+		fileNamePieces := strings.Split(fileName, ".")
+		if len(fileNamePieces) < 2 {
+			return media, fmt.Errorf("invalid filename format: %s", fileName) // Return empty media if filename format is invalid
+		}
+
+		media.VideoFile = pipelineEvent.Payload.FileName
+		fileName = fileNamePieces[len(fileNamePieces)-2]
+		attributes := strings.Split(fileName, "_")
+		if len(attributes) == 6 {
+			// Set other fields..
+			startTimestamp, err := strconv.ParseInt(attributes[0], 10, 64)
+			if err != nil {
+				return media, fmt.Errorf("invalid timestamp format: %s", attributes[0])
+			}
+			media.StartTimestamp = startTimestamp
+			media.DeviceName = attributes[2]
+			media.DeviceId = attributes[2]
+			motionPixels, err := strconv.Atoi(attributes[4])
+			if err != nil {
+				return media, fmt.Errorf("invalid motion pixels format: %s", attributes[4])
+			}
+			media.Metadata = &MediaMetadata{
+				MotionPixels: motionPixels,
+			}
+			duration, err := strconv.ParseInt(attributes[5], 10, 64)
+			if err != nil {
+				return media, fmt.Errorf("invalid duration format: %s", attributes[5])
+			}
+			media.Duration = int(duration)
+		} else {
+			return media, fmt.Errorf("invalid attributes format: %s", fileName) // Return empty media if attributes format is invalid
+		}
+
+		// If DeviceId is set in metadata, we expect the new format, and can extract more data from the event object.
+	} else {
+		media.VideoFile = pipelineEvent.Payload.FileName
+		startTimestamp, err := strconv.ParseInt(pipelineEvent.Payload.Metadata.Timestamp, 10, 64)
+		if err != nil {
+			return media, fmt.Errorf("invalid timestamp format: %s", pipelineEvent.Payload.Metadata.Timestamp)
+		}
+		media.StartTimestamp = startTimestamp
+		media.DeviceName = pipelineEvent.Payload.Metadata.DeviceName
+		duration, err := strconv.ParseInt(pipelineEvent.Payload.Metadata.Duration, 10, 64)
+		if err != nil {
+			return media, fmt.Errorf("invalid duration format: %s", pipelineEvent.Payload.Metadata.Duration)
+		}
+		media.Duration = int(duration)
+		media.DeviceId = pipelineEvent.Payload.Metadata.DeviceId
+	}
+
+	media.StorageSolution = pipelineEvent.Storage
+	return media, nil
+}
