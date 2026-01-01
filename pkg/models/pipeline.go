@@ -264,7 +264,9 @@ func GetMediaFromPipelineEvent(pipelineEvent PipelineEvent) (Media, error) {
 			if err != nil {
 				return media, fmt.Errorf("invalid motion pixels format: %s", attributes[4])
 			}
-			media.Metadata.MotionPixels = motionPixels
+			media.Metadata = &MediaMetadata{
+				MotionPixels: motionPixels,
+			}
 			duration, err := strconv.ParseInt(attributes[5], 10, 64)
 			if err != nil {
 				return media, fmt.Errorf("invalid duration format: %s", attributes[5])
