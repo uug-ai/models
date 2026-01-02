@@ -100,13 +100,13 @@ type PipelineAction string
 
 const (
 	// Forward indicates the message should be forwarded to the next stage
-	Forward PipelineAction = "forward"
+	PipelineForward PipelineAction = "forward"
 	// Cancel indicates the message processing should be cancelled
-	Cancel PipelineAction = "cancel"
+	PipelineCancel PipelineAction = "cancel"
 	// Retry indicates the message should be retried
-	Retry PipelineAction = "retry"
+	PipelineRetry PipelineAction = "retry"
 	// Error indicates an error occurred during message processing
-	Error PipelineAction = "error"
+	PipelineError PipelineAction = "error"
 )
 
 // PipelineMetrics represents processing metrics for a pipeline event
