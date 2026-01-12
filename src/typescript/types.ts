@@ -7063,6 +7063,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/pipelinemetrics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PipelineMetrics (schema generation only)
+         * @description Internal endpoint used only to ensure PipelineMetrics schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.PipelineMetrics"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/pipelinepayload": {
         parameters: {
             query?: never;
@@ -9293,7 +9332,7 @@ export interface components {
             metadata?: components["schemas"]["api.Metadata"];
         };
         /** @enum {string} */
-        "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_file_name_missing" | "analysis_signed_url_missing" | "analysis_all_frame_coordinates_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing" | "analysis_started" | "analysis_queue_subscribed" | "analysis_stage_monitor_missing" | "analysis_completed" | "analysis_decode_error";
+        "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_file_name_missing" | "analysis_signed_url_missing" | "analysis_all_frame_coordinates_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing" | "analysis_started" | "analysis_queue_subscribed" | "analysis_stage_monitor_missing" | "analysis_completed" | "analysis_decode_failed" | "analysis_insert_failed" | "analysis_update_failed" | "analysis_notification_update_failed" | "analysis_sequence_update_failed" | "analysis_task_update_failed";
         "api.CallerInfo": {
             file?: string;
             function?: string;
@@ -11193,6 +11232,9 @@ export interface components {
             embedding?: number[];
             /** @description frames per second */
             fps?: number;
+            motionPercentage?: number;
+            /** @description Motion information */
+            motionPixels?: number;
             /** @description e.g., 1920x1080 */
             resolution?: string;
             /** @description Sprite interval in seconds */
@@ -11322,6 +11364,9 @@ export interface components {
             "event-timestamp"?: string;
             productid?: string;
             uploadtime?: string;
+        };
+        "models.PipelineMetrics": {
+            processingTime?: number;
         };
         "models.PipelinePayload": {
             bytes_range_on_time?: components["schemas"]["models.FragmentedBytesRangeOnTime"][];
@@ -11740,6 +11785,7 @@ export namespace models {
     export type NotificationStage = components['schemas']['models.NotificationStage'];
     export type PipelineEvent = components['schemas']['models.PipelineEvent'];
     export type PipelineMetadata = components['schemas']['models.PipelineMetadata'];
+    export type PipelineMetrics = components['schemas']['models.PipelineMetrics'];
     export type PipelinePayload = components['schemas']['models.PipelinePayload'];
     export type Point = components['schemas']['models.Point'];
     export type Region = components['schemas']['models.Region'];
