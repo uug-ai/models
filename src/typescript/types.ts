@@ -4333,6 +4333,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getsinglesignondomainserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetSingleSignOnDomainsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetSingleSignOnDomainsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetSingleSignOnDomainsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getsinglesignondomainssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetSingleSignOnDomainsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetSingleSignOnDomainsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetSingleSignOnDomainsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getsiteoptionserrorresponse": {
         parameters: {
             query?: never;
@@ -7492,6 +7570,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/singlesignondomainsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SingleSignOnDomainsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure SingleSignOnDomainsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SingleSignOnDomainsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/singlesignondomainsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SingleSignOnDomainsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SingleSignOnDomainsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SingleSignOnDomainsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/site": {
         parameters: {
             query?: never;
@@ -9828,6 +9984,31 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetSingleSignOnDomainsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetSingleSignOnDomainsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.SingleSignOnDomainsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetSiteOptionsErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -10166,6 +10347,11 @@ export interface components {
             message?: string;
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.SingleSignOnDomainsRequest": Record<string, never>;
+        "api.SingleSignOnDomainsResponse": {
+            domains?: string[];
+            force_sso_domains?: string[];
         };
         "api.SiteFilter": {
             name?: string;
@@ -11882,6 +12068,8 @@ export namespace api {
     export type GetMediaRequest = components['schemas']['api.GetMediaRequest'];
     export type GetMediaResponse = components['schemas']['api.GetMediaResponse'];
     export type GetMediaSuccessResponse = components['schemas']['api.GetMediaSuccessResponse'];
+    export type GetSingleSignOnDomainsErrorResponse = components['schemas']['api.GetSingleSignOnDomainsErrorResponse'];
+    export type GetSingleSignOnDomainsSuccessResponse = components['schemas']['api.GetSingleSignOnDomainsSuccessResponse'];
     export type GetSiteOptionsErrorResponse = components['schemas']['api.GetSiteOptionsErrorResponse'];
     export type GetSiteOptionsRequest = components['schemas']['api.GetSiteOptionsRequest'];
     export type GetSiteOptionsResponse = components['schemas']['api.GetSiteOptionsResponse'];
@@ -11921,6 +12109,7 @@ export namespace api {
     export type SaveFaceRedactionRequest = components['schemas']['api.SaveFaceRedactionRequest'];
     export type SaveFaceRedactionResponse = components['schemas']['api.SaveFaceRedactionResponse'];
     export type SaveFaceRedactionSuccessResponse = components['schemas']['api.SaveFaceRedactionSuccessResponse'];
+    export type SingleSignOnDomainsResponse = components['schemas']['api.SingleSignOnDomainsResponse'];
     export type SiteFilter = components['schemas']['api.SiteFilter'];
     export type SubmitFaceRedactionErrorResponse = components['schemas']['api.SubmitFaceRedactionErrorResponse'];
     export type SubmitFaceRedactionRequest = components['schemas']['api.SubmitFaceRedactionRequest'];

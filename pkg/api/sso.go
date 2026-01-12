@@ -41,13 +41,13 @@ type SingleSignOnDomainsRequest struct {
 }
 
 type SingleSignOnDomainsResponse struct {
-	Domains         []string `json:"domains,omitempty" bson:"domains,omitempty"`
-	ForceSSODomains []string `json:"force_sso_domains,omitempty" bson:"force_sso_domains,omitempty"`
+	Domains         []string `json:"domains" bson:"domains"`
+	ForceSSODomains []string `json:"force_sso_domains" bson:"force_sso_domains"`
 }
 
 type GetSingleSignOnDomainsSuccessResponse struct {
 	SuccessResponse
-	Data SingleSignOnDomainsResponse `json:"data,omitempty" bson:"data,omitempty"`
+	Data SingleSignOnDomainsResponse `json:"data" bson:"data"`
 }
 type GetSingleSignOnDomainsErrorResponse struct {
 	ErrorResponse
