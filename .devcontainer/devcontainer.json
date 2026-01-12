@@ -16,5 +16,6 @@
 				"eamodio.gitlens"
 			]
 		}
-	}
+	},
+	"postCreateCommand": "npm install && npm run build"
 }
