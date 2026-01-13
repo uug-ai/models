@@ -48,19 +48,21 @@ type EntityStatus interface {
 // Metadata holds additional information about the request or response.
 // It can include timestamps, trace IDs, organisation IDs, user IDs, and other relevant data
 type Metadata struct {
-	Timestamp      int64          `json:"timestamp,omitempty" bson:"timestamp,omitempty"`           // Timestamp of the request or response
-	TraceId        string         `json:"traceId,omitempty" bson:"traceId,omitempty"`               // Trace ID for tracking requests
-	OrganisationId string         `json:"organisationId,omitempty" bson:"organisationId,omitempty"` // Organisation ID for the request
-	UserId         string         `json:"userId,omitempty" bson:"userId,omitempty"`                 // User ID of the user making the request
-	MediaFileName  string         `json:"mediaFileName,omitempty" bson:"mediaFileName,omitempty"`   // Name of the media file involved in the request
-	DeviceKey      string         `json:"deviceKey,omitempty" bson:"deviceKey,omitempty"`           // Device key involved in the request
-	Path           string         `json:"path,omitempty" bson:"path,omitempty"`                     // Path of the request
-	Function       string         `json:"function,omitempty" bson:"function,omitempty"`             // Function name where the response was generated
-	Line           int            `json:"line,omitempty" bson:"line,omitempty"`                     // Line number in the code where the response was generated
-	Error          string         `json:"error,omitempty" bson:"error,omitempty"`                   // Error message if any
-	MissingFields  []string       `json:"missingFields,omitempty" bson:"missingFields,omitempty"`   // List of missing fields in the request
-	Language       string         `json:"language,omitempty" bson:"language,omitempty"`             // Language of the response, if applicable
-	Data           map[string]any `json:"data,omitempty" bson:"data,omitempty"`
+	ApplicationName    string         `json:"applicationName,omitempty" bson:"applicationName,omitempty"`       // Name of the application
+	ApplicationVersion string         `json:"applicationVersion,omitempty" bson:"applicationVersion,omitempty"` // Version of the application
+	Timestamp          int64          `json:"timestamp,omitempty" bson:"timestamp,omitempty"`                   // Timestamp of the request or response
+	TraceId            string         `json:"traceId,omitempty" bson:"traceId,omitempty"`                       // Trace ID for tracking requests
+	OrganisationId     string         `json:"organisationId,omitempty" bson:"organisationId,omitempty"`         // Organisation ID for the request
+	UserId             string         `json:"userId,omitempty" bson:"userId,omitempty"`                         // User ID of the user making the request
+	MediaFileName      string         `json:"mediaFileName,omitempty" bson:"mediaFileName,omitempty"`           // Name of the media file involved in the request
+	DeviceKey          string         `json:"deviceKey,omitempty" bson:"deviceKey,omitempty"`                   // Device key involved in the request
+	Path               string         `json:"path,omitempty" bson:"path,omitempty"`                             // Path of the request
+	Function           string         `json:"function,omitempty" bson:"function,omitempty"`                     // Function name where the response was generated
+	Line               int            `json:"line,omitempty" bson:"line,omitempty"`                             // Line number in the code where the response was generated
+	Error              string         `json:"error,omitempty" bson:"error,omitempty"`                           // Error message if any
+	MissingFields      []string       `json:"missingFields,omitempty" bson:"missingFields,omitempty"`           // List of missing fields in the request
+	Language           string         `json:"language,omitempty" bson:"language,omitempty"`                     // Language of the response, if applicable
+	Data               map[string]any `json:"data,omitempty" bson:"data,omitempty"`
 	// Additional data relevant to the request or response, this can be free-format
 	Pagination *CursorPagination `json:"pagination,omitempty" bson:"pagination,omitempty"`
 }
