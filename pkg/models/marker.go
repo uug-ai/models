@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/go-playground/validator/v10"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -37,6 +38,11 @@ type Marker struct {
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"` // Audit information for tracking changes to the marker
+}
+
+func (m *Marker) Validate() error {
+	validate := validator.New()
+	return validate.Struct(m)
 }
 
 type MarkerMetadata struct {
