@@ -329,6 +329,60 @@ func (ms ThumbnailStatus) Translate(lang string) string {
 	return ms.String()
 }
 
+// --- DOMINANT COLORS ---
+
+type DominantcolorsStatus string
+
+const (
+	// Queue status codes
+	DominantcolorsQueueStarted    DominantcolorsStatus = "dominantcolors_queue_started"
+	DominantcolorsQueueSubscribed DominantcolorsStatus = "dominantcolors_queue_subscribed"
+	DominantcolorsQueueFailed     DominantcolorsStatus = "dominantcolors_queue_failed"
+	DominantcolorsQueueCompleted  DominantcolorsStatus = "dominantcolors_queue_completed"
+
+	// Trace status codes
+	DominantcolorsTracingStarted   DominantcolorsStatus = "dominantcolors_tracing_started"
+	DominantcolorsTracingCompleted DominantcolorsStatus = "dominantcolors_tracing_completed"
+	DominantcolorsTracingFailed    DominantcolorsStatus = "dominantcolors_tracing_failed"
+
+	// Stage status codes
+	DominantcolorsStageStart     DominantcolorsStatus = "dominantcolors_stage_start"
+	DominantcolorsStageEnd       DominantcolorsStatus = "dominantcolors_stage_end"
+	DominantcolorsCreationFailed DominantcolorsStatus = "dominantcolors_creation_failed"
+)
+
+// String returns the string representation of the Dominantcolors status
+func (ms DominantcolorsStatus) String() string {
+	return string(ms)
+}
+
+// Translate returns the translated string representation of the Dominantcolors status in the specified language
+func (ms DominantcolorsStatus) Translate(lang string) string {
+	translations := map[string]map[DominantcolorsStatus]string{
+		"en": {
+			DominantcolorsStageStart:     "Starting Dominantcolors stage",
+			DominantcolorsStageEnd:       "Dominantcolors stage completed",
+			DominantcolorsCreationFailed: "Dominantcolors creation failed",
+		},
+	}
+
+	if langTranslations, exists := translations[lang]; exists {
+		if translation, exists := langTranslations[ms]; exists {
+			return translation
+		}
+	}
+
+	// Default to English if language not found or translation doesn't exist
+	if enTranslations, exists := translations["en"]; exists {
+		if translation, exists := enTranslations[ms]; exists {
+			return translation
+		}
+	}
+
+	// Fallback to the string representation
+	return ms.String()
+}
+
 // --- NOTIFICATIONS ---
 
 type NotificationStatus string
