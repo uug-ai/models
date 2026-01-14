@@ -20,6 +20,7 @@ const (
 	MediaIdMissing       MediaStatus = "media_id_missing"
 	MediaDownloadFailed  MediaStatus = "media_download_failed"
 	MediaDownloadSuccess MediaStatus = "media_download_success"
+	MediaCleanupFailed   MediaStatus = "media_cleanup_failed"
 )
 
 // String returns the string representation of the media status
@@ -31,19 +32,20 @@ func (ms MediaStatus) String() string {
 func (ms MediaStatus) Translate(lang string) string {
 	translations := map[string]map[MediaStatus]string{
 		"en": {
-			MediaBindingFailed:  "Media binding failed",
-			MediaDuplicateName:  "Media duplicate name",
-			MediaMissingInfo:    "Media missing information",
-			MediaFound:          "Media found",
-			MediaNotFound:       "Media not found",
-			MediaAddSuccess:     "Media added successfully",
-			MediaAddFailed:      "Media failed to add",
-			MediaUpdateSuccess:  "Media updated successfully",
-			MediaUpdateFailed:   "Media failed to update",
-			MediaDeleteSuccess:  "Media deleted successfully",
-			MediaDeleteFailed:   "Media failed to delete",
-			MediaIdMissing:      "Media ID is missing",
-			MediaDownloadFailed: "Media download failed",
+			MediaBindingFailed:   "Media binding failed",
+			MediaDuplicateName:   "Media duplicate name",
+			MediaMissingInfo:     "Media missing information",
+			MediaFound:           "Media found",
+			MediaNotFound:        "Media not found",
+			MediaAddSuccess:      "Media added successfully",
+			MediaAddFailed:       "Media failed to add",
+			MediaUpdateSuccess:   "Media updated successfully",
+			MediaUpdateFailed:    "Media failed to update",
+			MediaDeleteSuccess:   "Media deleted successfully",
+			MediaDeleteFailed:    "Media failed to delete",
+			MediaIdMissing:       "Media ID is missing",
+			MediaDownloadFailed:  "Media download failed",
+			MediaDownloadSuccess: "Media downloaded successfully",
 		},
 	}
 
