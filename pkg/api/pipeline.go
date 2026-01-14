@@ -364,6 +364,7 @@ const (
 
 	// Stage status codes
 	DominantcolorsProcessingFailed DominantcolorsStatus = "dominantcolors_processing_failed"
+	DominantColorsCalculated       DominantcolorsStatus = "dominantcolors_calculated"
 )
 
 // String returns the string representation of the Dominantcolors status
@@ -386,6 +387,7 @@ func (ms DominantcolorsStatus) Translate(lang string) string {
 			DominantcolorsStageEnd:         "Dominantcolors stage completed",
 			DominantcolorsCreationFailed:   "Dominantcolors creation failed",
 			DominantcolorsProcessingFailed: "Dominantcolors processing failed",
+			DominantColorsCalculated:       "Dominant colors calculated",
 		},
 	}
 
