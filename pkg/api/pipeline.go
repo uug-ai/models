@@ -32,6 +32,7 @@ const (
 	ThumbnailMissing           PipelineStatus = "thumbnail_missing"
 	QueueCreationFailed        PipelineStatus = "queue_creation_failed"
 	PanicRecovered             PipelineStatus = "panic_recovered"
+	DeadLetterMarshalFailed    PipelineStatus = "dead_letter_marshal_failed"
 	DeadLetterQueueSendSuccess PipelineStatus = "dead_letter_queue_send_success"
 	DeadLetterQueueSendFailed  PipelineStatus = "dead_letter_queue_send_failed"
 	QueueReadMessagesFailed    PipelineStatus = "queue_read_messages_failed"
@@ -55,6 +56,7 @@ func (ps PipelineStatus) Translate(lang string) string {
 			ThumbnailMissing:           "Thumbnail is missing",
 			QueueCreationFailed:        "Failed to create queue",
 			PanicRecovered:             "Panic recovered during pipeline execution",
+			DeadLetterMarshalFailed:    "Failed to marshal message for dead letter queue",
 			DeadLetterQueueSendSuccess: "Successfully sent message to dead letter queue",
 			DeadLetterQueueSendFailed:  "Failed to send message to dead letter queue",
 			QueueReadMessagesFailed:    "Failed to read messages from queue",
