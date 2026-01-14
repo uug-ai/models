@@ -19,6 +19,7 @@ const (
 	MarkerDeleteFailed     MarkerStatus = "marker_delete_failed"
 	MarkerRetrievalSuccess MarkerStatus = "marker_retrieval_success"
 	MarkerRetrievalFailed  MarkerStatus = "marker_retrieval_failed"
+	MarkerValidationFailed MarkerStatus = "marker_validation_failed"
 
 	MarkerEventBindingFailed    MarkerStatus = "marker_event_binding_failed"
 	MarkerEventRetrievalFailed  MarkerStatus = "marker_event_retrieval_failed"
@@ -55,6 +56,7 @@ func (ms MarkerStatus) Translate(lang string) string {
 			MarkerDeleteFailed:          "Marker failed to delete",
 			MarkerRetrievalSuccess:      "Marker retrieved successfully",
 			MarkerRetrievalFailed:       "Marker retrieval failed",
+			MarkerValidationFailed:      "Marker validation failed",
 			MarkerEventBindingFailed:    "Marker event binding failed",
 			MarkerEventRetrievalFailed:  "Marker event retrieval failed",
 			MarkerEventRetrievalSuccess: "Marker event retrieved successfully",
@@ -76,6 +78,7 @@ func (ms MarkerStatus) Translate(lang string) string {
 			MarkerDeleteFailed:          "Error al eliminar el marcador",
 			MarkerRetrievalSuccess:      "Marcador recuperado con éxito",
 			MarkerRetrievalFailed:       "Error al recuperar el marcador",
+			MarkerValidationFailed:      "Error de validación del marcador",
 			MarkerEventBindingFailed:    "Error al vincular el evento del marcador",
 			MarkerEventRetrievalFailed:  "Error al recuperar el evento del marcador",
 			MarkerEventRetrievalSuccess: "Evento del marcador recuperado con éxito",
@@ -97,6 +100,7 @@ func (ms MarkerStatus) Translate(lang string) string {
 			MarkerDeleteFailed:          "Échec de la suppression du marqueur",
 			MarkerRetrievalSuccess:      "Marqueur récupéré avec succès",
 			MarkerRetrievalFailed:       "Échec de la récupération du marqueur",
+			MarkerValidationFailed:      "Échec de la validation du marqueur",
 			MarkerEventBindingFailed:    "Échec de la liaison de l'événement du marqueur",
 			MarkerEventRetrievalFailed:  "Échec de la récupération de l'événement du marqueur",
 			MarkerEventRetrievalSuccess: "Événement du marqueur récupéré avec succès",
