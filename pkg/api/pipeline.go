@@ -34,6 +34,8 @@ const (
 	PanicRecovered             PipelineStatus = "panic_recovered"
 	DeadLetterQueueSendSuccess PipelineStatus = "dead_letter_queue_send_success"
 	DeadLetterQueueSendFailed  PipelineStatus = "dead_letter_queue_send_failed"
+	QueueReadMessagesFailed    PipelineStatus = "queue_read_messages_failed"
+	QueueReconnectionFailed    PipelineStatus = "queue_reconnection_failed"
 )
 
 func (ps PipelineStatus) String() string {
@@ -43,15 +45,20 @@ func (ps PipelineStatus) String() string {
 func (ps PipelineStatus) Translate(lang string) string {
 	translations := map[string]map[PipelineStatus]string{
 		"en": {
-			UserMissing:         "User is missing",
-			TraceIdMissing:      "Trace ID is missing",
-			UserEmailEmpty:      "User email is empty",
-			MediaMissing:        "Media is missing",
-			IONotFound:          "IO not found",
-			IODecodeError:       "Error decoding IO information",
-			SignedUrlFailed:     "Failed to generate signed URL",
-			ThumbnailMissing:    "Thumbnail is missing",
-			QueueCreationFailed: "Failed to create queue",
+			UserMissing:                "User is missing",
+			TraceIdMissing:             "Trace ID is missing",
+			UserEmailEmpty:             "User email is empty",
+			MediaMissing:               "Media is missing",
+			IONotFound:                 "IO not found",
+			IODecodeError:              "Error decoding IO information",
+			SignedUrlFailed:            "Failed to generate signed URL",
+			ThumbnailMissing:           "Thumbnail is missing",
+			QueueCreationFailed:        "Failed to create queue",
+			PanicRecovered:             "Panic recovered during pipeline execution",
+			DeadLetterQueueSendSuccess: "Successfully sent message to dead letter queue",
+			DeadLetterQueueSendFailed:  "Failed to send message to dead letter queue",
+			QueueReadMessagesFailed:    "Failed to read messages from queue",
+			QueueReconnectionFailed:    "Failed to reconnect to queue",
 		},
 	}
 
