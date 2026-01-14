@@ -304,6 +304,9 @@ const (
 	ThumbnailStageStart     ThumbnailStatus = "thumbnail_stage_start"
 	ThumbnailStageEnd       ThumbnailStatus = "thumbnail_stage_end"
 	ThumbnailCreationFailed ThumbnailStatus = "thumbnail_creation_failed"
+
+	// Stage status codes
+	// ...
 )
 
 // String returns the string representation of the Thumbnail status
@@ -358,6 +361,9 @@ const (
 	DominantcolorsStageStart     DominantcolorsStatus = "dominantcolors_stage_start"
 	DominantcolorsStageEnd       DominantcolorsStatus = "dominantcolors_stage_end"
 	DominantcolorsCreationFailed DominantcolorsStatus = "dominantcolors_creation_failed"
+
+	// Stage status codes
+	DominantcolorsProcessingFailed DominantcolorsStatus = "dominantcolors_processing_failed"
 )
 
 // String returns the string representation of the Dominantcolors status
@@ -369,9 +375,17 @@ func (ms DominantcolorsStatus) String() string {
 func (ms DominantcolorsStatus) Translate(lang string) string {
 	translations := map[string]map[DominantcolorsStatus]string{
 		"en": {
-			DominantcolorsStageStart:     "Starting Dominantcolors stage",
-			DominantcolorsStageEnd:       "Dominantcolors stage completed",
-			DominantcolorsCreationFailed: "Dominantcolors creation failed",
+			DominantcolorsQueueStarted:     "Dominantcolors queue processing started",
+			DominantcolorsQueueSubscribed:  "Subscribed to Dominantcolors queue",
+			DominantcolorsQueueFailed:      "Dominantcolors queue processing failed",
+			DominantcolorsQueueCompleted:   "Dominantcolors queue processing completed",
+			DominantcolorsTracingStarted:   "Dominantcolors tracing started",
+			DominantcolorsTracingCompleted: "Dominantcolors tracing completed",
+			DominantcolorsTracingFailed:    "Dominantcolors tracing failed",
+			DominantcolorsStageStart:       "Starting Dominantcolors stage",
+			DominantcolorsStageEnd:         "Dominantcolors stage completed",
+			DominantcolorsCreationFailed:   "Dominantcolors creation failed",
+			DominantcolorsProcessingFailed: "Dominantcolors processing failed",
 		},
 	}
 
