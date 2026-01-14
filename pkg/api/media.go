@@ -6,18 +6,20 @@ import "github.com/uug-ai/models/pkg/models"
 type MediaStatus string
 
 const (
-	MediaBindingFailed MediaStatus = "media_binding_failed"
-	MediaDuplicateName MediaStatus = "media_duplicate_name"
-	MediaMissingInfo   MediaStatus = "media_missing_info"
-	MediaFound         MediaStatus = "media_found"
-	MediaNotFound      MediaStatus = "media_not_found"
-	MediaAddSuccess    MediaStatus = "media_add_success"
-	MediaAddFailed     MediaStatus = "media_add_failed"
-	MediaUpdateSuccess MediaStatus = "media_update_success"
-	MediaUpdateFailed  MediaStatus = "media_update_failed"
-	MediaDeleteSuccess MediaStatus = "media_delete_success"
-	MediaDeleteFailed  MediaStatus = "media_delete_failed"
-	MediaIdMissing     MediaStatus = "media_id_missing"
+	MediaBindingFailed   MediaStatus = "media_binding_failed"
+	MediaDuplicateName   MediaStatus = "media_duplicate_name"
+	MediaMissingInfo     MediaStatus = "media_missing_info"
+	MediaFound           MediaStatus = "media_found"
+	MediaNotFound        MediaStatus = "media_not_found"
+	MediaAddSuccess      MediaStatus = "media_add_success"
+	MediaAddFailed       MediaStatus = "media_add_failed"
+	MediaUpdateSuccess   MediaStatus = "media_update_success"
+	MediaUpdateFailed    MediaStatus = "media_update_failed"
+	MediaDeleteSuccess   MediaStatus = "media_delete_success"
+	MediaDeleteFailed    MediaStatus = "media_delete_failed"
+	MediaIdMissing       MediaStatus = "media_id_missing"
+	MediaDownloadFailed  MediaStatus = "media_download_failed"
+	MediaDownloadSuccess MediaStatus = "media_download_success"
 )
 
 // String returns the string representation of the media status
@@ -25,22 +27,23 @@ func (ms MediaStatus) String() string {
 	return string(ms)
 }
 
-// Into returns the translated string representation of the media status in the specified language
+// Translate returns the translated string representation of the media status in the specified language
 func (ms MediaStatus) Translate(lang string) string {
 	translations := map[string]map[MediaStatus]string{
 		"en": {
-			MediaBindingFailed: "Media binding failed",
-			MediaDuplicateName: "Media duplicate name",
-			MediaMissingInfo:   "Media missing information",
-			MediaFound:         "Media found",
-			MediaNotFound:      "Media not found",
-			MediaAddSuccess:    "Media added successfully",
-			MediaAddFailed:     "Media failed to add",
-			MediaUpdateSuccess: "Media updated successfully",
-			MediaUpdateFailed:  "Media failed to update",
-			MediaDeleteSuccess: "Media deleted successfully",
-			MediaDeleteFailed:  "Media failed to delete",
-			MediaIdMissing:     "Media ID is missing",
+			MediaBindingFailed:  "Media binding failed",
+			MediaDuplicateName:  "Media duplicate name",
+			MediaMissingInfo:    "Media missing information",
+			MediaFound:          "Media found",
+			MediaNotFound:       "Media not found",
+			MediaAddSuccess:     "Media added successfully",
+			MediaAddFailed:      "Media failed to add",
+			MediaUpdateSuccess:  "Media updated successfully",
+			MediaUpdateFailed:   "Media failed to update",
+			MediaDeleteSuccess:  "Media deleted successfully",
+			MediaDeleteFailed:   "Media failed to delete",
+			MediaIdMissing:      "Media ID is missing",
+			MediaDownloadFailed: "Media download failed",
 		},
 	}
 
