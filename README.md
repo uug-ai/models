@@ -387,6 +387,10 @@ DEBUG=true npm run generate
 ### API Models (`pkg/api/`)
 
 - `ErrorResponse` - Standard error responses
+
+### Selective Fields
+
+Clients can request optional fields on certain API payloads using the `include` parameter in request models. For example, site option queries support `include: ["metadata"]` to return site metadata alongside the default fields.
 - `HealthResponse` - Health check responses
 - `PaginationResponse` - Paginated list responses
 - `MediaResponse` - Media query responses

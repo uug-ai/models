@@ -64,13 +64,19 @@ func (ds SiteStatus) Translate(lang string) string {
 }
 
 type SiteFilter struct {
-	SiteIds []*string `json:"siteIds,omitempty" bson:"siteIds,omitempty"`
-	Name    *string   `json:"name,omitempty" bson:"name,omitempty"`
+	SiteIds    []*string `json:"siteIds,omitempty" bson:"siteIds,omitempty"`
+	Name       *string   `json:"name,omitempty" bson:"name,omitempty"`
+	DeviceKeys []string  `json:"deviceKeys,omitempty" bson:"deviceKeys,omitempty"`
+}
+
+type SiteFlags struct {
+	IncludeMetadata bool `json:"includeMetadata,omitempty" bson:"includeMetadata,omitempty"`
 }
 
 type GetSiteOptionsRequest struct {
 	Filter     *SiteFilter       `json:"filter,omitempty" bson:"filter,omitempty"`
 	Pagination *CursorPagination `json:"pagination,omitempty" bson:"pagination,omitempty"`
+	Flags      *SiteFlags        `json:"flags,omitempty" bson:"flags,omitempty"`
 }
 type GetSiteOptionsResponse struct {
 	Sites []models.SiteOption `json:"sites,omitempty" bson:"sites,omitempty"`

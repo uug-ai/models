@@ -7726,6 +7726,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/siteflags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SiteFlags (schema generation only)
+         * @description Internal endpoint used only to ensure SiteFlags schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SiteFlags"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/sitemetadata": {
         parameters: {
             query?: never;
@@ -10023,6 +10062,7 @@ export interface components {
         };
         "api.GetSiteOptionsRequest": {
             filter?: components["schemas"]["api.SiteFilter"];
+            flags?: components["schemas"]["api.SiteFlags"];
             pagination?: components["schemas"]["api.CursorPagination"];
         };
         "api.GetSiteOptionsResponse": {
@@ -10268,6 +10308,10 @@ export interface components {
             metadata?: components["schemas"]["api.mediaMetadataPatch"];
         };
         "api.Metadata": {
+            /** @description Name of the application */
+            applicationName?: string;
+            /** @description Version of the application */
+            applicationVersion?: string;
             data?: {
                 [key: string]: unknown;
             };
@@ -10356,6 +10400,9 @@ export interface components {
         "api.SiteFilter": {
             name?: string;
             siteIds?: string[];
+        };
+        "api.SiteFlags": {
+            includeMetadata?: boolean;
         };
         "api.SubmitFaceRedactionErrorResponse": {
             /** @description Application-specific error code */
@@ -11629,6 +11676,7 @@ export interface components {
         "models.SiteOption": {
             devices?: string[];
             groups?: string[];
+            metadata?: components["schemas"]["models.SiteMetadata"];
             text?: string;
             value?: string;
         };
@@ -12111,6 +12159,7 @@ export namespace api {
     export type SaveFaceRedactionSuccessResponse = components['schemas']['api.SaveFaceRedactionSuccessResponse'];
     export type SingleSignOnDomainsResponse = components['schemas']['api.SingleSignOnDomainsResponse'];
     export type SiteFilter = components['schemas']['api.SiteFilter'];
+    export type SiteFlags = components['schemas']['api.SiteFlags'];
     export type SubmitFaceRedactionErrorResponse = components['schemas']['api.SubmitFaceRedactionErrorResponse'];
     export type SubmitFaceRedactionRequest = components['schemas']['api.SubmitFaceRedactionRequest'];
     export type SubmitFaceRedactionResponse = components['schemas']['api.SubmitFaceRedactionResponse'];

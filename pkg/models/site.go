@@ -42,4 +42,6 @@ type SiteOption struct {
 
 	Devices []string `json:"devices" bson:"devices"`
 	Groups  []string `json:"groups" bson:"groups"`
+
+	Metadata *SiteMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
 }
