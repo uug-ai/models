@@ -32,8 +32,11 @@ const (
 	ThumbnailMissing           PipelineStatus = "thumbnail_missing"
 	QueueCreationFailed        PipelineStatus = "queue_creation_failed"
 	PanicRecovered             PipelineStatus = "panic_recovered"
+	DeadLetterMarshalFailed    PipelineStatus = "dead_letter_marshal_failed"
 	DeadLetterQueueSendSuccess PipelineStatus = "dead_letter_queue_send_success"
 	DeadLetterQueueSendFailed  PipelineStatus = "dead_letter_queue_send_failed"
+	QueueReadMessagesFailed    PipelineStatus = "queue_read_messages_failed"
+	QueueReconnectionFailed    PipelineStatus = "queue_reconnection_failed"
 )
 
 func (ps PipelineStatus) String() string {
@@ -43,15 +46,21 @@ func (ps PipelineStatus) String() string {
 func (ps PipelineStatus) Translate(lang string) string {
 	translations := map[string]map[PipelineStatus]string{
 		"en": {
-			UserMissing:         "User is missing",
-			TraceIdMissing:      "Trace ID is missing",
-			UserEmailEmpty:      "User email is empty",
-			MediaMissing:        "Media is missing",
-			IONotFound:          "IO not found",
-			IODecodeError:       "Error decoding IO information",
-			SignedUrlFailed:     "Failed to generate signed URL",
-			ThumbnailMissing:    "Thumbnail is missing",
-			QueueCreationFailed: "Failed to create queue",
+			UserMissing:                "User is missing",
+			TraceIdMissing:             "Trace ID is missing",
+			UserEmailEmpty:             "User email is empty",
+			MediaMissing:               "Media is missing",
+			IONotFound:                 "IO not found",
+			IODecodeError:              "Error decoding IO information",
+			SignedUrlFailed:            "Failed to generate signed URL",
+			ThumbnailMissing:           "Thumbnail is missing",
+			QueueCreationFailed:        "Failed to create queue",
+			PanicRecovered:             "Panic recovered during pipeline execution",
+			DeadLetterMarshalFailed:    "Failed to marshal message for dead letter queue",
+			DeadLetterQueueSendSuccess: "Successfully sent message to dead letter queue",
+			DeadLetterQueueSendFailed:  "Failed to send message to dead letter queue",
+			QueueReadMessagesFailed:    "Failed to read messages from queue",
+			QueueReconnectionFailed:    "Failed to reconnect to queue",
 		},
 	}
 
@@ -295,6 +304,9 @@ const (
 	ThumbnailStageStart     ThumbnailStatus = "thumbnail_stage_start"
 	ThumbnailStageEnd       ThumbnailStatus = "thumbnail_stage_end"
 	ThumbnailCreationFailed ThumbnailStatus = "thumbnail_creation_failed"
+
+	// Stage status codes
+	// ...
 )
 
 // String returns the string representation of the Thumbnail status
@@ -309,6 +321,73 @@ func (ms ThumbnailStatus) Translate(lang string) string {
 			ThumbnailStageStart:     "Starting Thumbnail stage",
 			ThumbnailStageEnd:       "Thumbnail stage completed",
 			ThumbnailCreationFailed: "Thumbnail creation failed",
+		},
+	}
+
+	if langTranslations, exists := translations[lang]; exists {
+		if translation, exists := langTranslations[ms]; exists {
+			return translation
+		}
+	}
+
+	// Default to English if language not found or translation doesn't exist
+	if enTranslations, exists := translations["en"]; exists {
+		if translation, exists := enTranslations[ms]; exists {
+			return translation
+		}
+	}
+
+	// Fallback to the string representation
+	return ms.String()
+}
+
+// --- DOMINANT COLORS ---
+
+type DominantcolorsStatus string
+
+const (
+	// Queue status codes
+	DominantcolorsQueueStarted    DominantcolorsStatus = "dominantcolors_queue_started"
+	DominantcolorsQueueSubscribed DominantcolorsStatus = "dominantcolors_queue_subscribed"
+	DominantcolorsQueueFailed     DominantcolorsStatus = "dominantcolors_queue_failed"
+	DominantcolorsQueueCompleted  DominantcolorsStatus = "dominantcolors_queue_completed"
+
+	// Trace status codes
+	DominantcolorsTracingStarted   DominantcolorsStatus = "dominantcolors_tracing_started"
+	DominantcolorsTracingCompleted DominantcolorsStatus = "dominantcolors_tracing_completed"
+	DominantcolorsTracingFailed    DominantcolorsStatus = "dominantcolors_tracing_failed"
+
+	// Stage status codes
+	DominantcolorsStageStart     DominantcolorsStatus = "dominantcolors_stage_start"
+	DominantcolorsStageEnd       DominantcolorsStatus = "dominantcolors_stage_end"
+	DominantcolorsCreationFailed DominantcolorsStatus = "dominantcolors_creation_failed"
+
+	// Stage status codes
+	DominantcolorsProcessingFailed DominantcolorsStatus = "dominantcolors_processing_failed"
+	DominantColorsCalculated       DominantcolorsStatus = "dominantcolors_calculated"
+)
+
+// String returns the string representation of the Dominantcolors status
+func (ms DominantcolorsStatus) String() string {
+	return string(ms)
+}
+
+// Translate returns the translated string representation of the Dominantcolors status in the specified language
+func (ms DominantcolorsStatus) Translate(lang string) string {
+	translations := map[string]map[DominantcolorsStatus]string{
+		"en": {
+			DominantcolorsQueueStarted:     "Dominantcolors queue processing started",
+			DominantcolorsQueueSubscribed:  "Subscribed to Dominantcolors queue",
+			DominantcolorsQueueFailed:      "Dominantcolors queue processing failed",
+			DominantcolorsQueueCompleted:   "Dominantcolors queue processing completed",
+			DominantcolorsTracingStarted:   "Dominantcolors tracing started",
+			DominantcolorsTracingCompleted: "Dominantcolors tracing completed",
+			DominantcolorsTracingFailed:    "Dominantcolors tracing failed",
+			DominantcolorsStageStart:       "Starting Dominantcolors stage",
+			DominantcolorsStageEnd:         "Dominantcolors stage completed",
+			DominantcolorsCreationFailed:   "Dominantcolors creation failed",
+			DominantcolorsProcessingFailed: "Dominantcolors processing failed",
+			DominantColorsCalculated:       "Dominant colors calculated",
 		},
 	}
 

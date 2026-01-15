@@ -19,6 +19,7 @@ const (
 	DeviceUpdateFailed     DeviceStatus = "device_update_failed"
 	DeviceDeleteSuccess    DeviceStatus = "device_delete_success"
 	DeviceDeleteFailed     DeviceStatus = "device_delete_failed"
+	DeviceValidationFailed DeviceStatus = "device_validation_failed"
 )
 
 // String returns the string representation of the device status
@@ -30,18 +31,19 @@ func (ds DeviceStatus) String() string {
 func (ds DeviceStatus) Translate(lang string) string {
 	translations := map[string]map[DeviceStatus]string{
 		"en": {
-			DeviceBindingFailed:   "Device binding failed",
-			DeviceDuplicateName:   "Device duplicate name",
-			DeviceMissingInfo:     "Device missing information",
-			DeviceRetrievalFailed: "Device retrieval failed",
-			DeviceFound:           "Device found",
-			DeviceNotFound:        "Device not found",
-			DeviceAddSuccess:      "Device added successfully",
-			DeviceAddFailed:       "Device failed to add",
-			DeviceUpdateSuccess:   "Device updated successfully",
-			DeviceUpdateFailed:    "Device failed to update",
-			DeviceDeleteSuccess:   "Device deleted successfully",
-			DeviceDeleteFailed:    "Device failed to delete",
+			DeviceBindingFailed:    "Device binding failed",
+			DeviceDuplicateName:    "Device duplicate name",
+			DeviceMissingInfo:      "Device missing information",
+			DeviceRetrievalFailed:  "Device retrieval failed",
+			DeviceFound:            "Device found",
+			DeviceNotFound:         "Device not found",
+			DeviceAddSuccess:       "Device added successfully",
+			DeviceAddFailed:        "Device failed to add",
+			DeviceUpdateSuccess:    "Device updated successfully",
+			DeviceUpdateFailed:     "Device failed to update",
+			DeviceDeleteSuccess:    "Device deleted successfully",
+			DeviceDeleteFailed:     "Device failed to delete",
+			DeviceValidationFailed: "Device validation failed",
 		},
 	}
 
