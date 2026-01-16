@@ -76,9 +76,13 @@ type SuccessResponse struct {
 	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the response, such as timestamps and request IDs
 }
 
-func CreateSuccess(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) SuccessResponse {
+func CreateSuccess(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata, skipFrames ...int) SuccessResponse {
+	level := 2 // default
+	if len(skipFrames) > 0 {
+		level = skipFrames[0]
+	}
 	metadata.Timestamp = time.Now().Unix()
-	callerInfo := GetCallerInfo(2)
+	callerInfo := GetCallerInfo(level)
 	metadata.Path = callerInfo.File
 	metadata.Function = callerInfo.Function
 	metadata.Line = callerInfo.Line
@@ -120,9 +124,13 @@ type ErrorResponse struct {
 	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
 }
 
-func CreateError(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) ErrorResponse {
+func CreateError(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata, skipFrames ...int) ErrorResponse {
+	level := 4 // default
+	if len(skipFrames) > 0 {
+		level = skipFrames[0]
+	}
 	metadata.Timestamp = time.Now().Unix()
-	callerInfo := GetCallerInfo(1)
+	callerInfo := GetCallerInfo(level)
 	metadata.Path = callerInfo.File
 	metadata.Function = callerInfo.Function
 	metadata.Line = callerInfo.Line
@@ -163,9 +171,13 @@ type DebugResponse struct {
 	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
 }
 
-func CreateDebug(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) DebugResponse {
+func CreateDebug(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata, skipFrames ...int) DebugResponse {
+	level := 4 // default
+	if len(skipFrames) > 0 {
+		level = skipFrames[0]
+	}
 	metadata.Timestamp = time.Now().Unix()
-	callerInfo := GetCallerInfo(1)
+	callerInfo := GetCallerInfo(level)
 	metadata.Path = callerInfo.File
 	metadata.Function = callerInfo.Function
 	metadata.Line = callerInfo.Line
@@ -208,9 +220,13 @@ type TraceResponse struct {
 	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
 }
 
-func CreateTrace(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) TraceResponse {
+func CreateTrace(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata, skipFrames ...int) TraceResponse {
+	level := 4 // default
+	if len(skipFrames) > 0 {
+		level = skipFrames[0]
+	}
 	metadata.Timestamp = time.Now().Unix()
-	callerInfo := GetCallerInfo(1)
+	callerInfo := GetCallerInfo(level)
 	metadata.Path = callerInfo.File
 	metadata.Function = callerInfo.Function
 	metadata.Line = callerInfo.Line
@@ -252,9 +268,13 @@ type WarningResponse struct {
 	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
 }
 
-func CreateWarning(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) WarningResponse {
+func CreateWarning(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata, skipFrames ...int) WarningResponse {
+	level := 4 // default
+	if len(skipFrames) > 0 {
+		level = skipFrames[0]
+	}
 	metadata.Timestamp = time.Now().Unix()
-	callerInfo := GetCallerInfo(1)
+	callerInfo := GetCallerInfo(level)
 	metadata.Path = callerInfo.File
 	metadata.Function = callerInfo.Function
 	metadata.Line = callerInfo.Line
@@ -296,9 +316,13 @@ type FatalResponse struct {
 	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
 }
 
-func CreateFatal(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) FatalResponse {
+func CreateFatal(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata, skipFrames ...int) FatalResponse {
+	level := 4 // default
+	if len(skipFrames) > 0 {
+		level = skipFrames[0]
+	}
 	metadata.Timestamp = time.Now().Unix()
-	callerInfo := GetCallerInfo(1)
+	callerInfo := GetCallerInfo(level)
 	metadata.Path = callerInfo.File
 	metadata.Function = callerInfo.Function
 	metadata.Line = callerInfo.Line
@@ -340,9 +364,13 @@ type PanicResponse struct {
 	Metadata              Metadata `json:"metadata,omitempty" bson:"metadata,omitempty"`                           // Additional metadata about the error, such as timestamps and request IDs
 }
 
-func CreatePanic(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata) PanicResponse {
+func CreatePanic(httpStatusCode int, applicationStatusCode string, entityStatusCode EntityStatus, metadata Metadata, skipFrames ...int) PanicResponse {
+	level := 4 // default
+	if len(skipFrames) > 0 {
+		level = skipFrames[0]
+	}
 	metadata.Timestamp = time.Now().Unix()
-	callerInfo := GetCallerInfo(1)
+	callerInfo := GetCallerInfo(level)
 	metadata.Path = callerInfo.File
 	metadata.Function = callerInfo.Function
 	metadata.Line = callerInfo.Line
