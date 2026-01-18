@@ -301,12 +301,11 @@ const (
 	ThumbnailTracingFailed    ThumbnailStatus = "thumbnail_tracing_failed"
 
 	// Stage status codes
-	ThumbnailStageStart     ThumbnailStatus = "thumbnail_stage_start"
-	ThumbnailStageEnd       ThumbnailStatus = "thumbnail_stage_end"
-	ThumbnailCreationFailed ThumbnailStatus = "thumbnail_creation_failed"
-
-	// Stage status codes
-	// ...
+	ThumbnailStageStart       ThumbnailStatus = "thumbnail_stage_start"
+	ThumbnailStageEnd         ThumbnailStatus = "thumbnail_stage_end"
+	ThumbnailCreationFailed   ThumbnailStatus = "thumbnail_creation_failed"
+	ThumbnailProcessingFailed ThumbnailStatus = "thumbnail_processing_failed"
+	ThumbnailGenerated        ThumbnailStatus = "thumbnail_generated"
 )
 
 // String returns the string representation of the Thumbnail status
@@ -318,9 +317,18 @@ func (ms ThumbnailStatus) String() string {
 func (ms ThumbnailStatus) Translate(lang string) string {
 	translations := map[string]map[ThumbnailStatus]string{
 		"en": {
-			ThumbnailStageStart:     "Starting Thumbnail stage",
-			ThumbnailStageEnd:       "Thumbnail stage completed",
-			ThumbnailCreationFailed: "Thumbnail creation failed",
+			ThumbnailQueueStarted:     "Thumbnail queue processing started",
+			ThumbnailQueueSubscribed:  "Subscribed to Thumbnail queue",
+			ThumbnailQueueFailed:      "Thumbnail queue processing failed",
+			ThumbnailQueueCompleted:   "Thumbnail queue processing completed",
+			ThumbnailTracingStarted:   "Thumbnail tracing started",
+			ThumbnailTracingCompleted: "Thumbnail tracing completed",
+			ThumbnailTracingFailed:    "Thumbnail tracing failed",
+			ThumbnailStageStart:       "Starting Thumbnail stage",
+			ThumbnailStageEnd:         "Thumbnail stage completed",
+			ThumbnailCreationFailed:   "Thumbnail creation failed",
+			ThumbnailProcessingFailed: "Thumbnail processing failed",
+			ThumbnailGenerated:        "Thumbnail generated successfully",
 		},
 	}
 
@@ -358,11 +366,9 @@ const (
 	DominantcolorsTracingFailed    DominantcolorsStatus = "dominantcolors_tracing_failed"
 
 	// Stage status codes
-	DominantcolorsStageStart     DominantcolorsStatus = "dominantcolors_stage_start"
-	DominantcolorsStageEnd       DominantcolorsStatus = "dominantcolors_stage_end"
-	DominantcolorsCreationFailed DominantcolorsStatus = "dominantcolors_creation_failed"
-
-	// Stage status codes
+	DominantcolorsStageStart       DominantcolorsStatus = "dominantcolors_stage_start"
+	DominantcolorsStageEnd         DominantcolorsStatus = "dominantcolors_stage_end"
+	DominantcolorsCreationFailed   DominantcolorsStatus = "dominantcolors_creation_failed"
 	DominantcolorsProcessingFailed DominantcolorsStatus = "dominantcolors_processing_failed"
 	DominantColorsCalculated       DominantcolorsStatus = "dominantcolors_calculated"
 )

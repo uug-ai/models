@@ -20,6 +20,8 @@ const (
 	MediaIdMissing              MediaStatus = "media_id_missing"
 	MediaDownloadFailed         MediaStatus = "media_download_failed"
 	MediaDownloadSuccess        MediaStatus = "media_download_success"
+	MediaUploadFailed           MediaStatus = "media_upload_failed"
+	MediaUploadSuccess          MediaStatus = "media_upload_success"
 	MediaCleanupFailed          MediaStatus = "media_cleanup_failed"
 	MediaVideoDurationExtracted MediaStatus = "media_video_duration_extracted"
 	MediaThumbnailLoaded        MediaStatus = "media_thumbnail_loaded"
@@ -34,20 +36,25 @@ func (ms MediaStatus) String() string {
 func (ms MediaStatus) Translate(lang string) string {
 	translations := map[string]map[MediaStatus]string{
 		"en": {
-			MediaBindingFailed:   "Media binding failed",
-			MediaDuplicateName:   "Media duplicate name",
-			MediaMissingInfo:     "Media missing information",
-			MediaFound:           "Media found",
-			MediaNotFound:        "Media not found",
-			MediaAddSuccess:      "Media added successfully",
-			MediaAddFailed:       "Media failed to add",
-			MediaUpdateSuccess:   "Media updated successfully",
-			MediaUpdateFailed:    "Media failed to update",
-			MediaDeleteSuccess:   "Media deleted successfully",
-			MediaDeleteFailed:    "Media failed to delete",
-			MediaIdMissing:       "Media ID is missing",
-			MediaDownloadFailed:  "Media download failed",
-			MediaDownloadSuccess: "Media downloaded successfully",
+			MediaBindingFailed:          "Media binding failed",
+			MediaDuplicateName:          "Media duplicate name",
+			MediaMissingInfo:            "Media missing information",
+			MediaFound:                  "Media found",
+			MediaNotFound:               "Media not found",
+			MediaAddSuccess:             "Media added successfully",
+			MediaAddFailed:              "Media failed to add",
+			MediaUpdateSuccess:          "Media updated successfully",
+			MediaUpdateFailed:           "Media failed to update",
+			MediaDeleteSuccess:          "Media deleted successfully",
+			MediaDeleteFailed:           "Media failed to delete",
+			MediaIdMissing:              "Media ID is missing",
+			MediaDownloadFailed:         "Media download failed",
+			MediaDownloadSuccess:        "Media downloaded successfully",
+			MediaUploadFailed:           "Media upload failed",
+			MediaUploadSuccess:          "Media uploaded successfully",
+			MediaCleanupFailed:          "Media cleanup failed",
+			MediaVideoDurationExtracted: "Media video duration extracted",
+			MediaThumbnailLoaded:        "Media thumbnail loaded",
 		},
 	}
 
