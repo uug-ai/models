@@ -23,11 +23,15 @@ type Media struct {
 
 	// Media file information (by default "vault", however might change
 	// in the future (integration with other storage solutions, next to Vault).
-	StorageSolution string `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`
-	VideoFile       string `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
-	ThumbnailFile   string `json:"thumbnailFile,omitempty" bson:"thumbnailFile,omitempty"`
-	SpriteFile      string `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
-	RedactionFile   string `json:"redactionFile,omitempty" bson:"redactionFile,omitempty"`
+	StorageSolution   string `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`
+	VideoFile         string `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
+	VideoProvider     string `json:"videoProvider,omitempty" bson:"videoProvider,omitempty"`
+	ThumbnailFile     string `json:"thumbnailFile,omitempty" bson:"thumbnailFile,omitempty"`
+	ThumbnailProvider string `json:"thumbnailProvider,omitempty" bson:"thumbnailProvider,omitempty"`
+	SpriteFile        string `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
+	SpriteProvider    string `json:"spriteProvider,omitempty" bson:"spriteProvider,omitempty"`
+	RedactionFile     string `json:"redactionFile,omitempty" bson:"redactionFile,omitempty"`
+	RedactionProvider string `json:"redactionProvider,omitempty" bson:"redactionProvider,omitempty"`
 
 	// Name of the device that uploaded media
 	DeviceName string `json:"deviceName,omitempty" bson:"deviceName,omitempty"`
