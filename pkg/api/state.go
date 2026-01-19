@@ -19,6 +19,7 @@ const (
 	StateUpdateFailed     StateStatus = "state_update_failed"
 	StateDeleteSuccess    StateStatus = "state_delete_success"
 	StateDeleteFailed     StateStatus = "state_delete_failed"
+	StateValidationFailed  StateStatus = "state_validation_failed"
 )
 
 // String returns the string representation of the device status
@@ -43,6 +44,7 @@ func (ds StateStatus) Translate(lang string) string {
 			StateDeleteSuccess:    "State deleted successfully",
 			StateDeleteFailed:     "State failed to delete",
 			StateRetrievalSuccess: "State retrieved successfully",
+			StateValidationFailed: "State validation failed",
 		},
 	}
 
