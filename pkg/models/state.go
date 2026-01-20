@@ -81,7 +81,7 @@ type TimeSchedule struct {
 	Timezone   string `json:"timezone,omitempty" bson:"timezone,omitempty" example:"Europe/Amsterdam"` // Timezone for the schedule (IANA format)
 	StartDate  int64  `json:"startDate,omitempty" bson:"startDate,omitempty" example:"1752482068"`     // Optional start date (epoch seconds) from when the schedule is valid
 	EndDate    int64  `json:"endDate,omitempty" bson:"endDate,omitempty" example:"1784018068"`         // Optional end date (epoch seconds) until when the schedule is valid
-	DaysOfWeek []int  `json:"daysOfWeek,omitempty" bson:"daysOfWeek,omitempty" example:"[1,2,3,4,5]"`  // Days of week (0=Sunday, 1=Monday, ..., 6=Saturday) - alternative to cron
+	DaysOfWeek []int  `json:"daysOfWeek,omitempty" bson:"daysOfWeek,omitempty" example:"1,2,3,4,5"`    // Days of week (0=Sunday, 1=Monday, ..., 6=Saturday) - alternative to cron
 	StartTime  string `json:"startTime,omitempty" bson:"startTime,omitempty" example:"09:00"`          // Start time in HH:MM format - alternative to cron
 	EndTime    string `json:"endTime,omitempty" bson:"endTime,omitempty" example:"17:00"`              // End time in HH:MM format - alternative to cron
 }
