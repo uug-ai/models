@@ -1057,6 +1057,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/classification": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Classification (schema generation only)
+         * @description Internal endpoint used only to ensure Classification schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Classification"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/classificationsummary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ClassificationSummary (schema generation only)
+         * @description Internal endpoint used only to ensure ClassificationSummary schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ClassificationSummary"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/classify": {
         parameters: {
             query?: never;
@@ -10398,6 +10476,7 @@ export interface components {
             force_sso_domains?: string[];
         };
         "api.SiteFilter": {
+            deviceKeys?: string[];
             name?: string;
             siteIds?: string[];
         };
@@ -10719,6 +10798,15 @@ export interface components {
             presets?: components["schemas"]["models.CameraPreset"][];
             running?: boolean;
             speed?: number;
+        };
+        "models.Classification": {
+            /** @description e.g., [[x1, y1], [x2, y2], ...] */
+            centroids?: number[][];
+            key?: string;
+        };
+        "models.ClassificationSummary": {
+            count?: number;
+            key?: string;
         };
         "models.Classify": {
             details?: components["schemas"]["models.ClassifyDetails"][];
@@ -11413,6 +11501,7 @@ export interface components {
             atRuntimeMetadata?: components["schemas"]["models.MediaAtRuntimeMetadata"];
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
+            classificationSummary?: components["schemas"]["models.ClassificationSummary"][];
             /** @description RBAC information
              *     DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
              *     OrganisationId is used to identify the organisation that owns the device. */
@@ -11428,15 +11517,19 @@ export interface components {
             metadata?: components["schemas"]["models.MediaMetadata"];
             organisationId?: string;
             redactionFile?: string;
+            redactionProvider?: string;
             siteId?: string;
             spriteFile?: string;
+            spriteProvider?: string;
             /** @description Time window of media file. */
             startTimestamp?: number;
             /** @description Media file information (by default "vault", however might change
              *     in the future (integration with other storage solutions, next to Vault). */
             storageSolution?: string;
             thumbnailFile?: string;
+            thumbnailProvider?: string;
             videoFile?: string;
+            videoProvider?: string;
         };
         "models.MediaAtRuntimeMetadata": {
             analysis?: components["schemas"]["models.AnalysisWrapper"];
@@ -11453,7 +11546,7 @@ export interface components {
             analysisId?: string;
             /** @description in kbps */
             bitrate?: number;
-            classifications?: string[];
+            classifications?: components["schemas"]["models.Classification"][];
             /** @description e.g., H.264, VP9 */
             codec?: string;
             /** @description Media containers related information */
@@ -11465,6 +11558,8 @@ export interface components {
             embedding?: number[];
             /** @description frames per second */
             fps?: number;
+            /** @description in pixels */
+            height?: number;
             motionPercentage?: number;
             /** @description Motion information */
             motionPixels?: number;
@@ -11474,6 +11569,8 @@ export interface components {
             spriteInterval?: number;
             /** @description Tags associated to give some context about the media file */
             tags?: string[];
+            /** @description in pixels */
+            width?: number;
         };
         "models.Message": {
             alert_id?: string;
@@ -11962,6 +12059,8 @@ export namespace models {
     export type CameraMetadata = components['schemas']['models.CameraMetadata'];
     export type CameraPreset = components['schemas']['models.CameraPreset'];
     export type CameraTour = components['schemas']['models.CameraTour'];
+    export type Classification = components['schemas']['models.Classification'];
+    export type ClassificationSummary = components['schemas']['models.ClassificationSummary'];
     export type Classify = components['schemas']['models.Classify'];
     export type ClassifyDetails = components['schemas']['models.ClassifyDetails'];
     export type Color = components['schemas']['models.Color'];

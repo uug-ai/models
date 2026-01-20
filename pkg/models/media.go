@@ -33,6 +33,8 @@ type Media struct {
 	RedactionFile     string `json:"redactionFile,omitempty" bson:"redactionFile,omitempty"`
 	RedactionProvider string `json:"redactionProvider,omitempty" bson:"redactionProvider,omitempty"`
 
+	ClassificationSummary []ClassificationSummary `json:"classificationSummary,omitempty" bson:"classificationSummary,omitempty"`
+
 	// Name of the device that uploaded media
 	DeviceName string `json:"deviceName,omitempty" bson:"deviceName,omitempty"`
 
@@ -53,6 +55,8 @@ type MediaMetadata struct {
 	// Media containers related information
 	Container  string `json:"containerType,omitempty" bson:"containerType,omitempty"` // e.g., mp4, mkv, avi
 	Resolution string `json:"resolution,omitempty" bson:"resolution,omitempty"`       // e.g., 1920x1080
+	Width      int    `json:"width,omitempty" bson:"width,omitempty"`                 // in pixels
+	Height     int    `json:"height,omitempty" bson:"height,omitempty"`               // in pixels
 	Codec      string `json:"codec,omitempty" bson:"codec,omitempty"`                 // e.g., H.264, VP9
 	Bitrate    int    `json:"bitrate,omitempty" bson:"bitrate,omitempty"`             // in kbps
 	FPS        int    `json:"fps,omitempty" bson:"fps,omitempty"`                     // frames per second
@@ -68,13 +72,13 @@ type MediaMetadata struct {
 	MotionPercentage float64 `json:"motionPercentage,omitempty" bson:"motionPercentage,omitempty"`
 
 	// Analysis data (we keep a reference to the original analysis, and cache some data here)
-	AnalysisId      string   `json:"analysisId,omitempty" bson:"analysisId,omitempty"`
-	Classifications []string `json:"classifications,omitempty" bson:"classifications,omitempty"`
-	Description     string   `json:"description,omitempty" bson:"description,omitempty"`
-	Detections      []string `json:"detections,omitempty" bson:"detections,omitempty"`
-	DominantColors  []string `json:"dominantColors,omitempty" bson:"dominantColors,omitempty"`
-	Count           int      `json:"count,omitempty" bson:"count,omitempty"`
-	Embedding       []int    `json:"embedding,omitempty" bson:"embedding,omitempty"`
+	AnalysisId      string           `json:"analysisId,omitempty" bson:"analysisId,omitempty"`
+	Classifications []Classification `json:"classifications,omitempty" bson:"classifications,omitempty"`
+	Description     string           `json:"description,omitempty" bson:"description,omitempty"`
+	Detections      []string         `json:"detections,omitempty" bson:"detections,omitempty"`
+	DominantColors  []string         `json:"dominantColors,omitempty" bson:"dominantColors,omitempty"`
+	Count           int              `json:"count,omitempty" bson:"count,omitempty"`
+	Embedding       []int            `json:"embedding,omitempty" bson:"embedding,omitempty"`
 }
 
 // MediaAtRuntimeMetadata contains metadata that is generated at runtime, which can include
@@ -94,11 +98,6 @@ type Region struct {
 	Width        int     `json:"width" bson:"width"`
 	Height       int     `json:"height" bson:"height"`
 	RegionPoints []Point `json:"regionPoints" bson:"regionPoints"`
-}
-
-type Point struct {
-	X float64 `json:"x" bson:"x"`
-	Y float64 `json:"y" bson:"y"`
 }
 
 type HourRange struct {
@@ -164,4 +163,16 @@ type VaultMediaFragmentCollection struct {
 type TimeRange struct {
 	Start int64 `json:"start,omitempty" bson:"start,omitempty"`
 	End   int64 `json:"end,omitempty" bson:"end,omitempty"`
+}
+
+type ClassificationSummary struct {
+	Key   string `json:"key" bson:"key"`
+	Count int    `json:"count" bson:"count"`
+	// Additional attributes can be added as needed to be shown in the front end
+}
+
+type Classification struct {
+	Key       string       `json:"key" bson:"key"`
+	Centroids [][2]float64 `json:"centroids" bson:"centroids"` // e.g., [[x1, y1], [x2, y2], ...]
+	// Additional attributes can be added as needed
 }
