@@ -1408,6 +1408,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/countingsummary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CountingSummary (schema generation only)
+         * @description Internal endpoint used only to ensure CountingSummary schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CountingSummary"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/cursorpagination": {
         parameters: {
             query?: never;
@@ -10881,6 +10920,11 @@ export interface components {
             type?: string;
             username?: string;
         };
+        "models.CountingSummary": {
+            count?: number;
+            duration?: number;
+            type?: string;
+        };
         "models.CustomAlert": {
             alexa_token?: string;
             channelsAll?: boolean;
@@ -12068,6 +12112,7 @@ export namespace models {
     export type Counting = components['schemas']['models.Counting'];
     export type CountingDetail = components['schemas']['models.CountingDetail'];
     export type CountingRecord = components['schemas']['models.CountingRecord'];
+    export type CountingSummary = components['schemas']['models.CountingSummary'];
     export type CustomAlert = components['schemas']['models.CustomAlert'];
     export type Device = components['schemas']['models.Device'];
     export type DeviceAtRuntimeMetadata = components['schemas']['models.DeviceAtRuntimeMetadata'];

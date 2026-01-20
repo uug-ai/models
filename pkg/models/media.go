@@ -34,6 +34,7 @@ type Media struct {
 	RedactionProvider string `json:"redactionProvider,omitempty" bson:"redactionProvider,omitempty"`
 
 	ClassificationSummary []ClassificationSummary `json:"classificationSummary,omitempty" bson:"classificationSummary,omitempty"`
+	CountingSummary       []CountingSummary       `json:"countingSummary,omitempty" bson:"countingSummary,omitempty"`
 
 	// Name of the device that uploaded media
 	DeviceName string `json:"deviceName,omitempty" bson:"deviceName,omitempty"`
@@ -175,4 +176,10 @@ type Classification struct {
 	Key       string       `json:"key" bson:"key"`
 	Centroids [][2]float64 `json:"centroids" bson:"centroids"` // e.g., [[x1, y1], [x2, y2], ...]
 	// Additional attributes can be added as needed
+}
+
+type CountingSummary struct {
+	Type     string  `json:"type" bson:"type"`
+	Count    int     `json:"count" bson:"count"`
+	Duration float64 `json:"duration" bson:"duration"`
 }
