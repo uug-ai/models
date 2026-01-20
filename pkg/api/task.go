@@ -1,6 +1,6 @@
 package api
 
-// MediaStatus represents specific status codes for media operations
+// TaskStatus represents specific status codes for task operations
 type TaskStatus string
 
 const (
