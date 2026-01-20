@@ -19,7 +19,9 @@ const (
 	StateUpdateFailed     StateStatus = "state_update_failed"
 	StateDeleteSuccess    StateStatus = "state_delete_success"
 	StateDeleteFailed     StateStatus = "state_delete_failed"
-	StateValidationFailed  StateStatus = "state_validation_failed"
+	StateUpsertSuccess    StateStatus = "state_upsert_success"
+	StateUpsertFailed     StateStatus = "state_upsert_failed"
+	StateValidationFailed StateStatus = "state_validation_failed"
 )
 
 // String returns the string representation of the device status
@@ -43,6 +45,8 @@ func (ds StateStatus) Translate(lang string) string {
 			StateUpdateFailed:     "State failed to update",
 			StateDeleteSuccess:    "State deleted successfully",
 			StateDeleteFailed:     "State failed to delete",
+			StateUpsertSuccess:    "State upserted successfully",
+			StateUpsertFailed:     "State upsert failed",
 			StateRetrievalSuccess: "State retrieved successfully",
 			StateValidationFailed: "State validation failed",
 		},
@@ -80,35 +84,19 @@ type GetStatesErrorResponse struct {
 	ErrorResponse
 }
 
-// AddStateRequest represents the request to create a state
+// UpsertStateRequest represents the request to upsert a state
 // @Router /states [post]
-type AddStateRequest struct {
+type UpsertStateRequest struct {
 	State models.State `json:"state" binding:"required"`
 }
-type AddStateResponse struct {
+type UpsertStateResponse struct {
 	State models.State `json:"state"`
 }
-type AddStateSuccessResponse struct {
+type UpsertStateSuccessResponse struct {
 	SuccessResponse
-	Data AddStateResponse `json:"data"`
+	Data UpsertStateResponse `json:"data"`
 }
-type AddStateErrorResponse struct {
-	ErrorResponse
-}
-
-// UpdateStateRequest represents the request to update a state
-// @Router /states/{stateId} [put]
-type UpdateStateRequest struct {
-	State models.State `json:"state" binding:"required"`
-}
-type UpdateStateResponse struct {
-	State models.State `json:"state"`
-}
-type UpdateStateSuccessResponse struct {
-	SuccessResponse
-	Data UpdateStateResponse `json:"data"`
-}
-type UpdateStateErrorResponse struct {
+type UpsertStateErrorResponse struct {
 	ErrorResponse
 }
 
