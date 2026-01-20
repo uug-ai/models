@@ -9,8 +9,8 @@ import (
 type StateEnum string
 
 const (
-	StateDefault     StateEnum = "default"      // Default state, no specific behavior
-	StateActive      StateEnum = "default"      // Active state, device is fully operational
+	StateDefault     StateEnum = "default"      // Default state, no specific behavior, returns to default when no desired state is valid or available.
+	StateDebug       StateEnum = "debug"        // Debug state, device operates in debug mode with verbose logging
 	StatePaused      StateEnum = "paused"       // Paused state, device operations are temporarily halted
 	StateNoRecording StateEnum = "no_recording" // No recording state, device does not record any media
 	StateNoLiveView  StateEnum = "no_live_view" // No live view state, device does not provide live video feed
@@ -31,7 +31,7 @@ type State struct {
 	Devices        []string `json:"devices,omitempty" bson:"devices,omitempty" example:"[\"686a906345c1df594939f9j25f4\",\"686a906345c1df594939f9j25f5\"]"` // List of device IDs associated with the state
 
 	// Timing information (all timestamps are in seconds)
-	DesiredState               StateEnum `json:"state" bson:"state" example:"active" required:"true"`                                                   // Desired state to be applied to the device, if all conditions are met.
+	DesiredState               StateEnum `json:"desiredState,omitempty" bson:"desiredState,omitempty" example:"active"`                                 // The desired state to be applied to the device
 	DesiredStateStartTimestamp int64     `json:"desiredStateStartTimestamp,omitempty" bson:"desiredStateStartTimestamp,omitempty" example:"1752482068"` // Timestamp when the desired state should start being applied
 	DesiredStateEndTimestamp   int64     `json:"desiredStateEndTimestamp,omitempty" bson:"desiredStateEndTimestamp,omitempty" example:"1784018068"`     // Timestamp when the desired state should stop being applied
 
