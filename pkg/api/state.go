@@ -22,6 +22,11 @@ const (
 	StateUpsertSuccess    StateStatus = "state_upsert_success"
 	StateUpsertFailed     StateStatus = "state_upsert_failed"
 	StateValidationFailed StateStatus = "state_validation_failed"
+	StateDefault          StateStatus = "state_default"
+	StateActive           StateStatus = "state_active"
+	StateDebug            StateStatus = "state_debug"
+	StatePaused           StateStatus = "state_paused"
+	StateNoRecording      StateStatus = "state_no_recording"
 )
 
 // String returns the string representation of the device status
@@ -49,6 +54,11 @@ func (ds StateStatus) Translate(lang string) string {
 			StateUpsertFailed:     "State upsert failed",
 			StateRetrievalSuccess: "State retrieved successfully",
 			StateValidationFailed: "State validation failed",
+			StateDefault:          "Default state",
+			StateActive:           "Active state",
+			StateDebug:            "Debug state",
+			StatePaused:           "Paused state",
+			StateNoRecording:      "No recording state",
 		},
 	}
 
