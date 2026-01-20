@@ -9,10 +9,11 @@ import (
 type StateEnum string
 
 const (
-	StateActive      StateEnum = "active"
-	StatePaused      StateEnum = "paused"
-	StateNoRecording StateEnum = "no_recording"
-	StateNoLiveView  StateEnum = "no_live_view"
+	StateDefault     StateEnum = "default"      // Default state, no specific behavior
+	StateActive      StateEnum = "default"      // Active state, device is fully operational
+	StatePaused      StateEnum = "paused"       // Paused state, device operations are temporarily halted
+	StateNoRecording StateEnum = "no_recording" // No recording state, device does not record any media
+	StateNoLiveView  StateEnum = "no_live_view" // No live view state, device does not provide live video feed
 )
 
 // State represents the state pattern used for a specific device.
@@ -30,13 +31,12 @@ type State struct {
 	Devices        []string `json:"devices,omitempty" bson:"devices,omitempty" example:"[\"686a906345c1df594939f9j25f4\",\"686a906345c1df594939f9j25f5\"]"` // List of device IDs associated with the state
 
 	// Timing information (all timestamps are in seconds)
-	DesiredState StateEnum `json:"state" bson:"state" example:"active" required:"true"` // Desired state to be applied to the device, if all conditions are met.
+	DesiredState               StateEnum `json:"state" bson:"state" example:"active" required:"true"`                                                   // Desired state to be applied to the device, if all conditions are met.
+	DesiredStateStartTimestamp int64     `json:"desiredStateStartTimestamp,omitempty" bson:"desiredStateStartTimestamp,omitempty" example:"1752482068"` // Timestamp when the desired state should start being applied
+	DesiredStateEndTimestamp   int64     `json:"desiredStateEndTimestamp,omitempty" bson:"desiredStateEndTimestamp,omitempty" example:"1784018068"`     // Timestamp when the desired state should stop being applied
 
 	// Conditions for the state to be applied
-	// @To be implemented in future releases
-	// Conditions Conditions `json:"conditions,omitempty" bson:"conditions,omitempty"` // Conditions that trigger the state change (to be implemented in future releases)
-	StartTimestamp int64 `json:"startTimestamp" bson:"startTimestamp" example:"1752482068" required:"true"` // Start timestamp of the marker in seconds since epoch
-	EndTimestamp   int64 `json:"endTimestamp" bson:"endTimestamp" example:"1752482079" required:"true"`     // End timestamp of the marker in seconds since epoch
+	TimeSchedule TimeSchedule `json:"timeSchedule,omitempty" bson:"timeSchedule,omitempty"` // Time schedule for when the state is active (if applicable)
 
 	// Additional metadata
 	Metadata *StateMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"` // Metadata associated with the marker, such as comments and tags
@@ -59,4 +59,18 @@ type StateMetadata struct {
 }
 
 type StateAtRuntimeMetadata struct {
+}
+
+// TimeSchedule represents a cron-like schedule for when a state should be active.
+// This allows defining recurring time windows using familiar cron patterns.
+type TimeSchedule struct {
+	Enabled    bool   `json:"enabled" bson:"enabled" example:"true"`                                   // Whether the time schedule is enabled
+	Cron       string `json:"cron,omitempty" bson:"cron,omitempty" example:"0 9 * * 1-5"`              // Cron expression (minute, hour, day of month, month, day of week)
+	Duration   int64  `json:"duration,omitempty" bson:"duration,omitempty" example:"28800"`            // Duration in seconds for how long the state remains active after trigger
+	Timezone   string `json:"timezone,omitempty" bson:"timezone,omitempty" example:"Europe/Amsterdam"` // Timezone for the schedule (IANA format)
+	StartDate  int64  `json:"startDate,omitempty" bson:"startDate,omitempty" example:"1752482068"`     // Optional start date (epoch seconds) from when the schedule is valid
+	EndDate    int64  `json:"endDate,omitempty" bson:"endDate,omitempty" example:"1784018068"`         // Optional end date (epoch seconds) until when the schedule is valid
+	DaysOfWeek []int  `json:"daysOfWeek,omitempty" bson:"daysOfWeek,omitempty" example:"[1,2,3,4,5]"`  // Days of week (0=Sunday, 1=Monday, ..., 6=Saturday) - alternative to cron
+	StartTime  string `json:"startTime,omitempty" bson:"startTime,omitempty" example:"09:00"`          // Start time in HH:MM format - alternative to cron
+	EndTime    string `json:"endTime,omitempty" bson:"endTime,omitempty" example:"17:00"`              // End time in HH:MM format - alternative to cron
 }
