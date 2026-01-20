@@ -22,6 +22,8 @@ const (
 	MediaDownloadSuccess        MediaStatus = "media_download_success"
 	MediaUploadFailed           MediaStatus = "media_upload_failed"
 	MediaUploadSuccess          MediaStatus = "media_upload_success"
+	MediaPublishFailed          MediaStatus = "media_publish_failed"
+	MediaPublishSuccess         MediaStatus = "media_publish_success"
 	MediaCleanupFailed          MediaStatus = "media_cleanup_failed"
 	MediaVideoDurationExtracted MediaStatus = "media_video_duration_extracted"
 	MediaThumbnailLoaded        MediaStatus = "media_thumbnail_loaded"
@@ -52,6 +54,8 @@ func (ms MediaStatus) Translate(lang string) string {
 			MediaDownloadSuccess:        "Media downloaded successfully",
 			MediaUploadFailed:           "Media upload failed",
 			MediaUploadSuccess:          "Media uploaded successfully",
+			MediaPublishFailed:          "Media publish failed",
+			MediaPublishSuccess:         "Media published successfully",
 			MediaCleanupFailed:          "Media cleanup failed",
 			MediaVideoDurationExtracted: "Media video duration extracted",
 			MediaThumbnailLoaded:        "Media thumbnail loaded",
