@@ -55,6 +55,17 @@ func (s *State) Validate() error {
 	return validate.Struct(s)
 }
 
+// Check if the state needs to be considered ( time > desiredStateStartTimestamp and time < desiredStateEndTimestamp )
+func (s *State) IsActiveAt(timestamp int64) bool {
+	if s.DesiredStateStartTimestamp != 0 && timestamp < s.DesiredStateStartTimestamp {
+		return false
+	}
+	if s.DesiredStateEndTimestamp != 0 && timestamp > s.DesiredStateEndTimestamp {
+		return false
+	}
+	return true
+}
+
 type StateMetadata struct {
 }
 
