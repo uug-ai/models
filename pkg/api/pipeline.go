@@ -37,6 +37,7 @@ const (
 	DeadLetterQueueSendFailed  PipelineStatus = "dead_letter_queue_send_failed"
 	QueueReadMessagesFailed    PipelineStatus = "queue_read_messages_failed"
 	QueueReconnectionFailed    PipelineStatus = "queue_reconnection_failed"
+	PreflightCheckFailed       PipelineStatus = "preflight_check_failed"
 )
 
 func (ps PipelineStatus) String() string {
@@ -61,6 +62,7 @@ func (ps PipelineStatus) Translate(lang string) string {
 			DeadLetterQueueSendFailed:  "Failed to send message to dead letter queue",
 			QueueReadMessagesFailed:    "Failed to read messages from queue",
 			QueueReconnectionFailed:    "Failed to reconnect to queue",
+			PreflightCheckFailed:       "Preflight check failed",
 		},
 	}
 
