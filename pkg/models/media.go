@@ -185,3 +185,9 @@ type CountingSummary struct {
 	Count    int     `json:"count" bson:"count"`
 	Duration float64 `json:"duration,omitempty" bson:"duration,omitempty"`
 }
+
+const (
+	CountingIn     = "counting-in"
+	CountingOut    = "counting-out"
+	CountingRegion = "counting-region"
+)
