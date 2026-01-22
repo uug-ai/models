@@ -55,7 +55,10 @@ func (s *State) Validate() error {
 	return validate.Struct(s)
 }
 
-// Check if the state needs to be considered ( time > desiredStateStartTimestamp and time < desiredStateEndTimestamp )
+// IsActiveAt checks if the state is active at the given timestamp.
+// A value of 0 for DesiredStateStartTimestamp means no start bound (active since the beginning of time).
+// A value of 0 for DesiredStateEndTimestamp means no end bound (active indefinitely).
+// If both are 0, the state is always active (infinite duration).
 func (s *State) IsActiveAt(timestamp int64) bool {
 	if s.DesiredStateStartTimestamp != 0 && timestamp < s.DesiredStateStartTimestamp {
 		return false
