@@ -187,7 +187,7 @@ type CountingSummary struct {
 }
 
 const (
-	CountingIn     = "counting-in"
-	CountingOut    = "counting-out"
-	CountingRegion = "counting-region"
+	CountingIn     = "countingIn"
+	CountingOut    = "countingOut"
+	CountingRegion = "countingRegion"
 )
