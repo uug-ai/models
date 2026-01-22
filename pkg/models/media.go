@@ -176,11 +176,12 @@ type ClassificationSummary struct {
 type Classification struct {
 	Key       string       `json:"key" bson:"key"`
 	Centroids [][2]float64 `json:"centroids" bson:"centroids"` // e.g., [[x1, y1], [x2, y2], ...]
+	Duration  float64      `json:"duration,omitempty" bson:"duration,omitempty"`
 	// Additional attributes can be added as needed
 }
 
 type CountingSummary struct {
-	Type     string  `json:"type" bson:"type"`
+	Key      string  `json:"key" bson:"key"`
 	Count    int     `json:"count" bson:"count"`
-	Duration float64 `json:"duration" bson:"duration"`
+	Duration float64 `json:"duration,omitempty" bson:"duration,omitempty"`
 }
