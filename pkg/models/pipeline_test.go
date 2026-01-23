@@ -272,3 +272,235 @@ func TestGetMediaFromPipelineEvent_NewFormat(t *testing.T) {
 		})
 	}
 }
+
+func TestPipelineEvent_GetMedia(t *testing.T) {
+	tests := []struct {
+		name          string
+		event         PipelineEvent
+		expectedMedia Media
+		expectError   bool
+		errorContains string
+	}{
+		{
+			name: "new format with metadata - valid",
+			event: PipelineEvent{
+				Storage:  "s3",
+				Provider: "aws",
+				Payload: PipelinePayload{
+					FileName: "user123/video.mp4",
+					Metadata: PipelineMetadata{
+						DeviceId:   "device-001",
+						DeviceName: "Front Camera",
+						Duration:   "300",
+						Timestamp:  "1706000000",
+					},
+				},
+			},
+			expectedMedia: Media{
+				VideoFile:       "user123/video.mp4",
+				DeviceId:        "device-001",
+				DeviceName:      "Front Camera",
+				Duration:        300,
+				StartTimestamp:  1706000000,
+				StorageSolution: "s3",
+				VideoProvider:   "aws",
+			},
+			expectError: false,
+		},
+		{
+			name: "legacy format - valid 6 attributes",
+			event: PipelineEvent{
+				Storage:  "gcs",
+				Provider: "google",
+				Payload: PipelinePayload{
+					FileName: "username/1706000000_attr1_camera1_attr3_500_60.mp4",
+					Metadata: PipelineMetadata{
+						DeviceId: "", // Empty triggers legacy parsing
+					},
+				},
+			},
+			expectedMedia: Media{
+				VideoFile:       "username/1706000000_attr1_camera1_attr3_500_60.mp4",
+				DeviceId:        "camera1",
+				DeviceName:      "camera1",
+				Duration:        60,
+				StartTimestamp:  1706000000,
+				StorageSolution: "gcs",
+				VideoProvider:   "google",
+			},
+			expectError: false,
+		},
+		{
+			name: "invalid path - missing slash",
+			event: PipelineEvent{
+				Payload: PipelinePayload{
+					FileName: "invalidpath",
+					Metadata: PipelineMetadata{
+						DeviceId: "",
+					},
+				},
+			},
+			expectError:   true,
+			errorContains: "invalid file path format",
+		},
+		{
+			name: "legacy format - invalid filename without extension",
+			event: PipelineEvent{
+				Payload: PipelinePayload{
+					FileName: "username/videofile",
+					Metadata: PipelineMetadata{
+						DeviceId: "",
+					},
+				},
+			},
+			expectError:   true,
+			errorContains: "invalid video file name format",
+		},
+		{
+			name: "legacy format - wrong number of attributes",
+			event: PipelineEvent{
+				Payload: PipelinePayload{
+					FileName: "username/attr1_attr2_attr3.mp4",
+					Metadata: PipelineMetadata{
+						DeviceId: "",
+					},
+				},
+			},
+			expectError:   true,
+			errorContains: "invalid attributes format",
+		},
+		{
+			name: "new format with metadata - empty duration",
+			event: PipelineEvent{
+				Storage:  "s3",
+				Provider: "aws",
+				Payload: PipelinePayload{
+					FileName: "user123/video.mp4",
+					Metadata: PipelineMetadata{
+						DeviceId:   "device-001",
+						DeviceName: "Front Camera",
+						Duration:   "",
+						Timestamp:  "1706000000",
+					},
+				},
+			},
+			expectedMedia: Media{
+				VideoFile:       "user123/video.mp4",
+				DeviceId:        "device-001",
+				DeviceName:      "Front Camera",
+				Duration:        0, // Empty string parses to 0
+				StartTimestamp:  1706000000,
+				StorageSolution: "s3",
+				VideoProvider:   "aws",
+			},
+			expectError: false,
+		},
+		{
+			name: "legacy format - only filename with extension",
+			event: PipelineEvent{
+				Storage:  "azure",
+				Provider: "blob",
+				Payload: PipelinePayload{
+					FileName: "username/1706000000_x_cam_y_100_30.mp4",
+					Metadata: PipelineMetadata{
+						DeviceId: "",
+					},
+				},
+			},
+			expectedMedia: Media{
+				VideoFile:       "username/1706000000_x_cam_y_100_30.mp4",
+				DeviceId:        "cam",
+				DeviceName:      "cam",
+				Duration:        30,
+				StartTimestamp:  1706000000,
+				StorageSolution: "azure",
+				VideoProvider:   "blob",
+			},
+			expectError: false,
+		},
+		{
+			name: "new format - zero values parsed correctly",
+			event: PipelineEvent{
+				Storage:  "local",
+				Provider: "disk",
+				Payload: PipelinePayload{
+					FileName: "user/test.mp4",
+					Metadata: PipelineMetadata{
+						DeviceId:   "dev-123",
+						DeviceName: "Test Device",
+						Duration:   "0",
+						Timestamp:  "0",
+					},
+				},
+			},
+			expectedMedia: Media{
+				VideoFile:       "user/test.mp4",
+				DeviceId:        "dev-123",
+				DeviceName:      "Test Device",
+				Duration:        0,
+				StartTimestamp:  0,
+				StorageSolution: "local",
+				VideoProvider:   "disk",
+			},
+			expectError: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			media, err := tt.event.GetMedia()
+
+			if tt.expectError {
+				if err == nil {
+					t.Errorf("expected error containing %q, got nil", tt.errorContains)
+					return
+				}
+				if tt.errorContains != "" && !contains(err.Error(), tt.errorContains) {
+					t.Errorf("expected error containing %q, got %q", tt.errorContains, err.Error())
+				}
+				return
+			}
+
+			if err != nil {
+				t.Errorf("unexpected error: %v", err)
+				return
+			}
+
+			if media.VideoFile != tt.expectedMedia.VideoFile {
+				t.Errorf("VideoFile: got %q, want %q", media.VideoFile, tt.expectedMedia.VideoFile)
+			}
+			if media.DeviceId != tt.expectedMedia.DeviceId {
+				t.Errorf("DeviceId: got %q, want %q", media.DeviceId, tt.expectedMedia.DeviceId)
+			}
+			if media.DeviceName != tt.expectedMedia.DeviceName {
+				t.Errorf("DeviceName: got %q, want %q", media.DeviceName, tt.expectedMedia.DeviceName)
+			}
+			if media.Duration != tt.expectedMedia.Duration {
+				t.Errorf("Duration: got %d, want %d", media.Duration, tt.expectedMedia.Duration)
+			}
+			if media.StartTimestamp != tt.expectedMedia.StartTimestamp {
+				t.Errorf("StartTimestamp: got %d, want %d", media.StartTimestamp, tt.expectedMedia.StartTimestamp)
+			}
+			if media.StorageSolution != tt.expectedMedia.StorageSolution {
+				t.Errorf("StorageSolution: got %q, want %q", media.StorageSolution, tt.expectedMedia.StorageSolution)
+			}
+			if media.VideoProvider != tt.expectedMedia.VideoProvider {
+				t.Errorf("VideoProvider: got %q, want %q", media.VideoProvider, tt.expectedMedia.VideoProvider)
+			}
+		})
+	}
+}
+
+func contains(s, substr string) bool {
+	return len(s) >= len(substr) && (s == substr || len(substr) == 0 ||
+		(len(s) > 0 && len(substr) > 0 && searchSubstring(s, substr)))
+}
+
+func searchSubstring(s, substr string) bool {
+	for i := 0; i <= len(s)-len(substr); i++ {
+		if s[i:i+len(substr)] == substr {
+			return true
+		}
+	}
+	return false
+}

@@ -37,6 +37,7 @@ const (
 	DeadLetterQueueSendFailed  PipelineStatus = "dead_letter_queue_send_failed"
 	QueueReadMessagesFailed    PipelineStatus = "queue_read_messages_failed"
 	QueueReconnectionFailed    PipelineStatus = "queue_reconnection_failed"
+	PreflightChecksFailed      PipelineStatus = "preflight_checks_failed"
 )
 
 func (ps PipelineStatus) String() string {
@@ -61,6 +62,7 @@ func (ps PipelineStatus) Translate(lang string) string {
 			DeadLetterQueueSendFailed:  "Failed to send message to dead letter queue",
 			QueueReadMessagesFailed:    "Failed to read messages from queue",
 			QueueReconnectionFailed:    "Failed to reconnect to queue",
+			PreflightChecksFailed:      "Preflight checks failed",
 		},
 	}
 
@@ -157,6 +159,9 @@ const (
 	MonitorStageMissing         MonitorStatus = "monitor_stage_missing"
 	MonitorUserNotFound         MonitorStatus = "monitor_user_not_found"
 	MonitorOrganizationNotFound MonitorStatus = "monitor_organization_not_found"
+	MonitorProcessingStart      MonitorStatus = "monitor_processing_start"
+	MonitorProcessingEnd        MonitorStatus = "monitor_processing_end"
+	MonitorProcessingFailed     MonitorStatus = "monitor_processing_failed"
 )
 
 // String returns the string representation of the monitor status
@@ -173,6 +178,9 @@ func (ms MonitorStatus) Translate(lang string) string {
 			MonitorStageMissing:         "Monitor stage missing",
 			MonitorUserNotFound:         "User not found during monitor stage",
 			MonitorOrganizationNotFound: "Organization not found during monitor stage",
+			MonitorProcessingStart:      "Starting monitor processing",
+			MonitorProcessingEnd:        "Monitor processing completed",
+			MonitorProcessingFailed:     "Monitor processing failed",
 		},
 	}
 
