@@ -17,6 +17,9 @@ RUN git config --global \
 ##########################################
 # Installing some additional dependencies.
 
+# Remove yarn repo with expired GPG key (not needed for this build)
+RUN rm -f /etc/apt/sources.list.d/yarn.list
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git build-essential cmake pkg-config unzip libgtk2.0-dev \
     curl ca-certificates libcurl4-openssl-dev libssl-dev libjpeg62-turbo-dev && \
