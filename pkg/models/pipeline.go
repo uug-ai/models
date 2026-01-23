@@ -58,6 +58,80 @@ type PipelineEvent struct {
 	Data map[string]interface{} `json:"data,omitempty"` // We should get rid of this and use the stage map
 }
 
+func (pe *PipelineEvent) GetMedia() (Media, error) {
+
+	// We need to extract attributes from the event.
+	// 1. The old way, we need to parse the filename (all info is stored in the filename).
+	// 2. (or) Use the metadata attributes.
+
+	media := Media{}
+
+	pathParts := strings.Split(pe.Payload.FileName, "/")
+	if len(pathParts) < 2 {
+		return media, fmt.Errorf("invalid file path format, expected at least 2 parts separated by '/', got: %s", pe.Payload.FileName) // Return empty media if path format is invalid
+	}
+
+	// If we have a DeviceId in the metadata, we can use the structured metadata way.
+	// This is the new and recommended approach.
+	if pe.Payload.Metadata.DeviceId != "" {
+		// Set video file
+		media.VideoFile = pe.Payload.FileName
+
+		// Get device information from metadata
+		media.DeviceName = pe.Payload.Metadata.DeviceName
+		media.DeviceId = pe.Payload.Metadata.DeviceId
+
+		// Get time information from the recording
+		duration, _ := strconv.ParseInt(pe.Payload.Metadata.Duration, 10, 64)
+		media.Duration = int(duration)
+		media.StartTimestamp, _ = strconv.ParseInt(pe.Payload.Metadata.Timestamp, 10, 64)
+
+		// Information about where the media is stored and provided from
+		media.StorageSolution = pe.Storage
+		media.VideoProvider = pe.Provider
+
+		return media, nil
+	}
+
+	// Legacy way, parse from filename the different fields. We used to have only the filename, and used the filename to store all attributes.
+	// As this was not very flexible, we moved to structured metadata, but we still need to support the legacy way if there
+	// is a legacy Vault in place.
+
+	username := pathParts[0]
+	_ = username // Currently not used, but could be useful in the future.
+	videoFileName := pathParts[1]
+	videoFileNamePieces := strings.Split(videoFileName, ".")
+	if len(videoFileNamePieces) < 2 {
+		return media, fmt.Errorf("invalid video file name format, expected at least 2 parts separated by '.', got: %s", videoFileName) // Return empty media if filename format is invalid
+	}
+
+	// Extract attributes from the video file name
+	videoFileAttribute := videoFileNamePieces[len(videoFileNamePieces)-2]
+	attributes := strings.Split(videoFileAttribute, "_")
+	if len(attributes) == 6 {
+
+		// Set video file
+		media.VideoFile = pe.Payload.FileName
+
+		// Get device information from the filename, we do not have metadata in the legacy way
+		media.DeviceName = attributes[2]
+		media.DeviceId = attributes[2]
+
+		// Get time information from the filename
+		duration, _ := strconv.ParseInt(attributes[5], 10, 64)
+		media.Duration = int(duration)
+		media.StartTimestamp, _ = strconv.ParseInt(attributes[0], 10, 64)
+
+		// Information about where the media is stored and provided from
+		media.StorageSolution = pe.Storage
+		media.VideoProvider = pe.Provider
+
+		return media, nil
+	}
+	return media, fmt.Errorf("invalid attributes format in video file name: %s, expected 6 attributes, got: %d", videoFileName, len(attributes)) // Return empty media if attributes format is invalid
+
+}
+
 type PipelinePayload struct {
 	Timestamp int64  `json:"timestamp,omitempty"`
 	FileName  string `json:"key,omitempty"`
