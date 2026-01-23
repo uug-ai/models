@@ -1,0 +1,27 @@
+package properties
+
+const (
+	UserId                    = "_id"
+	UserUsername              = "username"
+	UserEmail                 = "email"
+	UserError                 = "error"
+	UserReachedLimit          = "reachedLimit"
+	UserReachedLimitTimestamp = "reachedLimitTimestamp"
+	UserTimezone              = "timezone"
+	UserDates                 = "dates"
+	UserInstances             = "instances"
+	UserPublicKey             = "amazon_access_key_id"
+	UserPrivateKey            = "amazon_secret_access_key"
+	UserPushbullet            = "pushbullet_api_key"
+	UserSettings              = "settings"
+	UserThrottler             = "throttler"
+	UserActivity              = "activity"
+	UserHighUpload            = "highupload"
+	UserDevices               = "devices"
+	UserNotificationSettings  = "notificationSettings"
+	UserChannels              = "channels"
+	UserStorage               = "storage"
+	UserCustomUsageLimit      = "custom_usage_limit"
+	UserCustomDayLimit        = "custom_day_limit"
+	UserCustomAnalysisLimit   = "custom_analysis_limit"
+)
