@@ -2,7 +2,9 @@
   "scripts": {
     "generate:openapi": "node scripts/auto-discover-models.js && cd cmd && swag init --output ../docs --parseDependency && cd .. && npx swagger2openapi docs/swagger.yaml --outfile docs/openapi.yaml",
     "generate:types": "npx openapi-typescript docs/openapi.yaml --output src/typescript/types.ts && node scripts/add-type-exports.js",
-    "generate": "npm run generate:openapi && npm run generate:types && cd src/typescript && npm run build",
+    "generate:properties": "go run scripts/generate-properties/main.go",
+    "generate:properties:force": "go run scripts/generate-properties/main.go --force",
+    "generate": "npm run generate:properties && npm run generate:openapi && npm run generate:types && cd src/typescript && npm run build",
     "build": "cd src/typescript && npm run build"
   },
   "devDependencies": {
