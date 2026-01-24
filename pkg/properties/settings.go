@@ -5,6 +5,7 @@ package properties
 
 // Settings property field names (BSON)
 const (
+	SettingsId = "_id"
 	SettingsKey = "key"
 	SettingsMap = "map"
 )
