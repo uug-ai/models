@@ -6,7 +6,7 @@ on:
     types: [created]
   push:
     branches:
-      - main
+      - main 
 
 env:
   ORGANIZATION: uug-ai
