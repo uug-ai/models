@@ -90,6 +90,11 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		media.StorageSolution = pe.Storage
 		media.VideoProvider = pe.Provider
 
+		// Metadata information
+		media.Metadata = &MediaMetadata{}
+		media.Metadata.MotionPixels = 0
+		media.Metadata.FileSize = pe.Payload.FileSize
+
 		return media, nil
 	}
 
@@ -125,6 +130,11 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		// Information about where the media is stored and provided from
 		media.StorageSolution = pe.Storage
 		media.VideoProvider = pe.Provider
+
+		// Metadata information
+		media.Metadata = &MediaMetadata{}
+		media.Metadata.MotionPixels = 0
+		media.Metadata.FileSize = pe.Payload.FileSize
 
 		return media, nil
 	}
