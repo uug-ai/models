@@ -7180,6 +7180,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/plan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Plan (schema generation only)
+         * @description Internal endpoint used only to ensure Plan schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Plan"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/point": {
         parameters: {
             query?: never;
@@ -11494,19 +11533,36 @@ export interface components {
             detections?: string[];
             dominantColors?: string[];
             embedding?: number[];
+            /** @description in bytes */
+            fileSize?: number;
             /** @description frames per second */
             fps?: number;
             /** @description in pixels */
             height?: number;
+            /** @description Percentage of frame with motion detected */
             motionPercentage?: number;
             /** @description Motion information */
             motionPixels?: number;
             /** @description e.g., 1920x1080 */
             resolution?: string;
-            /** @description Sprite interval in seconds */
+            /** @description Number of thumbnails in the sprite */
+            spriteCount?: number;
+            /** @description in bytes */
+            spriteFileSize?: number;
+            /** @description in pixels */
+            spriteHeight?: number;
+            /** @description Sprite information */
             spriteInterval?: number;
+            /** @description in pixels */
+            spriteWidth?: number;
             /** @description Tags associated to give some context about the media file */
             tags?: string[];
+            /** @description in bytes */
+            thumbnailFileSize?: number;
+            /** @description in pixels */
+            thumbnailHeight?: number;
+            /** @description Thumbnail information */
+            thumbnailWidth?: number;
             /** @description in pixels */
             width?: number;
         };
@@ -11582,7 +11638,7 @@ export interface components {
             monitorData?: string;
             name?: string;
             plans?: {
-                [key: string]: unknown;
+                [key: string]: components["schemas"]["models.Plan"];
             };
             subscription?: components["schemas"]["models.Subscription"];
             /** @description Add more fields as needed */
@@ -11653,6 +11709,20 @@ export interface components {
             /** @description Signed URL */
             signedUrl?: string;
             timestamp?: number;
+        };
+        "models.Plan": {
+            /** @description AnalysisLimit is the maximum number of analysis operations allowed */
+            analysisLimit?: number;
+            /** @description DayLimit is the retention period in days */
+            dayLimit?: number;
+            /** @description Level indicates the tier of the plan (1-5, higher is better) */
+            level?: number;
+            /** @description UploadLimit is the maximum number of uploads allowed */
+            uploadLimit?: number;
+            /** @description Usage is the storage limit in MB */
+            usage?: number;
+            /** @description VideoLimit is the maximum number of videos allowed */
+            videoLimit?: number;
         };
         "models.Point": {
             x?: number;
@@ -11807,10 +11877,14 @@ export interface components {
             uri?: string;
         };
         "models.Subscription": {
+            created_at?: string;
             ends_at?: string;
             id?: string;
-            name?: string;
+            quantity?: number;
+            stripe_id?: string;
             stripe_plan?: string;
+            trial_ends_at?: string;
+            updated_at?: string;
             user_id?: string;
         };
         "models.Synchronize": {
@@ -12124,6 +12198,7 @@ export namespace models {
     export type PipelineMetadata = components['schemas']['models.PipelineMetadata'];
     export type PipelineMetrics = components['schemas']['models.PipelineMetrics'];
     export type PipelinePayload = components['schemas']['models.PipelinePayload'];
+    export type Plan = components['schemas']['models.Plan'];
     export type Point = components['schemas']['models.Point'];
     export type Region = components['schemas']['models.Region'];
     export type Role = components['schemas']['models.Role'];
