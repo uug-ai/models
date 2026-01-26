@@ -61,16 +61,26 @@ type MediaMetadata struct {
 	Codec      string `json:"codec,omitempty" bson:"codec,omitempty"`                 // e.g., H.264, VP9
 	Bitrate    int    `json:"bitrate,omitempty" bson:"bitrate,omitempty"`             // in kbps
 	FPS        int    `json:"fps,omitempty" bson:"fps,omitempty"`                     // frames per second
+	FileSize   int64  `json:"fileSize,omitempty" bson:"fileSize,omitempty"`           // in bytes
 
 	// Tags associated to give some context about the media file
 	Tags []string `json:"tags,omitempty" bson:"tags,omitempty"`
 
-	// Sprite interval in seconds
-	SpriteInterval int `json:"spriteInterval,omitempty" bson:"spriteInterval,omitempty"`
+	// Thumbnail information
+	ThumbnailWidth    int   `json:"thumbnailWidth,omitempty" bson:"thumbnailWidth,omitempty"`       // in pixels
+	ThumbnailHeight   int   `json:"thumbnailHeight,omitempty" bson:"thumbnailHeight,omitempty"`     // in pixels
+	ThumbnailFileSize int64 `json:"thumbnailFileSize,omitempty" bson:"thumbnailFileSize,omitempty"` // in bytes
+
+	// Sprite information
+	SpriteInterval int   `json:"spriteInterval,omitempty" bson:"spriteInterval,omitempty"` // in seconds
+	SpriteWidth    int   `json:"spriteWidth,omitempty" bson:"spriteWidth,omitempty"`       // in pixels
+	SpriteHeight   int   `json:"spriteHeight,omitempty" bson:"spriteHeight,omitempty"`     // in pixels
+	SpriteCount    int   `json:"spriteCount,omitempty" bson:"spriteCount,omitempty"`       // Number of thumbnails in the sprite
+	SpriteFileSize int64 `json:"spriteFileSize,omitempty" bson:"spriteFileSize,omitempty"` // in bytes
 
 	// Motion information
-	MotionPixels     int     `json:"motionPixels,omitempty" bson:"motionPixels,omitempty"`
-	MotionPercentage float64 `json:"motionPercentage,omitempty" bson:"motionPercentage,omitempty"`
+	MotionPixels     int     `json:"motionPixels,omitempty" bson:"motionPixels,omitempty"`         // Number of pixels with motion detected
+	MotionPercentage float64 `json:"motionPercentage,omitempty" bson:"motionPercentage,omitempty"` // Percentage of frame with motion detected
 
 	// Analysis data (we keep a reference to the original analysis, and cache some data here)
 	AnalysisId      string           `json:"analysisId,omitempty" bson:"analysisId,omitempty"`

@@ -36,8 +36,15 @@ type Device struct {
 	SiteIds        []string `json:"siteIds" bson:"siteIds,omitempty"`
 	GroupIds       []string `json:"groupIds" bson:"groupIds,omitempty"`
 
+	// @LEGACY FIELDS - to be removed in future versions
+	UserId string `json:"user_id" bson:"user_id,omitempty"`
+
+	// Latest Media information
+	LatestMedia          string `json:"latestMedia" bson:"latestMedia,omitempty"`                   // ID of the latest media captured by the device
+	LatestMediaTimestamp int64  `json:"latestMediaTimestamp" bson:"latestMediaTimestamp,omitempty"` // Timestamp of the latest media captured by the device (milliseconds since epoch)
+
 	// Device status
-	// Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc.
+	// Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc."
 	// LastSeenTimestamp is used to identify the last time the device was seen online.
 	ConnectionStart       int64 `json:"connectionStart" bson:"connectionStart,omitempty"`             // timestamp in milliseconds when the device last connected e.g. after a reboot
 	DeviceLastSeen        int64 `json:"deviceLastSeen" bson:"deviceLastSeen,omitempty"`               // last time the device itself reported being online (timestamp in milliseconds)

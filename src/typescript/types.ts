@@ -394,162 +394,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/addstrategyerrorresponse": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get AddStrategyErrorResponse (schema generation only)
-         * @description Internal endpoint used only to ensure AddStrategyErrorResponse schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["api.AddStrategyErrorResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/addstrategyrequest": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get AddStrategyRequest (schema generation only)
-         * @description Internal endpoint used only to ensure AddStrategyRequest schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["api.AddStrategyRequest"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/addstrategyresponse": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get AddStrategyResponse (schema generation only)
-         * @description Internal endpoint used only to ensure AddStrategyResponse schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["api.AddStrategyResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/addstrategysuccessresponse": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get AddStrategySuccessResponse (schema generation only)
-         * @description Internal endpoint used only to ensure AddStrategySuccessResponse schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["api.AddStrategySuccessResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/alertfeatures": {
         parameters: {
             query?: never;
@@ -1720,7 +1564,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/deletestrategyerrorresponse": {
+    "/internal/deletestateerrorresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -1728,8 +1572,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get DeleteStrategyErrorResponse (schema generation only)
-         * @description Internal endpoint used only to ensure DeleteStrategyErrorResponse schema is generated in OpenAPI spec
+         * Get DeleteStateErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteStateErrorResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -1746,7 +1590,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.DeleteStrategyErrorResponse"];
+                        "application/json": components["schemas"]["api.DeleteStateErrorResponse"];
                     };
                 };
             };
@@ -1759,7 +1603,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/deletestrategyrequest": {
+    "/internal/deletestaterequest": {
         parameters: {
             query?: never;
             header?: never;
@@ -1767,8 +1611,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get DeleteStrategyRequest (schema generation only)
-         * @description Internal endpoint used only to ensure DeleteStrategyRequest schema is generated in OpenAPI spec
+         * Get DeleteStateRequest (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteStateRequest schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -1785,7 +1629,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.DeleteStrategyRequest"];
+                        "application/json": components["schemas"]["api.DeleteStateRequest"];
                     };
                 };
             };
@@ -1798,7 +1642,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/deletestrategyresponse": {
+    "/internal/deletestateresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -1806,8 +1650,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get DeleteStrategyResponse (schema generation only)
-         * @description Internal endpoint used only to ensure DeleteStrategyResponse schema is generated in OpenAPI spec
+         * Get DeleteStateResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteStateResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -1824,7 +1668,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.DeleteStrategyResponse"];
+                        "application/json": components["schemas"]["api.DeleteStateResponse"];
                     };
                 };
             };
@@ -1837,7 +1681,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/deletestrategysuccessresponse": {
+    "/internal/deletestatesuccessresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -1845,8 +1689,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get DeleteStrategySuccessResponse (schema generation only)
-         * @description Internal endpoint used only to ensure DeleteStrategySuccessResponse schema is generated in OpenAPI spec
+         * Get DeleteStateSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteStateSuccessResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -1863,7 +1707,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.DeleteStrategySuccessResponse"];
+                        "application/json": components["schemas"]["api.DeleteStateSuccessResponse"];
                     };
                 };
             };
@@ -4684,7 +4528,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/getstrategieserrorresponse": {
+    "/internal/getstateserrorresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -4692,8 +4536,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get GetStrategiesErrorResponse (schema generation only)
-         * @description Internal endpoint used only to ensure GetStrategiesErrorResponse schema is generated in OpenAPI spec
+         * Get GetStatesErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetStatesErrorResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -4710,7 +4554,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.GetStrategiesErrorResponse"];
+                        "application/json": components["schemas"]["api.GetStatesErrorResponse"];
                     };
                 };
             };
@@ -4723,7 +4567,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/getstrategiesrequest": {
+    "/internal/getstatesrequest": {
         parameters: {
             query?: never;
             header?: never;
@@ -4731,8 +4575,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get GetStrategiesRequest (schema generation only)
-         * @description Internal endpoint used only to ensure GetStrategiesRequest schema is generated in OpenAPI spec
+         * Get GetStatesRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetStatesRequest schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -4749,7 +4593,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.GetStrategiesRequest"];
+                        "application/json": components["schemas"]["api.GetStatesRequest"];
                     };
                 };
             };
@@ -4762,7 +4606,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/getstrategiesresponse": {
+    "/internal/getstatesresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -4770,8 +4614,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get GetStrategiesResponse (schema generation only)
-         * @description Internal endpoint used only to ensure GetStrategiesResponse schema is generated in OpenAPI spec
+         * Get GetStatesResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetStatesResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -4788,7 +4632,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.GetStrategiesResponse"];
+                        "application/json": components["schemas"]["api.GetStatesResponse"];
                     };
                 };
             };
@@ -4801,7 +4645,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/getstrategiessuccessresponse": {
+    "/internal/getstatessuccessresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -4809,8 +4653,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get GetStrategiesSuccessResponse (schema generation only)
-         * @description Internal endpoint used only to ensure GetStrategiesSuccessResponse schema is generated in OpenAPI spec
+         * Get GetStatesSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetStatesSuccessResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -4827,7 +4671,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.GetStrategiesSuccessResponse"];
+                        "application/json": components["schemas"]["api.GetStatesSuccessResponse"];
                     };
                 };
             };
@@ -7336,6 +7180,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/plan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Plan (schema generation only)
+         * @description Internal endpoint used only to ensure Plan schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Plan"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/point": {
         parameters: {
             query?: never;
@@ -7675,6 +7558,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.SequenceStage"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Settings (schema generation only)
+         * @description Internal endpoint used only to ensure Settings schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Settings"];
                     };
                 };
             };
@@ -8038,6 +7960,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/state": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get State (schema generation only)
+         * @description Internal endpoint used only to ensure State schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.State"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/stateatruntimemetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get StateAtRuntimeMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure StateAtRuntimeMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.StateAtRuntimeMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/statemetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get StateMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure StateMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.StateMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/storage": {
         parameters: {
             query?: never;
@@ -8065,123 +8104,6 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Storage"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/strategy": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Strategy (schema generation only)
-         * @description Internal endpoint used only to ensure Strategy schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.Strategy"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/strategyatruntimemetadata": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get StrategyAtRuntimeMetadata (schema generation only)
-         * @description Internal endpoint used only to ensure StrategyAtRuntimeMetadata schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.StrategyAtRuntimeMetadata"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/strategymetadata": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get StrategyMetadata (schema generation only)
-         * @description Internal endpoint used only to ensure StrategyMetadata schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.StrategyMetadata"];
                     };
                 };
             };
@@ -8623,6 +8545,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/timeschedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TimeSchedule (schema generation only)
+         * @description Internal endpoint used only to ensure TimeSchedule schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.TimeSchedule"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/timewindow": {
         parameters: {
             query?: never;
@@ -9052,7 +9013,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/updatestrategyerrorresponse": {
+    "/internal/upsertstateerrorresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -9060,8 +9021,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get UpdateStrategyErrorResponse (schema generation only)
-         * @description Internal endpoint used only to ensure UpdateStrategyErrorResponse schema is generated in OpenAPI spec
+         * Get UpsertStateErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpsertStateErrorResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -9078,7 +9039,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.UpdateStrategyErrorResponse"];
+                        "application/json": components["schemas"]["api.UpsertStateErrorResponse"];
                     };
                 };
             };
@@ -9091,7 +9052,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/updatestrategyrequest": {
+    "/internal/upsertstaterequest": {
         parameters: {
             query?: never;
             header?: never;
@@ -9099,8 +9060,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get UpdateStrategyRequest (schema generation only)
-         * @description Internal endpoint used only to ensure UpdateStrategyRequest schema is generated in OpenAPI spec
+         * Get UpsertStateRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpsertStateRequest schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -9117,7 +9078,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.UpdateStrategyRequest"];
+                        "application/json": components["schemas"]["api.UpsertStateRequest"];
                     };
                 };
             };
@@ -9130,7 +9091,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/updatestrategyresponse": {
+    "/internal/upsertstateresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -9138,8 +9099,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get UpdateStrategyResponse (schema generation only)
-         * @description Internal endpoint used only to ensure UpdateStrategyResponse schema is generated in OpenAPI spec
+         * Get UpsertStateResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpsertStateResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -9156,7 +9117,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.UpdateStrategyResponse"];
+                        "application/json": components["schemas"]["api.UpsertStateResponse"];
                     };
                 };
             };
@@ -9169,7 +9130,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/updatestrategysuccessresponse": {
+    "/internal/upsertstatesuccessresponse": {
         parameters: {
             query?: never;
             header?: never;
@@ -9177,8 +9138,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get UpdateStrategySuccessResponse (schema generation only)
-         * @description Internal endpoint used only to ensure UpdateStrategySuccessResponse schema is generated in OpenAPI spec
+         * Get UpsertStateSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpsertStateSuccessResponse schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -9195,7 +9156,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.UpdateStrategySuccessResponse"];
+                        "application/json": components["schemas"]["api.UpsertStateSuccessResponse"];
                     };
                 };
             };
@@ -9612,37 +9573,6 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.AddStrategyErrorResponse": {
-            /** @description Application-specific error code */
-            applicationStatusCode?: string;
-            /** @description Entity-specific error code */
-            entityStatusCode?: string;
-            /** @description HTTP status code for the error */
-            httpStatusCode?: number;
-            /** @description Error message describing the issue */
-            message?: string;
-            /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metadata?: components["schemas"]["api.Metadata"];
-        };
-        "api.AddStrategyRequest": {
-            strategy: components["schemas"]["models.Strategy"];
-        };
-        "api.AddStrategyResponse": {
-            strategy?: components["schemas"]["models.Strategy"];
-        };
-        "api.AddStrategySuccessResponse": {
-            /** @description Application-specific status code */
-            applicationStatusCode?: string;
-            data?: components["schemas"]["api.AddStrategyResponse"];
-            /** @description Entity-specific status code */
-            entityStatusCode?: string;
-            /** @description HTTP status code for the response */
-            httpStatusCode?: number;
-            /** @description Success message describing the operation */
-            message?: string;
-            /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metadata?: components["schemas"]["api.Metadata"];
-        };
         /** @enum {string} */
         "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_file_name_missing" | "analysis_signed_url_missing" | "analysis_all_frame_coordinates_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing" | "analysis_started" | "analysis_queue_subscribed" | "analysis_stage_monitor_missing" | "analysis_completed" | "analysis_decode_failed" | "analysis_insert_failed" | "analysis_update_failed" | "analysis_notification_update_failed" | "analysis_sequence_update_failed" | "analysis_task_update_failed";
         "api.CallerInfo": {
@@ -9702,7 +9632,7 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.DeleteStrategyErrorResponse": {
+        "api.DeleteStateErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
             /** @description Entity-specific error code */
@@ -9714,12 +9644,12 @@ export interface components {
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.DeleteStrategyRequest": Record<string, never>;
-        "api.DeleteStrategyResponse": Record<string, never>;
-        "api.DeleteStrategySuccessResponse": {
+        "api.DeleteStateRequest": Record<string, never>;
+        "api.DeleteStateResponse": Record<string, never>;
+        "api.DeleteStateSuccessResponse": {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
-            data?: components["schemas"]["api.DeleteStrategyResponse"];
+            data?: components["schemas"]["api.DeleteStateResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -10198,7 +10128,7 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.GetStrategiesErrorResponse": {
+        "api.GetStatesErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
             /** @description Entity-specific error code */
@@ -10210,14 +10140,14 @@ export interface components {
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.GetStrategiesRequest": Record<string, never>;
-        "api.GetStrategiesResponse": {
-            strategies?: components["schemas"]["models.Strategy"][];
+        "api.GetStatesRequest": Record<string, never>;
+        "api.GetStatesResponse": {
+            states?: components["schemas"]["models.State"][];
         };
-        "api.GetStrategiesSuccessResponse": {
+        "api.GetStatesSuccessResponse": {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
-            data?: components["schemas"]["api.GetStrategiesResponse"];
+            data?: components["schemas"]["api.GetStatesResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -10647,7 +10577,7 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.UpdateStrategyErrorResponse": {
+        "api.UpsertStateErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
             /** @description Entity-specific error code */
@@ -10659,16 +10589,16 @@ export interface components {
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.UpdateStrategyRequest": {
-            strategy: components["schemas"]["models.Strategy"];
+        "api.UpsertStateRequest": {
+            state: components["schemas"]["models.State"];
         };
-        "api.UpdateStrategyResponse": {
-            strategy?: components["schemas"]["models.Strategy"];
+        "api.UpsertStateResponse": {
+            state?: components["schemas"]["models.State"];
         };
-        "api.UpdateStrategySuccessResponse": {
+        "api.UpsertStateSuccessResponse": {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
-            data?: components["schemas"]["api.UpdateStrategyResponse"];
+            data?: components["schemas"]["api.UpsertStateResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -10841,6 +10771,7 @@ export interface components {
         "models.Classification": {
             /** @description e.g., [[x1, y1], [x2, y2], ...] */
             centroids?: number[][];
+            duration?: number;
             key?: string;
         };
         "models.ClassificationSummary": {
@@ -10923,7 +10854,7 @@ export interface components {
         "models.CountingSummary": {
             count?: number;
             duration?: number;
-            type?: string;
+            key?: string;
         };
         "models.CustomAlert": {
             alexa_token?: string;
@@ -11546,6 +11477,7 @@ export interface components {
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
             classificationSummary?: components["schemas"]["models.ClassificationSummary"][];
+            countingSummary?: components["schemas"]["models.CountingSummary"][];
             /** @description RBAC information
              *     DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
              *     OrganisationId is used to identify the organisation that owns the device. */
@@ -11580,6 +11512,7 @@ export interface components {
             /** @description Timestamp when the runtime metadata was cached. */
             cachedTimestamp?: number;
             device?: components["schemas"]["models.Device"];
+            durationFormatted?: string;
             redactionUrl?: string;
             spriteUrl?: string;
             thumbnailUrl?: string;
@@ -11600,19 +11533,36 @@ export interface components {
             detections?: string[];
             dominantColors?: string[];
             embedding?: number[];
+            /** @description in bytes */
+            fileSize?: number;
             /** @description frames per second */
             fps?: number;
             /** @description in pixels */
             height?: number;
+            /** @description Percentage of frame with motion detected */
             motionPercentage?: number;
             /** @description Motion information */
             motionPixels?: number;
             /** @description e.g., 1920x1080 */
             resolution?: string;
-            /** @description Sprite interval in seconds */
+            /** @description Number of thumbnails in the sprite */
+            spriteCount?: number;
+            /** @description in bytes */
+            spriteFileSize?: number;
+            /** @description in pixels */
+            spriteHeight?: number;
+            /** @description Sprite information */
             spriteInterval?: number;
+            /** @description in pixels */
+            spriteWidth?: number;
             /** @description Tags associated to give some context about the media file */
             tags?: string[];
+            /** @description in bytes */
+            thumbnailFileSize?: number;
+            /** @description in pixels */
+            thumbnailHeight?: number;
+            /** @description Thumbnail information */
+            thumbnailWidth?: number;
             /** @description in pixels */
             width?: number;
         };
@@ -11688,7 +11638,7 @@ export interface components {
             monitorData?: string;
             name?: string;
             plans?: {
-                [key: string]: unknown;
+                [key: string]: components["schemas"]["models.Plan"];
             };
             subscription?: components["schemas"]["models.Subscription"];
             /** @description Add more fields as needed */
@@ -11760,6 +11710,20 @@ export interface components {
             signedUrl?: string;
             timestamp?: number;
         };
+        "models.Plan": {
+            /** @description AnalysisLimit is the maximum number of analysis operations allowed */
+            analysisLimit?: number;
+            /** @description DayLimit is the retention period in days */
+            dayLimit?: number;
+            /** @description Level indicates the tier of the plan (1-5, higher is better) */
+            level?: number;
+            /** @description UploadLimit is the maximum number of uploads allowed */
+            uploadLimit?: number;
+            /** @description Usage is the storage limit in MB */
+            usage?: number;
+            /** @description VideoLimit is the maximum number of videos allowed */
+            videoLimit?: number;
+        };
         "models.Point": {
             x?: number;
             y?: number;
@@ -11786,6 +11750,14 @@ export interface components {
             name?: string;
             /** @description Add fields relevant to sequence stage */
             sequenceId?: number;
+        };
+        "models.Settings": {
+            id?: string;
+            key?: string;
+            /** @description @TODO replace this */
+            map?: {
+                [key: string]: unknown;
+            };
         };
         "models.Site": {
             /** @description Audit information */
@@ -11826,6 +11798,77 @@ export interface components {
             interval?: number;
             provider?: string;
         };
+        "models.State": {
+            /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
+             *     more verbose information about the device's current state, capabilities, or configuration.
+             *     for example the linked sites details, etc. */
+            atRuntimeMetadata?: components["schemas"]["models.StateAtRuntimeMetadata"];
+            /** @description Audit information */
+            audit?: components["schemas"]["models.Audit"];
+            /**
+             * @description Description of the status
+             * @example Person forcably opened a door
+             */
+            description?: string;
+            /**
+             * @description Timing information (all timestamps are in seconds)
+             * @example active
+             */
+            desiredState?: components["schemas"]["models.StateEnum"];
+            /**
+             * @description Timestamp when the desired state should stop being applied
+             * @example 1784018068
+             */
+            desiredStateEndTimestamp?: number;
+            /**
+             * @description Timestamp when the desired state should start being applied
+             * @example 1752482068
+             */
+            desiredStateStartTimestamp?: number;
+            /**
+             * @description Resource identification, to which this state applies
+             * @example 686a906345c1df594939f9j25f4
+             */
+            deviceId?: string;
+            /**
+             * @description List of device IDs associated with the state
+             * @example [
+             *       "[\"686a906345c1df594939f9j25f4\"",
+             *       "\"686a906345c1df594939f9j25f5\"]"
+             *     ]
+             */
+            devices?: string[];
+            /**
+             * @description GroupId is used to identify the group for which the state is relevant
+             * @example 686a906345c1df594pmt41w4
+             */
+            groupId?: string;
+            /** @description Unique identifier for the state */
+            id?: string;
+            /** @description Additional metadata */
+            metadata?: components["schemas"]["models.StateMetadata"];
+            /**
+             * @description Name of the state
+             * @example Default State
+             */
+            name?: string;
+            /**
+             * @description OrganisationId is used to identify the organisation that owns the state.
+             * @example 686a906345c1df594pad69f0
+             */
+            organisationId?: string;
+            /**
+             * @description SiteId is used to identify the site for which the state is relevant
+             * @example 686a906345c1df594pcsr3r45
+             */
+            siteId?: string;
+            /** @description Conditions for the state to be applied */
+            timeSchedule?: components["schemas"]["models.TimeSchedule"];
+        };
+        "models.StateAtRuntimeMetadata": Record<string, never>;
+        /** @enum {string} */
+        "models.StateEnum": "default" | "debug" | "paused" | "no_recording" | "no_live_view";
+        "models.StateMetadata": Record<string, never>;
         /** @enum {string} */
         "models.Status": "pending" | "skipped" | "assigned" | "inProgress" | "completed" | "failed";
         "models.Storage": {
@@ -11833,78 +11876,15 @@ export interface components {
             secret_key?: string;
             uri?: string;
         };
-        "models.Strategy": {
-            /**
-             * @description Indicates if the strategy is currently active
-             * @example true
-             */
-            active?: boolean;
-            /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
-             *     more verbose information about the device's current state, capabilities, or configuration.
-             *     for example the linked sites details, etc. */
-            atRuntimeMetadata?: components["schemas"]["models.StrategyAtRuntimeMetadata"];
-            /** @description Audit information */
-            audit?: components["schemas"]["models.Audit"];
-            /**
-             * @description Description of the marker
-             * @example Person forcably opened a door
-             */
-            description?: string;
-            /**
-             * @description RBAC information
-             * @example 686a906345c1df594939f9j25f4
-             */
-            deviceId?: string;
-            /**
-             * @description Duration of the strategy in seconds
-             * @example 11
-             */
-            duration?: number;
-            /**
-             * @description End timestamp of the marker in seconds since epoch
-             * @example 1752482079
-             */
-            endTimestamp?: number;
-            /**
-             * @description GroupId is used to identify the group of markers
-             * @example 686a906345c1df594pmt41w4
-             */
-            groupId?: string;
-            /**
-             * @description Unique identifier for the strategy
-             * @example strategy-123
-             */
-            id?: string;
-            /** @description Additional metadata */
-            metadata?: components["schemas"]["models.StrategyMetadata"];
-            /**
-             * @description Name of the strategy
-             * @example Default Strategy
-             */
-            name?: string;
-            /**
-             * @description OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
-             * @example 686a906345c1df594pad69f0
-             */
-            organisationId?: string;
-            /**
-             * @description SiteId is used to identify the site where the marker is located
-             * @example 686a906345c1df594pcsr3r45
-             */
-            siteId?: string;
-            /**
-             * @description Timing information (all timestamps are in seconds)
-             * @example 1752482068
-             */
-            startTimestamp?: number;
-        };
-        "models.StrategyAtRuntimeMetadata": Record<string, never>;
-        "models.StrategyMetadata": Record<string, never>;
         "models.Subscription": {
+            created_at?: string;
             ends_at?: string;
             id?: string;
-            name?: string;
+            quantity?: number;
+            stripe_id?: string;
             stripe_plan?: string;
+            trial_ends_at?: string;
+            updated_at?: string;
             user_id?: string;
         };
         "models.Synchronize": {
@@ -11948,6 +11928,59 @@ export interface components {
         "models.TimeRange": {
             end?: number;
             start?: number;
+        };
+        "models.TimeSchedule": {
+            /**
+             * @description Cron expression (minute, hour, day of month, month, day of week)
+             * @example 0 9 * * 1-5
+             */
+            cron?: string;
+            /**
+             * @description Days of week (0=Sunday, 1=Monday, ..., 6=Saturday) - alternative to cron
+             * @example [
+             *       1,
+             *       2,
+             *       3,
+             *       4,
+             *       5
+             *     ]
+             */
+            daysOfWeek?: number[];
+            /**
+             * @description Duration in seconds for how long the state remains active after trigger
+             * @example 28800
+             */
+            duration?: number;
+            /**
+             * @description Whether the time schedule is enabled
+             * @example true
+             */
+            enabled?: boolean;
+            /**
+             * @description Optional end date (epoch seconds) until when the schedule is valid
+             * @example 1784018068
+             */
+            endDate?: number;
+            /**
+             * @description End time in HH:MM format - alternative to cron
+             * @example 17:00
+             */
+            endTime?: string;
+            /**
+             * @description Optional start date (epoch seconds) from when the schedule is valid
+             * @example 1752482068
+             */
+            startDate?: number;
+            /**
+             * @description Start time in HH:MM format - alternative to cron
+             * @example 09:00
+             */
+            startTime?: string;
+            /**
+             * @description Timezone for the schedule (IANA format)
+             * @example Europe/Amsterdam
+             */
+            timezone?: string;
         };
         "models.TimeWindow": {
             timeRange1MaxFriday?: number;
@@ -12165,16 +12198,18 @@ export namespace models {
     export type PipelineMetadata = components['schemas']['models.PipelineMetadata'];
     export type PipelineMetrics = components['schemas']['models.PipelineMetrics'];
     export type PipelinePayload = components['schemas']['models.PipelinePayload'];
+    export type Plan = components['schemas']['models.Plan'];
     export type Point = components['schemas']['models.Point'];
     export type Region = components['schemas']['models.Region'];
     export type Role = components['schemas']['models.Role'];
     export type SequenceStage = components['schemas']['models.SequenceStage'];
+    export type Settings = components['schemas']['models.Settings'];
     export type Site = components['schemas']['models.Site'];
     export type SiteMetadata = components['schemas']['models.SiteMetadata'];
     export type SiteOption = components['schemas']['models.SiteOption'];
     export type Sprite = components['schemas']['models.Sprite'];
+    export type State = components['schemas']['models.State'];
     export type Storage = components['schemas']['models.Storage'];
-    export type Strategy = components['schemas']['models.Strategy'];
     export type Subscription = components['schemas']['models.Subscription'];
     export type Synchronize = components['schemas']['models.Synchronize'];
     export type SynchronizeEvent = components['schemas']['models.SynchronizeEvent'];
@@ -12182,6 +12217,7 @@ export namespace models {
     export type Thumbnail = components['schemas']['models.Thumbnail'];
     export type Thumby = components['schemas']['models.Thumby'];
     export type TimeRange = components['schemas']['models.TimeRange'];
+    export type TimeSchedule = components['schemas']['models.TimeSchedule'];
     export type TimeWindow = components['schemas']['models.TimeWindow'];
     export type TrackBox = components['schemas']['models.TrackBox'];
     export type User = components['schemas']['models.User'];
@@ -12200,17 +12236,13 @@ export namespace api {
     export type AddMarkerRequest = components['schemas']['api.AddMarkerRequest'];
     export type AddMarkerResponse = components['schemas']['api.AddMarkerResponse'];
     export type AddMarkerSuccessResponse = components['schemas']['api.AddMarkerSuccessResponse'];
-    export type AddStrategyErrorResponse = components['schemas']['api.AddStrategyErrorResponse'];
-    export type AddStrategyRequest = components['schemas']['api.AddStrategyRequest'];
-    export type AddStrategyResponse = components['schemas']['api.AddStrategyResponse'];
-    export type AddStrategySuccessResponse = components['schemas']['api.AddStrategySuccessResponse'];
     export type CallerInfo = components['schemas']['api.CallerInfo'];
     export type CursorPagination = components['schemas']['api.CursorPagination'];
     export type DebugResponse = components['schemas']['api.DebugResponse'];
     export type DeleteAccessTokenErrorResponse = components['schemas']['api.DeleteAccessTokenErrorResponse'];
     export type DeleteAccessTokenSuccessResponse = components['schemas']['api.DeleteAccessTokenSuccessResponse'];
-    export type DeleteStrategyErrorResponse = components['schemas']['api.DeleteStrategyErrorResponse'];
-    export type DeleteStrategySuccessResponse = components['schemas']['api.DeleteStrategySuccessResponse'];
+    export type DeleteStateErrorResponse = components['schemas']['api.DeleteStateErrorResponse'];
+    export type DeleteStateSuccessResponse = components['schemas']['api.DeleteStateSuccessResponse'];
     export type DeviceFilter = components['schemas']['api.DeviceFilter'];
     export type ErrorResponse = components['schemas']['api.ErrorResponse'];
     export type FaceRedactionMessage = components['schemas']['api.FaceRedactionMessage'];
@@ -12266,9 +12298,9 @@ export namespace api {
     export type GetSiteOptionsRequest = components['schemas']['api.GetSiteOptionsRequest'];
     export type GetSiteOptionsResponse = components['schemas']['api.GetSiteOptionsResponse'];
     export type GetSiteOptionsSuccessResponse = components['schemas']['api.GetSiteOptionsSuccessResponse'];
-    export type GetStrategiesErrorResponse = components['schemas']['api.GetStrategiesErrorResponse'];
-    export type GetStrategiesResponse = components['schemas']['api.GetStrategiesResponse'];
-    export type GetStrategiesSuccessResponse = components['schemas']['api.GetStrategiesSuccessResponse'];
+    export type GetStatesErrorResponse = components['schemas']['api.GetStatesErrorResponse'];
+    export type GetStatesResponse = components['schemas']['api.GetStatesResponse'];
+    export type GetStatesSuccessResponse = components['schemas']['api.GetStatesSuccessResponse'];
     export type GetTimelineErrorResponse = components['schemas']['api.GetTimelineErrorResponse'];
     export type GetTimelineEventsErrorResponse = components['schemas']['api.GetTimelineEventsErrorResponse'];
     export type GetTimelineEventsRequest = components['schemas']['api.GetTimelineEventsRequest'];
@@ -12318,10 +12350,10 @@ export namespace api {
     export type UpdateMediaRequest = components['schemas']['api.UpdateMediaRequest'];
     export type UpdateMediaResponse = components['schemas']['api.UpdateMediaResponse'];
     export type UpdateMediaSuccessResponse = components['schemas']['api.UpdateMediaSuccessResponse'];
-    export type UpdateStrategyErrorResponse = components['schemas']['api.UpdateStrategyErrorResponse'];
-    export type UpdateStrategyRequest = components['schemas']['api.UpdateStrategyRequest'];
-    export type UpdateStrategyResponse = components['schemas']['api.UpdateStrategyResponse'];
-    export type UpdateStrategySuccessResponse = components['schemas']['api.UpdateStrategySuccessResponse'];
+    export type UpsertStateErrorResponse = components['schemas']['api.UpsertStateErrorResponse'];
+    export type UpsertStateRequest = components['schemas']['api.UpsertStateRequest'];
+    export type UpsertStateResponse = components['schemas']['api.UpsertStateResponse'];
+    export type UpsertStateSuccessResponse = components['schemas']['api.UpsertStateSuccessResponse'];
     export type WarningResponse = components['schemas']['api.WarningResponse'];
     export type mediaMetadataPatch = components['schemas']['api.mediaMetadataPatch'];
 }

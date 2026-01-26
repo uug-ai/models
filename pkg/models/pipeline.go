@@ -90,6 +90,11 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		media.StorageSolution = pe.Storage
 		media.VideoProvider = pe.Provider
 
+		// Metadata information
+		media.Metadata = &MediaMetadata{}
+		media.Metadata.MotionPixels = 0
+		media.Metadata.FileSize = pe.Payload.FileSize
+
 		return media, nil
 	}
 
@@ -125,6 +130,11 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		// Information about where the media is stored and provided from
 		media.StorageSolution = pe.Storage
 		media.VideoProvider = pe.Provider
+
+		// Metadata information
+		media.Metadata = &MediaMetadata{}
+		media.Metadata.MotionPixels = 0
+		media.Metadata.FileSize = pe.Payload.FileSize
 
 		return media, nil
 	}
@@ -221,11 +231,11 @@ type MonitorStage struct {
 	MonitorData string `json:"monitorData,omitempty"` // Add fields relevant to monitor stage
 
 	// Add more fields as needed
-	User         User                   `json:"user,omitempty"`
-	Subscription Subscription           `json:"subscription,omitempty"`
-	Plans        map[string]interface{} `json:"plans,omitempty"`
-	HighUpload   HighUpload             `json:"highUpload,omitempty"`
-	Activity     Activity               `json:"activity,omitempty"`
+	User         User            `json:"user,omitempty"`
+	Subscription Subscription    `json:"subscription,omitempty"`
+	Plans        map[string]Plan `json:"plans,omitempty"`
+	HighUpload   HighUpload      `json:"highUpload,omitempty"`
+	Activity     Activity        `json:"activity,omitempty"`
 }
 
 // Constructor function for MonitorStage
