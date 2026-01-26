@@ -54,6 +54,8 @@ const (
 	DeviceSiteIds = "siteIds"
 	DeviceGroupIds = "groupIds"
 	DeviceUserId = "user_id"
+	DeviceLatestMedia = "latestMedia"
+	DeviceLatestMediaTimestamp = "latestMediaTimestamp"
 	DeviceConnectionStart = "connectionStart"
 	DeviceDeviceLastSeen = "deviceLastSeen"
 	DeviceAgentLastSeen = "agentLastSeen"
