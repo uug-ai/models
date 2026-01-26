@@ -53,6 +53,7 @@ const (
 	DeviceOrganisationId = "organisationId"
 	DeviceSiteIds = "siteIds"
 	DeviceGroupIds = "groupIds"
+	DeviceUserId = "user_id"
 	DeviceConnectionStart = "connectionStart"
 	DeviceDeviceLastSeen = "deviceLastSeen"
 	DeviceAgentLastSeen = "agentLastSeen"
