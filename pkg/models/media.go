@@ -94,6 +94,7 @@ type MediaMetadata struct {
 
 // MediaAtRuntimeMetadata contains metadata that is generated at runtime, which can include
 type MediaAtRuntimeMetadata struct {
+	DateTime          string           `json:"dateTime,omitempty" bson:"dateTime,omitempty"`               // Human-readable date and time of the media.
 	CachedTimestamp   int64            `json:"cachedTimestamp,omitempty" bson:"cachedTimestamp,omitempty"` // Timestamp when the runtime metadata was cached.
 	VideoUrl          string           `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
 	ThumbnailUrl      string           `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`

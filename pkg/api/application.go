@@ -4,13 +4,13 @@ package api
 type ApplicationStatus string
 
 const (
-	PongSuccess ApplicationStatus = "pong_success"
+	PongSuccess     ApplicationStatus = "pong_success"
 	DatabaseSuccess ApplicationStatus = "database_success"
-	DatabaseError ApplicationStatus = "database_error"
-	QueueSuccess ApplicationStatus = "queue_success"
-	QueueError ApplicationStatus = "queue_error"
-	CacheSuccess ApplicationStatus = "cache_success"
-	CacheError ApplicationStatus = "cache_error"
+	DatabaseError   ApplicationStatus = "database_error"
+	QueueSuccess    ApplicationStatus = "queue_success"
+	QueueError      ApplicationStatus = "queue_error"
+	CacheSuccess    ApplicationStatus = "cache_success"
+	CacheError      ApplicationStatus = "cache_error"
 )
 
 // String returns the string representation of the application status

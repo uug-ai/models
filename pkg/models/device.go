@@ -40,8 +40,8 @@ type Device struct {
 	UserId string `json:"user_id" bson:"user_id,omitempty"`
 
 	// Latest Media information
-	LatestMedia          string `json:"latestMedia" bson:"latestMedia,omitempty"`                   // ID of the latest media captured by the device
-	LatestMediaTimestamp int64  `json:"latestMediaTimestamp" bson:"latestMediaTimestamp,omitempty"` // Timestamp of the latest media captured by the device (milliseconds since epoch)
+	LatestMedia          Media `json:"latestMedia" bson:"latestMedia,omitempty"`                   // ID of the latest media captured by the device
+	LatestMediaTimestamp int64 `json:"latestMediaTimestamp" bson:"latestMediaTimestamp,omitempty"` // Timestamp of the latest media captured by the device (milliseconds since epoch)
 
 	// Device status
 	// Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc."
