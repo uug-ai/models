@@ -86,3 +86,15 @@ type GetDeviceOptionsSuccessResponse struct {
 type GetDeviceOptionsErrorResponse struct {
 	ErrorResponse
 }
+
+// GetDevices API responses
+type GetDevicesResponse struct {
+	Devices []models.Device `json:"devices,omitempty" bson:"devices,omitempty"`
+}
+type GetDevicesSuccessResponse struct {
+	SuccessResponse
+	Data GetDevicesResponse `json:"data,omitempty" bson:"data,omitempty"`
+}
+type GetDevicesErrorResponse struct {
+	ErrorResponse
+}
