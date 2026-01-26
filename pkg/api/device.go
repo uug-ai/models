@@ -87,7 +87,6 @@ type GetDeviceOptionsErrorResponse struct {
 	ErrorResponse
 }
 
-// GetDevices API responses
 type GetDevicesResponse struct {
 	Devices []models.Device `json:"devices,omitempty" bson:"devices,omitempty"`
 }
