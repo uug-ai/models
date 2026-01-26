@@ -22,7 +22,7 @@ type User struct {
 	Pushbullet            string                            `json:"pushbullet_api_key" bson:"pushbullet_api_key,omitempty"`
 	Settings              map[string]interface{}            `json:"settings,omitempty" bson:"settings,omitempty"`
 	Throttler             map[string]interface{}            `json:"throttler,omitempty" bson:"throttler,omitempty"`
-	Activity              []map[string]interface{}          `json:"activity,omitempty" bson:"activity,omitempty"`
+	Activity              []Activity                        `json:"activity,omitempty" bson:"activity,omitempty"`
 	HighUpload            HighUpload                        `json:"highupload,omitempty" bson:"highupload,omitempty"`
 	Devices               []map[string]interface{}          `json:"devices,omitempty" bson:"devices,omitempty"`
 	NotificationSettings  map[string]map[string]interface{} `json:"notificationSettings" bson:"notificationSettings,omitempty"`
