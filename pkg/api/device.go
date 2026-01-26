@@ -20,6 +20,7 @@ const (
 	DeviceDeleteSuccess    DeviceStatus = "device_delete_success"
 	DeviceDeleteFailed     DeviceStatus = "device_delete_failed"
 	DeviceValidationFailed DeviceStatus = "device_validation_failed"
+	DeviceMediaFound       DeviceStatus = "device_media_found"
 )
 
 // String returns the string representation of the device status
@@ -44,6 +45,7 @@ func (ds DeviceStatus) Translate(lang string) string {
 			DeviceDeleteSuccess:    "Device deleted successfully",
 			DeviceDeleteFailed:     "Device failed to delete",
 			DeviceValidationFailed: "Device validation failed",
+			DeviceMediaFound:       "Device media found",
 		},
 	}
 
