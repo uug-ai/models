@@ -81,7 +81,7 @@ type Device struct {
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
 
-	// To be removed
+	// Deprecated - to be removed
 	DeprecatedAnalytics *[]DeprecatedHeartbeat `json:"analytics" bson:"analytics,omitempty"`
 }
 
