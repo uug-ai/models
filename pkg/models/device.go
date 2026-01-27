@@ -82,7 +82,7 @@ type Device struct {
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
 
 	// To be removed
-	DeprecatedAnalytics []DeprecatedHeartbeat `json:"analytics" bson:"analytics,omitempty"`
+	DeprecatedAnalytics *[]DeprecatedHeartbeat `json:"analytics" bson:"analytics,omitempty"`
 }
 
 // We can store additional metadata for media files, such as tags and classifications.
