@@ -1,5 +1,9 @@
 package api
 
+import (
+	"github.com/uug-ai/models/pkg/models"
+)
+
 // UserStatus represents specific status codes for user operations
 type UserStatus string
 
@@ -57,4 +61,16 @@ func (ms UserStatus) Translate(lang string) string {
 
 	// Fallback to the string representation
 	return ms.String()
+}
+
+// GetUserById response types
+type GetUserByIdResponse struct {
+	User models.User `json:"user"`
+}
+type GetUserByIdSuccessResponse struct {
+	SuccessResponse
+	Data GetUserByIdResponse `json:"data"`
+}
+type GetUserByIdErrorResponse struct {
+	ErrorResponse
 }
