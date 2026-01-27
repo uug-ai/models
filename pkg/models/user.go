@@ -29,8 +29,16 @@ type User struct {
 	Channels              map[string]map[string]interface{} `json:"channels,omitempty" bson:"channels,omitempty"`
 	Storage               Storage                           `json:"storage,omitempty" bson:"storage,omitempty"`
 
+	WithTimezone     bool   `json:"with_timezone,omitempty" bson:"with_timezone,omitempty"`
+	PrivateCloudPlan string `json:"private_cloud_plan,omitempty" bson:"private_cloud_plan,omitempty"`
+	Plan             Plan   `json:"plan,omitempty" bson:"plan,omitempty"`
+
 	// We can override the subscription settings if needed.
 	CustomUsageLimit    int `json:"custom_usage_limit" bson:"custom_usage_limit,omitempty"`
 	CustomDayLimit      int `json:"custom_day_limit" bson:"custom_day_limit,omitempty"`
 	CustomAnalysisLimit int `json:"custom_analysis_limit" bson:"custom_analysis_limit,omitempty"`
+
+	// Master account settings
+	MasterAccount string `json:"master_account,omitempty" bson:"master_account,omitempty"`
+	Master        *User  `json:"master,omitempty" bson:"master,omitempty"`
 }
