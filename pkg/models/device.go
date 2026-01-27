@@ -80,6 +80,9 @@ type Device struct {
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
+
+	// To be removed
+	DeprecatedAnalytics []DeprecatedHeartbeat `json:"analytics" bson:"analytics,omitempty"`
 }
 
 // We can store additional metadata for media files, such as tags and classifications.
@@ -207,4 +210,72 @@ type CameraTour struct {
 	Running bool           `json:"running" bson:"running,omitempty"`
 	Loop    bool           `json:"loop" bson:"loop,omitempty"`
 	Speed   float64        `json:"speed" bson:"speed,omitempty"`
+}
+
+// @Deprecated - to be removed in future versions
+type DeprecatedHeartbeat struct {
+	CloudPublicKey string `json:"cloudpublicKey,omitempty" bson:"cloudpublickey,omitempty"`
+	Encrypted      bool   `json:"encrypted,omitempty"`
+	EncryptedData  []byte `json:"encryptedData,omitempty"`
+	// -----------
+	Key              string                  `json:"key,omitempty"`
+	HubEncryption    string                  `json:"hub_encryption,omitempty" bson:"hub_encryption,omitempty"`
+	E2EEncryption    string                  `json:"e2e_encryption,omitempty" bson:"e2e_encryption,omitempty"`
+	Enterprise       bool                    `json:"enterprise,omitempty"`
+	Hash             string                  `json:"hash,omitempty"`
+	Version          string                  `json:"version,omitempty"`
+	Release          string                  `json:"release,omitempty"`
+	MACs             []string                `json:"mac_list,omitempty" bson:"mac_list,omitempty"`
+	IPs              []string                `json:"ip_list,omitempty" bson:"ip_list,omitempty"`
+	CpuID            string                  `json:"cpuid,omitempty" bson:"cpuid,omitempty"`
+	CloudUser        string                  `json:"clouduser,omitempty" bson:"clouduser,omitempty"`
+	CameraName       string                  `json:"cameraname,omitempty" bson:"cameraname,omitempty"`
+	CameraType       string                  `json:"cameratype,omitempty" bson:"cameratype,omitempty"`
+	Architecture     string                  `json:"architecture,omitempty"`
+	Hostname         string                  `json:"hostname,omitempty"`
+	FreeMemory       string                  `json:"freeMemory,omitempty" bson:"freeMemory,omitempty"`
+	TotalMemory      string                  `json:"totalMemory,omitempty" bson:"totalMemory,omitempty"`
+	UsedMemory       string                  `json:"usedMemory,omitempty" bson:"usedMemory,omitempty"`
+	ProcessMemory    string                  `json:"processMemory,omitempty" bson:"processMemory,omitempty"`
+	Kubernetes       bool                    `json:"kubernetes,omitempty"`
+	Docker           bool                    `json:"docker,omitempty"`
+	Kios             bool                    `json:"kios,omitempty"`
+	Raspberrypi      bool                    `json:"raspberrypi,omitempty"`
+	Uptime           string                  `json:"uptime,omitempty" bson:"uptime,omitempty"`
+	BootTime         string                  `json:"boot_time,omitempty" bson:"boot_time,omitempty"`
+	Timestamp        int64                   `json:"timestamp" bson:"timestamp"`
+	SiteID           string                  `json:"siteID" bson:"siteID,omitempty"`
+	ONVIF            string                  `json:"onvif" bson:"onvif,omitempty"`
+	ONVIFZoom        string                  `json:"onvif_zoom" bson:"onvif_zoom,omitempty"`
+	ONVIFPanTilt     string                  `json:"onvif_pantilt" bson:"onvif_pantilt,omitempty"`
+	ONVIFPresets     string                  `json:"onvif_presets" bson:"onvif_presets,omitempty"`
+	ONVIFPresetsList []DeprecatedPreset      `json:"onvif_presets_list" bson:"onvif_presets_list,omitempty"`
+	ONVIFEventsList  []DeprecatedONVIFEvents `json:"onvif_events_list" bson:"onvif_events_list,omitempty"`
+	CameraConnected  string                  `json:"cameraConnected" bson:"cameraConnected,omitempty"`
+	HasBackChannel   string                  `json:"hasBackChannel" bson:"hasBackChannel,omitempty"`
+	//Board           string   `json:"board,omitempty"`
+	//Disk1Size       string   `json:"disk1size,omitempty" bson:"disk1size,omitempty"`
+	//Disk3Size       string   `json:"disk3size,omitempty" bson:"disk3size,omitempty"`
+	//DiskVDASize     string   `json:"diskvdasize,omitempty" bson:"diskvdasize,omitempty"`
+	//NumberOfFiles   string   `json:"numberofiles,omitempty" bson:"numberoffiles,omitempty"`
+	//Temperature string `json:"temperature,omitempty"`
+	//WifiSSID        string   `json:"wifissid,omitempty" bson:"wifissid,omitempty"`
+	//WifiStrength    string   `json:"wifistrength,omitempty" bson:"wifisstrength,omitempty"`
+}
+
+// @Deprecated - to be removed in future versions
+type DeprecatedPreset struct {
+	Name  string  `json:"name" bson:"name"`
+	Token string  `json:"token" bson:"token"`
+	X     float64 `json:"x" bson:"x"`
+	Y     float64 `json:"y" bson:"y"`
+	Z     float64 `json:"z" bson:"z"`
+}
+
+// @Deprecated - to be removed in future versions
+type DeprecatedONVIFEvents struct {
+	Key       string `json:"key" bson:"key,omitempty"`
+	Type      string `json:"type" bson:"type,omitempty"`
+	Value     string `json:"value" bson:"value,omitempty"`
+	Timestamp int64  `json:"timestamp" bson:"timestamp,omitempty"`
 }
