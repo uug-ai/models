@@ -58,6 +58,7 @@ const (
 
 // MediaAtRuntimeMetadata property field names (BSON)
 const (
+	MediaAtRuntimeMetadataDateTime = "dateTime"
 	MediaAtRuntimeMetadataCachedTimestamp = "cachedTimestamp"
 	MediaAtRuntimeMetadataVideoUrl = "videoUrl"
 	MediaAtRuntimeMetadataThumbnailUrl = "thumbnailUrl"

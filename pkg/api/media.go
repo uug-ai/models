@@ -101,16 +101,17 @@ type MediaFilter struct {
 }
 
 type Media2Filter struct {
-	TimeRanges []*models.TimeRange `json:"timeRanges,omitempty" bson:"timeRanges,omitempty"`
-	Sites      []*string           `json:"sites,omitempty" bson:"sites,omitempty"`
-	Groups     []*string           `json:"groups,omitempty" bson:"groups,omitempty"`
-	Devices    []*string           `json:"devices,omitempty" bson:"devices,omitempty"`
-	Markers    []*string           `json:"markers,omitempty" bson:"markers,omitempty"`
-	Events     []*string           `json:"events,omitempty" bson:"events,omitempty"`
-	Tags       []*string           `json:"tags,omitempty" bson:"tags,omitempty"`
-	Regions    []*models.Region    `json:"regions,omitempty" bson:"regions,omitempty"`
-	Starred    *bool               `json:"starred,omitempty" bson:"starred,omitempty"`
-	SortBy     *string             `json:"sortBy,omitempty" bson:"sortBy,omitempty"`
+	TimeRanges      []*models.TimeRange `json:"timeRanges,omitempty" bson:"timeRanges,omitempty"`
+	Sites           []*string           `json:"sites,omitempty" bson:"sites,omitempty"`
+	Groups          []*string           `json:"groups,omitempty" bson:"groups,omitempty"`
+	Devices         []*string           `json:"devices,omitempty" bson:"devices,omitempty"`
+	ExcludedDevices []*string           `json:"excludedDevices,omitempty" bson:"excludedDevices,omitempty"`
+	Markers         []*string           `json:"markers,omitempty" bson:"markers,omitempty"`
+	Events          []*string           `json:"events,omitempty" bson:"events,omitempty"`
+	Tags            []*string           `json:"tags,omitempty" bson:"tags,omitempty"`
+	Regions         []*models.Region    `json:"regions,omitempty" bson:"regions,omitempty"`
+	Starred         *bool               `json:"starred,omitempty" bson:"starred,omitempty"`
+	SortBy          *string             `json:"sortBy,omitempty" bson:"sortBy,omitempty"`
 }
 
 type MediaGroup struct {
