@@ -26,7 +26,7 @@ func TestGetMediaFromPipelineEvent_LegacyFormat(t *testing.T) {
 				VideoFile:       "username/1640000000_region_devicename_motion_1234_5000.mp4",
 				StartTimestamp:  1640000000,
 				DeviceName:      "devicename",
-				DeviceId:        "devicename",
+				DeviceKey:       "devicename",
 				Duration:        5000,
 				StorageSolution: "s3",
 				Metadata: &MediaMetadata{
@@ -117,7 +117,7 @@ func TestGetMediaFromPipelineEvent_LegacyFormat(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotMedia, err := GetMediaFromPipelineEvent(tt.pipelineEvent)
+			gotMedia, err := tt.pipelineEvent.GetMedia()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetMediaFromPipelineEvent() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -132,8 +132,8 @@ func TestGetMediaFromPipelineEvent_LegacyFormat(t *testing.T) {
 				if gotMedia.DeviceName != tt.wantMedia.DeviceName {
 					t.Errorf("DeviceName = %v, want %v", gotMedia.DeviceName, tt.wantMedia.DeviceName)
 				}
-				if gotMedia.DeviceId != tt.wantMedia.DeviceId {
-					t.Errorf("DeviceId = %v, want %v", gotMedia.DeviceId, tt.wantMedia.DeviceId)
+				if gotMedia.DeviceKey != tt.wantMedia.DeviceKey {
+					t.Errorf("DeviceKey = %v, want %v", gotMedia.DeviceKey, tt.wantMedia.DeviceKey)
 				}
 				if gotMedia.Duration != tt.wantMedia.Duration {
 					t.Errorf("Duration = %v, want %v", gotMedia.Duration, tt.wantMedia.Duration)
@@ -178,7 +178,7 @@ func TestGetMediaFromPipelineEvent_NewFormat(t *testing.T) {
 				VideoFile:       "path/to/video.mp4",
 				StartTimestamp:  1640000000,
 				DeviceName:      "Front Camera",
-				DeviceId:        "device123",
+				DeviceKey:       "device123",
 				Duration:        3000,
 				StorageSolution: "minio",
 			},
@@ -234,7 +234,7 @@ func TestGetMediaFromPipelineEvent_NewFormat(t *testing.T) {
 				VideoFile:       "path/to/video.mp4",
 				StartTimestamp:  1650000000,
 				DeviceName:      "",
-				DeviceId:        "device456",
+				DeviceKey:       "device456",
 				Duration:        2500,
 				StorageSolution: "azure",
 			},
@@ -244,7 +244,7 @@ func TestGetMediaFromPipelineEvent_NewFormat(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotMedia, err := GetMediaFromPipelineEvent(tt.pipelineEvent)
+			gotMedia, err := tt.pipelineEvent.GetMedia()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetMediaFromPipelineEvent() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -259,8 +259,8 @@ func TestGetMediaFromPipelineEvent_NewFormat(t *testing.T) {
 				if gotMedia.DeviceName != tt.wantMedia.DeviceName {
 					t.Errorf("DeviceName = %v, want %v", gotMedia.DeviceName, tt.wantMedia.DeviceName)
 				}
-				if gotMedia.DeviceId != tt.wantMedia.DeviceId {
-					t.Errorf("DeviceId = %v, want %v", gotMedia.DeviceId, tt.wantMedia.DeviceId)
+				if gotMedia.DeviceKey != tt.wantMedia.DeviceKey {
+					t.Errorf("DeviceKey = %v, want %v", gotMedia.DeviceKey, tt.wantMedia.DeviceKey)
 				}
 				if gotMedia.Duration != tt.wantMedia.Duration {
 					t.Errorf("Duration = %v, want %v", gotMedia.Duration, tt.wantMedia.Duration)
@@ -298,7 +298,7 @@ func TestPipelineEvent_GetMedia(t *testing.T) {
 			},
 			expectedMedia: Media{
 				VideoFile:       "user123/video.mp4",
-				DeviceId:        "device-001",
+				DeviceKey:       "device-001",
 				DeviceName:      "Front Camera",
 				Duration:        300,
 				StartTimestamp:  1706000000,
@@ -321,7 +321,7 @@ func TestPipelineEvent_GetMedia(t *testing.T) {
 			},
 			expectedMedia: Media{
 				VideoFile:       "username/1706000000_attr1_camera1_attr3_500_60.mp4",
-				DeviceId:        "camera1",
+				DeviceKey:       "camera1",
 				DeviceName:      "camera1",
 				Duration:        60,
 				StartTimestamp:  1706000000,
@@ -386,7 +386,7 @@ func TestPipelineEvent_GetMedia(t *testing.T) {
 			},
 			expectedMedia: Media{
 				VideoFile:       "user123/video.mp4",
-				DeviceId:        "device-001",
+				DeviceKey:       "device-001",
 				DeviceName:      "Front Camera",
 				Duration:        0, // Empty string parses to 0
 				StartTimestamp:  1706000000,
@@ -409,7 +409,7 @@ func TestPipelineEvent_GetMedia(t *testing.T) {
 			},
 			expectedMedia: Media{
 				VideoFile:       "username/1706000000_x_cam_y_100_30.mp4",
-				DeviceId:        "cam",
+				DeviceKey:       "cam",
 				DeviceName:      "cam",
 				Duration:        30,
 				StartTimestamp:  1706000000,
@@ -435,7 +435,7 @@ func TestPipelineEvent_GetMedia(t *testing.T) {
 			},
 			expectedMedia: Media{
 				VideoFile:       "user/test.mp4",
-				DeviceId:        "dev-123",
+				DeviceKey:       "dev-123",
 				DeviceName:      "Test Device",
 				Duration:        0,
 				StartTimestamp:  0,
@@ -469,8 +469,8 @@ func TestPipelineEvent_GetMedia(t *testing.T) {
 			if media.VideoFile != tt.expectedMedia.VideoFile {
 				t.Errorf("VideoFile: got %q, want %q", media.VideoFile, tt.expectedMedia.VideoFile)
 			}
-			if media.DeviceId != tt.expectedMedia.DeviceId {
-				t.Errorf("DeviceId: got %q, want %q", media.DeviceId, tt.expectedMedia.DeviceId)
+			if media.DeviceKey != tt.expectedMedia.DeviceKey {
+				t.Errorf("DeviceKey: got %q, want %q", media.DeviceKey, tt.expectedMedia.DeviceKey)
 			}
 			if media.DeviceName != tt.expectedMedia.DeviceName {
 				t.Errorf("DeviceName: got %q, want %q", media.DeviceName, tt.expectedMedia.DeviceName)
