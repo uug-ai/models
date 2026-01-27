@@ -2890,6 +2890,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getdeviceserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDevicesErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDevicesErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDevicesErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdevicesresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDevicesResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDevicesResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDevicesResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdevicessuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDevicesSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDevicesSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDevicesSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getgroupoptionserrorresponse": {
         parameters: {
             query?: never;
@@ -9789,6 +9906,34 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetDevicesErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetDevicesResponse": {
+            devices?: components["schemas"]["models.Device"][];
+        };
+        "api.GetDevicesSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetDevicesResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetGroupOptionsErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -10317,6 +10462,7 @@ export interface components {
         "api.Media2Filter": {
             devices?: string[];
             events?: string[];
+            excludedDevices?: string[];
             groups?: string[];
             markers?: string[];
             regions?: components["schemas"]["models.Region"][];
@@ -10910,7 +11056,7 @@ export interface components {
             /** @description Device Specific Metadata */
             cameraMetadata?: components["schemas"]["models.CameraMetadata"];
             /** @description Device status
-             *     Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc.
+             *     Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc."
              *     LastSeenTimestamp is used to identify the last time the device was seen online. */
             connectionStart?: number;
             /** @description Type of deployment used e.g. "factory", "docker", "docker compose", "kubernetes" */
@@ -10937,6 +11083,10 @@ export interface components {
              *     Note: DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
              *     DeviceType is used to identify the type of device, such as camera, sensor, access control, etc. */
             key?: string;
+            /** @description Latest Media information */
+            latestMedia?: components["schemas"]["models.Media"];
+            /** @description Timestamp of the latest media captured by the device (milliseconds since epoch) */
+            latestMediaTimestamp?: number;
             lightSensorMetadata?: components["schemas"]["models.LightSensorMetadata"];
             /** @description Location of the device, not real time postion. e.g. "Office 1st Floor", "Lobby", "Kilian's Car", etc. */
             location?: components["schemas"]["models.Location"];
@@ -10958,6 +11108,8 @@ export interface components {
             siteIds?: string[];
             /** @description Type of device e.g. "camera", "sensor", "access_control" */
             type?: string;
+            /** @description @LEGACY FIELDS - to be removed in future versions */
+            user_id?: string;
             /** @description Version of the agent, injected on build. Reflects the release tag of the agent. */
             version?: string;
         };
@@ -11511,6 +11663,8 @@ export interface components {
             analysis?: components["schemas"]["models.AnalysisWrapper"];
             /** @description Timestamp when the runtime metadata was cached. */
             cachedTimestamp?: number;
+            /** @description Human-readable date and time of the media. */
+            dateTime?: string;
             device?: components["schemas"]["models.Device"];
             durationFormatted?: string;
             redactionUrl?: string;
@@ -12022,9 +12176,7 @@ export interface components {
             y2?: number;
         };
         "models.User": {
-            activity?: {
-                [key: string]: unknown;
-            }[];
+            activity?: components["schemas"]["models.Activity"][];
             amazon_access_key_id?: string;
             amazon_secret_access_key?: string;
             channels?: {
@@ -12258,6 +12410,9 @@ export namespace api {
     export type GetDeviceOptionsRequest = components['schemas']['api.GetDeviceOptionsRequest'];
     export type GetDeviceOptionsResponse = components['schemas']['api.GetDeviceOptionsResponse'];
     export type GetDeviceOptionsSuccessResponse = components['schemas']['api.GetDeviceOptionsSuccessResponse'];
+    export type GetDevicesErrorResponse = components['schemas']['api.GetDevicesErrorResponse'];
+    export type GetDevicesResponse = components['schemas']['api.GetDevicesResponse'];
+    export type GetDevicesSuccessResponse = components['schemas']['api.GetDevicesSuccessResponse'];
     export type GetGroupOptionsErrorResponse = components['schemas']['api.GetGroupOptionsErrorResponse'];
     export type GetGroupOptionsRequest = components['schemas']['api.GetGroupOptionsRequest'];
     export type GetGroupOptionsResponse = components['schemas']['api.GetGroupOptionsResponse'];
