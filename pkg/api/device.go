@@ -99,3 +99,14 @@ type GetDevicesSuccessResponse struct {
 type GetDevicesErrorResponse struct {
 	ErrorResponse
 }
+
+type GetDeviceMediaResponse struct {
+	Media []models.Media `json:"media,omitempty" bson:"media,omitempty"`
+}
+type GetDeviceMediaSuccessResponse struct {
+	SuccessResponse
+	Data GetDeviceMediaResponse `json:"data,omitempty" bson:"data,omitempty"`
+}
+type GetDeviceMediaErrorResponse struct {
+	ErrorResponse
+}
