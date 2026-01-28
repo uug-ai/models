@@ -4,26 +4,46 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// AccessLevel defines the level of access for a feature or resource
+type AccessLevel int
+
+const (
+	AccessLevelNone  AccessLevel = 0 // No access
+	AccessLevelRead  AccessLevel = 1 // Read-only access
+	AccessLevelWrite AccessLevel = 2 // Read and write access
+	AccessLevelAdmin AccessLevel = 3 // Full administrative access
+)
+
 type Role struct {
 	Id                 primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	OrganisationId     primitive.ObjectID `json:"organisation_id" bson:"organisation_id,omitempty"` // Organisation this role belongs to
 	Name               string             `json:"roleName" bson:"roleName,omitempty"`
+	Description        string             `json:"description" bson:"description,omitempty"`
 	ParentRole         string             `json:"role" bson:"role,omitempty"`
 	Pages              []string           `json:"pages" bson:"pages"`
 	TimeWindow         TimeWindow         `json:"timeWindow" bson:"timeWindow"`
-	UserId             string             `json:"user_id" bson:"user_id,omitempty"`
 	IsActive           int                `json:"isActive" bson:"isActive"`
 	FeaturePermissions FeaturePermissions `json:"featurePermissions" bson:"featurePermissions"`
 	TimeWindowActive   int                `json:"timeWindowActive" bson:"timeWindowActive"`
+	Audit              Audit              `json:"audit" bson:"audit,omitempty"`
 }
 
 type FeaturePermissions struct {
-	PTZ          int `json:"ptz" bson:"ptz"`
-	Liveview     int `json:"liveview" bson:"liveview"`
-	RemoteConfig int `json:"remote_config" bson:"remote_config"`
-	IO           int `json:"io" bson:"io"`
-	FloorPlans   int `json:"floorPlans" bson:"floorPlans"`
-	// Talk..
-	// ...
+	PTZ          AccessLevel `json:"ptz" bson:"ptz"`                     // 0=none, 1=read, 2=write, 3=admin
+	Liveview     AccessLevel `json:"liveview" bson:"liveview"`           // 0=none, 1=read, 2=write, 3=admin
+	RemoteConfig AccessLevel `json:"remote_config" bson:"remote_config"` // 0=none, 1=read, 2=write, 3=admin
+	IO           AccessLevel `json:"io" bson:"io"`                       // 0=none, 1=read, 2=write, 3=admin
+	FloorPlans   AccessLevel `json:"floorPlans" bson:"floorPlans"`       // 0=none, 1=read, 2=write, 3=admin
+	Playback     AccessLevel `json:"playback" bson:"playback"`           // 0=none, 1=read, 2=write, 3=admin
+	Export       AccessLevel `json:"export" bson:"export"`               // 0=none, 1=read, 2=write, 3=admin
+	Markers      AccessLevel `json:"markers" bson:"markers"`             // 0=none, 1=read, 2=write, 3=admin
+	Alerts       AccessLevel `json:"alerts" bson:"alerts"`               // 0=none, 1=read, 2=write, 3=admin
+	Users        AccessLevel `json:"users" bson:"users"`                 // 0=none, 1=read, 2=write, 3=admin
+	Devices      AccessLevel `json:"devices" bson:"devices"`             // 0=none, 1=read, 2=write, 3=admin
+	Sites        AccessLevel `json:"sites" bson:"sites"`                 // 0=none, 1=read, 2=write, 3=admin
+	Groups       AccessLevel `json:"groups" bson:"groups"`               // 0=none, 1=read, 2=write, 3=admin
+	Roles        AccessLevel `json:"roles" bson:"roles"`                 // 0=none, 1=read, 2=write, 3=admin
+	Settings     AccessLevel `json:"settings" bson:"settings"`           // 0=none, 1=read, 2=write, 3=admin
 }
 
 type TimeWindow struct {
