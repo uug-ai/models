@@ -43,6 +43,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/account": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Account (schema generation only)
+         * @description Internal endpoint used only to ensure Account schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Account"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/accountbody": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AccountBody (schema generation only)
+         * @description Internal endpoint used only to ensure AccountBody schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AccountBody"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/activity": {
         parameters: {
             query?: never;
@@ -421,6 +499,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.AlertFeatures"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/alexa": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Alexa (schema generation only)
+         * @description Internal endpoint used only to ensure Alexa schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Alexa"];
                     };
                 };
             };
@@ -901,6 +1018,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/card": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Card (schema generation only)
+         * @description Internal endpoint used only to ensure Card schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Card"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Channels (schema generation only)
+         * @description Internal endpoint used only to ensure Channels schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Channels"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channeltest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelTest (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelTest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelTest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channeltestdata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelTestData (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelTestData schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelTestData"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channelupdate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelUpdate (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelUpdate schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelUpdate"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channelupdatepayload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelUpdatePayload (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelUpdatePayload schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelUpdatePayload"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/classification": {
         parameters: {
             query?: never;
@@ -1279,6 +1630,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.CountingSummary"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/credentials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Credentials (schema generation only)
+         * @description Internal endpoint used only to ensure Credentials schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Credentials"];
                     };
                 };
             };
@@ -1720,6 +2110,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/deprecatedheartbeat": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeprecatedHeartbeat (schema generation only)
+         * @description Internal endpoint used only to ensure DeprecatedHeartbeat schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeprecatedHeartbeat"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deprecatedonvifevents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeprecatedONVIFEvents (schema generation only)
+         * @description Internal endpoint used only to ensure DeprecatedONVIFEvents schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeprecatedONVIFEvents"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deprecatedpreset": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeprecatedPreset (schema generation only)
+         * @description Internal endpoint used only to ensure DeprecatedPreset schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeprecatedPreset"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/detections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Detections (schema generation only)
+         * @description Internal endpoint used only to ensure Detections schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Detections"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/device": {
         parameters: {
             query?: never;
@@ -1786,6 +2332,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.DeviceAtRuntimeMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicedata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceData (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceData schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceData"];
                     };
                 };
             };
@@ -2032,6 +2617,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Devices (schema generation only)
+         * @description Internal endpoint used only to ensure Devices schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Devices"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/dominantcolor": {
         parameters: {
             query?: never;
@@ -2059,6 +2683,84 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.DominantColor"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/email": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Email (schema generation only)
+         * @description Internal endpoint used only to ensure Email schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Email"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/encryption": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Encryption (schema generation only)
+         * @description Internal endpoint used only to ensure Encryption schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Encryption"];
                     };
                 };
             };
@@ -2722,6 +3424,123 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetAnalysisSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdevicemediaerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceMediaErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceMediaErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceMediaErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdevicemediaresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceMediaResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceMediaResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceMediaResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdevicemediasuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceMediaSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceMediaSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceMediaSuccessResponse"];
                     };
                 };
             };
@@ -5425,6 +6244,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getuserbyiderrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetUserByIdErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetUserByIdErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetUserByIdErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getuserbyidresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetUserByIdResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetUserByIdResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetUserByIdResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getuserbyidsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetUserByIdSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetUserByIdSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetUserByIdSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/gpsmetadata": {
         parameters: {
             query?: never;
@@ -5745,8 +6681,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get HighUpload (schema generation only)
-         * @description Internal endpoint used only to ensure HighUpload schema is generated in OpenAPI spec
+         * Get Highupload (schema generation only)
+         * @description Internal endpoint used only to ensure Highupload schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -5763,7 +6699,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.HighUpload"];
+                        "application/json": components["schemas"]["models.Highupload"];
                     };
                 };
             };
@@ -5815,6 +6751,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/hubcredentials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get HubCredentials (schema generation only)
+         * @description Internal endpoint used only to ensure HubCredentials schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.HubCredentials"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/humiditysensormetadata": {
         parameters: {
             query?: never;
@@ -5842,6 +6817,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.HumiditySensorMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/ifttt": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Ifttt (schema generation only)
+         * @description Internal endpoint used only to ensure Ifttt schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Ifttt"];
                     };
                 };
             };
@@ -5893,6 +6907,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/keypair": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get KeyPair (schema generation only)
+         * @description Internal endpoint used only to ensure KeyPair schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.KeyPair"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/lightsensormetadata": {
         parameters: {
             query?: never;
@@ -5920,6 +6973,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.LightSensorMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/livestream": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Livestream (schema generation only)
+         * @description Internal endpoint used only to ensure Livestream schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Livestream"];
                     };
                 };
             };
@@ -7063,6 +8155,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/notificationsettings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get NotificationSettings (schema generation only)
+         * @description Internal endpoint used only to ensure NotificationSettings schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.NotificationSettings"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/notificationstage": {
         parameters: {
             query?: never;
@@ -7102,6 +8233,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/notificationupdate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get NotificationUpdate (schema generation only)
+         * @description Internal endpoint used only to ensure NotificationUpdate schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.NotificationUpdate"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/notificationupdatepayload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get NotificationUpdatePayload (schema generation only)
+         * @description Internal endpoint used only to ensure NotificationUpdatePayload schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.NotificationUpdatePayload"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/panicresponse": {
         parameters: {
             query?: never;
@@ -7129,6 +8338,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.PanicResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/permissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Permissions (schema generation only)
+         * @description Internal endpoint used only to ensure Permissions schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Permissions"];
                     };
                 };
             };
@@ -7375,6 +8623,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/profilesettings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ProfileSettings (schema generation only)
+         * @description Internal endpoint used only to ensure ProfileSettings schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ProfileSettings"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/pushbullet": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Pushbullet (schema generation only)
+         * @description Internal endpoint used only to ensure Pushbullet schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Pushbullet"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/pushover": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Pushover (schema generation only)
+         * @description Internal endpoint used only to ensure Pushover schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Pushover"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/redactionevent": {
         parameters: {
             query?: never;
@@ -7453,6 +8818,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/regionpoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RegionPoint (schema generation only)
+         * @description Internal endpoint used only to ensure RegionPoint schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.RegionPoint"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/role": {
         parameters: {
             query?: never;
@@ -7480,6 +8884,84 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Role"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/roleassignment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RoleAssignment (schema generation only)
+         * @description Internal endpoint used only to ensure RoleAssignment schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.RoleAssignment"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/rolescope": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RoleScope (schema generation only)
+         * @description Internal endpoint used only to ensure RoleScope schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.RoleScope"];
                     };
                 };
             };
@@ -7999,6 +9481,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/slack": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Slack (schema generation only)
+         * @description Internal endpoint used only to ensure Slack schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Slack"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/sms": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Sms (schema generation only)
+         * @description Internal endpoint used only to ensure Sms schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Sms"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/sprite": {
         parameters: {
             query?: never;
@@ -8494,6 +10054,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.SynchronizeEvent"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/telegram": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Telegram (schema generation only)
+         * @description Internal endpoint used only to ensure Telegram schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Telegram"];
                     };
                 };
             };
@@ -9130,6 +10729,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/updateuserprofileerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateUserProfileErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateUserProfileErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateUserProfileErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateuserprofileresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateUserProfileResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateUserProfileResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateUserProfileResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateuserprofilesuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateUserProfileSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateUserProfileSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateUserProfileSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/upsertstateerrorresponse": {
         parameters: {
             query?: never;
@@ -9325,6 +11041,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/userprofile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UserProfile (schema generation only)
+         * @description Internal endpoint used only to ensure UserProfile schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UserProfile"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/userprofilesettings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UserProfileSettings (schema generation only)
+         * @description Internal endpoint used only to ensure UserProfileSettings schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UserProfileSettings"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/userroleassignments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UserRoleAssignments (schema generation only)
+         * @description Internal endpoint used only to ensure UserRoleAssignments schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UserRoleAssignments"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/usersettings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UserSettings (schema generation only)
+         * @description Internal endpoint used only to ensure UserSettings schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UserSettings"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/usershort": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UserShort (schema generation only)
+         * @description Internal endpoint used only to ensure UserShort schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UserShort"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/userupdate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UserUpdate (schema generation only)
+         * @description Internal endpoint used only to ensure UserUpdate schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UserUpdate"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/vaultmedia": {
         parameters: {
             query?: never;
@@ -9508,6 +11458,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.WarningResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/webhook": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Webhook (schema generation only)
+         * @description Internal endpoint used only to ensure Webhook schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Webhook"];
                     };
                 };
             };
@@ -9865,6 +11854,34 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetAnalysisResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetDeviceMediaErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetDeviceMediaResponse": {
+            media?: components["schemas"]["models.Media"][];
+        };
+        "api.GetDeviceMediaSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetDeviceMediaResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -10430,6 +12447,34 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetUserByIdErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetUserByIdResponse": {
+            user?: components["schemas"]["models.User"];
+        };
+        "api.GetUserByIdSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetUserByIdResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GroupFilter": {
             groupIds?: string[];
             name?: string;
@@ -10723,6 +12768,34 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.UpdateUserProfileErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateUserProfileResponse": {
+            user?: components["schemas"]["models.User"];
+        };
+        "api.UpdateUserProfileSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateUserProfileResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.UpsertStateErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -10790,6 +12863,23 @@ export interface components {
         };
         /** @enum {string} */
         "models.AccessTokenScope": "markers:write" | "markers:read";
+        "models.Account": {
+            account?: components["schemas"]["models.AccountBody"];
+        };
+        "models.AccountBody": {
+            cameras?: string[];
+            domain?: string;
+            email?: string;
+            firstname?: string;
+            force_mfa?: number;
+            groups?: string[];
+            isActive?: number;
+            lastname?: string;
+            password?: string;
+            role?: string;
+            sites?: string[];
+            username?: string;
+        };
         "models.Activity": {
             day?: string;
             devices?: {
@@ -10803,6 +12893,11 @@ export interface components {
         };
         "models.AlertFeatures": {
             createMarker?: boolean;
+        };
+        "models.Alexa": {
+            accesscode?: string;
+            enabled?: boolean;
+            valid?: boolean;
         };
         "models.Analysis": {
             classify?: components["schemas"]["models.Classify"];
@@ -10914,6 +13009,39 @@ export interface components {
             running?: boolean;
             speed?: number;
         };
+        "models.Card": {
+            card_brand?: string;
+            card_last_four?: string;
+            card_status?: string;
+            card_status_message?: string;
+            stripe_id?: string;
+        };
+        "models.ChannelTest": {
+            data?: components["schemas"]["models.ChannelTestData"];
+            events?: string[];
+        };
+        "models.ChannelTestData": {
+            channel?: string;
+            userId?: string;
+        };
+        "models.ChannelUpdate": {
+            channels?: components["schemas"]["models.ChannelUpdatePayload"];
+        };
+        "models.ChannelUpdatePayload": {
+            channel?: string;
+            payload?: unknown;
+        };
+        "models.Channels": {
+            alexa?: components["schemas"]["models.Alexa"];
+            email?: components["schemas"]["models.Email"];
+            ifttt?: components["schemas"]["models.Ifttt"];
+            pushbullet?: components["schemas"]["models.Pushbullet"];
+            pushover?: components["schemas"]["models.Pushover"];
+            slack?: components["schemas"]["models.Slack"];
+            sms?: components["schemas"]["models.Sms"];
+            telegram?: components["schemas"]["models.Telegram"];
+            webhook?: components["schemas"]["models.Webhook"];
+        };
         "models.Classification": {
             /** @description e.g., [[x1, y1], [x2, y2], ...] */
             centroids?: number[][];
@@ -11002,6 +13130,11 @@ export interface components {
             duration?: number;
             key?: string;
         };
+        "models.Credentials": {
+            currentPassword?: string;
+            newPassword?: string;
+            newPasswordRepeat?: string;
+        };
         "models.CustomAlert": {
             alexa_token?: string;
             channelsAll?: boolean;
@@ -11044,9 +13177,79 @@ export interface components {
             user_id?: string;
             webhook_url?: string;
         };
+        "models.DeprecatedHeartbeat": {
+            architecture?: string;
+            boot_time?: string;
+            cameraConnected?: string;
+            cameraname?: string;
+            cameratype?: string;
+            cloudpublicKey?: string;
+            clouduser?: string;
+            cpuid?: string;
+            docker?: boolean;
+            e2e_encryption?: string;
+            encrypted?: boolean;
+            encryptedData?: number[];
+            enterprise?: boolean;
+            freeMemory?: string;
+            hasBackChannel?: string;
+            hash?: string;
+            hostname?: string;
+            hub_encryption?: string;
+            ip_list?: string[];
+            /** @description ----------- */
+            key?: string;
+            kios?: boolean;
+            kubernetes?: boolean;
+            mac_list?: string[];
+            onvif?: string;
+            onvif_events_list?: components["schemas"]["models.DeprecatedONVIFEvents"][];
+            onvif_pantilt?: string;
+            onvif_presets?: string;
+            onvif_presets_list?: components["schemas"]["models.DeprecatedPreset"][];
+            onvif_zoom?: string;
+            processMemory?: string;
+            raspberrypi?: boolean;
+            release?: string;
+            siteID?: string;
+            timestamp?: number;
+            totalMemory?: string;
+            uptime?: string;
+            usedMemory?: string;
+            version?: string;
+        };
+        "models.DeprecatedONVIFEvents": {
+            key?: string;
+            timestamp?: number;
+            type?: string;
+            value?: string;
+        };
+        "models.DeprecatedPreset": {
+            name?: string;
+            token?: string;
+            x?: number;
+            y?: number;
+            z?: number;
+        };
+        "models.Detections": {
+            channelsAll?: boolean;
+            channelsList?: string[];
+            classificationAll?: boolean;
+            classificationList?: string[];
+            devicesAll?: boolean;
+            devicesList?: components["schemas"]["models.DeviceKey"][];
+            enabled?: boolean;
+            timeAdvanced?: boolean;
+            timeRange1Max?: number;
+            timeRange1Min?: number;
+            timeRange2Max?: number;
+            timeRange2Min?: number;
+        };
         "models.Device": {
             /** @description last time the agent reported being online (timestamp in milliseconds) */
             agentLastSeen?: number;
+            /** @description Deprecated - to be removed */
+            analytics?: components["schemas"]["models.DeprecatedHeartbeat"][];
             /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
              *     more verbose information about the device's current state, capabilities, or configuration.
              *     for example the linked sites details, etc. */
@@ -11116,6 +13319,10 @@ export interface components {
         "models.DeviceAtRuntimeMetadata": {
             /** @description Status is derived from the last seen timestamps and thresholds. */
             status?: string;
+        };
+        "models.DeviceData": {
+            activeDevices?: number;
+            totalDevices?: number;
         };
         "models.DeviceFeaturePermissions": {
             floorPlans?: components["schemas"]["models.PermissionLevel"];
@@ -11196,9 +13403,31 @@ export interface components {
             /** @description Absolute Y coordinate */
             y?: number;
         };
+        "models.Devices": {
+            channelsAll?: boolean;
+            channelsList?: string[];
+            devicesAll?: boolean;
+            devicesList?: components["schemas"]["models.DeviceKey"][];
+            duration?: number;
+            enabled?: boolean;
+        };
         "models.DominantColor": {
             hexs?: string[];
             rgbs?: number[][];
+        };
+        "models.Email": {
+            address?: string;
+            enabled?: boolean;
+            valid?: boolean;
+        };
+        "models.Encryption": {
+            creation_date?: number;
+            enabled?: boolean;
+            fingerprint?: string;
+            fingerprint_encrypted?: string;
+            has_passphrase?: boolean;
+            public_key?: string;
+            symmetric_key?: string;
         };
         "models.EventStage": {
             /** @description Add fields relevant to event stage */
@@ -11330,9 +13559,25 @@ export interface components {
             requests?: number;
             start_timestamp?: number;
         };
+        "models.Highupload": {
+            channelsAll?: boolean;
+            channelsList?: string[];
+            devicesAll?: boolean;
+            devicesList?: components["schemas"]["models.DeviceKey"][];
+            enabled?: boolean;
+            requests?: number;
+        };
         "models.HourRange": {
             end?: number;
             start?: number;
+        };
+        "models.HubCredentials": {
+            active?: boolean;
+            amazon_access_key_id?: string;
+            amazon_secret_access_key?: string;
+            bucket?: string;
+            directory?: string;
+            region?: string;
         };
         "models.HumiditySensorMetadata": {
             /** @description CurrentHumidity is the latest measured humidity level in percentage */
@@ -11359,6 +13604,15 @@ export interface components {
             type?: string;
             value?: string;
         };
+        "models.Ifttt": {
+            enabled?: boolean;
+            token?: string;
+            valid?: boolean;
+        };
+        "models.KeyPair": {
+            amazon_access_key_id?: string;
+            amazon_secret_access_key?: string;
+        };
         "models.LightSensorMetadata": {
             /** @description CurrentLux is the latest measured light level in lux */
             currentLux?: number;
@@ -11368,6 +13622,9 @@ export interface components {
             sensitivity?: number;
             /** @description Unit is the measurement unit, typically "lux" */
             unit?: string;
+        };
+        "models.Livestream": {
+            speech?: boolean;
         };
         "models.Location": {
             /** @description e.g. "123 Main St, Anytown, USA" */
@@ -11633,7 +13890,7 @@ export interface components {
             /** @description RBAC information
              *     DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
              *     OrganisationId is used to identify the organisation that owns the device. */
-            deviceId?: string;
+            deviceKey?: string;
             /** @description Name of the device that uploaded media */
             deviceName?: string;
             duration?: number;
@@ -11798,13 +14055,29 @@ export interface components {
             /** @description Add more fields as needed */
             user?: components["schemas"]["models.User"];
         };
+        "models.NotificationSettings": {
+            detections?: components["schemas"]["models.Detections"];
+            devices?: components["schemas"]["models.Devices"];
+            highupload?: components["schemas"]["models.Highupload"];
+        };
         "models.NotificationStage": {
             name?: string;
             /** @description Add fields relevant to notification stage */
             notificationType?: string;
         };
+        "models.NotificationUpdate": {
+            notificationSettings?: components["schemas"]["models.NotificationUpdatePayload"];
+        };
+        "models.NotificationUpdatePayload": {
+            payload?: unknown;
+            type?: string;
+        };
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
+        "models.Permissions": {
+            featurePermissions?: components["schemas"]["models.FeaturePermissions"];
+            pages?: string[];
+        };
         "models.PipelineEvent": {
             analysisStage?: components["schemas"]["models.AnalysisStage"];
             /** @description We should get rid of this and use the stage map */
@@ -11882,12 +14155,30 @@ export interface components {
             x?: number;
             y?: number;
         };
+        "models.ProfileSettings": {
+            defaultFloorPlanLabelsHidden?: boolean;
+        };
+        "models.Pushbullet": {
+            apikey?: string;
+            enabled?: boolean;
+            valid?: boolean;
+        };
+        "models.Pushover": {
+            apikey?: string;
+            enabled?: boolean;
+            sendto?: string;
+            valid?: boolean;
+        };
         "models.Region": {
             device?: string;
             height?: number;
             id?: string;
             regionPoints?: components["schemas"]["models.Point"][];
             width?: number;
+        };
+        "models.RegionPoint": {
+            x?: number;
+            y?: number;
         };
         "models.Role": {
             featurePermissions?: components["schemas"]["models.FeaturePermissions"];
@@ -11899,6 +14190,29 @@ export interface components {
             timeWindow?: components["schemas"]["models.TimeWindow"];
             timeWindowActive?: number;
             user_id?: string;
+        };
+        "models.RoleAssignment": {
+            assigned_at?: string;
+            assigned_by?: string;
+            created_at?: string;
+            expires_at?: string;
+            id?: string;
+            is_active?: number;
+            organisation_id?: string;
+            role_id?: string;
+            scope?: components["schemas"]["models.RoleScope"];
+            updated_at?: string;
+            user_id?: string;
+        };
+        "models.RoleScope": {
+            /** @description Devices where the role applies */
+            device_ids?: string[];
+            /** @description Groups where the role applies */
+            group_ids?: string[];
+            /** @description Sites where the role applies */
+            site_ids?: string[];
+            /** @description e.g., "global", "site", "group", "device" */
+            type?: string;
         };
         "models.SequenceStage": {
             name?: string;
@@ -11946,6 +14260,22 @@ export interface components {
             metadata?: components["schemas"]["models.SiteMetadata"];
             text?: string;
             value?: string;
+        };
+        "models.Slack": {
+            apikey?: string;
+            channel?: string;
+            enabled?: boolean;
+            hook?: string;
+            username?: string;
+            valid?: boolean;
+        };
+        "models.Sms": {
+            accountsid?: string;
+            authtoken?: string;
+            enabled?: boolean;
+            from?: string;
+            to?: string;
+            valid?: boolean;
         };
         "models.Sprite": {
             filename?: string;
@@ -12063,6 +14393,12 @@ export interface components {
             /** @description ID of the worker handling synchronization */
             workerId?: string;
         };
+        "models.Telegram": {
+            channel?: string;
+            enabled?: boolean;
+            token?: string;
+            valid?: boolean;
+        };
         "models.ThrottlerStage": {
             name?: string;
             /** @description Add fields relevant to throttler stage */
@@ -12177,42 +14513,156 @@ export interface components {
         };
         "models.User": {
             activity?: components["schemas"]["models.Activity"][];
+            address?: string;
             amazon_access_key_id?: string;
             amazon_secret_access_key?: string;
-            channels?: {
-                [key: string]: {
-                    [key: string]: unknown;
-                };
-            };
+            archive_storage?: components["schemas"]["models.Storage"];
+            audit?: components["schemas"]["models.Audit"][];
+            bucket?: string;
+            camera_brands?: components["schemas"]["models.Settings"];
+            cameras?: string[];
+            card_brand?: string;
+            card_last_four?: string;
+            card_status?: string;
+            card_status_message?: string;
+            channels?: components["schemas"]["models.Channels"];
+            classification_list?: components["schemas"]["models.Settings"];
+            company_city?: string;
+            company_country?: string;
+            company_country_long?: string;
+            company_name?: string;
+            company_number?: string;
+            company_postal?: string;
+            company_region?: string;
+            company_street?: string;
+            company_street_number?: string;
+            coupons?: string[];
+            created_at?: string;
             custom_analysis_limit?: number;
             custom_day_limit?: number;
+            custom_role?: string;
             /** @description We can override the subscription settings if needed. */
             custom_usage_limit?: number;
             dates?: string[];
-            devices?: {
-                [key: string]: unknown;
-            }[];
+            devices?: components["schemas"]["models.Device"][];
+            domain?: string;
             email?: string;
-            error?: boolean;
-            highupload?: components["schemas"]["models.HighUpload"];
+            /** @description Encryption */
+            encryption?: components["schemas"]["models.Encryption"];
+            firstname?: string;
+            force_mfa?: number;
+            forgotPassword?: string;
+            google2fa_enabled?: boolean;
+            google2fa_secret?: string;
+            groups?: string[];
+            /** @description Settings HLS (hacky should be included in here). */
+            hls_callback_url?: string;
             id?: string;
-            instances?: string[];
-            notificationSettings?: {
-                [key: string]: {
-                    [key: string]: unknown;
-                };
-            };
-            pushbullet_api_key?: string;
+            isActive?: number;
+            lastname?: string;
+            livestream?: components["schemas"]["models.Livestream"];
+            master?: components["schemas"]["models.User"];
+            mfa?: boolean;
+            nickname?: string;
+            notificationSettings?: components["schemas"]["models.NotificationSettings"];
+            oauth_client_creation_date?: number;
+            /** @description Settings OAuth (hacky should be included in here). */
+            oauth_client_id?: string;
+            oauth_client_name?: string;
+            oauth_client_secret?: string;
+            organisation_id?: string;
+            password?: string;
+            permissions?: components["schemas"]["models.Permissions"];
+            /** @description Subscription - Credentials */
+            plan?: string;
+            private_cloud?: boolean;
+            private_cloud_plan?: string;
+            profileCompleted?: boolean;
+            profileSettings?: components["schemas"]["models.ProfileSettings"];
             reachedLimit?: boolean;
             reachedLimitTimestamp?: number;
-            settings?: {
-                [key: string]: unknown;
-            };
+            region?: string;
+            registerToken?: string;
+            role?: string;
+            role_level?: number;
+            sites?: string[];
             storage?: components["schemas"]["models.Storage"];
-            throttler?: {
-                [key: string]: unknown;
-            };
+            /** @description Should go away into Card struct */
+            stripe_id?: string;
+            subscription?: components["schemas"]["models.Subscription"];
             timezone?: string;
+            updated_at?: string;
+            /** @description Master account to which this account was added. */
+            user_id?: string;
+            username?: string;
+        };
+        "models.UserProfile": {
+            card?: components["schemas"]["models.Card"];
+            user?: components["schemas"]["models.User"];
+        };
+        "models.UserProfileSettings": {
+            address?: string;
+            company_city?: string;
+            company_country?: string;
+            company_country_long?: string;
+            company_name?: string;
+            company_number?: string;
+            company_postal?: string;
+            company_region?: string;
+            company_street?: string;
+            company_street_number?: string;
+            domain?: string;
+            firstname?: string;
+            force_mfa?: number;
+            isActive?: number;
+            lastname?: string;
+            nickname?: string;
+            profileCompleted?: boolean;
+            profileSettings?: components["schemas"]["models.ProfileSettings"];
+            registerToken?: string;
+            timezone?: string;
+            username?: string;
+        };
+        "models.UserRoleAssignments": {
+            assignments?: components["schemas"]["models.RoleAssignment"][];
+            /** @description Populated role details */
+            roles?: components["schemas"]["models.Role"][];
+            user_id?: string;
+        };
+        "models.UserSettings": {
+            hls_callback_url?: string;
+            oauth_client_creation_date?: number;
+            oauth_client_id?: string;
+            oauth_client_name?: string;
+            oauth_client_secret?: string;
+        };
+        "models.UserShort": {
+            amazon_access_key_id?: string;
+            amazon_secret_access_key?: string;
+            created_at?: string;
+            deviceData?: components["schemas"]["models.DeviceData"];
+            email?: string;
+            firstname?: string;
+            googlemfa_enabled?: boolean;
+            has_keys?: boolean;
+            id?: string;
+            lastname?: string;
+            password?: string;
+            stripe_plan?: string;
+            updated_at?: string;
+            username?: string;
+        };
+        "models.UserUpdate": {
+            address?: string;
+            amazon_access_key_id?: string;
+            amazon_secret_access_key?: string;
+            company_name?: string;
+            company_number?: string;
+            email?: string;
+            firstname?: string;
+            lastname?: string;
+            profileSettings?: components["schemas"]["models.ProfileSettings"];
+            updated_at?: string;
             username?: string;
         };
         "models.VaultMedia": {
@@ -12262,6 +14712,11 @@ export interface components {
             is_fragmented?: boolean;
             timescale?: number;
         };
+        "models.Webhook": {
+            enabled?: boolean;
+            url?: string;
+            valid?: boolean;
+        };
     };
     responses: never;
     parameters: never;
@@ -12275,8 +14730,11 @@ export type operations = Record<string, never>;
 // Export namespaces for organized access
 export namespace models {
     export type AccessToken = components['schemas']['models.AccessToken'];
+    export type Account = components['schemas']['models.Account'];
+    export type AccountBody = components['schemas']['models.AccountBody'];
     export type Activity = components['schemas']['models.Activity'];
     export type AlertFeatures = components['schemas']['models.AlertFeatures'];
+    export type Alexa = components['schemas']['models.Alexa'];
     export type Analysis = components['schemas']['models.Analysis'];
     export type AnalysisFilter = components['schemas']['models.AnalysisFilter'];
     export type AnalysisShort = components['schemas']['models.AnalysisShort'];
@@ -12288,6 +14746,12 @@ export namespace models {
     export type CameraMetadata = components['schemas']['models.CameraMetadata'];
     export type CameraPreset = components['schemas']['models.CameraPreset'];
     export type CameraTour = components['schemas']['models.CameraTour'];
+    export type Card = components['schemas']['models.Card'];
+    export type ChannelTest = components['schemas']['models.ChannelTest'];
+    export type ChannelTestData = components['schemas']['models.ChannelTestData'];
+    export type ChannelUpdate = components['schemas']['models.ChannelUpdate'];
+    export type ChannelUpdatePayload = components['schemas']['models.ChannelUpdatePayload'];
+    export type Channels = components['schemas']['models.Channels'];
     export type Classification = components['schemas']['models.Classification'];
     export type ClassificationSummary = components['schemas']['models.ClassificationSummary'];
     export type Classify = components['schemas']['models.Classify'];
@@ -12298,15 +14762,24 @@ export namespace models {
     export type CountingDetail = components['schemas']['models.CountingDetail'];
     export type CountingRecord = components['schemas']['models.CountingRecord'];
     export type CountingSummary = components['schemas']['models.CountingSummary'];
+    export type Credentials = components['schemas']['models.Credentials'];
     export type CustomAlert = components['schemas']['models.CustomAlert'];
+    export type DeprecatedHeartbeat = components['schemas']['models.DeprecatedHeartbeat'];
+    export type DeprecatedONVIFEvents = components['schemas']['models.DeprecatedONVIFEvents'];
+    export type DeprecatedPreset = components['schemas']['models.DeprecatedPreset'];
+    export type Detections = components['schemas']['models.Detections'];
     export type Device = components['schemas']['models.Device'];
     export type DeviceAtRuntimeMetadata = components['schemas']['models.DeviceAtRuntimeMetadata'];
+    export type DeviceData = components['schemas']['models.DeviceData'];
     export type DeviceFeaturePermissions = components['schemas']['models.DeviceFeaturePermissions'];
     export type DeviceKey = components['schemas']['models.DeviceKey'];
     export type DeviceMetadata = components['schemas']['models.DeviceMetadata'];
     export type DeviceOption = components['schemas']['models.DeviceOption'];
     export type DevicePlacement = components['schemas']['models.DevicePlacement'];
+    export type Devices = components['schemas']['models.Devices'];
     export type DominantColor = components['schemas']['models.DominantColor'];
+    export type Email = components['schemas']['models.Email'];
+    export type Encryption = components['schemas']['models.Encryption'];
     export type EventStage = components['schemas']['models.EventStage'];
     export type FaceRedaction = components['schemas']['models.FaceRedaction'];
     export type FaceRedactionTrack = components['schemas']['models.FaceRedactionTrack'];
@@ -12320,10 +14793,15 @@ export namespace models {
     export type Health = components['schemas']['models.Health'];
     export type HealthMetadata = components['schemas']['models.HealthMetadata'];
     export type HighUpload = components['schemas']['models.HighUpload'];
+    export type Highupload = components['schemas']['models.Highupload'];
     export type HourRange = components['schemas']['models.HourRange'];
+    export type HubCredentials = components['schemas']['models.HubCredentials'];
     export type HumiditySensorMetadata = components['schemas']['models.HumiditySensorMetadata'];
     export type IO = components['schemas']['models.IO'];
+    export type Ifttt = components['schemas']['models.Ifttt'];
+    export type KeyPair = components['schemas']['models.KeyPair'];
     export type LightSensorMetadata = components['schemas']['models.LightSensorMetadata'];
+    export type Livestream = components['schemas']['models.Livestream'];
     export type Location = components['schemas']['models.Location'];
     export type Marker = components['schemas']['models.Marker'];
     export type MarkerAtRuntimeMetadata = components['schemas']['models.MarkerAtRuntimeMetadata'];
@@ -12345,26 +14823,39 @@ export namespace models {
     export type Model = components['schemas']['models.Model'];
     export type ModelOption = components['schemas']['models.ModelOption'];
     export type MonitorStage = components['schemas']['models.MonitorStage'];
+    export type NotificationSettings = components['schemas']['models.NotificationSettings'];
     export type NotificationStage = components['schemas']['models.NotificationStage'];
+    export type NotificationUpdate = components['schemas']['models.NotificationUpdate'];
+    export type NotificationUpdatePayload = components['schemas']['models.NotificationUpdatePayload'];
+    export type Permissions = components['schemas']['models.Permissions'];
     export type PipelineEvent = components['schemas']['models.PipelineEvent'];
     export type PipelineMetadata = components['schemas']['models.PipelineMetadata'];
     export type PipelineMetrics = components['schemas']['models.PipelineMetrics'];
     export type PipelinePayload = components['schemas']['models.PipelinePayload'];
     export type Plan = components['schemas']['models.Plan'];
     export type Point = components['schemas']['models.Point'];
+    export type ProfileSettings = components['schemas']['models.ProfileSettings'];
+    export type Pushbullet = components['schemas']['models.Pushbullet'];
+    export type Pushover = components['schemas']['models.Pushover'];
     export type Region = components['schemas']['models.Region'];
+    export type RegionPoint = components['schemas']['models.RegionPoint'];
     export type Role = components['schemas']['models.Role'];
+    export type RoleAssignment = components['schemas']['models.RoleAssignment'];
+    export type RoleScope = components['schemas']['models.RoleScope'];
     export type SequenceStage = components['schemas']['models.SequenceStage'];
     export type Settings = components['schemas']['models.Settings'];
     export type Site = components['schemas']['models.Site'];
     export type SiteMetadata = components['schemas']['models.SiteMetadata'];
     export type SiteOption = components['schemas']['models.SiteOption'];
+    export type Slack = components['schemas']['models.Slack'];
+    export type Sms = components['schemas']['models.Sms'];
     export type Sprite = components['schemas']['models.Sprite'];
     export type State = components['schemas']['models.State'];
     export type Storage = components['schemas']['models.Storage'];
     export type Subscription = components['schemas']['models.Subscription'];
     export type Synchronize = components['schemas']['models.Synchronize'];
     export type SynchronizeEvent = components['schemas']['models.SynchronizeEvent'];
+    export type Telegram = components['schemas']['models.Telegram'];
     export type ThrottlerStage = components['schemas']['models.ThrottlerStage'];
     export type Thumbnail = components['schemas']['models.Thumbnail'];
     export type Thumby = components['schemas']['models.Thumby'];
@@ -12373,10 +14864,17 @@ export namespace models {
     export type TimeWindow = components['schemas']['models.TimeWindow'];
     export type TrackBox = components['schemas']['models.TrackBox'];
     export type User = components['schemas']['models.User'];
+    export type UserProfile = components['schemas']['models.UserProfile'];
+    export type UserProfileSettings = components['schemas']['models.UserProfileSettings'];
+    export type UserRoleAssignments = components['schemas']['models.UserRoleAssignments'];
+    export type UserSettings = components['schemas']['models.UserSettings'];
+    export type UserShort = components['schemas']['models.UserShort'];
+    export type UserUpdate = components['schemas']['models.UserUpdate'];
     export type VaultMedia = components['schemas']['models.VaultMedia'];
     export type VaultMediaEvent = components['schemas']['models.VaultMediaEvent'];
     export type VaultMediaFragmentCollection = components['schemas']['models.VaultMediaFragmentCollection'];
     export type VaultMediaMetadata = components['schemas']['models.VaultMediaMetadata'];
+    export type Webhook = components['schemas']['models.Webhook'];
 }
 
 export namespace api {
@@ -12406,6 +14904,9 @@ export namespace api {
     export type GetAnalysisRequest = components['schemas']['api.GetAnalysisRequest'];
     export type GetAnalysisResponse = components['schemas']['api.GetAnalysisResponse'];
     export type GetAnalysisSuccessResponse = components['schemas']['api.GetAnalysisSuccessResponse'];
+    export type GetDeviceMediaErrorResponse = components['schemas']['api.GetDeviceMediaErrorResponse'];
+    export type GetDeviceMediaResponse = components['schemas']['api.GetDeviceMediaResponse'];
+    export type GetDeviceMediaSuccessResponse = components['schemas']['api.GetDeviceMediaSuccessResponse'];
     export type GetDeviceOptionsErrorResponse = components['schemas']['api.GetDeviceOptionsErrorResponse'];
     export type GetDeviceOptionsRequest = components['schemas']['api.GetDeviceOptionsRequest'];
     export type GetDeviceOptionsResponse = components['schemas']['api.GetDeviceOptionsResponse'];
@@ -12472,6 +14973,9 @@ export namespace api {
     export type GetTimelineRequest = components['schemas']['api.GetTimelineRequest'];
     export type GetTimelineResponse = components['schemas']['api.GetTimelineResponse'];
     export type GetTimelineSuccessResponse = components['schemas']['api.GetTimelineSuccessResponse'];
+    export type GetUserByIdErrorResponse = components['schemas']['api.GetUserByIdErrorResponse'];
+    export type GetUserByIdResponse = components['schemas']['api.GetUserByIdResponse'];
+    export type GetUserByIdSuccessResponse = components['schemas']['api.GetUserByIdSuccessResponse'];
     export type GroupFilter = components['schemas']['api.GroupFilter'];
     export type MarkerCategoryFilter = components['schemas']['api.MarkerCategoryFilter'];
     export type MarkerEventFilter = components['schemas']['api.MarkerEventFilter'];
@@ -12505,6 +15009,9 @@ export namespace api {
     export type UpdateMediaRequest = components['schemas']['api.UpdateMediaRequest'];
     export type UpdateMediaResponse = components['schemas']['api.UpdateMediaResponse'];
     export type UpdateMediaSuccessResponse = components['schemas']['api.UpdateMediaSuccessResponse'];
+    export type UpdateUserProfileErrorResponse = components['schemas']['api.UpdateUserProfileErrorResponse'];
+    export type UpdateUserProfileResponse = components['schemas']['api.UpdateUserProfileResponse'];
+    export type UpdateUserProfileSuccessResponse = components['schemas']['api.UpdateUserProfileSuccessResponse'];
     export type UpsertStateErrorResponse = components['schemas']['api.UpsertStateErrorResponse'];
     export type UpsertStateRequest = components['schemas']['api.UpsertStateRequest'];
     export type UpsertStateResponse = components['schemas']['api.UpsertStateResponse'];
