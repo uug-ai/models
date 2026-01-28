@@ -64,6 +64,7 @@ func (ms UserStatus) Translate(lang string) string {
 }
 
 // GetUserById response types
+// @Router /users/{id} [get]
 type GetUserByIdResponse struct {
 	User models.User `json:"user"`
 }
@@ -72,5 +73,20 @@ type GetUserByIdSuccessResponse struct {
 	Data GetUserByIdResponse `json:"data"`
 }
 type GetUserByIdErrorResponse struct {
+	ErrorResponse
+}
+
+// UpdateUserProfile response types
+// @Router /profile/user [put]
+type UpdateUserProfileResponse struct {
+	User models.User `json:"user"`
+}
+
+type UpdateUserProfileSuccessResponse struct {
+	SuccessResponse
+	Data UpdateUserProfileResponse `json:"data"`
+}
+
+type UpdateUserProfileErrorResponse struct {
 	ErrorResponse
 }

@@ -35,7 +35,7 @@ const (
 	MediaStartTimestamp = "startTimestamp"
 	MediaEndTimestamp = "endTimestamp"
 	MediaDuration = "duration"
-	MediaDeviceId = "deviceId"
+	MediaDeviceKey = "deviceKey"
 	MediaGroupId = "groupId"
 	MediaSiteId = "siteId"
 	MediaOrganisationId = "organisationId"
