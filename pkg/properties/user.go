@@ -3,29 +3,235 @@
 
 package properties
 
+// Account property field names (BSON)
+const (
+	AccountAccount = "account"
+)
+
+// AccountBody property field names (BSON)
+const (
+	AccountBodyDomain = "domain"
+	AccountBodyFirstName = "firstname"
+	AccountBodyLastName = "lastname"
+	AccountBodyUsername = "username"
+	AccountBodyEmail = "email"
+	AccountBodyPassword = "password"
+	AccountBodyRole = "role"
+	AccountBodySites = "sites"
+	AccountBodyGroups = "groups"
+	AccountBodyCameras = "cameras"
+	AccountBodyIsActive = "isActive"
+	AccountBodyForceMFA = "force_mfa"
+)
+
+// Card property field names (BSON)
+const (
+	CardStripeId = "stripe_id"
+	CardCardBrand = "card_brand"
+	CardCardLastFour = "card_last_four"
+	CardCardStatus = "card_status"
+	CardCardStatusMessage = "card_status_message"
+)
+
+// Credentials property field names (BSON)
+const (
+	CredentialsCurrentPassword = "username"
+	CredentialsNewPassword = "password"
+	CredentialsNewPasswordRepeat = "role"
+)
+
+// DeviceData property field names (BSON)
+const (
+	DeviceDataActiveDevices = "activeDevices"
+	DeviceDataTotalDevices = "totalDevices"
+)
+
+// Encryption property field names (BSON)
+const (
+	EncryptionEnabled = "enabled"
+	EncryptionHasPassphrase = "has_passphrase"
+	EncryptionFingerprint = "fingerprint"
+	EncryptionFingerprintEncrypted = "fingerprint_encrypted"
+	EncryptionPublicKey = "public_key"
+	EncryptionSymmetricKey = "symmetric_key"
+	EncryptionCreationDate = "creation_date"
+)
+
+// HubCredentials property field names (BSON)
+const (
+	HubCredentialsPublicKey = "amazon_access_key_id"
+	HubCredentialsPrivateKey = "amazon_secret_access_key"
+	HubCredentialsBucket = "bucket"
+	HubCredentialsDirectory = "directory"
+	HubCredentialsRegion = "region"
+	HubCredentialsActive = "active"
+)
+
+// KeyPair property field names (BSON)
+const (
+	KeyPairPublicKey = "amazon_access_key_id"
+	KeyPairPrivateKey = "amazon_secret_access_key"
+)
+
+// Livestream property field names (BSON)
+const (
+	LivestreamSpeech = "speech"
+)
+
+// ProfileSettings property field names (BSON)
+const (
+	ProfileSettingsDefaultFloorPlanLabelsHidden = "defaultFloorPlanLabelsHidden"
+)
+
 // User property field names (BSON)
 const (
 	UserId = "_id"
+	UserOrganisationId = "organisation_id"
 	UserUsername = "username"
+	UserPassword = "password"
+	UserForgotPassword = "forgotPassword"
 	UserEmail = "email"
-	UserError = "error"
+	UserDomain = "domain"
+	UserRegistrationToken = "registerToken"
+	UserRole = "role"
+	UserCustomRole = "custom_role"
+	UserRoleLevel = "role_level"
+	UserPermissions = "permissions"
+	UserDays = "dates"
+	UserGoogleMFASecret = "google2fa_secret"
+	UserGoogleMFAEnabled = "google2fa_enabled"
+	UserMfa = "mfa"
+	UserForceMFA = "force_mfa"
+	UserAudit = "audit"
+	UserNickname = "nickname"
+	UserFirstName = "firstname"
+	UserLastName = "lastname"
+	UserCompanyName = "company_name"
+	UserCompanyNumber = "company_number"
+	UserAddress = "address"
+	UserCompanyStreetNumber = "company_street_number"
+	UserCompanyStreet = "company_street"
+	UserCompanyCity = "company_city"
+	UserCompanyPostalCode = "company_postal"
+	UserCompanyRegion = "company_region"
+	UserCompanyCountry = "company_country"
+	UserCompanyCountryLong = "company_country_long"
+	UserTimezone = "timezone"
+	UserProfileCompleted = "profileCompleted"
+	UserIsActive = "isActive"
 	UserReachedLimit = "reachedLimit"
 	UserReachedLimitTimestamp = "reachedLimitTimestamp"
-	UserTimezone = "timezone"
-	UserDates = "dates"
-	UserInstances = "instances"
-	UserPublicKey = "amazon_access_key_id"
-	UserPrivateKey = "amazon_secret_access_key"
-	UserPushbullet = "pushbullet_api_key"
-	UserSettings = "settings"
-	UserThrottler = "throttler"
-	UserActivity = "activity"
-	UserHighUpload = "highupload"
+	UserLivestream = "livestream"
 	UserDevices = "devices"
+	UserCreatedAt = "created_at"
+	UserUpdatedAt = "updated_at"
+	UserSubscription = "subscription"
+	UserStorage = "storage"
+	UserArchiveStorage = "archive_storage"
 	UserNotificationSettings = "notificationSettings"
 	UserChannels = "channels"
-	UserStorage = "storage"
+	UserActivity = "activity"
+	UserSites = "sites"
+	UserGroups = "groups"
+	UserCameras = "cameras"
+	UserCameraBrands = "camera_brands"
+	UserClassificationList = "classification_list"
+	UserProfileSettings = "profileSettings"
 	UserCustomUsageLimit = "custom_usage_limit"
 	UserCustomDayLimit = "custom_day_limit"
 	UserCustomAnalysisLimit = "custom_analysis_limit"
+	UserPlan = "plan"
+	UserPrivateCloud = "private_cloud"
+	UserPrivateCloudPlan = "private_cloud_plan"
+	UserPublicKey = "amazon_access_key_id"
+	UserPrivateKey = "amazon_secret_access_key"
+	UserBucket = "bucket"
+	UserRegion = "region"
+	UserMasterAccount = "user_id"
+	UserMaster = "master"
+	UserStripeId = "stripe_id"
+	UserCoupons = "coupons"
+	UserCardBrand = "card_brand"
+	UserCardLastFour = "card_last_four"
+	UserCardStatus = "card_status"
+	UserCardStatusMessage = "card_status_message"
+	UserHLSCallbackURL = "hls_callback_url"
+	UserOAuthClientID = "oauth_client_id"
+	UserOAuthClientSecret = "oauth_client_secret"
+	UserOAuthClientName = "oauth_client_name"
+	UserOAuthClientCreationDate = "oauth_client_creation_date"
+	UserEncryption = "encryption"
+)
+
+// UserProfile property field names (BSON)
+const (
+	UserProfileUser = "user"
+	UserProfileCard = "card"
+)
+
+// UserProfileSettings property field names (BSON)
+const (
+	UserProfileSettingsUsername = "username"
+	UserProfileSettingsDomain = "domain"
+	UserProfileSettingsRegistrationToken = "registerToken"
+	UserProfileSettingsNickname = "nickname"
+	UserProfileSettingsFirstName = "firstname"
+	UserProfileSettingsLastName = "lastname"
+	UserProfileSettingsCompanyName = "company_name"
+	UserProfileSettingsCompanyNumber = "company_number"
+	UserProfileSettingsAddress = "address"
+	UserProfileSettingsCompanyStreetNumber = "company_street_number"
+	UserProfileSettingsCompanyStreet = "company_street"
+	UserProfileSettingsCompanyCity = "company_city"
+	UserProfileSettingsCompanyPostalCode = "company_postal"
+	UserProfileSettingsCompanyRegion = "company_region"
+	UserProfileSettingsCompanyCountry = "company_country"
+	UserProfileSettingsCompanyCountryLong = "company_country_long"
+	UserProfileSettingsTimezone = "timezone"
+	UserProfileSettingsProfileCompleted = "profileCompleted"
+	UserProfileSettingsIsActive = "isActive"
+	UserProfileSettingsForceMFA = "force_mfa"
+	UserProfileSettingsProfileSettings = "profileSettings"
+)
+
+// UserSettings property field names (BSON)
+const (
+	UserSettingsHLSCallbackURL = "hls_callback_url"
+	UserSettingsOAuthClientID = "oauth_client_id"
+	UserSettingsOAuthClientSecret = "oauth_client_secret"
+	UserSettingsOAuthClientName = "oauth_client_name"
+	UserSettingsOAuthClientCreationDate = "oauth_client_creation_date"
+)
+
+// UserShort property field names (BSON)
+const (
+	UserShortId = "_id"
+	UserShortUsername = "username"
+	UserShortPassword = "password"
+	UserShortEmail = "email"
+	UserShortFirstName = "firstname"
+	UserShortLastName = "lastname"
+	UserShortStripe_plan = "stripe_plan"
+	UserShortCreatedAt = "created_at"
+	UserShortUpdatedAt = "updated_at"
+	UserShortGoogleMFAEnabled = "google2fa_enabled"
+	UserShortPublicKey = "amazon_access_key_id"
+	UserShortPrivateKey = "amazon_secret_access_key"
+	UserShortHasKeys = "has_keys"
+	UserShortDeviceData = "deviceData"
+)
+
+// UserUpdate property field names (BSON)
+const (
+	UserUpdatePublicKey = "amazon_access_key_id"
+	UserUpdatePrivateKey = "amazon_secret_access_key"
+	UserUpdateUpdatedAt = "updated_at"
+	UserUpdateUsername = "username"
+	UserUpdateEmail = "email"
+	UserUpdateFirstName = "firstname"
+	UserUpdateLastName = "lastname"
+	UserUpdateCompanyName = "company_name"
+	UserUpdateCompanyNumber = "company_number"
+	UserUpdateAddress = "address"
+	UserUpdateProfileSettings = "profileSettings"
 )

@@ -41,6 +41,52 @@ const (
 	CameraTourSpeed = "speed"
 )
 
+// DeprecatedHeartbeat property field names (BSON)
+const (
+	DeprecatedHeartbeatCloudPublicKey = "cloudpublickey"
+	DeprecatedHeartbeatHubEncryption = "hub_encryption"
+	DeprecatedHeartbeatE2EEncryption = "e2e_encryption"
+	DeprecatedHeartbeatMACs = "mac_list"
+	DeprecatedHeartbeatIPs = "ip_list"
+	DeprecatedHeartbeatCpuID = "cpuid"
+	DeprecatedHeartbeatCloudUser = "clouduser"
+	DeprecatedHeartbeatCameraName = "cameraname"
+	DeprecatedHeartbeatCameraType = "cameratype"
+	DeprecatedHeartbeatFreeMemory = "freeMemory"
+	DeprecatedHeartbeatTotalMemory = "totalMemory"
+	DeprecatedHeartbeatUsedMemory = "usedMemory"
+	DeprecatedHeartbeatProcessMemory = "processMemory"
+	DeprecatedHeartbeatUptime = "uptime"
+	DeprecatedHeartbeatBootTime = "boot_time"
+	DeprecatedHeartbeatTimestamp = "timestamp"
+	DeprecatedHeartbeatSiteID = "siteID"
+	DeprecatedHeartbeatONVIF = "onvif"
+	DeprecatedHeartbeatONVIFZoom = "onvif_zoom"
+	DeprecatedHeartbeatONVIFPanTilt = "onvif_pantilt"
+	DeprecatedHeartbeatONVIFPresets = "onvif_presets"
+	DeprecatedHeartbeatONVIFPresetsList = "onvif_presets_list"
+	DeprecatedHeartbeatONVIFEventsList = "onvif_events_list"
+	DeprecatedHeartbeatCameraConnected = "cameraConnected"
+	DeprecatedHeartbeatHasBackChannel = "hasBackChannel"
+)
+
+// DeprecatedONVIFEvents property field names (BSON)
+const (
+	DeprecatedONVIFEventsKey = "key"
+	DeprecatedONVIFEventsType = "type"
+	DeprecatedONVIFEventsValue = "value"
+	DeprecatedONVIFEventsTimestamp = "timestamp"
+)
+
+// DeprecatedPreset property field names (BSON)
+const (
+	DeprecatedPresetName = "name"
+	DeprecatedPresetToken = "token"
+	DeprecatedPresetX = "x"
+	DeprecatedPresetY = "y"
+	DeprecatedPresetZ = "z"
+)
+
 // Device property field names (BSON)
 const (
 	DeviceId = "_id"
@@ -71,6 +117,7 @@ const (
 	DeviceFeaturePermissions = "featurePermissions"
 	DeviceAtRuntimeMetadata = "atRuntimeMetadata"
 	DeviceAudit = "audit"
+	DeviceDeprecatedAnalytics = "analytics"
 )
 
 // DeviceAtRuntimeMetadata property field names (BSON)
