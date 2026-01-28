@@ -15,7 +15,49 @@ type Organisation struct {
 	OwnerId     primitive.ObjectID   `json:"owner_id" bson:"owner_id,omitempty"` // The user who owns this organisation
 	Settings    OrganisationSettings `json:"settings" bson:"settings,omitempty"`
 	IsActive    int                  `json:"is_active" bson:"is_active"`
-	Audit       Audit                `json:"audit" bson:"audit,omitempty"`
+
+	// Company Details
+	Company CompanyDetails `json:"company" bson:"company,omitempty"`
+
+	// Billing & Subscription
+	Subscription   Subscription `json:"subscription" bson:"subscription,omitempty"`
+	BillingAddress Address      `json:"billing_address" bson:"billing_address,omitempty"`
+
+	Audit Audit `json:"audit" bson:"audit,omitempty"`
+}
+
+// CompanyDetails contains the legal and business information for an organisation.
+type CompanyDetails struct {
+	LegalName          string `json:"legal_name" bson:"legal_name,omitempty"`                   // Official registered company name
+	TradingName        string `json:"trading_name" bson:"trading_name,omitempty"`               // Trading/DBA name if different
+	RegistrationNumber string `json:"registration_number" bson:"registration_number,omitempty"` // Company registration number
+	VATNumber          string `json:"vat_number" bson:"vat_number,omitempty"`                   // VAT/Tax ID number
+	TaxId              string `json:"tax_id" bson:"tax_id,omitempty"`                           // Alternative tax identifier
+	Industry           string `json:"industry" bson:"industry,omitempty"`                       // Industry/sector
+	Website            string `json:"website" bson:"website,omitempty"`                         // Company website
+	Phone              string `json:"phone" bson:"phone,omitempty"`                             // Main company phone
+	Email              string `json:"email" bson:"email,omitempty"`                             // Main company email
+	Logo               string `json:"logo" bson:"logo,omitempty"`                               // Company logo URL
+}
+
+// Address represents a physical address.
+type Address struct {
+	StreetNumber string `json:"street_number" bson:"street_number,omitempty"`
+	Street       string `json:"street" bson:"street,omitempty"`
+	Street2      string `json:"street2" bson:"street2,omitempty"` // Additional address line
+	City         string `json:"city" bson:"city,omitempty"`
+	PostalCode   string `json:"postal_code" bson:"postal_code,omitempty"`
+	Region       string `json:"region" bson:"region,omitempty"`             // State/Province/Region
+	Country      string `json:"country" bson:"country,omitempty"`           // ISO country code
+	CountryName  string `json:"country_name" bson:"country_name,omitempty"` // Full country name
+}
+
+// Contact represents a contact person with their details.
+type Contact struct {
+	Name  string `json:"name" bson:"name,omitempty"`
+	Email string `json:"email" bson:"email,omitempty"`
+	Phone string `json:"phone" bson:"phone,omitempty"`
+	Role  string `json:"role" bson:"role,omitempty"` // Job title/role
 }
 
 // OrganisationSettings contains configurable settings for an organisation.
@@ -25,6 +67,11 @@ type OrganisationSettings struct {
 	DefaultRoleId    primitive.ObjectID `json:"default_role_id" bson:"default_role_id,omitempty"` // Default role for new members
 	MaxMembers       int                `json:"max_members" bson:"max_members,omitempty"`
 	AllowInvitations bool               `json:"allow_invitations" bson:"allow_invitations,omitempty"`
+
+	// Contacts for different purposes
+	FinancialContact Contact `json:"financial_contact" bson:"financial_contact,omitempty"` // Billing/finance contact
+	TechnicalContact Contact `json:"technical_contact" bson:"technical_contact,omitempty"` // Technical/support contact
+	PrimaryContact   Contact `json:"primary_contact" bson:"primary_contact,omitempty"`     // Main point of contact
 }
 
 // UserOrganisation represents a user's membership in an organisation.
