@@ -2,32 +2,50 @@ package models
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
+type GroupType struct {
+	Id   primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	Name string             `json:"name" bson:"name,omitempty"`
+}
+
 type Group struct {
 	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	Type        GroupType          `json:"type" bson:"type,omitempty"`
 	Name        string             `json:"name" bson:"name,omitempty"`
 	Description string             `json:"description" bson:"description,omitempty"`
-	GroupType   string             `json:"group_type" bson:"group_type,omitempty"`
+	Initials    string             `json:"initials" bson:"initials,omitempty"`
+	Color       string             `json:"color" bson:"color,omitempty"`
 
-	// RBAC information
-	OrganisationId string   `json:"organisationId" bson:"organisationId,omitempty"`
-	Devices        []string `json:"devices" bson:"devices"`
-	Groups         []string `json:"groups" bson:"groups"` // Nested groups
-	Sites          []string `json:"sites" bson:"sites"`   // Nested sites
+	// RBAC properties
+	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
+	UserId         string `json:"user_id" bson:"user_id,omitempty"`
+
+	// Permissions and scope for group
+	Devices []string `json:"devices" bson:"devices"`
+	Groups  []string `json:"groups" bson:"groups"`
+
+	// Location info for group (if applicable)
+	Address Location `json:"address" bson:"address,omitempty"`
+	Street  string   `json:"street" bson:"street"`
+	Country string   `json:"country" bson:"country"`
 
 	// Media file information (by default "vault", however might change
 	// in the future (integration with other storage solutions, next to Vault).
 	StorageSolution string `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`
-
 	VaultAccessKey string `json:"vaultAccessKey" bson:"vaultAccessKey"`
 	VaultSecretKey string `json:"vaultSecretKey" bson:"vaultSecretKey"`
 	VaultUri       string `json:"vaultUri" bson:"vaultUri"`
 
-	// Metadata
-	Metadata *GroupMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
+	// @ Deprecated: should go into the Audit property
+	CreatedBy   string `json:"created_by" bson:"created_by,omitempty"`
+	CreatedTime int64  `json:"created_time" bson:"created_time,omitempty"`
+	UpdatedBy   string `json:"updated_by" bson:"updated_by,omitempty"`
+	UpdatedTime int64  `json:"updated_time" bson:"updated_time,omitempty"`
 
-	// Audit information
-	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
+	// @ Deprecated: The idea is that we will create recursive groups instead of assigning sites to groups
+	GroupType string   `json:"group_type" bson:"group_type,omitempty"`
+	Sites     []string `json:"sites" bson:"sites"`
 }
+
 
 // GroupMetadata contains additional metadata for the group, such as tags and classifications.
 type GroupMetadata struct {
