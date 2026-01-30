@@ -35,6 +35,15 @@ type Group struct {
 	VaultSecretKey string `json:"vaultSecretKey" bson:"vaultSecretKey"`
 	VaultUri       string `json:"vaultUri" bson:"vaultUri"`
 
+
+	// AtRuntimeMetadata contains metadata that is generated at runtime, which can include
+	// more verbose information about the device's current state, capabilities, or configuration.
+	// for example the linked sites details, etc.
+	AtRuntimeMetadata *GroupRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"atRuntimeMetadata,omitempty"`
+
+	// Audit information
+	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
+
 	// @ Deprecated: should go into the Audit property
 	CreatedBy   string `json:"created_by" bson:"created_by,omitempty"`
 	CreatedTime int64  `json:"created_time" bson:"created_time,omitempty"`
@@ -54,6 +63,10 @@ type GroupMetadata struct {
 	FloorPlans         []FloorPlan `json:"floorPlans" bson:"floorPlans,omitempty"` // List of floor plans associated with the group
 	NumberOfFloorPlans int         `json:"numberOfFloorPlans" bson:"numberOfFloorPlans,omitempty"`
 	Location           Location    `json:"location" bson:"location,omitempty"`
+}
+
+// GroupRuntimeMetadata contains metadata generated at runtime for the group.
+type GroupRuntimeMetadata struct {
 }
 
 type GroupOption struct {
