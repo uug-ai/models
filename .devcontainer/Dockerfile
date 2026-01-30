@@ -1,5 +1,8 @@
 FROM mcr.microsoft.com/devcontainers/go:1.24-bookworm
 
+# Remove yarn repo with expired GPG key (not needed for this devcontainer)
+RUN rm -f /etc/apt/sources.list.d/yarn.list
+
 # Add nodejs and npm
 RUN apt-get update && \
     apt-get install -y nodejs npm && \

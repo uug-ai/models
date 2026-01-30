@@ -8,48 +8,80 @@ import (
 
 // Organisation represents an organization entity that users can belong to.
 type Organisation struct {
-	Id          primitive.ObjectID   `json:"id" bson:"_id,omitempty"`
-	Name        string               `json:"name" bson:"name,omitempty"`
-	Description string               `json:"description" bson:"description,omitempty"`
-	Domain      string               `json:"domain" bson:"domain,omitempty"`
-	OwnerId     primitive.ObjectID   `json:"owner_id" bson:"owner_id,omitempty"` // The user who owns this organisation
-	Settings    OrganisationSettings `json:"settings" bson:"settings,omitempty"`
-	IsActive    int                  `json:"is_active" bson:"is_active"`
+	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	Name        string             `json:"name" bson:"name,omitempty"`
+	Description string             `json:"description" bson:"description,omitempty"`
+	OwnerId     string             `json:"ownerId" bson:"ownerId,omitempty"`
+	IsActive    int                `json:"isActive" bson:"isActive"`
+
+	// Credentials
+	PublicKey  string `json:"publicKey" bson:"publicKey,omitempty"`
+	PrivateKey string `json:"privateKey" bson:"privateKey,omitempty"`
+
+	// Subscription plan
+	Subscription Subscription `json:"subscription" bson:"subscription,omitempty"`
 
 	// Company Details
-	Company CompanyDetails `json:"company" bson:"company,omitempty"`
+	Company        CompanyDetails `json:"company" bson:"company,omitempty"`
+	BillingAddress Address        `json:"billingAddress" bson:"billingAddress,omitempty"`
 
-	// Billing & Subscription
-	Subscription   Subscription `json:"subscription" bson:"subscription,omitempty"`
-	BillingAddress Address      `json:"billing_address" bson:"billing_address,omitempty"`
+	// Additional metadata
+	Metadata *OrganisationMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
 
-	Audit Audit `json:"audit" bson:"audit,omitempty"`
+	// AtRuntimeMetadata contains metadata that is generated at runtime, which can include
+	// more verbose information about the organisation information, something that doesnt need to be stored in the database,
+	// for example the roles assignments, role permissions
+	AtRuntimeMetadata *OrganisationAtRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"atRuntimeMetadata,omitempty"`
+
+	// Audit information
+	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"` // Audit information for tracking changes to the marker
+}
+
+type OrganisationMetadata struct {
+	Domain           string             `json:"domain" bson:"domain,omitempty"`
+	ForceMFA         bool               `json:"forceMFA" bson:"forceMFA,omitempty"`
+	AllowedDomains   []string           `json:"allowedDomains" bson:"allowedDomains,omitempty"` // Email domains allowed for membership
+	DefaultRoleId    primitive.ObjectID `json:"defaultRoleId" bson:"defaultRoleId,omitempty"`   // Default role for new members
+	MaxMembers       int                `json:"maxMembers" bson:"maxMembers,omitempty"`
+	AllowInvitations bool               `json:"allowInvitations" bson:"allowInvitations,omitempty"`
+
+	// Subscription information
+	ReachedLimit          bool  `json:"reachedLimit" bson:"reachedLimit,omitempty"`
+	ReachedLimitTimestamp int64 `json:"reachedLimitTimestamp" bson:"reachedLimitTimestamp,omitempty"`
+
+	// Contacts for different purposes
+	FinancialContact Contact `json:"financialContact" bson:"financialContact,omitempty"` // Billing/finance contact
+	TechnicalContact Contact `json:"technicalContact" bson:"technicalContact,omitempty"` // Technical/support contact
+	PrimaryContact   Contact `json:"primaryContact" bson:"primaryContact,omitempty"`     // Main point of contact
+}
+
+type OrganisationAtRuntimeMetadata struct {
 }
 
 // CompanyDetails contains the legal and business information for an organisation.
 type CompanyDetails struct {
-	LegalName          string `json:"legal_name" bson:"legal_name,omitempty"`                   // Official registered company name
-	TradingName        string `json:"trading_name" bson:"trading_name,omitempty"`               // Trading/DBA name if different
-	RegistrationNumber string `json:"registration_number" bson:"registration_number,omitempty"` // Company registration number
-	VATNumber          string `json:"vat_number" bson:"vat_number,omitempty"`                   // VAT/Tax ID number
-	TaxId              string `json:"tax_id" bson:"tax_id,omitempty"`                           // Alternative tax identifier
-	Industry           string `json:"industry" bson:"industry,omitempty"`                       // Industry/sector
-	Website            string `json:"website" bson:"website,omitempty"`                         // Company website
-	Phone              string `json:"phone" bson:"phone,omitempty"`                             // Main company phone
-	Email              string `json:"email" bson:"email,omitempty"`                             // Main company email
-	Logo               string `json:"logo" bson:"logo,omitempty"`                               // Company logo URL
+	LegalName          string `json:"legalName" bson:"legalName,omitempty"`                   // Official registered company name
+	TradingName        string `json:"tradingName" bson:"tradingName,omitempty"`               // Trading/DBA name if different
+	RegistrationNumber string `json:"registrationNumber" bson:"registrationNumber,omitempty"` // Company registration number
+	VATNumber          string `json:"vatNumber" bson:"vatNumber,omitempty"`                   // VAT/Tax ID number
+	TaxId              string `json:"taxId" bson:"taxId,omitempty"`                           // Alternative tax identifier
+	Industry           string `json:"industry" bson:"industry,omitempty"`                     // Industry/sector
+	Website            string `json:"website" bson:"website,omitempty"`                       // Company website
+	Phone              string `json:"phone" bson:"phone,omitempty"`                           // Main company phone
+	Email              string `json:"email" bson:"email,omitempty"`                           // Main company email
+	Logo               string `json:"logo" bson:"logo,omitempty"`                             // Company logo URL
 }
 
 // Address represents a physical address.
 type Address struct {
-	StreetNumber string `json:"street_number" bson:"street_number,omitempty"`
+	StreetNumber string `json:"streetNumber" bson:"streetNumber,omitempty"`
 	Street       string `json:"street" bson:"street,omitempty"`
 	Street2      string `json:"street2" bson:"street2,omitempty"` // Additional address line
 	City         string `json:"city" bson:"city,omitempty"`
-	PostalCode   string `json:"postal_code" bson:"postal_code,omitempty"`
-	Region       string `json:"region" bson:"region,omitempty"`             // State/Province/Region
-	Country      string `json:"country" bson:"country,omitempty"`           // ISO country code
-	CountryName  string `json:"country_name" bson:"country_name,omitempty"` // Full country name
+	PostalCode   string `json:"postalCode" bson:"postalCode,omitempty"`
+	Region       string `json:"region" bson:"region,omitempty"`           // State/Province/Region
+	Country      string `json:"country" bson:"country,omitempty"`         // ISO country code
+	CountryName  string `json:"countryName" bson:"countryName,omitempty"` // Full country name
 }
 
 // Contact represents a contact person with their details.
@@ -60,76 +92,62 @@ type Contact struct {
 	Role  string `json:"role" bson:"role,omitempty"` // Job title/role
 }
 
-// OrganisationSettings contains configurable settings for an organisation.
-type OrganisationSettings struct {
-	ForceMFA         bool               `json:"force_mfa" bson:"force_mfa,omitempty"`
-	AllowedDomains   []string           `json:"allowed_domains" bson:"allowed_domains,omitempty"` // Email domains allowed for membership
-	DefaultRoleId    primitive.ObjectID `json:"default_role_id" bson:"default_role_id,omitempty"` // Default role for new members
-	MaxMembers       int                `json:"max_members" bson:"max_members,omitempty"`
-	AllowInvitations bool               `json:"allow_invitations" bson:"allow_invitations,omitempty"`
-
-	// Contacts for different purposes
-	FinancialContact Contact `json:"financial_contact" bson:"financial_contact,omitempty"` // Billing/finance contact
-	TechnicalContact Contact `json:"technical_contact" bson:"technical_contact,omitempty"` // Technical/support contact
-	PrimaryContact   Contact `json:"primary_contact" bson:"primary_contact,omitempty"`     // Main point of contact
-}
-
 // UserOrganisation represents a user's membership in an organisation.
 // This is the join table between users and organisations, allowing users
 // to belong to multiple organisations. Role assignments are managed separately
 // through the RoleAssignment model.
 type UserOrganisation struct {
 	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
-	UserId         primitive.ObjectID `json:"user_id" bson:"user_id,omitempty"`
-	OrganisationId primitive.ObjectID `json:"organisation_id" bson:"organisation_id,omitempty"`
+	UserId         string             `json:"userId" bson:"userId,omitempty"`
+	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
 	Status         string             `json:"status" bson:"status,omitempty"` // "pending", "active", "suspended", "revoked"
-	InvitedBy      primitive.ObjectID `json:"invited_by" bson:"invited_by,omitempty"`
-	InvitedAt      time.Time          `json:"invited_at" bson:"invited_at,omitempty"`
-	JoinedAt       time.Time          `json:"joined_at" bson:"joined_at,omitempty"`
-	ExpiresAt      time.Time          `json:"expires_at" bson:"expires_at,omitempty"`   // Optional expiration for temporary access
+	InvitedBy      string             `json:"invitedBy" bson:"invitedBy,omitempty"`
+	InvitedAt      time.Time          `json:"invitedAt" bson:"invitedAt,omitempty"`
+	JoinedAt       time.Time          `json:"joinedAt" bson:"joinedAt,omitempty"`
+	ExpiresAt      time.Time          `json:"expiresAt" bson:"expiresAt,omitempty"`     // Optional expiration for temporary access
 	Permissions    UserOrgPermissions `json:"permissions" bson:"permissions,omitempty"` // Additional permissions specific to this membership
 	Audit          Audit              `json:"audit" bson:"audit,omitempty"`
 }
 
 // UserOrgPermissions defines specific permissions a user has within an organisation.
 type UserOrgPermissions struct {
-	CanInviteUsers   bool     `json:"can_invite_users" bson:"can_invite_users,omitempty"`
-	CanManageRoles   bool     `json:"can_manage_roles" bson:"can_manage_roles,omitempty"`
-	CanManageDevices bool     `json:"can_manage_devices" bson:"can_manage_devices,omitempty"`
-	CanManageSites   bool     `json:"can_manage_sites" bson:"can_manage_sites,omitempty"`
-	CanManageGroups  bool     `json:"can_manage_groups" bson:"can_manage_groups,omitempty"`
-	SiteIds          []string `json:"site_ids" bson:"site_ids,omitempty"`     // Specific sites user has access to
-	GroupIds         []string `json:"group_ids" bson:"group_ids,omitempty"`   // Specific groups user has access to
-	DeviceIds        []string `json:"device_ids" bson:"device_ids,omitempty"` // Specific devices user has access to
+	CanInviteUsers   bool     `json:"canInviteUsers" bson:"canInviteUsers,omitempty"`
+	CanManageRoles   bool     `json:"canManageRoles" bson:"canManageRoles,omitempty"`
+	CanManageDevices bool     `json:"canManageDevices" bson:"canManageDevices,omitempty"`
+	CanManageSites   bool     `json:"canManageSites" bson:"canManageSites,omitempty"`
+	CanManageGroups  bool     `json:"canManageGroups" bson:"canManageGroups,omitempty"`
+	SiteIds          []string `json:"siteIds" bson:"siteIds,omitempty"`     // Specific sites user has access to
+	GroupIds         []string `json:"groupIds" bson:"groupIds,omitempty"`   // Specific groups user has access to
+	DeviceIds        []string `json:"deviceIds" bson:"deviceIds,omitempty"` // Specific devices user has access to
 }
 
 // OrganisationInvitation represents a pending invitation to join an organisation.
 type OrganisationInvitation struct {
 	Id             primitive.ObjectID   `json:"id" bson:"_id,omitempty"`
-	OrganisationId primitive.ObjectID   `json:"organisation_id" bson:"organisation_id,omitempty"`
+	OrganisationId string               `json:"organisationId" bson:"organisationId,omitempty"`
 	Email          string               `json:"email" bson:"email,omitempty"`
-	RoleIds        []primitive.ObjectID `json:"role_ids" bson:"role_ids,omitempty"` // Roles to assign upon acceptance
+	RoleIds        []primitive.ObjectID `json:"roleIds" bson:"roleIds,omitempty"` // Roles to assign upon acceptance
 	Token          string               `json:"token" bson:"token,omitempty"`
-	InvitedBy      primitive.ObjectID   `json:"invited_by" bson:"invited_by,omitempty"`
+	InvitedBy      primitive.ObjectID   `json:"invitedBy" bson:"invitedBy,omitempty"`
 	Status         string               `json:"status" bson:"status,omitempty"` // "pending", "accepted", "expired", "revoked"
-	ExpiresAt      time.Time            `json:"expires_at" bson:"expires_at,omitempty"`
+	ExpiresAt      time.Time            `json:"expiresAt" bson:"expiresAt,omitempty"`
 	Audit          Audit                `json:"audit" bson:"audit,omitempty"`
 }
 
 // UserOrganisationDetails is a helper struct that includes full organisation and role details
 type UserOrganisationDetails struct {
-	UserId          primitive.ObjectID `json:"user_id" bson:"user_id,omitempty"`
-	Membership      UserOrganisation   `json:"membership" bson:"membership,omitempty"`
-	Organisation    Organisation       `json:"organisation" bson:"organisation,omitempty"`
-	RoleAssignments []RoleAssignment   `json:"role_assignments" bson:"role_assignments,omitempty"` // User's role assignments in this organisation
-	Roles           []Role             `json:"roles" bson:"roles,omitempty"`                       // Populated role details
+	UserId          string           `json:"userId" bson:"userId,omitempty"`
+	Membership      UserOrganisation `json:"membership" bson:"membership,omitempty"`
+	Organisation    Organisation     `json:"organisation" bson:"organisation,omitempty"`
+	RoleAssignments []RoleAssignment `json:"roleAssignments" bson:"roleAssignments,omitempty"` // User's role assignments in this organisation
+	Roles           []Role           `json:"roles" bson:"roles,omitempty"`                     // Populated role details
 }
 
 // OrganisationMember is a helper struct that includes full user details for an organisation member
 type OrganisationMember struct {
-	OrganisationId  primitive.ObjectID `json:"organisation_id" bson:"organisation_id,omitempty"`
-	Membership      UserOrganisation   `json:"membership" bson:"membership,omitempty"`
-	User            User               `json:"user" bson:"user,omitempty"`
-	RoleAssignments []RoleAssignment   `json:"role_assignments" bson:"role_assignments,omitempty"` // Member's role assignments
-	Roles           []Role             `json:"roles" bson:"roles,omitempty"`                       // Populated role details
+	OrganisationId  string           `json:"organisationId" bson:"organisationId,omitempty"`
+	Membership      UserOrganisation `json:"membership" bson:"membership,omitempty"`
+	User            User             `json:"user" bson:"user,omitempty"`
+	RoleAssignments []RoleAssignment `json:"roleAssignments" bson:"roleAssignments,omitempty"` // Member's role assignments
+	Roles           []Role           `json:"roles" bson:"roles,omitempty"`                     // Populated role details
 }
