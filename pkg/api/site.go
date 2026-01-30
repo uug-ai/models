@@ -67,6 +67,7 @@ type SiteFilter struct {
 	SiteIds    []*string `json:"siteIds,omitempty" bson:"siteIds,omitempty"`
 	Name       *string   `json:"name,omitempty" bson:"name,omitempty"`
 	DeviceKeys []string  `json:"deviceKeys,omitempty" bson:"deviceKeys,omitempty"`
+	Sort       *string   `json:"sort,omitempty" bson:"sort,omitempty"`
 }
 
 type SiteFlags struct {

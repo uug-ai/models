@@ -66,6 +66,7 @@ func (ds GroupStatus) Translate(lang string) string {
 type GroupFilter struct {
 	GroupIds []*string `json:"groupIds,omitempty" bson:"groupIds,omitempty"`
 	Name     *string   `json:"name,omitempty" bson:"name,omitempty"`
+	Sort     *string   `json:"sort,omitempty" bson:"sort,omitempty"`
 }
 
 type GetGroupOptionsRequest struct {

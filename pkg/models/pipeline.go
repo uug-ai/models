@@ -100,14 +100,14 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 
 	// Legacy way, parse from filename the different fields. We used to have only the filename, and used the filename to store all attributes.
 	// As this was not very flexible, we moved to structured metadata, but we still need to support the legacy way if there
-	// is a legacy Vault in place.
+	// is a legacy Vault in~ place.
 
 	username := pathParts[0]
 	_ = username // Currently not used, but could be useful in the future.
 	videoFileName := pathParts[1]
 	videoFileNamePieces := strings.Split(videoFileName, ".")
 	if len(videoFileNamePieces) < 2 {
-		return media, fmt.Errorf("invalid video file name format, expected at least 2 parts separated by '.', got: %s", videoFileName) // Return empty media if filename format is invalid
+		return media, fmt.Errorf("inval`id video file name format, expected at least 2 parts separated by '.', got: %s", videoFileName) // Return empty media if filename format is invalid
 	}
 
 	// Extract attributes from the video file name
