@@ -16,22 +16,31 @@ const (
 
 type Role struct {
 	Id                 primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
-	OrganisationId     primitive.ObjectID `json:"organisation_id" bson:"organisation_id,omitempty"` // Organisation this role belongs to
+	OrganisationId     primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"` // Organisation this role belongs to
 	Name               string             `json:"roleName" bson:"roleName,omitempty"`
-	Description        string             `json:"description" bson:"description,omitempty"`
-	ParentRole         string             `json:"role" bson:"role,omitempty"`
+	Description        string             `json:"description" bson:"description,omitempty"`\
 	Pages              []string           `json:"pages" bson:"pages"`
 	TimeWindow         TimeWindow         `json:"timeWindow" bson:"timeWindow"`
 	IsActive           int                `json:"isActive" bson:"isActive"`
 	FeaturePermissions FeaturePermissions `json:"featurePermissions" bson:"featurePermissions"`
 	TimeWindowActive   int                `json:"timeWindowActive" bson:"timeWindowActive"`
+	Scope              RoleScope          `json:"scope" bson:"scope,omitempty"` // Optional granular scope within organisation
 	Audit              Audit              `json:"audit" bson:"audit,omitempty"`
+}
+
+// RoleScope defines the scope/context where the role assignment applies.
+// This allows for granular role assignments at different levels.
+type RoleScope struct {
+	Type      string   `json:"type" bson:"type,omitempty"`             // e.g., "global", "site", "group", "device"
+	SiteIds   []string `json:"siteIds" bson:"siteIds,omitempty"`     // Sites where the role applies
+	GroupIds  []string `json:"groupIds" bson:"groupIds,omitempty"`   // Groups where the role applies
+	DeviceIds []string `json:"deviceIds" bson:"deviceIds,omitempty"` // Devices where the role applies
 }
 
 type FeaturePermissions struct {
 	PTZ          AccessLevel `json:"ptz" bson:"ptz"`                     // 0=none, 1=read, 2=write, 3=admin
 	Liveview     AccessLevel `json:"liveview" bson:"liveview"`           // 0=none, 1=read, 2=write, 3=admin
-	RemoteConfig AccessLevel `json:"remote_config" bson:"remote_config"` // 0=none, 1=read, 2=write, 3=admin
+	RemoteConfig AccessLevel `json:"remoteConfig" bson:"remoteConfig"` 	 // 0=none, 1=read, 2=write, 3=admin
 	IO           AccessLevel `json:"io" bson:"io"`                       // 0=none, 1=read, 2=write, 3=admin
 	FloorPlans   AccessLevel `json:"floorPlans" bson:"floorPlans"`       // 0=none, 1=read, 2=write, 3=admin
 	Playback     AccessLevel `json:"playback" bson:"playback"`           // 0=none, 1=read, 2=write, 3=admin
