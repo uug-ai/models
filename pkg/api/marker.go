@@ -128,32 +128,36 @@ func (ms MarkerStatus) Translate(lang string) string {
 }
 
 type MarkerFilter struct {
-	MarkerIds  []*string
-	Names      []*string
-	Name       *string
-	Categories []*string
-	DeviceKeys []*string
-	TimeRanges []*models.TimeRange
+	MarkerIds  []*string           `json:"markerIds,omitempty" bson:"markerIds,omitempty"`
+	Names      []*string           `json:"names,omitempty" bson:"names,omitempty"`
+	Name       *string             `json:"name,omitempty" bson:"name,omitempty"`
+	Categories []*string           `json:"categories,omitempty" bson:"categories,omitempty"`
+	DeviceKeys []*string           `json:"deviceKeys,omitempty" bson:"deviceKeys,omitempty"`
+	TimeRanges []*models.TimeRange `json:"timeRanges,omitempty" bson:"timeRanges,omitempty"`
+	Sort       *string             `json:"sort,omitempty" bson:"sort,omitempty"`
 }
 
 type MarkerEventFilter struct {
-	MarkerEventIds []*string
-	Names          []*string
-	Name           *string
-	DeviceKeys     []*string
-	TimeRanges     []*models.TimeRange
+	MarkerEventIds []*string           `json:"markerEventIds,omitempty" bson:"markerEventIds,omitempty"`
+	Names          []*string           `json:"names,omitempty" bson:"names,omitempty"`
+	Name           *string             `json:"name,omitempty" bson:"name,omitempty"`
+	DeviceKeys     []*string           `json:"deviceKeys,omitempty" bson:"deviceKeys,omitempty"`
+	TimeRanges     []*models.TimeRange `json:"timeRanges,omitempty" bson:"timeRanges,omitempty"`
+	Sort           *string             `json:"sort,omitempty" bson:"sort,omitempty"`
 }
 
 type MarkerTagFilter struct {
-	Names      []*string
-	Name       *string
-	DeviceKeys []*string
-	TimeRanges []*models.TimeRange
+	Names      []*string           `json:"names,omitempty" bson:"names,omitempty"`
+	Name       *string             `json:"name,omitempty" bson:"name,omitempty"`
+	DeviceKeys []*string           `json:"deviceKeys,omitempty" bson:"deviceKeys,omitempty"`
+	TimeRanges []*models.TimeRange `json:"timeRanges,omitempty" bson:"timeRanges,omitempty"`
+	Sort       *string             `json:"sort,omitempty" bson:"sort,omitempty"`
 }
 
 type MarkerCategoryFilter struct {
-	Names []*string
-	Name  *string
+	Names []*string `json:"names,omitempty" bson:"names,omitempty"`
+	Name  *string   `json:"name,omitempty" bson:"name,omitempty"`
+	Sort  *string   `json:"sort,omitempty" bson:"sort,omitempty"`
 }
 
 // GetMarkers

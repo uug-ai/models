@@ -72,6 +72,7 @@ type DeviceFilter struct {
 	Sites     []*string `json:"sites,omitempty" bson:"sites,omitempty"`
 	Groups    []*string `json:"groups,omitempty" bson:"groups,omitempty"`
 	Markers   []*string `json:"markers,omitempty" bson:"markers,omitempty"`
+	Sort      *string   `json:"sort,omitempty" bson:"sort,omitempty"`
 }
 
 type GetDeviceOptionsRequest struct {
