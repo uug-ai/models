@@ -46,6 +46,7 @@ type CustomAlert struct {
 	Features            *AlertFeatures       `json:"features,omitempty" bson:"features,omitempty"`
 	WeeklySchedule      []*WeeklySchedule    `json:"weeklySchedule" bson:"weeklySchedule,omitempty"`
 	DateRangeSchedule   []*DateRangeSchedule `json:"dateRangeSchedule" bson:"dateRangeSchedule,omitempty"`
+	OrganisationId      string               `json:"organisationId" bson:"organisationId,omitempty"`
 
 	// Deprecated: legacy time range fields. Use WeeklySchedule/DateRangeSchedule instead.
 	TimeRange1Max int32 `json:"timeRange1Max" bson:"timeRange1Max"`
@@ -193,4 +194,47 @@ func inSegments(seconds int, segments []DayTimeRange) bool {
 
 func isValidSegment(seg DayTimeRange) bool {
 	return seg.Start >= 0 && seg.End <= 86400 && seg.Start < seg.End
+}
+
+// WeeklyScheduleFromDeprecatedTimeRanges maps legacy TimeRange values to a weekly schedule.
+// Each time range becomes a daily segment for every weekday, enabled in Europe/Brussels.
+func (a *CustomAlert) WeeklyScheduleFromDeprecatedTimeRanges() []*WeeklySchedule {
+	if a == nil {
+		return nil
+	}
+	segments := deprecatedTimeRangeSegments(a.TimeRange1Min, a.TimeRange1Max, a.TimeRange2Min, a.TimeRange2Max)
+	if len(segments) == 0 {
+		return nil
+	}
+	schedules := make([]*WeeklySchedule, 0, 7)
+	for day := 0; day < 7; day++ {
+		schedules = append(schedules, &WeeklySchedule{
+			Day:      day,
+			Segments: append([]DayTimeRange(nil), segments...),
+			Enabled:  true,
+			Timezone: "Europe/Brussels",
+		})
+	}
+	return schedules
+}
+
+func deprecatedTimeRangeSegments(min1, max1, min2, max2 int32) []DayTimeRange {
+	segments := make([]DayTimeRange, 0, 2)
+	if seg, ok := toDayTimeRange(min1, max1); ok {
+		segments = append(segments, seg)
+	}
+	if seg, ok := toDayTimeRange(min2, max2); ok {
+		segments = append(segments, seg)
+	}
+	return segments
+}
+
+func toDayTimeRange(minHour, maxHour int32) (DayTimeRange, bool) {
+	if minHour < 0 || maxHour > 24 || minHour >= maxHour {
+		return DayTimeRange{}, false
+	}
+	return DayTimeRange{
+		Start: int64(minHour) * 3600,
+		End:   int64(maxHour) * 3600,
+	}, true
 }
