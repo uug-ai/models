@@ -66,7 +66,7 @@ type WeeklySchedule struct {
 }
 
 type DateRangeSchedule struct {
-	// StartDate/EndDate are unix seconds for local midnight in Timezone (inclusive bounds).
+	// StartDate is inclusive; EndDate is exclusive. Both are unix seconds for local midnight in Timezone.
 	StartDate int64          `json:"startDate" bson:"startDate"`
 	EndDate   int64          `json:"endDate" bson:"endDate"`
 	Segments  []DayTimeRange `json:"segments" bson:"segments"`
@@ -139,7 +139,9 @@ func (d *DateRangeSchedule) DateInRange(ts time.Time) bool {
 		return false
 	}
 	tsUnix := ts.Unix()
-	return tsUnix >= d.StartDate && tsUnix <= d.EndDate
+	// EndDate is treated as an exclusive boundary to ensure the range
+	// covers full local days from StartDate up to, but not including, EndDate.
+	return tsUnix >= d.StartDate && tsUnix < d.EndDate
 }
 
 // IsActiveAt reports whether ts falls within any enabled date-range segment.
