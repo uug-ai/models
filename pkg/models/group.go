@@ -27,6 +27,12 @@ type Group struct {
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
+
+	// Deprecated
+	UserId   string   `json:"user_id" bson:"user_id,omitempty"`
+	Initials string   `json:"initials" bson:"initials,omitempty"`
+	Address  Location `json:"address" bson:"address,omitempty"`
+	Color    string   `json:"color" bson:"color,omitempty"`
 }
 
 // GroupMetadata contains additional metadata for the group, such as tags and classifications.
