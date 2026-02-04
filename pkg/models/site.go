@@ -25,6 +25,9 @@ type Site struct {
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
+
+	// Deprecated
+	UserId string `json:"user_id" bson:"user_id,omitempty"`
 }
 
 // SiteMetadata contains additional metadata for the site, such as tags and classifications.
