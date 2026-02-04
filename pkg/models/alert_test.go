@@ -1,6 +1,7 @@
 package models
 
 import (
+	"reflect"
 	"testing"
 	"time"
 )
@@ -256,4 +257,104 @@ func TestDateRangeScheduleTimezonePolicy(t *testing.T) {
 	if dr.IsActiveAt(ts.Unix()) {
 		t.Fatalf("expected date range schedule to be inactive at end boundary")
 	}
+}
+
+func TestDateRangeScheduleIanaTimezone(t *testing.T) {
+	loc, err := time.LoadLocation("Europe/Brussels")
+	if err != nil {
+		t.Skipf("timezone data not available: %v", err)
+	}
+
+	localMidnight := time.Date(2026, 2, 4, 0, 0, 0, 0, loc)
+	endMidnight := time.Date(2026, 2, 5, 0, 0, 0, 0, loc)
+
+	dr := &DateRangeSchedule{
+		StartDate: localMidnight.Unix(),
+		EndDate:   endMidnight.Unix(),
+		Enabled:   true,
+		Timezone:  "Europe/Brussels",
+		Segments: []DayTimeRange{
+			{Start: 23 * 3600, End: 24 * 3600},
+		},
+	}
+
+	ts := time.Date(2026, 2, 4, 22, 30, 0, 0, time.UTC) // 23:30 in Brussels
+	if !dr.IsActiveAt(ts.Unix()) {
+		t.Fatalf("expected schedule to be active for Brussels local time")
+	}
+
+	ts = time.Date(2026, 2, 4, 21, 30, 0, 0, time.UTC) // 22:30 in Brussels
+	if dr.IsActiveAt(ts.Unix()) {
+		t.Fatalf("expected schedule to be inactive outside Brussels segment")
+	}
+}
+
+func TestWeeklyScheduleFromDeprecatedTimeRanges(t *testing.T) {
+	tests := []struct {
+		name string
+		alert *CustomAlert
+		want  []*WeeklySchedule
+	}{
+		{
+			name: "FullDayBothRanges",
+			alert: &CustomAlert{
+				TimeRange1Min: 0,
+				TimeRange1Max: 24,
+				TimeRange2Min: 0,
+				TimeRange2Max: 24,
+			},
+			want: expectedWeeklySchedules([]DayTimeRange{
+				{Start: 0, End: 24 * 3600},
+				{Start: 0, End: 24 * 3600},
+			}),
+		},
+		{
+			name: "CustomRanges",
+			alert: &CustomAlert{
+				TimeRange1Min: 6,
+				TimeRange1Max: 11,
+				TimeRange2Min: 12,
+				TimeRange2Max: 20,
+			},
+			want: expectedWeeklySchedules([]DayTimeRange{
+				{Start: 6 * 3600, End: 11 * 3600},
+				{Start: 12 * 3600, End: 20 * 3600},
+			}),
+		},
+		{
+			name: "InvalidRangesSkipped",
+			alert: &CustomAlert{
+				TimeRange1Min: -1,
+				TimeRange1Max: 10,
+				TimeRange2Min: 18,
+				TimeRange2Max: 18,
+			},
+			want: nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.alert.WeeklyScheduleFromDeprecatedTimeRanges()
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Fatalf("expected schedule %+v, got %+v", tt.want, got)
+			}
+		})
+	}
+}
+
+func expectedWeeklySchedules(segments []DayTimeRange) []*WeeklySchedule {
+	if len(segments) == 0 {
+		return nil
+	}
+	schedules := make([]*WeeklySchedule, 0, 7)
+	for day := 0; day < 7; day++ {
+		schedules = append(schedules, &WeeklySchedule{
+			Day:      day,
+			Segments: append([]DayTimeRange(nil), segments...),
+			Enabled:  true,
+			Timezone: "Europe/Brussels",
+		})
+	}
+	return schedules
 }
