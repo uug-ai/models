@@ -27,7 +27,14 @@ type Site struct {
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
 
 	// Deprecated
-	UserId string `json:"user_id" bson:"user_id,omitempty"`
+	UserId     string   `json:"user_id" bson:"user_id,omitempty"`
+	Initials   string   `json:"initials" bson:"initials,omitempty"`
+	Color      string   `json:"color" bson:"color,omitempty"`
+	Address    Location `json:"address" bson:"address,omitempty"`
+	AllDevices []string `json:"all_devices" bson:"all_devices"`
+	AccessKey  string   `json:"access_key" bson:"access_key"`
+	SecretKey  string   `json:"secret_key" bson:"secret_key"`
+	StorageUri string   `json:"storage_uri" bson:"storage_uri"`
 }
 
 // SiteMetadata contains additional metadata for the site, such as tags and classifications.
