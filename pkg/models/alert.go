@@ -81,9 +81,10 @@ type DayTimeRange struct {
 
 var scheduleTzCache sync.Map
 
-// IsScheduledAt reports whether ts falls within the alert's schedules.
+// IsScheduledAt reports whether unixTs falls within the alert's schedules.
 // Date ranges take precedence when the date is within any configured range.
-func (a *CustomAlert) IsScheduledAt(ts time.Time) bool {
+func (a *CustomAlert) IsScheduledAt(unixTs int64) bool {
+	ts := time.Unix(unixTs, 0)
 	hasWeekly := len(a.WeeklySchedule) > 0
 	hasDateRange := len(a.DateRangeSchedule) > 0
 
@@ -93,9 +94,9 @@ func (a *CustomAlert) IsScheduledAt(ts time.Time) bool {
 			if dr == nil || !dr.Enabled {
 				continue
 			}
-			if dr.DateInRange(ts) {
+			if dr.DateInRange(unixTs) {
 				activeRange = true
-				if dr.IsActiveAt(ts) {
+				if dr.IsActiveAt(unixTs) {
 					return true
 				}
 			}
@@ -133,25 +134,25 @@ func (w *WeeklySchedule) IsActiveAt(ts time.Time) bool {
 	return inSegments(secondsOfDay(tsInLoc), w.Segments)
 }
 
-// DateInRange reports whether ts (as a unix second) is within the inclusive range.
-func (d *DateRangeSchedule) DateInRange(ts time.Time) bool {
+// DateInRange reports whether unixTs is within the range.
+// EndDate is treated as an exclusive boundary to ensure the range
+// covers full local days from StartDate up to, but not including, EndDate.
+func (d *DateRangeSchedule) DateInRange(unixTs int64) bool {
 	if d == nil || !d.Enabled {
 		return false
 	}
-	tsUnix := ts.Unix()
-	// EndDate is treated as an exclusive boundary to ensure the range
-	// covers full local days from StartDate up to, but not including, EndDate.
-	return tsUnix >= d.StartDate && tsUnix < d.EndDate
+	return unixTs >= d.StartDate && unixTs < d.EndDate
 }
 
-// IsActiveAt reports whether ts falls within any enabled date-range segment.
-func (d *DateRangeSchedule) IsActiveAt(ts time.Time) bool {
+// IsActiveAt reports whether unixTs falls within any enabled date-range segment.
+func (d *DateRangeSchedule) IsActiveAt(unixTs int64) bool {
 	if d == nil || !d.Enabled {
 		return false
 	}
-	if !d.DateInRange(ts) {
+	if !d.DateInRange(unixTs) {
 		return false
 	}
+	ts := time.Unix(unixTs, 0)
 	loc := scheduleLocation(d.Timezone, ts)
 	tsInLoc := ts.In(loc)
 	return inSegments(secondsOfDay(tsInLoc), d.Segments)

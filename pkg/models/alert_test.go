@@ -64,6 +64,7 @@ func TestWeeklyScheduleIsActiveAt(t *testing.T) {
 func TestDateRangeScheduleIsActiveAt(t *testing.T) {
 	ts := time.Date(2026, 2, 4, 10, 30, 0, 0, time.UTC)
 	seconds := int64(ts.Hour()*3600 + ts.Minute()*60 + ts.Second())
+	unixTs := ts.Unix()
 
 	tests := []struct {
 		name string
@@ -136,7 +137,7 @@ func TestDateRangeScheduleIsActiveAt(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.dr.IsActiveAt(ts); got != tt.want {
+			if got := tt.dr.IsActiveAt(unixTs); got != tt.want {
 				t.Fatalf("expected %v, got %v", tt.want, got)
 			}
 		})
@@ -146,6 +147,7 @@ func TestDateRangeScheduleIsActiveAt(t *testing.T) {
 func TestCustomAlertIsScheduledAtDateRangeOverride(t *testing.T) {
 	ts := time.Date(2026, 2, 4, 9, 0, 0, 0, time.UTC)
 	seconds := int64(ts.Hour()*3600 + ts.Minute()*60 + ts.Second())
+	unixTs := ts.Unix()
 
 	tests := []struct {
 		name  string
@@ -216,7 +218,7 @@ func TestCustomAlertIsScheduledAtDateRangeOverride(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.alert.IsScheduledAt(ts); got != tt.want {
+			if got := tt.alert.IsScheduledAt(unixTs); got != tt.want {
 				t.Fatalf("expected %v, got %v", tt.want, got)
 			}
 		})
@@ -225,7 +227,7 @@ func TestCustomAlertIsScheduledAtDateRangeOverride(t *testing.T) {
 
 func TestCustomAlertIsScheduledAtNoSchedules(t *testing.T) {
 	alert := &CustomAlert{}
-	if !alert.IsScheduledAt(time.Now()) {
+	if !alert.IsScheduledAt(time.Now().Unix()) {
 		t.Fatalf("expected alert with no schedules to be active")
 	}
 }
@@ -246,12 +248,12 @@ func TestDateRangeScheduleTimezonePolicy(t *testing.T) {
 	}
 
 	ts := time.Date(2026, 2, 4, 23, 0, 0, 0, fixed)
-	if !dr.IsActiveAt(ts) {
+	if !dr.IsActiveAt(ts.Unix()) {
 		t.Fatalf("expected date range schedule to be active within local day")
 	}
 
 	ts = time.Date(2026, 2, 5, 0, 0, 0, 0, fixed)
-	if dr.IsActiveAt(ts) {
+	if dr.IsActiveAt(ts.Unix()) {
 		t.Fatalf("expected date range schedule to be inactive at end boundary")
 	}
 }
