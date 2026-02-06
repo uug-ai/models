@@ -80,6 +80,81 @@ type DayTimeRange struct {
 	End   int64 `json:"end" bson:"end"`
 }
 
+type AlertPatch struct {
+	Title               *string           `json:"title,omitempty" bson:"title,omitempty"`
+	Enabled             *bool             `json:"enabled,omitempty" bson:"enabled,omitempty"`
+	Description         *string           `json:"description,omitempty" bson:"description,omitempty"`
+	TimeRange1Min       *int32            `json:"timeRange1Min,omitempty" bson:"timeRange1Min,omitempty"`
+	TimeRange1Max       *int32            `json:"timeRange1Max,omitempty" bson:"timeRange1Max,omitempty"`
+	TimeRange2Min       *int32            `json:"timeRange2Min,omitempty" bson:"timeRange2Min,omitempty"`
+	TimeRange2Max       *int32            `json:"timeRange2Max,omitempty" bson:"timeRange2Max,omitempty"`
+	TimeAdvanced        *bool             `json:"timeAdvanced,omitempty" bson:"timeAdvanced,omitempty"`
+	WeeklySchedule      []*WeeklySchedule `json:"weeklySchedule,omitempty" bson:"weeklySchedule,omitempty"`
+	ChannelsAll         *bool             `json:"channelsAll,omitempty" bson:"channelsAll,omitempty"`
+	ChannelsList        []string          `json:"channelsList,omitempty" bson:"channelsList,omitempty"`
+	DevicesAll          *bool             `json:"devicesAll,omitempty" bson:"devicesAll,omitempty"`
+	DevicesList         []DeviceKey       `json:"devicesList,omitempty" bson:"devicesList,omitempty"`
+	CountingDevicesAll  *bool             `json:"countingDevicesAll,omitempty" bson:"countingDevicesAll,omitempty"`
+	CountingDevicesList []DeviceKey       `json:"countingDevicesList,omitempty" bson:"countingDevicesList,omitempty"`
+	ClassificationAll   *bool             `json:"classificationAll,omitempty" bson:"classificationAll,omitempty"`
+	ClassificationList  []string          `json:"classificationList,omitempty" bson:"classificationList,omitempty"`
+	MotionRegions       []Region          `json:"motionRegions,omitempty" bson:"motionRegions,omitempty"`
+	CountingRegions     []Region          `json:"countingRegions,omitempty" bson:"countingRegions,omitempty"`
+	CountingLines       []Region          `json:"countingLines,omitempty" bson:"countingLines,omitempty"`
+	InputList           []string          `json:"inputList,omitempty" bson:"inputList,omitempty"`
+	OutputList          []string          `json:"outputList,omitempty" bson:"outputList,omitempty"`
+	InputsAND           *bool             `json:"inputsAND,omitempty" bson:"inputsAND,omitempty"`
+	EmailEmail          *string           `json:"email_email,omitempty" bson:"email_email,omitempty"`
+	SlackHook           *string           `json:"slack_hook,omitempty" bson:"slack_hook,omitempty"`
+	SlackBotname        *string           `json:"slack_botname,omitempty" bson:"slack_botname,omitempty"`
+	PushbulletApikey    *string           `json:"pushbullet_apikey,omitempty" bson:"pushbullet_apikey,omitempty"`
+	TelegramToken       *string           `json:"telegram_token,omitempty" bson:"telegram_token,omitempty"`
+	TelegramChannel     *string           `json:"telegram_channel,omitempty" bson:"telegram_channel,omitempty"`
+	AlexaToken          *string           `json:"alexa_token,omitempty" bson:"alexa_token,omitempty"`
+	WebhookUrl          *string           `json:"webhook_url,omitempty" bson:"webhook_url,omitempty"`
+	IftttToken          *string           `json:"ifttt_token,omitempty" bson:"ifttt_token,omitempty"`
+	SMSAccountsid       *string           `json:"sms_accountsid,omitempty" bson:"sms_accountsid,omitempty"`
+	SMSAuthtoken        *string           `json:"sms_authtoken,omitempty" bson:"sms_authtoken,omitempty"`
+	SMSTelfrom          *string           `json:"sms_telfrom,omitempty" bson:"sms_telfrom,omitempty"`
+	SMSTelto            *string           `json:"sms_telto,omitempty" bson:"sms_telto,omitempty"`
+	PushoverApikey      *string           `json:"pushover_apikey,omitempty" bson:"pushover_apikey,omitempty"`
+	PushoverSendto      *string           `json:"pushover_sendto,omitempty" bson:"pushover_sendto,omitempty"`
+}
+
+type GetAlertsInput struct {
+	User User `json:"user" bson:"user"`
+}
+
+type GetAlertsOutput struct {
+	Alerts []CustomAlert `json:"alerts" bson:"alerts"`
+}
+
+type CreateAlertInput struct {
+	User  User        `json:"user" bson:"user"`
+	Alert CustomAlert `json:"alert" bson:"alert"`
+}
+
+type CreateAlertOutput struct {
+	Alert *CustomAlert `json:"alert" bson:"alert"`
+}
+
+type UpdateAlertInput struct {
+	User       User        `json:"user" bson:"user"`
+	AlertId    string      `json:"alertId" bson:"alertId"`
+	AlertPatch *AlertPatch `json:"alertPatch" bson:"alertPatch"`
+}
+
+type UpdateAlertOutput struct {
+	Alert *CustomAlert `json:"alert" bson:"alert"`
+}
+
+type RemoveAlertInput struct {
+	User    User   `json:"user" bson:"user"`
+	AlertId string `json:"alertId" bson:"alertId"`
+}
+
+type RemoveAlertOutput struct{}
+
 var scheduleTzCache sync.Map
 
 // IsScheduledAt reports whether unixTs falls within the alert's schedules.

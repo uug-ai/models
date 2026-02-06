@@ -291,7 +291,7 @@ func TestDateRangeScheduleIanaTimezone(t *testing.T) {
 
 func TestWeeklyScheduleFromDeprecatedTimeRanges(t *testing.T) {
 	tests := []struct {
-		name string
+		name  string
 		alert *CustomAlert
 		want  []*WeeklySchedule
 	}{
