@@ -293,6 +293,7 @@ func TestWeeklyScheduleFromDeprecatedTimeRanges(t *testing.T) {
 	tests := []struct {
 		name  string
 		alert *CustomAlert
+		tz    string
 		want  []*WeeklySchedule
 	}{
 		{
@@ -303,10 +304,11 @@ func TestWeeklyScheduleFromDeprecatedTimeRanges(t *testing.T) {
 				TimeRange2Min: 0,
 				TimeRange2Max: 24,
 			},
+			tz: "",
 			want: expectedWeeklySchedules([]DayTimeRange{
 				{Start: 0, End: 24 * 3600},
 				{Start: 0, End: 24 * 3600},
-			}),
+			}, "Europe/Brussels"),
 		},
 		{
 			name: "CustomRanges",
@@ -316,10 +318,11 @@ func TestWeeklyScheduleFromDeprecatedTimeRanges(t *testing.T) {
 				TimeRange2Min: 12,
 				TimeRange2Max: 20,
 			},
+			tz: "UTC",
 			want: expectedWeeklySchedules([]DayTimeRange{
 				{Start: 6 * 3600, End: 11 * 3600},
 				{Start: 12 * 3600, End: 20 * 3600},
-			}),
+			}, "UTC"),
 		},
 		{
 			name: "InvalidRangesSkipped",
@@ -329,13 +332,25 @@ func TestWeeklyScheduleFromDeprecatedTimeRanges(t *testing.T) {
 				TimeRange2Min: 18,
 				TimeRange2Max: 18,
 			},
+			tz:   "Europe/Brussels",
 			want: nil,
+		},
+		{
+			name: "InvalidTimezoneFallsBack",
+			alert: &CustomAlert{
+				TimeRange1Min: 8,
+				TimeRange1Max: 12,
+			},
+			tz: "Not/AZone",
+			want: expectedWeeklySchedules([]DayTimeRange{
+				{Start: 8 * 3600, End: 12 * 3600},
+			}, "Europe/Brussels"),
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := tt.alert.WeeklyScheduleFromDeprecatedTimeRanges()
+			got := tt.alert.WeeklyScheduleFromDeprecatedTimeRanges(tt.tz)
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Fatalf("expected schedule %+v, got %+v", tt.want, got)
 			}
@@ -343,7 +358,7 @@ func TestWeeklyScheduleFromDeprecatedTimeRanges(t *testing.T) {
 	}
 }
 
-func expectedWeeklySchedules(segments []DayTimeRange) []*WeeklySchedule {
+func expectedWeeklySchedules(segments []DayTimeRange, timezone string) []*WeeklySchedule {
 	if len(segments) == 0 {
 		return nil
 	}
@@ -353,7 +368,7 @@ func expectedWeeklySchedules(segments []DayTimeRange) []*WeeklySchedule {
 			Day:      day,
 			Segments: append([]DayTimeRange(nil), segments...),
 			Enabled:  true,
-			Timezone: "Europe/Brussels",
+			Timezone: timezone,
 		})
 	}
 	return schedules
