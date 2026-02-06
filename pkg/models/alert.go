@@ -271,9 +271,12 @@ func isValidSegment(seg DayTimeRange) bool {
 	return seg.Start >= 0 && seg.End <= 86400 && seg.Start < seg.End
 }
 
+const defaultScheduleTimezone = "Europe/Brussels"
+
 // WeeklyScheduleFromDeprecatedTimeRanges maps legacy TimeRange values to a weekly schedule.
-// Each time range becomes a daily segment for every weekday, enabled in Europe/Brussels.
-func (a *CustomAlert) WeeklyScheduleFromDeprecatedTimeRanges() []*WeeklySchedule {
+// Each time range becomes a daily segment for every weekday, enabled in the provided timezone.
+// If the timezone is empty or invalid, it defaults to Europe/Brussels.
+func (a *CustomAlert) WeeklyScheduleFromDeprecatedTimeRanges(timezone string) []*WeeklySchedule {
 	if a == nil {
 		return nil
 	}
@@ -281,16 +284,27 @@ func (a *CustomAlert) WeeklyScheduleFromDeprecatedTimeRanges() []*WeeklySchedule
 	if len(segments) == 0 {
 		return nil
 	}
+	scheduleTimezone := resolveScheduleTimezone(timezone)
 	schedules := make([]*WeeklySchedule, 0, 7)
 	for day := 0; day < 7; day++ {
 		schedules = append(schedules, &WeeklySchedule{
 			Day:      day,
 			Segments: append([]DayTimeRange(nil), segments...),
 			Enabled:  true,
-			Timezone: "Europe/Brussels",
+			Timezone: scheduleTimezone,
 		})
 	}
 	return schedules
+}
+
+func resolveScheduleTimezone(timezone string) string {
+	if timezone == "" {
+		return defaultScheduleTimezone
+	}
+	if _, err := time.LoadLocation(timezone); err != nil {
+		return defaultScheduleTimezone
+	}
+	return timezone
 }
 
 func deprecatedTimeRangeSegments(min1, max1, min2, max2 int32) []DayTimeRange {
