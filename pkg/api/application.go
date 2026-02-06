@@ -4,14 +4,17 @@ package api
 type ApplicationStatus string
 
 const (
-	PongSuccess     ApplicationStatus = "pong_success"
-	DatabaseSuccess ApplicationStatus = "database_success"
-	DatabaseError   ApplicationStatus = "database_error"
-	QueueSuccess    ApplicationStatus = "queue_success"
-	QueueError      ApplicationStatus = "queue_error"
-	CacheSuccess    ApplicationStatus = "cache_success"
-	CacheError      ApplicationStatus = "cache_error"
-	TypeCastFailed  ApplicationStatus = "type_cast_failed"
+	PongSuccess             ApplicationStatus = "pong_success"
+	DatabaseSuccess         ApplicationStatus = "database_success"
+	DatabaseError           ApplicationStatus = "database_error"
+	DatabaseItemNotFound    ApplicationStatus = "database_item_not_found"
+	DatabaseMarshalFailed   ApplicationStatus = "database_marshal_failed"
+	DatabaseUnmarshalFailed ApplicationStatus = "database_unmarshal_failed"
+	QueueSuccess            ApplicationStatus = "queue_success"
+	QueueError              ApplicationStatus = "queue_error"
+	CacheSuccess            ApplicationStatus = "cache_success"
+	CacheError              ApplicationStatus = "cache_error"
+	TypeCastFailed          ApplicationStatus = "type_cast_failed"
 )
 
 // String returns the string representation of the application status
@@ -23,34 +26,43 @@ func (as ApplicationStatus) String() string {
 func (as ApplicationStatus) Translate(lang string) string {
 	translations := map[string]map[ApplicationStatus]string{
 		"en": {
-			PongSuccess:     "Pong successful",
-			DatabaseSuccess: "Database operation successful",
-			DatabaseError:   "Database operation failed",
-			QueueSuccess:    "Queue operation successful",
-			QueueError:      "Queue operation failed",
-			CacheSuccess:    "Cache operation successful",
-			CacheError:      "Cache operation failed",
-			TypeCastFailed:  "Type casting failed",
+			PongSuccess:             "Pong successful",
+			DatabaseSuccess:         "Database operation successful",
+			DatabaseError:           "Database operation failed",
+			DatabaseItemNotFound:    "Database item not found",
+			DatabaseMarshalFailed:   "Database marshal failed",
+			DatabaseUnmarshalFailed: "Database unmarshal failed",
+			QueueSuccess:            "Queue operation successful",
+			QueueError:              "Queue operation failed",
+			CacheSuccess:            "Cache operation successful",
+			CacheError:              "Cache operation failed",
+			TypeCastFailed:          "Type casting failed",
 		},
 		"es": {
-			PongSuccess:     "Pong exitoso",
-			DatabaseSuccess: "Operación de base de datos exitosa",
-			DatabaseError:   "Error en la operación de base de datos",
-			QueueSuccess:    "Operación de cola exitosa",
-			QueueError:      "Error en la operación de cola",
-			CacheSuccess:    "Operación de caché exitosa",
-			CacheError:      "Error en la operación de caché",
-			TypeCastFailed:  "Error de conversión de tipo",
+			PongSuccess:             "Pong exitoso",
+			DatabaseSuccess:         "Operación de base de datos exitosa",
+			DatabaseError:           "Error en la operación de base de datos",
+			DatabaseItemNotFound:    "Elemento de base de datos no encontrado",
+			DatabaseMarshalFailed:   "Error al serializar la base de datos",
+			DatabaseUnmarshalFailed: "Error al deserializar la base de datos",
+			QueueSuccess:            "Operación de cola exitosa",
+			QueueError:              "Error en la operación de cola",
+			CacheSuccess:            "Operación de caché exitosa",
+			CacheError:              "Error en la operación de caché",
+			TypeCastFailed:          "Error de conversión de tipo",
 		},
 		"fr": {
-			PongSuccess:     "Pong réussi",
-			DatabaseSuccess: "Opération de base de données réussie",
-			DatabaseError:   "Échec de l'opération de base de données",
-			QueueSuccess:    "Opération de file d'attente réussie",
-			QueueError:      "Échec de l'opération de file d'attente",
-			CacheSuccess:    "Opération de cache réussie",
-			CacheError:      "Échec de l'opération de cache",
-			TypeCastFailed:  "Échec de la conversion de type",
+			PongSuccess:             "Pong réussi",
+			DatabaseSuccess:         "Opération de base de données réussie",
+			DatabaseError:           "Échec de l'opération de base de données",
+			DatabaseItemNotFound:    "Élément de base de données non trouvé",
+			DatabaseMarshalFailed:   "Échec de la sérialisation de la base de données",
+			DatabaseUnmarshalFailed: "Échec de la désérialisation de la base de données",
+			QueueSuccess:            "Opération de file d'attente réussie",
+			QueueError:              "Échec de l'opération de file d'attente",
+			CacheSuccess:            "Opération de cache réussie",
+			CacheError:              "Échec de l'opération de cache",
+			TypeCastFailed:          "Échec de la conversion de type",
 		},
 	}
 
