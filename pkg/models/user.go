@@ -102,7 +102,7 @@ type User struct {
 
 	// Master account to which this account was added.
 	MasterAccount string `json:"user_id" bson:"user_id,omitempty"`
-	Master        *User  `json:"master" bson:"master,omitempty"`
+	Master        User  `json:"master" bson:"master,omitempty"`
 
 	// Should go away into Card struct
 	StripeId          string   `json:"stripe_id" bson:"stripe_id,omitempty"`
