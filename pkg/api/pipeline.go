@@ -572,3 +572,76 @@ func (ms NotificationStatus) Translate(lang string) string {
 	// Fallback to the string representation
 	return ms.String()
 }
+
+// --- EXPORT ---
+
+type ExportStatus string
+
+const (
+	// Queue status codes
+	ExportQueueStarted    ExportStatus = "export_queue_started"
+	ExportQueueSubscribed ExportStatus = "export_queue_subscribed"
+	ExportQueueFailed     ExportStatus = "export_queue_failed"
+	ExportQueueCompleted  ExportStatus = "export_queue_completed"
+
+	// Trace status codes
+	ExportTracingStarted   ExportStatus = "export_tracing_started"
+	ExportTracingCompleted ExportStatus = "export_tracing_completed"
+	ExportTracingFailed    ExportStatus = "export_tracing_failed"
+
+	// Stage status codes
+	ExportStageStart              ExportStatus = "export_stage_start"
+	ExportStageEnd                ExportStatus = "export_stage_end"
+	ExportProcessingFailed        ExportStatus = "export_processing_failed"
+	ExportTaskNotFound            ExportStatus = "export_task_not_found"
+	ExportStatusUpdated           ExportStatus = "export_status_updated"
+	ExportCompressionStarted      ExportStatus = "export_compression_started"
+	ExportCompressionCompleted    ExportStatus = "export_compression_completed"
+	ExportDirectoryCreationFailed ExportStatus = "export_directory_creation_failed"
+	ExportUploadCompleted         ExportStatus = "export_upload_completed"
+)
+
+// String returns the string representation of the Export status
+func (es ExportStatus) String() string {
+	return string(es)
+}
+
+// Translate returns the translated string representation of the Export status in the specified language
+func (es ExportStatus) Translate(lang string) string {
+	translations := map[string]map[ExportStatus]string{
+		"en": {
+			ExportQueueStarted:            "Export queue processing started",
+			ExportQueueSubscribed:         "Subscribed to Export queue",
+			ExportQueueFailed:             "Export queue processing failed",
+			ExportQueueCompleted:          "Export queue processing completed",
+			ExportTracingStarted:          "Export tracing started",
+			ExportTracingCompleted:        "Export tracing completed",
+			ExportTracingFailed:           "Export tracing failed",
+			ExportStageStart:              "Starting Export stage",
+			ExportStageEnd:                "Export stage completed",
+			ExportProcessingFailed:        "Export processing failed",
+			ExportTaskNotFound:            "Export task not found",
+			ExportStatusUpdated:           "Export status updated",
+			ExportCompressionStarted:      "Export compression started",
+			ExportCompressionCompleted:    "Export compression completed",
+			ExportDirectoryCreationFailed: "Export directory creation failed",
+			ExportUploadCompleted:         "Export upload completed",
+		},
+	}
+
+	if langTranslations, exists := translations[lang]; exists {
+		if translation, exists := langTranslations[es]; exists {
+			return translation
+		}
+	}
+
+	// Default to English if language not found or translation doesn't exist
+	if enTranslations, exists := translations["en"]; exists {
+		if translation, exists := enTranslations[es]; exists {
+			return translation
+		}
+	}
+
+	// Fallback to the string representation
+	return es.String()
+}
