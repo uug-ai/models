@@ -16,6 +16,7 @@ type Media struct {
 	// RBAC information
 	// DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
 	// OrganisationId is used to identify the organisation that owns the device.
+	DeviceId       string `json:"deviceId" bson:"deviceId,omitempty"`   // @deprecated - device identifier
 	DeviceKey      string `json:"deviceKey" bson:"deviceKey,omitempty"` // device identifier
 	GroupId        string `json:"groupId" bson:"groupId,omitempty"`
 	SiteId         string `json:"siteId" bson:"siteId,omitempty"`
