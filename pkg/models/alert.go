@@ -8,10 +8,10 @@ import (
 )
 
 type CustomAlert struct {
-	Id                  primitive.ObjectID   `json:"id" bson:"_id,omitempty"`
+	Id                  primitive.ObjectID   `json:"id" bson:"_id"`
 	Enabled             bool                 `json:"enabled" bson:"enabled"`
-	Title               string               `json:"title" bson:"title,omitempty"`
-	Description         string               `json:"description" bson:"description,omitempty"`
+	Title               string               `json:"title" bson:"title"`
+	Description         string               `json:"description" bson:"description"`
 	ChannelsAll         bool                 `json:"channelsAll" bson:"channelsAll"`
 	ChannelsList        []string             `json:"channelsList" bson:"channelsList"`
 	DevicesAll          bool                 `json:"devicesAll" bson:"devicesAll"`
@@ -21,32 +21,32 @@ type CustomAlert struct {
 	ClassificationAll   bool                 `json:"classificationAll" bson:"classificationAll"`
 	ClassificationList  []string             `json:"classificationList" bson:"classificationList"`
 	TimeAdvanced        bool                 `json:"timeAdvanced" bson:"timeAdvanced"`
-	UserId              string               `json:"user_id" bson:"user_id,omitempty"`
-	MasterUserId        string               `json:"master_user_id" bson:"master_user_id,omitempty"`
-	EmailEmail          string               `json:"email_email" bson:"email_email,omitempty"`
-	SlackHook           string               `json:"slack_hook" bson:"slack_hook,omitempty"`
-	SlackBotname        string               `json:"slack_botname" bson:"slack_botname,omitempty"`
-	PushbulletApikey    string               `json:"pushbullet_apikey" bson:"pushbullet_apikey,omitempty"`
-	TelegramToken       string               `json:"telegram_token" bson:"telegram_token,omitempty"`
-	TelegramChannel     string               `json:"telegram_channel" bson:"telegram_channel,omitempty"`
-	AlexaToken          string               `json:"alexa_token" bson:"alexa_token,omitempty"`
-	WebhookUrl          string               `json:"webhook_url" bson:"webhook_url,omitempty"`
-	IftttToken          string               `json:"ifttt_token" bson:"ifttt_token,omitempty"`
-	SMSAccountsid       string               `json:"sms_accountsid" bson:"sms_accountsid,omitempty"`
-	SMSAuthtoken        string               `json:"sms_authtoken" bson:"sms_authtoken,omitempty"`
-	SMSTelfrom          string               `json:"sms_telfrom" bson:"sms_telfrom,omitempty"`
-	SMSTelto            string               `json:"sms_telto" bson:"sms_telto,omitempty"`
-	PushoverApikey      string               `json:"pushover_apikey" bson:"pushover_apikey,omitempty"`
-	PushoverSendto      string               `json:"pushover_sendto" bson:"pushover_sendto,omitempty"`
-	MotionRegions       []Region             `json:"motionRegions" bson:"motionRegions,omitempty"`
-	CountingLines       []Region             `json:"countingLines" bson:"countingLines,omitempty"`
-	InputList           []string             `json:"inputList" bson:"inputList,omitempty"`
+	UserId              string               `json:"user_id" bson:"user_id"`
+	MasterUserId        string               `json:"master_user_id" bson:"master_user_id"`
+	EmailEmail          string               `json:"email_email" bson:"email_email"`
+	SlackHook           string               `json:"slack_hook" bson:"slack_hook"`
+	SlackBotname        string               `json:"slack_botname" bson:"slack_botname"`
+	PushbulletApikey    string               `json:"pushbullet_apikey" bson:"pushbullet_apikey"`
+	TelegramToken       string               `json:"telegram_token" bson:"telegram_token"`
+	TelegramChannel     string               `json:"telegram_channel" bson:"telegram_channel"`
+	AlexaToken          string               `json:"alexa_token" bson:"alexa_token"`
+	WebhookUrl          string               `json:"webhook_url" bson:"webhook_url"`
+	IftttToken          string               `json:"ifttt_token" bson:"ifttt_token"`
+	SMSAccountsid       string               `json:"sms_accountsid" bson:"sms_accountsid"`
+	SMSAuthtoken        string               `json:"sms_authtoken" bson:"sms_authtoken"`
+	SMSTelfrom          string               `json:"sms_telfrom" bson:"sms_telfrom"`
+	SMSTelto            string               `json:"sms_telto" bson:"sms_telto"`
+	PushoverApikey      string               `json:"pushover_apikey" bson:"pushover_apikey"`
+	PushoverSendto      string               `json:"pushover_sendto" bson:"pushover_sendto"`
+	MotionRegions       []Region             `json:"motionRegions" bson:"motionRegions"`
+	CountingLines       []Region             `json:"countingLines" bson:"countingLines"`
+	InputList           []string             `json:"inputList" bson:"inputList"`
 	InputsAND           bool                 `json:"inputsAND" bson:"inputsAND"`
-	OutputList          []string             `json:"outputList" bson:"outputList,omitempty"`
-	Features            *AlertFeatures       `json:"features,omitempty" bson:"features,omitempty"`
-	WeeklySchedule      []*WeeklySchedule    `json:"weeklySchedule" bson:"weeklySchedule,omitempty"`
-	DateRangeSchedule   []*DateRangeSchedule `json:"dateRangeSchedule" bson:"dateRangeSchedule,omitempty"`
-	OrganisationId      string               `json:"organisationId" bson:"organisationId,omitempty"`
+	OutputList          []string             `json:"outputList" bson:"outputList"`
+	Features            *AlertFeatures       `json:"features" bson:"features"`
+	WeeklySchedule      []*WeeklySchedule    `json:"weeklySchedule" bson:"weeklySchedule"`
+	DateRangeSchedule   []*DateRangeSchedule `json:"dateRangeSchedule" bson:"dateRangeSchedule"`
+	OrganisationId      string               `json:"organisationId" bson:"organisationId"`
 
 	// Deprecated: legacy time range fields. Use WeeklySchedule/DateRangeSchedule instead.
 	TimeRange1Max int32 `json:"timeRange1Max" bson:"timeRange1Max"`
