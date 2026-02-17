@@ -112,6 +112,7 @@ type Region struct {
 	Width        int     `json:"width" bson:"width"`
 	Height       int     `json:"height" bson:"height"`
 	RegionPoints []Point `json:"regionPoints" bson:"regionPoints"`
+	Direction    string  `json:"direction" bson:"direction,omitempty"`
 }
 
 type HourRange struct {
