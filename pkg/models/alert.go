@@ -97,12 +97,12 @@ type AlertPatch struct {
 	CountingDevicesAll  *bool             `json:"countingDevicesAll,omitempty" bson:"countingDevicesAll,omitempty"`
 	CountingDevicesList []DeviceKey       `json:"countingDevicesList,omitempty" bson:"countingDevicesList,omitempty"`
 	ClassificationAll   *bool             `json:"classificationAll,omitempty" bson:"classificationAll,omitempty"`
-	ClassificationList  []string          `json:"classificationList,omitempty" bson:"classificationList,omitempty"`
-	MotionRegions       []Region          `json:"motionRegions,omitempty" bson:"motionRegions,omitempty"`
-	CountingRegions     []Region          `json:"countingRegions,omitempty" bson:"countingRegions,omitempty"`
-	CountingLines       []Region          `json:"countingLines,omitempty" bson:"countingLines,omitempty"`
-	InputList           []string          `json:"inputList,omitempty" bson:"inputList,omitempty"`
-	OutputList          []string          `json:"outputList,omitempty" bson:"outputList,omitempty"`
+	ClassificationList  []*string         `json:"classificationList,omitempty" bson:"classificationList,omitempty"`
+	MotionRegions       []*Region         `json:"motionRegions,omitempty" bson:"motionRegions,omitempty"`
+	CountingRegions     []*Region         `json:"countingRegions,omitempty" bson:"countingRegions,omitempty"`
+	CountingLines       []*Region         `json:"countingLines,omitempty" bson:"countingLines,omitempty"`
+	InputList           []*string         `json:"inputList,omitempty" bson:"inputList,omitempty"`
+	OutputList          []*string         `json:"outputList,omitempty" bson:"outputList,omitempty"`
 	InputsAND           *bool             `json:"inputsAND,omitempty" bson:"inputsAND,omitempty"`
 	EmailEmail          *string           `json:"email_email,omitempty" bson:"email_email,omitempty"`
 	SlackHook           *string           `json:"slack_hook,omitempty" bson:"slack_hook,omitempty"`
