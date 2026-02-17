@@ -89,20 +89,20 @@ type AlertPatch struct {
 	TimeRange2Min       *int32            `json:"timeRange2Min,omitempty" bson:"timeRange2Min,omitempty"`
 	TimeRange2Max       *int32            `json:"timeRange2Max,omitempty" bson:"timeRange2Max,omitempty"`
 	TimeAdvanced        *bool             `json:"timeAdvanced,omitempty" bson:"timeAdvanced,omitempty"`
-	WeeklySchedule      []*WeeklySchedule `json:"weeklySchedule,omitempty" bson:"weeklySchedule,omitempty"`
+	WeeklySchedule      *[]WeeklySchedule `json:"weeklySchedule,omitempty" bson:"weeklySchedule,omitempty"`
 	ChannelsAll         *bool             `json:"channelsAll,omitempty" bson:"channelsAll,omitempty"`
-	ChannelsList        []string          `json:"channelsList,omitempty" bson:"channelsList,omitempty"`
+	ChannelsList        *[]string         `json:"channelsList,omitempty" bson:"channelsList,omitempty"`
 	DevicesAll          *bool             `json:"devicesAll,omitempty" bson:"devicesAll,omitempty"`
-	DevicesList         []DeviceKey       `json:"devicesList,omitempty" bson:"devicesList,omitempty"`
+	DevicesList         *[]DeviceKey      `json:"devicesList,omitempty" bson:"devicesList,omitempty"`
 	CountingDevicesAll  *bool             `json:"countingDevicesAll,omitempty" bson:"countingDevicesAll,omitempty"`
-	CountingDevicesList []DeviceKey       `json:"countingDevicesList,omitempty" bson:"countingDevicesList,omitempty"`
+	CountingDevicesList *[]DeviceKey      `json:"countingDevicesList,omitempty" bson:"countingDevicesList,omitempty"`
 	ClassificationAll   *bool             `json:"classificationAll,omitempty" bson:"classificationAll,omitempty"`
-	ClassificationList  []string          `json:"classificationList,omitempty" bson:"classificationList,omitempty"`
-	MotionRegions       []Region          `json:"motionRegions,omitempty" bson:"motionRegions,omitempty"`
-	CountingRegions     []Region          `json:"countingRegions,omitempty" bson:"countingRegions,omitempty"`
-	CountingLines       []Region          `json:"countingLines,omitempty" bson:"countingLines,omitempty"`
-	InputList           []string          `json:"inputList,omitempty" bson:"inputList,omitempty"`
-	OutputList          []string          `json:"outputList,omitempty" bson:"outputList,omitempty"`
+	ClassificationList  *[]string         `json:"classificationList,omitempty" bson:"classificationList,omitempty"`
+	MotionRegions       *[]Region         `json:"motionRegions,omitempty" bson:"motionRegions,omitempty"`
+	CountingRegions     *[]Region         `json:"countingRegions,omitempty" bson:"countingRegions,omitempty"`
+	CountingLines       *[]Region         `json:"countingLines,omitempty" bson:"countingLines,omitempty"`
+	InputList           *[]string         `json:"inputList,omitempty" bson:"inputList,omitempty"`
+	OutputList          *[]string         `json:"outputList,omitempty" bson:"outputList,omitempty"`
 	InputsAND           *bool             `json:"inputsAND,omitempty" bson:"inputsAND,omitempty"`
 	EmailEmail          *string           `json:"email_email,omitempty" bson:"email_email,omitempty"`
 	SlackHook           *string           `json:"slack_hook,omitempty" bson:"slack_hook,omitempty"`
