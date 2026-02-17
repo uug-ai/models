@@ -38,7 +38,7 @@ jobs:
           password: ${{ secrets.TOKEN }}
       - name: Run Build
         run: |
-          docker build -t ${{matrix.architecture}} \
+          docker build --provenance=false -t ${{matrix.architecture}} \
           --build-arg github_username=${{ secrets.USERNAME }} \
           --build-arg github_token=${{ secrets.TOKEN }} .
 
