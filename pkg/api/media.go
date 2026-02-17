@@ -179,6 +179,21 @@ type GetMediaByIdErrorResponse struct {
 	ErrorResponse
 }
 
+// GetMediaByVideoFile
+// @Router /media/video-file [get]
+type GetMediaByVideoFileRequest struct {
+}
+type GetMediaByVideoFileResponse struct {
+	Media models.Media `json:"media"`
+}
+type GetMediaByVideoFileSuccessResponse struct {
+	SuccessResponse
+	Data GetMediaByVideoFileResponse `json:"data"`
+}
+type GetMediaByVideoFileErrorResponse struct {
+	ErrorResponse
+}
+
 // UpdateMedia
 // @Router /media/{mediaId} [patch]
 type UpdateMediaRequest struct {
