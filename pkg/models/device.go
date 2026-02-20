@@ -175,10 +175,10 @@ type GPSMetadata struct {
 // DeviceAtRuntimeMetadata contains metadata that is generated at runtime, which can include
 // more verbose information about the device's current state, capabilities, or configuration.
 type DeviceAtRuntimeMetadata struct {
-	// LinkedSites contains details about the sites that the device is linked to.
-	//Sites []Sites `json:"sites,omitempty" bson:"sites,omitempty"`
-	// LinkedGroups contains details about the groups that the device is linked to.
-	//Groups []Groups `json:"groups,omitempty" bson:"groups,omitempty"`
+	// Sites contains details about the sites that the device is linked to.
+	Sites []SiteOption `json:"sites,omitempty" bson:"sites,omitempty"`
+	// Groups contains details about the groups that the device is linked to.
+	Groups []GroupOption `json:"groups,omitempty" bson:"groups,omitempty"`
 
 	// Status is derived from the last seen timestamps and thresholds.
 	Status string `json:"status" bson:"status,omitempty"` // e.g. "connected", "idle", "disconnected", "healthy"
