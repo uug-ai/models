@@ -8,7 +8,7 @@ import (
 )
 
 type CustomAlert struct {
-	Id                  primitive.ObjectID   `json:"id" bson:"_id"`
+	Id                  primitive.ObjectID   `json:"id" bson:"_id,omitempty"`
 	Enabled             bool                 `json:"enabled" bson:"enabled"`
 	Title               string               `json:"title" bson:"title"`
 	Description         string               `json:"description" bson:"description"`
