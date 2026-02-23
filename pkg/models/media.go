@@ -37,6 +37,10 @@ type Media struct {
 	ClassificationSummary []ClassificationSummary `json:"classificationSummary,omitempty" bson:"classificationSummary,omitempty"`
 	CountingSummary       []CountingSummary       `json:"countingSummary,omitempty" bson:"countingSummary,omitempty"`
 
+	MarkerNames []string `json:"markerNames,omitempty" bson:"markerNames,omitempty"`
+	EventNames  []string `json:"eventNames,omitempty" bson:"eventNames,omitempty"`
+	TagNames    []string `json:"tagNames,omitempty" bson:"tagNames,omitempty"`
+
 	// Name of the device that uploaded media
 	DeviceName string `json:"deviceName,omitempty" bson:"deviceName,omitempty"`
 
