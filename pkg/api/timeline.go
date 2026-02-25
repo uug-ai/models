@@ -65,8 +65,7 @@ type GetTimelineMediaRequest struct {
 	Filter MediaFilter `json:"filter" bson:"filter"`
 }
 type GetTimelineMediaResponse struct {
-	Device models.Device `json:"device"`
-	Media  []MediaGroup  `json:"media"`
+	Timelines []models.MediaTimeline `json:"timelines" bson:"timelines"`
 }
 type GetTimelineMediaErrorResponse struct {
 	ErrorResponse
@@ -83,8 +82,7 @@ type GetTimelineMarkersRequest struct {
 }
 
 type GetTimelineMarkersResponse struct {
-	Device  models.Device                  `json:"device"`
-	Markers []models.MarkerOptionTimeRange `json:"markers"`
+	Timelines []models.MarkerTimeline `json:"timelines" bson:"timelines"`
 }
 
 type GetTimelineMarkersSuccessResponse struct {

@@ -114,36 +114,12 @@ type Media2Filter struct {
 	SortBy          *string             `json:"sortBy,omitempty" bson:"sortBy,omitempty"`
 }
 
-type MediaGroup struct {
-	StartTimestamp int64          `json:"startTimestamp" bson:"startTimestamp"`
-	EndTimestamp   int64          `json:"endTimestamp" bson:"endTimestamp"`
-	Count          int64          `json:"count" bson:"count"`
-	Media          []models.Media `json:"media" bson:"media"`
-}
-
 type MediaPatch struct {
-	Metadata *mediaMetadataPatch `json:"metadata,omitempty" bson:"metadata,omitempty"`
+	Metadata *MediaMetadataPatch `json:"metadata,omitempty" bson:"metadata,omitempty"`
 }
 
-type mediaMetadataPatch struct {
+type MediaMetadataPatch struct {
 	Description *string `json:"description,omitempty" bson:"description,omitempty"`
-}
-
-// GetTimeline
-// @Router /timeline/{deviceId} [post]
-type GetTimelineRequest struct {
-	Filter MediaFilter `json:"filter" bson:"filter"`
-}
-type GetTimelineResponse struct {
-	Device models.Device `json:"device"`
-	Media  []MediaGroup  `json:"media"`
-}
-type GetTimelineErrorResponse struct {
-	ErrorResponse
-}
-type GetTimelineSuccessResponse struct {
-	SuccessResponse
-	Data GetTimelineResponse `json:"data"`
 }
 
 // GetMedia
