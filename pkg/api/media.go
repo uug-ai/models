@@ -106,6 +106,7 @@ type Media2Filter struct {
 	Groups          []*string           `json:"groups,omitempty" bson:"groups,omitempty"`
 	Devices         []*string           `json:"devices,omitempty" bson:"devices,omitempty"`
 	ExcludedDevices []*string           `json:"excludedDevices,omitempty" bson:"excludedDevices,omitempty"`
+	ExcludedMedia   []*string           `json:"excludedMedia,omitempty" bson:"excludedMedia,omitempty"`
 	Markers         []*string           `json:"markers,omitempty" bson:"markers,omitempty"`
 	Events          []*string           `json:"events,omitempty" bson:"events,omitempty"`
 	Tags            []*string           `json:"tags,omitempty" bson:"tags,omitempty"`
