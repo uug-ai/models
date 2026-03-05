@@ -102,6 +102,7 @@ type MediaFilter struct {
 
 type Media2Filter struct {
 	TimeRanges      []*models.TimeRange `json:"timeRanges,omitempty" bson:"timeRanges,omitempty"`
+	MediaIds		[]*string           `json:"mediaIds,omitempty" bson:"mediaIds,omitempty"`
 	Sites           []*string           `json:"sites,omitempty" bson:"sites,omitempty"`
 	Groups          []*string           `json:"groups,omitempty" bson:"groups,omitempty"`
 	Devices         []*string           `json:"devices,omitempty" bson:"devices,omitempty"`
