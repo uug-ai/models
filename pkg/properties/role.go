@@ -10,19 +10,31 @@ const (
 	FeaturePermissionsRemoteConfig = "remote_config"
 	FeaturePermissionsIO = "io"
 	FeaturePermissionsFloorPlans = "floorPlans"
+	FeaturePermissionsPlayback = "playback"
+	FeaturePermissionsExport = "export"
+	FeaturePermissionsMarkers = "markers"
+	FeaturePermissionsAlerts = "alerts"
+	FeaturePermissionsUsers = "users"
+	FeaturePermissionsDevices = "devices"
+	FeaturePermissionsSites = "sites"
+	FeaturePermissionsGroups = "groups"
+	FeaturePermissionsRoles = "roles"
+	FeaturePermissionsSettings = "settings"
 )
 
 // Role property field names (BSON)
 const (
 	RoleId = "_id"
+	RoleOrganisationId = "organisation_id"
 	RoleName = "roleName"
+	RoleDescription = "description"
 	RoleParentRole = "role"
 	RolePages = "pages"
 	RoleTimeWindow = "timeWindow"
-	RoleUserId = "user_id"
 	RoleIsActive = "isActive"
 	RoleFeaturePermissions = "featurePermissions"
 	RoleTimeWindowActive = "timeWindowActive"
+	RoleAudit = "audit"
 )
 
 // TimeWindow property field names (BSON)

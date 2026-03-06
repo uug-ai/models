@@ -9,13 +9,10 @@ const (
 	RoleAssignmentUserId = "user_id"
 	RoleAssignmentRoleId = "role_id"
 	RoleAssignmentOrganisationId = "organisation_id"
-	RoleAssignmentAssignedBy = "assigned_by"
-	RoleAssignmentAssignedAt = "assigned_at"
 	RoleAssignmentExpiresAt = "expires_at"
 	RoleAssignmentIsActive = "is_active"
 	RoleAssignmentScope = "scope"
-	RoleAssignmentCreatedAt = "created_at"
-	RoleAssignmentUpdatedAt = "updated_at"
+	RoleAssignmentAudit = "audit"
 )
 
 // RoleScope property field names (BSON)

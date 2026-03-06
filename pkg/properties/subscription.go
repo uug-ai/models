@@ -6,12 +6,14 @@ package properties
 // Subscription property field names (BSON)
 const (
 	SubscriptionId = "_id"
+	SubscriptionOrganisationId = "organisation_id"
+	SubscriptionUserId = "user_id"
 	SubscriptionStripeId = "stripe_id"
 	SubscriptionStripePlan = "stripe_plan"
 	SubscriptionQuantity = "quantity"
+	SubscriptionStatus = "status"
 	SubscriptionTrialEndsAt = "trial_ends_at"
 	SubscriptionEndsAt = "ends_at"
-	SubscriptionUserId = "user_id"
 	SubscriptionUpdatedAt = "updated_at"
 	SubscriptionCreatedAt = "created_at"
 )

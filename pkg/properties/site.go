@@ -17,6 +17,14 @@ const (
 	SiteVaultUri = "vaultUri"
 	SiteMetadata = "metadata"
 	SiteAudit = "audit"
+	SiteUserId = "user_id"
+	SiteInitials = "initials"
+	SiteColor = "color"
+	SiteAddress = "address"
+	SiteAllDevices = "all_devices"
+	SiteAccessKey = "access_key"
+	SiteSecretKey = "secret_key"
+	SiteStorageUri = "storage_uri"
 )
 
 // SiteMetadata property field names (BSON)

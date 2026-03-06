@@ -472,6 +472,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/address": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Address (schema generation only)
+         * @description Internal endpoint used only to ensure Address schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Address"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/alertfeatures": {
         parameters: {
             query?: never;
@@ -499,6 +538,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.AlertFeatures"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/alertpatch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AlertPatch (schema generation only)
+         * @description Internal endpoint used only to ensure AlertPatch schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AlertPatch"];
                     };
                 };
             };
@@ -1486,6 +1564,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/companydetails": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CompanyDetails (schema generation only)
+         * @description Internal endpoint used only to ensure CompanyDetails schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CompanyDetails"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/contact": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Contact (schema generation only)
+         * @description Internal endpoint used only to ensure Contact schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Contact"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/counting": {
         parameters: {
             query?: never;
@@ -1642,6 +1798,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/createalertinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateAlertInput (schema generation only)
+         * @description Internal endpoint used only to ensure CreateAlertInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CreateAlertInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createalertoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateAlertOutput (schema generation only)
+         * @description Internal endpoint used only to ensure CreateAlertOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CreateAlertOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createcustomalerterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateCustomAlertErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateCustomAlertErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateCustomAlertErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createcustomalertrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateCustomAlertRequest (schema generation only)
+         * @description Internal endpoint used only to ensure CreateCustomAlertRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateCustomAlertRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createcustomalertresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateCustomAlertResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateCustomAlertResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateCustomAlertResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createcustomalertsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateCustomAlertSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateCustomAlertSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateCustomAlertSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/credentials": {
         parameters: {
             query?: never;
@@ -1747,6 +2137,84 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.CustomAlert"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/daterangeschedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DateRangeSchedule (schema generation only)
+         * @description Internal endpoint used only to ensure DateRangeSchedule schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DateRangeSchedule"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/daytimerange": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DayTimeRange (schema generation only)
+         * @description Internal endpoint used only to ensure DayTimeRange schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DayTimeRange"];
                     };
                 };
             };
@@ -2851,6 +3319,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/exportfile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ExportFile (schema generation only)
+         * @description Internal endpoint used only to ensure ExportFile schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ExportFile"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/faceredaction": {
         parameters: {
             query?: never;
@@ -3280,6 +3787,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getalertsinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAlertsInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetAlertsInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetAlertsInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getalertsoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAlertsOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetAlertsOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetAlertsOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getanalysiserrorresponse": {
         parameters: {
             query?: never;
@@ -3424,6 +4009,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetAnalysisSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcustomalertserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCustomAlertsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetCustomAlertsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetCustomAlertsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcustomalertsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCustomAlertsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetCustomAlertsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetCustomAlertsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcustomalertsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCustomAlertsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetCustomAlertsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetCustomAlertsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcustomalertssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCustomAlertsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetCustomAlertsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetCustomAlertsSuccessResponse"];
                     };
                 };
             };
@@ -5074,6 +5815,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getmediabyvideofileerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMediaByVideoFileErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMediaByVideoFileErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMediaByVideoFileErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmediabyvideofilerequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMediaByVideoFileRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetMediaByVideoFileRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMediaByVideoFileRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmediabyvideofileresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMediaByVideoFileResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMediaByVideoFileResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMediaByVideoFileResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmediabyvideofilesuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMediaByVideoFileSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMediaByVideoFileSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMediaByVideoFileSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getmediaerrorresponse": {
         parameters: {
             query?: never;
@@ -5620,45 +6517,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/gettimelineerrorresponse": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get GetTimelineErrorResponse (schema generation only)
-         * @description Internal endpoint used only to ensure GetTimelineErrorResponse schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["api.GetTimelineErrorResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/gettimelineeventserrorresponse": {
         parameters: {
             query?: never;
@@ -6115,123 +6973,6 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetTimelineMediaSuccessResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/gettimelinerequest": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get GetTimelineRequest (schema generation only)
-         * @description Internal endpoint used only to ensure GetTimelineRequest schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["api.GetTimelineRequest"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/gettimelineresponse": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get GetTimelineResponse (schema generation only)
-         * @description Internal endpoint used only to ensure GetTimelineResponse schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["api.GetTimelineResponse"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/gettimelinesuccessresponse": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get GetTimelineSuccessResponse (schema generation only)
-         * @description Internal endpoint used only to ensure GetTimelineSuccessResponse schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["api.GetTimelineSuccessResponse"];
                     };
                 };
             };
@@ -7453,6 +8194,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/markergroup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerGroup (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerGroup schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MarkerGroup"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/markermetadata": {
         parameters: {
             query?: never;
@@ -7726,6 +8506,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/markertimeline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerTimeline (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerTimeline schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MarkerTimeline"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/media2filter": {
         parameters: {
             query?: never;
@@ -7869,7 +8688,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.MediaGroup"];
+                        "application/json": components["schemas"]["models.MediaGroup"];
                     };
                 };
             };
@@ -7921,6 +8740,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/mediametadatapatch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MediaMetadataPatch (schema generation only)
+         * @description Internal endpoint used only to ensure MediaMetadataPatch schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.MediaMetadataPatch"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/mediapatch": {
         parameters: {
             query?: never;
@@ -7948,6 +8806,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.MediaPatch"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/mediatimeline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MediaTimeline (schema generation only)
+         * @description Internal endpoint used only to ensure MediaTimeline schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MediaTimeline"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/mediaurlrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MediaUrlRequest (schema generation only)
+         * @description Internal endpoint used only to ensure MediaUrlRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MediaUrlRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/mediaurlresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MediaUrlResponse (schema generation only)
+         * @description Internal endpoint used only to ensure MediaUrlResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MediaUrlResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/mediawrapper": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MediaWrapper (schema generation only)
+         * @description Internal endpoint used only to ensure MediaWrapper schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MediaWrapper"];
                     };
                 };
             };
@@ -8299,6 +9313,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.NotificationUpdatePayload"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/organisation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Organisation (schema generation only)
+         * @description Internal endpoint used only to ensure Organisation schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Organisation"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/organisationinvitation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get OrganisationInvitation (schema generation only)
+         * @description Internal endpoint used only to ensure OrganisationInvitation schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.OrganisationInvitation"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/organisationmember": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get OrganisationMember (schema generation only)
+         * @description Internal endpoint used only to ensure OrganisationMember schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.OrganisationMember"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/organisationsettings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get OrganisationSettings (schema generation only)
+         * @description Internal endpoint used only to ensure OrganisationSettings schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.OrganisationSettings"];
                     };
                 };
             };
@@ -8857,6 +10027,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/removealertinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RemoveAlertInput (schema generation only)
+         * @description Internal endpoint used only to ensure RemoveAlertInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.RemoveAlertInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/removealertoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RemoveAlertOutput (schema generation only)
+         * @description Internal endpoint used only to ensure RemoveAlertOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.RemoveAlertOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/removecustomalerterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RemoveCustomAlertErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure RemoveCustomAlertErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RemoveCustomAlertErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/removecustomalertrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RemoveCustomAlertRequest (schema generation only)
+         * @description Internal endpoint used only to ensure RemoveCustomAlertRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RemoveCustomAlertRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/removecustomalertresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RemoveCustomAlertResponse (schema generation only)
+         * @description Internal endpoint used only to ensure RemoveCustomAlertResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RemoveCustomAlertResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/removecustomalertsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RemoveCustomAlertSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure RemoveCustomAlertSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RemoveCustomAlertSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/role": {
         parameters: {
             query?: never;
@@ -9118,6 +10522,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.SaveFaceRedactionSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/sequence": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Sequence (schema generation only)
+         * @description Internal endpoint used only to ensure Sequence schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Sequence"];
                     };
                 };
             };
@@ -10066,6 +11509,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/task": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Task (schema generation only)
+         * @description Internal endpoint used only to ensure Task schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Task"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/taskfilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TaskFilter (schema generation only)
+         * @description Internal endpoint used only to ensure TaskFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.TaskFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/taskwrapper": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TaskWrapper (schema generation only)
+         * @description Internal endpoint used only to ensure TaskWrapper schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.TaskWrapper"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/telegram": {
         parameters: {
             query?: never;
@@ -10210,6 +11770,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Thumby"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/timeline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Timeline (schema generation only)
+         * @description Internal endpoint used only to ensure Timeline schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Timeline"];
                     };
                 };
             };
@@ -10561,6 +12160,240 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.UpdateAccessTokenSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatealertinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAlertInput (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAlertInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UpdateAlertInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatealertoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAlertOutput (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAlertOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UpdateAlertOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecustomalerterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCustomAlertErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCustomAlertErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCustomAlertErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecustomalertrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCustomAlertRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCustomAlertRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCustomAlertRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecustomalertresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCustomAlertResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCustomAlertResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCustomAlertResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecustomalertsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCustomAlertSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCustomAlertSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCustomAlertSuccessResponse"];
                     };
                 };
             };
@@ -11041,6 +12874,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/userorganisation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UserOrganisation (schema generation only)
+         * @description Internal endpoint used only to ensure UserOrganisation schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UserOrganisation"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/userorganisationdetails": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UserOrganisationDetails (schema generation only)
+         * @description Internal endpoint used only to ensure UserOrganisationDetails schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UserOrganisationDetails"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/userorgpermissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UserOrgPermissions (schema generation only)
+         * @description Internal endpoint used only to ensure UserOrgPermissions schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UserOrgPermissions"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/userprofile": {
         parameters: {
             query?: never;
@@ -11509,6 +13459,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/weeklyschedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WeeklySchedule (schema generation only)
+         * @description Internal endpoint used only to ensure WeeklySchedule schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WeeklySchedule"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/media": {
         parameters: {
             query?: never;
@@ -11686,6 +13675,37 @@ export interface components {
             function?: string;
             line?: number;
         };
+        "api.CreateCustomAlertErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CreateCustomAlertRequest": {
+            alert?: components["schemas"]["models.CustomAlert"];
+        };
+        "api.CreateCustomAlertResponse": {
+            alert?: components["schemas"]["models.CustomAlert"];
+        };
+        "api.CreateCustomAlertSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.CreateCustomAlertResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.CursorPagination": {
             /** @description Request fields (sent by client) */
             cursor?: string;
@@ -11771,6 +13791,7 @@ export interface components {
             markers?: string[];
             name?: string;
             sites?: string[];
+            sort?: string;
         };
         "api.ErrorResponse": {
             /** @description Application-specific error code */
@@ -11854,6 +13875,35 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetAnalysisResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetCustomAlertsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetCustomAlertsRequest": Record<string, never>;
+        "api.GetCustomAlertsResponse": {
+            alerts?: components["schemas"]["models.CustomAlert"][];
+        };
+        "api.GetCustomAlertsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetCustomAlertsResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -12200,6 +14250,35 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetMediaByVideoFileErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetMediaByVideoFileRequest": Record<string, never>;
+        "api.GetMediaByVideoFileResponse": {
+            media?: components["schemas"]["models.Media"];
+        };
+        "api.GetMediaByVideoFileSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetMediaByVideoFileResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetMediaErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -12319,18 +14398,6 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.GetTimelineErrorResponse": {
-            /** @description Application-specific error code */
-            applicationStatusCode?: string;
-            /** @description Entity-specific error code */
-            entityStatusCode?: string;
-            /** @description HTTP status code for the error */
-            httpStatusCode?: number;
-            /** @description Error message describing the issue */
-            message?: string;
-            /** @description Additional metadata about the error, such as timestamps and request IDs */
-            metadata?: components["schemas"]["api.Metadata"];
-        };
         "api.GetTimelineEventsErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -12379,8 +14446,7 @@ export interface components {
             filter?: components["schemas"]["api.MarkerFilter"];
         };
         "api.GetTimelineMarkersResponse": {
-            device?: components["schemas"]["models.Device"];
-            markers?: components["schemas"]["models.MarkerOptionTimeRange"][];
+            timelines?: components["schemas"]["models.MarkerTimeline"][];
         };
         "api.GetTimelineMarkersSuccessResponse": {
             /** @description Application-specific status code */
@@ -12411,33 +14477,12 @@ export interface components {
             filter?: components["schemas"]["api.MediaFilter"];
         };
         "api.GetTimelineMediaResponse": {
-            device?: components["schemas"]["models.Device"];
-            media?: components["schemas"]["api.MediaGroup"][];
+            timelines?: components["schemas"]["models.MediaTimeline"][];
         };
         "api.GetTimelineMediaSuccessResponse": {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetTimelineMediaResponse"];
-            /** @description Entity-specific status code */
-            entityStatusCode?: string;
-            /** @description HTTP status code for the response */
-            httpStatusCode?: number;
-            /** @description Success message describing the operation */
-            message?: string;
-            /** @description Additional metadata about the response, such as timestamps and request IDs */
-            metadata?: components["schemas"]["api.Metadata"];
-        };
-        "api.GetTimelineRequest": {
-            filter?: components["schemas"]["api.MediaFilter"];
-        };
-        "api.GetTimelineResponse": {
-            device?: components["schemas"]["models.Device"];
-            media?: components["schemas"]["api.MediaGroup"][];
-        };
-        "api.GetTimelineSuccessResponse": {
-            /** @description Application-specific status code */
-            applicationStatusCode?: string;
-            data?: components["schemas"]["api.GetTimelineResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -12478,16 +14523,19 @@ export interface components {
         "api.GroupFilter": {
             groupIds?: string[];
             name?: string;
+            sort?: string;
         };
         "api.MarkerCategoryFilter": {
             name?: string;
             names?: string[];
+            sort?: string;
         };
         "api.MarkerEventFilter": {
             deviceKeys?: string[];
             markerEventIds?: string[];
             name?: string;
             names?: string[];
+            sort?: string;
             timeRanges?: components["schemas"]["models.TimeRange"][];
         };
         "api.MarkerFilter": {
@@ -12496,20 +14544,24 @@ export interface components {
             markerIds?: string[];
             name?: string;
             names?: string[];
+            sort?: string;
             timeRanges?: components["schemas"]["models.TimeRange"][];
         };
         "api.MarkerTagFilter": {
             deviceKeys?: string[];
             name?: string;
             names?: string[];
+            sort?: string;
             timeRanges?: components["schemas"]["models.TimeRange"][];
         };
         "api.Media2Filter": {
             devices?: string[];
             events?: string[];
             excludedDevices?: string[];
+            excludedMedia?: string[];
             groups?: string[];
             markers?: string[];
+            mediaIds?: string[];
             regions?: components["schemas"]["models.Region"][];
             sites?: string[];
             sortBy?: string;
@@ -12536,14 +14588,11 @@ export interface components {
             timelineStartTimestamp?: number;
             viewStyle?: string;
         };
-        "api.MediaGroup": {
-            count?: number;
-            endTimestamp?: number;
-            media?: components["schemas"]["models.Media"][];
-            startTimestamp?: number;
+        "api.MediaMetadataPatch": {
+            description?: string;
         };
         "api.MediaPatch": {
-            metadata?: components["schemas"]["api.mediaMetadataPatch"];
+            metadata?: components["schemas"]["api.MediaMetadataPatch"];
         };
         "api.Metadata": {
             /** @description Name of the application */
@@ -12597,6 +14646,33 @@ export interface components {
                 [key: string]: components["schemas"]["models.TrackBox"][];
             };
         };
+        "api.RemoveCustomAlertErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.RemoveCustomAlertRequest": Record<string, never>;
+        "api.RemoveCustomAlertResponse": Record<string, never>;
+        "api.RemoveCustomAlertSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.RemoveCustomAlertResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.SaveFaceRedactionErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -12639,6 +14715,7 @@ export interface components {
             deviceKeys?: string[];
             name?: string;
             siteIds?: string[];
+            sort?: string;
         };
         "api.SiteFlags": {
             includeMetadata?: boolean;
@@ -12728,6 +14805,37 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.UpdateAccessTokenResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateCustomAlertErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateCustomAlertRequest": {
+            alertPatch?: components["schemas"]["models.AlertPatch"];
+        };
+        "api.UpdateCustomAlertResponse": {
+            alert?: components["schemas"]["models.CustomAlert"];
+        };
+        "api.UpdateCustomAlertSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateCustomAlertResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -12839,9 +14947,8 @@ export interface components {
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.mediaMetadataPatch": {
-            description?: string;
-        };
+        /** @enum {integer} */
+        "models.AccessLevel": 0 | 1 | 2 | 3;
         "models.AccessToken": {
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
@@ -12891,8 +14998,62 @@ export interface components {
             usage?: number;
             videos?: number;
         };
+        "models.Address": {
+            city?: string;
+            /** @description ISO country code */
+            country?: string;
+            /** @description Full country name */
+            country_name?: string;
+            postal_code?: string;
+            /** @description State/Province/Region */
+            region?: string;
+            street?: string;
+            street_number?: string;
+            /** @description Additional address line */
+            street2?: string;
+        };
         "models.AlertFeatures": {
             createMarker?: boolean;
+        };
+        "models.AlertPatch": {
+            alexa_token?: string;
+            channelsAll?: boolean;
+            channelsList?: string[];
+            classificationAll?: boolean;
+            classificationList?: string[];
+            countingDevicesAll?: boolean;
+            countingDevicesList?: components["schemas"]["models.DeviceKey"][];
+            countingLines?: components["schemas"]["models.Region"][];
+            countingRegions?: components["schemas"]["models.Region"][];
+            description?: string;
+            devicesAll?: boolean;
+            devicesList?: components["schemas"]["models.DeviceKey"][];
+            email_email?: string;
+            enabled?: boolean;
+            ifttt_token?: string;
+            inputList?: string[];
+            inputsAND?: boolean;
+            motionRegions?: components["schemas"]["models.Region"][];
+            outputList?: string[];
+            pushbullet_apikey?: string;
+            pushover_apikey?: string;
+            pushover_sendto?: string;
+            slack_botname?: string;
+            slack_hook?: string;
+            sms_accountsid?: string;
+            sms_authtoken?: string;
+            sms_telfrom?: string;
+            sms_telto?: string;
+            telegram_channel?: string;
+            telegram_token?: string;
+            timeAdvanced?: boolean;
+            timeRange1Max?: number;
+            timeRange1Min?: number;
+            timeRange2Max?: number;
+            timeRange2Min?: number;
+            title?: string;
+            webhook_url?: string;
+            weeklySchedule?: components["schemas"]["models.WeeklySchedule"][];
         };
         "models.Alexa": {
             accesscode?: string;
@@ -13098,6 +15259,35 @@ export interface components {
             /** @description Comment information */
             type?: string;
         };
+        "models.CompanyDetails": {
+            /** @description Main company email */
+            email?: string;
+            /** @description Industry/sector */
+            industry?: string;
+            /** @description Official registered company name */
+            legal_name?: string;
+            /** @description Company logo URL */
+            logo?: string;
+            /** @description Main company phone */
+            phone?: string;
+            /** @description Company registration number */
+            registration_number?: string;
+            /** @description Alternative tax identifier */
+            tax_id?: string;
+            /** @description Trading/DBA name if different */
+            trading_name?: string;
+            /** @description VAT/Tax ID number */
+            vat_number?: string;
+            /** @description Company website */
+            website?: string;
+        };
+        "models.Contact": {
+            email?: string;
+            name?: string;
+            phone?: string;
+            /** @description Job title/role */
+            role?: string;
+        };
         "models.Counting": {
             detail?: components["schemas"]["models.CountingDetail"][];
             records?: components["schemas"]["models.CountingRecord"][];
@@ -13130,6 +15320,13 @@ export interface components {
             duration?: number;
             key?: string;
         };
+        "models.CreateAlertInput": {
+            alert?: components["schemas"]["models.CustomAlert"];
+            user?: components["schemas"]["models.User"];
+        };
+        "models.CreateAlertOutput": {
+            alert?: components["schemas"]["models.CustomAlert"];
+        };
         "models.Credentials": {
             currentPassword?: string;
             newPassword?: string;
@@ -13144,6 +15341,8 @@ export interface components {
             countingDevicesAll?: boolean;
             countingDevicesList?: components["schemas"]["models.DeviceKey"][];
             countingLines?: components["schemas"]["models.Region"][];
+            countingRegions?: components["schemas"]["models.Region"][];
+            dateRangeSchedule?: components["schemas"]["models.DateRangeSchedule"][];
             description?: string;
             devicesAll?: boolean;
             devicesList?: components["schemas"]["models.DeviceKey"][];
@@ -13156,6 +15355,7 @@ export interface components {
             inputsAND?: boolean;
             master_user_id?: string;
             motionRegions?: components["schemas"]["models.Region"][];
+            organisationId?: string;
             outputList?: string[];
             pushbullet_apikey?: string;
             pushover_apikey?: string;
@@ -13169,6 +15369,7 @@ export interface components {
             telegram_channel?: string;
             telegram_token?: string;
             timeAdvanced?: boolean;
+            /** @description Deprecated: legacy time range fields. Use WeeklySchedule/DateRangeSchedule instead. */
             timeRange1Max?: number;
             timeRange1Min?: number;
             timeRange2Max?: number;
@@ -13176,6 +15377,20 @@ export interface components {
             title?: string;
             user_id?: string;
             webhook_url?: string;
+            weeklySchedule?: components["schemas"]["models.WeeklySchedule"][];
+        };
+        "models.DateRangeSchedule": {
+            enabled?: boolean;
+            endDate?: number;
+            segments?: components["schemas"]["models.DayTimeRange"][];
+            /** @description StartDate is inclusive; EndDate is exclusive. Both are unix seconds for local midnight in Timezone. */
+            startDate?: number;
+            timezone?: string;
+        };
+        "models.DayTimeRange": {
+            end?: number;
+            /** @description seconds since midnight, 0..86400 */
+            start?: number;
         };
         "models.DeprecatedHeartbeat": {
             architecture?: string;
@@ -13317,6 +15532,10 @@ export interface components {
             version?: string;
         };
         "models.DeviceAtRuntimeMetadata": {
+            /** @description Groups contains details about the groups that the device is linked to. */
+            groups?: components["schemas"]["models.GroupOption"][];
+            /** @description Sites contains details about the sites that the device is linked to. */
+            sites?: components["schemas"]["models.SiteOption"][];
             /** @description Status is derived from the last seen timestamps and thresholds. */
             status?: string;
         };
@@ -13434,6 +15653,18 @@ export interface components {
             eventData?: string;
             name?: string;
         };
+        "models.ExportFile": {
+            camera_id?: string;
+            key?: string;
+            provider?: string;
+            source?: string;
+            spriteFile?: string;
+            spriteInterval?: number;
+            spriteProvider?: string;
+            thumbnailFile?: string;
+            thumbnailProvider?: string;
+            timestamp?: number;
+        };
         "models.FaceRedaction": {
             id?: string;
             tracks?: components["schemas"]["models.FaceRedactionTrack"][];
@@ -13453,11 +15684,36 @@ export interface components {
             traject?: number[][];
         };
         "models.FeaturePermissions": {
-            floorPlans?: number;
-            io?: number;
-            liveview?: number;
-            ptz?: number;
-            remote_config?: number;
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            alerts?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            devices?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            export?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            floorPlans?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            groups?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            io?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            liveview?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            markers?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            playback?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            ptz?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            remote_config?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            roles?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            settings?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            sites?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
+            users?: components["schemas"]["models.AccessLevel"];
         };
         "models.FloorPlan": {
             /** @description Audit information */
@@ -13495,15 +15751,24 @@ export interface components {
             /** @description Timestamp is the time when the GPS data was recorded (milliseconds since epoch). */
             timestamp?: number;
         };
+        "models.GetAlertsInput": {
+            user?: components["schemas"]["models.User"];
+        };
+        "models.GetAlertsOutput": {
+            alerts?: components["schemas"]["models.CustomAlert"][];
+        };
         "models.Group": {
+            address?: components["schemas"]["models.Location"];
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
+            color?: string;
             description?: string;
             devices?: string[];
             group_type?: string;
             /** @description Nested groups */
             groups?: string[];
             id?: string;
+            initials?: string;
             /** @description Metadata */
             metadata?: components["schemas"]["models.GroupMetadata"];
             name?: string;
@@ -13514,6 +15779,8 @@ export interface components {
             /** @description Media file information (by default "vault", however might change
              *     in the future (integration with other storage solutions, next to Vault). */
             storageSolution?: string;
+            /** @description Deprecated */
+            user_id?: string;
             vaultAccessKey?: string;
             vaultSecretKey?: string;
             vaultUri?: string;
@@ -13799,6 +16066,12 @@ export interface components {
             updatedAt?: number;
             value?: string;
         };
+        "models.MarkerGroup": {
+            count?: number;
+            endTimestamp?: number;
+            markers?: components["schemas"]["models.Marker"][];
+            startTimestamp?: number;
+        };
         "models.MarkerMetadata": {
             /** @description Additional comments or description of the marker */
             comments?: components["schemas"]["models.Comment"];
@@ -13878,6 +16151,10 @@ export interface components {
             updatedAt?: number;
             value?: string;
         };
+        "models.MarkerTimeline": {
+            device?: components["schemas"]["models.Device"];
+            markers?: components["schemas"]["models.MarkerGroup"][];
+        };
         "models.Media": {
             /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
              *     more verbose information about the device's current state, capabilities, or configuration.
@@ -13890,14 +16167,18 @@ export interface components {
             /** @description RBAC information
              *     DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
              *     OrganisationId is used to identify the organisation that owns the device. */
+            deviceId?: string;
+            /** @description device identifier */
             deviceKey?: string;
             /** @description Name of the device that uploaded media */
             deviceName?: string;
             duration?: number;
             endTimestamp?: number;
+            eventNames?: string[];
             groupId?: string;
             /** @description Unique identifier for the media file */
             id?: string;
+            markerNames?: string[];
             /** @description Metadata */
             metadata?: components["schemas"]["models.MediaMetadata"];
             organisationId?: string;
@@ -13911,6 +16192,7 @@ export interface components {
             /** @description Media file information (by default "vault", however might change
              *     in the future (integration with other storage solutions, next to Vault). */
             storageSolution?: string;
+            tagNames?: string[];
             thumbnailFile?: string;
             thumbnailProvider?: string;
             videoFile?: string;
@@ -13928,6 +16210,12 @@ export interface components {
             spriteUrl?: string;
             thumbnailUrl?: string;
             videoUrl?: string;
+        };
+        "models.MediaGroup": {
+            count?: number;
+            endTimestamp?: number;
+            media?: components["schemas"]["models.Media"][];
+            startTimestamp?: number;
         };
         "models.MediaMetadata": {
             /** @description Analysis data (we keep a reference to the original analysis, and cache some data here) */
@@ -13976,6 +16264,35 @@ export interface components {
             thumbnailWidth?: number;
             /** @description in pixels */
             width?: number;
+        };
+        "models.MediaTimeline": {
+            device?: components["schemas"]["models.Device"];
+            media?: components["schemas"]["models.MediaGroup"][];
+        };
+        "models.MediaUrlRequest": {
+            filename?: string;
+            provider?: string;
+            uriExpiryTime?: string;
+        };
+        "models.MediaUrlResponse": {
+            data?: string;
+        };
+        "models.MediaWrapper": {
+            description?: string;
+            index?: number;
+            instanceName?: string;
+            labels?: string[];
+            metadata?: components["schemas"]["models.Media"];
+            persisted?: boolean;
+            properties?: string[];
+            spriteUrl?: string;
+            src?: string;
+            task_created?: boolean;
+            thumbnailUrl?: string;
+            time?: string;
+            timestamp?: number;
+            type?: string;
+            vault?: boolean;
         };
         "models.Message": {
             alert_id?: string;
@@ -14071,6 +16388,59 @@ export interface components {
         "models.NotificationUpdatePayload": {
             payload?: unknown;
             type?: string;
+        };
+        "models.Organisation": {
+            audit?: components["schemas"]["models.Audit"];
+            billing_address?: components["schemas"]["models.Address"];
+            /** @description Company Details */
+            company?: components["schemas"]["models.CompanyDetails"];
+            description?: string;
+            domain?: string;
+            id?: string;
+            is_active?: number;
+            name?: string;
+            /** @description The user who owns this organisation */
+            owner_id?: string;
+            settings?: components["schemas"]["models.OrganisationSettings"];
+            /** @description Billing & Subscription */
+            subscription?: components["schemas"]["models.Subscription"];
+        };
+        "models.OrganisationInvitation": {
+            audit?: components["schemas"]["models.Audit"];
+            email?: string;
+            expires_at?: string;
+            id?: string;
+            invited_by?: string;
+            organisation_id?: string;
+            /** @description Roles to assign upon acceptance */
+            role_ids?: string[];
+            /** @description "pending", "accepted", "expired", "revoked" */
+            status?: string;
+            token?: string;
+        };
+        "models.OrganisationMember": {
+            membership?: components["schemas"]["models.UserOrganisation"];
+            organisation_id?: string;
+            /** @description Member's role assignments */
+            role_assignments?: components["schemas"]["models.RoleAssignment"][];
+            /** @description Populated role details */
+            roles?: components["schemas"]["models.Role"][];
+            user?: components["schemas"]["models.User"];
+        };
+        "models.OrganisationSettings": {
+            allow_invitations?: boolean;
+            /** @description Email domains allowed for membership */
+            allowed_domains?: string[];
+            /** @description Default role for new members */
+            default_role_id?: string;
+            /** @description Contacts for different purposes */
+            financial_contact?: components["schemas"]["models.Contact"];
+            force_mfa?: boolean;
+            max_members?: number;
+            /** @description Main point of contact */
+            primary_contact?: components["schemas"]["models.Contact"];
+            /** @description Technical/support contact */
+            technical_contact?: components["schemas"]["models.Contact"];
         };
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
@@ -14171,6 +16541,7 @@ export interface components {
         };
         "models.Region": {
             device?: string;
+            direction?: string;
             height?: number;
             id?: string;
             regionPoints?: components["schemas"]["models.Point"][];
@@ -14180,28 +16551,37 @@ export interface components {
             x?: number;
             y?: number;
         };
+        "models.RemoveAlertInput": {
+            alertId?: string;
+            user?: components["schemas"]["models.User"];
+        };
+        "models.RemoveAlertOutput": Record<string, never>;
         "models.Role": {
+            audit?: components["schemas"]["models.Audit"];
+            description?: string;
             featurePermissions?: components["schemas"]["models.FeaturePermissions"];
             id?: string;
             isActive?: number;
+            /** @description Organisation this role belongs to */
+            organisation_id?: string;
             pages?: string[];
             role?: string;
             roleName?: string;
             timeWindow?: components["schemas"]["models.TimeWindow"];
             timeWindowActive?: number;
-            user_id?: string;
         };
         "models.RoleAssignment": {
-            assigned_at?: string;
-            assigned_by?: string;
-            created_at?: string;
+            audit?: components["schemas"]["models.Audit"];
+            /** @description Optional expiration for temporary assignments */
             expires_at?: string;
             id?: string;
             is_active?: number;
+            /** @description Organisation context for this assignment */
             organisation_id?: string;
+            /** @description Reference to the organisation-specific Role */
             role_id?: string;
+            /** @description Optional granular scope within organisation */
             scope?: components["schemas"]["models.RoleScope"];
-            updated_at?: string;
             user_id?: string;
         };
         "models.RoleScope": {
@@ -14213,6 +16593,18 @@ export interface components {
             site_ids?: string[];
             /** @description e.g., "global", "site", "group", "device" */
             type?: string;
+        };
+        "models.Sequence": {
+            analysis?: {
+                [key: string]: unknown;
+            };
+            devices?: string[];
+            end?: number;
+            id?: string;
+            images?: components["schemas"]["models.Media"][];
+            notified?: boolean;
+            start?: number;
+            user_id?: string;
         };
         "models.SequenceStage": {
             name?: string;
@@ -14228,20 +16620,29 @@ export interface components {
             };
         };
         "models.Site": {
+            access_key?: string;
+            address?: components["schemas"]["models.Location"];
+            all_devices?: string[];
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
+            color?: string;
             description?: string;
             devices?: string[];
             groups?: string[];
             id?: string;
+            initials?: string;
             /** @description Metadata */
             metadata?: components["schemas"]["models.SiteMetadata"];
             name?: string;
             /** @description RBAC information */
             organisationId?: string;
+            secret_key?: string;
+            storage_uri?: string;
             /** @description Media file information (by default "vault", however might change
              *     in the future (integration with other storage solutions, next to Vault). */
             storageSolution?: string;
+            /** @description Deprecated */
+            user_id?: string;
             vaultAccessKey?: string;
             vaultSecretKey?: string;
             vaultUri?: string;
@@ -14357,6 +16758,7 @@ export interface components {
         "models.Status": "pending" | "skipped" | "assigned" | "inProgress" | "completed" | "failed";
         "models.Storage": {
             access_key?: string;
+            provider?: string;
             secret_key?: string;
             uri?: string;
         };
@@ -14364,11 +16766,16 @@ export interface components {
             created_at?: string;
             ends_at?: string;
             id?: string;
+            /** @description Organisation this subscription belongs to */
+            organisation_id?: string;
             quantity?: number;
+            /** @description active, cancelled, past_due, trialing, etc. */
+            status?: string;
             stripe_id?: string;
             stripe_plan?: string;
             trial_ends_at?: string;
             updated_at?: string;
+            /** @description Legacy: user who created/owns the subscription */
             user_id?: string;
         };
         "models.Synchronize": {
@@ -14392,6 +16799,81 @@ export interface components {
             timestamp?: number;
             /** @description ID of the worker handling synchronization */
             workerId?: string;
+        };
+        "models.Task": {
+            /** @description Users associated with this task */
+            assignees?: string[];
+            assignees_profile?: string[];
+            assignees_sent_to?: string[];
+            /** @description A task can be assigned to a single camera or multiple cameras (depending of the export) */
+            camera?: string;
+            /** @description this is for the camera names (is computed on demand) */
+            camera_names?: string[];
+            /** @description these are camera ids */
+            cameras?: string[];
+            /** @description Related collections */
+            comments?: components["schemas"]["models.Comment"][];
+            compressed_url?: string;
+            compressedFile?: string;
+            compressedProvider?: string;
+            creation_date?: number;
+            creation_datetime?: string;
+            date?: number;
+            downloaded_files?: string[];
+            export_files?: components["schemas"]["models.ExportFile"][];
+            export_files_count?: number;
+            /** @description "0% -> 100%" */
+            export_progress?: number;
+            /** @description An export task, is containing multiple video in a compressed file format (.zip) */
+            export_status?: string;
+            id?: string;
+            is_private?: boolean;
+            labels?: string[];
+            media_date?: string;
+            media_datetime?: string;
+            media_end_datetime?: string;
+            media_end_timestamp?: number;
+            media_timestamp?: number;
+            notes?: string;
+            notes_short?: string;
+            notify_assignees?: boolean;
+            reporter_email?: string;
+            reporter_id?: string;
+            reporter_profile?: string;
+            sequenceId?: string;
+            sprite_url?: string;
+            spriteFile?: string;
+            spriteInterval?: number;
+            spriteProvider?: string;
+            /** @description open, approved, rejected */
+            status?: string;
+            /** @description base 64 encoded */
+            thumbnail?: string;
+            thumbnail_url?: string;
+            thumbnailFile?: string;
+            thumbnailProvider?: string;
+            title?: string;
+            user_id?: string;
+            username?: string;
+            /** @description This is used for a single export, for a bulk export, we will use the first video as thumbnail and sprite.
+             *     Referencing to some media: video, thumbnail and sprite */
+            video_url?: string;
+            videoFile?: string;
+            videoProvider?: string;
+        };
+        "models.TaskFilter": {
+            assignees?: string[];
+            devices?: string[];
+            groups?: string[];
+            labels?: string[];
+            limit?: number;
+            offset?: number;
+            sites?: string[];
+            status?: string[];
+            title?: string;
+        };
+        "models.TaskWrapper": {
+            task?: components["schemas"]["models.Task"];
         };
         "models.Telegram": {
             channel?: string;
@@ -14502,6 +16984,11 @@ export interface components {
             timeRange2MinTuesday?: number;
             timeRange2MinWednesday?: number;
         };
+        "models.Timeline": {
+            device?: components["schemas"]["models.Device"];
+            markers?: components["schemas"]["models.MarkerGroup"][];
+            media?: components["schemas"]["models.MediaGroup"][];
+        };
         "models.TrackBox": {
             edited?: boolean;
             smoothed?: boolean;
@@ -14510,6 +16997,14 @@ export interface components {
             x2?: number;
             y1?: number;
             y2?: number;
+        };
+        "models.UpdateAlertInput": {
+            alertId?: string;
+            alertPatch?: components["schemas"]["models.AlertPatch"];
+            user?: components["schemas"]["models.User"];
+        };
+        "models.UpdateAlertOutput": {
+            alert?: components["schemas"]["models.CustomAlert"];
         };
         "models.User": {
             activity?: components["schemas"]["models.Activity"][];
@@ -14555,6 +17050,7 @@ export interface components {
             google2fa_enabled?: boolean;
             google2fa_secret?: string;
             groups?: string[];
+            highupload?: components["schemas"]["models.HighUpload"];
             /** @description Settings HLS (hacky should be included in here). */
             hls_callback_url?: string;
             id?: string;
@@ -14585,6 +17081,9 @@ export interface components {
             registerToken?: string;
             role?: string;
             role_level?: number;
+            settings?: {
+                [key: string]: unknown;
+            };
             sites?: string[];
             storage?: components["schemas"]["models.Storage"];
             /** @description Should go away into Card struct */
@@ -14595,6 +17094,43 @@ export interface components {
             /** @description Master account to which this account was added. */
             user_id?: string;
             username?: string;
+        };
+        "models.UserOrgPermissions": {
+            can_invite_users?: boolean;
+            can_manage_devices?: boolean;
+            can_manage_groups?: boolean;
+            can_manage_roles?: boolean;
+            can_manage_sites?: boolean;
+            /** @description Specific devices user has access to */
+            device_ids?: string[];
+            /** @description Specific groups user has access to */
+            group_ids?: string[];
+            /** @description Specific sites user has access to */
+            site_ids?: string[];
+        };
+        "models.UserOrganisation": {
+            audit?: components["schemas"]["models.Audit"];
+            /** @description Optional expiration for temporary access */
+            expires_at?: string;
+            id?: string;
+            invited_at?: string;
+            invited_by?: string;
+            joined_at?: string;
+            organisation_id?: string;
+            /** @description Additional permissions specific to this membership */
+            permissions?: components["schemas"]["models.UserOrgPermissions"];
+            /** @description "pending", "active", "suspended", "revoked" */
+            status?: string;
+            user_id?: string;
+        };
+        "models.UserOrganisationDetails": {
+            membership?: components["schemas"]["models.UserOrganisation"];
+            organisation?: components["schemas"]["models.Organisation"];
+            /** @description User's role assignments in this organisation */
+            role_assignments?: components["schemas"]["models.RoleAssignment"][];
+            /** @description Populated role details */
+            roles?: components["schemas"]["models.Role"][];
+            user_id?: string;
         };
         "models.UserProfile": {
             card?: components["schemas"]["models.Card"];
@@ -14717,6 +17253,12 @@ export interface components {
             url?: string;
             valid?: boolean;
         };
+        "models.WeeklySchedule": {
+            day?: number;
+            enabled?: boolean;
+            segments?: components["schemas"]["models.DayTimeRange"][];
+            timezone?: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -14733,7 +17275,9 @@ export namespace models {
     export type Account = components['schemas']['models.Account'];
     export type AccountBody = components['schemas']['models.AccountBody'];
     export type Activity = components['schemas']['models.Activity'];
+    export type Address = components['schemas']['models.Address'];
     export type AlertFeatures = components['schemas']['models.AlertFeatures'];
+    export type AlertPatch = components['schemas']['models.AlertPatch'];
     export type Alexa = components['schemas']['models.Alexa'];
     export type Analysis = components['schemas']['models.Analysis'];
     export type AnalysisFilter = components['schemas']['models.AnalysisFilter'];
@@ -14758,12 +17302,18 @@ export namespace models {
     export type ClassifyDetails = components['schemas']['models.ClassifyDetails'];
     export type Color = components['schemas']['models.Color'];
     export type Comment = components['schemas']['models.Comment'];
+    export type CompanyDetails = components['schemas']['models.CompanyDetails'];
+    export type Contact = components['schemas']['models.Contact'];
     export type Counting = components['schemas']['models.Counting'];
     export type CountingDetail = components['schemas']['models.CountingDetail'];
     export type CountingRecord = components['schemas']['models.CountingRecord'];
     export type CountingSummary = components['schemas']['models.CountingSummary'];
+    export type CreateAlertInput = components['schemas']['models.CreateAlertInput'];
+    export type CreateAlertOutput = components['schemas']['models.CreateAlertOutput'];
     export type Credentials = components['schemas']['models.Credentials'];
     export type CustomAlert = components['schemas']['models.CustomAlert'];
+    export type DateRangeSchedule = components['schemas']['models.DateRangeSchedule'];
+    export type DayTimeRange = components['schemas']['models.DayTimeRange'];
     export type DeprecatedHeartbeat = components['schemas']['models.DeprecatedHeartbeat'];
     export type DeprecatedONVIFEvents = components['schemas']['models.DeprecatedONVIFEvents'];
     export type DeprecatedPreset = components['schemas']['models.DeprecatedPreset'];
@@ -14781,12 +17331,15 @@ export namespace models {
     export type Email = components['schemas']['models.Email'];
     export type Encryption = components['schemas']['models.Encryption'];
     export type EventStage = components['schemas']['models.EventStage'];
+    export type ExportFile = components['schemas']['models.ExportFile'];
     export type FaceRedaction = components['schemas']['models.FaceRedaction'];
     export type FaceRedactionTrack = components['schemas']['models.FaceRedactionTrack'];
     export type FeaturePermissions = components['schemas']['models.FeaturePermissions'];
     export type FloorPlan = components['schemas']['models.FloorPlan'];
     export type FragmentedBytesRangeOnTime = components['schemas']['models.FragmentedBytesRangeOnTime'];
     export type GPSMetadata = components['schemas']['models.GPSMetadata'];
+    export type GetAlertsInput = components['schemas']['models.GetAlertsInput'];
+    export type GetAlertsOutput = components['schemas']['models.GetAlertsOutput'];
     export type Group = components['schemas']['models.Group'];
     export type GroupMetadata = components['schemas']['models.GroupMetadata'];
     export type GroupOption = components['schemas']['models.GroupOption'];
@@ -14810,15 +17363,22 @@ export namespace models {
     export type MarkerEvent = components['schemas']['models.MarkerEvent'];
     export type MarkerEventOption = components['schemas']['models.MarkerEventOption'];
     export type MarkerEventTimeRange = components['schemas']['models.MarkerEventTimeRange'];
+    export type MarkerGroup = components['schemas']['models.MarkerGroup'];
     export type MarkerMetadata = components['schemas']['models.MarkerMetadata'];
     export type MarkerOption = components['schemas']['models.MarkerOption'];
     export type MarkerOptionTimeRange = components['schemas']['models.MarkerOptionTimeRange'];
     export type MarkerTag = components['schemas']['models.MarkerTag'];
     export type MarkerTagOption = components['schemas']['models.MarkerTagOption'];
     export type MarkerTagTimeRange = components['schemas']['models.MarkerTagTimeRange'];
+    export type MarkerTimeline = components['schemas']['models.MarkerTimeline'];
     export type Media = components['schemas']['models.Media'];
     export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
+    export type MediaGroup = components['schemas']['models.MediaGroup'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
+    export type MediaTimeline = components['schemas']['models.MediaTimeline'];
+    export type MediaUrlRequest = components['schemas']['models.MediaUrlRequest'];
+    export type MediaUrlResponse = components['schemas']['models.MediaUrlResponse'];
+    export type MediaWrapper = components['schemas']['models.MediaWrapper'];
     export type Message = components['schemas']['models.Message'];
     export type Model = components['schemas']['models.Model'];
     export type ModelOption = components['schemas']['models.ModelOption'];
@@ -14827,6 +17387,10 @@ export namespace models {
     export type NotificationStage = components['schemas']['models.NotificationStage'];
     export type NotificationUpdate = components['schemas']['models.NotificationUpdate'];
     export type NotificationUpdatePayload = components['schemas']['models.NotificationUpdatePayload'];
+    export type Organisation = components['schemas']['models.Organisation'];
+    export type OrganisationInvitation = components['schemas']['models.OrganisationInvitation'];
+    export type OrganisationMember = components['schemas']['models.OrganisationMember'];
+    export type OrganisationSettings = components['schemas']['models.OrganisationSettings'];
     export type Permissions = components['schemas']['models.Permissions'];
     export type PipelineEvent = components['schemas']['models.PipelineEvent'];
     export type PipelineMetadata = components['schemas']['models.PipelineMetadata'];
@@ -14839,9 +17403,11 @@ export namespace models {
     export type Pushover = components['schemas']['models.Pushover'];
     export type Region = components['schemas']['models.Region'];
     export type RegionPoint = components['schemas']['models.RegionPoint'];
+    export type RemoveAlertInput = components['schemas']['models.RemoveAlertInput'];
     export type Role = components['schemas']['models.Role'];
     export type RoleAssignment = components['schemas']['models.RoleAssignment'];
     export type RoleScope = components['schemas']['models.RoleScope'];
+    export type Sequence = components['schemas']['models.Sequence'];
     export type SequenceStage = components['schemas']['models.SequenceStage'];
     export type Settings = components['schemas']['models.Settings'];
     export type Site = components['schemas']['models.Site'];
@@ -14855,6 +17421,9 @@ export namespace models {
     export type Subscription = components['schemas']['models.Subscription'];
     export type Synchronize = components['schemas']['models.Synchronize'];
     export type SynchronizeEvent = components['schemas']['models.SynchronizeEvent'];
+    export type Task = components['schemas']['models.Task'];
+    export type TaskFilter = components['schemas']['models.TaskFilter'];
+    export type TaskWrapper = components['schemas']['models.TaskWrapper'];
     export type Telegram = components['schemas']['models.Telegram'];
     export type ThrottlerStage = components['schemas']['models.ThrottlerStage'];
     export type Thumbnail = components['schemas']['models.Thumbnail'];
@@ -14862,8 +17431,14 @@ export namespace models {
     export type TimeRange = components['schemas']['models.TimeRange'];
     export type TimeSchedule = components['schemas']['models.TimeSchedule'];
     export type TimeWindow = components['schemas']['models.TimeWindow'];
+    export type Timeline = components['schemas']['models.Timeline'];
     export type TrackBox = components['schemas']['models.TrackBox'];
+    export type UpdateAlertInput = components['schemas']['models.UpdateAlertInput'];
+    export type UpdateAlertOutput = components['schemas']['models.UpdateAlertOutput'];
     export type User = components['schemas']['models.User'];
+    export type UserOrgPermissions = components['schemas']['models.UserOrgPermissions'];
+    export type UserOrganisation = components['schemas']['models.UserOrganisation'];
+    export type UserOrganisationDetails = components['schemas']['models.UserOrganisationDetails'];
     export type UserProfile = components['schemas']['models.UserProfile'];
     export type UserProfileSettings = components['schemas']['models.UserProfileSettings'];
     export type UserRoleAssignments = components['schemas']['models.UserRoleAssignments'];
@@ -14875,6 +17450,7 @@ export namespace models {
     export type VaultMediaFragmentCollection = components['schemas']['models.VaultMediaFragmentCollection'];
     export type VaultMediaMetadata = components['schemas']['models.VaultMediaMetadata'];
     export type Webhook = components['schemas']['models.Webhook'];
+    export type WeeklySchedule = components['schemas']['models.WeeklySchedule'];
 }
 
 export namespace api {
@@ -14887,6 +17463,10 @@ export namespace api {
     export type AddMarkerResponse = components['schemas']['api.AddMarkerResponse'];
     export type AddMarkerSuccessResponse = components['schemas']['api.AddMarkerSuccessResponse'];
     export type CallerInfo = components['schemas']['api.CallerInfo'];
+    export type CreateCustomAlertErrorResponse = components['schemas']['api.CreateCustomAlertErrorResponse'];
+    export type CreateCustomAlertRequest = components['schemas']['api.CreateCustomAlertRequest'];
+    export type CreateCustomAlertResponse = components['schemas']['api.CreateCustomAlertResponse'];
+    export type CreateCustomAlertSuccessResponse = components['schemas']['api.CreateCustomAlertSuccessResponse'];
     export type CursorPagination = components['schemas']['api.CursorPagination'];
     export type DebugResponse = components['schemas']['api.DebugResponse'];
     export type DeleteAccessTokenErrorResponse = components['schemas']['api.DeleteAccessTokenErrorResponse'];
@@ -14904,6 +17484,9 @@ export namespace api {
     export type GetAnalysisRequest = components['schemas']['api.GetAnalysisRequest'];
     export type GetAnalysisResponse = components['schemas']['api.GetAnalysisResponse'];
     export type GetAnalysisSuccessResponse = components['schemas']['api.GetAnalysisSuccessResponse'];
+    export type GetCustomAlertsErrorResponse = components['schemas']['api.GetCustomAlertsErrorResponse'];
+    export type GetCustomAlertsResponse = components['schemas']['api.GetCustomAlertsResponse'];
+    export type GetCustomAlertsSuccessResponse = components['schemas']['api.GetCustomAlertsSuccessResponse'];
     export type GetDeviceMediaErrorResponse = components['schemas']['api.GetDeviceMediaErrorResponse'];
     export type GetDeviceMediaResponse = components['schemas']['api.GetDeviceMediaResponse'];
     export type GetDeviceMediaSuccessResponse = components['schemas']['api.GetDeviceMediaSuccessResponse'];
@@ -14944,6 +17527,9 @@ export namespace api {
     export type GetMediaByIdRequest = components['schemas']['api.GetMediaByIdRequest'];
     export type GetMediaByIdResponse = components['schemas']['api.GetMediaByIdResponse'];
     export type GetMediaByIdSuccessResponse = components['schemas']['api.GetMediaByIdSuccessResponse'];
+    export type GetMediaByVideoFileErrorResponse = components['schemas']['api.GetMediaByVideoFileErrorResponse'];
+    export type GetMediaByVideoFileResponse = components['schemas']['api.GetMediaByVideoFileResponse'];
+    export type GetMediaByVideoFileSuccessResponse = components['schemas']['api.GetMediaByVideoFileSuccessResponse'];
     export type GetMediaErrorResponse = components['schemas']['api.GetMediaErrorResponse'];
     export type GetMediaRequest = components['schemas']['api.GetMediaRequest'];
     export type GetMediaResponse = components['schemas']['api.GetMediaResponse'];
@@ -14957,7 +17543,6 @@ export namespace api {
     export type GetStatesErrorResponse = components['schemas']['api.GetStatesErrorResponse'];
     export type GetStatesResponse = components['schemas']['api.GetStatesResponse'];
     export type GetStatesSuccessResponse = components['schemas']['api.GetStatesSuccessResponse'];
-    export type GetTimelineErrorResponse = components['schemas']['api.GetTimelineErrorResponse'];
     export type GetTimelineEventsErrorResponse = components['schemas']['api.GetTimelineEventsErrorResponse'];
     export type GetTimelineEventsRequest = components['schemas']['api.GetTimelineEventsRequest'];
     export type GetTimelineEventsResponse = components['schemas']['api.GetTimelineEventsResponse'];
@@ -14970,9 +17555,6 @@ export namespace api {
     export type GetTimelineMediaRequest = components['schemas']['api.GetTimelineMediaRequest'];
     export type GetTimelineMediaResponse = components['schemas']['api.GetTimelineMediaResponse'];
     export type GetTimelineMediaSuccessResponse = components['schemas']['api.GetTimelineMediaSuccessResponse'];
-    export type GetTimelineRequest = components['schemas']['api.GetTimelineRequest'];
-    export type GetTimelineResponse = components['schemas']['api.GetTimelineResponse'];
-    export type GetTimelineSuccessResponse = components['schemas']['api.GetTimelineSuccessResponse'];
     export type GetUserByIdErrorResponse = components['schemas']['api.GetUserByIdErrorResponse'];
     export type GetUserByIdResponse = components['schemas']['api.GetUserByIdResponse'];
     export type GetUserByIdSuccessResponse = components['schemas']['api.GetUserByIdSuccessResponse'];
@@ -14983,11 +17565,13 @@ export namespace api {
     export type MarkerTagFilter = components['schemas']['api.MarkerTagFilter'];
     export type Media2Filter = components['schemas']['api.Media2Filter'];
     export type MediaFilter = components['schemas']['api.MediaFilter'];
-    export type MediaGroup = components['schemas']['api.MediaGroup'];
+    export type MediaMetadataPatch = components['schemas']['api.MediaMetadataPatch'];
     export type MediaPatch = components['schemas']['api.MediaPatch'];
     export type Metadata = components['schemas']['api.Metadata'];
     export type PanicResponse = components['schemas']['api.PanicResponse'];
     export type RedactionEvent = components['schemas']['api.RedactionEvent'];
+    export type RemoveCustomAlertErrorResponse = components['schemas']['api.RemoveCustomAlertErrorResponse'];
+    export type RemoveCustomAlertSuccessResponse = components['schemas']['api.RemoveCustomAlertSuccessResponse'];
     export type SaveFaceRedactionErrorResponse = components['schemas']['api.SaveFaceRedactionErrorResponse'];
     export type SaveFaceRedactionRequest = components['schemas']['api.SaveFaceRedactionRequest'];
     export type SaveFaceRedactionResponse = components['schemas']['api.SaveFaceRedactionResponse'];
@@ -15005,6 +17589,10 @@ export namespace api {
     export type UpdateAccessTokenRequest = components['schemas']['api.UpdateAccessTokenRequest'];
     export type UpdateAccessTokenResponse = components['schemas']['api.UpdateAccessTokenResponse'];
     export type UpdateAccessTokenSuccessResponse = components['schemas']['api.UpdateAccessTokenSuccessResponse'];
+    export type UpdateCustomAlertErrorResponse = components['schemas']['api.UpdateCustomAlertErrorResponse'];
+    export type UpdateCustomAlertRequest = components['schemas']['api.UpdateCustomAlertRequest'];
+    export type UpdateCustomAlertResponse = components['schemas']['api.UpdateCustomAlertResponse'];
+    export type UpdateCustomAlertSuccessResponse = components['schemas']['api.UpdateCustomAlertSuccessResponse'];
     export type UpdateMediaErrorResponse = components['schemas']['api.UpdateMediaErrorResponse'];
     export type UpdateMediaRequest = components['schemas']['api.UpdateMediaRequest'];
     export type UpdateMediaResponse = components['schemas']['api.UpdateMediaResponse'];
@@ -15017,5 +17605,4 @@ export namespace api {
     export type UpsertStateResponse = components['schemas']['api.UpsertStateResponse'];
     export type UpsertStateSuccessResponse = components['schemas']['api.UpsertStateSuccessResponse'];
     export type WarningResponse = components['schemas']['api.WarningResponse'];
-    export type mediaMetadataPatch = components['schemas']['api.mediaMetadataPatch'];
 }

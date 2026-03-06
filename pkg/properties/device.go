@@ -122,6 +122,8 @@ const (
 
 // DeviceAtRuntimeMetadata property field names (BSON)
 const (
+	DeviceAtRuntimeMetadataSites = "sites"
+	DeviceAtRuntimeMetadataGroups = "groups"
 	DeviceAtRuntimeMetadataStatus = "status"
 )
 

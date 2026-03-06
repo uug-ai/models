@@ -35,6 +35,7 @@ const (
 	MediaStartTimestamp = "startTimestamp"
 	MediaEndTimestamp = "endTimestamp"
 	MediaDuration = "duration"
+	MediaDeviceId = "deviceId"
 	MediaDeviceKey = "deviceKey"
 	MediaGroupId = "groupId"
 	MediaSiteId = "siteId"
@@ -50,6 +51,9 @@ const (
 	MediaRedactionProvider = "redactionProvider"
 	MediaClassificationSummary = "classificationSummary"
 	MediaCountingSummary = "countingSummary"
+	MediaMarkerNames = "markerNames"
+	MediaEventNames = "eventNames"
+	MediaTagNames = "tagNames"
 	MediaDeviceName = "deviceName"
 	MediaMetadata = "metadata"
 	MediaAtRuntimeMetadata = "atRuntimeMetadata"
@@ -106,6 +110,7 @@ const (
 	RegionWidth = "width"
 	RegionHeight = "height"
 	RegionRegionPoints = "regionPoints"
+	RegionDirection = "direction"
 )
 
 // TimeRange property field names (BSON)

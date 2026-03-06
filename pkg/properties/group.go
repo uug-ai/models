@@ -19,6 +19,10 @@ const (
 	GroupVaultUri = "vaultUri"
 	GroupMetadata = "metadata"
 	GroupAudit = "audit"
+	GroupUserId = "user_id"
+	GroupInitials = "initials"
+	GroupAddress = "address"
+	GroupColor = "color"
 )
 
 // GroupMetadata property field names (BSON)
