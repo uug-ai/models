@@ -8,6 +8,59 @@ const (
 	AlertFeaturesCreateMarker = "createMarker"
 )
 
+// AlertPatch property field names (BSON)
+const (
+	AlertPatchTitle = "title"
+	AlertPatchEnabled = "enabled"
+	AlertPatchDescription = "description"
+	AlertPatchTimeRange1Min = "timeRange1Min"
+	AlertPatchTimeRange1Max = "timeRange1Max"
+	AlertPatchTimeRange2Min = "timeRange2Min"
+	AlertPatchTimeRange2Max = "timeRange2Max"
+	AlertPatchTimeAdvanced = "timeAdvanced"
+	AlertPatchWeeklySchedule = "weeklySchedule"
+	AlertPatchChannelsAll = "channelsAll"
+	AlertPatchChannelsList = "channelsList"
+	AlertPatchDevicesAll = "devicesAll"
+	AlertPatchDevicesList = "devicesList"
+	AlertPatchCountingDevicesAll = "countingDevicesAll"
+	AlertPatchCountingDevicesList = "countingDevicesList"
+	AlertPatchClassificationAll = "classificationAll"
+	AlertPatchClassificationList = "classificationList"
+	AlertPatchMotionRegions = "motionRegions"
+	AlertPatchCountingRegions = "countingRegions"
+	AlertPatchCountingLines = "countingLines"
+	AlertPatchInputList = "inputList"
+	AlertPatchOutputList = "outputList"
+	AlertPatchInputsAND = "inputsAND"
+	AlertPatchEmailEmail = "email_email"
+	AlertPatchSlackHook = "slack_hook"
+	AlertPatchSlackBotname = "slack_botname"
+	AlertPatchPushbulletApikey = "pushbullet_apikey"
+	AlertPatchTelegramToken = "telegram_token"
+	AlertPatchTelegramChannel = "telegram_channel"
+	AlertPatchAlexaToken = "alexa_token"
+	AlertPatchWebhookUrl = "webhook_url"
+	AlertPatchIftttToken = "ifttt_token"
+	AlertPatchSMSAccountsid = "sms_accountsid"
+	AlertPatchSMSAuthtoken = "sms_authtoken"
+	AlertPatchSMSTelfrom = "sms_telfrom"
+	AlertPatchSMSTelto = "sms_telto"
+	AlertPatchPushoverApikey = "pushover_apikey"
+	AlertPatchPushoverSendto = "pushover_sendto"
+)
+
+// CreateAlertInput property field names (BSON)
+const (
+	CreateAlertInputUser = "user"
+	CreateAlertInputAlert = "alert"
+)
+
+// CreateAlertOutput property field names (BSON)
+const (
+	CreateAlertOutputAlert = "alert"
+)
+
 // CustomAlert property field names (BSON)
 const (
 	CustomAlertId = "_id"
@@ -23,10 +76,6 @@ const (
 	CustomAlertClassificationAll = "classificationAll"
 	CustomAlertClassificationList = "classificationList"
 	CustomAlertTimeAdvanced = "timeAdvanced"
-	CustomAlertTimeRange1Max = "timeRange1Max"
-	CustomAlertTimeRange1Min = "timeRange1Min"
-	CustomAlertTimeRange2Max = "timeRange2Max"
-	CustomAlertTimeRange2Min = "timeRange2Min"
 	CustomAlertUserId = "user_id"
 	CustomAlertMasterUserId = "master_user_id"
 	CustomAlertEmailEmail = "email_email"
@@ -46,8 +95,67 @@ const (
 	CustomAlertPushoverSendto = "pushover_sendto"
 	CustomAlertMotionRegions = "motionRegions"
 	CustomAlertCountingLines = "countingLines"
+	CustomAlertCountingRegions = "countingRegions"
 	CustomAlertInputList = "inputList"
 	CustomAlertInputsAND = "inputsAND"
 	CustomAlertOutputList = "outputList"
 	CustomAlertFeatures = "features"
+	CustomAlertWeeklySchedule = "weeklySchedule"
+	CustomAlertDateRangeSchedule = "dateRangeSchedule"
+	CustomAlertOrganisationId = "organisationId"
+	CustomAlertTimeRange1Max = "timeRange1Max"
+	CustomAlertTimeRange1Min = "timeRange1Min"
+	CustomAlertTimeRange2Max = "timeRange2Max"
+	CustomAlertTimeRange2Min = "timeRange2Min"
+)
+
+// DateRangeSchedule property field names (BSON)
+const (
+	DateRangeScheduleStartDate = "startDate"
+	DateRangeScheduleEndDate = "endDate"
+	DateRangeScheduleSegments = "segments"
+	DateRangeScheduleEnabled = "enabled"
+	DateRangeScheduleTimezone = "timezone"
+)
+
+// DayTimeRange property field names (BSON)
+const (
+	DayTimeRangeStart = "start"
+	DayTimeRangeEnd = "end"
+)
+
+// GetAlertsInput property field names (BSON)
+const (
+	GetAlertsInputUser = "user"
+)
+
+// GetAlertsOutput property field names (BSON)
+const (
+	GetAlertsOutputAlerts = "alerts"
+)
+
+// RemoveAlertInput property field names (BSON)
+const (
+	RemoveAlertInputUser = "user"
+	RemoveAlertInputAlertId = "alertId"
+)
+
+// UpdateAlertInput property field names (BSON)
+const (
+	UpdateAlertInputUser = "user"
+	UpdateAlertInputAlertId = "alertId"
+	UpdateAlertInputAlertPatch = "alertPatch"
+)
+
+// UpdateAlertOutput property field names (BSON)
+const (
+	UpdateAlertOutputAlert = "alert"
+)
+
+// WeeklySchedule property field names (BSON)
+const (
+	WeeklyScheduleDay = "day"
+	WeeklyScheduleSegments = "segments"
+	WeeklyScheduleEnabled = "enabled"
+	WeeklyScheduleTimezone = "timezone"
 )

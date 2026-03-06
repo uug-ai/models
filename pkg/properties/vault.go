@@ -3,9 +3,22 @@
 
 package properties
 
+// MediaUrlRequest property field names (BSON)
+const (
+	MediaUrlRequestProvider = "provider"
+	MediaUrlRequestFilename = "filename"
+	MediaUrlRequestUriExpiryTime = "uriExpiryTime"
+)
+
+// MediaUrlResponse property field names (BSON)
+const (
+	MediaUrlResponseData = "data"
+)
+
 // Storage property field names (BSON)
 const (
 	StorageUri = "uri"
 	StorageAccessKey = "access_key"
+	StorageProvider = "provider"
 	StorageSecret = "secret_key"
 )
