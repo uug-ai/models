@@ -13,6 +13,7 @@ const (
 	AlertPatchTitle = "title"
 	AlertPatchEnabled = "enabled"
 	AlertPatchDescription = "description"
+	AlertPatchFeatures = "features"
 	AlertPatchTimeRange1Min = "timeRange1Min"
 	AlertPatchTimeRange1Max = "timeRange1Max"
 	AlertPatchTimeRange2Min = "timeRange2Min"

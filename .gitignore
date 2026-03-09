@@ -7,7 +7,6 @@ docs/
 cmd/cmd
 cmd/main.go
 
-
 # IDE
 .vscode/
 .idea/

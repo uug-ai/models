@@ -85,6 +85,7 @@ type AlertPatch struct {
 	Title               *string           `json:"title,omitempty" bson:"title,omitempty"`
 	Enabled             *bool             `json:"enabled,omitempty" bson:"enabled,omitempty"`
 	Description         *string           `json:"description,omitempty" bson:"description,omitempty"`
+	Features            *AlertFeatures    `json:"features,omitempty" bson:"features,omitempty"`
 	TimeRange1Min       *int32            `json:"timeRange1Min,omitempty" bson:"timeRange1Min,omitempty"`
 	TimeRange1Max       *int32            `json:"timeRange1Max,omitempty" bson:"timeRange1Max,omitempty"`
 	TimeRange2Min       *int32            `json:"timeRange2Min,omitempty" bson:"timeRange2Min,omitempty"`
