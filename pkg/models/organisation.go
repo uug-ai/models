@@ -74,11 +74,11 @@ type OrganisationSettings struct {
 	PrimaryContact   Contact `json:"primary_contact" bson:"primary_contact,omitempty"`     // Main point of contact
 }
 
-// UserOrganisation represents a user's membership in an organisation.
+// OrganisationUser represents a user's membership in an organisation.
 // This is the join table between users and organisations, allowing users
 // to belong to multiple organisations. Role assignments are managed separately
 // through the RoleAssignment model.
-type UserOrganisation struct {
+type OrganisationUser struct {
 	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	UserId         primitive.ObjectID `json:"user_id" bson:"user_id,omitempty"`
 	OrganisationId primitive.ObjectID `json:"organisation_id" bson:"organisation_id,omitempty"`
@@ -116,10 +116,10 @@ type OrganisationInvitation struct {
 	Audit          Audit                `json:"audit" bson:"audit,omitempty"`
 }
 
-// UserOrganisationDetails is a helper struct that includes full organisation and role details
-type UserOrganisationDetails struct {
+// OrganisationUserDetails is a helper struct that includes full organisation and role details
+type OrganisationUserDetails struct {
 	UserId          primitive.ObjectID `json:"user_id" bson:"user_id,omitempty"`
-	Membership      UserOrganisation   `json:"membership" bson:"membership,omitempty"`
+	Membership      OrganisationUser   `json:"membership" bson:"membership,omitempty"`
 	Organisation    Organisation       `json:"organisation" bson:"organisation,omitempty"`
 	RoleAssignments []RoleAssignment   `json:"role_assignments" bson:"role_assignments,omitempty"` // User's role assignments in this organisation
 	Roles           []Role             `json:"roles" bson:"roles,omitempty"`                       // Populated role details
@@ -128,7 +128,7 @@ type UserOrganisationDetails struct {
 // OrganisationMember is a helper struct that includes full user details for an organisation member
 type OrganisationMember struct {
 	OrganisationId  primitive.ObjectID `json:"organisation_id" bson:"organisation_id,omitempty"`
-	Membership      UserOrganisation   `json:"membership" bson:"membership,omitempty"`
+	Membership      OrganisationUser   `json:"membership" bson:"membership,omitempty"`
 	User            User               `json:"user" bson:"user,omitempty"`
 	RoleAssignments []RoleAssignment   `json:"role_assignments" bson:"role_assignments,omitempty"` // Member's role assignments
 	Roles           []Role             `json:"roles" bson:"roles,omitempty"`                       // Populated role details
