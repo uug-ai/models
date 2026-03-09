@@ -40,7 +40,7 @@ type CustomAlert struct {
 	PushoverSendto      string               `json:"pushover_sendto" bson:"pushover_sendto"`
 	MotionRegions       []Region             `json:"motionRegions" bson:"motionRegions"`
 	CountingLines       []Region             `json:"countingLines" bson:"countingLines"`
-	CountingRegions     []Region         	 `json:"countingRegions,omitempty" bson:"countingRegions,omitempty"`
+	CountingRegions     []Region             `json:"countingRegions,omitempty" bson:"countingRegions,omitempty"`
 	InputList           []string             `json:"inputList" bson:"inputList"`
 	InputsAND           bool                 `json:"inputsAND" bson:"inputsAND"`
 	OutputList          []string             `json:"outputList" bson:"outputList"`
@@ -57,7 +57,8 @@ type CustomAlert struct {
 }
 
 type AlertFeatures struct {
-	CreateMarker bool `json:"createMarker,omitempty" bson:"createMarker,omitempty"`
+	CreateMarker        bool `json:"createMarker,omitempty" bson:"createMarker,omitempty"`
+	CreateWatchlistItem bool `json:"createWatchlistItem,omitempty" bson:"createWatchlistItem,omitempty"`
 }
 
 type WeeklySchedule struct {
