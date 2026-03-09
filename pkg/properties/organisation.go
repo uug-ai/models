@@ -86,6 +86,29 @@ const (
 	OrganisationSettingsPrimaryContact = "primary_contact"
 )
 
+// OrganisationUser property field names (BSON)
+const (
+	OrganisationUserId = "_id"
+	OrganisationUserUserId = "user_id"
+	OrganisationUserOrganisationId = "organisation_id"
+	OrganisationUserStatus = "status"
+	OrganisationUserInvitedBy = "invited_by"
+	OrganisationUserInvitedAt = "invited_at"
+	OrganisationUserJoinedAt = "joined_at"
+	OrganisationUserExpiresAt = "expires_at"
+	OrganisationUserPermissions = "permissions"
+	OrganisationUserAudit = "audit"
+)
+
+// OrganisationUserDetails property field names (BSON)
+const (
+	OrganisationUserDetailsUserId = "user_id"
+	OrganisationUserDetailsMembership = "membership"
+	OrganisationUserDetailsOrganisation = "organisation"
+	OrganisationUserDetailsRoleAssignments = "role_assignments"
+	OrganisationUserDetailsRoles = "roles"
+)
+
 // UserOrgPermissions property field names (BSON)
 const (
 	UserOrgPermissionsCanInviteUsers = "can_invite_users"
@@ -96,27 +119,4 @@ const (
 	UserOrgPermissionsSiteIds = "site_ids"
 	UserOrgPermissionsGroupIds = "group_ids"
 	UserOrgPermissionsDeviceIds = "device_ids"
-)
-
-// UserOrganisation property field names (BSON)
-const (
-	UserOrganisationId = "_id"
-	UserOrganisationUserId = "user_id"
-	UserOrganisationOrganisationId = "organisation_id"
-	UserOrganisationStatus = "status"
-	UserOrganisationInvitedBy = "invited_by"
-	UserOrganisationInvitedAt = "invited_at"
-	UserOrganisationJoinedAt = "joined_at"
-	UserOrganisationExpiresAt = "expires_at"
-	UserOrganisationPermissions = "permissions"
-	UserOrganisationAudit = "audit"
-)
-
-// UserOrganisationDetails property field names (BSON)
-const (
-	UserOrganisationDetailsUserId = "user_id"
-	UserOrganisationDetailsMembership = "membership"
-	UserOrganisationDetailsOrganisation = "organisation"
-	UserOrganisationDetailsRoleAssignments = "role_assignments"
-	UserOrganisationDetailsRoles = "roles"
 )

@@ -7,8 +7,6 @@ docs/
 cmd/cmd
 cmd/main.go
 
-pkg/properties/
-
 # IDE
 .vscode/
 .idea/

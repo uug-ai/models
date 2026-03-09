@@ -9481,6 +9481,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/organisationuser": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get OrganisationUser (schema generation only)
+         * @description Internal endpoint used only to ensure OrganisationUser schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.OrganisationUser"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/organisationuserdetails": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get OrganisationUserDetails (schema generation only)
+         * @description Internal endpoint used only to ensure OrganisationUserDetails schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.OrganisationUserDetails"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/panicresponse": {
         parameters: {
             query?: never;
@@ -12874,84 +12952,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/userorganisation": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get UserOrganisation (schema generation only)
-         * @description Internal endpoint used only to ensure UserOrganisation schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.UserOrganisation"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/userorganisationdetails": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get UserOrganisationDetails (schema generation only)
-         * @description Internal endpoint used only to ensure UserOrganisationDetails schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.UserOrganisationDetails"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/userorgpermissions": {
         parameters: {
             query?: never;
@@ -15030,6 +15030,7 @@ export interface components {
             devicesList?: components["schemas"]["models.DeviceKey"][];
             email_email?: string;
             enabled?: boolean;
+            features?: components["schemas"]["models.AlertFeatures"];
             ifttt_token?: string;
             inputList?: string[];
             inputsAND?: boolean;
@@ -16419,7 +16420,7 @@ export interface components {
             token?: string;
         };
         "models.OrganisationMember": {
-            membership?: components["schemas"]["models.UserOrganisation"];
+            membership?: components["schemas"]["models.OrganisationUser"];
             organisation_id?: string;
             /** @description Member's role assignments */
             role_assignments?: components["schemas"]["models.RoleAssignment"][];
@@ -16441,6 +16442,30 @@ export interface components {
             primary_contact?: components["schemas"]["models.Contact"];
             /** @description Technical/support contact */
             technical_contact?: components["schemas"]["models.Contact"];
+        };
+        "models.OrganisationUser": {
+            audit?: components["schemas"]["models.Audit"];
+            /** @description Optional expiration for temporary access */
+            expires_at?: string;
+            id?: string;
+            invited_at?: string;
+            invited_by?: string;
+            joined_at?: string;
+            organisation_id?: string;
+            /** @description Additional permissions specific to this membership */
+            permissions?: components["schemas"]["models.UserOrgPermissions"];
+            /** @description "pending", "active", "suspended", "revoked" */
+            status?: string;
+            user_id?: string;
+        };
+        "models.OrganisationUserDetails": {
+            membership?: components["schemas"]["models.OrganisationUser"];
+            organisation?: components["schemas"]["models.Organisation"];
+            /** @description User's role assignments in this organisation */
+            role_assignments?: components["schemas"]["models.RoleAssignment"][];
+            /** @description Populated role details */
+            roles?: components["schemas"]["models.Role"][];
+            user_id?: string;
         };
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
@@ -17108,30 +17133,6 @@ export interface components {
             /** @description Specific sites user has access to */
             site_ids?: string[];
         };
-        "models.UserOrganisation": {
-            audit?: components["schemas"]["models.Audit"];
-            /** @description Optional expiration for temporary access */
-            expires_at?: string;
-            id?: string;
-            invited_at?: string;
-            invited_by?: string;
-            joined_at?: string;
-            organisation_id?: string;
-            /** @description Additional permissions specific to this membership */
-            permissions?: components["schemas"]["models.UserOrgPermissions"];
-            /** @description "pending", "active", "suspended", "revoked" */
-            status?: string;
-            user_id?: string;
-        };
-        "models.UserOrganisationDetails": {
-            membership?: components["schemas"]["models.UserOrganisation"];
-            organisation?: components["schemas"]["models.Organisation"];
-            /** @description User's role assignments in this organisation */
-            role_assignments?: components["schemas"]["models.RoleAssignment"][];
-            /** @description Populated role details */
-            roles?: components["schemas"]["models.Role"][];
-            user_id?: string;
-        };
         "models.UserProfile": {
             card?: components["schemas"]["models.Card"];
             user?: components["schemas"]["models.User"];
@@ -17391,6 +17392,8 @@ export namespace models {
     export type OrganisationInvitation = components['schemas']['models.OrganisationInvitation'];
     export type OrganisationMember = components['schemas']['models.OrganisationMember'];
     export type OrganisationSettings = components['schemas']['models.OrganisationSettings'];
+    export type OrganisationUser = components['schemas']['models.OrganisationUser'];
+    export type OrganisationUserDetails = components['schemas']['models.OrganisationUserDetails'];
     export type Permissions = components['schemas']['models.Permissions'];
     export type PipelineEvent = components['schemas']['models.PipelineEvent'];
     export type PipelineMetadata = components['schemas']['models.PipelineMetadata'];
@@ -17437,8 +17440,6 @@ export namespace models {
     export type UpdateAlertOutput = components['schemas']['models.UpdateAlertOutput'];
     export type User = components['schemas']['models.User'];
     export type UserOrgPermissions = components['schemas']['models.UserOrgPermissions'];
-    export type UserOrganisation = components['schemas']['models.UserOrganisation'];
-    export type UserOrganisationDetails = components['schemas']['models.UserOrganisationDetails'];
     export type UserProfile = components['schemas']['models.UserProfile'];
     export type UserProfileSettings = components['schemas']['models.UserProfileSettings'];
     export type UserRoleAssignments = components['schemas']['models.UserRoleAssignments'];
