@@ -6,6 +6,7 @@ type TimeSeriesDataPoint struct {
 }
 
 type TimeSeries struct {
+	Key   string                `json:"key" bson:"key,omitempty"`
 	Label string                `json:"label" bson:"label,omitempty"`
 	Data  []TimeSeriesDataPoint `json:"data" bson:"data,omitempty"`
 }
