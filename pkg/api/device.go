@@ -101,6 +101,17 @@ type GetDevicesErrorResponse struct {
 	ErrorResponse
 }
 
+type GetDeviceResponse struct {
+	Device models.Device `json:"device,omitempty" bson:"device,omitempty"`
+}
+type GetDeviceSuccessResponse struct {
+	SuccessResponse
+	Data GetDeviceResponse `json:"data,omitempty" bson:"data,omitempty"`
+}
+type GetDeviceErrorResponse struct {
+	ErrorResponse
+}
+
 type GetDeviceMediaResponse struct {
 	Media []models.Media `json:"media,omitempty" bson:"media,omitempty"`
 }
