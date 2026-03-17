@@ -6985,6 +6985,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/gettimeseriescharterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTimeSeriesChartErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTimeSeriesChartErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTimeSeriesChartErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettimeserieschartrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTimeSeriesChartRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetTimeSeriesChartRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTimeSeriesChartRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettimeserieschartresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTimeSeriesChartResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTimeSeriesChartResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTimeSeriesChartResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettimeserieschartsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTimeSeriesChartSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTimeSeriesChartSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTimeSeriesChartSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getuserbyiderrorresponse": {
         parameters: {
             query?: never;
@@ -8533,45 +8689,6 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.MarkerTimeline"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/media2filter": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Media2Filter (schema generation only)
-         * @description Internal endpoint used only to ensure Media2Filter schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["api.Media2Filter"];
                     };
                 };
             };
@@ -11977,6 +12094,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/timeseries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TimeSeries (schema generation only)
+         * @description Internal endpoint used only to ensure TimeSeries schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.TimeSeries"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/timeserieschart": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TimeSeriesChart (schema generation only)
+         * @description Internal endpoint used only to ensure TimeSeriesChart schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.TimeSeriesChart"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/timeseriesdatapoint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TimeSeriesDataPoint (schema generation only)
+         * @description Internal endpoint used only to ensure TimeSeriesDataPoint schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.TimeSeriesDataPoint"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/timewindow": {
         parameters: {
             query?: never;
@@ -14292,7 +14526,7 @@ export interface components {
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetMediaRequest": {
-            filter?: components["schemas"]["api.Media2Filter"];
+            filter?: components["schemas"]["api.MediaFilter"];
             pagination?: components["schemas"]["api.CursorPagination"];
         };
         "api.GetMediaResponse": {
@@ -14389,6 +14623,37 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetStatesResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTimeSeriesChartErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTimeSeriesChartRequest": {
+            filter?: components["schemas"]["api.MediaFilter"];
+        };
+        "api.GetTimeSeriesChartResponse": {
+            chart?: components["schemas"]["models.TimeSeriesChart"];
+        };
+        "api.GetTimeSeriesChartSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetTimeSeriesChartResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -14554,7 +14819,7 @@ export interface components {
             sort?: string;
             timeRanges?: components["schemas"]["models.TimeRange"][];
         };
-        "api.Media2Filter": {
+        "api.MediaFilter": {
             devices?: string[];
             events?: string[];
             excludedDevices?: string[];
@@ -14568,25 +14833,6 @@ export interface components {
             starred?: boolean;
             tags?: string[];
             timeRanges?: components["schemas"]["models.TimeRange"][];
-        };
-        "api.MediaFilter": {
-            classifications?: string[];
-            dates?: string[];
-            devices?: string[];
-            events?: string[];
-            favourite?: boolean;
-            globalSearch?: boolean;
-            hasLabel?: boolean;
-            hourRange?: components["schemas"]["models.HourRange"];
-            lastMedia?: number;
-            limit?: number;
-            markers?: string[];
-            offset?: number;
-            regions?: components["schemas"]["models.Region"][];
-            sort?: string;
-            timelineEndTimestamp?: number;
-            timelineStartTimestamp?: number;
-            viewStyle?: string;
         };
         "api.MediaMetadataPatch": {
             description?: string;
@@ -15014,6 +15260,7 @@ export interface components {
         };
         "models.AlertFeatures": {
             createMarker?: boolean;
+            createWatchlistItem?: boolean;
         };
         "models.AlertPatch": {
             alexa_token?: string;
@@ -16979,6 +17226,24 @@ export interface components {
              */
             timezone?: string;
         };
+        "models.TimeSeries": {
+            data?: components["schemas"]["models.TimeSeriesDataPoint"][];
+            key?: string;
+            label?: string;
+        };
+        "models.TimeSeriesChart": {
+            /** @description "hour", "day" */
+            granularity?: string;
+            metric?: string;
+            series?: components["schemas"]["models.TimeSeries"][];
+            timezone?: string;
+        };
+        "models.TimeSeriesDataPoint": {
+            /** @description x-axis timestamp in milliseconds */
+            time?: number;
+            /** @description y-axis value */
+            value?: number;
+        };
         "models.TimeWindow": {
             timeRange1MaxFriday?: number;
             timeRange1MaxMonday?: number;
@@ -17433,6 +17698,9 @@ export namespace models {
     export type Thumby = components['schemas']['models.Thumby'];
     export type TimeRange = components['schemas']['models.TimeRange'];
     export type TimeSchedule = components['schemas']['models.TimeSchedule'];
+    export type TimeSeries = components['schemas']['models.TimeSeries'];
+    export type TimeSeriesChart = components['schemas']['models.TimeSeriesChart'];
+    export type TimeSeriesDataPoint = components['schemas']['models.TimeSeriesDataPoint'];
     export type TimeWindow = components['schemas']['models.TimeWindow'];
     export type Timeline = components['schemas']['models.Timeline'];
     export type TrackBox = components['schemas']['models.TrackBox'];
@@ -17544,6 +17812,10 @@ export namespace api {
     export type GetStatesErrorResponse = components['schemas']['api.GetStatesErrorResponse'];
     export type GetStatesResponse = components['schemas']['api.GetStatesResponse'];
     export type GetStatesSuccessResponse = components['schemas']['api.GetStatesSuccessResponse'];
+    export type GetTimeSeriesChartErrorResponse = components['schemas']['api.GetTimeSeriesChartErrorResponse'];
+    export type GetTimeSeriesChartRequest = components['schemas']['api.GetTimeSeriesChartRequest'];
+    export type GetTimeSeriesChartResponse = components['schemas']['api.GetTimeSeriesChartResponse'];
+    export type GetTimeSeriesChartSuccessResponse = components['schemas']['api.GetTimeSeriesChartSuccessResponse'];
     export type GetTimelineEventsErrorResponse = components['schemas']['api.GetTimelineEventsErrorResponse'];
     export type GetTimelineEventsRequest = components['schemas']['api.GetTimelineEventsRequest'];
     export type GetTimelineEventsResponse = components['schemas']['api.GetTimelineEventsResponse'];
@@ -17564,7 +17836,6 @@ export namespace api {
     export type MarkerEventFilter = components['schemas']['api.MarkerEventFilter'];
     export type MarkerFilter = components['schemas']['api.MarkerFilter'];
     export type MarkerTagFilter = components['schemas']['api.MarkerTagFilter'];
-    export type Media2Filter = components['schemas']['api.Media2Filter'];
     export type MediaFilter = components['schemas']['api.MediaFilter'];
     export type MediaMetadataPatch = components['schemas']['api.MediaMetadataPatch'];
     export type MediaPatch = components['schemas']['api.MediaPatch'];

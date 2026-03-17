@@ -81,28 +81,8 @@ func (ms MediaStatus) Translate(lang string) string {
 }
 
 type MediaFilter struct {
-	LastMedia              int64            `json:"lastMedia" bson:"lastMedia"`
-	GlobalSearch           bool             `json:"globalSearch" bson:"globalSearch"`
-	Dates                  []string         `json:"dates" bson:"dates"`
-	Devices                []string         `json:"devices" bson:"devices"`
-	Regions                []models.Region  `json:"regions" bson:"regions"`
-	Classifications        []string         `json:"classifications" bson:"classifications"`
-	Sort                   string           `json:"sort" bson:"sort"`
-	Favourite              bool             `json:"favourite" bson:"favourite"`
-	HasLabel               bool             `json:"hasLabel" bson:"hasLabel"`
-	HourRange              models.HourRange `json:"hourRange" bson:"hourRange"`
-	Markers                []string         `json:"markers" bson:"markers"`
-	Events                 []string         `json:"events" bson:"events"`
-	ViewStyle              string           `json:"viewStyle" bson:"viewStyle"`
-	Offset                 int64            `json:"offset" bson:"offset"`
-	Limit                  int64            `json:"limit" bson:"limit"`
-	TimelineStartTimestamp int64            `json:"timelineStartTimestamp" bson:"timelineStartTimestamp"`
-	TimelineEndTimestamp   int64            `json:"timelineEndTimestamp" bson:"timelineEndTimestamp"`
-}
-
-type Media2Filter struct {
 	TimeRanges      []*models.TimeRange `json:"timeRanges,omitempty" bson:"timeRanges,omitempty"`
-	MediaIds		[]*string           `json:"mediaIds,omitempty" bson:"mediaIds,omitempty"`
+	MediaIds        []*string           `json:"mediaIds,omitempty" bson:"mediaIds,omitempty"`
 	Sites           []*string           `json:"sites,omitempty" bson:"sites,omitempty"`
 	Groups          []*string           `json:"groups,omitempty" bson:"groups,omitempty"`
 	Devices         []*string           `json:"devices,omitempty" bson:"devices,omitempty"`
@@ -127,7 +107,7 @@ type MediaMetadataPatch struct {
 // GetMedia
 // @Router /media/ [post]
 type GetMediaRequest struct {
-	Filter     Media2Filter     `json:"filter" bson:"filter"`
+	Filter     MediaFilter      `json:"filter" bson:"filter"`
 	Pagination CursorPagination `json:"pagination" bson:"pagination"`
 }
 type GetMediaResponse struct {
