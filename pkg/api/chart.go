@@ -43,10 +43,8 @@ func (cs ChartStatus) Translate(lang string) string {
 	return cs.String()
 }
 
-// GetTimeSeriesChart
-// @Router /chart/time-series [post]
 type GetTimeSeriesChartRequest struct {
-	Filter *Media2Filter `json:"filter,omitempty" bson:"filter,omitempty"`
+	Filter *MediaFilter `json:"filter,omitempty" bson:"filter,omitempty"`
 }
 
 type GetTimeSeriesChartResponse struct {
