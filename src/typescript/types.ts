@@ -2032,6 +2032,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/createvideowallerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateVideowallErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateVideowallErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateVideowallErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createvideowallinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateVideowallInput (schema generation only)
+         * @description Internal endpoint used only to ensure CreateVideowallInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CreateVideowallInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createvideowalloutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateVideowallOutput (schema generation only)
+         * @description Internal endpoint used only to ensure CreateVideowallOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CreateVideowallOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createvideowallrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateVideowallRequest (schema generation only)
+         * @description Internal endpoint used only to ensure CreateVideowallRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateVideowallRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createvideowallresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateVideowallResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateVideowallResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateVideowallResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createvideowallsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateVideowallSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateVideowallSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateVideowallSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/credentials": {
         parameters: {
             query?: never;
@@ -2566,6 +2800,240 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.DeleteStateSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletevideowallerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteVideowallErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteVideowallErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteVideowallErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletevideowallinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteVideowallInput (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteVideowallInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeleteVideowallInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletevideowalloutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteVideowallOutput (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteVideowallOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeleteVideowallOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletevideowallrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteVideowallRequest (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteVideowallRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteVideowallRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletevideowallresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteVideowallResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteVideowallResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteVideowallResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletevideowallsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteVideowallSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteVideowallSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteVideowallSuccessResponse"];
                     };
                 };
             };
@@ -4177,6 +4645,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getdeviceerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getdevicemediaerrorresponse": {
         parameters: {
             query?: never;
@@ -4450,6 +4957,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getdeviceresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getdeviceserrorresponse": {
         parameters: {
             query?: never;
@@ -4555,6 +5101,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetDevicesSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdevicesuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDeviceSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDeviceSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDeviceSuccessResponse"];
                     };
                 };
             };
@@ -7258,6 +7843,474 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getvideowallerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetVideowallErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetVideowallErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetVideowallErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getvideowallinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetVideowallInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetVideowallInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetVideowallInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getvideowalloutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetVideowallOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetVideowallOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetVideowallOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getvideowallrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetVideowallRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetVideowallRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetVideowallRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getvideowallresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetVideowallResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetVideowallResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetVideowallResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getvideowallserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetVideowallsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetVideowallsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetVideowallsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getvideowallsinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetVideowallsInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetVideowallsInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetVideowallsInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getvideowallsoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetVideowallsOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetVideowallsOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetVideowallsOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getvideowallsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetVideowallsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetVideowallsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetVideowallsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getvideowallsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetVideowallsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetVideowallsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetVideowallsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getvideowallssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetVideowallsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetVideowallsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetVideowallsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getvideowallsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetVideowallSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetVideowallSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetVideowallSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/gpsmetadata": {
         parameters: {
             query?: never;
@@ -9703,6 +10756,240 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.PanicResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/patchvideowallerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PatchVideowallErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure PatchVideowallErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.PatchVideowallErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/patchvideowallinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PatchVideowallInput (schema generation only)
+         * @description Internal endpoint used only to ensure PatchVideowallInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.PatchVideowallInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/patchvideowalloutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PatchVideowallOutput (schema generation only)
+         * @description Internal endpoint used only to ensure PatchVideowallOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.PatchVideowallOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/patchvideowallrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PatchVideowallRequest (schema generation only)
+         * @description Internal endpoint used only to ensure PatchVideowallRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.PatchVideowallRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/patchvideowallresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PatchVideowallResponse (schema generation only)
+         * @description Internal endpoint used only to ensure PatchVideowallResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.PatchVideowallResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/patchvideowallsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PatchVideowallSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure PatchVideowallSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.PatchVideowallSuccessResponse"];
                     };
                 };
             };
@@ -12991,6 +14278,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/updatevideowallerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateVideowallErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateVideowallErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateVideowallErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatevideowallinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateVideowallInput (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateVideowallInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UpdateVideowallInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatevideowalloutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateVideowallOutput (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateVideowallOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UpdateVideowallOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatevideowallrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateVideowallRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateVideowallRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateVideowallRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatevideowallresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateVideowallResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateVideowallResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateVideowallResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatevideowallsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateVideowallSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateVideowallSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateVideowallSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/upsertstateerrorresponse": {
         parameters: {
             query?: never;
@@ -13615,6 +15136,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/videowall": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Videowall (schema generation only)
+         * @description Internal endpoint used only to ensure Videowall schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Videowall"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/warningresponse": {
         parameters: {
             query?: never;
@@ -13940,6 +15500,37 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.CreateVideowallErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CreateVideowallRequest": {
+            videowall?: components["schemas"]["models.Videowall"];
+        };
+        "api.CreateVideowallResponse": {
+            videowall?: components["schemas"]["models.Videowall"];
+        };
+        "api.CreateVideowallSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.CreateVideowallResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.CursorPagination": {
             /** @description Request fields (sent by client) */
             cursor?: string;
@@ -14010,6 +15601,33 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.DeleteStateResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteVideowallErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteVideowallRequest": Record<string, never>;
+        "api.DeleteVideowallResponse": Record<string, never>;
+        "api.DeleteVideowallSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.DeleteVideowallResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -14147,6 +15765,18 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetDeviceErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetDeviceMediaErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -14198,6 +15828,22 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetDeviceOptionsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetDeviceResponse": {
+            device?: components["schemas"]["models.Device"];
+        };
+        "api.GetDeviceSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetDeviceResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -14785,6 +16431,64 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetVideowallErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetVideowallRequest": Record<string, never>;
+        "api.GetVideowallResponse": {
+            videowall?: components["schemas"]["models.Videowall"];
+        };
+        "api.GetVideowallSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetVideowallResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetVideowallsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetVideowallsRequest": Record<string, never>;
+        "api.GetVideowallsResponse": {
+            videowalls?: components["schemas"]["models.Videowall"][];
+        };
+        "api.GetVideowallsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetVideowallsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GroupFilter": {
             groupIds?: string[];
             name?: string;
@@ -14885,6 +16589,39 @@ export interface components {
             /** @description Error message describing the issue */
             message?: string;
             /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.PatchVideowallErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.PatchVideowallRequest": {
+            updates?: {
+                [key: string]: unknown;
+            };
+        };
+        "api.PatchVideowallResponse": {
+            videowall?: components["schemas"]["models.Videowall"];
+        };
+        "api.PatchVideowallSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.PatchVideowallResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.RedactionEvent": {
@@ -15141,6 +16878,37 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.UpdateUserProfileResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateVideowallErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateVideowallRequest": {
+            videowall?: components["schemas"]["models.Videowall"];
+        };
+        "api.UpdateVideowallResponse": {
+            videowall?: components["schemas"]["models.Videowall"];
+        };
+        "api.UpdateVideowallSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateVideowallResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -15575,6 +17343,13 @@ export interface components {
         "models.CreateAlertOutput": {
             alert?: components["schemas"]["models.CustomAlert"];
         };
+        "models.CreateVideowallInput": {
+            user?: components["schemas"]["models.User"];
+            videowall?: components["schemas"]["models.Videowall"];
+        };
+        "models.CreateVideowallOutput": {
+            videowall?: components["schemas"]["models.Videowall"];
+        };
         "models.Credentials": {
             currentPassword?: string;
             newPassword?: string;
@@ -15640,6 +17415,11 @@ export interface components {
             /** @description seconds since midnight, 0..86400 */
             start?: number;
         };
+        "models.DeleteVideowallInput": {
+            user?: components["schemas"]["models.User"];
+            videowall_id?: string;
+        };
+        "models.DeleteVideowallOutput": Record<string, never>;
         "models.DeprecatedHeartbeat": {
             architecture?: string;
             boot_time?: string;
@@ -16004,6 +17784,19 @@ export interface components {
         };
         "models.GetAlertsOutput": {
             alerts?: components["schemas"]["models.CustomAlert"][];
+        };
+        "models.GetVideowallInput": {
+            user?: components["schemas"]["models.User"];
+            videowall_id?: string;
+        };
+        "models.GetVideowallOutput": {
+            videowall?: components["schemas"]["models.Videowall"];
+        };
+        "models.GetVideowallsInput": {
+            user?: components["schemas"]["models.User"];
+        };
+        "models.GetVideowallsOutput": {
+            videowalls?: components["schemas"]["models.Videowall"][];
         };
         "models.Group": {
             address?: components["schemas"]["models.Location"];
@@ -16714,6 +18507,16 @@ export interface components {
             roles?: components["schemas"]["models.Role"][];
             user_id?: string;
         };
+        "models.PatchVideowallInput": {
+            updates?: {
+                [key: string]: unknown;
+            };
+            user?: components["schemas"]["models.User"];
+            videowall_id?: string;
+        };
+        "models.PatchVideowallOutput": {
+            videowall?: components["schemas"]["models.Videowall"];
+        };
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.Permissions": {
@@ -17296,6 +19099,14 @@ export interface components {
         "models.UpdateAlertOutput": {
             alert?: components["schemas"]["models.CustomAlert"];
         };
+        "models.UpdateVideowallInput": {
+            user?: components["schemas"]["models.User"];
+            videowall?: components["schemas"]["models.Videowall"];
+            videowall_id?: string;
+        };
+        "models.UpdateVideowallOutput": {
+            videowall?: components["schemas"]["models.Videowall"];
+        };
         "models.User": {
             activity?: components["schemas"]["models.Activity"][];
             address?: string;
@@ -17514,6 +19325,27 @@ export interface components {
             is_fragmented?: boolean;
             timescale?: number;
         };
+        "models.Videowall": {
+            assigned_users?: string[];
+            cameras?: string[];
+            description?: string;
+            expiration?: number;
+            fingerprint?: string;
+            groups?: string[];
+            header?: number;
+            id?: string;
+            io?: number;
+            isActive?: number;
+            liveview?: number;
+            master_user_id?: string;
+            name?: string;
+            pass_code?: string;
+            /** @description ForceMFA    int      `json:"force_mfa" bson:"force_mfa"` */
+            ptz?: number;
+            short_link?: string;
+            sites?: string[];
+            user_id?: string;
+        };
         "models.Webhook": {
             enabled?: boolean;
             url?: string;
@@ -17576,10 +19408,13 @@ export namespace models {
     export type CountingSummary = components['schemas']['models.CountingSummary'];
     export type CreateAlertInput = components['schemas']['models.CreateAlertInput'];
     export type CreateAlertOutput = components['schemas']['models.CreateAlertOutput'];
+    export type CreateVideowallInput = components['schemas']['models.CreateVideowallInput'];
+    export type CreateVideowallOutput = components['schemas']['models.CreateVideowallOutput'];
     export type Credentials = components['schemas']['models.Credentials'];
     export type CustomAlert = components['schemas']['models.CustomAlert'];
     export type DateRangeSchedule = components['schemas']['models.DateRangeSchedule'];
     export type DayTimeRange = components['schemas']['models.DayTimeRange'];
+    export type DeleteVideowallInput = components['schemas']['models.DeleteVideowallInput'];
     export type DeprecatedHeartbeat = components['schemas']['models.DeprecatedHeartbeat'];
     export type DeprecatedONVIFEvents = components['schemas']['models.DeprecatedONVIFEvents'];
     export type DeprecatedPreset = components['schemas']['models.DeprecatedPreset'];
@@ -17606,6 +19441,10 @@ export namespace models {
     export type GPSMetadata = components['schemas']['models.GPSMetadata'];
     export type GetAlertsInput = components['schemas']['models.GetAlertsInput'];
     export type GetAlertsOutput = components['schemas']['models.GetAlertsOutput'];
+    export type GetVideowallInput = components['schemas']['models.GetVideowallInput'];
+    export type GetVideowallOutput = components['schemas']['models.GetVideowallOutput'];
+    export type GetVideowallsInput = components['schemas']['models.GetVideowallsInput'];
+    export type GetVideowallsOutput = components['schemas']['models.GetVideowallsOutput'];
     export type Group = components['schemas']['models.Group'];
     export type GroupMetadata = components['schemas']['models.GroupMetadata'];
     export type GroupOption = components['schemas']['models.GroupOption'];
@@ -17659,6 +19498,8 @@ export namespace models {
     export type OrganisationSettings = components['schemas']['models.OrganisationSettings'];
     export type OrganisationUser = components['schemas']['models.OrganisationUser'];
     export type OrganisationUserDetails = components['schemas']['models.OrganisationUserDetails'];
+    export type PatchVideowallInput = components['schemas']['models.PatchVideowallInput'];
+    export type PatchVideowallOutput = components['schemas']['models.PatchVideowallOutput'];
     export type Permissions = components['schemas']['models.Permissions'];
     export type PipelineEvent = components['schemas']['models.PipelineEvent'];
     export type PipelineMetadata = components['schemas']['models.PipelineMetadata'];
@@ -17706,6 +19547,8 @@ export namespace models {
     export type TrackBox = components['schemas']['models.TrackBox'];
     export type UpdateAlertInput = components['schemas']['models.UpdateAlertInput'];
     export type UpdateAlertOutput = components['schemas']['models.UpdateAlertOutput'];
+    export type UpdateVideowallInput = components['schemas']['models.UpdateVideowallInput'];
+    export type UpdateVideowallOutput = components['schemas']['models.UpdateVideowallOutput'];
     export type User = components['schemas']['models.User'];
     export type UserOrgPermissions = components['schemas']['models.UserOrgPermissions'];
     export type UserProfile = components['schemas']['models.UserProfile'];
@@ -17718,6 +19561,7 @@ export namespace models {
     export type VaultMediaEvent = components['schemas']['models.VaultMediaEvent'];
     export type VaultMediaFragmentCollection = components['schemas']['models.VaultMediaFragmentCollection'];
     export type VaultMediaMetadata = components['schemas']['models.VaultMediaMetadata'];
+    export type Videowall = components['schemas']['models.Videowall'];
     export type Webhook = components['schemas']['models.Webhook'];
     export type WeeklySchedule = components['schemas']['models.WeeklySchedule'];
 }
@@ -17736,12 +19580,18 @@ export namespace api {
     export type CreateCustomAlertRequest = components['schemas']['api.CreateCustomAlertRequest'];
     export type CreateCustomAlertResponse = components['schemas']['api.CreateCustomAlertResponse'];
     export type CreateCustomAlertSuccessResponse = components['schemas']['api.CreateCustomAlertSuccessResponse'];
+    export type CreateVideowallErrorResponse = components['schemas']['api.CreateVideowallErrorResponse'];
+    export type CreateVideowallRequest = components['schemas']['api.CreateVideowallRequest'];
+    export type CreateVideowallResponse = components['schemas']['api.CreateVideowallResponse'];
+    export type CreateVideowallSuccessResponse = components['schemas']['api.CreateVideowallSuccessResponse'];
     export type CursorPagination = components['schemas']['api.CursorPagination'];
     export type DebugResponse = components['schemas']['api.DebugResponse'];
     export type DeleteAccessTokenErrorResponse = components['schemas']['api.DeleteAccessTokenErrorResponse'];
     export type DeleteAccessTokenSuccessResponse = components['schemas']['api.DeleteAccessTokenSuccessResponse'];
     export type DeleteStateErrorResponse = components['schemas']['api.DeleteStateErrorResponse'];
     export type DeleteStateSuccessResponse = components['schemas']['api.DeleteStateSuccessResponse'];
+    export type DeleteVideowallErrorResponse = components['schemas']['api.DeleteVideowallErrorResponse'];
+    export type DeleteVideowallSuccessResponse = components['schemas']['api.DeleteVideowallSuccessResponse'];
     export type DeviceFilter = components['schemas']['api.DeviceFilter'];
     export type ErrorResponse = components['schemas']['api.ErrorResponse'];
     export type FaceRedactionMessage = components['schemas']['api.FaceRedactionMessage'];
@@ -17756,6 +19606,7 @@ export namespace api {
     export type GetCustomAlertsErrorResponse = components['schemas']['api.GetCustomAlertsErrorResponse'];
     export type GetCustomAlertsResponse = components['schemas']['api.GetCustomAlertsResponse'];
     export type GetCustomAlertsSuccessResponse = components['schemas']['api.GetCustomAlertsSuccessResponse'];
+    export type GetDeviceErrorResponse = components['schemas']['api.GetDeviceErrorResponse'];
     export type GetDeviceMediaErrorResponse = components['schemas']['api.GetDeviceMediaErrorResponse'];
     export type GetDeviceMediaResponse = components['schemas']['api.GetDeviceMediaResponse'];
     export type GetDeviceMediaSuccessResponse = components['schemas']['api.GetDeviceMediaSuccessResponse'];
@@ -17763,6 +19614,8 @@ export namespace api {
     export type GetDeviceOptionsRequest = components['schemas']['api.GetDeviceOptionsRequest'];
     export type GetDeviceOptionsResponse = components['schemas']['api.GetDeviceOptionsResponse'];
     export type GetDeviceOptionsSuccessResponse = components['schemas']['api.GetDeviceOptionsSuccessResponse'];
+    export type GetDeviceResponse = components['schemas']['api.GetDeviceResponse'];
+    export type GetDeviceSuccessResponse = components['schemas']['api.GetDeviceSuccessResponse'];
     export type GetDevicesErrorResponse = components['schemas']['api.GetDevicesErrorResponse'];
     export type GetDevicesResponse = components['schemas']['api.GetDevicesResponse'];
     export type GetDevicesSuccessResponse = components['schemas']['api.GetDevicesSuccessResponse'];
@@ -17831,6 +19684,12 @@ export namespace api {
     export type GetUserByIdErrorResponse = components['schemas']['api.GetUserByIdErrorResponse'];
     export type GetUserByIdResponse = components['schemas']['api.GetUserByIdResponse'];
     export type GetUserByIdSuccessResponse = components['schemas']['api.GetUserByIdSuccessResponse'];
+    export type GetVideowallErrorResponse = components['schemas']['api.GetVideowallErrorResponse'];
+    export type GetVideowallResponse = components['schemas']['api.GetVideowallResponse'];
+    export type GetVideowallSuccessResponse = components['schemas']['api.GetVideowallSuccessResponse'];
+    export type GetVideowallsErrorResponse = components['schemas']['api.GetVideowallsErrorResponse'];
+    export type GetVideowallsResponse = components['schemas']['api.GetVideowallsResponse'];
+    export type GetVideowallsSuccessResponse = components['schemas']['api.GetVideowallsSuccessResponse'];
     export type GroupFilter = components['schemas']['api.GroupFilter'];
     export type MarkerCategoryFilter = components['schemas']['api.MarkerCategoryFilter'];
     export type MarkerEventFilter = components['schemas']['api.MarkerEventFilter'];
@@ -17841,6 +19700,10 @@ export namespace api {
     export type MediaPatch = components['schemas']['api.MediaPatch'];
     export type Metadata = components['schemas']['api.Metadata'];
     export type PanicResponse = components['schemas']['api.PanicResponse'];
+    export type PatchVideowallErrorResponse = components['schemas']['api.PatchVideowallErrorResponse'];
+    export type PatchVideowallRequest = components['schemas']['api.PatchVideowallRequest'];
+    export type PatchVideowallResponse = components['schemas']['api.PatchVideowallResponse'];
+    export type PatchVideowallSuccessResponse = components['schemas']['api.PatchVideowallSuccessResponse'];
     export type RedactionEvent = components['schemas']['api.RedactionEvent'];
     export type RemoveCustomAlertErrorResponse = components['schemas']['api.RemoveCustomAlertErrorResponse'];
     export type RemoveCustomAlertSuccessResponse = components['schemas']['api.RemoveCustomAlertSuccessResponse'];
@@ -17872,6 +19735,10 @@ export namespace api {
     export type UpdateUserProfileErrorResponse = components['schemas']['api.UpdateUserProfileErrorResponse'];
     export type UpdateUserProfileResponse = components['schemas']['api.UpdateUserProfileResponse'];
     export type UpdateUserProfileSuccessResponse = components['schemas']['api.UpdateUserProfileSuccessResponse'];
+    export type UpdateVideowallErrorResponse = components['schemas']['api.UpdateVideowallErrorResponse'];
+    export type UpdateVideowallRequest = components['schemas']['api.UpdateVideowallRequest'];
+    export type UpdateVideowallResponse = components['schemas']['api.UpdateVideowallResponse'];
+    export type UpdateVideowallSuccessResponse = components['schemas']['api.UpdateVideowallSuccessResponse'];
     export type UpsertStateErrorResponse = components['schemas']['api.UpsertStateErrorResponse'];
     export type UpsertStateRequest = components['schemas']['api.UpsertStateRequest'];
     export type UpsertStateResponse = components['schemas']['api.UpsertStateResponse'];
