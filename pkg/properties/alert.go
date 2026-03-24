@@ -6,6 +6,7 @@ package properties
 // AlertFeatures property field names (BSON)
 const (
 	AlertFeaturesCreateMarker = "createMarker"
+	AlertFeaturesCreateWatchlistItem = "createWatchlistItem"
 )
 
 // AlertPatch property field names (BSON)
