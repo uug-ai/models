@@ -11,6 +11,7 @@ type Videowall struct {
 	Cameras      []string           `json:"cameras" bson:"cameras"`
 	IsActive     int                `json:"isActive" bson:"isActive"`
 	UserId       string             `json:"user_id" bson:"user_id"`
+	Username     string             `json:"username" bson:"username,omitempty"`
 	MasterUserId string             `json:"master_user_id" bson:"master_user_id"`
 	PassCode     string             `json:"pass_code" bson:"pass_code"`
 	Fingerprint  string             `json:"fingerprint" bson:"fingerprint"`
