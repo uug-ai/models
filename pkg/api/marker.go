@@ -163,6 +163,8 @@ type MarkerCategoryFilter struct {
 // GetMarkers
 // @Router /markers [get]
 type GetMarkersRequest struct {
+	Filter     *MarkerFilter  `json:"filter"`
+	Pagination *CursorPagination  `json:"pagination"`
 }
 type GetMarkersResponse struct {
 	Markers []models.Marker `json:"markers"`
