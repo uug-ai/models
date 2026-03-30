@@ -62,7 +62,8 @@ func (ms TimelineStatus) Translate(lang string) string {
 // GetTimelineMedia
 // @Router /timeline/{deviceId} [post]
 type GetTimelineMediaRequest struct {
-	Filter MediaFilter `json:"filter" bson:"filter"`
+	Filter          MediaFilter `json:"filter" bson:"filter"`
+	DisableGrouping *bool       `json:"disableGrouping,omitempty" bson:"disableGrouping,omitempty"`
 }
 type GetTimelineMediaResponse struct {
 	Timelines []models.MediaTimeline `json:"timelines" bson:"timelines"`
@@ -78,7 +79,8 @@ type GetTimelineMediaSuccessResponse struct {
 // GetTimelineMarkers
 // @Router /timeline/{deviceId}/markers [post]
 type GetTimelineMarkersRequest struct {
-	Filter MarkerFilter `json:"filter" bson:"filter"`
+	Filter          MarkerFilter `json:"filter" bson:"filter"`
+	DisableGrouping *bool        `json:"disableGrouping,omitempty" bson:"disableGrouping,omitempty"`
 }
 
 type GetTimelineMarkersResponse struct {

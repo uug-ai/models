@@ -16354,6 +16354,7 @@ export interface components {
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetTimelineMarkersRequest": {
+            disableGrouping?: boolean;
             filter?: components["schemas"]["api.MarkerFilter"];
         };
         "api.GetTimelineMarkersResponse": {
@@ -16385,6 +16386,7 @@ export interface components {
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetTimelineMediaRequest": {
+            disableGrouping?: boolean;
             filter?: components["schemas"]["api.MediaFilter"];
         };
         "api.GetTimelineMediaResponse": {
