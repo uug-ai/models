@@ -16512,10 +16512,14 @@ export interface components {
         "api.MarkerFilter": {
             categories?: string[];
             deviceKeys?: string[];
+            events?: string[];
             markerIds?: string[];
             name?: string;
             names?: string[];
+            regions?: components["schemas"]["models.Region"][];
             sort?: string;
+            starred?: boolean;
+            tags?: string[];
             timeRanges?: components["schemas"]["models.TimeRange"][];
         };
         "api.MarkerTagFilter": {
