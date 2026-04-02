@@ -134,6 +134,10 @@ type MarkerFilter struct {
 	Categories []*string           `json:"categories,omitempty" bson:"categories,omitempty"`
 	DeviceKeys []*string           `json:"deviceKeys,omitempty" bson:"deviceKeys,omitempty"`
 	TimeRanges []*models.TimeRange `json:"timeRanges,omitempty" bson:"timeRanges,omitempty"`
+	Events     []*string           `json:"events,omitempty" bson:"events,omitempty"`
+	Tags       []*string           `json:"tags,omitempty" bson:"tags,omitempty"`
+	Regions    []*models.Region    `json:"regions,omitempty" bson:"regions,omitempty"`
+	Starred    *bool               `json:"starred,omitempty" bson:"starred,omitempty"`
 	Sort       *string             `json:"sort,omitempty" bson:"sort,omitempty"`
 }
 
