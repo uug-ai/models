@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -83,6 +85,19 @@ type Device struct {
 
 	// Deprecated - to be removed
 	DeprecatedAnalytics *[]DeprecatedHeartbeat `json:"analytics" bson:"analytics,omitempty"`
+}
+
+type DevicePatch struct {
+	Name               *string                   `json:"name,omitempty" bson:"name,omitempty"`
+	Color              *string                   `json:"color,omitempty" bson:"color,omitempty"`
+	Brand              *string                   `json:"brand,omitempty" bson:"brand,omitempty"`
+	Model              *string                   `json:"model,omitempty" bson:"model,omitempty"`
+	Description        *string                   `json:"description,omitempty" bson:"description,omitempty"`
+	LastMaintenance    *time.Time                `json:"lastMaintenance,omitempty" bson:"lastMaintenance,omitempty"`
+	InstallationDate   *time.Time                `json:"installationDate,omitempty" bson:"installationDate,omitempty"`
+	OnFloorPlans       *[]string                 `json:"onFloorPlans,omitempty" bson:"onFloorPlans,omitempty"`
+	FieldOfView        *float64                  `json:"fieldOfView,omitempty" bson:"fieldOfView,omitempty"`
+	FeaturePermissions *DeviceFeaturePermissions `json:"featurePermissions,omitempty" bson:"featurePermissions,omitempty"`
 }
 
 // We can store additional metadata for media files, such as tags and classifications.

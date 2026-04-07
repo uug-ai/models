@@ -8,6 +8,7 @@ type DeviceStatus string
 const (
 	DeviceBindingFailed    DeviceStatus = "device_binding_failed"
 	DeviceDuplicateName    DeviceStatus = "device_duplicate_name"
+	DeviceIdMissing        DeviceStatus = "device_id_missing"
 	DeviceMissingInfo      DeviceStatus = "device_missing_info"
 	DeviceRetrievalSuccess DeviceStatus = "device_retrieval_success"
 	DeviceRetrievalFailed  DeviceStatus = "device_retrieval_failed"
@@ -34,6 +35,7 @@ func (ds DeviceStatus) Translate(lang string) string {
 		"en": {
 			DeviceBindingFailed:    "Device binding failed",
 			DeviceDuplicateName:    "Device duplicate name",
+			DeviceIdMissing:        "Device ID is missing",
 			DeviceMissingInfo:      "Device missing information",
 			DeviceRetrievalFailed:  "Device retrieval failed",
 			DeviceFound:            "Device found",
@@ -120,5 +122,22 @@ type GetDeviceMediaSuccessResponse struct {
 	Data GetDeviceMediaResponse `json:"data,omitempty" bson:"data,omitempty"`
 }
 type GetDeviceMediaErrorResponse struct {
+	ErrorResponse
+}
+
+type UpdateDeviceRequest struct {
+	DevicePatch models.DevicePatch `json:"devicePatch,omitempty" bson:"devicePatch,omitempty"`
+}
+
+type UpdateDeviceResponse struct {
+	Device models.Device `json:"device,omitempty" bson:"device,omitempty"`
+}
+
+type UpdateDeviceSuccessResponse struct {
+	SuccessResponse
+	Data UpdateDeviceResponse `json:"data,omitempty" bson:"data,omitempty"`
+}
+
+type UpdateDeviceErrorResponse struct {
 	ErrorResponse
 }
