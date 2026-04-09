@@ -8,6 +8,7 @@ type TimeSeriesDataPoint struct {
 type TimeSeries struct {
 	Key   string                `json:"key" bson:"key,omitempty"`
 	Label string                `json:"label" bson:"label,omitempty"`
+	Color string                `json:"color,omitempty" bson:"color,omitempty"`
 	Data  []TimeSeriesDataPoint `json:"data" bson:"data,omitempty"`
 }
 
