@@ -165,6 +165,20 @@ const (
 	DeviceOptionText = "text"
 )
 
+// DevicePatch property field names (BSON)
+const (
+	DevicePatchName = "name"
+	DevicePatchColor = "color"
+	DevicePatchBrand = "brand"
+	DevicePatchModel = "model"
+	DevicePatchDescription = "description"
+	DevicePatchLastMaintenance = "lastMaintenance"
+	DevicePatchInstallationDate = "installationDate"
+	DevicePatchOnFloorPlans = "onFloorPlans"
+	DevicePatchFieldOfView = "fieldOfView"
+	DevicePatchFeaturePermissions = "featurePermissions"
+)
+
 // GPSMetadata property field names (BSON)
 const (
 	GPSMetadataLatitude = "latitude"

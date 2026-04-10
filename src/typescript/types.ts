@@ -823,6 +823,318 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/analyticsalertsummary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalyticsAlertSummary (schema generation only)
+         * @description Internal endpoint used only to ensure AnalyticsAlertSummary schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalyticsAlertSummary"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/analyticscharts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalyticsCharts (schema generation only)
+         * @description Internal endpoint used only to ensure AnalyticsCharts schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalyticsCharts"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/analyticsdashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalyticsDashboard (schema generation only)
+         * @description Internal endpoint used only to ensure AnalyticsDashboard schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalyticsDashboard"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/analyticsevent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalyticsEvent (schema generation only)
+         * @description Internal endpoint used only to ensure AnalyticsEvent schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalyticsEvent"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/analyticsfilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalyticsFilter (schema generation only)
+         * @description Internal endpoint used only to ensure AnalyticsFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalyticsFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/analyticshours": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalyticsHours (schema generation only)
+         * @description Internal endpoint used only to ensure AnalyticsHours schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalyticsHours"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/analyticslists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalyticsLists (schema generation only)
+         * @description Internal endpoint used only to ensure AnalyticsLists schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalyticsLists"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/analyticssummary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalyticsSummary (schema generation only)
+         * @description Internal endpoint used only to ensure AnalyticsSummary schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalyticsSummary"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/audit": {
         parameters: {
             query?: never;
@@ -3514,6 +3826,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/devicepatch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DevicePatch (schema generation only)
+         * @description Internal endpoint used only to ensure DevicePatch schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DevicePatch"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/deviceplacement": {
         parameters: {
             query?: never;
@@ -3580,6 +3931,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Devices"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/directionaltimeserieschart": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DirectionalTimeSeriesChart (schema generation only)
+         * @description Internal endpoint used only to ensure DirectionalTimeSeriesChart schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DirectionalTimeSeriesChart"];
                     };
                 };
             };
@@ -4477,6 +4867,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetAnalysisSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getanalyticsdashboarderrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAnalyticsDashboardErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAnalyticsDashboardErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAnalyticsDashboardErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getanalyticsdashboardrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAnalyticsDashboardRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetAnalyticsDashboardRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAnalyticsDashboardRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getanalyticsdashboardresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAnalyticsDashboardResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAnalyticsDashboardResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAnalyticsDashboardResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getanalyticsdashboardsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAnalyticsDashboardSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAnalyticsDashboardSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAnalyticsDashboardSuccessResponse"];
                     };
                 };
             };
@@ -14005,6 +14551,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/updatedeviceerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateDeviceErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateDeviceErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateDeviceErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatedevicerequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateDeviceRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateDeviceRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateDeviceRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatedeviceresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateDeviceResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateDeviceResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateDeviceResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatedevicesuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateDeviceSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateDeviceSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateDeviceSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/updatemediaerrorresponse": {
         parameters: {
             query?: never;
@@ -15736,6 +16438,37 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetAnalyticsDashboardErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAnalyticsDashboardRequest": {
+            filter?: components["schemas"]["models.AnalyticsFilter"];
+        };
+        "api.GetAnalyticsDashboardResponse": {
+            analytics?: components["schemas"]["models.AnalyticsDashboard"];
+        };
+        "api.GetAnalyticsDashboardSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAnalyticsDashboardResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetCustomAlertsErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -16082,7 +16815,10 @@ export interface components {
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
-        "api.GetMarkersRequest": Record<string, never>;
+        "api.GetMarkersRequest": {
+            filter?: components["schemas"]["api.MarkerFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
         "api.GetMarkersResponse": {
             markers?: components["schemas"]["models.Marker"][];
         };
@@ -16834,6 +17570,37 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.UpdateDeviceErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateDeviceRequest": {
+            devicePatch?: components["schemas"]["models.DevicePatch"];
+        };
+        "api.UpdateDeviceResponse": {
+            device?: components["schemas"]["models.Device"];
+        };
+        "api.UpdateDeviceSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateDeviceResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.UpdateMediaErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -17133,6 +17900,68 @@ export interface components {
             start?: number;
             timestamp?: number;
             user_id?: string;
+        };
+        "models.AnalyticsAlertSummary": {
+            alertId?: string;
+            alertLabel?: string;
+            count?: number;
+            durationLabel?: string;
+            durationSeconds?: number;
+            in?: number;
+            out?: number;
+            regionIn?: number;
+            total?: number;
+            type?: string;
+        };
+        "models.AnalyticsCharts": {
+            countsPerHourByAlert?: components["schemas"]["models.DirectionalTimeSeriesChart"];
+            countsPerHourByDevice?: components["schemas"]["models.TimeSeriesChart"];
+            recordingsPerHour?: components["schemas"]["models.TimeSeriesChart"];
+            regionDurationPerHourAlert?: components["schemas"]["models.TimeSeriesChart"];
+        };
+        "models.AnalyticsDashboard": {
+            alerts?: components["schemas"]["models.AnalyticsAlertSummary"][];
+            charts?: components["schemas"]["models.AnalyticsCharts"];
+            lists?: components["schemas"]["models.AnalyticsLists"];
+            summary?: components["schemas"]["models.AnalyticsSummary"];
+        };
+        "models.AnalyticsEvent": {
+            alertId?: string;
+            alertLabel?: string;
+            count?: number;
+            deviceId?: string;
+            deviceLabel?: string;
+            durationLabel?: string;
+            durationSeconds?: number;
+            key?: string;
+            objectId?: string;
+            objectLabel?: string;
+            sequenceId?: string;
+            timestamp?: number;
+            type?: string;
+        };
+        "models.AnalyticsFilter": {
+            devices?: string[];
+            groups?: string[];
+            sites?: string[];
+            timeRanges?: components["schemas"]["models.TimeRange"][];
+        };
+        "models.AnalyticsHours": {
+            instances?: {
+                [key: string]: number[];
+            };
+            total?: number[];
+        };
+        "models.AnalyticsLists": {
+            countEvents?: components["schemas"]["models.AnalyticsEvent"][];
+            regionEvents?: components["schemas"]["models.AnalyticsEvent"][];
+        };
+        "models.AnalyticsSummary": {
+            totalCounts?: number;
+            totalRecordings?: number;
+            totalRegionDurationLabel?: string;
+            totalRegionDurationSeconds?: number;
+            totalRegions?: number;
         };
         "models.Audit": {
             create?: components["schemas"]["models.AuditCreate"];
@@ -17626,6 +18455,18 @@ export interface components {
             text?: string;
             value?: string;
         };
+        "models.DevicePatch": {
+            brand?: string;
+            color?: string;
+            description?: string;
+            featurePermissions?: components["schemas"]["models.DeviceFeaturePermissions"];
+            fieldOfView?: number;
+            installationDate?: string;
+            lastMaintenance?: string;
+            model?: string;
+            name?: string;
+            onFloorPlans?: string[];
+        };
         "models.DevicePlacement": {
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
@@ -17663,6 +18504,11 @@ export interface components {
             devicesList?: components["schemas"]["models.DeviceKey"][];
             duration?: number;
             enabled?: boolean;
+        };
+        "models.DirectionalTimeSeriesChart": {
+            all?: components["schemas"]["models.TimeSeriesChart"];
+            in?: components["schemas"]["models.TimeSeriesChart"];
+            out?: components["schemas"]["models.TimeSeriesChart"];
         };
         "models.DominantColor": {
             hexs?: string[];
@@ -19036,6 +19882,7 @@ export interface components {
             timezone?: string;
         };
         "models.TimeSeries": {
+            color?: string;
             data?: components["schemas"]["models.TimeSeriesDataPoint"][];
             key?: string;
             label?: string;
@@ -19351,6 +20198,7 @@ export interface components {
             short_link?: string;
             sites?: string[];
             user_id?: string;
+            username?: string;
         };
         "models.Webhook": {
             enabled?: boolean;
@@ -19388,6 +20236,14 @@ export namespace models {
     export type AnalysisShort = components['schemas']['models.AnalysisShort'];
     export type AnalysisStage = components['schemas']['models.AnalysisStage'];
     export type AnalysisWrapper = components['schemas']['models.AnalysisWrapper'];
+    export type AnalyticsAlertSummary = components['schemas']['models.AnalyticsAlertSummary'];
+    export type AnalyticsCharts = components['schemas']['models.AnalyticsCharts'];
+    export type AnalyticsDashboard = components['schemas']['models.AnalyticsDashboard'];
+    export type AnalyticsEvent = components['schemas']['models.AnalyticsEvent'];
+    export type AnalyticsFilter = components['schemas']['models.AnalyticsFilter'];
+    export type AnalyticsHours = components['schemas']['models.AnalyticsHours'];
+    export type AnalyticsLists = components['schemas']['models.AnalyticsLists'];
+    export type AnalyticsSummary = components['schemas']['models.AnalyticsSummary'];
     export type Audit = components['schemas']['models.Audit'];
     export type AuditCreate = components['schemas']['models.AuditCreate'];
     export type AuditUpdate = components['schemas']['models.AuditUpdate'];
@@ -19432,8 +20288,10 @@ export namespace models {
     export type DeviceKey = components['schemas']['models.DeviceKey'];
     export type DeviceMetadata = components['schemas']['models.DeviceMetadata'];
     export type DeviceOption = components['schemas']['models.DeviceOption'];
+    export type DevicePatch = components['schemas']['models.DevicePatch'];
     export type DevicePlacement = components['schemas']['models.DevicePlacement'];
     export type Devices = components['schemas']['models.Devices'];
+    export type DirectionalTimeSeriesChart = components['schemas']['models.DirectionalTimeSeriesChart'];
     export type DominantColor = components['schemas']['models.DominantColor'];
     export type Email = components['schemas']['models.Email'];
     export type Encryption = components['schemas']['models.Encryption'];
@@ -19609,6 +20467,10 @@ export namespace api {
     export type GetAnalysisRequest = components['schemas']['api.GetAnalysisRequest'];
     export type GetAnalysisResponse = components['schemas']['api.GetAnalysisResponse'];
     export type GetAnalysisSuccessResponse = components['schemas']['api.GetAnalysisSuccessResponse'];
+    export type GetAnalyticsDashboardErrorResponse = components['schemas']['api.GetAnalyticsDashboardErrorResponse'];
+    export type GetAnalyticsDashboardRequest = components['schemas']['api.GetAnalyticsDashboardRequest'];
+    export type GetAnalyticsDashboardResponse = components['schemas']['api.GetAnalyticsDashboardResponse'];
+    export type GetAnalyticsDashboardSuccessResponse = components['schemas']['api.GetAnalyticsDashboardSuccessResponse'];
     export type GetCustomAlertsErrorResponse = components['schemas']['api.GetCustomAlertsErrorResponse'];
     export type GetCustomAlertsResponse = components['schemas']['api.GetCustomAlertsResponse'];
     export type GetCustomAlertsSuccessResponse = components['schemas']['api.GetCustomAlertsSuccessResponse'];
@@ -19649,6 +20511,7 @@ export namespace api {
     export type GetMarkerTagOptionsResponse = components['schemas']['api.GetMarkerTagOptionsResponse'];
     export type GetMarkerTagOptionsSuccessResponse = components['schemas']['api.GetMarkerTagOptionsSuccessResponse'];
     export type GetMarkersErrorResponse = components['schemas']['api.GetMarkersErrorResponse'];
+    export type GetMarkersRequest = components['schemas']['api.GetMarkersRequest'];
     export type GetMarkersResponse = components['schemas']['api.GetMarkersResponse'];
     export type GetMarkersSuccessResponse = components['schemas']['api.GetMarkersSuccessResponse'];
     export type GetMediaByIdErrorResponse = components['schemas']['api.GetMediaByIdErrorResponse'];
@@ -19734,6 +20597,10 @@ export namespace api {
     export type UpdateCustomAlertRequest = components['schemas']['api.UpdateCustomAlertRequest'];
     export type UpdateCustomAlertResponse = components['schemas']['api.UpdateCustomAlertResponse'];
     export type UpdateCustomAlertSuccessResponse = components['schemas']['api.UpdateCustomAlertSuccessResponse'];
+    export type UpdateDeviceErrorResponse = components['schemas']['api.UpdateDeviceErrorResponse'];
+    export type UpdateDeviceRequest = components['schemas']['api.UpdateDeviceRequest'];
+    export type UpdateDeviceResponse = components['schemas']['api.UpdateDeviceResponse'];
+    export type UpdateDeviceSuccessResponse = components['schemas']['api.UpdateDeviceSuccessResponse'];
     export type UpdateMediaErrorResponse = components['schemas']['api.UpdateMediaErrorResponse'];
     export type UpdateMediaRequest = components['schemas']['api.UpdateMediaRequest'];
     export type UpdateMediaResponse = components['schemas']['api.UpdateMediaResponse'];

@@ -7,6 +7,7 @@ package properties
 const (
 	TimeSeriesKey = "key"
 	TimeSeriesLabel = "label"
+	TimeSeriesColor = "color"
 	TimeSeriesData = "data"
 )
 
