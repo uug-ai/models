@@ -5,83 +5,83 @@ package properties
 
 // AnalyticsAlertSummary property field names (BSON)
 const (
-	AnalyticsAlertSummaryAlertId         = "alertId"
-	AnalyticsAlertSummaryAlertLabel      = "alertLabel"
-	AnalyticsAlertSummaryType            = "type"
-	AnalyticsAlertSummaryTotal           = "total"
-	AnalyticsAlertSummaryCount           = "count"
-	AnalyticsAlertSummaryIn              = "in"
-	AnalyticsAlertSummaryOut             = "out"
-	AnalyticsAlertSummaryRegionIn        = "regionIn"
+	AnalyticsAlertSummaryAlertId = "alertId"
+	AnalyticsAlertSummaryAlertLabel = "alertLabel"
+	AnalyticsAlertSummaryType = "type"
+	AnalyticsAlertSummaryTotal = "total"
+	AnalyticsAlertSummaryCount = "count"
+	AnalyticsAlertSummaryIn = "in"
+	AnalyticsAlertSummaryOut = "out"
+	AnalyticsAlertSummaryRegionIn = "regionIn"
 	AnalyticsAlertSummaryDurationSeconds = "durationSeconds"
-	AnalyticsAlertSummaryDurationLabel   = "durationLabel"
+	AnalyticsAlertSummaryDurationLabel = "durationLabel"
 )
 
 // AnalyticsCharts property field names (BSON)
 const (
-	AnalyticsChartsRecordingsPerHour          = "recordingsPerHour"
-	AnalyticsChartsCountsPerHourByDevice      = "countsPerHourByDevice"
-	AnalyticsChartsCountsPerHourByAlert       = "countsPerHourByAlert"
+	AnalyticsChartsRecordingsPerHour = "recordingsPerHour"
+	AnalyticsChartsCountsPerHourByDevice = "countsPerHourByDevice"
+	AnalyticsChartsCountsPerHourByAlert = "countsPerHourByAlert"
 	AnalyticsChartsRegionDurationPerHourAlert = "regionDurationPerHourAlert"
 )
 
 // AnalyticsDashboard property field names (BSON)
 const (
 	AnalyticsDashboardSummary = "summary"
-	AnalyticsDashboardAlerts  = "alerts"
-	AnalyticsDashboardLists   = "lists"
-	AnalyticsDashboardCharts  = "charts"
+	AnalyticsDashboardAlerts = "alerts"
+	AnalyticsDashboardLists = "lists"
+	AnalyticsDashboardCharts = "charts"
 )
 
 // AnalyticsEvent property field names (BSON)
 const (
-	AnalyticsEventKey             = "key"
-	AnalyticsEventTimestamp       = "timestamp"
-	AnalyticsEventDeviceId        = "deviceId"
-	AnalyticsEventDeviceLabel     = "deviceLabel"
-	AnalyticsEventAlertId         = "alertId"
-	AnalyticsEventAlertLabel      = "alertLabel"
-	AnalyticsEventSequenceId      = "sequenceId"
-	AnalyticsEventObjectId        = "objectId"
-	AnalyticsEventObjectLabel     = "objectLabel"
-	AnalyticsEventType            = "type"
-	AnalyticsEventCount           = "count"
+	AnalyticsEventKey = "key"
+	AnalyticsEventTimestamp = "timestamp"
+	AnalyticsEventDeviceId = "deviceId"
+	AnalyticsEventDeviceLabel = "deviceLabel"
+	AnalyticsEventAlertId = "alertId"
+	AnalyticsEventAlertLabel = "alertLabel"
+	AnalyticsEventSequenceId = "sequenceId"
+	AnalyticsEventObjectId = "objectId"
+	AnalyticsEventObjectLabel = "objectLabel"
+	AnalyticsEventType = "type"
+	AnalyticsEventCount = "count"
 	AnalyticsEventDurationSeconds = "durationSeconds"
-	AnalyticsEventDurationLabel   = "durationLabel"
+	AnalyticsEventDurationLabel = "durationLabel"
 )
 
 // AnalyticsFilter property field names (BSON)
 const (
 	AnalyticsFilterTimeRanges = "timeRanges"
-	AnalyticsFilterSites      = "sites"
-	AnalyticsFilterGroups     = "groups"
-	AnalyticsFilterDevices    = "devices"
+	AnalyticsFilterSites = "sites"
+	AnalyticsFilterGroups = "groups"
+	AnalyticsFilterDevices = "devices"
 )
 
 // AnalyticsHours property field names (BSON)
 const (
-	AnalyticsHoursTotal     = "total"
+	AnalyticsHoursTotal = "total"
 	AnalyticsHoursInstances = "instances"
 )
 
 // AnalyticsLists property field names (BSON)
 const (
-	AnalyticsListsCountEvents  = "countEvents"
+	AnalyticsListsCountEvents = "countEvents"
 	AnalyticsListsRegionEvents = "regionEvents"
 )
 
 // AnalyticsSummary property field names (BSON)
 const (
-	AnalyticsSummaryTotalRecordings            = "totalRecordings"
-	AnalyticsSummaryTotalCounts                = "totalCounts"
-	AnalyticsSummaryTotalRegions               = "totalRegions"
+	AnalyticsSummaryTotalRecordings = "totalRecordings"
+	AnalyticsSummaryTotalCounts = "totalCounts"
+	AnalyticsSummaryTotalRegions = "totalRegions"
 	AnalyticsSummaryTotalRegionDurationSeconds = "totalRegionDurationSeconds"
-	AnalyticsSummaryTotalRegionDurationLabel   = "totalRegionDurationLabel"
+	AnalyticsSummaryTotalRegionDurationLabel = "totalRegionDurationLabel"
 )
 
 // DirectionalTimeSeriesChart property field names (BSON)
 const (
 	DirectionalTimeSeriesChartAll = "all"
-	DirectionalTimeSeriesChartIn  = "in"
+	DirectionalTimeSeriesChartIn = "in"
 	DirectionalTimeSeriesChartOut = "out"
 )

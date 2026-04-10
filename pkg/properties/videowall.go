@@ -13,6 +13,7 @@ const (
 	VideowallCameras = "cameras"
 	VideowallIsActive = "isActive"
 	VideowallUserId = "user_id"
+	VideowallUsername = "username"
 	VideowallMasterUserId = "master_user_id"
 	VideowallPassCode = "pass_code"
 	VideowallFingerprint = "fingerprint"
