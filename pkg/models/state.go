@@ -9,6 +9,7 @@ import (
 type StateEnum string
 
 const (
+	StateActive      StateEnum = "active"       // Active state, device operates in normal mode with all features enabled
 	StateDefault     StateEnum = "default"      // Default state, no specific behavior, returns to default when no desired state is valid or available.
 	StateDebug       StateEnum = "debug"        // Debug state, device operates in debug mode with verbose logging
 	StatePaused      StateEnum = "paused"       // Paused state, device operations are temporarily halted
