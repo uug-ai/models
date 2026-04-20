@@ -1,20 +1,24 @@
 package api
 
+import "github.com/uug-ai/models/pkg/models"
+
 // TaskStatus represents specific status codes for task operations
 type TaskStatus string
 
 const (
-	TaskBindingFailed TaskStatus = "Task_binding_failed"
-	TaskDuplicateName TaskStatus = "Task_duplicate_name"
-	TaskMissingInfo   TaskStatus = "Task_missing_info"
-	TaskFound         TaskStatus = "Task_found"
-	TaskNotFound      TaskStatus = "Task_not_found"
-	TaskAddSuccess    TaskStatus = "Task_add_success"
-	TaskAddFailed     TaskStatus = "Task_add_failed"
-	TaskUpdateSuccess TaskStatus = "Task_update_success"
-	TaskUpdateFailed  TaskStatus = "Task_update_failed"
-	TaskDeleteSuccess TaskStatus = "Task_delete_success"
-	TaskDeleteFailed  TaskStatus = "Task_delete_failed"
+	TaskBindingFailed   TaskStatus = "Task_binding_failed"
+	TaskDuplicateName   TaskStatus = "Task_duplicate_name"
+	TaskMissingInfo     TaskStatus = "Task_missing_info"
+	TaskFound           TaskStatus = "Task_found"
+	TaskNotFound        TaskStatus = "Task_not_found"
+	TaskAddSuccess      TaskStatus = "Task_add_success"
+	TaskAddFailed       TaskStatus = "Task_add_failed"
+	TaskUpdateSuccess   TaskStatus = "Task_update_success"
+	TaskUpdateFailed    TaskStatus = "Task_update_failed"
+	TaskDeleteSuccess   TaskStatus = "Task_delete_success"
+	TaskDeleteFailed    TaskStatus = "Task_delete_failed"
+	TaskMediaAddSuccess TaskStatus = "Task_media_add_success"
+	TaskMediaAddFailed  TaskStatus = "Task_media_add_failed"
 )
 
 // String returns the string representation of the Task status
@@ -37,6 +41,8 @@ func (ms TaskStatus) Translate(lang string) string {
 			TaskUpdateFailed:  "Task failed to update",
 			TaskDeleteSuccess: "Task deleted successfully",
 			TaskDeleteFailed:  "Task failed to delete",
+			TaskMediaAddSuccess: "Media was added to the task successfully",
+			TaskMediaAddFailed:  "Failed to add media to the task",
 		},
 	}
 
@@ -55,4 +61,26 @@ func (ms TaskStatus) Translate(lang string) string {
 
 	// Fallback to the string representation
 	return ms.String()
+}
+
+// AddTaskMediaRequest is used by POST /tasks/{id}/media to attach one or more media
+// items to an existing task.
+type AddTaskMediaRequest struct {
+	MediaIds []string `json:"mediaIds,omitempty" bson:"mediaIds,omitempty"`
+}
+
+// AddTaskMediaResponse returns the updated task and which media IDs were added or skipped.
+type AddTaskMediaResponse struct {
+	Task            models.Task `json:"task,omitempty" bson:"task,omitempty"`
+	AddedMediaIds   []string    `json:"addedMediaIds,omitempty" bson:"addedMediaIds,omitempty"`
+	SkippedMediaIds []string    `json:"skippedMediaIds,omitempty" bson:"skippedMediaIds,omitempty"`
+}
+
+type AddTaskMediaSuccessResponse struct {
+	SuccessResponse
+	Data AddTaskMediaResponse `json:"data,omitempty" bson:"data,omitempty"`
+}
+
+type AddTaskMediaErrorResponse struct {
+	ErrorResponse
 }
