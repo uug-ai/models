@@ -77,6 +77,7 @@ type Task struct {
 
 type TaskFilter struct {
 	Title     string   `json:"title" bson:"title,omitempty"`
+	View      string   `json:"view" bson:"view,omitempty"` // "full" (default) or "compact"
 	Limit     int      `json:"limit" bson:"limit,omitempty"`
 	Sites     []string `json:"sites" bson:"sites,omitempty"`
 	Devices   []string `json:"devices" bson:"devices,omitempty"`
