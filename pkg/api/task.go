@@ -137,13 +137,10 @@ type GetTasksErrorResponse struct {
 	ErrorResponse
 }
 
-// TaskWorkflowStatus is the editable lifecycle state of a task/case.
-type TaskWorkflowStatus string
-
 const (
-	TaskWorkflowOpen     TaskWorkflowStatus = "open"
-	TaskWorkflowApproved TaskWorkflowStatus = "approved"
-	TaskWorkflowRejected TaskWorkflowStatus = "rejected"
+	TaskStatusOpen     TaskStatus = "open"
+	TaskStatusApproved TaskStatus = "approved"
+	TaskStatusRejected TaskStatus = "rejected"
 )
 
 type GetTaskByIdResponse struct {
@@ -252,7 +249,7 @@ type AddTaskErrorResponse struct {
 // EditTaskRequest matches PATCH /tasks/{id} request payload.
 // It includes only fields currently editable from the frontend task UI.
 type EditTaskRequest struct {
-	Status           *TaskWorkflowStatus `json:"status,omitempty" bson:"status,omitempty"`
+	Status           *TaskStatus `json:"status,omitempty" bson:"status,omitempty"`
 	Notes            *string   `json:"notes,omitempty" bson:"notes,omitempty"`
 	Labels           *[]string `json:"labels,omitempty" bson:"labels,omitempty"`
 	Assignees        *[]string `json:"assignees,omitempty" bson:"assignees,omitempty"`
