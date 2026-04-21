@@ -21,3 +21,7 @@ type Comment struct {
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
 }
+
+type CommentWrapper struct {
+	Comment Comment `json:"comment" bson:"comment"`
+}

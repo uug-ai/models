@@ -13,6 +13,13 @@ type TaskWrapper struct {
 	Task Task `json:"task" bson:"task"`
 }
 
+type TaskStatistics struct {
+	Open     int64 `json:"open" bson:"open"`
+	Rejected int64 `json:"rejected" bson:"rejected"`
+	Approved int64 `json:"approved" bson:"approved"`
+	Total    int64 `json:"total" bson:"total"`
+}
+
 type Task struct {
 	Id                primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
 	CreationDate      int64              `json:"creation_date" bson:"creation_date,omitempty"`
@@ -73,19 +80,6 @@ type Task struct {
 	// Related collections
 	Comments []Comment `json:"comments" bson:"comments,omitempty"`
 	Labels   []string  `json:"labels" bson:"labels,omitempty"`
-}
-
-type TaskFilter struct {
-	Title     string   `json:"title" bson:"title,omitempty"`
-	View      string   `json:"view" bson:"view,omitempty"` // "full" (default) or "compact"
-	Limit     int      `json:"limit" bson:"limit,omitempty"`
-	Sites     []string `json:"sites" bson:"sites,omitempty"`
-	Devices   []string `json:"devices" bson:"devices,omitempty"`
-	Groups    []string `json:"groups" bson:"groups,omitempty"`
-	Assignees []string `json:"assignees" bson:"assignees,omitempty"`
-	Labels    []string `json:"labels" bson:"labels,omitempty"`
-	Status    []string `json:"status" bson:"status,omitempty"`
-	Offset    int      `json:"offset" bson:"offset,omitempty"`
 }
 
 type ExportFile struct {
