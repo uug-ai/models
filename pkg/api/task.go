@@ -14,7 +14,6 @@ const (
 	TaskMissingInfo     TaskStatus = "Task_missing_info"
 	TaskFound           TaskStatus = "Task_found"
 	TaskNotFound        TaskStatus = "Task_not_found"
-	TaskForbidden       TaskStatus = "Task_forbidden"
 	TaskAddSuccess      TaskStatus = "Task_add_success"
 	TaskAddFailed       TaskStatus = "Task_add_failed"
 	TaskUpdateSuccess   TaskStatus = "Task_update_success"
@@ -39,7 +38,6 @@ func (ms TaskStatus) Translate(lang string) string {
 			TaskMissingInfo:   "Task missing information",
 			TaskFound:         "Task found",
 			TaskNotFound:      "Task not found",
-			TaskForbidden:     "You are not allowed to access this task",
 			TaskAddSuccess:    "Task added successfully",
 			TaskAddFailed:     "Task failed to add",
 			TaskUpdateSuccess: "Task updated successfully",
@@ -103,9 +101,7 @@ type TaskCommentIdRequest struct {
 
 // GetTasksRequest captures query parameters for GET /tasks.
 type GetTasksRequest struct {
-	Limit  int    `form:"limit,omitempty" json:"limit,omitempty" bson:"limit,omitempty"`
-	Offset int    `form:"offset,omitempty" json:"offset,omitempty" bson:"offset,omitempty"`
-	Cursor string `form:"cursor,omitempty" json:"cursor,omitempty" bson:"cursor,omitempty"`
+	Limit int `form:"limit,omitempty" json:"limit,omitempty" bson:"limit,omitempty"`
 }
 
 // TaskFilter defines filtering options for listing tasks.
@@ -137,37 +133,9 @@ type GetTasksErrorResponse struct {
 	ErrorResponse
 }
 
-// TaskWorkflowStatus is the editable lifecycle state of a task/case.
-type TaskWorkflowStatus string
-
-const (
-	TaskWorkflowOpen     TaskWorkflowStatus = "open"
-	TaskWorkflowApproved TaskWorkflowStatus = "approved"
-	TaskWorkflowRejected TaskWorkflowStatus = "rejected"
-)
-
-type GetTaskByIdResponse struct {
-	Task models.Task `json:"task,omitempty" bson:"task,omitempty"`
-}
-
-type GetTaskByIdSuccessResponse struct {
-	SuccessResponse
-	Data GetTaskByIdResponse `json:"data,omitempty" bson:"data,omitempty"`
-}
-
-type GetTaskByIdErrorResponse struct {
-	ErrorResponse
-}
-
 // GetTasksFilteredRequest matches POST /tasks/filter request body.
-// It supports both:
-// - legacy direct filters: { title, status, limit, offset, ... }
-// - preferred wrapped form: { filter: {...}, pagination: { cursor, limit } }
-type GetTasksFilteredRequest struct {
-	TaskFilter  `bson:",inline"`
-	Filter      *TaskFilter       `json:"filter,omitempty" bson:"filter,omitempty"`
-	Pagination  *CursorPagination `json:"pagination,omitempty" bson:"pagination,omitempty"`
-}
+// The endpoint receives the filter object directly.
+type GetTasksFilteredRequest = TaskFilter
 
 // GetTasksFilteredQuery captures query parameters for POST /tasks/filter.
 type GetTasksFilteredQuery struct {
@@ -190,15 +158,6 @@ type GetTasksFilteredResponse struct {
 
 type GetTasksCompactResponse struct {
 	Tasks []TaskCompact `json:"tasks,omitempty" bson:"tasks,omitempty"`
-}
-
-type GetTasksCompactSuccessResponse struct {
-	SuccessResponse
-	Data GetTasksCompactResponse `json:"data,omitempty" bson:"data,omitempty"`
-}
-
-type GetTasksCompactErrorResponse struct {
-	ErrorResponse
 }
 
 type GetTasksFilteredSuccessResponse struct {
@@ -250,20 +209,11 @@ type AddTaskErrorResponse struct {
 }
 
 // EditTaskRequest matches PATCH /tasks/{id} request payload.
-// It includes only fields currently editable from the frontend task UI.
-type EditTaskRequest struct {
-	Status           *TaskWorkflowStatus `json:"status,omitempty" bson:"status,omitempty"`
-	Notes            *string   `json:"notes,omitempty" bson:"notes,omitempty"`
-	Labels           *[]string `json:"labels,omitempty" bson:"labels,omitempty"`
-	Assignees        *[]string `json:"assignees,omitempty" bson:"assignees,omitempty"`
-	AssigneesProfile *[]string `json:"assignees_profile,omitempty" bson:"assignees_profile,omitempty"`
-	NotifyAssignees  *bool     `json:"notify_assignees,omitempty" bson:"notify_assignees,omitempty"`
-	IsPrivate        *bool     `json:"is_private,omitempty" bson:"is_private,omitempty"`
-}
+// It intentionally remains dynamic because patchable fields vary.
+type EditTaskRequest map[string]interface{}
 
 type EditTaskResponse struct {
 	UpdatedFields map[string]interface{} `json:"updatedFields,omitempty" bson:"updatedFields,omitempty"`
-	Task          models.Task            `json:"task,omitempty" bson:"task,omitempty"`
 }
 
 type EditTaskSuccessResponse struct {

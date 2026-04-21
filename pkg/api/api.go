@@ -14,7 +14,6 @@ const (
 	HttpNoStatus                  int = 0
 	HttpStatusOK                  int = http.StatusOK
 	HttpStatusCreated             int = http.StatusCreated
-	HttpStatusForbidden           int = http.StatusForbidden
 	HttpStatusUnauthorized        int = http.StatusUnauthorized
 	HttpStatusBadRequest          int = http.StatusBadRequest
 	HttpStatusInternalServerError int = http.StatusInternalServerError
