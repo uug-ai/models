@@ -179,6 +179,7 @@ type TaskCompact struct {
 	Title            string        `json:"title,omitempty" bson:"title,omitempty"`
 	Status           string        `json:"status,omitempty" bson:"status,omitempty"`
 	IsPrivate        bool          `json:"is_private,omitempty" bson:"is_private,omitempty"`
+	ThumbnailUrl     string        `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`
 }
 
 type GetTasksFilteredResponse struct {
