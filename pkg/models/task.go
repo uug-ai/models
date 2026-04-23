@@ -88,11 +88,14 @@ type ExportFile struct {
 	CameraId          string `json:"camera_id" bson:"camera_id,omitempty"`
 	Provider          string `json:"provider" bson:"provider,omitempty"`
 	Source            string `json:"source" bson:"source,omitempty"`
+	VideoUrl          string `json:"video_url,omitempty" bson:"video_url,omitempty"`
 	SpriteFile        string `json:"spriteFile" bson:"spriteFile"`
 	SpriteProvider    string `json:"spriteProvider" bson:"spriteProvider"`
+	SpriteUrl         string `json:"sprite_url,omitempty" bson:"sprite_url,omitempty"`
 	SpriteInterval    int    `json:"spriteInterval" bson:"spriteInterval"`
 	ThumbnailFile     string `json:"thumbnailFile" bson:"thumbnailFile"`
 	ThumbnailProvider string `json:"thumbnailProvider" bson:"thumbnailProvider"`
+	ThumbnailUrl      string `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`
 }
 
 type MediaWrapper struct {
