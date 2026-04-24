@@ -106,13 +106,14 @@ type GetTasksRequest struct {
 	Limit  int    `form:"limit,omitempty" json:"limit,omitempty" bson:"limit,omitempty"`
 	Offset int    `form:"offset,omitempty" json:"offset,omitempty" bson:"offset,omitempty"`
 	Cursor string `form:"cursor,omitempty" json:"cursor,omitempty" bson:"cursor,omitempty"`
+	View   string `form:"view,omitempty" json:"view,omitempty" bson:"view,omitempty"` // "full" (default), "compact", or "overview"
 }
 
 // TaskFilter defines filtering options for listing tasks.
 type TaskFilter struct {
 	TaskIds   []string `json:"taskIds,omitempty" bson:"taskIds,omitempty"`
 	Title     string   `json:"title" bson:"title,omitempty"`
-	View      string   `json:"view" bson:"view,omitempty"` // "full" (default) or "compact"
+	View      string   `json:"view" bson:"view,omitempty"` // "full" (default), "compact", or "overview"
 	Limit     int      `json:"limit" bson:"limit,omitempty"`
 	Sites     []string `json:"sites" bson:"sites,omitempty"`
 	Devices   []string `json:"devices" bson:"devices,omitempty"`
@@ -123,9 +124,58 @@ type TaskFilter struct {
 	Offset    int      `json:"offset" bson:"offset,omitempty"`
 }
 
+const (
+	TaskViewFull     = "full"
+	TaskViewCompact  = "compact"
+	TaskViewOverview = "overview"
+)
+
 // GetTasksResponse represents task list payloads returned by list endpoints.
 type GetTasksResponse struct {
 	Tasks []models.Task `json:"tasks,omitempty" bson:"tasks,omitempty"`
+}
+
+// TaskOverview is used for task list views that do not require media URL enrichment.
+// It intentionally excludes heavy media payloads such as export_files.
+type TaskOverview struct {
+	Id                primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty"`
+	CreationDate      int64              `json:"creation_date,omitempty" bson:"creation_date,omitempty"`
+	CreationDateTime  string             `json:"creation_datetime,omitempty" bson:"creation_datetime,omitempty"`
+	MediaTimestamp    int64              `json:"media_timestamp,omitempty" bson:"media_timestamp,omitempty"`
+	MediaEndTimestamp int64              `json:"media_end_timestamp,omitempty" bson:"media_end_timestamp,omitempty"`
+	MediaDateTime     string             `json:"media_datetime,omitempty" bson:"media_datetime,omitempty"`
+	Title             string             `json:"title,omitempty" bson:"title,omitempty"`
+	Notes             string             `json:"notes,omitempty" bson:"notes,omitempty"`
+	NotesShort        string             `json:"notes_short,omitempty" bson:"notes_short,omitempty"`
+	Status            string             `json:"status,omitempty" bson:"status,omitempty"`
+	IsPrivate         bool               `json:"is_private,omitempty" bson:"is_private,omitempty"`
+	ReporterId        string             `json:"reporter_id,omitempty" bson:"reporter_id,omitempty"`
+	Reporter          string             `json:"reporter,omitempty" bson:"reporter,omitempty"`
+	ReporterEmail     string             `json:"reporterEmail,omitempty" bson:"reporterEmail,omitempty"`
+	Assignees         []string           `json:"assignees,omitempty" bson:"assignees,omitempty"`
+	Labels            []string           `json:"labels,omitempty" bson:"labels,omitempty"`
+	Cameras           []string           `json:"cameras,omitempty" bson:"cameras,omitempty"`
+	CameraNames       []string           `json:"camera_names,omitempty" bson:"camera_names,omitempty"`
+	ThumbnailUrl      string             `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`
+	SequenceId        string             `json:"sequence_id,omitempty" bson:"sequence_id,omitempty"`
+	CompressedUrl     string             `json:"compressed_url,omitempty" bson:"compressed_url,omitempty"`
+	ExportStatus      string             `json:"export_status,omitempty" bson:"export_status,omitempty"`
+	ExportFilesCount  int                `json:"export_files_count,omitempty" bson:"export_files_count,omitempty"`
+	DownloadedFiles   []string           `json:"downloaded_files,omitempty" bson:"downloaded_files,omitempty"`
+	MediaCount        int                `json:"mediaCount,omitempty" bson:"mediaCount,omitempty"`
+}
+
+type GetTasksOverviewResponse struct {
+	Tasks []TaskOverview `json:"tasks,omitempty" bson:"tasks,omitempty"`
+}
+
+type GetTasksOverviewSuccessResponse struct {
+	SuccessResponse
+	Data GetTasksOverviewResponse `json:"data,omitempty" bson:"data,omitempty"`
+}
+
+type GetTasksOverviewErrorResponse struct {
+	ErrorResponse
 }
 
 type GetTasksSuccessResponse struct {
@@ -153,6 +203,31 @@ type GetTaskByIdSuccessResponse struct {
 }
 
 type GetTaskByIdErrorResponse struct {
+	ErrorResponse
+}
+
+// GetTaskMediaRequest captures URI + query parameters for GET /tasks/{id}/media.
+// This endpoint is intended for on-demand media URL enrichment when a task is opened.
+type GetTaskMediaRequest struct {
+	Id     string `uri:"id" json:"id,omitempty" bson:"id,omitempty"`
+	Cursor string `form:"cursor,omitempty" json:"cursor,omitempty" bson:"cursor,omitempty"`
+	Limit  int64  `form:"limit,omitempty" json:"limit,omitempty" bson:"limit,omitempty"`
+}
+
+// TaskMediaItem is the API representation of a media item attached to a task.
+type TaskMediaItem = models.ExportFile
+
+type GetTaskMediaResponse struct {
+	TaskId string          `json:"taskId,omitempty" bson:"taskId,omitempty"`
+	Media  []TaskMediaItem `json:"media,omitempty" bson:"media,omitempty"`
+}
+
+type GetTaskMediaSuccessResponse struct {
+	SuccessResponse
+	Data GetTaskMediaResponse `json:"data,omitempty" bson:"data,omitempty"`
+}
+
+type GetTaskMediaErrorResponse struct {
 	ErrorResponse
 }
 
