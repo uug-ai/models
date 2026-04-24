@@ -76,6 +76,9 @@ type Task struct {
 	ExportFiles      []ExportFile `json:"export_files" bson:"export_files,omitempty"`
 	ExportFilesCount int          `json:"export_files_count" bson:"export_files_count,omitempty"`
 	DownloadedFiles  []string     `json:"downloaded_files" bson:"downloaded_files,omitempty"`
+	ExportRequested  bool         `json:"export_requested" bson:"export_requested,omitempty"`
+	ExportInProgress bool         `json:"export_in_progress" bson:"export_in_progress,omitempty"`
+	ExportRevision   int64        `json:"export_revision" bson:"export_revision,omitempty"`
 
 	// Related collections
 	Comments []Comment `json:"comments" bson:"comments,omitempty"`
