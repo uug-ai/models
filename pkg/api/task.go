@@ -143,15 +143,25 @@ type TaskOverview struct {
 	CreationDateTime  string             `json:"creation_datetime,omitempty" bson:"creation_datetime,omitempty"`
 	MediaTimestamp    int64              `json:"media_timestamp,omitempty" bson:"media_timestamp,omitempty"`
 	MediaEndTimestamp int64              `json:"media_end_timestamp,omitempty" bson:"media_end_timestamp,omitempty"`
+	MediaDateTime     string             `json:"media_datetime,omitempty" bson:"media_datetime,omitempty"`
 	Title             string             `json:"title,omitempty" bson:"title,omitempty"`
+	Notes             string             `json:"notes,omitempty" bson:"notes,omitempty"`
+	NotesShort        string             `json:"notes_short,omitempty" bson:"notes_short,omitempty"`
 	Status            string             `json:"status,omitempty" bson:"status,omitempty"`
 	IsPrivate         bool               `json:"is_private,omitempty" bson:"is_private,omitempty"`
 	ReporterId        string             `json:"reporter_id,omitempty" bson:"reporter_id,omitempty"`
+	Reporter          string             `json:"reporter,omitempty" bson:"reporter,omitempty"`
+	ReporterEmail     string             `json:"reporterEmail,omitempty" bson:"reporterEmail,omitempty"`
 	Assignees         []string           `json:"assignees,omitempty" bson:"assignees,omitempty"`
 	Labels            []string           `json:"labels,omitempty" bson:"labels,omitempty"`
 	Cameras           []string           `json:"cameras,omitempty" bson:"cameras,omitempty"`
 	CameraNames       []string           `json:"camera_names,omitempty" bson:"camera_names,omitempty"`
 	ThumbnailUrl      string             `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`
+	SequenceId        string             `json:"sequence_id,omitempty" bson:"sequence_id,omitempty"`
+	CompressedUrl     string             `json:"compressed_url,omitempty" bson:"compressed_url,omitempty"`
+	ExportStatus      string             `json:"export_status,omitempty" bson:"export_status,omitempty"`
+	ExportFilesCount  int                `json:"export_files_count,omitempty" bson:"export_files_count,omitempty"`
+	DownloadedFiles   []string           `json:"downloaded_files,omitempty" bson:"downloaded_files,omitempty"`
 	MediaCount        int                `json:"mediaCount,omitempty" bson:"mediaCount,omitempty"`
 }
 
