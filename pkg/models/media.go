@@ -24,9 +24,11 @@ type Media struct {
 
 	// Media file information (by default "vault", however might change
 	// in the future (integration with other storage solutions, next to Vault).
-	StorageSolution   string `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`
-	VideoFile         string `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
-	VideoProvider     string `json:"videoProvider,omitempty" bson:"videoProvider,omitempty"`
+	StorageSolution       string                  `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`
+	VideoFile             string                  `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
+	VideoProvider         string                  `json:"videoProvider,omitempty" bson:"videoProvider,omitempty"`
+	VideoBytesRangeOnTime []VideoBytesRangeOnTime `json:"videooBytesRangeOnTime,omitempty"  bson:"videooBytesRangeOnTime,omitempty"`
+
 	ThumbnailFile     string `json:"thumbnailFile,omitempty" bson:"thumbnailFile,omitempty"`
 	ThumbnailProvider string `json:"thumbnailProvider,omitempty" bson:"thumbnailProvider,omitempty"`
 	SpriteFile        string `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
