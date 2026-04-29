@@ -98,6 +98,7 @@ type MediaFilter struct {
 
 type MediaPatch struct {
 	Metadata *MediaMetadataPatch `json:"metadata,omitempty" bson:"metadata,omitempty"`
+	Star     *bool               `json:"star,omitempty" bson:"star,omitempty"`
 }
 
 type MediaMetadataPatch struct {
