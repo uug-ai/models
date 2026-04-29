@@ -28,7 +28,7 @@ type Media struct {
 	StorageSolution       string                  `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`
 	VideoFile             string                  `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
 	VideoProvider         string                  `json:"videoProvider,omitempty" bson:"videoProvider,omitempty"`
-	VideoBytesRangeOnTime []VideoBytesRangeOnTime `json:"videooBytesRangeOnTime,omitempty"  bson:"videooBytesRangeOnTime,omitempty"`
+	VideoBytesRangeOnTime []VideoBytesRangeOnTime `json:"videoBytesRangeOnTime,omitempty"  bson:"videoBytesRangeOnTime,omitempty"`
 
 	ThumbnailFile     string `json:"thumbnailFile,omitempty" bson:"thumbnailFile,omitempty"`
 	ThumbnailProvider string `json:"thumbnailProvider,omitempty" bson:"thumbnailProvider,omitempty"`
