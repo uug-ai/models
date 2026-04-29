@@ -12,6 +12,7 @@ type Media struct {
 	StartTimestamp int64 `json:"startTimestamp,omitempty" bson:"startTimestamp,omitempty"`
 	EndTimestamp   int64 `json:"endTimestamp,omitempty" bson:"endTimestamp,omitempty"`
 	Duration       int   `json:"duration,omitempty" bson:"duration,omitempty"`
+	Star           bool  `json:"star,omitempty" bson:"star,omitempty"`
 
 	// RBAC information
 	// DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
