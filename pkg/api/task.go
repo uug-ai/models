@@ -231,10 +231,6 @@ type GetTaskMediaErrorResponse struct {
 	ErrorResponse
 }
 
-type GetTaskMediaRequestBody struct {
-	Pagination CursorPagination `json:"pagination,omitempty" bson:"pagination,omitempty"`
-}
-
 // GetTasksFilteredRequest matches POST /tasks/filter request body.
 // It supports both:
 // - legacy direct filters: { title, status, limit, offset, ... }
