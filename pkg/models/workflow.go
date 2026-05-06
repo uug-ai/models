@@ -30,6 +30,7 @@ type Workflow struct {
 	Id           primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Name         string             `json:"name" bson:"name,omitempty"`
 	Description  string             `json:"description" bson:"description,omitempty"`
+	Enabled      bool               `json:"enabled" bson:"enabled"`
 	Nodes        []WorkflowNode     `json:"nodes" bson:"nodes"`
 	Edges        []WorkflowEdge     `json:"edges" bson:"edges"`
 	UserId       string             `json:"user_id" bson:"user_id,omitempty"`
