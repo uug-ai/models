@@ -34,18 +34,18 @@ func (ms TaskStatus) String() string {
 func (ms TaskStatus) Translate(lang string) string {
 	translations := map[string]map[TaskStatus]string{
 		"en": {
-			TaskBindingFailed: "Task binding failed",
-			TaskDuplicateName: "Task duplicate name",
-			TaskMissingInfo:   "Task missing information",
-			TaskFound:         "Task found",
-			TaskNotFound:      "Task not found",
-			TaskForbidden:     "You are not allowed to access this task",
-			TaskAddSuccess:    "Task added successfully",
-			TaskAddFailed:     "Task failed to add",
-			TaskUpdateSuccess: "Task updated successfully",
-			TaskUpdateFailed:  "Task failed to update",
-			TaskDeleteSuccess: "Task deleted successfully",
-			TaskDeleteFailed:  "Task failed to delete",
+			TaskBindingFailed:   "Task binding failed",
+			TaskDuplicateName:   "Task duplicate name",
+			TaskMissingInfo:     "Task missing information",
+			TaskFound:           "Task found",
+			TaskNotFound:        "Task not found",
+			TaskForbidden:       "You are not allowed to access this task",
+			TaskAddSuccess:      "Task added successfully",
+			TaskAddFailed:       "Task failed to add",
+			TaskUpdateSuccess:   "Task updated successfully",
+			TaskUpdateFailed:    "Task failed to update",
+			TaskDeleteSuccess:   "Task deleted successfully",
+			TaskDeleteFailed:    "Task failed to delete",
 			TaskMediaAddSuccess: "Media was added to the task successfully",
 			TaskMediaAddFailed:  "Failed to add media to the task",
 		},
@@ -206,12 +206,19 @@ type GetTaskByIdErrorResponse struct {
 	ErrorResponse
 }
 
-// GetTaskMediaRequest captures URI + query parameters for GET /tasks/{id}/media.
+// GetTaskMediaRequest captures URI + query parameters for legacy GET /tasks/{id}/media.
 // This endpoint is intended for on-demand media URL enrichment when a task is opened.
 type GetTaskMediaRequest struct {
 	Id     string `uri:"id" json:"id,omitempty" bson:"id,omitempty"`
 	Cursor string `form:"cursor,omitempty" json:"cursor,omitempty" bson:"cursor,omitempty"`
 	Limit  int64  `form:"limit,omitempty" json:"limit,omitempty" bson:"limit,omitempty"`
+}
+
+// GetTaskMediaRequestBody matches POST /tasks/{id}/media/filter request body.
+// The task id remains in the URI; filtering/pagination settings live in the body.
+type GetTaskMediaRequestBody struct {
+	Filter     map[string]interface{} `json:"filter,omitempty" bson:"filter,omitempty"`
+	Pagination CursorPagination       `json:"pagination" bson:"pagination"`
 }
 
 // TaskMediaItem is the API representation of a media item attached to a task.
@@ -236,9 +243,9 @@ type GetTaskMediaErrorResponse struct {
 // - legacy direct filters: { title, status, limit, offset, ... }
 // - preferred wrapped form: { filter: {...}, pagination: { cursor, limit } }
 type GetTasksFilteredRequest struct {
-	TaskFilter  `bson:",inline"`
-	Filter      *TaskFilter       `json:"filter,omitempty" bson:"filter,omitempty"`
-	Pagination  *CursorPagination `json:"pagination,omitempty" bson:"pagination,omitempty"`
+	TaskFilter `bson:",inline"`
+	Filter     *TaskFilter       `json:"filter,omitempty" bson:"filter,omitempty"`
+	Pagination *CursorPagination `json:"pagination,omitempty" bson:"pagination,omitempty"`
 }
 
 // GetTasksFilteredQuery captures query parameters for POST /tasks/filter.
@@ -249,12 +256,12 @@ type GetTasksFilteredQuery struct {
 // TaskCompact is used by lightweight task pickers that only need summary fields.
 type TaskCompact struct {
 	Id               primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty"`
-	CreationDate     int64         `json:"creation_date,omitempty" bson:"creation_date,omitempty"`
-	CreationDateTime string        `json:"creation_datetime,omitempty" bson:"creation_datetime,omitempty"`
-	Title            string        `json:"title,omitempty" bson:"title,omitempty"`
-	Status           string        `json:"status,omitempty" bson:"status,omitempty"`
-	IsPrivate        bool          `json:"is_private,omitempty" bson:"is_private,omitempty"`
-	ThumbnailUrl     string        `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`
+	CreationDate     int64              `json:"creation_date,omitempty" bson:"creation_date,omitempty"`
+	CreationDateTime string             `json:"creation_datetime,omitempty" bson:"creation_datetime,omitempty"`
+	Title            string             `json:"title,omitempty" bson:"title,omitempty"`
+	Status           string             `json:"status,omitempty" bson:"status,omitempty"`
+	IsPrivate        bool               `json:"is_private,omitempty" bson:"is_private,omitempty"`
+	ThumbnailUrl     string             `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`
 }
 
 type GetTasksFilteredResponse struct {
@@ -326,12 +333,12 @@ type AddTaskErrorResponse struct {
 // It includes only fields currently editable from the frontend task UI.
 type EditTaskRequest struct {
 	Status           *TaskStatus `json:"status,omitempty" bson:"status,omitempty"`
-	Notes            *string   `json:"notes,omitempty" bson:"notes,omitempty"`
-	Labels           *[]string `json:"labels,omitempty" bson:"labels,omitempty"`
-	Assignees        *[]string `json:"assignees,omitempty" bson:"assignees,omitempty"`
-	AssigneesProfile *[]string `json:"assignees_profile,omitempty" bson:"assignees_profile,omitempty"`
-	NotifyAssignees  *bool     `json:"notify_assignees,omitempty" bson:"notify_assignees,omitempty"`
-	IsPrivate        *bool     `json:"is_private,omitempty" bson:"is_private,omitempty"`
+	Notes            *string     `json:"notes,omitempty" bson:"notes,omitempty"`
+	Labels           *[]string   `json:"labels,omitempty" bson:"labels,omitempty"`
+	Assignees        *[]string   `json:"assignees,omitempty" bson:"assignees,omitempty"`
+	AssigneesProfile *[]string   `json:"assignees_profile,omitempty" bson:"assignees_profile,omitempty"`
+	NotifyAssignees  *bool       `json:"notify_assignees,omitempty" bson:"notify_assignees,omitempty"`
+	IsPrivate        *bool       `json:"is_private,omitempty" bson:"is_private,omitempty"`
 }
 
 type EditTaskResponse struct {
