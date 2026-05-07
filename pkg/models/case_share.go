@@ -48,3 +48,10 @@ type DeleteCaseShareInput struct {
 	UserId  string `json:"user_id"`
 }
 type DeleteCaseShareOutput struct{}
+
+type UpdateCaseShareOTPInput struct {
+	Token   string `json:"token"`
+	OTPCode string `json:"otp_code"`
+	Expiry  int64  `json:"otp_expiry"`
+}
+type UpdateCaseShareOTPOutput struct{}
