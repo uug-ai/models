@@ -1,6 +1,6 @@
 module github.com/uug-ai/models
 
-go 1.25.9
+go 1.25.8
 
 require (
 	github.com/go-playground/validator/v10 v10.30.2
