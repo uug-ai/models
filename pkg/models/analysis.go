@@ -165,12 +165,4 @@ type TrackBox struct {
 type FaceRedaction struct {
 	Id     primitive.ObjectID   `json:"id" bson:"_id,omitempty"`
 	Tracks []FaceRedactionTrack `json:"tracks" bson:"tracks"`
-	// Status reflects the lifecycle of the redaction job driven by the
-	// hub-pipeline-redaction worker: "" (unsubmitted), "queued",
-	// "processing", "completed", "failed".
-	Status string `json:"status,omitempty" bson:"status,omitempty"`
-	// StatusError carries the failure reason when Status == "failed".
-	StatusError string `json:"statusError,omitempty" bson:"statusError,omitempty"`
-	// UpdatedAt is the unix timestamp of the last status transition.
-	UpdatedAt int64 `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
 }
