@@ -99,6 +99,15 @@ type ExportFile struct {
 	ThumbnailFile     string `json:"thumbnailFile" bson:"thumbnailFile"`
 	ThumbnailProvider string `json:"thumbnailProvider" bson:"thumbnailProvider"`
 	ThumbnailUrl      string `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`
+	// Redaction variant: when present, the API has discovered a redacted
+	// version of this media in the media collection. RedactionFile /
+	// RedactionProvider mirror the corresponding fields on the Media doc,
+	// and RedactionUrl carries the signed URL for client playback. These
+	// are populated by the API at fetch time and are not persisted on the
+	// task document.
+	RedactionFile     string `json:"redaction_file,omitempty" bson:"-"`
+	RedactionProvider string `json:"redaction_provider,omitempty" bson:"-"`
+	RedactionUrl      string `json:"redaction_url,omitempty" bson:"-"`
 }
 
 type MediaWrapper struct {
