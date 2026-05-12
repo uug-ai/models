@@ -182,12 +182,18 @@ type FaceRedactionMessage struct {
 //
 // FileName carries the source media filename and is used by the analysis
 // service to locate the matching Media document when the job completes.
+// RedactionFile / RedactionProvider carry the storage location of the
+// rendered artefact and are populated on the terminal Completed event so
+// the analysis service can persist them onto both the Media and any
+// referencing Task / Case documents.
 type FaceRedactionStatusEvent struct {
-	AnalysisId     string                     `json:"analysisId"`
-	OrganisationId string                     `json:"organisationId"`
-	FileName       string                     `json:"fileName,omitempty"`
-	Status         models.FaceRedactionStatus `json:"status"`
-	StatusError    string                     `json:"statusError,omitempty"`
+	AnalysisId        string                     `json:"analysisId"`
+	OrganisationId    string                     `json:"organisationId"`
+	FileName          string                     `json:"fileName,omitempty"`
+	Status            models.FaceRedactionStatus `json:"status"`
+	StatusError       string                     `json:"statusError,omitempty"`
+	RedactionFile     string                     `json:"redactionFile,omitempty"`
+	RedactionProvider string                     `json:"redactionProvider,omitempty"`
 }
 
 // GetAnalysis

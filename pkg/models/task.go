@@ -99,14 +99,14 @@ type ExportFile struct {
 	ThumbnailFile     string `json:"thumbnailFile" bson:"thumbnailFile"`
 	ThumbnailProvider string `json:"thumbnailProvider" bson:"thumbnailProvider"`
 	ThumbnailUrl      string `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`
-	// Redaction variant: when present, the API has discovered a redacted
-	// version of this media in the media collection. RedactionFile /
-	// RedactionProvider mirror the corresponding fields on the Media doc,
-	// and RedactionUrl carries the signed URL for client playback. These
-	// are populated by the API at fetch time and are not persisted on the
-	// task document.
-	RedactionFile     string `json:"redaction_file,omitempty" bson:"-"`
-	RedactionProvider string `json:"redaction_provider,omitempty" bson:"-"`
+	// Redaction variant: persisted onto the task document by
+	// hub-pipeline-analysis when the corresponding redaction job completes.
+	// RedactionFile / RedactionProvider mirror the matching fields on the
+	// Media doc so downstream consumers (export, frontend) can resolve the
+	// redacted artefact without a join. RedactionUrl is signed by the API at
+	// fetch time and is therefore not persisted.
+	RedactionFile     string `json:"redaction_file,omitempty" bson:"redaction_file,omitempty"`
+	RedactionProvider string `json:"redaction_provider,omitempty" bson:"redaction_provider,omitempty"`
 	RedactionUrl      string `json:"redaction_url,omitempty" bson:"-"`
 }
 
