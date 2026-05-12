@@ -174,6 +174,22 @@ type FaceRedactionMessage struct {
 	Data   map[string]interface{} `json:"data,omitempty"`
 }
 
+// FaceRedactionStatusEvent is the structured payload published by
+// hub-pipeline-redaction onto the analysis queue (under
+// event.Data["redaction"]) to drive lifecycle transitions of the
+// face-redaction job recorded on the Analysis document. The receiving
+// service (hub-pipeline-analysis) owns the corresponding MongoDB writes.
+//
+// FileName carries the source media filename and is used by the analysis
+// service to locate the matching Media document when the job completes.
+type FaceRedactionStatusEvent struct {
+	AnalysisId     string                     `json:"analysisId"`
+	OrganisationId string                     `json:"organisationId"`
+	FileName       string                     `json:"fileName,omitempty"`
+	Status         models.FaceRedactionStatus `json:"status"`
+	StatusError    string                     `json:"statusError,omitempty"`
+}
+
 // GetAnalysis
 // @Router /analysis [get]
 type GetAnalysisRequest struct {
