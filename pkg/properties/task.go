@@ -97,12 +97,6 @@ const (
 	TaskLabels = "labels"
 )
 
-// TaskMediaSelection property field names (BSON)
-const (
-	TaskMediaSelectionCaseMediaId = "case_media_id"
-	TaskMediaSelectionIncluded = "included"
-)
-
 // TaskStatistics property field names (BSON)
 const (
 	TaskStatisticsOpen = "open"

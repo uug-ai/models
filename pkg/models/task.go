@@ -84,29 +84,21 @@ type Task struct {
 	// case_media documents where role == "source" and task_id matches.
 	MediaCount int `json:"media_count" bson:"media_count,omitempty"`
 
-	// Per-purpose case_media selections. Each slice references rows in
-	// the case_media collection and records whether the row is included
-	// for that purpose. When a selection is empty, consumers fall back
-	// to the default rule: pick the latest completed edit for each
-	// source (or the source itself when no edit exists).
+	// Per-purpose case_media selections. Each slice is an ordered list
+	// of case_media ids picked for that purpose. The full inventory
+	// lives in the case_media collection (queryable by task_id); these
+	// fields only record which subset participates in the export /
+	// share bundle and in what order.
 	//
-	// Slice order is playback order.
-	ExportSelection []TaskMediaSelection `json:"export_selection,omitempty" bson:"export_selection,omitempty"`
-	ShareSelection  []TaskMediaSelection `json:"share_selection,omitempty"  bson:"share_selection,omitempty"`
+	// An empty selection means "default rule": consumers fall back to
+	// every source's latest completed edit (or the source itself when
+	// no completed edit exists).
+	ExportSelection []primitive.ObjectID `json:"export_selection,omitempty" bson:"export_selection,omitempty"`
+	ShareSelection  []primitive.ObjectID `json:"share_selection,omitempty"  bson:"share_selection,omitempty"`
 
 	// Related collections
 	Comments []Comment `json:"comments" bson:"comments,omitempty"`
 	Labels   []string  `json:"labels" bson:"labels,omitempty"`
-}
-
-// TaskMediaSelection references a case_media row chosen for a specific
-// task purpose (export, share, download, ...). The slice it lives in
-// records playback order; `Included=false` keeps a row in the slice but
-// excludes it from the resulting bundle, which is useful for UIs that
-// need to remember a user's deselection across edits.
-type TaskMediaSelection struct {
-	CaseMediaId primitive.ObjectID `json:"caseMediaId" bson:"case_media_id"`
-	Included    bool               `json:"included"    bson:"included"`
 }
 
 type ExportFile struct {
