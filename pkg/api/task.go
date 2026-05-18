@@ -221,23 +221,6 @@ type GetTaskMediaRequestBody struct {
 	Pagination CursorPagination       `json:"pagination" bson:"pagination"`
 }
 
-// TaskMediaItem is the API representation of a media item attached to a task.
-type TaskMediaItem = models.ExportFile
-
-type GetTaskMediaResponse struct {
-	TaskId string          `json:"taskId,omitempty" bson:"taskId,omitempty"`
-	Media  []TaskMediaItem `json:"media,omitempty" bson:"media,omitempty"`
-}
-
-type GetTaskMediaSuccessResponse struct {
-	SuccessResponse
-	Data GetTaskMediaResponse `json:"data,omitempty" bson:"data,omitempty"`
-}
-
-type GetTaskMediaErrorResponse struct {
-	ErrorResponse
-}
-
 // GetTasksFilteredRequest matches POST /tasks/filter request body.
 // It supports both:
 // - legacy direct filters: { title, status, limit, offset, ... }

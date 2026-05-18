@@ -73,7 +73,7 @@ type Task struct {
 	// An export task, is containing multiple video in a compressed file format (.zip)
 	ExportStatus     string       `json:"export_status" bson:"export_status,omitempty"`     // "", "idle", "start", "progress", "success", "error"
 	ExportProgress   int          `json:"export_progress" bson:"export_progress,omitempty"` // "0% -> 100%"
-	ExportFiles      []ExportFile `json:"export_files" bson:"export_files,omitempty"`
+	ExportFiles      []ExportFile `json:"export_files" bson:"export_files,omitempty"`       // legacy: read by v20130101 only
 	ExportFilesCount int          `json:"export_files_count" bson:"export_files_count,omitempty"`
 	DownloadedFiles  []string     `json:"downloaded_files" bson:"downloaded_files,omitempty"`
 	ExportRequested  bool         `json:"export_requested" bson:"export_requested,omitempty"`
@@ -101,6 +101,8 @@ type Task struct {
 	Labels   []string  `json:"labels" bson:"labels,omitempty"`
 }
 
+// ExportFile is the legacy media descriptor embedded on Task.ExportFiles.
+// Kept only for the v20130101 API surface; new code uses CaseMedia.
 type ExportFile struct {
 	Timestamp         int64  `json:"timestamp" bson:"timestamp"`
 	Key               string `json:"key" bson:"key,omitempty"`
