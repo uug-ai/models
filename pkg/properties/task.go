@@ -90,8 +90,17 @@ const (
 	TaskExportRequested = "export_requested"
 	TaskExportInProgress = "export_in_progress"
 	TaskExportRevision = "export_revision"
+	TaskMediaCount = "media_count"
+	TaskExportSelection = "export_selection"
+	TaskShareSelection = "share_selection"
 	TaskComments = "comments"
 	TaskLabels = "labels"
+)
+
+// TaskMediaSelection property field names (BSON)
+const (
+	TaskMediaSelectionCaseMediaId = "case_media_id"
+	TaskMediaSelectionIncluded = "included"
 )
 
 // TaskStatistics property field names (BSON)
