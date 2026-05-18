@@ -427,3 +427,50 @@ type DeleteTaskCommentSuccessResponse struct {
 type DeleteTaskCommentErrorResponse struct {
 	ErrorResponse
 }
+
+// ===== Case media (sources + edits) =====
+
+// CreateMediaEditRequest is the body of POST /tasks/{taskId}/media-edits.
+// It describes a single edit to apply to a source CaseMedia entry that
+// already lives on the case. The server validates Action / EditType,
+// allocates the next Version and enqueues to the matching worker.
+//
+// For Action = "composite" the Params map is expected to contain an
+// "operations" array, each entry having an "op" discriminator matching
+// one of the single-action CaseMediaAction values.
+type CreateMediaEditRequest struct {
+	SourceCaseMediaId string                 `json:"sourceCaseMediaId"`
+	Action            models.CaseMediaAction `json:"action"`
+	EditType          string                 `json:"editType,omitempty"`
+	Params            map[string]interface{} `json:"params,omitempty"`
+	SupersedesId      string                 `json:"supersedesId,omitempty"`
+}
+
+type CreateMediaEditResponse struct {
+	CaseMedia models.CaseMedia `json:"caseMedia"`
+}
+
+type CreateMediaEditSuccessResponse struct {
+	SuccessResponse
+	Data CreateMediaEditResponse `json:"data"`
+}
+
+type CreateMediaEditErrorResponse struct {
+	ErrorResponse
+}
+
+// ListCaseMediaResponse returns every case_media entry attached to a
+// task (sources and edits) so the case view can render the inventory
+// without further joins.
+type ListCaseMediaResponse struct {
+	CaseMedia []models.CaseMedia `json:"caseMedia"`
+}
+
+type ListCaseMediaSuccessResponse struct {
+	SuccessResponse
+	Data ListCaseMediaResponse `json:"data"`
+}
+
+type ListCaseMediaErrorResponse struct {
+	ErrorResponse
+}

@@ -146,12 +146,26 @@ type SaveFaceRedactionErrorResponse struct {
 	ErrorResponse
 }
 
-// SubmitFaceRedaction
-// @Router /analysis/submit-face-redaction [post]
+// SubmitFaceRedaction is the worker-bound payload published by hub-api
+// to the redaction queue. The user-facing endpoint is the generic
+// POST /tasks/{taskId}/media-edits — this struct is the internal queue
+// message format consumed by hub-pipeline-redaction.
+//
+// TaskId / CaseMediaId tie the job back to the CaseMedia entry that
+// hub-api created when accepting the request. DestinationKey /
+// DestinationProvider are computed server-side and tell the worker
+// exactly where to upload the rendered artefact so the storage layout
+// stays under hub-api's control.
 type SubmitFaceRedactionRequest struct {
 	AnalysisId          string                        `json:"analysisId"`
+	TaskId              string                        `json:"taskId"`
+	CaseMediaId         string                        `json:"caseMediaId"`
 	SignedUrl           string                        `json:"signedUrl"`
 	FileName            string                        `json:"fileName"`
+	DestinationKey      string                        `json:"destinationKey"`
+	DestinationProvider string                        `json:"destinationProvider"`
+	EditType            string                        `json:"editType,omitempty"`
+	Mode                models.RedactionMode          `json:"mode,omitempty"`
 	AllFrameCoordinates map[string][]*models.TrackBox `json:"allFrameCoordinates,omitempty"`
 	FaceRedaction       *models.FaceRedaction         `json:"faceRedaction,omitempty"`
 }
@@ -168,32 +182,33 @@ type SubmitFaceRedactionErrorResponse struct {
 	ErrorResponse
 }
 
+// FaceRedactionMessage is the structured payload published by hub-api
+// onto the redaction queue when a face redaction is submitted. It carries
+// the user context and a free-form Data map that is wrapped by the worker
+// into a concrete request struct.
 type FaceRedactionMessage struct {
 	Events []string               `json:"events,omitempty"`
 	User   models.User            `json:"user,omitempty"`
 	Data   map[string]interface{} `json:"data,omitempty"`
 }
 
-// FaceRedactionStatusEvent is the structured payload published by
-// hub-pipeline-redaction onto the analysis queue (under
-// event.Data["redaction"]) to drive lifecycle transitions of the
-// face-redaction job recorded on the Analysis document. The receiving
-// service (hub-pipeline-analysis) owns the corresponding MongoDB writes.
+// CaseMediaStatusEvent is the structured payload published by edit
+// workers (hub-pipeline-redaction first; trim/composite later) onto the
+// analysis queue to drive lifecycle transitions of a CaseMedia entry.
+// hub-pipeline-analysis owns the corresponding MongoDB writes against
+// the case_media collection.
 //
-// FileName carries the source media filename and is used by the analysis
-// service to locate the matching Media document when the job completes.
-// RedactionFile / RedactionProvider carry the storage location of the
-// rendered artefact and are populated on the terminal Completed event so
-// the analysis service can persist them onto both the Media and any
-// referencing Task / Case documents.
-type FaceRedactionStatusEvent struct {
-	AnalysisId        string                     `json:"analysisId"`
-	OrganisationId    string                     `json:"organisationId"`
-	FileName          string                     `json:"fileName,omitempty"`
-	Status            models.FaceRedactionStatus `json:"status"`
-	StatusError       string                     `json:"statusError,omitempty"`
-	RedactionFile     string                     `json:"redactionFile,omitempty"`
-	RedactionProvider string                     `json:"redactionProvider,omitempty"`
+// File / Provider carry the storage location of the rendered artefact
+// and are populated on the terminal Completed event so consumers can
+// resolve the produced media without an additional lookup.
+type CaseMediaStatusEvent struct {
+	TaskId         string                 `json:"taskId"`
+	CaseMediaId    string                 `json:"caseMediaId"`
+	OrganisationId string                 `json:"organisationId"`
+	Status         models.CaseMediaStatus `json:"status"`
+	StatusError    string                 `json:"statusError,omitempty"`
+	File           string                 `json:"file,omitempty"`
+	Provider       string                 `json:"provider,omitempty"`
 }
 
 // GetAnalysis

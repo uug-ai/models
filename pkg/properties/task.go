@@ -10,11 +10,14 @@ const (
 	ExportFileCameraId = "camera_id"
 	ExportFileProvider = "provider"
 	ExportFileSource = "source"
+	ExportFileVideoUrl = "video_url"
 	ExportFileSpriteFile = "spriteFile"
 	ExportFileSpriteProvider = "spriteProvider"
+	ExportFileSpriteUrl = "sprite_url"
 	ExportFileSpriteInterval = "spriteInterval"
 	ExportFileThumbnailFile = "thumbnailFile"
 	ExportFileThumbnailProvider = "thumbnailProvider"
+	ExportFileThumbnailUrl = "thumbnail_url"
 )
 
 // MediaWrapper property field names (BSON)
@@ -84,21 +87,19 @@ const (
 	TaskExportFiles = "export_files"
 	TaskExportFilesCount = "export_files_count"
 	TaskDownloadedFiles = "downloaded_files"
+	TaskExportRequested = "export_requested"
+	TaskExportInProgress = "export_in_progress"
+	TaskExportRevision = "export_revision"
 	TaskComments = "comments"
 	TaskLabels = "labels"
 )
 
-// TaskFilter property field names (BSON)
+// TaskStatistics property field names (BSON)
 const (
-	TaskFilterTitle = "title"
-	TaskFilterLimit = "limit"
-	TaskFilterSites = "sites"
-	TaskFilterDevices = "devices"
-	TaskFilterGroups = "groups"
-	TaskFilterAssignees = "assignees"
-	TaskFilterLabels = "labels"
-	TaskFilterStatus = "status"
-	TaskFilterOffset = "offset"
+	TaskStatisticsOpen = "open"
+	TaskStatisticsRejected = "rejected"
+	TaskStatisticsApproved = "approved"
+	TaskStatisticsTotal = "total"
 )
 
 // TaskWrapper property field names (BSON)

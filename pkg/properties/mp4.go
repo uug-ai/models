@@ -9,3 +9,10 @@ const (
 	FragmentedBytesRangeOnTimeTime = "time"
 	FragmentedBytesRangeOnTimeRange = "range"
 )
+
+// VideoBytesRangeOnTime property field names (BSON)
+const (
+	VideoBytesRangeOnTimeDuration = "duration"
+	VideoBytesRangeOnTimeTime = "time"
+	VideoBytesRangeOnTimeRange = "range"
+)
