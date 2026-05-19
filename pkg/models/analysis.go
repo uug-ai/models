@@ -165,33 +165,13 @@ type TrackBox struct {
 type FaceRedaction struct {
 	Id     primitive.ObjectID   `json:"id" bson:"_id,omitempty"`
 	Tracks []FaceRedactionTrack `json:"tracks" bson:"tracks"`
-	// Status reflects the lifecycle of the redaction job driven by the
-	// hub-pipeline-redaction worker. See FaceRedactionStatus for the
-	// allowed values.
-	Status FaceRedactionStatus `json:"status,omitempty" bson:"status,omitempty"`
-	// StatusError carries the failure reason when Status == "failed".
-	StatusError string `json:"statusError,omitempty" bson:"statusError,omitempty"`
-	// UpdatedAt is the unix timestamp of the last status transition.
-	UpdatedAt int64 `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+	// CaseMediaId back-references the case_media entry (role=edit,
+	// action=redaction) created when the redaction is submitted. The
+	// lifecycle (queued/processing/completed/failed) is owned by that
+	// case_media document; this struct only carries the tracks/inputs
+	// the user has defined.
+	CaseMediaId *primitive.ObjectID `json:"caseMediaId,omitempty" bson:"caseMediaId,omitempty"`
 }
-
-// FaceRedactionStatus enumerates the lifecycle states of a face-redaction
-// job persisted on FaceRedaction.Status.
-//
-//   - "" (unsubmitted): redaction tracks saved but no job has been queued.
-//   - "queued":       hub-api accepted the submit request and enqueued the job.
-//   - "processing":   the hub-pipeline-redaction worker is rendering.
-//   - "completed":    the redacted artifact is available on the Media doc.
-//   - "failed":       the worker aborted; see FaceRedaction.StatusError.
-type FaceRedactionStatus string
-
-const (
-	FaceRedactionStatusUnsubmitted FaceRedactionStatus = ""
-	FaceRedactionStatusQueued      FaceRedactionStatus = "queued"
-	FaceRedactionStatusProcessing  FaceRedactionStatus = "processing"
-	FaceRedactionStatusCompleted   FaceRedactionStatus = "completed"
-	FaceRedactionStatusFailed      FaceRedactionStatus = "failed"
-)
 
 // RedactionMode describes the visual technique applied by the
 // hub-pipeline-redaction worker over each track region.

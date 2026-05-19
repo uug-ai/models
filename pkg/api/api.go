@@ -21,6 +21,7 @@ const (
 	HttpStatusNotFound            int = http.StatusNotFound
 	HttpStatusServiceUnavailable  int = http.StatusServiceUnavailable
 	HttpStatusGone                int = http.StatusGone
+	HttpStatusNotImplemented      int = http.StatusNotImplemented
 )
 
 // Custom status codes for specific operations

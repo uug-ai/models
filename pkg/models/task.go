@@ -73,18 +73,44 @@ type Task struct {
 	// An export task, is containing multiple video in a compressed file format (.zip)
 	ExportStatus     string       `json:"export_status" bson:"export_status,omitempty"`     // "", "idle", "start", "progress", "success", "error"
 	ExportProgress   int          `json:"export_progress" bson:"export_progress,omitempty"` // "0% -> 100%"
-	ExportFiles      []ExportFile `json:"export_files" bson:"export_files,omitempty"`
+	ExportFiles      []ExportFile `json:"export_files" bson:"export_files,omitempty"`       // legacy: read by v20130101 only
 	ExportFilesCount int          `json:"export_files_count" bson:"export_files_count,omitempty"`
 	DownloadedFiles  []string     `json:"downloaded_files" bson:"downloaded_files,omitempty"`
 	ExportRequested  bool         `json:"export_requested" bson:"export_requested,omitempty"`
 	ExportInProgress bool         `json:"export_in_progress" bson:"export_in_progress,omitempty"`
 	ExportRevision   int64        `json:"export_revision" bson:"export_revision,omitempty"`
 
+	// Number of source case_media rows attached to this task. Mirrors
+	// case_media documents where role == "source" and task_id matches.
+	MediaCount int `json:"media_count" bson:"media_count,omitempty"`
+
+	// Per-purpose case_media selections. Each slice is an ordered list
+	// of case_media ids picked for that purpose. The full inventory
+	// lives in the case_media collection (queryable by task_id); these
+	// fields only record which subset participates in the export /
+	// share bundle and in what order.
+	//
+	// An empty selection means "default rule": consumers fall back to
+	// every source's latest completed edit (or the source itself when
+	// no completed edit exists).
+	ExportSelection []primitive.ObjectID `json:"export_selection,omitempty" bson:"export_selection,omitempty"`
+	ShareSelection  []primitive.ObjectID `json:"share_selection,omitempty"  bson:"share_selection,omitempty"`
+
+	// Attachments are auxiliary, non-pipeline files attached to the
+	// case (PDFs, hi-res images, scanned documents, audio notes, …).
+	// They are embedded directly here under the assumption that the
+	// per-case cardinality stays bounded (soft cap ~100). Only
+	// metadata is stored; bytes live in Vault. List-cases endpoints
+	// SHOULD project this field out to keep the list view light.
+	Attachments []CaseAttachment `json:"attachments,omitempty" bson:"attachments,omitempty"`
+
 	// Related collections
 	Comments []Comment `json:"comments" bson:"comments,omitempty"`
 	Labels   []string  `json:"labels" bson:"labels,omitempty"`
 }
 
+// ExportFile is the legacy media descriptor embedded on Task.ExportFiles.
+// Kept only for the v20130101 API surface; new code uses CaseMedia.
 type ExportFile struct {
 	Timestamp         int64  `json:"timestamp" bson:"timestamp"`
 	Key               string `json:"key" bson:"key,omitempty"`
@@ -99,15 +125,6 @@ type ExportFile struct {
 	ThumbnailFile     string `json:"thumbnailFile" bson:"thumbnailFile"`
 	ThumbnailProvider string `json:"thumbnailProvider" bson:"thumbnailProvider"`
 	ThumbnailUrl      string `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`
-	// Redaction variant: persisted onto the task document by
-	// hub-pipeline-analysis when the corresponding redaction job completes.
-	// RedactionFile / RedactionProvider mirror the matching fields on the
-	// Media doc so downstream consumers (export, frontend) can resolve the
-	// redacted artefact without a join. RedactionUrl is signed by the API at
-	// fetch time and is therefore not persisted.
-	RedactionFile     string `json:"redaction_file,omitempty" bson:"redaction_file,omitempty"`
-	RedactionProvider string `json:"redaction_provider,omitempty" bson:"redaction_provider,omitempty"`
-	RedactionUrl      string `json:"redaction_url,omitempty" bson:"-"`
 }
 
 type MediaWrapper struct {

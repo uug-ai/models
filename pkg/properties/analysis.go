@@ -112,6 +112,7 @@ const (
 const (
 	FaceRedactionId = "_id"
 	FaceRedactionTracks = "tracks"
+	FaceRedactionCaseMediaId = "caseMediaId"
 )
 
 // FaceRedactionTrack property field names (BSON)

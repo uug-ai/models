@@ -34,8 +34,6 @@ type Media struct {
 	ThumbnailProvider string `json:"thumbnailProvider,omitempty" bson:"thumbnailProvider,omitempty"`
 	SpriteFile        string `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
 	SpriteProvider    string `json:"spriteProvider,omitempty" bson:"spriteProvider,omitempty"`
-	RedactionFile     string `json:"redactionFile,omitempty" bson:"redactionFile,omitempty"`
-	RedactionProvider string `json:"redactionProvider,omitempty" bson:"redactionProvider,omitempty"`
 
 	ClassificationSummary []ClassificationSummary `json:"classificationSummary,omitempty" bson:"classificationSummary,omitempty"`
 	CountingSummary       []CountingSummary       `json:"countingSummary,omitempty" bson:"countingSummary,omitempty"`
@@ -107,7 +105,6 @@ type MediaAtRuntimeMetadata struct {
 	VideoUrl          string           `json:"videoUrl,omitempty" bson:"videoUrl,omitempty"`
 	ThumbnailUrl      string           `json:"thumbnailUrl,omitempty" bson:"thumbnailUrl,omitempty"`
 	SpriteUrl         string           `json:"spriteUrl,omitempty" bson:"spriteUrl,omitempty"`
-	RedactionUrl      string           `json:"redactionUrl,omitempty" bson:"redactionUrl,omitempty"`
 	Analysis          *AnalysisWrapper `json:"analysis,omitempty" bson:"analysis,omitempty"`
 	Device            *Device          `json:"device,omitempty" bson:"device,omitempty"`
 	DurationFormatted string           `json:"durationFormatted,omitempty" bson:"durationFormatted,omitempty"`

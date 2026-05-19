@@ -427,3 +427,58 @@ type DeleteTaskCommentSuccessResponse struct {
 type DeleteTaskCommentErrorResponse struct {
 	ErrorResponse
 }
+
+// ===== Case media (sources + edits) =====
+
+// CreateMediaEditRequest is the body of POST /tasks/{taskId}/media-edits.
+// It describes a single edit to apply to a source CaseMedia entry that
+// already lives on the case. The server validates Action / EditType,
+// allocates the next Version and enqueues to the matching worker.
+//
+// For Action = "composite" the Params map is expected to contain an
+// "operations" array, each entry having an "op" discriminator matching
+// one of the single-action CaseMediaAction values.
+type CreateMediaEditRequest struct {
+	SourceCaseMediaId string                   `json:"sourceCaseMediaId,omitempty"`
+	// SourceVideoFile points at a legacy task.export_files entry by its
+	// storage key. When SourceCaseMediaId is empty the API resolves
+	// this key against the task's ExportFiles, lazily creates a
+	// Role=source CaseMedia row for it (idempotent — reuses an
+	// existing row with the same video_file when present), and then
+	// applies the edit to that row. Lets pre-migration cases be
+	// redacted without requiring a workspace-wide backfill.
+	SourceVideoFile string                   `json:"sourceVideoFile,omitempty"`
+	Action          models.CaseMediaAction   `json:"action"`
+	EditType        models.CaseMediaEditType `json:"editType,omitempty"`
+	Params          map[string]interface{}   `json:"params,omitempty"`
+	SupersedesId    string                   `json:"supersedesId,omitempty"`
+}
+
+type CreateMediaEditResponse struct {
+	CaseMedia models.CaseMedia `json:"caseMedia"`
+}
+
+type CreateMediaEditSuccessResponse struct {
+	SuccessResponse
+	Data CreateMediaEditResponse `json:"data"`
+}
+
+type CreateMediaEditErrorResponse struct {
+	ErrorResponse
+}
+
+// ListCaseMediaResponse returns every case_media entry attached to a
+// task (sources and edits) so the case view can render the inventory
+// without further joins.
+type ListCaseMediaResponse struct {
+	CaseMedia []models.CaseMedia `json:"caseMedia"`
+}
+
+type ListCaseMediaSuccessResponse struct {
+	SuccessResponse
+	Data ListCaseMediaResponse `json:"data"`
+}
+
+type ListCaseMediaErrorResponse struct {
+	ErrorResponse
+}

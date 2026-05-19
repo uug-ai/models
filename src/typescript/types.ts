@@ -511,6 +511,513 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/addtaskcommenterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskCommentErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskCommentErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskCommentErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addtaskcommentrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskCommentRequest (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskCommentRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskCommentRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addtaskcommentresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskCommentResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskCommentResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskCommentResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addtaskcommentsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskCommentSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskCommentSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskCommentSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addtaskerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addtaskmediaerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskMediaErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskMediaErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskMediaErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addtaskmediarequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskMediaRequest (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskMediaRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskMediaRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addtaskmediaresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskMediaResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskMediaResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskMediaResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addtaskmediasuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskMediaSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskMediaSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskMediaSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addtaskpayload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskPayload (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskPayload schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskPayload"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addtaskrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskRequest (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addtaskresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/addtasksuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AddTaskSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure AddTaskSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AddTaskSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/alertfeatures": {
         parameters: {
             query?: never;
@@ -1447,6 +1954,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/casemedia": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CaseMedia (schema generation only)
+         * @description Internal endpoint used only to ensure CaseMedia schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CaseMedia"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/casemediastatusevent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CaseMediaStatusEvent (schema generation only)
+         * @description Internal endpoint used only to ensure CaseMediaStatusEvent schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CaseMediaStatusEvent"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/caseshare": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CaseShare (schema generation only)
+         * @description Internal endpoint used only to ensure CaseShare schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CaseShare"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/channels": {
         parameters: {
             query?: never;
@@ -1876,6 +2500,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/commentwrapper": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CommentWrapper (schema generation only)
+         * @description Internal endpoint used only to ensure CommentWrapper schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CommentWrapper"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/companydetails": {
         parameters: {
             query?: never;
@@ -2188,6 +2851,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/createcaseshareinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateCaseShareInput (schema generation only)
+         * @description Internal endpoint used only to ensure CreateCaseShareInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CreateCaseShareInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createcaseshareoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateCaseShareOutput (schema generation only)
+         * @description Internal endpoint used only to ensure CreateCaseShareOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CreateCaseShareOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/createcustomalerterrorresponse": {
         parameters: {
             query?: never;
@@ -2332,6 +3073,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.CreateCustomAlertSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createmediaediterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateMediaEditErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateMediaEditErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateMediaEditErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createmediaeditrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateMediaEditRequest (schema generation only)
+         * @description Internal endpoint used only to ensure CreateMediaEditRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateMediaEditRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createmediaeditresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateMediaEditResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateMediaEditResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateMediaEditResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createmediaeditsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateMediaEditSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateMediaEditSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateMediaEditSuccessResponse"];
                     };
                 };
             };
@@ -2566,6 +3463,240 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.CreateVideowallSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createworkflowerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateWorkflowErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateWorkflowErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateWorkflowErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createworkflowinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateWorkflowInput (schema generation only)
+         * @description Internal endpoint used only to ensure CreateWorkflowInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CreateWorkflowInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createworkflowoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateWorkflowOutput (schema generation only)
+         * @description Internal endpoint used only to ensure CreateWorkflowOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CreateWorkflowOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createworkflowrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateWorkflowRequest (schema generation only)
+         * @description Internal endpoint used only to ensure CreateWorkflowRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateWorkflowRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createworkflowresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateWorkflowResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateWorkflowResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateWorkflowResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createworkflowsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateWorkflowSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateWorkflowSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateWorkflowSuccessResponse"];
                     };
                 };
             };
@@ -2968,6 +4099,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/deletecaseshareinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteCaseShareInput (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteCaseShareInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeleteCaseShareInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletecaseshareoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteCaseShareOutput (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteCaseShareOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeleteCaseShareOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/deletestateerrorresponse": {
         parameters: {
             query?: never;
@@ -3112,6 +4321,240 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.DeleteStateSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletetaskcommenterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteTaskCommentErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteTaskCommentErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteTaskCommentErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletetaskcommentresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteTaskCommentResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteTaskCommentResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteTaskCommentResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletetaskcommentsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteTaskCommentSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteTaskCommentSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteTaskCommentSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletetaskerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteTaskErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteTaskErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteTaskErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletetaskresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteTaskResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteTaskResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteTaskResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletetasksuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteTaskSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteTaskSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteTaskSuccessResponse"];
                     };
                 };
             };
@@ -3346,6 +4789,240 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.DeleteVideowallSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteworkflowerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteWorkflowErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteWorkflowErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteWorkflowErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteworkflowinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteWorkflowInput (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteWorkflowInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeleteWorkflowInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteworkflowoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteWorkflowOutput (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteWorkflowOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeleteWorkflowOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteworkflowrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteWorkflowRequest (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteWorkflowRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteWorkflowRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteworkflowresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteWorkflowResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteWorkflowResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteWorkflowResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteworkflowsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteWorkflowSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteWorkflowSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteWorkflowSuccessResponse"];
                     };
                 };
             };
@@ -4009,6 +5686,318 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.DominantColor"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/edittaskcommenterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get EditTaskCommentErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure EditTaskCommentErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.EditTaskCommentErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/edittaskcommentrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get EditTaskCommentRequest (schema generation only)
+         * @description Internal endpoint used only to ensure EditTaskCommentRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.EditTaskCommentRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/edittaskcommentresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get EditTaskCommentResponse (schema generation only)
+         * @description Internal endpoint used only to ensure EditTaskCommentResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.EditTaskCommentResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/edittaskcommentsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get EditTaskCommentSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure EditTaskCommentSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.EditTaskCommentSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/edittaskerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get EditTaskErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure EditTaskErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.EditTaskErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/edittaskrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get EditTaskRequest (schema generation only)
+         * @description Internal endpoint used only to ensure EditTaskRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.EditTaskRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/edittaskresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get EditTaskResponse (schema generation only)
+         * @description Internal endpoint used only to ensure EditTaskResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.EditTaskResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/edittasksuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get EditTaskSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure EditTaskSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.EditTaskSuccessResponse"];
                     };
                 };
             };
@@ -5023,6 +7012,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetAnalyticsDashboardSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcasesharebytokeninput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCaseShareByTokenInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetCaseShareByTokenInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetCaseShareByTokenInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcasesharebytokenoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCaseShareByTokenOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetCaseShareByTokenOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetCaseShareByTokenOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcasesharesfortaskinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCaseSharesForTaskInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetCaseSharesForTaskInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetCaseSharesForTaskInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcasesharesfortaskoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCaseSharesForTaskOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetCaseSharesForTaskOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetCaseSharesForTaskOutput"];
                     };
                 };
             };
@@ -7648,6 +9793,1137 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/gettaskbyiderrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskByIdErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskByIdErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskByIdErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskbyidresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskByIdResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskByIdResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskByIdResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskbyidsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskByIdSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskByIdSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskByIdSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskcommentserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskCommentsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskCommentsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskCommentsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskcommentsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskCommentsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskCommentsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskCommentsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskcommentssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskCommentsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskCommentsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskCommentsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskmediaerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskMediaErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskMediaErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskMediaErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskmediarequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskMediaRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskMediaRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskMediaRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskmediarequestbody": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskMediaRequestBody (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskMediaRequestBody schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskMediaRequestBody"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskmediaresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskMediaResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskMediaResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskMediaResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskmediasuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskMediaSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskMediaSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskMediaSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskscompacterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksCompactErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksCompactErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksCompactErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskscompactresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksCompactResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksCompactResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksCompactResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskscompactsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksCompactSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksCompactSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksCompactSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettasksfilterederrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksFilteredErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksFilteredErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksFilteredErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettasksfilteredquery": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksFilteredQuery (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksFilteredQuery schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksFilteredQuery"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettasksfilteredrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksFilteredRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksFilteredRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksFilteredRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettasksfilteredresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksFilteredResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksFilteredResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksFilteredResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettasksfilteredsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksFilteredSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksFilteredSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksFilteredSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettasksoverviewerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksOverviewErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksOverviewErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksOverviewErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettasksoverviewresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksOverviewResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksOverviewResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksOverviewResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettasksoverviewsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksOverviewSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksOverviewSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksOverviewSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettasksrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettasksresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTasksSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTasksSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTasksSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskstatisticserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskStatisticsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskStatisticsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskStatisticsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskstatisticsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskStatisticsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskStatisticsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskStatisticsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskstatisticssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskStatisticsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskStatisticsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskStatisticsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/gettimelineeventserrorresponse": {
         parameters: {
             query?: never;
@@ -8857,6 +12133,474 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getworkflowerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetWorkflowInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetWorkflowOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowsinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowsInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowsInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetWorkflowsInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowsoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowsOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowsOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetWorkflowsOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/gpsmetadata": {
         parameters: {
             query?: never;
@@ -9469,6 +13213,123 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.LightSensorMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/listcasemediaerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ListCaseMediaErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure ListCaseMediaErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.ListCaseMediaErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/listcasemediaresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ListCaseMediaResponse (schema generation only)
+         * @description Internal endpoint used only to ensure ListCaseMediaResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.ListCaseMediaResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/listcasemediasuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ListCaseMediaSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure ListCaseMediaSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.ListCaseMediaSuccessResponse"];
                     };
                 };
             };
@@ -13576,6 +17437,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/taskcommentidrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TaskCommentIdRequest (schema generation only)
+         * @description Internal endpoint used only to ensure TaskCommentIdRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.TaskCommentIdRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/taskcompact": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TaskCompact (schema generation only)
+         * @description Internal endpoint used only to ensure TaskCompact schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.TaskCompact"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/taskfilter": {
         parameters: {
             query?: never;
@@ -13602,7 +17541,124 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.TaskFilter"];
+                        "application/json": components["schemas"]["api.TaskFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/taskidrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TaskIdRequest (schema generation only)
+         * @description Internal endpoint used only to ensure TaskIdRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.TaskIdRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/taskoverview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TaskOverview (schema generation only)
+         * @description Internal endpoint used only to ensure TaskOverview schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.TaskOverview"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/taskstatistics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TaskStatistics (schema generation only)
+         * @description Internal endpoint used only to ensure TaskStatistics schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.TaskStatistics"];
                     };
                 };
             };
@@ -14383,6 +18439,84 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.UpdateAlertOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecaseshareotpinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseShareOTPInput (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseShareOTPInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UpdateCaseShareOTPInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecaseshareotpoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseShareOTPOutput (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseShareOTPOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UpdateCaseShareOTPOutput"];
                     };
                 };
             };
@@ -15214,6 +19348,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/updateworkflowerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateWorkflowErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateWorkflowErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateWorkflowErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateworkflowinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateWorkflowInput (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateWorkflowInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UpdateWorkflowInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateworkflowoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateWorkflowOutput (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateWorkflowOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UpdateWorkflowOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateworkflowrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateWorkflowRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateWorkflowRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateWorkflowRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateworkflowresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateWorkflowResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateWorkflowResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateWorkflowResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateworkflowsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateWorkflowSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateWorkflowSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateWorkflowSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/upsertstateerrorresponse": {
         parameters: {
             query?: never;
@@ -15838,6 +20206,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/videobytesrangeontime": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get VideoBytesRangeOnTime (schema generation only)
+         * @description Internal endpoint used only to ensure VideoBytesRangeOnTime schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.VideoBytesRangeOnTime"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/videowall": {
         parameters: {
             query?: never;
@@ -15982,6 +20389,123 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.WeeklySchedule"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflow": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Workflow (schema generation only)
+         * @description Internal endpoint used only to ensure Workflow schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Workflow"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowedge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowEdge (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowEdge schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowEdge"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflownode": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowNode (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowNode schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowNode"];
                     };
                 };
             };
@@ -16164,12 +20688,197 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.AddTaskCommentErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.AddTaskCommentRequest": {
+            comment?: components["schemas"]["models.Comment"];
+        };
+        "api.AddTaskCommentResponse": {
+            comment?: components["schemas"]["models.Comment"];
+        };
+        "api.AddTaskCommentSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.AddTaskCommentResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.AddTaskErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.AddTaskMediaErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.AddTaskMediaRequest": {
+            mediaIds?: string[];
+        };
+        "api.AddTaskMediaResponse": {
+            addedMediaIds?: string[];
+            skippedMediaIds?: string[];
+            task?: components["schemas"]["models.Task"];
+        };
+        "api.AddTaskMediaSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.AddTaskMediaResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.AddTaskPayload": {
+            /** @description Users associated with this task */
+            assignees?: string[];
+            assignees_profile?: string[];
+            assignees_sent_to?: string[];
+            /** @description A task can be assigned to a single camera or multiple cameras (depending of the export) */
+            camera?: string;
+            /** @description this is for the camera names (is computed on demand) */
+            camera_names?: string[];
+            /** @description these are camera ids */
+            cameras?: string[];
+            /** @description Related collections */
+            comments?: components["schemas"]["models.Comment"][];
+            compressed_url?: string;
+            compressedFile?: string;
+            compressedProvider?: string;
+            creation_date?: number;
+            creation_datetime?: string;
+            date?: number;
+            downloaded_files?: string[];
+            /** @description legacy: read by v20130101 only */
+            export_files?: components["schemas"]["models.ExportFile"][];
+            export_files_count?: number;
+            export_in_progress?: boolean;
+            /** @description "0% -> 100%" */
+            export_progress?: number;
+            export_requested?: boolean;
+            export_revision?: number;
+            /** @description Per-purpose case_media selections. Each slice is an ordered list
+             *     of case_media ids picked for that purpose. The full inventory
+             *     lives in the case_media collection (queryable by task_id); these
+             *     fields only record which subset participates in the export /
+             *     share bundle and in what order.
+             *
+             *     An empty selection means "default rule": consumers fall back to
+             *     every source's latest completed edit (or the source itself when
+             *     no completed edit exists). */
+            export_selection?: string[];
+            /** @description An export task, is containing multiple video in a compressed file format (.zip) */
+            export_status?: string;
+            id?: string;
+            is_private?: boolean;
+            labels?: string[];
+            /** @description Number of source case_media rows attached to this task. Mirrors
+             *     case_media documents where role == "source" and task_id matches. */
+            media_count?: number;
+            media_date?: string;
+            media_datetime?: string;
+            media_end_datetime?: string;
+            media_end_timestamp?: number;
+            media_timestamp?: number;
+            mediaFilter?: components["schemas"]["api.MediaFilter"];
+            notes?: string;
+            notes_short?: string;
+            notify_assignees?: boolean;
+            reporter_email?: string;
+            reporter_id?: string;
+            reporter_profile?: string;
+            sequenceId?: string;
+            share_selection?: string[];
+            sprite_url?: string;
+            spriteFile?: string;
+            spriteInterval?: number;
+            spriteProvider?: string;
+            /** @description open, approved, rejected */
+            status?: string;
+            /** @description base 64 encoded */
+            thumbnail?: string;
+            thumbnail_url?: string;
+            thumbnailFile?: string;
+            thumbnailProvider?: string;
+            title?: string;
+            user_id?: string;
+            username?: string;
+            /** @description This is used for a single export, for a bulk export, we will use the first video as thumbnail and sprite.
+             *     Referencing to some media: video, thumbnail and sprite */
+            video_url?: string;
+            videoFile?: string;
+            videoProvider?: string;
+        };
+        "api.AddTaskRequest": {
+            task?: components["schemas"]["api.AddTaskPayload"];
+        };
+        "api.AddTaskResponse": {
+            task?: components["schemas"]["models.Task"];
+            tasks?: components["schemas"]["models.Task"][];
+        };
+        "api.AddTaskSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.AddTaskResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         /** @enum {string} */
         "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_file_name_missing" | "analysis_signed_url_missing" | "analysis_all_frame_coordinates_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing" | "analysis_started" | "analysis_queue_subscribed" | "analysis_stage_monitor_missing" | "analysis_completed" | "analysis_decode_failed" | "analysis_insert_failed" | "analysis_update_failed" | "analysis_notification_update_failed" | "analysis_sequence_update_failed" | "analysis_task_update_failed";
         "api.CallerInfo": {
             file?: string;
             function?: string;
             line?: number;
+        };
+        "api.CaseMediaStatusEvent": {
+            caseMediaId?: string;
+            file?: string;
+            organisationId?: string;
+            provider?: string;
+            status?: components["schemas"]["models.CaseMediaStatus"];
+            statusError?: string;
+            taskId?: string;
         };
         "api.CreateCustomAlertErrorResponse": {
             /** @description Application-specific error code */
@@ -16202,6 +20911,51 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.CreateMediaEditErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CreateMediaEditRequest": {
+            action?: components["schemas"]["models.CaseMediaAction"];
+            editType?: components["schemas"]["models.CaseMediaEditType"];
+            params?: {
+                [key: string]: unknown;
+            };
+            sourceCaseMediaId?: string;
+            /** @description SourceVideoFile points at a legacy task.export_files entry by its
+             *     storage key. When SourceCaseMediaId is empty the API resolves
+             *     this key against the task's ExportFiles, lazily creates a
+             *     Role=source CaseMedia row for it (idempotent — reuses an
+             *     existing row with the same video_file when present), and then
+             *     applies the edit to that row. Lets pre-migration cases be
+             *     redacted without requiring a workspace-wide backfill. */
+            sourceVideoFile?: string;
+            supersedesId?: string;
+        };
+        "api.CreateMediaEditResponse": {
+            caseMedia?: components["schemas"]["models.CaseMedia"];
+        };
+        "api.CreateMediaEditSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.CreateMediaEditResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.CreateVideowallErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -16224,6 +20978,37 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.CreateVideowallResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CreateWorkflowErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CreateWorkflowRequest": {
+            workflow?: components["schemas"]["models.Workflow"];
+        };
+        "api.CreateWorkflowResponse": {
+            workflow?: components["schemas"]["models.Workflow"];
+        };
+        "api.CreateWorkflowSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.CreateWorkflowResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -16312,6 +21097,62 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.DeleteTaskCommentErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteTaskCommentResponse": {
+            message?: string;
+        };
+        "api.DeleteTaskCommentSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.DeleteTaskCommentResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteTaskErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteTaskResponse": {
+            task?: components["schemas"]["models.Task"];
+        };
+        "api.DeleteTaskSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.DeleteTaskResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.DeleteVideowallErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -16339,6 +21180,33 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.DeleteWorkflowErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteWorkflowRequest": Record<string, never>;
+        "api.DeleteWorkflowResponse": Record<string, never>;
+        "api.DeleteWorkflowSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.DeleteWorkflowResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.DeviceFilter": {
             deviceIds?: string[];
             groups?: string[];
@@ -16346,6 +21214,77 @@ export interface components {
             name?: string;
             sites?: string[];
             sort?: string;
+        };
+        "api.EditTaskCommentErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.EditTaskCommentRequest": {
+            comment?: components["schemas"]["models.Comment"];
+        };
+        "api.EditTaskCommentResponse": {
+            comment?: components["schemas"]["models.Comment"];
+        };
+        "api.EditTaskCommentSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.EditTaskCommentResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.EditTaskErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.EditTaskRequest": {
+            assignees?: string[];
+            assignees_profile?: string[];
+            is_private?: boolean;
+            labels?: string[];
+            notes?: string;
+            notify_assignees?: boolean;
+            status?: components["schemas"]["api.TaskStatus"];
+        };
+        "api.EditTaskResponse": {
+            task?: components["schemas"]["models.Task"];
+            updatedFields?: {
+                [key: string]: unknown;
+            };
+        };
+        "api.EditTaskSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.EditTaskResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.ErrorResponse": {
             /** @description Application-specific error code */
@@ -17014,6 +21953,268 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetTaskByIdErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTaskByIdResponse": {
+            task?: components["schemas"]["models.Task"];
+        };
+        "api.GetTaskByIdSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetTaskByIdResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTaskCommentsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTaskCommentsResponse": {
+            comments?: components["schemas"]["models.Comment"][];
+        };
+        "api.GetTaskCommentsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetTaskCommentsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTaskMediaErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTaskMediaRequest": {
+            cursor?: string;
+            id?: string;
+            limit?: number;
+        };
+        "api.GetTaskMediaRequestBody": {
+            filter?: {
+                [key: string]: unknown;
+            };
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetTaskMediaResponse": {
+            media?: components["schemas"]["api.TaskMediaItem"][];
+            taskId?: string;
+        };
+        "api.GetTaskMediaSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetTaskMediaResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTaskStatisticsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTaskStatisticsResponse": {
+            statistics?: components["schemas"]["models.TaskStatistics"];
+        };
+        "api.GetTaskStatisticsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetTaskStatisticsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTasksCompactErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTasksCompactResponse": {
+            tasks?: components["schemas"]["api.TaskCompact"][];
+        };
+        "api.GetTasksCompactSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetTasksCompactResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTasksErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTasksFilteredErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTasksFilteredQuery": {
+            limit?: number;
+        };
+        "api.GetTasksFilteredRequest": {
+            assignees?: string[];
+            devices?: string[];
+            filter?: components["schemas"]["api.TaskFilter"];
+            groups?: string[];
+            labels?: string[];
+            limit?: number;
+            offset?: number;
+            pagination?: components["schemas"]["api.CursorPagination"];
+            sites?: string[];
+            status?: string[];
+            taskIds?: string[];
+            title?: string;
+            /** @description "full" (default), "compact", or "overview" */
+            view?: string;
+        };
+        "api.GetTasksFilteredResponse": {
+            tasks?: components["schemas"]["models.Task"][];
+        };
+        "api.GetTasksFilteredSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetTasksFilteredResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTasksOverviewErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTasksOverviewResponse": {
+            tasks?: components["schemas"]["api.TaskOverview"][];
+        };
+        "api.GetTasksOverviewSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetTasksOverviewResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetTasksRequest": {
+            cursor?: string;
+            limit?: number;
+            offset?: number;
+            /** @description "full" (default), "compact", or "overview" */
+            view?: string;
+        };
+        "api.GetTasksResponse": {
+            tasks?: components["schemas"]["models.Task"][];
+        };
+        "api.GetTasksSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetTasksResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetTimeSeriesChartErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -17227,10 +22428,96 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetWorkflowErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetWorkflowRequest": Record<string, never>;
+        "api.GetWorkflowResponse": {
+            workflow?: components["schemas"]["models.Workflow"];
+        };
+        "api.GetWorkflowSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetWorkflowResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetWorkflowsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetWorkflowsRequest": Record<string, never>;
+        "api.GetWorkflowsResponse": {
+            workflows?: components["schemas"]["models.Workflow"][];
+        };
+        "api.GetWorkflowsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetWorkflowsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GroupFilter": {
             groupIds?: string[];
             name?: string;
             sort?: string;
+        };
+        "api.ListCaseMediaErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.ListCaseMediaResponse": {
+            caseMedia?: components["schemas"]["models.CaseMedia"][];
+        };
+        "api.ListCaseMediaSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.ListCaseMediaResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.MarkerCategoryFilter": {
             name?: string;
@@ -17285,6 +22572,7 @@ export interface components {
         };
         "api.MediaPatch": {
             metadata?: components["schemas"]["api.MediaMetadataPatch"];
+            star?: boolean;
         };
         "api.Metadata": {
             /** @description Name of the application */
@@ -17462,9 +22750,15 @@ export interface components {
                 [key: string]: components["schemas"]["models.TrackBox"][];
             };
             analysisId?: string;
+            caseMediaId?: string;
+            destinationKey?: string;
+            destinationProvider?: string;
+            editType?: components["schemas"]["models.CaseMediaEditType"];
             faceRedaction?: components["schemas"]["models.FaceRedaction"];
             fileName?: string;
+            mode?: components["schemas"]["models.RedactionMode"];
             signedUrl?: string;
+            taskId?: string;
         };
         "api.SubmitFaceRedactionResponse": {
             analysisId?: string;
@@ -17496,6 +22790,80 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.TaskCommentIdRequest": {
+            commentId?: string;
+            id?: string;
+        };
+        "api.TaskCompact": {
+            creation_date?: number;
+            creation_datetime?: string;
+            id?: string;
+            is_private?: boolean;
+            status?: string;
+            thumbnail_url?: string;
+            title?: string;
+        };
+        "api.TaskFilter": {
+            assignees?: string[];
+            devices?: string[];
+            groups?: string[];
+            labels?: string[];
+            limit?: number;
+            offset?: number;
+            sites?: string[];
+            status?: string[];
+            taskIds?: string[];
+            title?: string;
+            /** @description "full" (default), "compact", or "overview" */
+            view?: string;
+        };
+        "api.TaskIdRequest": {
+            id?: string;
+        };
+        "api.TaskMediaItem": {
+            camera_id?: string;
+            key?: string;
+            provider?: string;
+            source?: string;
+            sprite_url?: string;
+            spriteFile?: string;
+            spriteInterval?: number;
+            spriteProvider?: string;
+            thumbnail_url?: string;
+            thumbnailFile?: string;
+            thumbnailProvider?: string;
+            timestamp?: number;
+            video_url?: string;
+        };
+        "api.TaskOverview": {
+            assignees?: string[];
+            camera_names?: string[];
+            cameras?: string[];
+            compressed_url?: string;
+            creation_date?: number;
+            creation_datetime?: string;
+            downloaded_files?: string[];
+            export_files_count?: number;
+            export_status?: string;
+            id?: string;
+            is_private?: boolean;
+            labels?: string[];
+            media_datetime?: string;
+            media_end_timestamp?: number;
+            media_timestamp?: number;
+            mediaCount?: number;
+            notes?: string;
+            notes_short?: string;
+            reporter?: string;
+            reporter_id?: string;
+            reporterEmail?: string;
+            sequence_id?: string;
+            status?: string;
+            thumbnail_url?: string;
+            title?: string;
+        };
+        /** @enum {string} */
+        "api.TaskStatus": "Task_binding_failed" | "Task_duplicate_name" | "Task_missing_info" | "Task_found" | "Task_not_found" | "Task_forbidden" | "Task_add_success" | "Task_add_failed" | "Task_update_success" | "Task_update_failed" | "Task_delete_success" | "Task_delete_failed" | "Task_media_add_success" | "Task_media_add_failed" | "open" | "approved" | "rejected";
         "api.TraceResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -17682,6 +23050,37 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.UpdateVideowallResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateWorkflowErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateWorkflowRequest": {
+            workflow?: components["schemas"]["models.Workflow"];
+        };
+        "api.UpdateWorkflowResponse": {
+            workflow?: components["schemas"]["models.Workflow"];
+        };
+        "api.UpdateWorkflowSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateWorkflowResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -18028,6 +23427,100 @@ export interface components {
             card_status_message?: string;
             stripe_id?: string;
         };
+        "models.CaseMedia": {
+            /** @description Action describes what the edit does. Only meaningful when
+             *     Role = "edit". See CaseMediaAction. */
+            action?: components["schemas"]["models.CaseMediaAction"];
+            /** @description Optional job linkage — back-pointers to the analysis / face
+             *     redaction documents that drove the edit, when applicable. */
+            analysisId?: string;
+            cameraId?: string;
+            createdAt?: number;
+            createdBy?: string;
+            /** @description EditType is a sub-variant of Action (for example "face_blur",
+             *     "face_pixelate", "face_mask" when Action = "redaction"). Display
+             *     labels are derived from this in the UI. Canonical values are
+             *     declared as CaseMediaEditType constants below. */
+            editType?: components["schemas"]["models.CaseMediaEditType"];
+            endTimestamp?: number;
+            faceRedactionId?: string;
+            /** @description Produced artefact (populated on Role = "edit" once the worker
+             *     completes; for Role = "source" these mirror VideoFile/VideoProvider). */
+            file?: string;
+            id?: string;
+            organisationId?: string;
+            /** @description Params carries kind-specific parameters used to produce the edit.
+             *     For Action = "composite" it is expected to contain an
+             *     "operations" array whose elements have an "op" discriminator
+             *     matching one of the single-op CaseMediaAction values. */
+            params?: {
+                [key: string]: unknown;
+            };
+            /** @description ParentId links an edit (Role = "edit") to the case_media entry it
+             *     was produced from. For composite edits the parent is still a single
+             *     source — the individual operations are described in Params. */
+            parentId?: string;
+            provider?: string;
+            /** @description Role describes whether this entry represents a source attached to
+             *     the case or an edit derived from another entry. See CaseMediaRole. */
+            role?: components["schemas"]["models.CaseMediaRole"];
+            /** @description Source snapshot fields (populated on Role = "source"; mirrored from
+             *     Media at attach time so the case stays self-contained even after
+             *     the original media document is cleaned up). */
+            sourceMediaId?: string;
+            spriteFile?: string;
+            spriteInterval?: number;
+            spriteProvider?: string;
+            /** @description SpriteUrl is a signed playback URL for SpriteFile and is populated
+             *     by the API at fetch time. Not persisted. */
+            spriteUrl?: string;
+            /** @description Lifecycle (only meaningful on Role = "edit"). For sources this is
+             *     implicitly Completed at creation time. */
+            status?: components["schemas"]["models.CaseMediaStatus"];
+            statusError?: string;
+            storageSolution?: string;
+            /** @description SupersedesId points at the previous version this entry replaces,
+             *     preserving the full edit chain for auditing / rollback. */
+            supersedesId?: string;
+            taskId?: string;
+            thumbnailFile?: string;
+            thumbnailProvider?: string;
+            /** @description ThumbnailUrl is a signed playback URL for ThumbnailFile and is
+             *     populated by the API at fetch time. Not persisted. */
+            thumbnailUrl?: string;
+            timestamp?: number;
+            updatedAt?: number;
+            /** @description Url is signed by the API at fetch time and not persisted. */
+            url?: string;
+            /** @description Version is monotonically increasing within
+             *     (TaskId, ParentId, Action, EditType). The most recent completed
+             *     version is the one the export pipeline picks up. */
+            version?: number;
+            videoFile?: string;
+            videoProvider?: string;
+        };
+        /** @enum {string} */
+        "models.CaseMediaAction": "redaction" | "trim" | "composite";
+        /** @enum {string} */
+        "models.CaseMediaEditType": "face_blur" | "face_pixelate" | "face_mask";
+        /** @enum {string} */
+        "models.CaseMediaRole": "source" | "edit";
+        /** @enum {string} */
+        "models.CaseMediaStatus": "queued" | "processing" | "completed" | "failed";
+        "models.CaseShare": {
+            created_at?: number;
+            email?: string;
+            expires_at?: number;
+            id?: string;
+            is_active?: boolean;
+            organisation_id?: string;
+            /** @description e.g. ["view"] */
+            permissions?: string[];
+            task_id?: string;
+            token?: string;
+            user_email?: string;
+            user_id?: string;
+        };
         "models.ChannelTest": {
             data?: components["schemas"]["models.ChannelTestData"];
             events?: string[];
@@ -18110,6 +23603,9 @@ export interface components {
             /** @description Comment information */
             type?: string;
         };
+        "models.CommentWrapper": {
+            comment?: components["schemas"]["models.Comment"];
+        };
         "models.CompanyDetails": {
             /** @description Main company email */
             email?: string;
@@ -18178,12 +23674,25 @@ export interface components {
         "models.CreateAlertOutput": {
             alert?: components["schemas"]["models.CustomAlert"];
         };
+        "models.CreateCaseShareInput": {
+            share?: components["schemas"]["models.CaseShare"];
+        };
+        "models.CreateCaseShareOutput": {
+            share?: components["schemas"]["models.CaseShare"];
+        };
         "models.CreateVideowallInput": {
             user?: components["schemas"]["models.User"];
             videowall?: components["schemas"]["models.Videowall"];
         };
         "models.CreateVideowallOutput": {
             videowall?: components["schemas"]["models.Videowall"];
+        };
+        "models.CreateWorkflowInput": {
+            user?: components["schemas"]["models.User"];
+            workflow?: components["schemas"]["models.Workflow"];
+        };
+        "models.CreateWorkflowOutput": {
+            workflow?: components["schemas"]["models.Workflow"];
         };
         "models.Credentials": {
             currentPassword?: string;
@@ -18250,11 +23759,21 @@ export interface components {
             /** @description seconds since midnight, 0..86400 */
             start?: number;
         };
+        "models.DeleteCaseShareInput": {
+            share_id?: string;
+            user_id?: string;
+        };
+        "models.DeleteCaseShareOutput": Record<string, never>;
         "models.DeleteVideowallInput": {
             user?: components["schemas"]["models.User"];
             videowall_id?: string;
         };
         "models.DeleteVideowallOutput": Record<string, never>;
+        "models.DeleteWorkflowInput": {
+            user?: components["schemas"]["models.User"];
+            workflow_id?: string;
+        };
+        "models.DeleteWorkflowOutput": Record<string, never>;
         "models.DeprecatedHeartbeat": {
             architecture?: string;
             boot_time?: string;
@@ -18538,14 +24057,23 @@ export interface components {
             key?: string;
             provider?: string;
             source?: string;
+            sprite_url?: string;
             spriteFile?: string;
             spriteInterval?: number;
             spriteProvider?: string;
+            thumbnail_url?: string;
             thumbnailFile?: string;
             thumbnailProvider?: string;
             timestamp?: number;
+            video_url?: string;
         };
         "models.FaceRedaction": {
+            /** @description CaseMediaId back-references the case_media entry (role=edit,
+             *     action=redaction) created when the redaction is submitted. The
+             *     lifecycle (queued/processing/completed/failed) is owned by that
+             *     case_media document; this struct only carries the tracks/inputs
+             *     the user has defined. */
+            caseMediaId?: string;
             id?: string;
             tracks?: components["schemas"]["models.FaceRedactionTrack"][];
         };
@@ -18637,6 +24165,19 @@ export interface components {
         "models.GetAlertsOutput": {
             alerts?: components["schemas"]["models.CustomAlert"][];
         };
+        "models.GetCaseShareByTokenInput": {
+            token?: string;
+        };
+        "models.GetCaseShareByTokenOutput": {
+            share?: components["schemas"]["models.CaseShare"];
+        };
+        "models.GetCaseSharesForTaskInput": {
+            task_id?: string;
+            user_id?: string;
+        };
+        "models.GetCaseSharesForTaskOutput": {
+            shares?: components["schemas"]["models.CaseShare"][];
+        };
         "models.GetVideowallInput": {
             user?: components["schemas"]["models.User"];
             videowall_id?: string;
@@ -18649,6 +24190,19 @@ export interface components {
         };
         "models.GetVideowallsOutput": {
             videowalls?: components["schemas"]["models.Videowall"][];
+        };
+        "models.GetWorkflowInput": {
+            user?: components["schemas"]["models.User"];
+            workflow_id?: string;
+        };
+        "models.GetWorkflowOutput": {
+            workflow?: components["schemas"]["models.Workflow"];
+        };
+        "models.GetWorkflowsInput": {
+            user?: components["schemas"]["models.User"];
+        };
+        "models.GetWorkflowsOutput": {
+            workflows?: components["schemas"]["models.Workflow"][];
         };
         "models.Group": {
             address?: components["schemas"]["models.Location"];
@@ -19075,11 +24629,10 @@ export interface components {
             /** @description Metadata */
             metadata?: components["schemas"]["models.MediaMetadata"];
             organisationId?: string;
-            redactionFile?: string;
-            redactionProvider?: string;
             siteId?: string;
             spriteFile?: string;
             spriteProvider?: string;
+            star?: boolean;
             /** @description Time window of media file. */
             startTimestamp?: number;
             /** @description Media file information (by default "vault", however might change
@@ -19088,6 +24641,7 @@ export interface components {
             tagNames?: string[];
             thumbnailFile?: string;
             thumbnailProvider?: string;
+            videoBytesRangeOnTime?: components["schemas"]["models.VideoBytesRangeOnTime"][];
             videoFile?: string;
             videoProvider?: string;
         };
@@ -19099,7 +24653,6 @@ export interface components {
             dateTime?: string;
             device?: components["schemas"]["models.Device"];
             durationFormatted?: string;
-            redactionUrl?: string;
             spriteUrl?: string;
             thumbnailUrl?: string;
             videoUrl?: string;
@@ -19466,6 +25019,8 @@ export interface components {
             sendto?: string;
             valid?: boolean;
         };
+        /** @enum {string} */
+        "models.RedactionMode": "blur" | "pixelate" | "black";
         "models.Region": {
             device?: string;
             direction?: string;
@@ -19679,7 +25234,7 @@ export interface components {
         };
         "models.StateAtRuntimeMetadata": Record<string, never>;
         /** @enum {string} */
-        "models.StateEnum": "default" | "debug" | "paused" | "no_recording" | "no_live_view";
+        "models.StateEnum": "active" | "default" | "debug" | "paused" | "no_recording" | "no_live_view";
         "models.StateMetadata": Record<string, never>;
         /** @enum {string} */
         "models.Status": "pending" | "skipped" | "assigned" | "inProgress" | "completed" | "failed";
@@ -19747,15 +25302,32 @@ export interface components {
             creation_datetime?: string;
             date?: number;
             downloaded_files?: string[];
+            /** @description legacy: read by v20130101 only */
             export_files?: components["schemas"]["models.ExportFile"][];
             export_files_count?: number;
+            export_in_progress?: boolean;
             /** @description "0% -> 100%" */
             export_progress?: number;
+            export_requested?: boolean;
+            export_revision?: number;
+            /** @description Per-purpose case_media selections. Each slice is an ordered list
+             *     of case_media ids picked for that purpose. The full inventory
+             *     lives in the case_media collection (queryable by task_id); these
+             *     fields only record which subset participates in the export /
+             *     share bundle and in what order.
+             *
+             *     An empty selection means "default rule": consumers fall back to
+             *     every source's latest completed edit (or the source itself when
+             *     no completed edit exists). */
+            export_selection?: string[];
             /** @description An export task, is containing multiple video in a compressed file format (.zip) */
             export_status?: string;
             id?: string;
             is_private?: boolean;
             labels?: string[];
+            /** @description Number of source case_media rows attached to this task. Mirrors
+             *     case_media documents where role == "source" and task_id matches. */
+            media_count?: number;
             media_date?: string;
             media_datetime?: string;
             media_end_datetime?: string;
@@ -19768,6 +25340,7 @@ export interface components {
             reporter_id?: string;
             reporter_profile?: string;
             sequenceId?: string;
+            share_selection?: string[];
             sprite_url?: string;
             spriteFile?: string;
             spriteInterval?: number;
@@ -19788,16 +25361,11 @@ export interface components {
             videoFile?: string;
             videoProvider?: string;
         };
-        "models.TaskFilter": {
-            assignees?: string[];
-            devices?: string[];
-            groups?: string[];
-            labels?: string[];
-            limit?: number;
-            offset?: number;
-            sites?: string[];
-            status?: string[];
-            title?: string;
+        "models.TaskStatistics": {
+            approved?: number;
+            open?: number;
+            rejected?: number;
+            total?: number;
         };
         "models.TaskWrapper": {
             task?: components["schemas"]["models.Task"];
@@ -19952,6 +25520,12 @@ export interface components {
         "models.UpdateAlertOutput": {
             alert?: components["schemas"]["models.CustomAlert"];
         };
+        "models.UpdateCaseShareOTPInput": {
+            otp_code?: string;
+            otp_expiry?: number;
+            token?: string;
+        };
+        "models.UpdateCaseShareOTPOutput": Record<string, never>;
         "models.UpdateVideowallInput": {
             user?: components["schemas"]["models.User"];
             videowall?: components["schemas"]["models.Videowall"];
@@ -19959,6 +25533,14 @@ export interface components {
         };
         "models.UpdateVideowallOutput": {
             videowall?: components["schemas"]["models.Videowall"];
+        };
+        "models.UpdateWorkflowInput": {
+            user?: components["schemas"]["models.User"];
+            workflow?: components["schemas"]["models.Workflow"];
+            workflow_id?: string;
+        };
+        "models.UpdateWorkflowOutput": {
+            workflow?: components["schemas"]["models.Workflow"];
         };
         "models.User": {
             activity?: components["schemas"]["models.Activity"][];
@@ -20178,6 +25760,11 @@ export interface components {
             is_fragmented?: boolean;
             timescale?: number;
         };
+        "models.VideoBytesRangeOnTime": {
+            duration?: string;
+            range?: string;
+            time?: string;
+        };
         "models.Videowall": {
             assigned_users?: string[];
             cameras?: string[];
@@ -20210,6 +25797,40 @@ export interface components {
             enabled?: boolean;
             segments?: components["schemas"]["models.DayTimeRange"][];
             timezone?: string;
+        };
+        "models.Workflow": {
+            created_at?: number;
+            description?: string;
+            edges?: components["schemas"]["models.WorkflowEdge"][];
+            enabled?: boolean;
+            id?: string;
+            master_user_id?: string;
+            name?: string;
+            nodes?: components["schemas"]["models.WorkflowNode"][];
+            updated_at?: number;
+            user_id?: string;
+            username?: string;
+        };
+        "models.WorkflowEdge": {
+            id?: string;
+            source?: string;
+            sourcePort?: string;
+            target?: string;
+            targetPort?: string;
+        };
+        "models.WorkflowNode": {
+            data?: {
+                [key: string]: unknown;
+            };
+            endAt?: string;
+            id?: string;
+            label?: string;
+            selection?: string;
+            startAt?: string;
+            type?: string;
+            weekdays?: number[];
+            x?: number;
+            y?: number;
         };
     };
     responses: never;
@@ -20251,6 +25872,8 @@ export namespace models {
     export type CameraPreset = components['schemas']['models.CameraPreset'];
     export type CameraTour = components['schemas']['models.CameraTour'];
     export type Card = components['schemas']['models.Card'];
+    export type CaseMedia = components['schemas']['models.CaseMedia'];
+    export type CaseShare = components['schemas']['models.CaseShare'];
     export type ChannelTest = components['schemas']['models.ChannelTest'];
     export type ChannelTestData = components['schemas']['models.ChannelTestData'];
     export type ChannelUpdate = components['schemas']['models.ChannelUpdate'];
@@ -20262,6 +25885,7 @@ export namespace models {
     export type ClassifyDetails = components['schemas']['models.ClassifyDetails'];
     export type Color = components['schemas']['models.Color'];
     export type Comment = components['schemas']['models.Comment'];
+    export type CommentWrapper = components['schemas']['models.CommentWrapper'];
     export type CompanyDetails = components['schemas']['models.CompanyDetails'];
     export type Contact = components['schemas']['models.Contact'];
     export type Counting = components['schemas']['models.Counting'];
@@ -20270,13 +25894,19 @@ export namespace models {
     export type CountingSummary = components['schemas']['models.CountingSummary'];
     export type CreateAlertInput = components['schemas']['models.CreateAlertInput'];
     export type CreateAlertOutput = components['schemas']['models.CreateAlertOutput'];
+    export type CreateCaseShareInput = components['schemas']['models.CreateCaseShareInput'];
+    export type CreateCaseShareOutput = components['schemas']['models.CreateCaseShareOutput'];
     export type CreateVideowallInput = components['schemas']['models.CreateVideowallInput'];
     export type CreateVideowallOutput = components['schemas']['models.CreateVideowallOutput'];
+    export type CreateWorkflowInput = components['schemas']['models.CreateWorkflowInput'];
+    export type CreateWorkflowOutput = components['schemas']['models.CreateWorkflowOutput'];
     export type Credentials = components['schemas']['models.Credentials'];
     export type CustomAlert = components['schemas']['models.CustomAlert'];
     export type DateRangeSchedule = components['schemas']['models.DateRangeSchedule'];
     export type DayTimeRange = components['schemas']['models.DayTimeRange'];
+    export type DeleteCaseShareInput = components['schemas']['models.DeleteCaseShareInput'];
     export type DeleteVideowallInput = components['schemas']['models.DeleteVideowallInput'];
+    export type DeleteWorkflowInput = components['schemas']['models.DeleteWorkflowInput'];
     export type DeprecatedHeartbeat = components['schemas']['models.DeprecatedHeartbeat'];
     export type DeprecatedONVIFEvents = components['schemas']['models.DeprecatedONVIFEvents'];
     export type DeprecatedPreset = components['schemas']['models.DeprecatedPreset'];
@@ -20305,10 +25935,18 @@ export namespace models {
     export type GPSMetadata = components['schemas']['models.GPSMetadata'];
     export type GetAlertsInput = components['schemas']['models.GetAlertsInput'];
     export type GetAlertsOutput = components['schemas']['models.GetAlertsOutput'];
+    export type GetCaseShareByTokenInput = components['schemas']['models.GetCaseShareByTokenInput'];
+    export type GetCaseShareByTokenOutput = components['schemas']['models.GetCaseShareByTokenOutput'];
+    export type GetCaseSharesForTaskInput = components['schemas']['models.GetCaseSharesForTaskInput'];
+    export type GetCaseSharesForTaskOutput = components['schemas']['models.GetCaseSharesForTaskOutput'];
     export type GetVideowallInput = components['schemas']['models.GetVideowallInput'];
     export type GetVideowallOutput = components['schemas']['models.GetVideowallOutput'];
     export type GetVideowallsInput = components['schemas']['models.GetVideowallsInput'];
     export type GetVideowallsOutput = components['schemas']['models.GetVideowallsOutput'];
+    export type GetWorkflowInput = components['schemas']['models.GetWorkflowInput'];
+    export type GetWorkflowOutput = components['schemas']['models.GetWorkflowOutput'];
+    export type GetWorkflowsInput = components['schemas']['models.GetWorkflowsInput'];
+    export type GetWorkflowsOutput = components['schemas']['models.GetWorkflowsOutput'];
     export type Group = components['schemas']['models.Group'];
     export type GroupMetadata = components['schemas']['models.GroupMetadata'];
     export type GroupOption = components['schemas']['models.GroupOption'];
@@ -20395,7 +26033,7 @@ export namespace models {
     export type Synchronize = components['schemas']['models.Synchronize'];
     export type SynchronizeEvent = components['schemas']['models.SynchronizeEvent'];
     export type Task = components['schemas']['models.Task'];
-    export type TaskFilter = components['schemas']['models.TaskFilter'];
+    export type TaskStatistics = components['schemas']['models.TaskStatistics'];
     export type TaskWrapper = components['schemas']['models.TaskWrapper'];
     export type Telegram = components['schemas']['models.Telegram'];
     export type ThrottlerStage = components['schemas']['models.ThrottlerStage'];
@@ -20411,8 +26049,11 @@ export namespace models {
     export type TrackBox = components['schemas']['models.TrackBox'];
     export type UpdateAlertInput = components['schemas']['models.UpdateAlertInput'];
     export type UpdateAlertOutput = components['schemas']['models.UpdateAlertOutput'];
+    export type UpdateCaseShareOTPInput = components['schemas']['models.UpdateCaseShareOTPInput'];
     export type UpdateVideowallInput = components['schemas']['models.UpdateVideowallInput'];
     export type UpdateVideowallOutput = components['schemas']['models.UpdateVideowallOutput'];
+    export type UpdateWorkflowInput = components['schemas']['models.UpdateWorkflowInput'];
+    export type UpdateWorkflowOutput = components['schemas']['models.UpdateWorkflowOutput'];
     export type User = components['schemas']['models.User'];
     export type UserOrgPermissions = components['schemas']['models.UserOrgPermissions'];
     export type UserProfile = components['schemas']['models.UserProfile'];
@@ -20425,9 +26066,13 @@ export namespace models {
     export type VaultMediaEvent = components['schemas']['models.VaultMediaEvent'];
     export type VaultMediaFragmentCollection = components['schemas']['models.VaultMediaFragmentCollection'];
     export type VaultMediaMetadata = components['schemas']['models.VaultMediaMetadata'];
+    export type VideoBytesRangeOnTime = components['schemas']['models.VideoBytesRangeOnTime'];
     export type Videowall = components['schemas']['models.Videowall'];
     export type Webhook = components['schemas']['models.Webhook'];
     export type WeeklySchedule = components['schemas']['models.WeeklySchedule'];
+    export type Workflow = components['schemas']['models.Workflow'];
+    export type WorkflowEdge = components['schemas']['models.WorkflowEdge'];
+    export type WorkflowNode = components['schemas']['models.WorkflowNode'];
 }
 
 export namespace api {
@@ -20439,24 +26084,62 @@ export namespace api {
     export type AddMarkerRequest = components['schemas']['api.AddMarkerRequest'];
     export type AddMarkerResponse = components['schemas']['api.AddMarkerResponse'];
     export type AddMarkerSuccessResponse = components['schemas']['api.AddMarkerSuccessResponse'];
+    export type AddTaskCommentErrorResponse = components['schemas']['api.AddTaskCommentErrorResponse'];
+    export type AddTaskCommentRequest = components['schemas']['api.AddTaskCommentRequest'];
+    export type AddTaskCommentResponse = components['schemas']['api.AddTaskCommentResponse'];
+    export type AddTaskCommentSuccessResponse = components['schemas']['api.AddTaskCommentSuccessResponse'];
+    export type AddTaskErrorResponse = components['schemas']['api.AddTaskErrorResponse'];
+    export type AddTaskMediaErrorResponse = components['schemas']['api.AddTaskMediaErrorResponse'];
+    export type AddTaskMediaRequest = components['schemas']['api.AddTaskMediaRequest'];
+    export type AddTaskMediaResponse = components['schemas']['api.AddTaskMediaResponse'];
+    export type AddTaskMediaSuccessResponse = components['schemas']['api.AddTaskMediaSuccessResponse'];
+    export type AddTaskPayload = components['schemas']['api.AddTaskPayload'];
+    export type AddTaskRequest = components['schemas']['api.AddTaskRequest'];
+    export type AddTaskResponse = components['schemas']['api.AddTaskResponse'];
+    export type AddTaskSuccessResponse = components['schemas']['api.AddTaskSuccessResponse'];
     export type CallerInfo = components['schemas']['api.CallerInfo'];
+    export type CaseMediaStatusEvent = components['schemas']['api.CaseMediaStatusEvent'];
     export type CreateCustomAlertErrorResponse = components['schemas']['api.CreateCustomAlertErrorResponse'];
     export type CreateCustomAlertRequest = components['schemas']['api.CreateCustomAlertRequest'];
     export type CreateCustomAlertResponse = components['schemas']['api.CreateCustomAlertResponse'];
     export type CreateCustomAlertSuccessResponse = components['schemas']['api.CreateCustomAlertSuccessResponse'];
+    export type CreateMediaEditErrorResponse = components['schemas']['api.CreateMediaEditErrorResponse'];
+    export type CreateMediaEditRequest = components['schemas']['api.CreateMediaEditRequest'];
+    export type CreateMediaEditResponse = components['schemas']['api.CreateMediaEditResponse'];
+    export type CreateMediaEditSuccessResponse = components['schemas']['api.CreateMediaEditSuccessResponse'];
     export type CreateVideowallErrorResponse = components['schemas']['api.CreateVideowallErrorResponse'];
     export type CreateVideowallRequest = components['schemas']['api.CreateVideowallRequest'];
     export type CreateVideowallResponse = components['schemas']['api.CreateVideowallResponse'];
     export type CreateVideowallSuccessResponse = components['schemas']['api.CreateVideowallSuccessResponse'];
+    export type CreateWorkflowErrorResponse = components['schemas']['api.CreateWorkflowErrorResponse'];
+    export type CreateWorkflowRequest = components['schemas']['api.CreateWorkflowRequest'];
+    export type CreateWorkflowResponse = components['schemas']['api.CreateWorkflowResponse'];
+    export type CreateWorkflowSuccessResponse = components['schemas']['api.CreateWorkflowSuccessResponse'];
     export type CursorPagination = components['schemas']['api.CursorPagination'];
     export type DebugResponse = components['schemas']['api.DebugResponse'];
     export type DeleteAccessTokenErrorResponse = components['schemas']['api.DeleteAccessTokenErrorResponse'];
     export type DeleteAccessTokenSuccessResponse = components['schemas']['api.DeleteAccessTokenSuccessResponse'];
     export type DeleteStateErrorResponse = components['schemas']['api.DeleteStateErrorResponse'];
     export type DeleteStateSuccessResponse = components['schemas']['api.DeleteStateSuccessResponse'];
+    export type DeleteTaskCommentErrorResponse = components['schemas']['api.DeleteTaskCommentErrorResponse'];
+    export type DeleteTaskCommentResponse = components['schemas']['api.DeleteTaskCommentResponse'];
+    export type DeleteTaskCommentSuccessResponse = components['schemas']['api.DeleteTaskCommentSuccessResponse'];
+    export type DeleteTaskErrorResponse = components['schemas']['api.DeleteTaskErrorResponse'];
+    export type DeleteTaskResponse = components['schemas']['api.DeleteTaskResponse'];
+    export type DeleteTaskSuccessResponse = components['schemas']['api.DeleteTaskSuccessResponse'];
     export type DeleteVideowallErrorResponse = components['schemas']['api.DeleteVideowallErrorResponse'];
     export type DeleteVideowallSuccessResponse = components['schemas']['api.DeleteVideowallSuccessResponse'];
+    export type DeleteWorkflowErrorResponse = components['schemas']['api.DeleteWorkflowErrorResponse'];
+    export type DeleteWorkflowSuccessResponse = components['schemas']['api.DeleteWorkflowSuccessResponse'];
     export type DeviceFilter = components['schemas']['api.DeviceFilter'];
+    export type EditTaskCommentErrorResponse = components['schemas']['api.EditTaskCommentErrorResponse'];
+    export type EditTaskCommentRequest = components['schemas']['api.EditTaskCommentRequest'];
+    export type EditTaskCommentResponse = components['schemas']['api.EditTaskCommentResponse'];
+    export type EditTaskCommentSuccessResponse = components['schemas']['api.EditTaskCommentSuccessResponse'];
+    export type EditTaskErrorResponse = components['schemas']['api.EditTaskErrorResponse'];
+    export type EditTaskRequest = components['schemas']['api.EditTaskRequest'];
+    export type EditTaskResponse = components['schemas']['api.EditTaskResponse'];
+    export type EditTaskSuccessResponse = components['schemas']['api.EditTaskSuccessResponse'];
     export type ErrorResponse = components['schemas']['api.ErrorResponse'];
     export type FaceRedactionMessage = components['schemas']['api.FaceRedactionMessage'];
     export type FatalResponse = components['schemas']['api.FatalResponse'];
@@ -20534,6 +26217,35 @@ export namespace api {
     export type GetStatesErrorResponse = components['schemas']['api.GetStatesErrorResponse'];
     export type GetStatesResponse = components['schemas']['api.GetStatesResponse'];
     export type GetStatesSuccessResponse = components['schemas']['api.GetStatesSuccessResponse'];
+    export type GetTaskByIdErrorResponse = components['schemas']['api.GetTaskByIdErrorResponse'];
+    export type GetTaskByIdResponse = components['schemas']['api.GetTaskByIdResponse'];
+    export type GetTaskByIdSuccessResponse = components['schemas']['api.GetTaskByIdSuccessResponse'];
+    export type GetTaskCommentsErrorResponse = components['schemas']['api.GetTaskCommentsErrorResponse'];
+    export type GetTaskCommentsResponse = components['schemas']['api.GetTaskCommentsResponse'];
+    export type GetTaskCommentsSuccessResponse = components['schemas']['api.GetTaskCommentsSuccessResponse'];
+    export type GetTaskMediaErrorResponse = components['schemas']['api.GetTaskMediaErrorResponse'];
+    export type GetTaskMediaRequest = components['schemas']['api.GetTaskMediaRequest'];
+    export type GetTaskMediaRequestBody = components['schemas']['api.GetTaskMediaRequestBody'];
+    export type GetTaskMediaResponse = components['schemas']['api.GetTaskMediaResponse'];
+    export type GetTaskMediaSuccessResponse = components['schemas']['api.GetTaskMediaSuccessResponse'];
+    export type GetTaskStatisticsErrorResponse = components['schemas']['api.GetTaskStatisticsErrorResponse'];
+    export type GetTaskStatisticsResponse = components['schemas']['api.GetTaskStatisticsResponse'];
+    export type GetTaskStatisticsSuccessResponse = components['schemas']['api.GetTaskStatisticsSuccessResponse'];
+    export type GetTasksCompactErrorResponse = components['schemas']['api.GetTasksCompactErrorResponse'];
+    export type GetTasksCompactResponse = components['schemas']['api.GetTasksCompactResponse'];
+    export type GetTasksCompactSuccessResponse = components['schemas']['api.GetTasksCompactSuccessResponse'];
+    export type GetTasksErrorResponse = components['schemas']['api.GetTasksErrorResponse'];
+    export type GetTasksFilteredErrorResponse = components['schemas']['api.GetTasksFilteredErrorResponse'];
+    export type GetTasksFilteredQuery = components['schemas']['api.GetTasksFilteredQuery'];
+    export type GetTasksFilteredRequest = components['schemas']['api.GetTasksFilteredRequest'];
+    export type GetTasksFilteredResponse = components['schemas']['api.GetTasksFilteredResponse'];
+    export type GetTasksFilteredSuccessResponse = components['schemas']['api.GetTasksFilteredSuccessResponse'];
+    export type GetTasksOverviewErrorResponse = components['schemas']['api.GetTasksOverviewErrorResponse'];
+    export type GetTasksOverviewResponse = components['schemas']['api.GetTasksOverviewResponse'];
+    export type GetTasksOverviewSuccessResponse = components['schemas']['api.GetTasksOverviewSuccessResponse'];
+    export type GetTasksRequest = components['schemas']['api.GetTasksRequest'];
+    export type GetTasksResponse = components['schemas']['api.GetTasksResponse'];
+    export type GetTasksSuccessResponse = components['schemas']['api.GetTasksSuccessResponse'];
     export type GetTimeSeriesChartErrorResponse = components['schemas']['api.GetTimeSeriesChartErrorResponse'];
     export type GetTimeSeriesChartRequest = components['schemas']['api.GetTimeSeriesChartRequest'];
     export type GetTimeSeriesChartResponse = components['schemas']['api.GetTimeSeriesChartResponse'];
@@ -20559,7 +26271,16 @@ export namespace api {
     export type GetVideowallsErrorResponse = components['schemas']['api.GetVideowallsErrorResponse'];
     export type GetVideowallsResponse = components['schemas']['api.GetVideowallsResponse'];
     export type GetVideowallsSuccessResponse = components['schemas']['api.GetVideowallsSuccessResponse'];
+    export type GetWorkflowErrorResponse = components['schemas']['api.GetWorkflowErrorResponse'];
+    export type GetWorkflowResponse = components['schemas']['api.GetWorkflowResponse'];
+    export type GetWorkflowSuccessResponse = components['schemas']['api.GetWorkflowSuccessResponse'];
+    export type GetWorkflowsErrorResponse = components['schemas']['api.GetWorkflowsErrorResponse'];
+    export type GetWorkflowsResponse = components['schemas']['api.GetWorkflowsResponse'];
+    export type GetWorkflowsSuccessResponse = components['schemas']['api.GetWorkflowsSuccessResponse'];
     export type GroupFilter = components['schemas']['api.GroupFilter'];
+    export type ListCaseMediaErrorResponse = components['schemas']['api.ListCaseMediaErrorResponse'];
+    export type ListCaseMediaResponse = components['schemas']['api.ListCaseMediaResponse'];
+    export type ListCaseMediaSuccessResponse = components['schemas']['api.ListCaseMediaSuccessResponse'];
     export type MarkerCategoryFilter = components['schemas']['api.MarkerCategoryFilter'];
     export type MarkerEventFilter = components['schemas']['api.MarkerEventFilter'];
     export type MarkerFilter = components['schemas']['api.MarkerFilter'];
@@ -20588,6 +26309,12 @@ export namespace api {
     export type SubmitFaceRedactionResponse = components['schemas']['api.SubmitFaceRedactionResponse'];
     export type SubmitFaceRedactionSuccessResponse = components['schemas']['api.SubmitFaceRedactionSuccessResponse'];
     export type SuccessResponse = components['schemas']['api.SuccessResponse'];
+    export type TaskCommentIdRequest = components['schemas']['api.TaskCommentIdRequest'];
+    export type TaskCompact = components['schemas']['api.TaskCompact'];
+    export type TaskFilter = components['schemas']['api.TaskFilter'];
+    export type TaskIdRequest = components['schemas']['api.TaskIdRequest'];
+    export type TaskMediaItem = components['schemas']['api.TaskMediaItem'];
+    export type TaskOverview = components['schemas']['api.TaskOverview'];
     export type TraceResponse = components['schemas']['api.TraceResponse'];
     export type UpdateAccessTokenErrorResponse = components['schemas']['api.UpdateAccessTokenErrorResponse'];
     export type UpdateAccessTokenRequest = components['schemas']['api.UpdateAccessTokenRequest'];
@@ -20612,6 +26339,10 @@ export namespace api {
     export type UpdateVideowallRequest = components['schemas']['api.UpdateVideowallRequest'];
     export type UpdateVideowallResponse = components['schemas']['api.UpdateVideowallResponse'];
     export type UpdateVideowallSuccessResponse = components['schemas']['api.UpdateVideowallSuccessResponse'];
+    export type UpdateWorkflowErrorResponse = components['schemas']['api.UpdateWorkflowErrorResponse'];
+    export type UpdateWorkflowRequest = components['schemas']['api.UpdateWorkflowRequest'];
+    export type UpdateWorkflowResponse = components['schemas']['api.UpdateWorkflowResponse'];
+    export type UpdateWorkflowSuccessResponse = components['schemas']['api.UpdateWorkflowSuccessResponse'];
     export type UpsertStateErrorResponse = components['schemas']['api.UpsertStateErrorResponse'];
     export type UpsertStateRequest = components['schemas']['api.UpsertStateRequest'];
     export type UpsertStateResponse = components['schemas']['api.UpsertStateResponse'];

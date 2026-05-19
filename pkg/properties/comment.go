@@ -15,3 +15,8 @@ const (
 	CommentParentId = "parentId"
 	CommentAudit = "audit"
 )
+
+// CommentWrapper property field names (BSON)
+const (
+	CommentWrapperComment = "comment"
+)
