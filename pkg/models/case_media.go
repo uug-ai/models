@@ -91,6 +91,12 @@ type CaseMedia struct {
 
 	// Url is signed by the API at fetch time and not persisted.
 	Url string `json:"url,omitempty" bson:"-"`
+	// ThumbnailUrl is a signed playback URL for ThumbnailFile and is
+	// populated by the API at fetch time. Not persisted.
+	ThumbnailUrl string `json:"thumbnailUrl,omitempty" bson:"-"`
+	// SpriteUrl is a signed playback URL for SpriteFile and is populated
+	// by the API at fetch time. Not persisted.
+	SpriteUrl string `json:"spriteUrl,omitempty" bson:"-"`
 }
 
 // CaseMediaRole distinguishes source attachments from edit derivatives
