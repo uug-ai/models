@@ -164,7 +164,7 @@ type SubmitFaceRedactionRequest struct {
 	FileName            string                        `json:"fileName"`
 	DestinationKey      string                        `json:"destinationKey"`
 	DestinationProvider string                        `json:"destinationProvider"`
-	EditType            string                        `json:"editType,omitempty"`
+	EditType            models.CaseMediaEditType      `json:"editType,omitempty"`
 	Mode                models.RedactionMode          `json:"mode,omitempty"`
 	AllFrameCoordinates map[string][]*models.TrackBox `json:"allFrameCoordinates,omitempty"`
 	FaceRedaction       *models.FaceRedaction         `json:"faceRedaction,omitempty"`

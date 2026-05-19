@@ -33,10 +33,11 @@ type CaseMedia struct {
 	// Role = "edit". See CaseMediaAction.
 	Action CaseMediaAction `json:"action,omitempty" bson:"action,omitempty"`
 
-	// EditType is a free-form sub-variant of Action (for example
-	// "face_blur", "face_pixelate", "face_mask" when Action = "redaction").
-	// Display labels are derived from this in the UI.
-	EditType string `json:"editType,omitempty" bson:"edit_type,omitempty"`
+	// EditType is a sub-variant of Action (for example "face_blur",
+	// "face_pixelate", "face_mask" when Action = "redaction"). Display
+	// labels are derived from this in the UI. Canonical values are
+	// declared as CaseMediaEditType constants below.
+	EditType CaseMediaEditType `json:"editType,omitempty" bson:"edit_type,omitempty"`
 
 	// Version is monotonically increasing within
 	// (TaskId, ParentId, Action, EditType). The most recent completed
@@ -125,4 +126,16 @@ const (
 	CaseMediaStatusProcessing CaseMediaStatus = "processing"
 	CaseMediaStatusCompleted  CaseMediaStatus = "completed"
 	CaseMediaStatusFailed     CaseMediaStatus = "failed"
+)
+
+// CaseMediaEditType enumerates the supported sub-variants of an edit
+// action. Values are grouped by their parent Action: redaction variants
+// (face_blur / face_pixelate / face_mask) are validated by hub-api when
+// Action = redaction; trim / composite do not currently use sub-variants.
+type CaseMediaEditType string
+
+const (
+	CaseMediaEditTypeFaceBlur     CaseMediaEditType = "face_blur"
+	CaseMediaEditTypeFacePixelate CaseMediaEditType = "face_pixelate"
+	CaseMediaEditTypeFaceMask     CaseMediaEditType = "face_mask"
 )

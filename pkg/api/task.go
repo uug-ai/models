@@ -422,11 +422,11 @@ type DeleteTaskCommentErrorResponse struct {
 // "operations" array, each entry having an "op" discriminator matching
 // one of the single-action CaseMediaAction values.
 type CreateMediaEditRequest struct {
-	SourceCaseMediaId string                 `json:"sourceCaseMediaId"`
-	Action            models.CaseMediaAction `json:"action"`
-	EditType          string                 `json:"editType,omitempty"`
-	Params            map[string]interface{} `json:"params,omitempty"`
-	SupersedesId      string                 `json:"supersedesId,omitempty"`
+	SourceCaseMediaId string                   `json:"sourceCaseMediaId"`
+	Action            models.CaseMediaAction   `json:"action"`
+	EditType          models.CaseMediaEditType `json:"editType,omitempty"`
+	Params            map[string]interface{}   `json:"params,omitempty"`
+	SupersedesId      string                   `json:"supersedesId,omitempty"`
 }
 
 type CreateMediaEditResponse struct {
