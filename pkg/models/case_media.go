@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -163,3 +165,78 @@ const (
 	CaseMediaEditTypeFacePixelate CaseMediaEditType = "face_pixelate"
 	CaseMediaEditTypeFaceMask     CaseMediaEditType = "face_mask"
 )
+
+// --- Contract notes ---------------------------------------------------------
+//
+// The flat snapshot fields on a Role=source row (VideoFile, VideoProvider,
+// ThumbnailFile, ThumbnailProvider, SpriteFile, SpriteProvider,
+// SpriteInterval, CameraId, Timestamp, EndTimestamp, StorageSolution)
+// are the *contract surface*. They are queried directly by the export
+// pipeline and by case-level summarisers without unmarshalling the
+// embedded Media / Analysis blobs.
+//
+// The embedded Media / Analysis fields are the *display payload* —
+// consumed only by the media-detail page and the face-redaction edit
+// modal. They are written exactly once (at attach time) and MUST NOT be
+// mutated piecemeal: replace the whole row if an upstream change has to
+// be propagated.
+//
+// Validate is intentionally cheap (no I/O); callers are expected to run
+// it before persisting.
+func (cm *CaseMedia) Validate() error {
+	if cm == nil {
+		return fmt.Errorf("case_media: nil")
+	}
+
+	switch cm.Role {
+	case CaseMediaRoleSource:
+		if cm.SourceMediaId == nil || cm.SourceMediaId.IsZero() {
+			return fmt.Errorf("case_media: source row requires sourceMediaId")
+		}
+		if cm.VideoFile == "" {
+			return fmt.Errorf("case_media: source row requires videoFile")
+		}
+		if cm.ParentId != nil {
+			return fmt.Errorf("case_media: source row must not have parentId")
+		}
+		if cm.Action != "" || cm.EditType != "" {
+			return fmt.Errorf("case_media: source row must not set action/editType")
+		}
+		if cm.Status == "" {
+			// Sources are inherently completed; reject implicit empty
+			// state so list/filter callers can rely on a populated
+			// status field.
+			return fmt.Errorf("case_media: source row must set status (typically Completed)")
+		}
+	case CaseMediaRoleEdit:
+		if cm.ParentId == nil || cm.ParentId.IsZero() {
+			return fmt.Errorf("case_media: edit row requires parentId")
+		}
+		if cm.Action == "" {
+			return fmt.Errorf("case_media: edit row requires action")
+		}
+		switch cm.Action {
+		case CaseMediaActionRedaction:
+			switch cm.EditType {
+			case CaseMediaEditTypeFaceBlur, CaseMediaEditTypeFacePixelate, CaseMediaEditTypeFaceMask:
+			default:
+				return fmt.Errorf("case_media: redaction edit requires a face_* editType (got %q)", cm.EditType)
+			}
+		case CaseMediaActionTrim, CaseMediaActionComposite:
+			if cm.EditType != "" {
+				return fmt.Errorf("case_media: action %q does not accept editType (got %q)", cm.Action, cm.EditType)
+			}
+		default:
+			return fmt.Errorf("case_media: unknown action %q", cm.Action)
+		}
+		if cm.Version <= 0 {
+			return fmt.Errorf("case_media: edit row requires version > 0")
+		}
+		if cm.Status == "" {
+			return fmt.Errorf("case_media: edit row requires status")
+		}
+	default:
+		return fmt.Errorf("case_media: unknown role %q", cm.Role)
+	}
+	return nil
+}

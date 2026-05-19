@@ -96,6 +96,14 @@ type Task struct {
 	ExportSelection []primitive.ObjectID `json:"export_selection,omitempty" bson:"export_selection,omitempty"`
 	ShareSelection  []primitive.ObjectID `json:"share_selection,omitempty"  bson:"share_selection,omitempty"`
 
+	// Attachments are auxiliary, non-pipeline files attached to the
+	// case (PDFs, hi-res images, scanned documents, audio notes, …).
+	// They are embedded directly here under the assumption that the
+	// per-case cardinality stays bounded (soft cap ~100). Only
+	// metadata is stored; bytes live in Vault. List-cases endpoints
+	// SHOULD project this field out to keep the list view light.
+	Attachments []CaseAttachment `json:"attachments,omitempty" bson:"attachments,omitempty"`
+
 	// Related collections
 	Comments []Comment `json:"comments" bson:"comments,omitempty"`
 	Labels   []string  `json:"labels" bson:"labels,omitempty"`

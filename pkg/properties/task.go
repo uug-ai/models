@@ -93,6 +93,7 @@ const (
 	TaskMediaCount = "media_count"
 	TaskExportSelection = "export_selection"
 	TaskShareSelection = "share_selection"
+	TaskAttachments = "attachments"
 	TaskComments = "comments"
 	TaskLabels = "labels"
 )
