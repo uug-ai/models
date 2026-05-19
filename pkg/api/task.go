@@ -221,6 +221,23 @@ type GetTaskMediaRequestBody struct {
 	Pagination CursorPagination       `json:"pagination" bson:"pagination"`
 }
 
+// TaskMediaItem is the API representation of a media item attached to a task.
+type TaskMediaItem = models.ExportFile
+
+type GetTaskMediaResponse struct {
+	TaskId string          `json:"taskId,omitempty" bson:"taskId,omitempty"`
+	Media  []TaskMediaItem `json:"media,omitempty" bson:"media,omitempty"`
+}
+
+type GetTaskMediaSuccessResponse struct {
+	SuccessResponse
+	Data GetTaskMediaResponse `json:"data,omitempty" bson:"data,omitempty"`
+}
+
+type GetTaskMediaErrorResponse struct {
+	ErrorResponse
+}
+
 // GetTasksFilteredRequest matches POST /tasks/filter request body.
 // It supports both:
 // - legacy direct filters: { title, status, limit, offset, ... }
@@ -422,11 +439,19 @@ type DeleteTaskCommentErrorResponse struct {
 // "operations" array, each entry having an "op" discriminator matching
 // one of the single-action CaseMediaAction values.
 type CreateMediaEditRequest struct {
-	SourceCaseMediaId string                   `json:"sourceCaseMediaId"`
-	Action            models.CaseMediaAction   `json:"action"`
-	EditType          models.CaseMediaEditType `json:"editType,omitempty"`
-	Params            map[string]interface{}   `json:"params,omitempty"`
-	SupersedesId      string                   `json:"supersedesId,omitempty"`
+	SourceCaseMediaId string                   `json:"sourceCaseMediaId,omitempty"`
+	// SourceVideoFile points at a legacy task.export_files entry by its
+	// storage key. When SourceCaseMediaId is empty the API resolves
+	// this key against the task's ExportFiles, lazily creates a
+	// Role=source CaseMedia row for it (idempotent — reuses an
+	// existing row with the same video_file when present), and then
+	// applies the edit to that row. Lets pre-migration cases be
+	// redacted without requiring a workspace-wide backfill.
+	SourceVideoFile string                   `json:"sourceVideoFile,omitempty"`
+	Action          models.CaseMediaAction   `json:"action"`
+	EditType        models.CaseMediaEditType `json:"editType,omitempty"`
+	Params          map[string]interface{}   `json:"params,omitempty"`
+	SupersedesId    string                   `json:"supersedesId,omitempty"`
 }
 
 type CreateMediaEditResponse struct {

@@ -70,6 +70,24 @@ type CaseMedia struct {
 	SpriteProvider    string              `json:"spriteProvider,omitempty" bson:"sprite_provider,omitempty"`
 	SpriteInterval    int                 `json:"spriteInterval,omitempty" bson:"sprite_interval,omitempty"`
 
+	// Media is a full snapshot of the source Media document captured at
+	// attach time. It is only populated on Role = "source" and is what
+	// the media-detail page and edit modal consume — the flat fields
+	// above stay in place because they are queried directly by the
+	// export pipeline and the case-level summarisers. The snapshot
+	// makes the case self-contained: edits to or deletions of the
+	// original media row do not affect what the case shows.
+	Media *Media `json:"media,omitempty" bson:"media,omitempty"`
+
+	// Analysis is a snapshot of the AnalysisWrapper associated with
+	// the source media at attach time, including the per-operation
+	// lifecycle fields (AsyncOperations / RequiredOperations /
+	// ResolvedOperations) plus the analysis data (classify, counting,
+	// faceRedaction, …) so the detail page and the face-redaction
+	// edit modal can render without an extra lookup against the
+	// `analysis` collection. Only populated on Role = "source".
+	Analysis *AnalysisWrapper `json:"analysis,omitempty" bson:"analysis,omitempty"`
+
 	// Produced artefact (populated on Role = "edit" once the worker
 	// completes; for Role = "source" these mirror VideoFile/VideoProvider).
 	File     string `json:"file,omitempty" bson:"file,omitempty"`

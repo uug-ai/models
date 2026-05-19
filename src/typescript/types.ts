@@ -10027,6 +10027,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/gettaskmediaerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskMediaErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskMediaErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskMediaErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/gettaskmediarequest": {
         parameters: {
             query?: never;
@@ -10093,6 +10132,84 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetTaskMediaRequestBody"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskmediaresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskMediaResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskMediaResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskMediaResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gettaskmediasuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetTaskMediaSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetTaskMediaSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetTaskMediaSuccessResponse"];
                     };
                 };
             };
@@ -20813,6 +20930,14 @@ export interface components {
                 [key: string]: unknown;
             };
             sourceCaseMediaId?: string;
+            /** @description SourceVideoFile points at a legacy task.export_files entry by its
+             *     storage key. When SourceCaseMediaId is empty the API resolves
+             *     this key against the task's ExportFiles, lazily creates a
+             *     Role=source CaseMedia row for it (idempotent — reuses an
+             *     existing row with the same video_file when present), and then
+             *     applies the edit to that row. Lets pre-migration cases be
+             *     redacted without requiring a workspace-wide backfill. */
+            sourceVideoFile?: string;
             supersedesId?: string;
         };
         "api.CreateMediaEditResponse": {
@@ -21884,6 +22009,18 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetTaskMediaErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetTaskMediaRequest": {
             cursor?: string;
             id?: string;
@@ -21894,6 +22031,23 @@ export interface components {
                 [key: string]: unknown;
             };
             pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.GetTaskMediaResponse": {
+            media?: components["schemas"]["api.TaskMediaItem"][];
+            taskId?: string;
+        };
+        "api.GetTaskMediaSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetTaskMediaResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetTaskStatisticsErrorResponse": {
             /** @description Application-specific error code */
@@ -22665,6 +22819,21 @@ export interface components {
         };
         "api.TaskIdRequest": {
             id?: string;
+        };
+        "api.TaskMediaItem": {
+            camera_id?: string;
+            key?: string;
+            provider?: string;
+            source?: string;
+            sprite_url?: string;
+            spriteFile?: string;
+            spriteInterval?: number;
+            spriteProvider?: string;
+            thumbnail_url?: string;
+            thumbnailFile?: string;
+            thumbnailProvider?: string;
+            timestamp?: number;
+            video_url?: string;
         };
         "api.TaskOverview": {
             assignees?: string[];
@@ -26054,8 +26223,11 @@ export namespace api {
     export type GetTaskCommentsErrorResponse = components['schemas']['api.GetTaskCommentsErrorResponse'];
     export type GetTaskCommentsResponse = components['schemas']['api.GetTaskCommentsResponse'];
     export type GetTaskCommentsSuccessResponse = components['schemas']['api.GetTaskCommentsSuccessResponse'];
+    export type GetTaskMediaErrorResponse = components['schemas']['api.GetTaskMediaErrorResponse'];
     export type GetTaskMediaRequest = components['schemas']['api.GetTaskMediaRequest'];
     export type GetTaskMediaRequestBody = components['schemas']['api.GetTaskMediaRequestBody'];
+    export type GetTaskMediaResponse = components['schemas']['api.GetTaskMediaResponse'];
+    export type GetTaskMediaSuccessResponse = components['schemas']['api.GetTaskMediaSuccessResponse'];
     export type GetTaskStatisticsErrorResponse = components['schemas']['api.GetTaskStatisticsErrorResponse'];
     export type GetTaskStatisticsResponse = components['schemas']['api.GetTaskStatisticsResponse'];
     export type GetTaskStatisticsSuccessResponse = components['schemas']['api.GetTaskStatisticsSuccessResponse'];
@@ -26141,6 +26313,7 @@ export namespace api {
     export type TaskCompact = components['schemas']['api.TaskCompact'];
     export type TaskFilter = components['schemas']['api.TaskFilter'];
     export type TaskIdRequest = components['schemas']['api.TaskIdRequest'];
+    export type TaskMediaItem = components['schemas']['api.TaskMediaItem'];
     export type TaskOverview = components['schemas']['api.TaskOverview'];
     export type TraceResponse = components['schemas']['api.TraceResponse'];
     export type UpdateAccessTokenErrorResponse = components['schemas']['api.UpdateAccessTokenErrorResponse'];
