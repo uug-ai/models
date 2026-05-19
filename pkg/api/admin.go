@@ -248,6 +248,41 @@ type GetAdminUserDevicesErrorResponse struct {
 	ErrorResponse
 }
 
+// ---------- Devices (admin variants - all devices) ----------
+
+type GetAdminDevicesMeta struct {
+	TotalDeviceCount int `json:"total_device_count"`
+	DeviceCount      int `json:"device_count"`
+	TotalPages       int `json:"total_pages"`
+}
+
+type GetAdminDevicesResponse struct {
+	Devices any                 `json:"devices"`
+	Meta    GetAdminDevicesMeta `json:"meta"`
+}
+
+type GetAdminDevicesSuccessResponse struct {
+	SuccessResponse
+	Data GetAdminDevicesResponse `json:"data,omitempty"`
+}
+
+type GetAdminDevicesErrorResponse struct {
+	ErrorResponse
+}
+
+type GetAdminDeviceResponse struct {
+	Device any `json:"device"`
+}
+
+type GetAdminDeviceSuccessResponse struct {
+	SuccessResponse
+	Data GetAdminDeviceResponse `json:"data,omitempty"`
+}
+
+type GetAdminDeviceErrorResponse struct {
+	ErrorResponse
+}
+
 // ---------- Subscriptions (admin variants) ----------
 
 type GetAdminSubscriptionSettingsResponse struct {
