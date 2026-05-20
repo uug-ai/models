@@ -24,6 +24,7 @@ const (
 	StorageAccountNotFound  StorageStatus = "storage_account_not_found"
 	StorageProviderNotFound StorageStatus = "storage_provider_not_found"
 	StorageDirectoryMissing StorageStatus = "storage_directory_missing"
+	StorageDirectoryInvalid StorageStatus = "storage_directory_invalid"
 )
 
 // String returns the string representation of the storage status.
@@ -51,6 +52,7 @@ func (ss StorageStatus) Translate(lang string) string {
 			StorageAccountNotFound:     "Storage account not found for the provided credentials.",
 			StorageProviderNotFound:    "Storage provider could not be found.",
 			StorageDirectoryMissing:    "Storage directory is missing.",
+			StorageDirectoryInvalid:    "Storage directory is invalid.",
 		},
 	}
 
