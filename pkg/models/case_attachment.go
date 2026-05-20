@@ -20,10 +20,10 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 type CaseAttachment struct {
 	Id primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 
-	// Kind is a coarse classification of the attachment used by the UI
+	// Type is a coarse classification of the attachment used by the UI
 	// to pick an icon / viewer. MimeType is the source of truth for
-	// content negotiation; Kind is derived from it at upload time.
-	Kind     CaseAttachmentKind `json:"kind" bson:"kind"`
+	// content negotiation; Type is derived from it at upload time.
+	Type     CaseAttachmentType `json:"type" bson:"type"`
 	MimeType string             `json:"mimeType" bson:"mime_type"`
 
 	// Name is the original filename at upload time. Users may rename
@@ -72,15 +72,15 @@ type CaseAttachment struct {
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty" bson:"-"`
 }
 
-// CaseAttachmentKind is a coarse classification driving icon / viewer
+// CaseAttachmentType is a coarse classification driving icon / viewer
 // selection in the UI. Derived from MimeType at upload time by hub-api.
-type CaseAttachmentKind string
+type CaseAttachmentType string
 
 const (
-	CaseAttachmentKindPDF      CaseAttachmentKind = "pdf"
-	CaseAttachmentKindImage    CaseAttachmentKind = "image"
-	CaseAttachmentKindDocument CaseAttachmentKind = "document" // docx, odt, txt, ...
-	CaseAttachmentKindAudio    CaseAttachmentKind = "audio"
-	CaseAttachmentKindVideo    CaseAttachmentKind = "video" // user-supplied, NOT pipeline output
-	CaseAttachmentKindOther    CaseAttachmentKind = "other"
+	CaseAttachmentTypePDF      CaseAttachmentType = "pdf"
+	CaseAttachmentTypeImage    CaseAttachmentType = "image"
+	CaseAttachmentTypeDocument CaseAttachmentType = "document" // docx, odt, txt, ...
+	CaseAttachmentTypeAudio    CaseAttachmentType = "audio"
+	CaseAttachmentTypeVideo    CaseAttachmentType = "video" // user-supplied, NOT pipeline output
+	CaseAttachmentTypeOther    CaseAttachmentType = "other"
 )

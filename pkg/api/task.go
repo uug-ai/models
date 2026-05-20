@@ -23,6 +23,19 @@ const (
 	TaskDeleteFailed    TaskStatus = "Task_delete_failed"
 	TaskMediaAddSuccess TaskStatus = "Task_media_add_success"
 	TaskMediaAddFailed  TaskStatus = "Task_media_add_failed"
+
+	// Case attachments — auxiliary, non-pipeline files attached to a
+	// case (PDFs, images, scanned documents, audio notes). See
+	// models.CaseAttachment.
+	TaskAttachmentAddSuccess    TaskStatus = "Task_attachment_add_success"
+	TaskAttachmentAddFailed     TaskStatus = "Task_attachment_add_failed"
+	TaskAttachmentUpdateSuccess TaskStatus = "Task_attachment_update_success"
+	TaskAttachmentUpdateFailed  TaskStatus = "Task_attachment_update_failed"
+	TaskAttachmentDeleteSuccess TaskStatus = "Task_attachment_delete_success"
+	TaskAttachmentDeleteFailed  TaskStatus = "Task_attachment_delete_failed"
+	TaskAttachmentNotFound      TaskStatus = "Task_attachment_not_found"
+	TaskAttachmentTooLarge      TaskStatus = "Task_attachment_too_large"
+	TaskAttachmentTypeRejected  TaskStatus = "Task_attachment_type_rejected"
 )
 
 // String returns the string representation of the Task status
@@ -48,6 +61,16 @@ func (ms TaskStatus) Translate(lang string) string {
 			TaskDeleteFailed:    "Task failed to delete",
 			TaskMediaAddSuccess: "Media was added to the task successfully",
 			TaskMediaAddFailed:  "Failed to add media to the task",
+
+			TaskAttachmentAddSuccess:    "Attachment added to the case successfully",
+			TaskAttachmentAddFailed:     "Failed to add attachment to the case",
+			TaskAttachmentUpdateSuccess: "Attachment updated successfully",
+			TaskAttachmentUpdateFailed:  "Failed to update attachment",
+			TaskAttachmentDeleteSuccess: "Attachment removed successfully",
+			TaskAttachmentDeleteFailed:  "Failed to remove attachment",
+			TaskAttachmentNotFound:      "Attachment not found on this case",
+			TaskAttachmentTooLarge:      "Attachment exceeds the size limit",
+			TaskAttachmentTypeRejected:  "Attachment file type is not allowed",
 		},
 	}
 
@@ -439,7 +462,7 @@ type DeleteTaskCommentErrorResponse struct {
 // "operations" array, each entry having an "op" discriminator matching
 // one of the single-action CaseMediaAction values.
 type CreateMediaEditRequest struct {
-	SourceCaseMediaId string                   `json:"sourceCaseMediaId,omitempty"`
+	SourceCaseMediaId string `json:"sourceCaseMediaId,omitempty"`
 	// SourceVideoFile points at a legacy task.export_files entry by its
 	// storage key. When SourceCaseMediaId is empty the API resolves
 	// this key against the task's ExportFiles, lazily creates a
@@ -480,5 +503,117 @@ type ListCaseMediaSuccessResponse struct {
 }
 
 type ListCaseMediaErrorResponse struct {
+	ErrorResponse
+}
+
+// ===== Case attachments (auxiliary, non-pipeline files on a case) =====
+//
+// Attachments are PDFs, images, scanned documents etc. attached to a
+// case. They are NOT part of the worker pipeline (no version chain,
+// no worker-driven status). The collection lives embedded on
+// Task.Attachments — see models.CaseAttachment for the schema and the
+// per-case soft-cap rationale.
+//
+// Upload uses multipart/form-data (single-POST + TeeReader streaming
+// inside hub-api). The bytes are forwarded to Vault and never persisted
+// inside Mongo. Signed Url / ThumbnailUrl fields on the response are
+// minted at fetch time and never persisted.
+
+// UploadCaseAttachmentRequest documents the metadata accepted on a
+// multipart upload to POST /tasks/{taskId}/attachments. The actual
+// upload field is named `file`; all other fields are optional form
+// values that override what hub-api would otherwise derive from the
+// uploaded part.
+//
+// Defined as a struct (rather than free-floating form params) so swag
+// can generate a consistent shape for OpenAPI / TS clients. The Go
+// controller reads these via c.PostForm / c.FormFile.
+type UploadCaseAttachmentRequest struct {
+	// Name overrides the filename recorded on the attachment. Defaults
+	// to the multipart part filename when omitted.
+	Name string `json:"name,omitempty" form:"name"`
+
+	// RelatedCaseMediaId optionally links the attachment to a specific
+	// case_media entry it documents or annotates (annotated screenshot
+	// of a redacted clip, etc.). Hex ObjectID; must belong to the same
+	// task.
+	RelatedCaseMediaId string `json:"relatedCaseMediaId,omitempty" form:"relatedCaseMediaId"`
+}
+
+type UploadCaseAttachmentResponse struct {
+	Attachment models.CaseAttachment `json:"attachment"`
+}
+
+type UploadCaseAttachmentSuccessResponse struct {
+	SuccessResponse
+	Data UploadCaseAttachmentResponse `json:"data"`
+}
+
+type UploadCaseAttachmentErrorResponse struct {
+	ErrorResponse
+}
+
+// ListCaseAttachmentsResponse returns every attachment embedded on the
+// task. URLs are signed at fetch time so the case detail view can
+// render the list without further round trips.
+type ListCaseAttachmentsResponse struct {
+	Attachments []models.CaseAttachment `json:"attachments"`
+}
+
+type ListCaseAttachmentsSuccessResponse struct {
+	SuccessResponse
+	Data ListCaseAttachmentsResponse `json:"data"`
+}
+
+type ListCaseAttachmentsErrorResponse struct {
+	ErrorResponse
+}
+
+type GetCaseAttachmentResponse struct {
+	Attachment models.CaseAttachment `json:"attachment"`
+}
+
+type GetCaseAttachmentSuccessResponse struct {
+	SuccessResponse
+	Data GetCaseAttachmentResponse `json:"data"`
+}
+
+type GetCaseAttachmentErrorResponse struct {
+	ErrorResponse
+}
+
+// UpdateCaseAttachmentRequest covers in-place metadata edits that do
+// not require re-uploading the bytes. Currently only Name is editable;
+// replacing the file means delete + re-upload so the storage key and
+// SHA-256 stay coupled.
+type UpdateCaseAttachmentRequest struct {
+	Name string `json:"name"`
+}
+
+type UpdateCaseAttachmentResponse struct {
+	Attachment models.CaseAttachment `json:"attachment"`
+}
+
+type UpdateCaseAttachmentSuccessResponse struct {
+	SuccessResponse
+	Data UpdateCaseAttachmentResponse `json:"data"`
+}
+
+type UpdateCaseAttachmentErrorResponse struct {
+	ErrorResponse
+}
+
+type DeleteCaseAttachmentResponse struct {
+	// Id of the removed attachment, echoed back for client cache
+	// invalidation.
+	Id string `json:"id"`
+}
+
+type DeleteCaseAttachmentSuccessResponse struct {
+	SuccessResponse
+	Data DeleteCaseAttachmentResponse `json:"data"`
+}
+
+type DeleteCaseAttachmentErrorResponse struct {
 	ErrorResponse
 }
