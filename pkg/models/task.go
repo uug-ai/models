@@ -104,6 +104,39 @@ type Task struct {
 	// SHOULD project this field out to keep the list view light.
 	Attachments []CaseAttachment `json:"attachments,omitempty" bson:"attachments,omitempty"`
 
+	// Retention / lifecycle.
+	//
+	// RetentionDays captures the *policy intent*: how many days the
+	// case should be kept after its retention anchor (typically the
+	// moment the case is closed, falling back to CreationDate when
+	// the case is still open). Nil means "use the workspace/tenant
+	// default policy"; 0 is a valid explicit "delete on next sweep".
+	//
+	// ExpiresAt is the *materialized* date at which the cleanup
+	// worker is allowed to purge the case (and its attachments,
+	// media, comments, …). It is recomputed from RetentionDays on
+	// write, EXCEPT when ExpiresAtOverridden is true. Nil means
+	// "never expires". An index on this field powers the cleanup
+	// sweep; do not use a Mongo TTL index — deletion must cascade
+	// through the API so downstream storage (Vault, search, audit)
+	// stays consistent.
+	//
+	// ExpiresAtOverridden is set to true the moment a user manually
+	// edits ExpiresAt. Once set, policy changes will NOT silently
+	// re-materialize ExpiresAt, so a granted extension cannot be
+	// undone by a tenant-wide policy tweak. Clearing the override
+	// (e.g. "reset to policy") flips this back to false.
+	//
+	// LegalHold, when true, suppresses cleanup unconditionally
+	// regardless of ExpiresAt. It is intentionally a separate flag
+	// from the retention date so audits can distinguish "kept longer
+	// because investigator extended" from "kept because under legal
+	// hold". Managed by a dedicated permission.
+	RetentionDays       *int   `json:"retention_days,omitempty"        bson:"retention_days,omitempty"`
+	ExpiresAt           *int64 `json:"expires_at,omitempty"            bson:"expires_at,omitempty"`
+	ExpiresAtOverridden bool   `json:"expires_at_overridden,omitempty" bson:"expires_at_overridden,omitempty"`
+	LegalHold           bool   `json:"legal_hold,omitempty"            bson:"legal_hold,omitempty"`
+
 	// Related collections
 	Comments []Comment `json:"comments" bson:"comments,omitempty"`
 	Labels   []string  `json:"labels" bson:"labels,omitempty"`
