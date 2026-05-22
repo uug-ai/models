@@ -186,6 +186,7 @@ type TaskOverview struct {
 	ExportFilesCount  int                `json:"export_files_count,omitempty" bson:"export_files_count,omitempty"`
 	DownloadedFiles   []string           `json:"downloaded_files,omitempty" bson:"downloaded_files,omitempty"`
 	MediaCount        int                `json:"mediaCount,omitempty" bson:"mediaCount,omitempty"`
+	ExpiresAt         *int64             `json:"expires_at,omitempty" bson:"expires_at,omitempty"`
 }
 
 type GetTasksOverviewResponse struct {
