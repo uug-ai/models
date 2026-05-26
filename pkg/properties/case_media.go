@@ -14,6 +14,7 @@ const (
 	CaseMediaEditType = "edit_type"
 	CaseMediaVersion = "version"
 	CaseMediaSupersedesId = "supersedes_id"
+	CaseMediaSelectedVersionId = "selected_version_id"
 	CaseMediaParams = "params"
 	CaseMediaSourceMediaId = "source_media_id"
 	CaseMediaTimestamp = "timestamp"

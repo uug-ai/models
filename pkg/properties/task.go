@@ -94,6 +94,10 @@ const (
 	TaskExportSelection = "export_selection"
 	TaskShareSelection = "share_selection"
 	TaskAttachments = "attachments"
+	TaskRetentionDays = "retention_days"
+	TaskExpiresAt = "expires_at"
+	TaskExpiresAtOverridden = "expires_at_overridden"
+	TaskLegalHold = "legal_hold"
 	TaskComments = "comments"
 	TaskLabels = "labels"
 )

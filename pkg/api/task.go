@@ -507,6 +507,33 @@ type ListCaseMediaErrorResponse struct {
 	ErrorResponse
 }
 
+// UpdateCaseMediaSelectedVersionRequest is the body of
+// PATCH /tasks/{taskId}/media/{caseMediaId}/selected-version.
+//
+// It targets a Role = "source" case_media row and records which
+// derivative the case should display and export. SelectedVersionId
+// must reference an existing Role = "edit" CaseMedia entry that
+// descends from the source (directly via ParentId or transitively
+// via SupersedesId). Sending an empty SelectedVersionId clears the
+// selection, restoring the default behaviour (latest completed edit
+// if any, otherwise the source itself).
+type UpdateCaseMediaSelectedVersionRequest struct {
+	SelectedVersionId string `json:"selectedVersionId"`
+}
+
+type UpdateCaseMediaSelectedVersionResponse struct {
+	CaseMedia models.CaseMedia `json:"caseMedia"`
+}
+
+type UpdateCaseMediaSelectedVersionSuccessResponse struct {
+	SuccessResponse
+	Data UpdateCaseMediaSelectedVersionResponse `json:"data"`
+}
+
+type UpdateCaseMediaSelectedVersionErrorResponse struct {
+	ErrorResponse
+}
+
 // ===== Case attachments (auxiliary, non-pipeline files on a case) =====
 //
 // Attachments are PDFs, images, scanned documents etc. attached to a

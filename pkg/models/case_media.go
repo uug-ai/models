@@ -50,6 +50,16 @@ type CaseMedia struct {
 	// preserving the full edit chain for auditing / rollback.
 	SupersedesId *primitive.ObjectID `json:"supersedesId,omitempty" bson:"supersedes_id,omitempty"`
 
+	// SelectedVersionId is only meaningful on Role = "source" rows and
+	// records which version of the source the case should display and
+	// export. When set it points at an Role = "edit" CaseMedia entry
+	// that descends from this source (directly via ParentId or
+	// transitively via SupersedesId). When empty, consumers fall back
+	// to the default behaviour (use the latest completed edit if any,
+	// otherwise the source itself). Persisted so the choice survives
+	// across sessions and is honoured by the export pipeline.
+	SelectedVersionId *primitive.ObjectID `json:"selectedVersionId,omitempty" bson:"selected_version_id,omitempty"`
+
 	// Params carries kind-specific parameters used to produce the edit.
 	// For Action = "composite" it is expected to contain an
 	// "operations" array whose elements have an "op" discriminator
@@ -211,6 +221,9 @@ func (cm *CaseMedia) Validate() error {
 	case CaseMediaRoleEdit:
 		if cm.ParentId == nil || cm.ParentId.IsZero() {
 			return fmt.Errorf("case_media: edit row requires parentId")
+		}
+		if cm.SelectedVersionId != nil {
+			return fmt.Errorf("case_media: edit row must not set selectedVersionId")
 		}
 		if cm.Action == "" {
 			return fmt.Errorf("case_media: edit row requires action")
