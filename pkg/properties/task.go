@@ -90,6 +90,8 @@ const (
 	TaskExportRequested           = "export_requested"
 	TaskExportInProgress          = "export_in_progress"
 	TaskExportRevision            = "export_revision"
+	TaskSelectionRevision         = "selection_revision"
+	TaskLastExportedSelectionRev  = "last_exported_selection_revision"
 	TaskMediaCount                = "media_count"
 	TaskExportSelection           = "export_selection"
 	TaskExportAttachmentSelection = "export_attachment_selection"
