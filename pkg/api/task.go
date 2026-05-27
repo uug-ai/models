@@ -583,6 +583,31 @@ type UpdateCaseMediaSelectedVersionErrorResponse struct {
 	ErrorResponse
 }
 
+// UpdateCaseMediaCurationRequest is the body of
+// PATCH /tasks/{taskId}/media/{caseMediaId}/curation.
+//
+// Each field is a pointer so callers can patch one flag without
+// having to round-trip the other. Both flags target Role = "source"
+// rows only — edits inherit the source's inclusion state at resolve
+// time. nil means "leave as-is".
+type UpdateCaseMediaCurationRequest struct {
+	IncludeInExport *bool `json:"includeInExport,omitempty"`
+	IncludeInShare  *bool `json:"includeInShare,omitempty"`
+}
+
+type UpdateCaseMediaCurationResponse struct {
+	CaseMedia models.CaseMedia `json:"caseMedia"`
+}
+
+type UpdateCaseMediaCurationSuccessResponse struct {
+	SuccessResponse
+	Data UpdateCaseMediaCurationResponse `json:"data"`
+}
+
+type UpdateCaseMediaCurationErrorResponse struct {
+	ErrorResponse
+}
+
 // ===== Case attachments (auxiliary, non-pipeline files on a case) =====
 //
 // Attachments are PDFs, images, scanned documents etc. attached to a
@@ -660,11 +685,14 @@ type GetCaseAttachmentErrorResponse struct {
 }
 
 // UpdateCaseAttachmentRequest covers in-place metadata edits that do
-// not require re-uploading the bytes. Currently only Name is editable;
-// replacing the file means delete + re-upload so the storage key and
-// SHA-256 stay coupled.
+// not require re-uploading the bytes. Name is the original mutable
+// field; IncludeInExport / IncludeInShare are the per-attachment
+// curation flags. All fields are pointer-typed so a partial PATCH
+// can target one without touching the others (nil = leave as-is).
 type UpdateCaseAttachmentRequest struct {
-	Name string `json:"name"`
+	Name            *string `json:"name,omitempty"`
+	IncludeInExport *bool   `json:"includeInExport,omitempty"`
+	IncludeInShare  *bool   `json:"includeInShare,omitempty"`
 }
 
 type UpdateCaseAttachmentResponse struct {

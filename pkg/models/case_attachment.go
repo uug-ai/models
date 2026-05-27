@@ -65,6 +65,17 @@ type CaseAttachment struct {
 	CreatedBy string `json:"createdBy,omitempty" bson:"created_by,omitempty"`
 	UpdatedAt int64  `json:"updatedAt,omitempty" bson:"updated_at,omitempty"`
 
+	// IncludeInExport and IncludeInShare are per-attachment curation
+	// flags. Same semantics as the namesakes on CaseMedia: defaulted
+	// to true at upload time, toggled via PATCH, consulted by the
+	// export pipeline and the share recipient endpoint, and frozen
+	// into CaseShare.AttachmentSelection at CreateShare time.
+	//
+	// BSON tags deliberately omit `,omitempty` so a `false` value is
+	// persisted faithfully instead of being dropped to the default.
+	IncludeInExport bool `json:"includeInExport" bson:"include_in_export"`
+	IncludeInShare  bool `json:"includeInShare"  bson:"include_in_share"`
+
 	// Url / ThumbnailUrl are signed by hub-api at fetch time and never
 	// persisted. They should be excluded from list-cases projections
 	// to keep that endpoint light.

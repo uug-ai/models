@@ -21298,6 +21298,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/updatecasemediacurationerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseMediaCurationErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseMediaCurationErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseMediaCurationErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecasemediacurationrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseMediaCurationRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseMediaCurationRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseMediaCurationRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecasemediacurationresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseMediaCurationResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseMediaCurationResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseMediaCurationResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecasemediacurationsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseMediaCurationSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseMediaCurationSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseMediaCurationSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/updatecasemediaselectedversionerrorresponse": {
         parameters: {
             query?: never;
@@ -23952,6 +24108,17 @@ export interface components {
             downloaded_files?: string[];
             expires_at?: number;
             expires_at_overridden?: boolean;
+            /** @description ExportAttachmentSelection is the parallel to ExportSelection for
+             *     task.Attachments[]. Kept as its own array because attachments
+             *     live on a different storage path (and a different mongo
+             *     document shape) than case_media — mixing both into a single
+             *     selection array would force the export pipeline to consult two
+             *     collections to disambiguate every id, and would also make
+             *     "deselect every attachment" indistinguishable from a legacy
+             *     (media-only) selection. Same semantics as ExportSelection: nil
+             *     or empty means "default rule" (include every attachment), a
+             *     non-empty slice is the literal allow-list. */
+            export_attachment_selection?: string[];
             /** @description legacy: read by v20130101 only */
             export_files?: components["schemas"]["models.ExportFile"][];
             export_files_count?: number;
@@ -23968,13 +24135,23 @@ export interface components {
              *
              *     An empty selection means "default rule": consumers fall back to
              *     every source's latest completed edit (or the source itself when
-             *     no completed edit exists). */
+             *     no completed edit exists).
+             *
+             *     NOTE on the share fields specifically: ShareSelection and
+             *     ShareAttachmentSelection are the owner-side TEMPLATE used to
+             *     pre-fill the next share modal ("start where the last share left
+             *     off"). They are NOT the source of truth for what an active
+             *     recipient sees \u2014 each CaseShare row carries its own Selection /
+             *     AttachmentSelection snapshot captured at CreateShare time, so
+             *     later edits to this template do not retroactively change what
+             *     already-issued tokens resolve to. */
             export_selection?: string[];
             /** @description An export task, is containing multiple video in a compressed file format (.zip) */
             export_status?: string;
             id?: string;
             is_private?: boolean;
             labels?: string[];
+            last_exported_selection_revision?: number;
             legal_hold?: boolean;
             /** @description Number of source case_media rows attached to this task. Mirrors
              *     case_media documents where role == "source" and task_id matches. */
@@ -24020,7 +24197,27 @@ export interface components {
              *     because investigator extended" from "kept because under legal
              *     hold". Managed by a dedicated permission. */
             retention_days?: number;
+            /** @description SelectionRevision is a monotonic counter bumped by hub-api on
+             *     every PATCH that mutates ExportSelection or
+             *     ExportAttachmentSelection. Decoupled from ExportRevision (which
+             *     gates the worker's mid-flight race protection) so that
+             *     re-ticking checkboxes does not look like a fresh export
+             *     request to the running pipeline.
+             *
+             *     LastExportedSelectionRevision is the value of SelectionRevision
+             *     the worker captured at the start of the most recently
+             *     completed export run. When SelectionRevision >
+             *     LastExportedSelectionRevision the current zip is stale — its
+             *     contents no longer match the persisted selection — and the
+             *     case detail page surfaces a "regenerate" hint next to the
+             *     download button. */
+            selection_revision?: number;
             sequenceId?: string;
+            /** @description ShareAttachmentSelection mirrors ExportAttachmentSelection for
+             *     the share flow. Same semantics: nil/empty = include every
+             *     attachment in the recipient view, non-empty = literal
+             *     allow-list. */
+            share_attachment_selection?: string[];
             share_selection?: string[];
             sprite_url?: string;
             spriteFile?: string;
@@ -24556,10 +24753,21 @@ export interface components {
         "api.EditTaskRequest": {
             assignees?: string[];
             assignees_profile?: string[];
+            export_attachment_selection?: string[];
+            /** @description Curation templates — pointer-to-slice so callers can distinguish
+             *     "field omitted" (no-op) from "field present with []" (empty
+             *     allow-list, which downstream readers interpret as "include all").
+             *     These mirror the per-side modal drafts and are persisted on every
+             *     inline checkbox toggle so the selection survives reloads. The
+             *     share-side arrays are templates only — once a share token is
+             *     created the snapshot lives on the CaseShare row itself. */
+            export_selection?: string[];
             is_private?: boolean;
             labels?: string[];
             notes?: string;
             notify_assignees?: boolean;
+            share_attachment_selection?: string[];
+            share_selection?: string[];
             status?: components["schemas"]["api.TaskStatus"];
         };
         "api.EditTaskResponse": {
@@ -26426,6 +26634,7 @@ export interface components {
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.RequestTaskExportRequest": {
+            export_attachment_selection?: string[];
             export_selection?: string[];
         };
         "api.RequestTaskExportResponse": {
@@ -26759,6 +26968,8 @@ export interface components {
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.UpdateCaseAttachmentRequest": {
+            includeInExport?: boolean;
+            includeInShare?: boolean;
             name?: string;
         };
         "api.UpdateCaseAttachmentResponse": {
@@ -26768,6 +26979,38 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.UpdateCaseAttachmentResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateCaseMediaCurationErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateCaseMediaCurationRequest": {
+            includeInExport?: boolean;
+            includeInShare?: boolean;
+        };
+        "api.UpdateCaseMediaCurationResponse": {
+            caseMedia?: components["schemas"]["models.CaseMedia"];
+        };
+        "api.UpdateCaseMediaCurationSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateCaseMediaCurationResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -27374,6 +27617,16 @@ export interface components {
              *     File is the object key inside it. */
             file?: string;
             id?: string;
+            /** @description IncludeInExport and IncludeInShare are per-attachment curation
+             *     flags. Same semantics as the namesakes on CaseMedia: defaulted
+             *     to true at upload time, toggled via PATCH, consulted by the
+             *     export pipeline and the share recipient endpoint, and frozen
+             *     into CaseShare.AttachmentSelection at CreateShare time.
+             *
+             *     BSON tags deliberately omit `,omitempty` so a `false` value is
+             *     persisted faithfully instead of being dropped to the default. */
+            includeInExport?: boolean;
+            includeInShare?: boolean;
             mimeType?: string;
             /** @description Name is the original filename at upload time. Users may rename
              *     the attachment afterwards without renaming the underlying object
@@ -27442,6 +27695,22 @@ export interface components {
              *     completes; for Role = "source" these mirror VideoFile/VideoProvider). */
             file?: string;
             id?: string;
+            /** @description IncludeInExport and IncludeInShare are per-row curation flags. A
+             *     case_media is included in an export bundle / share recipient view
+             *     when the corresponding flag is true. Both default to true at
+             *     insert time (set explicitly by the create path — the Go zero
+             *     value would otherwise be the opposite of what we want). Owners
+             *     toggle these via PATCH /case-media/:id; share/export consumers
+             *     filter on them at read time, and for shares the resolved set is
+             *     frozen into CaseShare.Selection at CreateShare time so later
+             *     toggles do not bleed into already-issued tokens. Only meaningful
+             *     on Role = "source" rows — edits inherit their inclusion state
+             *     from the source they resolve to.
+             *
+             *     BSON tags deliberately omit `,omitempty` so a `false` value is
+             *     persisted faithfully instead of being dropped to the default. */
+            includeInExport?: boolean;
+            includeInShare?: boolean;
             /** @description Media is a full snapshot of the source Media document captured at
              *     attach time. It is only populated on Role = "source" and is what
              *     the media-detail page and edit modal consume — the flat fields
@@ -27519,6 +27788,11 @@ export interface components {
         /** @enum {string} */
         "models.CaseMediaStatus": "queued" | "processing" | "completed" | "failed";
         "models.CaseShare": {
+            /** @description AttachmentSelection is the per-share snapshot of the
+             *     task.Attachments[] ids the recipient is allowed to browse.
+             *     Same nil/empty/non-empty semantics as Selection — and the same
+             *     reason the bson tag drops `,omitempty`. */
+            attachment_selection?: string[];
             created_at?: number;
             email?: string;
             expires_at?: number;
@@ -27527,6 +27801,29 @@ export interface components {
             organisation_id?: string;
             /** @description e.g. ["view"] */
             permissions?: string[];
+            /** @description Selection is the per-share snapshot of the case_media ids the
+             *     recipient is allowed to browse, captured at CreateShare time.
+             *     It is the source of truth for what this specific token resolves
+             *     to — task.ShareSelection is only used as the owner-side
+             *     template that pre-fills the next share modal. Storing the
+             *     allow-list here decouples each recipient's view from later
+             *     edits to the task and from subsequent shares of the same case.
+             *
+             *     nil  = legacy / unsnapshotted share — resolvers fall back to
+             *            the task-level selection so old rows keep working.
+             *     []   = "include all" (same convention as the export pipeline).
+             *     [..] = literal allow-list of case_media ids.
+             *
+             *     IMPORTANT: the bson tag deliberately omits `,omitempty`. An
+             *     "include all" snapshot is represented by an empty (non-nil)
+             *     slice, and `omitempty` would drop that empty array on insert,
+             *     causing the document to read back as nil and incorrectly
+             *     trigger the legacy fallback to task.ShareSelection — silently
+             *     re-binding the share to whatever template the owner happens to
+             *     have in place at read time. The JSON tag keeps `omitempty`
+             *     because the frontend treats a missing field identically to
+             *     `[]`. */
+            selection?: string[];
             task_id?: string;
             token?: string;
             user_email?: string;
@@ -29322,6 +29619,17 @@ export interface components {
             downloaded_files?: string[];
             expires_at?: number;
             expires_at_overridden?: boolean;
+            /** @description ExportAttachmentSelection is the parallel to ExportSelection for
+             *     task.Attachments[]. Kept as its own array because attachments
+             *     live on a different storage path (and a different mongo
+             *     document shape) than case_media — mixing both into a single
+             *     selection array would force the export pipeline to consult two
+             *     collections to disambiguate every id, and would also make
+             *     "deselect every attachment" indistinguishable from a legacy
+             *     (media-only) selection. Same semantics as ExportSelection: nil
+             *     or empty means "default rule" (include every attachment), a
+             *     non-empty slice is the literal allow-list. */
+            export_attachment_selection?: string[];
             /** @description legacy: read by v20130101 only */
             export_files?: components["schemas"]["models.ExportFile"][];
             export_files_count?: number;
@@ -29338,13 +29646,23 @@ export interface components {
              *
              *     An empty selection means "default rule": consumers fall back to
              *     every source's latest completed edit (or the source itself when
-             *     no completed edit exists). */
+             *     no completed edit exists).
+             *
+             *     NOTE on the share fields specifically: ShareSelection and
+             *     ShareAttachmentSelection are the owner-side TEMPLATE used to
+             *     pre-fill the next share modal ("start where the last share left
+             *     off"). They are NOT the source of truth for what an active
+             *     recipient sees \u2014 each CaseShare row carries its own Selection /
+             *     AttachmentSelection snapshot captured at CreateShare time, so
+             *     later edits to this template do not retroactively change what
+             *     already-issued tokens resolve to. */
             export_selection?: string[];
             /** @description An export task, is containing multiple video in a compressed file format (.zip) */
             export_status?: string;
             id?: string;
             is_private?: boolean;
             labels?: string[];
+            last_exported_selection_revision?: number;
             legal_hold?: boolean;
             /** @description Number of source case_media rows attached to this task. Mirrors
              *     case_media documents where role == "source" and task_id matches. */
@@ -29389,7 +29707,27 @@ export interface components {
              *     because investigator extended" from "kept because under legal
              *     hold". Managed by a dedicated permission. */
             retention_days?: number;
+            /** @description SelectionRevision is a monotonic counter bumped by hub-api on
+             *     every PATCH that mutates ExportSelection or
+             *     ExportAttachmentSelection. Decoupled from ExportRevision (which
+             *     gates the worker's mid-flight race protection) so that
+             *     re-ticking checkboxes does not look like a fresh export
+             *     request to the running pipeline.
+             *
+             *     LastExportedSelectionRevision is the value of SelectionRevision
+             *     the worker captured at the start of the most recently
+             *     completed export run. When SelectionRevision >
+             *     LastExportedSelectionRevision the current zip is stale — its
+             *     contents no longer match the persisted selection — and the
+             *     case detail page surfaces a "regenerate" hint next to the
+             *     download button. */
+            selection_revision?: number;
             sequenceId?: string;
+            /** @description ShareAttachmentSelection mirrors ExportAttachmentSelection for
+             *     the share flow. Same semantics: nil/empty = include every
+             *     attachment in the recipient view, non-empty = literal
+             *     allow-list. */
+            share_attachment_selection?: string[];
             share_selection?: string[];
             sprite_url?: string;
             spriteFile?: string;
@@ -30443,6 +30781,10 @@ export namespace api {
     export type UpdateCaseAttachmentRequest = components['schemas']['api.UpdateCaseAttachmentRequest'];
     export type UpdateCaseAttachmentResponse = components['schemas']['api.UpdateCaseAttachmentResponse'];
     export type UpdateCaseAttachmentSuccessResponse = components['schemas']['api.UpdateCaseAttachmentSuccessResponse'];
+    export type UpdateCaseMediaCurationErrorResponse = components['schemas']['api.UpdateCaseMediaCurationErrorResponse'];
+    export type UpdateCaseMediaCurationRequest = components['schemas']['api.UpdateCaseMediaCurationRequest'];
+    export type UpdateCaseMediaCurationResponse = components['schemas']['api.UpdateCaseMediaCurationResponse'];
+    export type UpdateCaseMediaCurationSuccessResponse = components['schemas']['api.UpdateCaseMediaCurationSuccessResponse'];
     export type UpdateCaseMediaSelectedVersionErrorResponse = components['schemas']['api.UpdateCaseMediaSelectedVersionErrorResponse'];
     export type UpdateCaseMediaSelectedVersionRequest = components['schemas']['api.UpdateCaseMediaSelectedVersionRequest'];
     export type UpdateCaseMediaSelectedVersionResponse = components['schemas']['api.UpdateCaseMediaSelectedVersionResponse'];

@@ -119,6 +119,23 @@ type CaseMedia struct {
 	CreatedBy string `json:"createdBy,omitempty" bson:"created_by,omitempty"`
 	UpdatedAt int64  `json:"updatedAt,omitempty" bson:"updated_at,omitempty"`
 
+	// IncludeInExport and IncludeInShare are per-row curation flags. A
+	// case_media is included in an export bundle / share recipient view
+	// when the corresponding flag is true. Both default to true at
+	// insert time (set explicitly by the create path — the Go zero
+	// value would otherwise be the opposite of what we want). Owners
+	// toggle these via PATCH /case-media/:id; share/export consumers
+	// filter on them at read time, and for shares the resolved set is
+	// frozen into CaseShare.Selection at CreateShare time so later
+	// toggles do not bleed into already-issued tokens. Only meaningful
+	// on Role = "source" rows — edits inherit their inclusion state
+	// from the source they resolve to.
+	//
+	// BSON tags deliberately omit `,omitempty` so a `false` value is
+	// persisted faithfully instead of being dropped to the default.
+	IncludeInExport bool `json:"includeInExport" bson:"include_in_export"`
+	IncludeInShare  bool `json:"includeInShare"  bson:"include_in_share"`
+
 	// Url is signed by the API at fetch time and not persisted.
 	Url string `json:"url,omitempty" bson:"-"`
 	// ThumbnailUrl is a signed playback URL for ThumbnailFile and is

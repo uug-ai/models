@@ -19,4 +19,6 @@ const (
 	CaseAttachmentCreatedAt = "created_at"
 	CaseAttachmentCreatedBy = "created_by"
 	CaseAttachmentUpdatedAt = "updated_at"
+	CaseAttachmentIncludeInExport = "include_in_export"
+	CaseAttachmentIncludeInShare = "include_in_share"
 )

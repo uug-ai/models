@@ -39,4 +39,6 @@ const (
 	CaseMediaCreatedAt = "created_at"
 	CaseMediaCreatedBy = "created_by"
 	CaseMediaUpdatedAt = "updated_at"
+	CaseMediaIncludeInExport = "include_in_export"
+	CaseMediaIncludeInShare = "include_in_share"
 )
