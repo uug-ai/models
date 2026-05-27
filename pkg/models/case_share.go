@@ -17,6 +17,25 @@ type CaseShare struct {
 	OTPCode        string             `json:"-" bson:"otp_code,omitempty"`
 	OTPExpiry      int64              `json:"-" bson:"otp_expiry,omitempty"`
 	OTPAttempts    int                `json:"-" bson:"otp_attempts,omitempty"`
+
+	// Selection is the per-share snapshot of the case_media ids the
+	// recipient is allowed to browse, captured at CreateShare time.
+	// It is the source of truth for what this specific token resolves
+	// to — task.ShareSelection is only used as the owner-side
+	// template that pre-fills the next share modal. Storing the
+	// allow-list here decouples each recipient's view from later
+	// edits to the task and from subsequent shares of the same case.
+	//
+	// nil  = legacy / unsnapshotted share — resolvers fall back to
+	//        the task-level selection so old rows keep working.
+	// []   = "include all" (same convention as the export pipeline).
+	// [..] = literal allow-list of case_media ids.
+	Selection []primitive.ObjectID `json:"selection,omitempty" bson:"selection,omitempty"`
+
+	// AttachmentSelection is the per-share snapshot of the
+	// task.Attachments[] ids the recipient is allowed to browse.
+	// Same nil/empty/non-empty semantics as Selection.
+	AttachmentSelection []primitive.ObjectID `json:"attachment_selection,omitempty" bson:"attachment_selection,omitempty"`
 }
 
 // Input/Output types for repository operations

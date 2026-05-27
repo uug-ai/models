@@ -127,8 +127,12 @@ type AddTaskMediaErrorResponse struct {
 // When ExportSelection is non-nil the server persists it on the task before
 // queueing the export so users can include / exclude individual case_media
 // items from the bundle. A nil value preserves the existing selection.
+// ExportAttachmentSelection is the parallel knob for task.Attachments[];
+// the two arrays are tracked independently so each side's "deselect
+// everything" can be expressed without ambiguity.
 type RequestTaskExportRequest struct {
-	ExportSelection *[]string `json:"export_selection,omitempty" bson:"export_selection,omitempty"`
+	ExportSelection           *[]string `json:"export_selection,omitempty"            bson:"export_selection,omitempty"`
+	ExportAttachmentSelection *[]string `json:"export_attachment_selection,omitempty" bson:"export_attachment_selection,omitempty"`
 }
 
 // RequestTaskExportResponse is returned by POST /tasks/{id}/export and
