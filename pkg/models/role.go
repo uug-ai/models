@@ -42,8 +42,9 @@ type FeaturePermissions struct {
 	Devices      AccessLevel `json:"devices" bson:"devices"`             // 0=none, 1=read, 2=write, 3=admin
 	Sites        AccessLevel `json:"sites" bson:"sites"`                 // 0=none, 1=read, 2=write, 3=admin
 	Groups       AccessLevel `json:"groups" bson:"groups"`               // 0=none, 1=read, 2=write, 3=admin
-	Roles        AccessLevel `json:"roles" bson:"roles"`                 // 0=none, 1=read, 2=write, 3=admin
-	Settings     AccessLevel `json:"settings" bson:"settings"`           // 0=none, 1=read, 2=write, 3=admin
+	Roles              AccessLevel `json:"roles" bson:"roles"`                             // 0=none, 1=read, 2=write, 3=admin
+	Settings           AccessLevel `json:"settings" bson:"settings"`                       // 0=none, 1=read, 2=write, 3=admin
+	DownloadRecordings AccessLevel `json:"download_recordings" bson:"download_recordings"` // 0=none, 1=read, 2=write, 3=admin
 }
 
 type TimeWindow struct {
