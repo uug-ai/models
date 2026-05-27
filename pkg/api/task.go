@@ -123,6 +123,14 @@ type AddTaskMediaErrorResponse struct {
 	ErrorResponse
 }
 
+// RequestTaskExportRequest is the optional body of POST /tasks/{id}/export.
+// When ExportSelection is non-nil the server persists it on the task before
+// queueing the export so users can include / exclude individual case_media
+// items from the bundle. A nil value preserves the existing selection.
+type RequestTaskExportRequest struct {
+	ExportSelection *[]string `json:"export_selection,omitempty" bson:"export_selection,omitempty"`
+}
+
 // RequestTaskExportResponse is returned by POST /tasks/{id}/export and
 // carries the updated task whose export job has just been queued.
 type RequestTaskExportResponse struct {
