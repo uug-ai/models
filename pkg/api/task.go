@@ -400,6 +400,18 @@ type EditTaskRequest struct {
 	AssigneesProfile *[]string   `json:"assignees_profile,omitempty" bson:"assignees_profile,omitempty"`
 	NotifyAssignees  *bool       `json:"notify_assignees,omitempty" bson:"notify_assignees,omitempty"`
 	IsPrivate        *bool       `json:"is_private,omitempty" bson:"is_private,omitempty"`
+
+	// Curation templates — pointer-to-slice so callers can distinguish
+	// "field omitted" (no-op) from "field present with []" (empty
+	// allow-list, which downstream readers interpret as "include all").
+	// These mirror the per-side modal drafts and are persisted on every
+	// inline checkbox toggle so the selection survives reloads. The
+	// share-side arrays are templates only — once a share token is
+	// created the snapshot lives on the CaseShare row itself.
+	ExportSelection           *[]string `json:"export_selection,omitempty" bson:"export_selection,omitempty"`
+	ExportAttachmentSelection *[]string `json:"export_attachment_selection,omitempty" bson:"export_attachment_selection,omitempty"`
+	ShareSelection            *[]string `json:"share_selection,omitempty" bson:"share_selection,omitempty"`
+	ShareAttachmentSelection  *[]string `json:"share_attachment_selection,omitempty" bson:"share_attachment_selection,omitempty"`
 }
 
 type EditTaskResponse struct {
