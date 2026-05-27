@@ -80,6 +80,16 @@ type Task struct {
 	ExportInProgress bool         `json:"export_in_progress" bson:"export_in_progress,omitempty"`
 	ExportRevision   int64        `json:"export_revision" bson:"export_revision,omitempty"`
 
+	// ExportSelectionDirty signals that the curated bundle composition
+	// (include_in_export flags on case_media / attachments, or a newly
+	// added media row) changed since the last successful export
+	// completion. Bumped to true by curation toggles and media inserts
+	// in hub-api; cleared by hub-pipeline-export in CompleteExport.
+	// The FE uses this to disable the Regenerate action when no
+	// changes are pending and to surface a "selection changed" hint
+	// next to the export status badge.
+	ExportSelectionDirty bool `json:"export_selection_dirty" bson:"export_selection_dirty,omitempty"`
+
 	// Number of source case_media rows attached to this task. Mirrors
 	// case_media documents where role == "source" and task_id matches.
 	MediaCount int `json:"media_count" bson:"media_count,omitempty"`
