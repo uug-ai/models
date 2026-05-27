@@ -24,6 +24,12 @@ const (
 	TaskMediaAddSuccess TaskStatus = "Task_media_add_success"
 	TaskMediaAddFailed  TaskStatus = "Task_media_add_failed"
 
+	// Export generation trigger — set when the user explicitly
+	// requests an export bundle build via POST /tasks/:id/export.
+	TaskExportRequestSuccess TaskStatus = "Task_export_request_success"
+	TaskExportRequestFailed  TaskStatus = "Task_export_request_failed"
+	TaskExportAlreadyActive  TaskStatus = "Task_export_already_active"
+
 	// Case attachments — auxiliary, non-pipeline files attached to a
 	// case (PDFs, images, scanned documents, audio notes). See
 	// models.CaseAttachment.
@@ -61,6 +67,10 @@ func (ms TaskStatus) Translate(lang string) string {
 			TaskDeleteFailed:    "Task failed to delete",
 			TaskMediaAddSuccess: "Media was added to the task successfully",
 			TaskMediaAddFailed:  "Failed to add media to the task",
+
+			TaskExportRequestSuccess: "Export bundle generation has been queued",
+			TaskExportRequestFailed:  "Failed to queue export bundle generation",
+			TaskExportAlreadyActive:  "An export is already in progress for this task",
 
 			TaskAttachmentAddSuccess:    "Attachment added to the case successfully",
 			TaskAttachmentAddFailed:     "Failed to add attachment to the case",
@@ -110,6 +120,21 @@ type AddTaskMediaSuccessResponse struct {
 }
 
 type AddTaskMediaErrorResponse struct {
+	ErrorResponse
+}
+
+// RequestTaskExportResponse is returned by POST /tasks/{id}/export and
+// carries the updated task whose export job has just been queued.
+type RequestTaskExportResponse struct {
+	Task models.Task `json:"task,omitempty" bson:"task,omitempty"`
+}
+
+type RequestTaskExportSuccessResponse struct {
+	SuccessResponse
+	Data RequestTaskExportResponse `json:"data,omitempty" bson:"data,omitempty"`
+}
+
+type RequestTaskExportErrorResponse struct {
 	ErrorResponse
 }
 
