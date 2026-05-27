@@ -24151,7 +24151,6 @@ export interface components {
             id?: string;
             is_private?: boolean;
             labels?: string[];
-            last_exported_selection_revision?: number;
             legal_hold?: boolean;
             /** @description Number of source case_media rows attached to this task. Mirrors
              *     case_media documents where role == "source" and task_id matches. */
@@ -24197,21 +24196,6 @@ export interface components {
              *     because investigator extended" from "kept because under legal
              *     hold". Managed by a dedicated permission. */
             retention_days?: number;
-            /** @description SelectionRevision is a monotonic counter bumped by hub-api on
-             *     every PATCH that mutates ExportSelection or
-             *     ExportAttachmentSelection. Decoupled from ExportRevision (which
-             *     gates the worker's mid-flight race protection) so that
-             *     re-ticking checkboxes does not look like a fresh export
-             *     request to the running pipeline.
-             *
-             *     LastExportedSelectionRevision is the value of SelectionRevision
-             *     the worker captured at the start of the most recently
-             *     completed export run. When SelectionRevision >
-             *     LastExportedSelectionRevision the current zip is stale — its
-             *     contents no longer match the persisted selection — and the
-             *     case detail page surfaces a "regenerate" hint next to the
-             *     download button. */
-            selection_revision?: number;
             sequenceId?: string;
             /** @description ShareAttachmentSelection mirrors ExportAttachmentSelection for
              *     the share flow. Same semantics: nil/empty = include every
@@ -29662,7 +29646,6 @@ export interface components {
             id?: string;
             is_private?: boolean;
             labels?: string[];
-            last_exported_selection_revision?: number;
             legal_hold?: boolean;
             /** @description Number of source case_media rows attached to this task. Mirrors
              *     case_media documents where role == "source" and task_id matches. */
@@ -29707,21 +29690,6 @@ export interface components {
              *     because investigator extended" from "kept because under legal
              *     hold". Managed by a dedicated permission. */
             retention_days?: number;
-            /** @description SelectionRevision is a monotonic counter bumped by hub-api on
-             *     every PATCH that mutates ExportSelection or
-             *     ExportAttachmentSelection. Decoupled from ExportRevision (which
-             *     gates the worker's mid-flight race protection) so that
-             *     re-ticking checkboxes does not look like a fresh export
-             *     request to the running pipeline.
-             *
-             *     LastExportedSelectionRevision is the value of SelectionRevision
-             *     the worker captured at the start of the most recently
-             *     completed export run. When SelectionRevision >
-             *     LastExportedSelectionRevision the current zip is stale — its
-             *     contents no longer match the persisted selection — and the
-             *     case detail page surfaces a "regenerate" hint next to the
-             *     download button. */
-            selection_revision?: number;
             sequenceId?: string;
             /** @description ShareAttachmentSelection mirrors ExportAttachmentSelection for
              *     the share flow. Same semantics: nil/empty = include every

@@ -80,23 +80,6 @@ type Task struct {
 	ExportInProgress bool         `json:"export_in_progress" bson:"export_in_progress,omitempty"`
 	ExportRevision   int64        `json:"export_revision" bson:"export_revision,omitempty"`
 
-	// SelectionRevision is a monotonic counter bumped by hub-api on
-	// every PATCH that mutates ExportSelection or
-	// ExportAttachmentSelection. Decoupled from ExportRevision (which
-	// gates the worker's mid-flight race protection) so that
-	// re-ticking checkboxes does not look like a fresh export
-	// request to the running pipeline.
-	//
-	// LastExportedSelectionRevision is the value of SelectionRevision
-	// the worker captured at the start of the most recently
-	// completed export run. When SelectionRevision >
-	// LastExportedSelectionRevision the current zip is stale — its
-	// contents no longer match the persisted selection — and the
-	// case detail page surfaces a "regenerate" hint next to the
-	// download button.
-	SelectionRevision             int64 `json:"selection_revision,omitempty" bson:"selection_revision,omitempty"`
-	LastExportedSelectionRevision int64 `json:"last_exported_selection_revision,omitempty" bson:"last_exported_selection_revision,omitempty"`
-
 	// Number of source case_media rows attached to this task. Mirrors
 	// case_media documents where role == "source" and task_id matches.
 	MediaCount int `json:"media_count" bson:"media_count,omitempty"`
