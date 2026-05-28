@@ -94,53 +94,6 @@ type Task struct {
 	// case_media documents where role == "source" and task_id matches.
 	MediaCount int `json:"media_count" bson:"media_count,omitempty"`
 
-	// Per-purpose case_media selections. Each slice is an ordered list
-	// of case_media ids picked for that purpose. The full inventory
-	// lives in the case_media collection (queryable by task_id); these
-	// fields only record which subset participates in the export /
-	// share bundle and in what order.
-	//
-	// An empty selection means "default rule": consumers fall back to
-	// every source's latest completed edit (or the source itself when
-	// no completed edit exists).
-	//
-	// NOTE on the share fields specifically: ShareSelection and
-	// ShareAttachmentSelection are the owner-side TEMPLATE used to
-	// pre-fill the next share modal ("start where the last share left
-	// off"). They are NOT the source of truth for what an active
-	// recipient sees \u2014 each CaseShare row carries its own Selection /
-	// AttachmentSelection snapshot captured at CreateShare time, so
-	// later edits to this template do not retroactively change what
-	// already-issued tokens resolve to.
-	ExportSelection []primitive.ObjectID `json:"export_selection,omitempty" bson:"export_selection,omitempty"`
-	ShareSelection  []primitive.ObjectID `json:"share_selection,omitempty"  bson:"share_selection,omitempty"`
-
-	// ExportAttachmentSelection is the parallel to ExportSelection for
-	// task.Attachments[]. Kept as its own array because attachments
-	// live on a different storage path (and a different mongo
-	// document shape) than case_media — mixing both into a single
-	// selection array would force the export pipeline to consult two
-	// collections to disambiguate every id, and would also make
-	// "deselect every attachment" indistinguishable from a legacy
-	// (media-only) selection. Same semantics as ExportSelection: nil
-	// or empty means "default rule" (include every attachment), a
-	// non-empty slice is the literal allow-list.
-	ExportAttachmentSelection []primitive.ObjectID `json:"export_attachment_selection,omitempty" bson:"export_attachment_selection,omitempty"`
-
-	// ShareAttachmentSelection mirrors ExportAttachmentSelection for
-	// the share flow. Same semantics: nil/empty = include every
-	// attachment in the recipient view, non-empty = literal
-	// allow-list.
-	ShareAttachmentSelection []primitive.ObjectID `json:"share_attachment_selection,omitempty" bson:"share_attachment_selection,omitempty"`
-
-	// Attachments are auxiliary, non-pipeline files attached to the
-	// case (PDFs, hi-res images, scanned documents, audio notes, …).
-	// They are embedded directly here under the assumption that the
-	// per-case cardinality stays bounded (soft cap ~100). Only
-	// metadata is stored; bytes live in Vault. List-cases endpoints
-	// SHOULD project this field out to keep the list view light.
-	Attachments []CaseAttachment `json:"attachments,omitempty" bson:"attachments,omitempty"`
-
 	// Retention / lifecycle.
 	//
 	// RetentionDays captures the *policy intent*: how many days the

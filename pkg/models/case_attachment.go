@@ -8,17 +8,22 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 // uploaded synchronously by the API in response to a user action, are
 // never mutated by background workers, and have no version chain.
 //
-// Attachments are embedded directly on Task (Task.Attachments) on the
-// assumption that the cardinality stays bounded per case (target soft
-// cap ~100). Only metadata is stored — the file bytes themselves live
-// in Vault and are referenced through File / Provider, matching the
-// pattern used by CaseMedia and the worker pipelines.
-//
-// If the cardinality assumption ever stops holding the migration path
-// is a one-shot $unwind + $out into a dedicated case_attachments
-// collection; nothing about this shape blocks that.
+// Attachments live in their own top-level `case_attachments` collection
+// (same pattern as CaseMedia). The legacy embedded slice on Task
+// (`task.attachments`) is migrated lazily by hub-api on first read and
+// is no longer the source of truth. Only metadata is stored — the file
+// bytes themselves live in Vault and are referenced through
+// File / Provider, matching the pattern used by CaseMedia and the
+// worker pipelines.
 type CaseAttachment struct {
 	Id primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+
+	// TaskId / OrganisationId scope the row to its parent case and
+	// tenant. Required on every row in the case_attachments collection
+	// so list/get queries can index on them directly without joining
+	// against the tasks collection.
+	TaskId         primitive.ObjectID `json:"taskId"         bson:"task_id"`
+	OrganisationId string             `json:"organisationId" bson:"organisation_id"`
 
 	// Type is a coarse classification of the attachment used by the UI
 	// to pick an icon / viewer. MimeType is the source of truth for

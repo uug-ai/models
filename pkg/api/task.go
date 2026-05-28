@@ -124,15 +124,11 @@ type AddTaskMediaErrorResponse struct {
 }
 
 // RequestTaskExportRequest is the optional body of POST /tasks/{id}/export.
-// When ExportSelection is non-nil the server persists it on the task before
-// queueing the export so users can include / exclude individual case_media
-// items from the bundle. A nil value preserves the existing selection.
-// ExportAttachmentSelection is the parallel knob for task.Attachments[];
-// the two arrays are tracked independently so each side's "deselect
-// everything" can be expressed without ambiguity.
+// v20260101 drives include/exclude through per-document IncludeInExport
+// flags on case_media / case_attachments, so the body carries no
+// selection payload anymore. The struct is retained as an empty
+// placeholder for OpenAPI generation and future fields.
 type RequestTaskExportRequest struct {
-	ExportSelection           *[]string `json:"export_selection,omitempty"            bson:"export_selection,omitempty"`
-	ExportAttachmentSelection *[]string `json:"export_attachment_selection,omitempty" bson:"export_attachment_selection,omitempty"`
 }
 
 // RequestTaskExportResponse is returned by POST /tasks/{id}/export and
@@ -400,18 +396,6 @@ type EditTaskRequest struct {
 	AssigneesProfile *[]string   `json:"assignees_profile,omitempty" bson:"assignees_profile,omitempty"`
 	NotifyAssignees  *bool       `json:"notify_assignees,omitempty" bson:"notify_assignees,omitempty"`
 	IsPrivate        *bool       `json:"is_private,omitempty" bson:"is_private,omitempty"`
-
-	// Curation templates — pointer-to-slice so callers can distinguish
-	// "field omitted" (no-op) from "field present with []" (empty
-	// allow-list, which downstream readers interpret as "include all").
-	// These mirror the per-side modal drafts and are persisted on every
-	// inline checkbox toggle so the selection survives reloads. The
-	// share-side arrays are templates only — once a share token is
-	// created the snapshot lives on the CaseShare row itself.
-	ExportSelection           *[]string `json:"export_selection,omitempty" bson:"export_selection,omitempty"`
-	ExportAttachmentSelection *[]string `json:"export_attachment_selection,omitempty" bson:"export_attachment_selection,omitempty"`
-	ShareSelection            *[]string `json:"share_selection,omitempty" bson:"share_selection,omitempty"`
-	ShareAttachmentSelection  *[]string `json:"share_attachment_selection,omitempty" bson:"share_attachment_selection,omitempty"`
 }
 
 type EditTaskResponse struct {
