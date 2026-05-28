@@ -14,6 +14,7 @@ const (
 	CaseMediaEditType = "edit_type"
 	CaseMediaVersion = "version"
 	CaseMediaSupersedesId = "supersedes_id"
+	CaseMediaSelectedVersionId = "selected_version_id"
 	CaseMediaParams = "params"
 	CaseMediaSourceMediaId = "source_media_id"
 	CaseMediaTimestamp = "timestamp"
@@ -38,4 +39,6 @@ const (
 	CaseMediaCreatedAt = "created_at"
 	CaseMediaCreatedBy = "created_by"
 	CaseMediaUpdatedAt = "updated_at"
+	CaseMediaIncludeInExport = "include_in_export"
+	CaseMediaIncludeInShare = "include_in_share"
 )

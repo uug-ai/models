@@ -1018,6 +1018,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/adminrecentsubscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AdminRecentSubscription (schema generation only)
+         * @description Internal endpoint used only to ensure AdminRecentSubscription schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.AdminRecentSubscription"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/alertfeatures": {
         parameters: {
             query?: never;
@@ -1954,6 +1993,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/caseattachment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CaseAttachment (schema generation only)
+         * @description Internal endpoint used only to ensure CaseAttachment schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CaseAttachment"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/casemedia": {
         parameters: {
             query?: never;
@@ -2761,6 +2839,240 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.CountingSummary"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createadminorganisationerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateAdminOrganisationErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateAdminOrganisationErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateAdminOrganisationErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createadminorganisationresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateAdminOrganisationResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateAdminOrganisationResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateAdminOrganisationResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createadminorganisationsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateAdminOrganisationSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateAdminOrganisationSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateAdminOrganisationSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createadminusererrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateAdminUserErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateAdminUserErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateAdminUserErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createadminuserresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateAdminUserResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateAdminUserResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateAdminUserResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createadminusersuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateAdminUserSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateAdminUserSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateAdminUserSuccessResponse"];
                     };
                 };
             };
@@ -4087,6 +4399,123 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.DeleteAccessTokenSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletecaseattachmenterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteCaseAttachmentErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteCaseAttachmentErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteCaseAttachmentErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletecaseattachmentresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteCaseAttachmentResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteCaseAttachmentResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteCaseAttachmentResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletecaseattachmentsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteCaseAttachmentSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteCaseAttachmentSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteCaseAttachmentSuccessResponse"];
                     };
                 };
             };
@@ -6478,6 +6907,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/generateadminuserkeyerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GenerateAdminUserKeyErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GenerateAdminUserKeyErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GenerateAdminUserKeyErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/generateadminuserkeyresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GenerateAdminUserKeyResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GenerateAdminUserKeyResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GenerateAdminUserKeyResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/generateadminuserkeysuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GenerateAdminUserKeySuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GenerateAdminUserKeySuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GenerateAdminUserKeySuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getaccesstokenserrorresponse": {
         parameters: {
             query?: never;
@@ -6622,6 +7168,1332 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetAccessTokensSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadmindeviceerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminDeviceErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminDeviceErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminDeviceErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadmindeviceresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminDeviceResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminDeviceResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminDeviceResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadmindeviceserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminDevicesErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminDevicesErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminDevicesErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadmindevicesmeta": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminDevicesMeta (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminDevicesMeta schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminDevicesMeta"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadmindevicesresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminDevicesResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminDevicesResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminDevicesResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadmindevicessuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminDevicesSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminDevicesSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminDevicesSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadmindevicesuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminDeviceSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminDeviceSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminDeviceSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminorganisationserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminOrganisationsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminOrganisationsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminOrganisationsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminorganisationsmeta": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminOrganisationsMeta (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminOrganisationsMeta schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminOrganisationsMeta"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminorganisationsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminOrganisationsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminOrganisationsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminOrganisationsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminorganisationssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminOrganisationsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminOrganisationsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminOrganisationsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminstatserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminStatsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminStatsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminStatsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminstatsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminStatsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminStatsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminStatsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminstatssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminStatsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminStatsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminStatsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminsubscriptionsettingserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminSubscriptionSettingsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminSubscriptionSettingsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminSubscriptionSettingsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminsubscriptionsettingsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminSubscriptionSettingsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminSubscriptionSettingsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminSubscriptionSettingsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminsubscriptionsettingssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminSubscriptionSettingsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminSubscriptionSettingsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminSubscriptionSettingsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminuserdeviceserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserDevicesErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserDevicesErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserDevicesErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminuserdevicesinformationerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserDevicesInformationErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserDevicesInformationErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserDevicesInformationErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminuserdevicesinformationresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserDevicesInformationResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserDevicesInformationResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserDevicesInformationResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminuserdevicesinformationsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserDevicesInformationSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserDevicesInformationSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserDevicesInformationSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminuserdevicesmeta": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserDevicesMeta (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserDevicesMeta schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserDevicesMeta"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminuserdevicesresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserDevicesResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserDevicesResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserDevicesResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminuserdevicessuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserDevicesSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserDevicesSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserDevicesSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminuserprofileerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserProfileErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserProfileErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserProfileErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminuserprofileresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserProfileResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserProfileResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserProfileResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminuserprofilesuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserProfileSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserProfileSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserProfileSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminuserserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUsersErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUsersErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUsersErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminusersmeta": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUsersMeta (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUsersMeta schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUsersMeta"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminusersresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUsersResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUsersResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUsersResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminuserssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUsersSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUsersSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUsersSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminusersubscriptionerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserSubscriptionErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserSubscriptionErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserSubscriptionErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminusersubscriptionresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserSubscriptionResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserSubscriptionResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserSubscriptionResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getadminusersubscriptionsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAdminUserSubscriptionSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAdminUserSubscriptionSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAdminUserSubscriptionSuccessResponse"];
                     };
                 };
             };
@@ -7012,6 +8884,123 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetAnalyticsDashboardSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcaseattachmenterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCaseAttachmentErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetCaseAttachmentErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetCaseAttachmentErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcaseattachmentresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCaseAttachmentResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetCaseAttachmentResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetCaseAttachmentResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcaseattachmentsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCaseAttachmentSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetCaseAttachmentSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetCaseAttachmentSuccessResponse"];
                     };
                 };
             };
@@ -13225,6 +15214,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/listcaseattachmentserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ListCaseAttachmentsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure ListCaseAttachmentsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.ListCaseAttachmentsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/listcaseattachmentsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ListCaseAttachmentsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure ListCaseAttachmentsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.ListCaseAttachmentsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/listcaseattachmentssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ListCaseAttachmentsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure ListCaseAttachmentsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.ListCaseAttachmentsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/listcasemediaerrorresponse": {
         parameters: {
             query?: never;
@@ -15721,6 +17827,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/publishfileerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PublishFileErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure PublishFileErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.PublishFileErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/publishfileresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PublishFileResponse (schema generation only)
+         * @description Internal endpoint used only to ensure PublishFileResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.PublishFileResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/publishfilesuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PublishFileSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure PublishFileSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.PublishFileSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/pushbullet": {
         parameters: {
             query?: never;
@@ -16138,6 +18361,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.RemoveCustomAlertSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/requesttaskexporterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RequestTaskExportErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure RequestTaskExportErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RequestTaskExportErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/requesttaskexportrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RequestTaskExportRequest (schema generation only)
+         * @description Internal endpoint used only to ensure RequestTaskExportRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RequestTaskExportRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/requesttaskexportresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RequestTaskExportResponse (schema generation only)
+         * @description Internal endpoint used only to ensure RequestTaskExportResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RequestTaskExportResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/requesttaskexportsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RequestTaskExportSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure RequestTaskExportSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RequestTaskExportSuccessResponse"];
                     };
                 };
             };
@@ -18373,6 +20752,318 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/updateadminusererrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAdminUserErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAdminUserErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateAdminUserErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateadminuserpassworderrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAdminUserPasswordErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAdminUserPasswordErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateAdminUserPasswordErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateadminuserpasswordsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAdminUserPasswordSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAdminUserPasswordSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateAdminUserPasswordSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateadminuserresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAdminUserResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAdminUserResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateAdminUserResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateadminusersubscriptionerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAdminUserSubscriptionErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAdminUserSubscriptionErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateAdminUserSubscriptionErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateadminusersubscriptionresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAdminUserSubscriptionResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAdminUserSubscriptionResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateAdminUserSubscriptionResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateadminusersubscriptionsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAdminUserSubscriptionSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAdminUserSubscriptionSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateAdminUserSubscriptionSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateadminusersuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateAdminUserSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateAdminUserSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateAdminUserSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/updatealertinput": {
         parameters: {
             query?: never;
@@ -18439,6 +21130,474 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.UpdateAlertOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecaseattachmenterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseAttachmentErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseAttachmentErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseAttachmentErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecaseattachmentrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseAttachmentRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseAttachmentRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseAttachmentRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecaseattachmentresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseAttachmentResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseAttachmentResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseAttachmentResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecaseattachmentsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseAttachmentSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseAttachmentSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseAttachmentSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecasemediacurationerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseMediaCurationErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseMediaCurationErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseMediaCurationErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecasemediacurationrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseMediaCurationRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseMediaCurationRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseMediaCurationRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecasemediacurationresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseMediaCurationResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseMediaCurationResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseMediaCurationResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecasemediacurationsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseMediaCurationSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseMediaCurationSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseMediaCurationSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecasemediaselectedversionerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseMediaSelectedVersionErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseMediaSelectedVersionErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseMediaSelectedVersionErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecasemediaselectedversionrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseMediaSelectedVersionRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseMediaSelectedVersionRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseMediaSelectedVersionRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecasemediaselectedversionresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseMediaSelectedVersionResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseMediaSelectedVersionResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseMediaSelectedVersionResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatecasemediaselectedversionsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateCaseMediaSelectedVersionSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateCaseMediaSelectedVersionSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateCaseMediaSelectedVersionSuccessResponse"];
                     };
                 };
             };
@@ -19570,6 +22729,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.UpdateWorkflowSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/uploadcaseattachmenterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UploadCaseAttachmentErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UploadCaseAttachmentErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UploadCaseAttachmentErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/uploadcaseattachmentrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UploadCaseAttachmentRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UploadCaseAttachmentRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UploadCaseAttachmentRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/uploadcaseattachmentresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UploadCaseAttachmentResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UploadCaseAttachmentResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UploadCaseAttachmentResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/uploadcaseattachmentsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UploadCaseAttachmentSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UploadCaseAttachmentSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UploadCaseAttachmentSuccessResponse"];
                     };
                 };
             };
@@ -20769,6 +24084,13 @@ export interface components {
             assignees?: string[];
             assignees_profile?: string[];
             assignees_sent_to?: string[];
+            /** @description Attachments are auxiliary, non-pipeline files attached to the
+             *     case (PDFs, hi-res images, scanned documents, audio notes, …).
+             *     They are embedded directly here under the assumption that the
+             *     per-case cardinality stays bounded (soft cap ~100). Only
+             *     metadata is stored; bytes live in Vault. List-cases endpoints
+             *     SHOULD project this field out to keep the list view light. */
+            attachments?: components["schemas"]["models.CaseAttachment"][];
             /** @description A task can be assigned to a single camera or multiple cameras (depending of the export) */
             camera?: string;
             /** @description this is for the camera names (is computed on demand) */
@@ -20784,6 +24106,19 @@ export interface components {
             creation_datetime?: string;
             date?: number;
             downloaded_files?: string[];
+            expires_at?: number;
+            expires_at_overridden?: boolean;
+            /** @description ExportAttachmentSelection is the parallel to ExportSelection for
+             *     task.Attachments[]. Kept as its own array because attachments
+             *     live on a different storage path (and a different mongo
+             *     document shape) than case_media — mixing both into a single
+             *     selection array would force the export pipeline to consult two
+             *     collections to disambiguate every id, and would also make
+             *     "deselect every attachment" indistinguishable from a legacy
+             *     (media-only) selection. Same semantics as ExportSelection: nil
+             *     or empty means "default rule" (include every attachment), a
+             *     non-empty slice is the literal allow-list. */
+            export_attachment_selection?: string[];
             /** @description legacy: read by v20130101 only */
             export_files?: components["schemas"]["models.ExportFile"][];
             export_files_count?: number;
@@ -20800,13 +24135,23 @@ export interface components {
              *
              *     An empty selection means "default rule": consumers fall back to
              *     every source's latest completed edit (or the source itself when
-             *     no completed edit exists). */
+             *     no completed edit exists).
+             *
+             *     NOTE on the share fields specifically: ShareSelection and
+             *     ShareAttachmentSelection are the owner-side TEMPLATE used to
+             *     pre-fill the next share modal ("start where the last share left
+             *     off"). They are NOT the source of truth for what an active
+             *     recipient sees \u2014 each CaseShare row carries its own Selection /
+             *     AttachmentSelection snapshot captured at CreateShare time, so
+             *     later edits to this template do not retroactively change what
+             *     already-issued tokens resolve to. */
             export_selection?: string[];
             /** @description An export task, is containing multiple video in a compressed file format (.zip) */
             export_status?: string;
             id?: string;
             is_private?: boolean;
             labels?: string[];
+            legal_hold?: boolean;
             /** @description Number of source case_media rows attached to this task. Mirrors
              *     case_media documents where role == "source" and task_id matches. */
             media_count?: number;
@@ -20822,7 +24167,41 @@ export interface components {
             reporter_email?: string;
             reporter_id?: string;
             reporter_profile?: string;
+            /** @description Retention / lifecycle.
+             *
+             *     RetentionDays captures the *policy intent*: how many days the
+             *     case should be kept after its retention anchor (typically the
+             *     moment the case is closed, falling back to CreationDate when
+             *     the case is still open). Nil means "use the workspace/tenant
+             *     default policy"; 0 is a valid explicit "delete on next sweep".
+             *
+             *     ExpiresAt is the *materialized* date at which the cleanup
+             *     worker is allowed to purge the case (and its attachments,
+             *     media, comments, …). It is recomputed from RetentionDays on
+             *     write, EXCEPT when ExpiresAtOverridden is true. Nil means
+             *     "never expires". An index on this field powers the cleanup
+             *     sweep; do not use a Mongo TTL index — deletion must cascade
+             *     through the API so downstream storage (Vault, search, audit)
+             *     stays consistent.
+             *
+             *     ExpiresAtOverridden is set to true the moment a user manually
+             *     edits ExpiresAt. Once set, policy changes will NOT silently
+             *     re-materialize ExpiresAt, so a granted extension cannot be
+             *     undone by a tenant-wide policy tweak. Clearing the override
+             *     (e.g. "reset to policy") flips this back to false.
+             *
+             *     LegalHold, when true, suppresses cleanup unconditionally
+             *     regardless of ExpiresAt. It is intentionally a separate flag
+             *     from the retention date so audits can distinguish "kept longer
+             *     because investigator extended" from "kept because under legal
+             *     hold". Managed by a dedicated permission. */
+            retention_days?: number;
             sequenceId?: string;
+            /** @description ShareAttachmentSelection mirrors ExportAttachmentSelection for
+             *     the share flow. Same semantics: nil/empty = include every
+             *     attachment in the recipient view, non-empty = literal
+             *     allow-list. */
+            share_attachment_selection?: string[];
             share_selection?: string[];
             sprite_url?: string;
             spriteFile?: string;
@@ -20864,6 +24243,17 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.AdminRecentSubscription": {
+            created_at?: unknown;
+            ends_at?: unknown;
+            id?: unknown;
+            name?: string;
+            quantity?: unknown;
+            stripe_active?: unknown;
+            stripe_plan?: string;
+            user_id?: string;
+            username?: string;
+        };
         /** @enum {string} */
         "api.AnalysisStatus": "analysis_face_redaction_binding_failed" | "analysis_save_redaction_success" | "analysis_save_redaction_failed" | "analysis_submit_redaction_success" | "analysis_submit_redaction_failed" | "analysis_file_name_missing" | "analysis_signed_url_missing" | "analysis_all_frame_coordinates_missing" | "analysis_not_found" | "analysis_found" | "analysisId_missing" | "analysis_started" | "analysis_queue_subscribed" | "analysis_stage_monitor_missing" | "analysis_completed" | "analysis_decode_failed" | "analysis_insert_failed" | "analysis_update_failed" | "analysis_notification_update_failed" | "analysis_sequence_update_failed" | "analysis_task_update_failed";
         "api.CallerInfo": {
@@ -20879,6 +24269,62 @@ export interface components {
             status?: components["schemas"]["models.CaseMediaStatus"];
             statusError?: string;
             taskId?: string;
+        };
+        "api.CreateAdminOrganisationErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CreateAdminOrganisationResponse": {
+            organisation?: unknown;
+        };
+        "api.CreateAdminOrganisationSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.CreateAdminOrganisationResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CreateAdminUserErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CreateAdminUserResponse": {
+            user?: unknown;
+        };
+        "api.CreateAdminUserSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.CreateAdminUserResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
         };
         "api.CreateCustomAlertErrorResponse": {
             /** @description Application-specific error code */
@@ -21061,6 +24507,36 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.DeleteAccessTokenResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteCaseAttachmentErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteCaseAttachmentResponse": {
+            /** @description Id of the removed attachment, echoed back for client cache
+             *     invalidation. */
+            id?: string;
+        };
+        "api.DeleteCaseAttachmentSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.DeleteCaseAttachmentResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -21261,10 +24737,21 @@ export interface components {
         "api.EditTaskRequest": {
             assignees?: string[];
             assignees_profile?: string[];
+            export_attachment_selection?: string[];
+            /** @description Curation templates — pointer-to-slice so callers can distinguish
+             *     "field omitted" (no-op) from "field present with []" (empty
+             *     allow-list, which downstream readers interpret as "include all").
+             *     These mirror the per-side modal drafts and are persisted on every
+             *     inline checkbox toggle so the selection survives reloads. The
+             *     share-side arrays are templates only — once a share token is
+             *     created the snapshot lives on the CaseShare row itself. */
+            export_selection?: string[];
             is_private?: boolean;
             labels?: string[];
             notes?: string;
             notify_assignees?: boolean;
+            share_attachment_selection?: string[];
+            share_selection?: string[];
             status?: components["schemas"]["api.TaskStatus"];
         };
         "api.EditTaskResponse": {
@@ -21317,6 +24804,35 @@ export interface components {
             /** @description Additional metadata about the error, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GenerateAdminUserKeyErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GenerateAdminUserKeyResponse": {
+            private_key?: string;
+            public_key?: string;
+        };
+        "api.GenerateAdminUserKeySuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GenerateAdminUserKeyResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetAccessTokensErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -21337,6 +24853,319 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetAccessTokensResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminDeviceErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminDeviceResponse": {
+            device?: unknown;
+        };
+        "api.GetAdminDeviceSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAdminDeviceResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminDevicesErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminDevicesMeta": {
+            device_count?: number;
+            total_device_count?: number;
+            total_pages?: number;
+        };
+        "api.GetAdminDevicesResponse": {
+            devices?: unknown;
+            meta?: components["schemas"]["api.GetAdminDevicesMeta"];
+        };
+        "api.GetAdminDevicesSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAdminDevicesResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminOrganisationsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminOrganisationsMeta": {
+            organisation_count?: number;
+            organisation_roles?: unknown;
+            organisation_types?: unknown;
+            total_organisation_count?: number;
+            total_pages?: number;
+        };
+        "api.GetAdminOrganisationsResponse": {
+            meta?: components["schemas"]["api.GetAdminOrganisationsMeta"];
+            organisations?: unknown;
+        };
+        "api.GetAdminOrganisationsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAdminOrganisationsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminStatsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminStatsResponse": {
+            device_count?: number;
+            organisation_count?: number;
+            recent_organisations?: unknown;
+            recent_subscriptions?: components["schemas"]["api.AdminRecentSubscription"][];
+            recent_users?: unknown;
+            recording_count?: number;
+            subscription_count?: number;
+            user_count?: number;
+        };
+        "api.GetAdminStatsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAdminStatsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminSubscriptionSettingsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminSubscriptionSettingsResponse": {
+            settings?: unknown;
+        };
+        "api.GetAdminSubscriptionSettingsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAdminSubscriptionSettingsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminUserDevicesErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminUserDevicesInformationErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminUserDevicesInformationResponse": {
+            devices?: unknown;
+            meta?: components["schemas"]["api.GetAdminUserDevicesMeta"];
+        };
+        "api.GetAdminUserDevicesInformationSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAdminUserDevicesInformationResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminUserDevicesMeta": {
+            device_count?: number;
+            total_device_count?: number;
+            total_pages?: number;
+        };
+        "api.GetAdminUserDevicesResponse": {
+            devices?: unknown;
+        };
+        "api.GetAdminUserDevicesSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAdminUserDevicesResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminUserProfileErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminUserProfileResponse": {
+            user?: unknown;
+        };
+        "api.GetAdminUserProfileSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAdminUserProfileResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminUserSubscriptionErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminUserSubscriptionResponse": {
+            subscription?: unknown;
+        };
+        "api.GetAdminUserSubscriptionSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAdminUserSubscriptionResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminUsersErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAdminUsersMeta": {
+            total_pages?: number;
+            total_user_count?: number;
+            user_count?: number;
+        };
+        "api.GetAdminUsersResponse": {
+            meta?: components["schemas"]["api.GetAdminUsersMeta"];
+            users?: unknown;
+        };
+        "api.GetAdminUsersSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAdminUsersResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -21399,6 +25228,34 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetAnalyticsDashboardResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetCaseAttachmentErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetCaseAttachmentResponse": {
+            attachment?: components["schemas"]["models.CaseAttachment"];
+        };
+        "api.GetCaseAttachmentSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetCaseAttachmentResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -22491,6 +26348,34 @@ export interface components {
             name?: string;
             sort?: string;
         };
+        "api.ListCaseAttachmentsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.ListCaseAttachmentsResponse": {
+            attachments?: components["schemas"]["models.CaseAttachment"][];
+        };
+        "api.ListCaseAttachmentsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.ListCaseAttachmentsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.ListCaseMediaErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -22654,6 +26539,40 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.PublishFileErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.PublishFileResponse": {
+            directory?: string;
+            fileName?: string;
+            fileSize?: number;
+            provider?: string;
+            /** @description SignedURL is a vault-signed URL that can be used to fetch the file
+             *     after upload. It carries an HMAC signature and a TTL. */
+            signedUrl?: string;
+        };
+        "api.PublishFileSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.PublishFileResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.RedactionEvent": {
             allFrameCoordinates?: {
                 [key: string]: components["schemas"]["models.TrackBox"][];
@@ -22677,6 +26596,38 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.RemoveCustomAlertResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.RequestTaskExportErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.RequestTaskExportRequest": {
+            export_attachment_selection?: string[];
+            export_selection?: string[];
+        };
+        "api.RequestTaskExportResponse": {
+            task?: components["schemas"]["models.Task"];
+        };
+        "api.RequestTaskExportSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.RequestTaskExportResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -22843,6 +26794,7 @@ export interface components {
             creation_date?: number;
             creation_datetime?: string;
             downloaded_files?: string[];
+            expires_at?: number;
             export_files_count?: number;
             export_status?: string;
             id?: string;
@@ -22863,7 +26815,7 @@ export interface components {
             title?: string;
         };
         /** @enum {string} */
-        "api.TaskStatus": "Task_binding_failed" | "Task_duplicate_name" | "Task_missing_info" | "Task_found" | "Task_not_found" | "Task_forbidden" | "Task_add_success" | "Task_add_failed" | "Task_update_success" | "Task_update_failed" | "Task_delete_success" | "Task_delete_failed" | "Task_media_add_success" | "Task_media_add_failed" | "open" | "approved" | "rejected";
+        "api.TaskStatus": "Task_binding_failed" | "Task_duplicate_name" | "Task_missing_info" | "Task_found" | "Task_not_found" | "Task_forbidden" | "Task_add_success" | "Task_add_failed" | "Task_update_success" | "Task_update_failed" | "Task_delete_success" | "Task_delete_failed" | "Task_media_add_success" | "Task_media_add_failed" | "Task_export_request_success" | "Task_export_request_failed" | "Task_export_already_active" | "Task_attachment_add_success" | "Task_attachment_add_failed" | "Task_attachment_update_success" | "Task_attachment_update_failed" | "Task_attachment_delete_success" | "Task_attachment_delete_failed" | "Task_attachment_not_found" | "Task_attachment_too_large" | "Task_attachment_type_rejected" | "open" | "approved" | "rejected";
         "api.TraceResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -22898,6 +26850,182 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.UpdateAccessTokenResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateAdminUserErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateAdminUserPasswordErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateAdminUserPasswordSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateAdminUserResponse": {
+            user?: unknown;
+        };
+        "api.UpdateAdminUserSubscriptionErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateAdminUserSubscriptionResponse": {
+            subscription?: unknown;
+        };
+        "api.UpdateAdminUserSubscriptionSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateAdminUserSubscriptionResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateAdminUserSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateAdminUserResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateCaseAttachmentErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateCaseAttachmentRequest": {
+            includeInExport?: boolean;
+            includeInShare?: boolean;
+            name?: string;
+        };
+        "api.UpdateCaseAttachmentResponse": {
+            attachment?: components["schemas"]["models.CaseAttachment"];
+        };
+        "api.UpdateCaseAttachmentSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateCaseAttachmentResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateCaseMediaCurationErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateCaseMediaCurationRequest": {
+            includeInExport?: boolean;
+            includeInShare?: boolean;
+        };
+        "api.UpdateCaseMediaCurationResponse": {
+            caseMedia?: components["schemas"]["models.CaseMedia"];
+        };
+        "api.UpdateCaseMediaCurationSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateCaseMediaCurationResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateCaseMediaSelectedVersionErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateCaseMediaSelectedVersionRequest": {
+            selectedVersionId?: string;
+        };
+        "api.UpdateCaseMediaSelectedVersionResponse": {
+            caseMedia?: components["schemas"]["models.CaseMedia"];
+        };
+        "api.UpdateCaseMediaSelectedVersionSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateCaseMediaSelectedVersionResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -23081,6 +27209,44 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.UpdateWorkflowResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UploadCaseAttachmentErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UploadCaseAttachmentRequest": {
+            /** @description Name overrides the filename recorded on the attachment. Defaults
+             *     to the multipart part filename when omitted. */
+            name?: string;
+            /** @description RelatedCaseMediaId optionally links the attachment to a specific
+             *     case_media entry it documents or annotates (annotated screenshot
+             *     of a redacted clip, etc.). Hex ObjectID; must belong to the same
+             *     task. */
+            relatedCaseMediaId?: string;
+        };
+        "api.UploadCaseAttachmentResponse": {
+            attachment?: components["schemas"]["models.CaseAttachment"];
+        };
+        "api.UploadCaseAttachmentSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UploadCaseAttachmentResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -23427,10 +27593,75 @@ export interface components {
             card_status_message?: string;
             stripe_id?: string;
         };
+        "models.CaseAttachment": {
+            createdAt?: number;
+            createdBy?: string;
+            /** @description Storage pointer into Vault (same abstraction as CaseMedia.File /
+             *     CaseMedia.Provider). Provider identifies the storage solution;
+             *     File is the object key inside it. */
+            file?: string;
+            id?: string;
+            /** @description IncludeInExport and IncludeInShare are per-attachment curation
+             *     flags. Same semantics as the namesakes on CaseMedia: defaulted
+             *     to true at upload time, toggled via PATCH, consulted by the
+             *     export pipeline and the share recipient endpoint, and frozen
+             *     into CaseShare.AttachmentSelection at CreateShare time.
+             *
+             *     BSON tags deliberately omit `,omitempty` so a `false` value is
+             *     persisted faithfully instead of being dropped to the default. */
+            includeInExport?: boolean;
+            includeInShare?: boolean;
+            mimeType?: string;
+            /** @description Name is the original filename at upload time. Users may rename
+             *     the attachment afterwards without renaming the underlying object
+             *     in Vault. */
+            name?: string;
+            provider?: string;
+            /** @description RelatedCaseMediaId optionally links the attachment to a specific
+             *     case_media entry it documents or annotates (for example, an
+             *     annotated screenshot of a redacted clip). Nil for free-standing
+             *     case-level attachments. */
+            relatedCaseMediaId?: string;
+            /** @description Sha256 is the hex-encoded SHA-256 of the uploaded bytes,
+             *     computed by hub-api while streaming the upload to Vault. Used
+             *     for de-duplication detection and integrity checks on large
+             *     files. Optional — older entries may not have it. */
+            sha256?: string;
+            /** @description Size in bytes of the stored object. Useful for UI display and
+             *     for sanity-checking that the Vault object still matches what we
+             *     recorded. */
+            size?: number;
+            /** @description Optional derived preview generated by hub-api on upload (a
+             *     downscaled JPEG for images, the first page rendered to an image
+             *     for PDFs, etc.). Absence is fine — the UI falls back to a
+             *     kind-based icon. */
+            thumbnailFile?: string;
+            thumbnailProvider?: string;
+            thumbnailUrl?: string;
+            /** @description Type is a coarse classification of the attachment used by the UI
+             *     to pick an icon / viewer. MimeType is the source of truth for
+             *     content negotiation; Type is derived from it at upload time. */
+            type?: components["schemas"]["models.CaseAttachmentType"];
+            updatedAt?: number;
+            /** @description Url / ThumbnailUrl are signed by hub-api at fetch time and never
+             *     persisted. They should be excluded from list-cases projections
+             *     to keep that endpoint light. */
+            url?: string;
+        };
+        /** @enum {string} */
+        "models.CaseAttachmentType": "pdf" | "image" | "document" | "audio" | "video" | "other";
         "models.CaseMedia": {
             /** @description Action describes what the edit does. Only meaningful when
              *     Role = "edit". See CaseMediaAction. */
             action?: components["schemas"]["models.CaseMediaAction"];
+            /** @description Analysis is a snapshot of the AnalysisWrapper associated with
+             *     the source media at attach time, including the per-operation
+             *     lifecycle fields (AsyncOperations / RequiredOperations /
+             *     ResolvedOperations) plus the analysis data (classify, counting,
+             *     faceRedaction, …) so the detail page and the face-redaction
+             *     edit modal can render without an extra lookup against the
+             *     `analysis` collection. Only populated on Role = "source". */
+            analysis?: components["schemas"]["models.AnalysisWrapper"];
             /** @description Optional job linkage — back-pointers to the analysis / face
              *     redaction documents that drove the edit, when applicable. */
             analysisId?: string;
@@ -23448,6 +27679,30 @@ export interface components {
              *     completes; for Role = "source" these mirror VideoFile/VideoProvider). */
             file?: string;
             id?: string;
+            /** @description IncludeInExport and IncludeInShare are per-row curation flags. A
+             *     case_media is included in an export bundle / share recipient view
+             *     when the corresponding flag is true. Both default to true at
+             *     insert time (set explicitly by the create path — the Go zero
+             *     value would otherwise be the opposite of what we want). Owners
+             *     toggle these via PATCH /case-media/:id; share/export consumers
+             *     filter on them at read time, and for shares the resolved set is
+             *     frozen into CaseShare.Selection at CreateShare time so later
+             *     toggles do not bleed into already-issued tokens. Only meaningful
+             *     on Role = "source" rows — edits inherit their inclusion state
+             *     from the source they resolve to.
+             *
+             *     BSON tags deliberately omit `,omitempty` so a `false` value is
+             *     persisted faithfully instead of being dropped to the default. */
+            includeInExport?: boolean;
+            includeInShare?: boolean;
+            /** @description Media is a full snapshot of the source Media document captured at
+             *     attach time. It is only populated on Role = "source" and is what
+             *     the media-detail page and edit modal consume — the flat fields
+             *     above stay in place because they are queried directly by the
+             *     export pipeline and the case-level summarisers. The snapshot
+             *     makes the case self-contained: edits to or deletions of the
+             *     original media row do not affect what the case shows. */
+            media?: components["schemas"]["models.Media"];
             organisationId?: string;
             /** @description Params carries kind-specific parameters used to produce the edit.
              *     For Action = "composite" it is expected to contain an
@@ -23464,6 +27719,15 @@ export interface components {
             /** @description Role describes whether this entry represents a source attached to
              *     the case or an edit derived from another entry. See CaseMediaRole. */
             role?: components["schemas"]["models.CaseMediaRole"];
+            /** @description SelectedVersionId is only meaningful on Role = "source" rows and
+             *     records which version of the source the case should display and
+             *     export. When set it points at an Role = "edit" CaseMedia entry
+             *     that descends from this source (directly via ParentId or
+             *     transitively via SupersedesId). When empty, consumers fall back
+             *     to the default behaviour (use the latest completed edit if any,
+             *     otherwise the source itself). Persisted so the choice survives
+             *     across sessions and is honoured by the export pipeline. */
+            selectedVersionId?: string;
             /** @description Source snapshot fields (populated on Role = "source"; mirrored from
              *     Media at attach time so the case stays self-contained even after
              *     the original media document is cleaned up). */
@@ -23508,6 +27772,11 @@ export interface components {
         /** @enum {string} */
         "models.CaseMediaStatus": "queued" | "processing" | "completed" | "failed";
         "models.CaseShare": {
+            /** @description AttachmentSelection is the per-share snapshot of the
+             *     task.Attachments[] ids the recipient is allowed to browse.
+             *     Same nil/empty/non-empty semantics as Selection — and the same
+             *     reason the bson tag drops `,omitempty`. */
+            attachment_selection?: string[];
             created_at?: number;
             email?: string;
             expires_at?: number;
@@ -23516,6 +27785,29 @@ export interface components {
             organisation_id?: string;
             /** @description e.g. ["view"] */
             permissions?: string[];
+            /** @description Selection is the per-share snapshot of the case_media ids the
+             *     recipient is allowed to browse, captured at CreateShare time.
+             *     It is the source of truth for what this specific token resolves
+             *     to — task.ShareSelection is only used as the owner-side
+             *     template that pre-fills the next share modal. Storing the
+             *     allow-list here decouples each recipient's view from later
+             *     edits to the task and from subsequent shares of the same case.
+             *
+             *     nil  = legacy / unsnapshotted share — resolvers fall back to
+             *            the task-level selection so old rows keep working.
+             *     []   = "include all" (same convention as the export pipeline).
+             *     [..] = literal allow-list of case_media ids.
+             *
+             *     IMPORTANT: the bson tag deliberately omits `,omitempty`. An
+             *     "include all" snapshot is represented by an empty (non-nil)
+             *     slice, and `omitempty` would drop that empty array on insert,
+             *     causing the document to read back as nil and incorrectly
+             *     trigger the legacy fallback to task.ShareSelection — silently
+             *     re-binding the share to whatever template the owner happens to
+             *     have in place at read time. The JSON tag keeps `omitempty`
+             *     because the frontend treats a missing field identically to
+             *     `[]`. */
+            selection?: string[];
             task_id?: string;
             token?: string;
             user_email?: string;
@@ -25287,6 +29579,13 @@ export interface components {
             assignees?: string[];
             assignees_profile?: string[];
             assignees_sent_to?: string[];
+            /** @description Attachments are auxiliary, non-pipeline files attached to the
+             *     case (PDFs, hi-res images, scanned documents, audio notes, …).
+             *     They are embedded directly here under the assumption that the
+             *     per-case cardinality stays bounded (soft cap ~100). Only
+             *     metadata is stored; bytes live in Vault. List-cases endpoints
+             *     SHOULD project this field out to keep the list view light. */
+            attachments?: components["schemas"]["models.CaseAttachment"][];
             /** @description A task can be assigned to a single camera or multiple cameras (depending of the export) */
             camera?: string;
             /** @description this is for the camera names (is computed on demand) */
@@ -25302,6 +29601,19 @@ export interface components {
             creation_datetime?: string;
             date?: number;
             downloaded_files?: string[];
+            expires_at?: number;
+            expires_at_overridden?: boolean;
+            /** @description ExportAttachmentSelection is the parallel to ExportSelection for
+             *     task.Attachments[]. Kept as its own array because attachments
+             *     live on a different storage path (and a different mongo
+             *     document shape) than case_media — mixing both into a single
+             *     selection array would force the export pipeline to consult two
+             *     collections to disambiguate every id, and would also make
+             *     "deselect every attachment" indistinguishable from a legacy
+             *     (media-only) selection. Same semantics as ExportSelection: nil
+             *     or empty means "default rule" (include every attachment), a
+             *     non-empty slice is the literal allow-list. */
+            export_attachment_selection?: string[];
             /** @description legacy: read by v20130101 only */
             export_files?: components["schemas"]["models.ExportFile"][];
             export_files_count?: number;
@@ -25318,13 +29630,23 @@ export interface components {
              *
              *     An empty selection means "default rule": consumers fall back to
              *     every source's latest completed edit (or the source itself when
-             *     no completed edit exists). */
+             *     no completed edit exists).
+             *
+             *     NOTE on the share fields specifically: ShareSelection and
+             *     ShareAttachmentSelection are the owner-side TEMPLATE used to
+             *     pre-fill the next share modal ("start where the last share left
+             *     off"). They are NOT the source of truth for what an active
+             *     recipient sees \u2014 each CaseShare row carries its own Selection /
+             *     AttachmentSelection snapshot captured at CreateShare time, so
+             *     later edits to this template do not retroactively change what
+             *     already-issued tokens resolve to. */
             export_selection?: string[];
             /** @description An export task, is containing multiple video in a compressed file format (.zip) */
             export_status?: string;
             id?: string;
             is_private?: boolean;
             labels?: string[];
+            legal_hold?: boolean;
             /** @description Number of source case_media rows attached to this task. Mirrors
              *     case_media documents where role == "source" and task_id matches. */
             media_count?: number;
@@ -25339,7 +29661,41 @@ export interface components {
             reporter_email?: string;
             reporter_id?: string;
             reporter_profile?: string;
+            /** @description Retention / lifecycle.
+             *
+             *     RetentionDays captures the *policy intent*: how many days the
+             *     case should be kept after its retention anchor (typically the
+             *     moment the case is closed, falling back to CreationDate when
+             *     the case is still open). Nil means "use the workspace/tenant
+             *     default policy"; 0 is a valid explicit "delete on next sweep".
+             *
+             *     ExpiresAt is the *materialized* date at which the cleanup
+             *     worker is allowed to purge the case (and its attachments,
+             *     media, comments, …). It is recomputed from RetentionDays on
+             *     write, EXCEPT when ExpiresAtOverridden is true. Nil means
+             *     "never expires". An index on this field powers the cleanup
+             *     sweep; do not use a Mongo TTL index — deletion must cascade
+             *     through the API so downstream storage (Vault, search, audit)
+             *     stays consistent.
+             *
+             *     ExpiresAtOverridden is set to true the moment a user manually
+             *     edits ExpiresAt. Once set, policy changes will NOT silently
+             *     re-materialize ExpiresAt, so a granted extension cannot be
+             *     undone by a tenant-wide policy tweak. Clearing the override
+             *     (e.g. "reset to policy") flips this back to false.
+             *
+             *     LegalHold, when true, suppresses cleanup unconditionally
+             *     regardless of ExpiresAt. It is intentionally a separate flag
+             *     from the retention date so audits can distinguish "kept longer
+             *     because investigator extended" from "kept because under legal
+             *     hold". Managed by a dedicated permission. */
+            retention_days?: number;
             sequenceId?: string;
+            /** @description ShareAttachmentSelection mirrors ExportAttachmentSelection for
+             *     the share flow. Same semantics: nil/empty = include every
+             *     attachment in the recipient view, non-empty = literal
+             *     allow-list. */
+            share_attachment_selection?: string[];
             share_selection?: string[];
             sprite_url?: string;
             spriteFile?: string;
@@ -25872,6 +30228,7 @@ export namespace models {
     export type CameraPreset = components['schemas']['models.CameraPreset'];
     export type CameraTour = components['schemas']['models.CameraTour'];
     export type Card = components['schemas']['models.Card'];
+    export type CaseAttachment = components['schemas']['models.CaseAttachment'];
     export type CaseMedia = components['schemas']['models.CaseMedia'];
     export type CaseShare = components['schemas']['models.CaseShare'];
     export type ChannelTest = components['schemas']['models.ChannelTest'];
@@ -26097,8 +30454,15 @@ export namespace api {
     export type AddTaskRequest = components['schemas']['api.AddTaskRequest'];
     export type AddTaskResponse = components['schemas']['api.AddTaskResponse'];
     export type AddTaskSuccessResponse = components['schemas']['api.AddTaskSuccessResponse'];
+    export type AdminRecentSubscription = components['schemas']['api.AdminRecentSubscription'];
     export type CallerInfo = components['schemas']['api.CallerInfo'];
     export type CaseMediaStatusEvent = components['schemas']['api.CaseMediaStatusEvent'];
+    export type CreateAdminOrganisationErrorResponse = components['schemas']['api.CreateAdminOrganisationErrorResponse'];
+    export type CreateAdminOrganisationResponse = components['schemas']['api.CreateAdminOrganisationResponse'];
+    export type CreateAdminOrganisationSuccessResponse = components['schemas']['api.CreateAdminOrganisationSuccessResponse'];
+    export type CreateAdminUserErrorResponse = components['schemas']['api.CreateAdminUserErrorResponse'];
+    export type CreateAdminUserResponse = components['schemas']['api.CreateAdminUserResponse'];
+    export type CreateAdminUserSuccessResponse = components['schemas']['api.CreateAdminUserSuccessResponse'];
     export type CreateCustomAlertErrorResponse = components['schemas']['api.CreateCustomAlertErrorResponse'];
     export type CreateCustomAlertRequest = components['schemas']['api.CreateCustomAlertRequest'];
     export type CreateCustomAlertResponse = components['schemas']['api.CreateCustomAlertResponse'];
@@ -26119,6 +30483,9 @@ export namespace api {
     export type DebugResponse = components['schemas']['api.DebugResponse'];
     export type DeleteAccessTokenErrorResponse = components['schemas']['api.DeleteAccessTokenErrorResponse'];
     export type DeleteAccessTokenSuccessResponse = components['schemas']['api.DeleteAccessTokenSuccessResponse'];
+    export type DeleteCaseAttachmentErrorResponse = components['schemas']['api.DeleteCaseAttachmentErrorResponse'];
+    export type DeleteCaseAttachmentResponse = components['schemas']['api.DeleteCaseAttachmentResponse'];
+    export type DeleteCaseAttachmentSuccessResponse = components['schemas']['api.DeleteCaseAttachmentSuccessResponse'];
     export type DeleteStateErrorResponse = components['schemas']['api.DeleteStateErrorResponse'];
     export type DeleteStateSuccessResponse = components['schemas']['api.DeleteStateSuccessResponse'];
     export type DeleteTaskCommentErrorResponse = components['schemas']['api.DeleteTaskCommentErrorResponse'];
@@ -26143,9 +30510,46 @@ export namespace api {
     export type ErrorResponse = components['schemas']['api.ErrorResponse'];
     export type FaceRedactionMessage = components['schemas']['api.FaceRedactionMessage'];
     export type FatalResponse = components['schemas']['api.FatalResponse'];
+    export type GenerateAdminUserKeyErrorResponse = components['schemas']['api.GenerateAdminUserKeyErrorResponse'];
+    export type GenerateAdminUserKeyResponse = components['schemas']['api.GenerateAdminUserKeyResponse'];
+    export type GenerateAdminUserKeySuccessResponse = components['schemas']['api.GenerateAdminUserKeySuccessResponse'];
     export type GetAccessTokensErrorResponse = components['schemas']['api.GetAccessTokensErrorResponse'];
     export type GetAccessTokensResponse = components['schemas']['api.GetAccessTokensResponse'];
     export type GetAccessTokensSuccessResponse = components['schemas']['api.GetAccessTokensSuccessResponse'];
+    export type GetAdminDeviceErrorResponse = components['schemas']['api.GetAdminDeviceErrorResponse'];
+    export type GetAdminDeviceResponse = components['schemas']['api.GetAdminDeviceResponse'];
+    export type GetAdminDeviceSuccessResponse = components['schemas']['api.GetAdminDeviceSuccessResponse'];
+    export type GetAdminDevicesErrorResponse = components['schemas']['api.GetAdminDevicesErrorResponse'];
+    export type GetAdminDevicesMeta = components['schemas']['api.GetAdminDevicesMeta'];
+    export type GetAdminDevicesResponse = components['schemas']['api.GetAdminDevicesResponse'];
+    export type GetAdminDevicesSuccessResponse = components['schemas']['api.GetAdminDevicesSuccessResponse'];
+    export type GetAdminOrganisationsErrorResponse = components['schemas']['api.GetAdminOrganisationsErrorResponse'];
+    export type GetAdminOrganisationsMeta = components['schemas']['api.GetAdminOrganisationsMeta'];
+    export type GetAdminOrganisationsResponse = components['schemas']['api.GetAdminOrganisationsResponse'];
+    export type GetAdminOrganisationsSuccessResponse = components['schemas']['api.GetAdminOrganisationsSuccessResponse'];
+    export type GetAdminStatsErrorResponse = components['schemas']['api.GetAdminStatsErrorResponse'];
+    export type GetAdminStatsResponse = components['schemas']['api.GetAdminStatsResponse'];
+    export type GetAdminStatsSuccessResponse = components['schemas']['api.GetAdminStatsSuccessResponse'];
+    export type GetAdminSubscriptionSettingsErrorResponse = components['schemas']['api.GetAdminSubscriptionSettingsErrorResponse'];
+    export type GetAdminSubscriptionSettingsResponse = components['schemas']['api.GetAdminSubscriptionSettingsResponse'];
+    export type GetAdminSubscriptionSettingsSuccessResponse = components['schemas']['api.GetAdminSubscriptionSettingsSuccessResponse'];
+    export type GetAdminUserDevicesErrorResponse = components['schemas']['api.GetAdminUserDevicesErrorResponse'];
+    export type GetAdminUserDevicesInformationErrorResponse = components['schemas']['api.GetAdminUserDevicesInformationErrorResponse'];
+    export type GetAdminUserDevicesInformationResponse = components['schemas']['api.GetAdminUserDevicesInformationResponse'];
+    export type GetAdminUserDevicesInformationSuccessResponse = components['schemas']['api.GetAdminUserDevicesInformationSuccessResponse'];
+    export type GetAdminUserDevicesMeta = components['schemas']['api.GetAdminUserDevicesMeta'];
+    export type GetAdminUserDevicesResponse = components['schemas']['api.GetAdminUserDevicesResponse'];
+    export type GetAdminUserDevicesSuccessResponse = components['schemas']['api.GetAdminUserDevicesSuccessResponse'];
+    export type GetAdminUserProfileErrorResponse = components['schemas']['api.GetAdminUserProfileErrorResponse'];
+    export type GetAdminUserProfileResponse = components['schemas']['api.GetAdminUserProfileResponse'];
+    export type GetAdminUserProfileSuccessResponse = components['schemas']['api.GetAdminUserProfileSuccessResponse'];
+    export type GetAdminUserSubscriptionErrorResponse = components['schemas']['api.GetAdminUserSubscriptionErrorResponse'];
+    export type GetAdminUserSubscriptionResponse = components['schemas']['api.GetAdminUserSubscriptionResponse'];
+    export type GetAdminUserSubscriptionSuccessResponse = components['schemas']['api.GetAdminUserSubscriptionSuccessResponse'];
+    export type GetAdminUsersErrorResponse = components['schemas']['api.GetAdminUsersErrorResponse'];
+    export type GetAdminUsersMeta = components['schemas']['api.GetAdminUsersMeta'];
+    export type GetAdminUsersResponse = components['schemas']['api.GetAdminUsersResponse'];
+    export type GetAdminUsersSuccessResponse = components['schemas']['api.GetAdminUsersSuccessResponse'];
     export type GetAnalysisErrorResponse = components['schemas']['api.GetAnalysisErrorResponse'];
     export type GetAnalysisRequest = components['schemas']['api.GetAnalysisRequest'];
     export type GetAnalysisResponse = components['schemas']['api.GetAnalysisResponse'];
@@ -26154,6 +30558,9 @@ export namespace api {
     export type GetAnalyticsDashboardRequest = components['schemas']['api.GetAnalyticsDashboardRequest'];
     export type GetAnalyticsDashboardResponse = components['schemas']['api.GetAnalyticsDashboardResponse'];
     export type GetAnalyticsDashboardSuccessResponse = components['schemas']['api.GetAnalyticsDashboardSuccessResponse'];
+    export type GetCaseAttachmentErrorResponse = components['schemas']['api.GetCaseAttachmentErrorResponse'];
+    export type GetCaseAttachmentResponse = components['schemas']['api.GetCaseAttachmentResponse'];
+    export type GetCaseAttachmentSuccessResponse = components['schemas']['api.GetCaseAttachmentSuccessResponse'];
     export type GetCustomAlertsErrorResponse = components['schemas']['api.GetCustomAlertsErrorResponse'];
     export type GetCustomAlertsResponse = components['schemas']['api.GetCustomAlertsResponse'];
     export type GetCustomAlertsSuccessResponse = components['schemas']['api.GetCustomAlertsSuccessResponse'];
@@ -26278,6 +30685,9 @@ export namespace api {
     export type GetWorkflowsResponse = components['schemas']['api.GetWorkflowsResponse'];
     export type GetWorkflowsSuccessResponse = components['schemas']['api.GetWorkflowsSuccessResponse'];
     export type GroupFilter = components['schemas']['api.GroupFilter'];
+    export type ListCaseAttachmentsErrorResponse = components['schemas']['api.ListCaseAttachmentsErrorResponse'];
+    export type ListCaseAttachmentsResponse = components['schemas']['api.ListCaseAttachmentsResponse'];
+    export type ListCaseAttachmentsSuccessResponse = components['schemas']['api.ListCaseAttachmentsSuccessResponse'];
     export type ListCaseMediaErrorResponse = components['schemas']['api.ListCaseMediaErrorResponse'];
     export type ListCaseMediaResponse = components['schemas']['api.ListCaseMediaResponse'];
     export type ListCaseMediaSuccessResponse = components['schemas']['api.ListCaseMediaSuccessResponse'];
@@ -26294,9 +30704,16 @@ export namespace api {
     export type PatchVideowallRequest = components['schemas']['api.PatchVideowallRequest'];
     export type PatchVideowallResponse = components['schemas']['api.PatchVideowallResponse'];
     export type PatchVideowallSuccessResponse = components['schemas']['api.PatchVideowallSuccessResponse'];
+    export type PublishFileErrorResponse = components['schemas']['api.PublishFileErrorResponse'];
+    export type PublishFileResponse = components['schemas']['api.PublishFileResponse'];
+    export type PublishFileSuccessResponse = components['schemas']['api.PublishFileSuccessResponse'];
     export type RedactionEvent = components['schemas']['api.RedactionEvent'];
     export type RemoveCustomAlertErrorResponse = components['schemas']['api.RemoveCustomAlertErrorResponse'];
     export type RemoveCustomAlertSuccessResponse = components['schemas']['api.RemoveCustomAlertSuccessResponse'];
+    export type RequestTaskExportErrorResponse = components['schemas']['api.RequestTaskExportErrorResponse'];
+    export type RequestTaskExportRequest = components['schemas']['api.RequestTaskExportRequest'];
+    export type RequestTaskExportResponse = components['schemas']['api.RequestTaskExportResponse'];
+    export type RequestTaskExportSuccessResponse = components['schemas']['api.RequestTaskExportSuccessResponse'];
     export type SaveFaceRedactionErrorResponse = components['schemas']['api.SaveFaceRedactionErrorResponse'];
     export type SaveFaceRedactionRequest = components['schemas']['api.SaveFaceRedactionRequest'];
     export type SaveFaceRedactionResponse = components['schemas']['api.SaveFaceRedactionResponse'];
@@ -26320,6 +30737,26 @@ export namespace api {
     export type UpdateAccessTokenRequest = components['schemas']['api.UpdateAccessTokenRequest'];
     export type UpdateAccessTokenResponse = components['schemas']['api.UpdateAccessTokenResponse'];
     export type UpdateAccessTokenSuccessResponse = components['schemas']['api.UpdateAccessTokenSuccessResponse'];
+    export type UpdateAdminUserErrorResponse = components['schemas']['api.UpdateAdminUserErrorResponse'];
+    export type UpdateAdminUserPasswordErrorResponse = components['schemas']['api.UpdateAdminUserPasswordErrorResponse'];
+    export type UpdateAdminUserPasswordSuccessResponse = components['schemas']['api.UpdateAdminUserPasswordSuccessResponse'];
+    export type UpdateAdminUserResponse = components['schemas']['api.UpdateAdminUserResponse'];
+    export type UpdateAdminUserSubscriptionErrorResponse = components['schemas']['api.UpdateAdminUserSubscriptionErrorResponse'];
+    export type UpdateAdminUserSubscriptionResponse = components['schemas']['api.UpdateAdminUserSubscriptionResponse'];
+    export type UpdateAdminUserSubscriptionSuccessResponse = components['schemas']['api.UpdateAdminUserSubscriptionSuccessResponse'];
+    export type UpdateAdminUserSuccessResponse = components['schemas']['api.UpdateAdminUserSuccessResponse'];
+    export type UpdateCaseAttachmentErrorResponse = components['schemas']['api.UpdateCaseAttachmentErrorResponse'];
+    export type UpdateCaseAttachmentRequest = components['schemas']['api.UpdateCaseAttachmentRequest'];
+    export type UpdateCaseAttachmentResponse = components['schemas']['api.UpdateCaseAttachmentResponse'];
+    export type UpdateCaseAttachmentSuccessResponse = components['schemas']['api.UpdateCaseAttachmentSuccessResponse'];
+    export type UpdateCaseMediaCurationErrorResponse = components['schemas']['api.UpdateCaseMediaCurationErrorResponse'];
+    export type UpdateCaseMediaCurationRequest = components['schemas']['api.UpdateCaseMediaCurationRequest'];
+    export type UpdateCaseMediaCurationResponse = components['schemas']['api.UpdateCaseMediaCurationResponse'];
+    export type UpdateCaseMediaCurationSuccessResponse = components['schemas']['api.UpdateCaseMediaCurationSuccessResponse'];
+    export type UpdateCaseMediaSelectedVersionErrorResponse = components['schemas']['api.UpdateCaseMediaSelectedVersionErrorResponse'];
+    export type UpdateCaseMediaSelectedVersionRequest = components['schemas']['api.UpdateCaseMediaSelectedVersionRequest'];
+    export type UpdateCaseMediaSelectedVersionResponse = components['schemas']['api.UpdateCaseMediaSelectedVersionResponse'];
+    export type UpdateCaseMediaSelectedVersionSuccessResponse = components['schemas']['api.UpdateCaseMediaSelectedVersionSuccessResponse'];
     export type UpdateCustomAlertErrorResponse = components['schemas']['api.UpdateCustomAlertErrorResponse'];
     export type UpdateCustomAlertRequest = components['schemas']['api.UpdateCustomAlertRequest'];
     export type UpdateCustomAlertResponse = components['schemas']['api.UpdateCustomAlertResponse'];
@@ -26343,6 +30780,10 @@ export namespace api {
     export type UpdateWorkflowRequest = components['schemas']['api.UpdateWorkflowRequest'];
     export type UpdateWorkflowResponse = components['schemas']['api.UpdateWorkflowResponse'];
     export type UpdateWorkflowSuccessResponse = components['schemas']['api.UpdateWorkflowSuccessResponse'];
+    export type UploadCaseAttachmentErrorResponse = components['schemas']['api.UploadCaseAttachmentErrorResponse'];
+    export type UploadCaseAttachmentRequest = components['schemas']['api.UploadCaseAttachmentRequest'];
+    export type UploadCaseAttachmentResponse = components['schemas']['api.UploadCaseAttachmentResponse'];
+    export type UploadCaseAttachmentSuccessResponse = components['schemas']['api.UploadCaseAttachmentSuccessResponse'];
     export type UpsertStateErrorResponse = components['schemas']['api.UpsertStateErrorResponse'];
     export type UpsertStateRequest = components['schemas']['api.UpsertStateRequest'];
     export type UpsertStateResponse = components['schemas']['api.UpsertStateResponse'];

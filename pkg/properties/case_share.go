@@ -19,4 +19,6 @@ const (
 	CaseShareOTPCode = "otp_code"
 	CaseShareOTPExpiry = "otp_expiry"
 	CaseShareOTPAttempts = "otp_attempts"
+	CaseShareSelection = "selection"
+	CaseShareAttachmentSelection = "attachment_selection"
 )

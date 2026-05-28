@@ -24,6 +24,12 @@ const (
 	TaskMediaAddSuccess TaskStatus = "Task_media_add_success"
 	TaskMediaAddFailed  TaskStatus = "Task_media_add_failed"
 
+	// Export generation trigger — set when the user explicitly
+	// requests an export bundle build via POST /tasks/:id/export.
+	TaskExportRequestSuccess TaskStatus = "Task_export_request_success"
+	TaskExportRequestFailed  TaskStatus = "Task_export_request_failed"
+	TaskExportAlreadyActive  TaskStatus = "Task_export_already_active"
+
 	// Case attachments — auxiliary, non-pipeline files attached to a
 	// case (PDFs, images, scanned documents, audio notes). See
 	// models.CaseAttachment.
@@ -61,6 +67,10 @@ func (ms TaskStatus) Translate(lang string) string {
 			TaskDeleteFailed:    "Task failed to delete",
 			TaskMediaAddSuccess: "Media was added to the task successfully",
 			TaskMediaAddFailed:  "Failed to add media to the task",
+
+			TaskExportRequestSuccess: "Export bundle generation has been queued",
+			TaskExportRequestFailed:  "Failed to queue export bundle generation",
+			TaskExportAlreadyActive:  "An export is already in progress for this task",
 
 			TaskAttachmentAddSuccess:    "Attachment added to the case successfully",
 			TaskAttachmentAddFailed:     "Failed to add attachment to the case",
@@ -110,6 +120,29 @@ type AddTaskMediaSuccessResponse struct {
 }
 
 type AddTaskMediaErrorResponse struct {
+	ErrorResponse
+}
+
+// RequestTaskExportRequest is the optional body of POST /tasks/{id}/export.
+// v20260101 drives include/exclude through per-document IncludeInExport
+// flags on case_media / case_attachments, so the body carries no
+// selection payload anymore. The struct is retained as an empty
+// placeholder for OpenAPI generation and future fields.
+type RequestTaskExportRequest struct {
+}
+
+// RequestTaskExportResponse is returned by POST /tasks/{id}/export and
+// carries the updated task whose export job has just been queued.
+type RequestTaskExportResponse struct {
+	Task models.Task `json:"task,omitempty" bson:"task,omitempty"`
+}
+
+type RequestTaskExportSuccessResponse struct {
+	SuccessResponse
+	Data RequestTaskExportResponse `json:"data,omitempty" bson:"data,omitempty"`
+}
+
+type RequestTaskExportErrorResponse struct {
 	ErrorResponse
 }
 
@@ -507,6 +540,58 @@ type ListCaseMediaErrorResponse struct {
 	ErrorResponse
 }
 
+// UpdateCaseMediaSelectedVersionRequest is the body of
+// PATCH /tasks/{taskId}/media/{caseMediaId}/selected-version.
+//
+// It targets a Role = "source" case_media row and records which
+// derivative the case should display and export. SelectedVersionId
+// must reference an existing Role = "edit" CaseMedia entry that
+// descends from the source (directly via ParentId or transitively
+// via SupersedesId). Sending an empty SelectedVersionId clears the
+// selection, restoring the default behaviour (latest completed edit
+// if any, otherwise the source itself).
+type UpdateCaseMediaSelectedVersionRequest struct {
+	SelectedVersionId string `json:"selectedVersionId"`
+}
+
+type UpdateCaseMediaSelectedVersionResponse struct {
+	CaseMedia models.CaseMedia `json:"caseMedia"`
+}
+
+type UpdateCaseMediaSelectedVersionSuccessResponse struct {
+	SuccessResponse
+	Data UpdateCaseMediaSelectedVersionResponse `json:"data"`
+}
+
+type UpdateCaseMediaSelectedVersionErrorResponse struct {
+	ErrorResponse
+}
+
+// UpdateCaseMediaCurationRequest is the body of
+// PATCH /tasks/{taskId}/media/{caseMediaId}/curation.
+//
+// Each field is a pointer so callers can patch one flag without
+// having to round-trip the other. Both flags target Role = "source"
+// rows only — edits inherit the source's inclusion state at resolve
+// time. nil means "leave as-is".
+type UpdateCaseMediaCurationRequest struct {
+	IncludeInExport *bool `json:"includeInExport,omitempty"`
+	IncludeInShare  *bool `json:"includeInShare,omitempty"`
+}
+
+type UpdateCaseMediaCurationResponse struct {
+	CaseMedia models.CaseMedia `json:"caseMedia"`
+}
+
+type UpdateCaseMediaCurationSuccessResponse struct {
+	SuccessResponse
+	Data UpdateCaseMediaCurationResponse `json:"data"`
+}
+
+type UpdateCaseMediaCurationErrorResponse struct {
+	ErrorResponse
+}
+
 // ===== Case attachments (auxiliary, non-pipeline files on a case) =====
 //
 // Attachments are PDFs, images, scanned documents etc. attached to a
@@ -584,11 +669,14 @@ type GetCaseAttachmentErrorResponse struct {
 }
 
 // UpdateCaseAttachmentRequest covers in-place metadata edits that do
-// not require re-uploading the bytes. Currently only Name is editable;
-// replacing the file means delete + re-upload so the storage key and
-// SHA-256 stay coupled.
+// not require re-uploading the bytes. Name is the original mutable
+// field; IncludeInExport / IncludeInShare are the per-attachment
+// curation flags. All fields are pointer-typed so a partial PATCH
+// can target one without touching the others (nil = leave as-is).
 type UpdateCaseAttachmentRequest struct {
-	Name string `json:"name"`
+	Name            *string `json:"name,omitempty"`
+	IncludeInExport *bool   `json:"includeInExport,omitempty"`
+	IncludeInShare  *bool   `json:"includeInShare,omitempty"`
 }
 
 type UpdateCaseAttachmentResponse struct {

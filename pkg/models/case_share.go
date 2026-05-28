@@ -17,6 +17,36 @@ type CaseShare struct {
 	OTPCode        string             `json:"-" bson:"otp_code,omitempty"`
 	OTPExpiry      int64              `json:"-" bson:"otp_expiry,omitempty"`
 	OTPAttempts    int                `json:"-" bson:"otp_attempts,omitempty"`
+
+	// Selection is the per-share snapshot of the case_media ids the
+	// recipient is allowed to browse, captured at CreateShare time.
+	// It is the source of truth for what this specific token resolves
+	// to — task.ShareSelection is only used as the owner-side
+	// template that pre-fills the next share modal. Storing the
+	// allow-list here decouples each recipient's view from later
+	// edits to the task and from subsequent shares of the same case.
+	//
+	// nil  = legacy / unsnapshotted share — resolvers fall back to
+	//        the task-level selection so old rows keep working.
+	// []   = "include all" (same convention as the export pipeline).
+	// [..] = literal allow-list of case_media ids.
+	//
+	// IMPORTANT: the bson tag deliberately omits `,omitempty`. An
+	// "include all" snapshot is represented by an empty (non-nil)
+	// slice, and `omitempty` would drop that empty array on insert,
+	// causing the document to read back as nil and incorrectly
+	// trigger the legacy fallback to task.ShareSelection — silently
+	// re-binding the share to whatever template the owner happens to
+	// have in place at read time. The JSON tag keeps `omitempty`
+	// because the frontend treats a missing field identically to
+	// `[]`.
+	Selection []primitive.ObjectID `json:"selection,omitempty" bson:"selection"`
+
+	// AttachmentSelection is the per-share snapshot of the
+	// task.Attachments[] ids the recipient is allowed to browse.
+	// Same nil/empty/non-empty semantics as Selection — and the same
+	// reason the bson tag drops `,omitempty`.
+	AttachmentSelection []primitive.ObjectID `json:"attachment_selection,omitempty" bson:"attachment_selection"`
 }
 
 // Input/Output types for repository operations

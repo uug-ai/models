@@ -17,6 +17,7 @@ const (
 	HttpStatusForbidden             int = http.StatusForbidden
 	HttpStatusUnauthorized          int = http.StatusUnauthorized
 	HttpStatusBadRequest            int = http.StatusBadRequest
+	HttpStatusConflict              int = http.StatusConflict
 	HttpStatusInternalServerError   int = http.StatusInternalServerError
 	HttpStatusNotFound              int = http.StatusNotFound
 	HttpStatusServiceUnavailable    int = http.StatusServiceUnavailable

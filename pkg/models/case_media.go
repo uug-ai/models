@@ -50,6 +50,16 @@ type CaseMedia struct {
 	// preserving the full edit chain for auditing / rollback.
 	SupersedesId *primitive.ObjectID `json:"supersedesId,omitempty" bson:"supersedes_id,omitempty"`
 
+	// SelectedVersionId is only meaningful on Role = "source" rows and
+	// records which version of the source the case should display and
+	// export. When set it points at an Role = "edit" CaseMedia entry
+	// that descends from this source (directly via ParentId or
+	// transitively via SupersedesId). When empty, consumers fall back
+	// to the default behaviour (use the latest completed edit if any,
+	// otherwise the source itself). Persisted so the choice survives
+	// across sessions and is honoured by the export pipeline.
+	SelectedVersionId *primitive.ObjectID `json:"selectedVersionId,omitempty" bson:"selected_version_id,omitempty"`
+
 	// Params carries kind-specific parameters used to produce the edit.
 	// For Action = "composite" it is expected to contain an
 	// "operations" array whose elements have an "op" discriminator
@@ -108,6 +118,23 @@ type CaseMedia struct {
 	CreatedAt int64  `json:"createdAt,omitempty" bson:"created_at,omitempty"`
 	CreatedBy string `json:"createdBy,omitempty" bson:"created_by,omitempty"`
 	UpdatedAt int64  `json:"updatedAt,omitempty" bson:"updated_at,omitempty"`
+
+	// IncludeInExport and IncludeInShare are per-row curation flags. A
+	// case_media is included in an export bundle / share recipient view
+	// when the corresponding flag is true. Both default to true at
+	// insert time (set explicitly by the create path — the Go zero
+	// value would otherwise be the opposite of what we want). Owners
+	// toggle these via PATCH /case-media/:id; share/export consumers
+	// filter on them at read time, and for shares the resolved set is
+	// frozen into CaseShare.Selection at CreateShare time so later
+	// toggles do not bleed into already-issued tokens. Only meaningful
+	// on Role = "source" rows — edits inherit their inclusion state
+	// from the source they resolve to.
+	//
+	// BSON tags deliberately omit `,omitempty` so a `false` value is
+	// persisted faithfully instead of being dropped to the default.
+	IncludeInExport bool `json:"includeInExport" bson:"include_in_export"`
+	IncludeInShare  bool `json:"includeInShare"  bson:"include_in_share"`
 
 	// Url is signed by the API at fetch time and not persisted.
 	Url string `json:"url,omitempty" bson:"-"`
@@ -211,6 +238,9 @@ func (cm *CaseMedia) Validate() error {
 	case CaseMediaRoleEdit:
 		if cm.ParentId == nil || cm.ParentId.IsZero() {
 			return fmt.Errorf("case_media: edit row requires parentId")
+		}
+		if cm.SelectedVersionId != nil {
+			return fmt.Errorf("case_media: edit row must not set selectedVersionId")
 		}
 		if cm.Action == "" {
 			return fmt.Errorf("case_media: edit row requires action")
