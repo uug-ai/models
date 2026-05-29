@@ -28,6 +28,10 @@ type Videowall struct {
 	IO             int               `json:"io" bson:"io"`
 	AssignedUsers  []string          `json:"assigned_users" bson:"assigned_users"`
 	WeeklySchedule []*WeeklySchedule `json:"weeklySchedule" bson:"weeklySchedule"`
+	// DefaultViewingMode chooses which stream quality the wall loads with:
+	// "preview" (SD) or "live" (HD). Empty defaults to "live". Always clamped
+	// to "preview" when Liveview only grants preview permission.
+	DefaultViewingMode string `json:"default_viewing_mode" bson:"default_viewing_mode,omitempty"`
 }
 
 // IsScheduledAt reports whether unixTs falls within the videowall's weekly
