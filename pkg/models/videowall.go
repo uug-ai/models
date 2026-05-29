@@ -1,6 +1,10 @@
 package models
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type Videowall struct {
 	Id           primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
@@ -19,10 +23,32 @@ type Videowall struct {
 	Header       int                `json:"header" bson:"header"`
 	Expiration   int64              `json:"expiration" bson:"expiration"`
 	//ForceMFA    int      `json:"force_mfa" bson:"force_mfa"`
-	PTZ           int      `json:"ptz" bson:"ptz"`
-	Liveview      int      `json:"liveview" bson:"liveview"`
-	IO            int      `json:"io" bson:"io"`
-	AssignedUsers []string `json:"assigned_users" bson:"assigned_users"`
+	PTZ            int               `json:"ptz" bson:"ptz"`
+	Liveview       int               `json:"liveview" bson:"liveview"`
+	IO             int               `json:"io" bson:"io"`
+	AssignedUsers  []string          `json:"assigned_users" bson:"assigned_users"`
+	WeeklySchedule []*WeeklySchedule `json:"weeklySchedule" bson:"weeklySchedule"`
+}
+
+// IsScheduledAt reports whether unixTs falls within the videowall's weekly
+// schedule. When no schedule is configured the videowall is considered always
+// active, preserving the behavior of walls created before scheduling was
+// introduced. When a schedule IS configured but every day is disabled, the
+// videowall is considered inactive — same semantics as CustomAlert.
+func (v *Videowall) IsScheduledAt(unixTs int64) bool {
+	if v == nil || len(v.WeeklySchedule) == 0 {
+		return true
+	}
+	ts := time.Unix(unixTs, 0)
+	for _, ws := range v.WeeklySchedule {
+		if ws == nil || !ws.Enabled {
+			continue
+		}
+		if ws.IsActiveAt(ts) {
+			return true
+		}
+	}
+	return false
 }
 
 // Input/Output types for repository operations
