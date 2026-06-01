@@ -1,6 +1,10 @@
 package models
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 // error codes
 var CREATE_TASK_EMPTY = "CREATE_TASK_EMPTY"
@@ -79,6 +83,28 @@ type Task struct {
 	ExportRequested  bool         `json:"export_requested" bson:"export_requested,omitempty"`
 	ExportInProgress bool         `json:"export_in_progress" bson:"export_in_progress,omitempty"`
 	ExportRevision   int64        `json:"export_revision" bson:"export_revision,omitempty"`
+
+	// ExportUpdatedAt is a heartbeat written by hub-pipeline-export
+	// every time it transitions the export state (claim, status
+	// updates, per-file download, release, complete) and by hub-api
+	// when a new export run is requested. It lets the API detect
+	// orphaned runs whose worker died without releasing the lock:
+	// when (now - ExportUpdatedAt) exceeds the staleness threshold,
+	// isExportActive treats the lock as released so the user can
+	// retry instead of being blocked by a 409 forever.
+	ExportUpdatedAt time.Time `json:"export_updated_at" bson:"export_updated_at,omitempty"`
+
+	// ExportHeartbeatAgeSeconds is computed at API response time
+	// (NOT persisted — bson:"-") and ships the server-side delta
+	// between now and ExportUpdatedAt so the frontend can render a
+	// "stuck" state without depending on the user's local clock
+	// (which may be skewed minutes or hours from server time).
+	// A nil value means the task has never had a heartbeat written
+	// (legacy / pre-feature tasks); a zero value means the heartbeat
+	// was just written. The FE only interprets this field in
+	// combination with the in-flight signal — see isExportActive
+	// and getExportUiState for the rule.
+	ExportHeartbeatAgeSeconds *int64 `json:"export_heartbeat_age_seconds,omitempty" bson:"-"`
 
 	// ExportSelectionDirty signals that the curated bundle composition
 	// (include_in_export flags on case_media / attachments, or a newly
