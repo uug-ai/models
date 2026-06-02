@@ -150,6 +150,11 @@ type FaceRedactionTrack struct {
 	Selected         bool               `json:"selected" bson:"selected"`
 	DeletedFrames    []int64            `json:"deletedFrames,omitempty" bson:"deletedFrames,omitempty"`
 	FrameCoordinates map[int64]TrackBox `json:"frameCoordinates,omitempty" bson:"frameCoordinates,omitempty"` // frame -> [x1, y1, x2, y2]
+	// Confidence, ClassId and Shape preserve track-level provenance from a
+	// detection run; empty for tracks created by the editor.
+	Confidence float64 `json:"confidence,omitempty" bson:"confidence,omitempty"`
+	ClassId    *int    `json:"classId,omitempty" bson:"classId,omitempty"`
+	Shape      string  `json:"shape,omitempty" bson:"shape,omitempty"`
 }
 
 type TrackBox struct {
@@ -160,6 +165,11 @@ type TrackBox struct {
 	TrackId  string  `json:"trackId,omitempty" bson:"trackId,omitempty"`
 	Smoothed bool    `json:"smoothed" bson:"smoothed"`
 	Edited   bool    `json:"edited" bson:"edited"`
+	// Confidence, ClassId and Label preserve the producer's per-box model
+	// output so a stored detection run can be re-thresholded or audited later.
+	Confidence float64 `json:"confidence,omitempty" bson:"confidence,omitempty"`
+	ClassId    *int    `json:"classId,omitempty" bson:"classId,omitempty"`
+	Label      string  `json:"label,omitempty" bson:"label,omitempty"`
 }
 
 type FaceRedaction struct {
@@ -171,6 +181,88 @@ type FaceRedaction struct {
 	// case_media document; this struct only carries the tracks/inputs
 	// the user has defined.
 	CaseMediaId *primitive.ObjectID `json:"caseMediaId,omitempty" bson:"caseMediaId,omitempty"`
+}
+
+// DetectionRun is one detection run for a recording. Runs are stored in a
+// dedicated "detections" collection keyed by the recording (Key) rather than
+// embedded on the analysis, so a recording can accumulate many runs without
+// bloating its analysis document. Each run is upserted by (Key, Source.RunId)
+// so re-posts are idempotent and multiple producers can coexist. It stores the
+// tracks verbatim (after coordinate normalisation) alongside provenance about
+// the producer. Tracks reuse FaceRedactionTrack so promoting a run into a
+// redaction is a direct copy.
+type DetectionRun struct {
+	// Id is the MongoDB document id, assigned on first insert.
+	Id primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty"`
+	// Key is the recording/media key the run belongs to. It is the stable
+	// identity the collection is keyed by (survives re-analysis).
+	Key string `json:"key,omitempty" bson:"key,omitempty"`
+	// OrganisationId scopes the run to the owning organisation (matched on the
+	// "userid" field, consistent with media/analysis). Never serialised out.
+	OrganisationId string `json:"-" bson:"userid,omitempty"`
+	// DeviceId is denormalised from the recording for convenient filtering and
+	// cascade cleanup; it is not authoritative.
+	DeviceId string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
+	// Task is a forward-compatibility discriminator for the kind of run.
+	// Defaults to "detection" when omitted.
+	Task          string               `json:"task,omitempty" bson:"task,omitempty"`
+	Source        DetectionSource      `json:"source" bson:"source"`
+	SchemaVersion string               `json:"schemaVersion,omitempty" bson:"schemaVersion,omitempty"`
+	Media         DetectionMedia       `json:"media,omitempty" bson:"media,omitempty"`
+	Categories    []DetectionCategory  `json:"categories,omitempty" bson:"categories,omitempty"`
+	Tracks        []FaceRedactionTrack `json:"tracks" bson:"tracks"`
+	// OriginalCoordinateSpace records the coordinate space the producer sent
+	// ("pixel" or "normalized") before the server normalised it on write.
+	// Tracks are always stored normalised; this preserves the original for audit.
+	OriginalCoordinateSpace string `json:"originalCoordinateSpace,omitempty" bson:"originalCoordinateSpace,omitempty"`
+	// OriginalBoxForm records the box geometry form the producer sent
+	// ("xywh", "xyxy", or "mixed") before conversion to the editor's TrackBox.
+	OriginalBoxForm string `json:"originalBoxForm,omitempty" bson:"originalBoxForm,omitempty"`
+	// CreatedAt is set by the server when the run is first stored (epoch millis).
+	CreatedAt int64 `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
+	// UpdatedAt is set by the server every time the run is written (epoch millis).
+	UpdatedAt int64 `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+	// RecordingTimestamp is the start time (epoch seconds) of the recording the
+	// run belongs to, denormalised from the analysis on write. It lets cleanup
+	// expire a run on the same retention clock as its recording rather than by
+	// the (possibly much later) post time.
+	RecordingTimestamp int64 `json:"recordingTimestamp,omitempty" bson:"recordingTimestamp,omitempty"`
+}
+
+// DetectionTask is the default value of DetectionRun.Task when a producer does
+// not send one.
+const DetectionTask = "detection"
+
+// DetectionSource identifies the producer of a detection run. RunId is the
+// natural key the upsert matches on within an analysis.
+type DetectionSource struct {
+	Kind           string  `json:"kind" bson:"kind"` // pipeline | model | import
+	Name           string  `json:"name" bson:"name"` // producer identifier / editor layer label
+	Version        string  `json:"version" bson:"version"`
+	RunId          string  `json:"runId" bson:"runId"` // ULID/UUID; upsert key
+	InputWidth     int     `json:"inputWidth,omitempty" bson:"inputWidth,omitempty"`
+	InputHeight    int     `json:"inputHeight,omitempty" bson:"inputHeight,omitempty"`
+	ScoreThreshold float64 `json:"scoreThreshold,omitempty" bson:"scoreThreshold,omitempty"`
+	NmsIou         float64 `json:"nmsIou,omitempty" bson:"nmsIou,omitempty"`
+	// RotationApplied indicates whether boxes are against the rotated/oriented
+	// frame. Defaults to true on the wire; a nil pointer is treated as true.
+	RotationApplied *bool `json:"rotationApplied,omitempty" bson:"rotationApplied,omitempty"`
+}
+
+// DetectionMedia describes the media the detections were produced against.
+type DetectionMedia struct {
+	Width      int     `json:"width,omitempty" bson:"width,omitempty"`
+	Height     int     `json:"height,omitempty" bson:"height,omitempty"`
+	Fps        float64 `json:"fps,omitempty" bson:"fps,omitempty"`
+	FrameCount int64   `json:"frameCount,omitempty" bson:"frameCount,omitempty"`
+	Rotation   int     `json:"rotation,omitempty" bson:"rotation,omitempty"`
+}
+
+// DetectionCategory is one entry in a producer's class taxonomy. Stored verbatim.
+type DetectionCategory struct {
+	Id    int    `json:"id" bson:"id"`
+	Name  string `json:"name" bson:"name"`
+	Alias string `json:"alias,omitempty" bson:"alias,omitempty"`
 }
 
 // RedactionMode describes the visual technique applied by the
