@@ -150,6 +150,11 @@ type FaceRedactionTrack struct {
 	Selected         bool               `json:"selected" bson:"selected"`
 	DeletedFrames    []int64            `json:"deletedFrames,omitempty" bson:"deletedFrames,omitempty"`
 	FrameCoordinates map[int64]TrackBox `json:"frameCoordinates,omitempty" bson:"frameCoordinates,omitempty"` // frame -> [x1, y1, x2, y2]
+	// Confidence, ClassId and Shape preserve track-level provenance from a
+	// detection run; empty for tracks created by the editor.
+	Confidence float64 `json:"confidence,omitempty" bson:"confidence,omitempty"`
+	ClassId    *int    `json:"classId,omitempty" bson:"classId,omitempty"`
+	Shape      string  `json:"shape,omitempty" bson:"shape,omitempty"`
 }
 
 type TrackBox struct {
@@ -160,6 +165,11 @@ type TrackBox struct {
 	TrackId  string  `json:"trackId,omitempty" bson:"trackId,omitempty"`
 	Smoothed bool    `json:"smoothed" bson:"smoothed"`
 	Edited   bool    `json:"edited" bson:"edited"`
+	// Confidence, ClassId and Label preserve the producer's per-box model
+	// output so a stored detection run can be re-thresholded or audited later.
+	Confidence float64 `json:"confidence,omitempty" bson:"confidence,omitempty"`
+	ClassId    *int    `json:"classId,omitempty" bson:"classId,omitempty"`
+	Label      string  `json:"label,omitempty" bson:"label,omitempty"`
 }
 
 type FaceRedaction struct {
@@ -212,6 +222,11 @@ type DetectionRun struct {
 	CreatedAt int64 `json:"createdAt,omitempty" bson:"createdAt,omitempty"`
 	// UpdatedAt is set by the server every time the run is written (epoch millis).
 	UpdatedAt int64 `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+	// RecordingTimestamp is the start time (epoch seconds) of the recording the
+	// run belongs to, denormalised from the analysis on write. It lets cleanup
+	// expire a run on the same retention clock as its recording rather than by
+	// the (possibly much later) post time.
+	RecordingTimestamp int64 `json:"recordingTimestamp,omitempty" bson:"recordingTimestamp,omitempty"`
 }
 
 // DetectionTask is the default value of DetectionRun.Task when a producer does

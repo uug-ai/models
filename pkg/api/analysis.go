@@ -206,15 +206,14 @@ type SaveFaceRedactionErrorResponse struct {
 // bring-your-own model) which the server normalises and stores in the dedicated
 // "detections" collection, keyed by the recording. Exactly one of MediaId
 // (recording/media key) or AnalysisId must identify the target recording. Runs
-// are upserted by (recording key, Source.RunId). The legacy
-// POST /analysis/{id}/detections alias supplies AnalysisId from the path.
+// are upserted by (recording key, Source.RunId).
 // @Router /detections [post]
 type PostDetectionsRequest struct {
 	// MediaId is the recording/media key the run belongs to. Provide this or
 	// AnalysisId (MediaId wins when both are present).
 	MediaId string `json:"mediaId,omitempty"`
-	// AnalysisId targets the recording via its analysis document id. Used by the
-	// legacy /analysis/{id}/detections alias.
+	// AnalysisId targets the recording via its analysis document id, as an
+	// alternative to MediaId.
 	AnalysisId string `json:"analysisId,omitempty"`
 	// Task is an optional run discriminator; defaults to "detection".
 	Task            string                     `json:"task,omitempty"`
