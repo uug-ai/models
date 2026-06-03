@@ -71,7 +71,7 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisDetectionsFailed:            "Failed to store detections",
 			AnalysisDetectionsUnsupportedSchema: "Unsupported detections schema version",
 			AnalysisDetectionsTooLarge:          "Detections payload too large",
-			AnalysisDetectionsTargetMissing:     "A mediaId or analysisId is required",
+			AnalysisDetectionsTargetMissing:     "A mediaKey or analysisId is required",
 			AnalysisDetectionsFound:             "Detections found",
 			AnalysisDetectionsNotFound:          "Detection run not found",
 			AnalysisDetectionsDeleted:           "Detection run deleted",
@@ -106,7 +106,7 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisDetectionsFailed:            "Error al almacenar las detecciones",
 			AnalysisDetectionsUnsupportedSchema: "Versión de esquema de detecciones no compatible",
 			AnalysisDetectionsTooLarge:          "Carga de detecciones demasiado grande",
-			AnalysisDetectionsTargetMissing:     "Se requiere un mediaId o analysisId",
+			AnalysisDetectionsTargetMissing:     "Se requiere un mediaKey o analysisId",
 			AnalysisDetectionsFound:             "Detecciones encontradas",
 			AnalysisDetectionsNotFound:          "Ejecución de detección no encontrada",
 			AnalysisDetectionsDeleted:           "Ejecución de detección eliminada",
@@ -141,7 +141,7 @@ func (as AnalysisStatus) Translate(lang string) string {
 			AnalysisDetectionsFailed:            "Échec de l'enregistrement des détections",
 			AnalysisDetectionsUnsupportedSchema: "Version de schéma de détections non prise en charge",
 			AnalysisDetectionsTooLarge:          "Charge de détections trop volumineuse",
-			AnalysisDetectionsTargetMissing:     "Un mediaId ou analysisId est requis",
+			AnalysisDetectionsTargetMissing:     "Un mediaKey ou analysisId est requis",
 			AnalysisDetectionsFound:             "Détections trouvées",
 			AnalysisDetectionsNotFound:          "Exécution de détection introuvable",
 			AnalysisDetectionsDeleted:           "Exécution de détection supprimée",
@@ -204,16 +204,19 @@ type SaveFaceRedactionErrorResponse struct {
 //
 // Wire format for POST /detections. Producers send detection runs (e.g. a
 // bring-your-own model) which the server normalises and stores in the dedicated
-// "detections" collection, keyed by the recording. Exactly one of MediaId
-// (recording/media key) or AnalysisId must identify the target recording. Runs
-// are upserted by (recording key, Source.RunId).
+// "detections" collection, keyed by the recording. Exactly one of MediaKey (the
+// recording key, i.e. media.videoFile / analysis.key - not the media _id) or
+// AnalysisId (the analysis document _id) must identify the target recording.
+// Runs are upserted by (recording key, Source.RunId).
 // @Router /detections [post]
 type PostDetectionsRequest struct {
-	// MediaId is the recording/media key the run belongs to. Provide this or
-	// AnalysisId (MediaId wins when both are present).
-	MediaId string `json:"mediaId,omitempty"`
-	// AnalysisId targets the recording via its analysis document id, as an
-	// alternative to MediaId.
+	// MediaKey is the recording KEY the run belongs to - the stable string that
+	// is stored as media.videoFile and analysis.key (NOT the media document's
+	// _id). The server resolves it against analysis.key. Provide this or
+	// AnalysisId (MediaKey wins when both are present).
+	MediaKey string `json:"mediaKey,omitempty"`
+	// AnalysisId targets the recording via its analysis document _id (an
+	// ObjectID hex), as an alternative to MediaKey.
 	AnalysisId string `json:"analysisId,omitempty"`
 	// Task is an optional run discriminator; defaults to "detection".
 	Task            string                     `json:"task,omitempty"`
