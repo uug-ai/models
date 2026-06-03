@@ -198,8 +198,8 @@ type DetectionRun struct {
 	// identity the collection is keyed by (survives re-analysis).
 	Key string `json:"key,omitempty" bson:"key,omitempty"`
 	// OrganisationId scopes the run to the owning organisation (matched on the
-	// "userid" field, consistent with media/analysis). Never serialised out.
-	OrganisationId string `json:"-" bson:"userid,omitempty"`
+	// "organisationId" field, consistent with media). Never serialised out.
+	OrganisationId string `json:"-" bson:"organisationId,omitempty"`
 	// DeviceId is denormalised from the recording for convenient filtering and
 	// cascade cleanup; it is not authoritative.
 	DeviceId string `json:"deviceId,omitempty" bson:"deviceId,omitempty"`
