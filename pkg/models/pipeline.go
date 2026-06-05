@@ -94,6 +94,9 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		media.Metadata = &MediaMetadata{}
 		media.Metadata.MotionPixels = 0
 		media.Metadata.FileSize = pe.Payload.FileSize
+		if fps, err := strconv.Atoi(pe.Payload.Metadata.FPS); err == nil {
+			media.Metadata.FPS = fps
+		}
 
 		return media, nil
 	}
@@ -177,6 +180,8 @@ type PipelineMetadata struct {
 	DeviceName string `json:"event-instancename,omitempty"`
 
 	RegionCoordinates string `json:"event-regioncoordinates,omitempty"`
+
+	FPS string `json:"fps,omitempty"`
 }
 
 // HandlerResult represents the result of message handling
