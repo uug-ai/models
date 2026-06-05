@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -163,6 +164,13 @@ type PipelinePayload struct {
 	IsFragmented     bool                         `json:"is_fragmented" bson:"is_fragmented"`
 	BytesRanges      string                       `json:"bytes_ranges" bson:"bytes_ranges"`
 	BytesRangeOnTime []FragmentedBytesRangeOnTime `json:"bytes_range_on_time" bson:"bytes_range_on_time"`
+
+	// Result is the typed result a producer stage hands back for a delegated
+	// ingest handler (e.g. a DetectionRun-shaped body). It is the result
+	// channel the ingest core reads from — distinct from the deprecated
+	// PipelineEvent.Data bag, which only carries storage credentials on
+	// dispatch and must not be used to carry results.
+	Result json.RawMessage `json:"result,omitempty" bson:"result,omitempty"`
 
 	// Metadata
 	Metadata PipelineMetadata `json:"metadata,omitempty"`
