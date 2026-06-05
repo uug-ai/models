@@ -230,10 +230,34 @@ func TestIngest_UnknownKind(t *testing.T) {
 	}
 }
 
+func TestIngest_PoseUsesDetectionContract(t *testing.T) {
+	scope, store, _ := newScope(SourceAPI)
+	body := map[string]any{
+		"task":            "pose",
+		"source":          map[string]any{"runId": "RUN-POSE"},
+		"coordinateSpace": "normalized",
+		"tracks":          []any{map[string]any{"id": "t", "boxes": []any{map[string]any{"frame": 0, "x": 0.1, "y": 0.1, "w": 0.1, "h": 0.1}}}},
+	}
+	raw, _ := json.Marshal(body)
+	report, err := Ingest(context.Background(), scope, target(), "detection", raw)
+	if err != nil {
+		t.Fatalf("Ingest: %v", err)
+	}
+	if len(store.runs) != 1 {
+		t.Fatalf("want 1 stored run, got %d", len(store.runs))
+	}
+	if store.runs[0].Task != "pose" {
+		t.Errorf("run.Task = %q, want \"pose\"", store.runs[0].Task)
+	}
+	if report.RunId != "RUN-POSE" || report.BoxesStored != 1 {
+		t.Errorf("report = %+v", report)
+	}
+}
+
 func TestIngest_UnknownTask(t *testing.T) {
 	scope, _, _ := newScope(SourceAPI)
 	body := map[string]any{
-		"task":            "pose",
+		"task":            "segmentation",
 		"source":          map[string]any{"runId": "RUN-4"},
 		"coordinateSpace": "normalized",
 		"tracks":          []any{map[string]any{"id": "t", "boxes": []any{map[string]any{"frame": 0, "x": 0.1, "y": 0.1, "w": 0.1, "h": 0.1}}}},

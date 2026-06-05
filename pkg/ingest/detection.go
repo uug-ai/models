@@ -157,11 +157,16 @@ type TaskHandler interface {
 	Normalize(req api.PostDetectionsRequest) (models.DetectionRun, Report)
 }
 
-// taskRegistry maps a detection task to its handler. box is the only task
-// today; anpr/pose arrive as new entries without touching either transport.
+// taskRegistry maps a detection task to its handler. Every task today shares
+// the detection bounding-box contract (api.PostDetectionsRequest), so they all
+// route to boxTask — pose, like box, reports a person/keypoint subject as an
+// axis-aligned box per frame and is stored as a DetectionRun. A task that later
+// needs a different geometry contract gets its own handler here without
+// touching either transport.
 var taskRegistry = map[string]TaskHandler{
-	models.DetectionTask: boxTask{},
-	// "anpr": anprTask{}, "pose": poseTask{},
+	models.DetectionTask: boxTask{}, // "detection" (default / box)
+	"pose":               boxTask{}, // pose producer emits the detection contract
+	// "anpr": anprTask{},
 }
 
 // --- box task --------------------------------------------------------------
