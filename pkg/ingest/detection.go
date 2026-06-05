@@ -564,7 +564,12 @@ func (PromoteTracksToRegions) Apply(ctx context.Context, scope Scope, target Tar
 		return fmt.Errorf("ingest: promote expected models.DetectionRun, got %T", run)
 	}
 	if scope.Regions == nil {
-		return errors.New("ingest: no RegionPromoter configured on scope")
+		// Promotion is opt-in by wiring: the transport is trusted to promote
+		// (RunFor), but a transport that only stores runs (e.g. generic
+		// detection/pose ingestion mirroring the detection endpoint) supplies
+		// no RegionPromoter. With nothing to promote through, this is a no-op,
+		// not a failure.
+		return nil
 	}
 	return scope.Regions.PromoteTracks(ctx, target.Key, dr.Source.RunId, dr.Tracks)
 }
