@@ -76,18 +76,18 @@ type WorkflowTrigger struct {
 // and the edges that route between them. Trigger says what activates it; the
 // nodes/edges say what runs.
 type Workflow struct {
-	Id           primitive.ObjectID `json:"id" bson:"_id,omitempty"`
-	Name         string             `json:"name" bson:"name,omitempty"`
-	Description  string             `json:"description" bson:"description,omitempty"`
-	Enabled      bool               `json:"enabled" bson:"enabled"`
-	Trigger      *WorkflowTrigger   `json:"trigger,omitempty" bson:"trigger,omitempty"`
-	Nodes        []WorkflowNode     `json:"nodes" bson:"nodes"`
-	Edges        []WorkflowEdge     `json:"edges" bson:"edges"`
-	UserId       string             `json:"user_id" bson:"user_id,omitempty"`
-	Username     string             `json:"username" bson:"username,omitempty"`
-	MasterUserId string             `json:"master_user_id" bson:"master_user_id,omitempty"`
-	CreatedAt    int64              `json:"created_at" bson:"created_at,omitempty"`
-	UpdatedAt    int64              `json:"updated_at" bson:"updated_at,omitempty"`
+	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	Name           string             `json:"name" bson:"name,omitempty"`
+	Description    string             `json:"description" bson:"description,omitempty"`
+	Enabled        bool               `json:"enabled" bson:"enabled"`
+	Trigger        *WorkflowTrigger   `json:"trigger,omitempty" bson:"trigger,omitempty"`
+	Nodes          []WorkflowNode     `json:"nodes" bson:"nodes"`
+	Edges          []WorkflowEdge     `json:"edges" bson:"edges"`
+	UserId         string             `json:"user_id" bson:"user_id,omitempty"`
+	Username       string             `json:"username" bson:"username,omitempty"`
+	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
+	CreatedAt      int64              `json:"created_at" bson:"created_at,omitempty"`
+	UpdatedAt      int64              `json:"updated_at" bson:"updated_at,omitempty"`
 }
 
 // Input / Output types for repository operations
