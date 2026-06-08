@@ -23,8 +23,10 @@ type WorkflowNode struct {
 	// by platform- and user-defined stages), not its Mongo Id. Always set:
 	// every node is an instance of a catalog stage, resolved at compile time.
 	StageRef string `json:"stageRef" bson:"stageRef"`
-	// Data holds optional per-instance parameters passed to the stage for this
-	// placement, layered over the stage's catalog defaults.
+	// Data holds optional per-instance parameter values for this placement, keyed
+	// by parameter name. They are validated against and defaulted from the
+	// referenced stage's declared Params (see WorkflowStage.Params), layered over
+	// the stage's catalog defaults.
 	Data map[string]interface{} `json:"data,omitempty" bson:"data,omitempty"`
 }
 
@@ -41,13 +43,19 @@ type WorkflowNode struct {
 type WorkflowEdge struct {
 	Id     string `json:"id" bson:"id"`
 	Source string `json:"source" bson:"source"`
-	// SourcePort optionally selects which of the source node's outputs this edge
-	// reads; Condition is evaluated against that output's result.
+	// SourcePort optionally selects which of the source stage's declared Outputs
+	// (see WorkflowStage.Outputs) this edge reads; Condition is evaluated against
+	// that output's result. Empty means the stage's single implicit default port.
 	SourcePort string `json:"sourcePort" bson:"sourcePort"`
 	Target     string `json:"target" bson:"target"`
+	// TargetPort optionally selects which of the target stage's declared Inputs
+	// (see WorkflowStage.Inputs) this edge feeds. Empty means the default port.
 	TargetPort string `json:"targetPort" bson:"targetPort"`
 	// Condition is the structured predicate evaluated against the source stage's
-	// result. Nil means the edge is an unconditional dependency.
+	// result. Nil means the edge is an unconditional dependency. The edge is the
+	// authoring source of truth for routing: this Condition is what compiles into
+	// the target stage's Needs[].Condition (see WorkflowStage.Needs), which is the
+	// derived runtime projection.
 	Condition *StageCondition `json:"condition,omitempty" bson:"condition,omitempty"`
 }
 
