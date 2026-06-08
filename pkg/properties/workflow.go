@@ -9,6 +9,7 @@ const (
 	WorkflowName = "name"
 	WorkflowDescription = "description"
 	WorkflowEnabled = "enabled"
+	WorkflowTrigger = "trigger"
 	WorkflowNodes = "nodes"
 	WorkflowEdges = "edges"
 	WorkflowUserId = "user_id"
@@ -25,18 +26,23 @@ const (
 	WorkflowEdgeSourcePort = "sourcePort"
 	WorkflowEdgeTarget = "target"
 	WorkflowEdgeTargetPort = "targetPort"
+	WorkflowEdgeCondition = "condition"
 )
 
 // WorkflowNode property field names (BSON)
 const (
 	WorkflowNodeId = "id"
-	WorkflowNodeType = "type"
 	WorkflowNodeLabel = "label"
 	WorkflowNodeX = "x"
 	WorkflowNodeY = "y"
-	WorkflowNodeSelection = "selection"
-	WorkflowNodeStartAt = "startAt"
-	WorkflowNodeEndAt = "endAt"
-	WorkflowNodeWeekdays = "weekdays"
+	WorkflowNodeStageRef = "stageRef"
 	WorkflowNodeData = "data"
+)
+
+// WorkflowTrigger property field names (BSON)
+const (
+	WorkflowTriggerSelection = "selection"
+	WorkflowTriggerStartAt = "startAt"
+	WorkflowTriggerEndAt = "endAt"
+	WorkflowTriggerWeekdays = "weekdays"
 )
