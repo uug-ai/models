@@ -18,6 +18,27 @@ const (
 	DispatchConditional Dispatch = "conditional"
 )
 
+// NeedsMode is the closed enum describing how a conditional stage's multiple
+// Needs combine into a single dispatch decision. It is named (not a boolean) so
+// further join modes can be added without a schema change, and only meaningful
+// when Dispatch is DispatchConditional and the stage has more than one need. An
+// empty NeedsMode defaults to NeedsModeAny.
+//
+//	any — fire as soon as one of the stage's needs is satisfied: its gate
+//	      operation is available on the run (or empty/ungated) and its condition
+//	      matches the run root (fan-in as OR). This is the back-compatible
+//	      default.
+//	all — fire only once every need is satisfied: each need's gate operation is
+//	      available and each need's condition matches the run root (fan-in as
+//	      AND / a join). A need whose gate operation is not yet available blocks
+//	      the stage.
+type NeedsMode string
+
+const (
+	NeedsModeAny NeedsMode = "any"
+	NeedsModeAll NeedsMode = "all"
+)
+
 // ConditionOp is the closed enum of comparison operators a StageCondition may
 // use. Named so the allowed operators are part of the type instead of a comment.
 type ConditionOp string
@@ -34,24 +55,52 @@ const (
 	ConditionOpLte      ConditionOp = "lte"      // less than or equal (numeric)
 )
 
-// StageCondition is a structured predicate evaluated against an upstream
-// operation's returned result. No free-form expressions are allowed: a
-// condition is a single (path, op, value) triple.
+// StageCondition is a structured predicate evaluated against the workflow run.
+// No free-form expressions are allowed: a condition is a single (path, op,
+// value) triple.
+//
+// Path is an absolute, dot-separated lookup rooted at the run object itself, not
+// at any single operation's result. The reachable roots are:
+//
+//   - inputs.<op>.<field>   — the run's immutable start context (e.g.
+//     inputs.classify.properties).
+//   - results.<op>.<field>  — an upstream stage's accumulated output (e.g.
+//     results.anpr.plates).
+//   - device.<field>        — the recording source (deviceKey, deviceName,
+//     provider, storageSolution).
+//   - user.<field>          — the owning account (id, organisationId only).
+//   - operation, runId, key, traceId — the run's top-level identity scalars.
+//
+// Credentials are deliberately unreachable: the run's Storage block and
+// user.storage are excluded from the matchable root, so a condition can never
+// match a secret. The lookup walks string-keyed maps only — it cannot index
+// into arrays (no results.anpr.items.0.x), so an array/scalar field is matchable
+// only at its own segment.
 type StageCondition struct {
-	Path  string      `json:"path" bson:"path"`   // dot-path into the upstream op's result
+	Path  string      `json:"path" bson:"path"`   // absolute dot-path into the run root (see type doc)
 	Op    ConditionOp `json:"op" bson:"op"`       // see the ConditionOp consts
 	Value any         `json:"value" bson:"value"` // comparison operand (unused for ConditionOpExists)
 }
 
-// StageDependency is one upstream a conditional stage waits on, paired with the
-// predicate that must match that upstream's result. It mirrors a single
-// incoming workflow edge: Operation is the edge's source stage, and Condition
-// is the edge's condition (nil for an unconditional dependency).
+// StageDependency is one trigger a conditional stage waits on, paired with the
+// predicate that must hold for the stage to fire. It mirrors a single incoming
+// workflow edge: Operation is the edge's source stage (the readiness gate), and
+// Condition is the edge's predicate (nil for an unconditional dependency).
+//
+// Operation and Condition are now decoupled: Operation is purely a readiness
+// gate ("don't evaluate this need until that operation's data is present on the
+// run"), while Condition is an absolute predicate over the whole run root (see
+// StageCondition) — it need not reference Operation's result at all. A need may
+// gate on classify yet match device.deviceKey, for example.
 type StageDependency struct {
-	// Operation is the upstream stage this dependency waits on.
-	Operation string `json:"operation" bson:"operation"`
-	// Condition is the predicate evaluated against the upstream's result. Nil
-	// means the dependency matches as soon as the upstream resolves.
+	// Operation is the upstream stage whose presence gates this need. It must be
+	// in the run's resolved/available operations before the need's Condition is
+	// evaluated. Empty means the need is ungated: it is a check on the run root
+	// itself (device/user/identity, or an input present from open), evaluated as
+	// soon as the run opens with nothing to wait for.
+	Operation string `json:"operation,omitempty" bson:"operation,omitempty"`
+	// Condition is the predicate evaluated against the run root. Nil means the
+	// need matches as soon as its gate (if any) is satisfied.
 	Condition *StageCondition `json:"condition,omitempty" bson:"condition,omitempty"`
 }
 
@@ -158,14 +207,24 @@ type WorkflowStage struct {
 	// workflow it is derived from the graph's edges (conditional when the node has
 	// at least one incoming edge); see the Routing note above.
 	Dispatch Dispatch `json:"dispatch,omitempty" bson:"dispatch,omitempty"`
-	// Needs lists the upstream dependencies of a conditional stage — its fan-in.
-	// It is the compiled, runtime-authoritative projection of the workflow's
-	// incoming edges (one entry per edge), not an independently editable field. At
-	// least one entry is required when Dispatch is DispatchConditional; ignored
-	// otherwise. The runtime re-evaluates the stage whenever any listed upstream
-	// resolves, and the stage fires for the first dependency whose Condition
-	// matches that upstream's result (a nil Condition matches unconditionally).
+	// Needs lists the dependencies of a conditional stage — its fan-in. It is the
+	// compiled, runtime-authoritative projection of the workflow's incoming edges
+	// (one entry per edge), not an independently editable field. At least one
+	// entry is required when Dispatch is DispatchConditional; ignored otherwise.
+	// The runtime re-evaluates the stage against the run root whenever the run
+	// progresses; each need's Operation gates when its Condition may be read (an
+	// empty Operation is ungated, evaluated at open) and the stage fires for the
+	// first need whose Condition matches (a nil Condition matches unconditionally).
 	Needs []StageDependency `json:"needs,omitempty" bson:"needs,omitempty"`
+
+	// NeedsMode controls how multiple Needs combine into a dispatch decision:
+	// NeedsModeAny (the default) fires the stage as soon as one need is satisfied
+	// (its gate operation available and its condition matching); NeedsModeAll
+	// fires the stage only once every need is satisfied (a join). It is
+	// meaningful only when Dispatch is DispatchConditional and there is more than
+	// one need; with a single need both modes behave identically. Empty defaults
+	// to NeedsModeAny.
+	NeedsMode NeedsMode `json:"needsMode,omitempty" bson:"needsMode,omitempty"`
 
 	// --- Contract ---
 
@@ -178,6 +237,17 @@ type WorkflowStage struct {
 	// a single implicit default port.
 	Inputs  []StagePort `json:"inputs,omitempty" bson:"inputs,omitempty"`
 	Outputs []StagePort `json:"outputs,omitempty" bson:"outputs,omitempty"`
+
+	// Kind names the ingest handler the platform routes this stage's typed result
+	// through (e.g. "detection"). When set, the stage is delegated-ingest: its
+	// worker hands the typed result back in WorkflowRun.Payload and the engine
+	// calls the shared ingest core to persist it into the kind's platform-owned
+	// collection (and mirrors the decoded form into the run's Results for
+	// routing). When empty the stage is self-persisting: its worker writes its
+	// own collection and the engine only records the result it returns in
+	// Results. A Kind with no handler registered in the ingest core is treated as
+	// self-persist — the result is recorded, not ingested.
+	Kind string `json:"kind,omitempty" bson:"kind,omitempty"`
 
 	// --- Deployment ---
 
