@@ -12,12 +12,14 @@
 //
 // Routing happens on two independent axes that must not be conflated:
 //
-//   - Kind  (the operation) — what is this result? detection vs thumbnail vs
-//     sprite. Different shapes, different sinks, different action sequences.
-//     Routed here, by the handlers registry.
-//   - Task  (within a kind) — which flavour? box / anpr / pose inside
-//     detection. All share one contract and one collection. Routed *inside*
-//     the kind handler (see detection.go).
+//   - Kind  (the operation) — what is this result? detection vs anpr vs
+//     thumbnail vs sprite. Different shapes, different sinks, different action
+//     sequences. Routed here, by the handlers registry.
+//   - Task  (within a kind) — which flavour? box / pose inside detection. All
+//     tasks of a kind share one contract and one collection. Routed *inside*
+//     the kind handler (see detection.go). A producer whose result has a
+//     genuinely different shape (e.g. anpr: recognised text, not boxes) is its
+//     own kind, not a task.
 package ingest
 
 import (
@@ -25,8 +27,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-
-	"github.com/uug-ai/models/pkg/api"
 )
 
 // ErrUnknownKind is returned when no handler is registered for the requested
@@ -79,16 +79,36 @@ type Scope struct {
 	Detections DetectionStore
 	// Regions is the sink for the optional promote-tracks-to-redaction effect.
 	Regions RegionPromoter
+	// ANPR is the sink for the mandatory anpr-run upsert. Only required by an app
+	// that routes the "anpr" kind; nil otherwise.
+	ANPR ANPRStore
+	// Markers is the sink for the optional create-markers effect (one marker per
+	// recognised ANPR plate). Wired only by a transport that wants the side
+	// effect (the trusted pipeline); nil otherwise (the action no-ops).
+	Markers MarkerStore
 }
 
-// Report summarises what a handler stored, mirroring api.PostDetectionsResponse
-// so an HTTP adapter can return it directly and a queue adapter can log it.
+// Report is the kind-agnostic envelope every handler returns. Only the
+// genuinely universal fields live here — the run's id and any non-fatal
+// warnings — so adding a kind never widens this struct. The kind-specific
+// summary (what and how much was stored, which items were rejected) lives in
+// Detail, a value the kind owns: a queue adapter logs Detail.Summary()
+// kind-agnostically, and an HTTP adapter type-asserts Detail to the concrete
+// type for its response body (it already branches by kind).
 type Report struct {
-	RunId        string
-	TracksStored int
-	BoxesStored  int
-	Rejected     []api.DetectionRejection
-	Warnings     []string
+	RunId    string
+	Warnings []string
+	Detail   ReportDetail
+}
+
+// ReportDetail is a kind's own result summary. Each kind defines a concrete
+// type (DetectionDetail, ANPRDetail, …). Summary keeps logging kind-agnostic;
+// a caller that needs the typed counts asserts on the concrete type — it always
+// knows the kind it asked Ingest to run.
+type ReportDetail interface {
+	// Summary is a short, human-readable line for logs, e.g.
+	// "3 track(s), 50 box(es), 1 rejected".
+	Summary() string
 }
 
 // Action is one idempotent effect in a handler's ordered sequence. Each action
@@ -121,6 +141,7 @@ type Handler struct {
 // never grows a case.
 var handlers = map[string]Handler{
 	detectionHandler.Kind: detectionHandler,
+	anprHandler.Kind:      anprHandler,
 	// "thumbnail": thumbnailHandler, "sprite": spriteHandler — migrated from
 	// the analyser's hardcoded switch later.
 }

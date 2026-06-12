@@ -109,8 +109,9 @@ func TestIngest_PixelNormalizesAndStores(t *testing.T) {
 		t.Errorf("normalised box = %+v, want {0.1,0.1,0.3,0.5}", box)
 	}
 
-	if report.TracksStored != 1 || report.BoxesStored != 1 || report.RunId != "RUN-1" {
-		t.Errorf("report = %+v", report)
+	detail := report.Detail.(DetectionDetail)
+	if detail.TracksStored != 1 || detail.BoxesStored != 1 || report.RunId != "RUN-1" {
+		t.Errorf("report = %+v detail = %+v", report, detail)
 	}
 }
 
@@ -189,11 +190,12 @@ func TestIngest_OutOfFrameBoxRejected(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Ingest: %v", err)
 	}
-	if report.BoxesStored != 1 {
-		t.Errorf("boxesStored = %d, want 1", report.BoxesStored)
+	detail := report.Detail.(DetectionDetail)
+	if detail.BoxesStored != 1 {
+		t.Errorf("boxesStored = %d, want 1", detail.BoxesStored)
 	}
-	if len(report.Rejected) != 1 || report.Rejected[0].Reason != "box_out_of_frame" || report.Rejected[0].Frame != 1 {
-		t.Errorf("rejected = %+v, want one box_out_of_frame at frame 1", report.Rejected)
+	if len(detail.Rejected) != 1 || detail.Rejected[0].Reason != "box_out_of_frame" || detail.Rejected[0].Frame != 1 {
+		t.Errorf("rejected = %+v, want one box_out_of_frame at frame 1", detail.Rejected)
 	}
 	if got := len(store.runs[0].Tracks[0].FrameCoordinates); got != 1 {
 		t.Errorf("stored frame coords = %d, want 1", got)
@@ -249,8 +251,8 @@ func TestIngest_PoseUsesDetectionContract(t *testing.T) {
 	if store.runs[0].Task != "pose" {
 		t.Errorf("run.Task = %q, want \"pose\"", store.runs[0].Task)
 	}
-	if report.RunId != "RUN-POSE" || report.BoxesStored != 1 {
-		t.Errorf("report = %+v", report)
+	if detail := report.Detail.(DetectionDetail); report.RunId != "RUN-POSE" || detail.BoxesStored != 1 {
+		t.Errorf("report = %+v detail = %+v", report, detail)
 	}
 }
 

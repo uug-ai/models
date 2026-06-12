@@ -207,7 +207,10 @@ type SaveFaceRedactionErrorResponse struct {
 // "detections" collection, keyed by the recording. Exactly one of MediaKey (the
 // recording key, i.e. media.videoFile / analysis.key - not the media _id) or
 // AnalysisId (the analysis document _id) must identify the target recording.
-// Runs are upserted by (recording key, Source.RunId).
+// Runs are upserted by (recording key, Source.RunId). The same body is also the
+// payload a delegated-ingest workflow stage returns for the "detection" kind —
+// set task "pose" for a pose run — in which case the engine targets the run's
+// recording from the WorkflowRun envelope and MediaKey/AnalysisId are not used.
 // @Router /detections [post]
 type PostDetectionsRequest struct {
 	// MediaKey is the recording KEY the run belongs to - the stable string that

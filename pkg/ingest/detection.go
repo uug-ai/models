@@ -81,6 +81,19 @@ var detectionHandler = Handler{
 	Actions: []Action{UpsertDetectionRun{}, PromoteTracksToRegions{}},
 }
 
+// DetectionDetail is the detection kind's ReportDetail: how many tracks and
+// boxes were stored and which boxes were rejected during normalisation.
+type DetectionDetail struct {
+	TracksStored int
+	BoxesStored  int
+	Rejected     []api.DetectionRejection
+}
+
+// Summary implements ReportDetail.
+func (d DetectionDetail) Summary() string {
+	return fmt.Sprintf("%d track(s), %d box(es), %d rejected", d.TracksStored, d.BoxesStored, len(d.Rejected))
+}
+
 // decodeDetection unmarshals the envelope payload into the shared
 // api.PostDetectionsRequest (the exact same type the HTTP door binds), routes
 // by Task to the matching validator/normaliser, and stamps the target-derived
@@ -110,7 +123,8 @@ func decodeDetection(scope Scope, target Target, payload json.RawMessage) (any, 
 
 	// A run in which every box was rejected stores nothing — surface it so the
 	// adapter can reject the whole request rather than persist an empty run.
-	if report.BoxesStored == 0 {
+	detail, _ := report.Detail.(DetectionDetail)
+	if detail.BoxesStored == 0 {
 		report.RunId = req.Source.RunId
 		return nil, report, ErrAllBoxesRejected
 	}
@@ -166,7 +180,6 @@ type TaskHandler interface {
 var taskRegistry = map[string]TaskHandler{
 	models.DetectionTask: boxTask{}, // "detection" (default / box)
 	"pose":               boxTask{}, // pose producer emits the detection contract
-	// "anpr": anprTask{},
 }
 
 // --- box task --------------------------------------------------------------
@@ -250,10 +263,8 @@ func (boxTask) Validate(req api.PostDetectionsRequest) error {
 // and report.BoxesStored stays zero so decodeDetection raises
 // ErrAllBoxesRejected.
 func (boxTask) Normalize(req api.PostDetectionsRequest) (models.DetectionRun, Report) {
-	report := Report{
-		Rejected: []api.DetectionRejection{},
-		Warnings: []string{},
-	}
+	detail := DetectionDetail{Rejected: []api.DetectionRejection{}}
+	warnings := []string{}
 
 	normalized := req.CoordinateSpace != "pixel"
 	scaleX, scaleY := 1.0, 1.0
@@ -297,7 +308,7 @@ func (boxTask) Normalize(req api.PostDetectionsRequest) (models.DetectionRun, Re
 
 			box, reason := normalizeDetectionBox(b, normalized, scaleX, scaleY)
 			if reason != "" {
-				report.Rejected = append(report.Rejected, api.DetectionRejection{
+				detail.Rejected = append(detail.Rejected, api.DetectionRejection{
 					TrackId: trackId,
 					Frame:   b.Frame,
 					Reason:  reason,
@@ -319,7 +330,7 @@ func (boxTask) Normalize(req api.PostDetectionsRequest) (models.DetectionRun, Re
 				duplicateFrames++
 			} else {
 				frames = append(frames, b.Frame)
-				report.BoxesStored++
+				detail.BoxesStored++
 			}
 			// Last write wins for a repeated frame within the same track.
 			frameCoords[b.Frame] = box
@@ -344,23 +355,25 @@ func (boxTask) Normalize(req api.PostDetectionsRequest) (models.DetectionRun, Re
 			ClassId:          t.ClassId,
 			Shape:            t.Shape,
 		})
-		report.TracksStored++
+		detail.TracksStored++
 	}
 
 	if timestampMismatches > 0 {
-		report.Warnings = append(report.Warnings, fmt.Sprintf("TIMESTAMP_FRAME_MISMATCH: %d box(es)", timestampMismatches))
+		warnings = append(warnings, fmt.Sprintf("TIMESTAMP_FRAME_MISMATCH: %d box(es)", timestampMismatches))
 	}
 	if frameOutOfRange > 0 {
-		report.Warnings = append(report.Warnings, fmt.Sprintf("FRAME_OUT_OF_RANGE: %d box(es)", frameOutOfRange))
+		warnings = append(warnings, fmt.Sprintf("FRAME_OUT_OF_RANGE: %d box(es)", frameOutOfRange))
 	}
 	if duplicateFrames > 0 {
-		report.Warnings = append(report.Warnings, fmt.Sprintf("DUPLICATE_FRAME: %d box(es) overwritten", duplicateFrames))
+		warnings = append(warnings, fmt.Sprintf("DUPLICATE_FRAME: %d box(es) overwritten", duplicateFrames))
 	}
 	if warning, _ := checkSchemaVersion(req.SchemaVersion); warning != "" {
-		report.Warnings = append(report.Warnings, warning)
+		warnings = append(warnings, warning)
 	}
 
-	if totalBoxes > 0 && report.BoxesStored == 0 {
+	report := Report{Warnings: warnings, Detail: detail}
+
+	if totalBoxes > 0 && detail.BoxesStored == 0 {
 		// Nothing survived; the empty report drives ErrAllBoxesRejected upstream.
 		return models.DetectionRun{}, report
 	}
