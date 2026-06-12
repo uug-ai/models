@@ -9,8 +9,9 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 // DispatchAlways.
 //
 //	always      — enqueued at workflow start, unconditionally.
-//	conditional — enqueued only when one of its upstream dependencies resolves
-//	              and that dependency's Condition matches the upstream result.
+//	conditional — held at start and enqueued only when its Needs are satisfied
+//	              against the run: each need's gate operation is available and
+//	              its Condition matches the run (see Needs and StageDependency).
 type Dispatch string
 
 const (
@@ -68,7 +69,7 @@ const (
 //     results.anpr.plates).
 //   - device.<field>        — the recording source (deviceKey, deviceName,
 //     provider, storageSolution).
-//   - user.<field>          — the owning account (id, organisationId only).
+//   - user.<field>          — the owning account (organisationId only).
 //   - operation, runId, key, traceId — the run's top-level identity scalars.
 //
 // Credentials are deliberately unreachable: the run's Storage block and
@@ -84,20 +85,27 @@ type StageCondition struct {
 
 // StageDependency is one trigger a conditional stage waits on, paired with the
 // predicate that must hold for the stage to fire. It mirrors a single incoming
-// workflow edge: Operation is the edge's source stage (the readiness gate), and
-// Condition is the edge's predicate (nil for an unconditional dependency).
+// workflow edge: Operation is the edge's source operation (the readiness gate),
+// and Condition is the edge's predicate (nil for an unconditional dependency).
 //
-// Operation and Condition are now decoupled: Operation is purely a readiness
-// gate ("don't evaluate this need until that operation's data is present on the
+// Operation and Condition are decoupled: Operation is purely a readiness gate
+// ("don't evaluate this need until that operation's data is present on the
 // run"), while Condition is an absolute predicate over the whole run root (see
 // StageCondition) — it need not reference Operation's result at all. A need may
 // gate on classify yet match device.deviceKey, for example.
+//
+// Note Operation is an OPERATION id, not necessarily a deployed STAGE: gate
+// readiness is checked against the run's available operations (the keys of
+// Inputs ∪ Results), which include the analysis trigger ("classify") that is not
+// a stage. See WorkflowStage.Operation for the stage/operation distinction.
 type StageDependency struct {
-	// Operation is the upstream stage whose presence gates this need. It must be
-	// in the run's resolved/available operations before the need's Condition is
-	// evaluated. Empty means the need is ungated: it is a check on the run root
-	// itself (device/user/identity, or an input present from open), evaluated as
-	// soon as the run opens with nothing to wait for.
+	// Operation is the id of the operation whose presence gates this need: it must
+	// be available on the run — present in Inputs or Results — before the need's
+	// Condition is evaluated. It is an operation id, not necessarily a deployed
+	// stage: the most common gate, "classify", is the analysis trigger (it arrives
+	// in Inputs at open), not a stage. Empty means the need is ungated: a check on
+	// the run root itself (device/user/identity, or an input present from open),
+	// evaluated as soon as the run opens with nothing to wait for.
 	Operation string `json:"operation,omitempty" bson:"operation,omitempty"`
 	// Condition is the predicate evaluated against the run root. Nil means the
 	// need matches as soon as its gate (if any) is satisfied.
@@ -199,8 +207,21 @@ type WorkflowStage struct {
 	// --- Routing ---
 
 	// Operation uniquely identifies the stage and binds its queue, dispatch and
-	// resolution. It is the key that workflow nodes reference. Two stages may
-	// never share an operation.
+	// resolution. It is the key workflow nodes reference, and the key under which
+	// the stage's result is filed in a run's Inputs/Results. Two stages may never
+	// share an operation.
+	//
+	// Stage vs. operation — they are not synonyms:
+	//   - a STAGE is this definition: a deployed worker with a queue and a
+	//     dispatch rule.
+	//   - an OPERATION is the id string. It names this stage, and it is also the
+	//     key results are filed under on a run.
+	// Every deployed stage has an operation, but a run's operation keyspace is
+	// wider than its stages: it also includes the trigger analysis hands off
+	// (e.g. "classify"), which seeds Inputs and can gate a need or be read by a
+	// condition, yet is not itself a deployed stage. That is why routing —
+	// Needs/gates, conditions, and the run's dispatched/resolved tiers — is keyed
+	// by operation (the wider id space), while deployment talks in stages.
 	Operation string `json:"operation" bson:"operation"`
 	// Dispatch is when the stage runs: DispatchAlways or DispatchConditional (the
 	// closed Dispatch enum). Empty defaults to DispatchAlways. For a user

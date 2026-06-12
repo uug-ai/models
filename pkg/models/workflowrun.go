@@ -22,12 +22,30 @@ import (
 //
 // The same shape travels every hop of the workflow tail:
 //
-//	analysis ──WorkflowRun{operation:"event"}──▶ engine
-//	engine   ──WorkflowRun{operation:<stage>, storage}──▶ stage worker
-//	worker   ──WorkflowRun{operation:<stage>, results}──▶ engine
+//	analysis ──WorkflowRun{operation:"event"}──────────────────▶ engine
+//	engine   ──WorkflowRun{operation:<stage>, storage}─────────▶ stage worker
+//	worker   ──WorkflowRun{operation:<stage>, payload|results}─▶ engine
 //
 // so each consumer reads and writes the one object instead of reconstructing
 // state from a generic bag.
+//
+// Integrator contract (engine ⇄ a custom stage worker) — the stable surface a
+// third-party stage codes against:
+//
+//   - A worker RECEIVES the engine→worker dispatch above: its Operation, the
+//     run identity (RunId, Key) and trace (TraceId), the curated User/Device
+//     context, the immutable start context (Inputs) and accumulated upstream
+//     outputs (Results), and the Storage credentials to fetch the media.
+//   - A worker RETURNS the same envelope it received — echo RunId, Key, TraceId
+//     and User so the engine can locate and scope the run — with Storage
+//     cleared and its result in exactly ONE channel. A delegated-ingest stage
+//     (its WorkflowStage declares an ingest Kind) sets Payload to its kind's
+//     typed body — a PostDetectionsRequest for kind "detection" (task
+//     "detection" or "pose"), a PostANPRRequest for kind "anpr" — which the
+//     engine persists through the shared ingest core and mirrors into Results.
+//     A self-persisting stage (no Kind) instead writes its own collection and
+//     returns just its routing values under Results[operation]. A worker never
+//     populates both.
 //
 // Tag discipline keeps the two representations from bleeding into each other:
 //   - `bson:"-"` marks WIRE-ONLY fields (transport role, curated projections,
@@ -43,7 +61,7 @@ type WorkflowRun struct {
 	//     carries the start context in Inputs (e.g. the classification result).
 	//   - any other value (e.g. "anpr"): either the engine dispatching that
 	//     stage to its worker (Storage populated), or the worker routing its
-	//     result back (Results populated). These never collide because the
+	//     result back (Payload or Results populated). These never collide because the
 	//     workflows queue only ever carries the "event" open and worker results —
 	//     a dispatch goes to the worker's own queue — so the engine never has to
 	//     disambiguate a dispatch from a result.
@@ -78,8 +96,12 @@ type WorkflowRun struct {
 	// RecordingTimestamp is the recording's start time (unix seconds), copied
 	// from the recording at hand-off time. It is denormalised onto any platform
 	// artifact the engine ingests (see Payload) so cleanup expires the artifact
-	// on the recording's retention clock rather than the post time. Persisted at
-	// open and also echoed on the wire so a worker round-trips it back.
+	// on the recording's retention clock rather than the post time. It is set on
+	// the analysis hand-off and persisted on the run at open; the engine then
+	// reads it from the run document when stamping an ingested artifact. It is
+	// therefore engine-internal — NOT sent on the engine→worker dispatch and not
+	// something a worker has to echo back, so it is not part of the stage
+	// contract.
 	RecordingTimestamp int64 `json:"recordingTimestamp,omitempty" bson:"recordingtimestamp,omitempty"`
 
 	// UserId scopes the run to an account (the organisation id). Persistence-only:
@@ -93,11 +115,12 @@ type WorkflowRun struct {
 	Start int64 `json:"-" bson:"start"`
 	End   int64 `json:"-" bson:"end,omitempty"`
 
-	// User is the curated, secret-free account context a run needs: the account
-	// id and organisation for logging/scoping and the account Storage block used
-	// to resolve a per-recording vault override. Copied (and scrubbed) from the
-	// analysis monitor stage — credential/secret fields never cross the boundary.
-	// Wire-only; the persisted scope is UserId.
+	// User is the curated, secret-free account context a run needs: the
+	// organisation that owns the recording (for logging/scoping) and the account
+	// Storage block used to resolve a per-recording vault override. Copied (and
+	// scrubbed) from the analysis monitor stage — credential/secret fields and the
+	// individual user id never cross the boundary. Wire-only; the persisted scope
+	// is UserId (which holds the organisation id).
 	User WorkflowUser `json:"user,omitempty" bson:"-"`
 
 	// Device identifies the recording the run derives from, with the few fields
@@ -133,7 +156,10 @@ type WorkflowRun struct {
 	//   - A delegated-ingest stage (its WorkflowStage declares an ingest Kind)
 	//     sets Payload on its result; the engine routes it through ingest.Ingest
 	//     into the stage's platform-owned collection and mirrors its decoded form
-	//     into Results so downstream conditions can branch on it.
+	//     into Results so downstream conditions can branch on it. The engine
+	//     targets the run's own recording (Key/User/Device), so a payload that
+	//     also carries its own recording reference (e.g. a PostDetectionsRequest
+	//     mediaKey/analysisId) has that reference ignored on the queue path.
 	//   - A self-persisting stage (no Kind) writes its own collection and returns
 	//     its routing values in Results instead; Payload is empty.
 	//
@@ -150,23 +176,39 @@ type WorkflowRun struct {
 	// persisted state.
 	Storage *WorkflowStorage `json:"storage,omitempty" bson:"-"`
 
-	// DispatchedOperations are the custom stages the engine has enqueued for this
+	// DispatchedOperations are the operation ids the engine has enqueued for this
 	// run — the always-stages seeded at open plus any conditional stages that
-	// matched. Persistence-only; written idempotently via $addToSet.
+	// matched. Every entry is a deployed stage's operation (only stages are ever
+	// dispatched), so here stage and operation coincide; the field is named by
+	// operation because the stored value is the operation id and to stay
+	// symmetric with ResolvedOperations. Persistence-only; written idempotently
+	// via $addToSet.
 	DispatchedOperations []string `json:"-" bson:"dispatchedoperations,omitempty"`
 
-	// ResolvedOperations are the upstream operations whose results the engine has
-	// observed (drives conditional dispatch and idempotency). Persistence-only.
+	// ResolvedOperations are the operation ids whose stage results the engine has
+	// observed (each worker hands its result back under its operation). With
+	// DispatchedOperations it drives finalization — the run ends once every
+	// dispatched operation is resolved — and idempotency.
+	//
+	// This is narrower than the set a need's gate checks: gate readiness is
+	// evaluated against the run's available operations — the keys of Inputs ∪
+	// Results, which also include the trigger analysis hands off (e.g. "classify")
+	// that seeds Inputs but never resolves as a stage and so never appears here.
+	// Persistence-only.
 	ResolvedOperations []string `json:"-" bson:"resolvedoperations,omitempty"`
 }
 
-// WorkflowUser is the secret-free projection of an account carried on a
-// WorkflowRun. It exposes only what the workflow tail consumes: identity for
-// logging/scoping and the account-level Storage block used to resolve a vault
-// override. Every credential/secret/billing field of the full User is
-// deliberately omitted so it can never reach the workflows queue or its logs.
+// WorkflowUser is the secret-free projection of the owning account carried on a
+// WorkflowRun. A run derives from a recording, which is owned by an
+// organisation (and device), not an individual user, so the scope is the
+// OrganisationId — the run document is keyed by (Key, OrganisationId) and every
+// ingested artifact is scoped to it. The individual user id is deliberately NOT
+// carried: it would imply a user↔recording link that does not exist and is not
+// needed by any stage. The account-level Storage block rides along only to
+// resolve a per-recording vault override. Every credential/secret/billing field
+// of the full User is omitted so it can never reach the workflows queue or its
+// logs.
 type WorkflowUser struct {
-	Id             string  `json:"id,omitempty"`
 	OrganisationId string  `json:"organisationId,omitempty"`
 	Storage        Storage `json:"storage,omitempty"`
 }

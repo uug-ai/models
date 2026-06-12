@@ -85,7 +85,7 @@ type Workflow struct {
 	Edges          []WorkflowEdge     `json:"edges" bson:"edges"`
 	UserId         string             `json:"user_id" bson:"user_id,omitempty"`
 	Username       string             `json:"username" bson:"username,omitempty"`
-	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
+	OrganisationId string             `json:"organisation_id" bson:"organisation_id,omitempty"`
 	CreatedAt      int64              `json:"created_at" bson:"created_at,omitempty"`
 	UpdatedAt      int64              `json:"updated_at" bson:"updated_at,omitempty"`
 }
