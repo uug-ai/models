@@ -76,9 +76,10 @@ type RegionPromoter interface {
 // PromoteTracksToRegions — exactly the "insert the run AND adjust the
 // region-selection" pair the model types are shaped for.
 var detectionHandler = Handler{
-	Kind:    "detection",
-	Decode:  decodeDetection,
-	Actions: []Action{UpsertDetectionRun{}, PromoteTracksToRegions{}},
+	Kind:           KindDetection,
+	AllowedSources: []Source{SourceAPI, SourcePipeline},
+	Decode:         decodeDetection,
+	Actions:        []Action{UpsertDetectionRun{}, PromoteTracksToRegions{}},
 }
 
 // DetectionDetail is the detection kind's ReportDetail: how many tracks and

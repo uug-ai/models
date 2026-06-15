@@ -29,11 +29,35 @@ import (
 	"fmt"
 )
 
-// ErrUnknownKind is returned when no handler is registered for the requested
-// operation. A handler-less kind must never reach Ingest — the adapter routes
-// a completion to Ingest only when a handler exists; otherwise it is a
-// self-persist / generic data.<op> completion that is recorded, not routed.
+// ErrUnknownKind is returned when an envelope carries a block whose type has no
+// registered handler. IngestBlocks rejects the whole envelope rather than
+// applying a partial result, so a bad block never leaves half a write behind.
 var ErrUnknownKind = errors.New("ingest: no handler registered for kind")
+
+// ErrSourceNotAllowed is returned when a block type is not permitted from the
+// request's transport/trust source — e.g. an external API push trying to emit a
+// pipeline-only block. It is the per-block access boundary.
+var ErrSourceNotAllowed = errors.New("ingest: block type not permitted from source")
+
+// ErrTooManyBlocks is returned when an envelope carries more blocks than
+// maxBlocksPerPayload, a boundary guard against an oversized payload.
+var ErrTooManyBlocks = errors.New("ingest: too many blocks in payload")
+
+// ErrPersist tags an action (sink) failure so a caller can tell a retryable
+// persistence error apart from a non-retryable decode/validation one and
+// re-queue the message instead of dropping the result.
+var ErrPersist = errors.New("ingest: persistence failed")
+
+// Block types the core handles today. A producer stamps Block.Type with one of
+// these; the handlers registry routes on it. A genuinely new shape adds a new
+// constant plus a handler — most new producers just recombine existing types.
+const (
+	KindDetection = "detection"
+	KindANPR      = "anpr"
+)
+
+// maxBlocksPerPayload caps how many blocks one envelope may carry.
+const maxBlocksPerPayload = 64
 
 // Source is the transport/trust axis a result arrived on. It gates the
 // optional side-effects of a handler via Action.RunFor — it is NOT the
@@ -111,6 +135,39 @@ type ReportDetail interface {
 	Summary() string
 }
 
+// Block is one self-describing unit of a producer's result. Type selects the
+// handler; Data is the block's own payload (the same per-kind body the typed
+// decoders validate); Schema is an optional per-block version. The same type
+// may appear more than once in an envelope, so each block instance must carry
+// its own stable identity (e.g. a distinct detection source.runId).
+type Block struct {
+	Type   string          `json:"type"`
+	Schema string          `json:"schema,omitempty"`
+	Data   json.RawMessage `json:"data"`
+}
+
+// BlockEnvelope is the payload a producer emits: a variable-length, possibly
+// heterogeneous list of blocks. It replaces the single typed body the per-kind
+// entry point took, so one result can carry e.g. a detection plus markers.
+type BlockEnvelope struct {
+	Schema string  `json:"schema,omitempty"`
+	Blocks []Block `json:"blocks"`
+}
+
+// BlockReport is the per-block outcome: the kind's existing Report (run id,
+// warnings, typed detail) tagged with the block type it came from.
+type BlockReport struct {
+	Type string
+	Report
+}
+
+// BatchReport aggregates the per-block reports for one envelope, plus any
+// envelope-level warnings.
+type BatchReport struct {
+	Blocks   []BlockReport
+	Warnings []string
+}
+
 // Action is one idempotent effect in a handler's ordered sequence. Each action
 // owns its own sink — essential because sinks genuinely differ (own collection
 // vs enrich-in-place). The dispatcher only orders and gates them.
@@ -131,9 +188,27 @@ type Action interface {
 // actions that consume that run. The first action is always the mandatory
 // persistence; any further actions are the optional, RunFor-gated side-effects.
 type Handler struct {
-	Kind    string
-	Decode  func(scope Scope, target Target, payload json.RawMessage) (run any, report Report, err error)
-	Actions []Action
+	// Kind is the block type this handler processes (the registry key).
+	Kind string
+	// AllowedSources is the transport/trust allow-list: which sources may emit
+	// this block type. Empty means trusted pipeline only — the safe default, so a
+	// new block type is never accidentally writable over the external API.
+	AllowedSources []Source
+	Decode         func(scope Scope, target Target, payload json.RawMessage) (run any, report Report, err error)
+	Actions        []Action
+}
+
+// AllowsSource reports whether a block of this kind may be ingested from src.
+func (h Handler) AllowsSource(src Source) bool {
+	if len(h.AllowedSources) == 0 {
+		return src == SourcePipeline
+	}
+	for _, s := range h.AllowedSources {
+		if s == src {
+			return true
+		}
+	}
+	return false
 }
 
 // handlers is the kind registry — the one switch the dispatcher routes on.
@@ -146,30 +221,51 @@ var handlers = map[string]Handler{
 	// the analyser's hardcoded switch later.
 }
 
-// Ingest is the single entry point both transports call. It looks up the
-// handler for kind, decodes the payload once, then runs each action in order,
-// skipping those the current Source is not trusted for. It owns only this
-// shared plumbing — the moment it starts switching on kind to do real work it
-// has become the hardcoded switch it replaced.
-func Ingest(ctx context.Context, scope Scope, target Target, kind string, payload json.RawMessage) (Report, error) {
-	h, ok := handlers[kind]
-	if !ok {
-		return Report{}, fmt.Errorf("%w: %s", ErrUnknownKind, kind)
+// IngestBlocks is the single entry point a producer's result flows through. The
+// payload is a self-describing BlockEnvelope: a variable-length, possibly
+// heterogeneous list of blocks. It validates the envelope up front — the block
+// cap, and that every block type is registered and permitted for this source —
+// so an unknown or forbidden block rejects the whole result before any write,
+// then decodes and applies each block in order. A sink failure is tagged
+// ErrPersist so the caller can retry; a decode/validation failure is not.
+func IngestBlocks(ctx context.Context, scope Scope, target Target, env BlockEnvelope) (BatchReport, error) {
+	var batch BatchReport
+
+	if len(env.Blocks) > maxBlocksPerPayload {
+		return batch, fmt.Errorf("%w: %d exceeds limit of %d", ErrTooManyBlocks, len(env.Blocks), maxBlocksPerPayload)
 	}
 
-	run, report, err := h.Decode(scope, target, payload)
-	if err != nil {
-		return report, err
-	}
-
-	for _, a := range h.Actions {
-		if !a.RunFor(scope.Source) {
-			continue
+	// Pre-pass: reject an unknown or forbidden block before applying any block,
+	// so a bad envelope never leaves a partial write behind.
+	for i, b := range env.Blocks {
+		h, ok := handlers[b.Type]
+		if !ok {
+			return batch, fmt.Errorf("%w: %s", ErrUnknownKind, b.Type)
 		}
-		if err := a.Apply(ctx, scope, target, run); err != nil {
-			return report, fmt.Errorf("ingest: action %q failed: %w", a.Name(), err)
+		if !h.AllowsSource(scope.Source) {
+			return batch, fmt.Errorf("%w: %q from %q (block %d)", ErrSourceNotAllowed, b.Type, scope.Source, i)
 		}
 	}
 
-	return report, nil
+	for i, b := range env.Blocks {
+		h := handlers[b.Type]
+
+		run, report, err := h.Decode(scope, target, b.Data)
+		if err != nil {
+			return batch, fmt.Errorf("ingest: block %d (%s): %w", i, b.Type, err)
+		}
+
+		for _, a := range h.Actions {
+			if !a.RunFor(scope.Source) {
+				continue
+			}
+			if err := a.Apply(ctx, scope, target, run); err != nil {
+				return batch, fmt.Errorf("%w: block %d (%s) action %q: %v", ErrPersist, i, b.Type, a.Name(), err)
+			}
+		}
+
+		batch.Blocks = append(batch.Blocks, BlockReport{Type: b.Type, Report: report})
+	}
+
+	return batch, nil
 }

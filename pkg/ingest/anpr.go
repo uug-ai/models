@@ -66,9 +66,10 @@ type MarkerStore interface {
 // which surfaces each plate as a user-facing marker — the anpr analogue of the
 // detection kind's "store the run AND adjust region-selection" pair.
 var anprHandler = Handler{
-	Kind:    "anpr",
-	Decode:  decodeANPR,
-	Actions: []Action{UpsertANPRRun{}, CreateANPRMarkers{}},
+	Kind:           KindANPR,
+	AllowedSources: []Source{SourceAPI, SourcePipeline},
+	Decode:         decodeANPR,
+	Actions:        []Action{UpsertANPRRun{}, CreateANPRMarkers{}},
 }
 
 // ANPRDetail is the anpr kind's ReportDetail: how many plates were stored and
