@@ -4,22 +4,22 @@
 //
 // "Service" here means a package, not a process: there is no new microservice,
 // deployment, queue or network hop. The package is compiled *into* both the
-// hub-api and the analyser binaries; each calls Ingest(...) in-process on its
-// own request. The package is deliberately infra-free — it only depends on
+// hub-api and the analyser binaries; each calls IngestBlocks(...) in-process on
+// its own request. The package is deliberately infra-free — it only depends on
 // types already in the models module and on the sink interfaces declared here,
 // so it stays a fast, testable library. Concrete persistence (the Mongo
 // upsert, region promotion) is supplied by each app through the Scope sinks.
 //
 // Routing happens on two independent axes that must not be conflated:
 //
-//   - Kind  (the operation) — what is this result? detection vs anpr vs
+//   - Kind  (the operation) — what is this result? detection vs marker vs
 //     thumbnail vs sprite. Different shapes, different sinks, different action
 //     sequences. Routed here, by the handlers registry.
 //   - Task  (within a kind) — which flavour? box / pose inside detection. All
 //     tasks of a kind share one contract and one collection. Routed *inside*
 //     the kind handler (see detection.go). A producer whose result has a
-//     genuinely different shape (e.g. anpr: recognised text, not boxes) is its
-//     own kind, not a task.
+//     genuinely different shape (e.g. a marker: a timeline annotation, not a
+//     detection's boxes) is its own kind, not a task.
 package ingest
 
 import (
@@ -52,8 +52,8 @@ var ErrPersist = errors.New("ingest: persistence failed")
 // these; the handlers registry routes on it. A genuinely new shape adds a new
 // constant plus a handler — most new producers just recombine existing types.
 const (
-	KindDetection = "detection"
-	KindANPR      = "anpr"
+	KindDetection = "detection" // a run of detection tracks/boxes (detection.go)
+	KindMarker    = "marker"    // a timeline annotation, one models.Marker (marker.go)
 )
 
 // maxBlocksPerPayload caps how many blocks one envelope may carry.
@@ -103,12 +103,9 @@ type Scope struct {
 	Detections DetectionStore
 	// Regions is the sink for the optional promote-tracks-to-redaction effect.
 	Regions RegionPromoter
-	// ANPR is the sink for the mandatory anpr-run upsert. Only required by an app
-	// that routes the "anpr" kind; nil otherwise.
-	ANPR ANPRStore
-	// Markers is the sink for the optional create-markers effect (one marker per
-	// recognised ANPR plate). Wired only by a transport that wants the side
-	// effect (the trusted pipeline); nil otherwise (the action no-ops).
+	// Markers is the sink for the mandatory marker upsert. Required only by an
+	// app that routes the "marker" kind; nil otherwise (the action errors if a
+	// marker block arrives without it).
 	Markers MarkerStore
 }
 
@@ -126,7 +123,7 @@ type Report struct {
 }
 
 // ReportDetail is a kind's own result summary. Each kind defines a concrete
-// type (DetectionDetail, ANPRDetail, …). Summary keeps logging kind-agnostic;
+// type (DetectionDetail, MarkerDetail, …). Summary keeps logging kind-agnostic;
 // a caller that needs the typed counts asserts on the concrete type — it always
 // knows the kind it asked Ingest to run.
 type ReportDetail interface {
@@ -216,7 +213,7 @@ func (h Handler) AllowsSource(src Source) bool {
 // never grows a case.
 var handlers = map[string]Handler{
 	detectionHandler.Kind: detectionHandler,
-	anprHandler.Kind:      anprHandler,
+	markerHandler.Kind:    markerHandler,
 	// "thumbnail": thumbnailHandler, "sprite": spriteHandler — migrated from
 	// the analyser's hardcoded switch later.
 }

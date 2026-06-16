@@ -66,7 +66,7 @@ const (
 //   - inputs.<op>.<field>   — the run's immutable start context (e.g.
 //     inputs.classify.properties).
 //   - results.<op>.<field>  — an upstream stage's accumulated output (e.g.
-//     results.anpr.plates).
+//     results.anpr.tracks).
 //   - device.<field>        — the recording source (deviceKey, deviceName,
 //     provider, storageSolution).
 //   - user.<field>          — the owning account (organisationId only).
@@ -75,7 +75,7 @@ const (
 // Credentials are deliberately unreachable: the run's Storage block and
 // user.storage are excluded from the matchable root, so a condition can never
 // match a secret. The lookup walks string-keyed maps only — it cannot index
-// into arrays (no results.anpr.items.0.x), so an array/scalar field is matchable
+// into arrays (no results.anpr.tracks.0.id), so an array/scalar field is matchable
 // only at its own segment.
 type StageCondition struct {
 	Path  string      `json:"path" bson:"path"`   // absolute dot-path into the run root (see type doc)

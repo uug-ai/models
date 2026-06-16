@@ -39,10 +39,11 @@ import (
 //   - A worker RETURNS the same envelope it received — echo RunId, Key, TraceId
 //     and User so the engine can locate and scope the run — with Storage
 //     cleared and its result in exactly ONE channel. A delegated-ingest stage
-//     (its WorkflowStage declares an ingest Kind) sets Payload to its kind's
-//     typed body — a PostDetectionsRequest for kind "detection" (task
-//     "detection" or "pose"), a PostANPRRequest for kind "anpr" — which the
-//     engine persists through the shared ingest core and mirrors into Results.
+//     (its WorkflowStage declares an ingest Kind) sets Payload to a
+//     self-describing block envelope — one or more typed blocks the shared
+//     ingest core routes by kind (e.g. a "detection" block carrying a
+//     PostDetectionsRequest, optionally followed by "marker" blocks) — which
+//     the engine persists and mirrors into Results.
 //     A self-persisting stage (no Kind) instead writes its own collection and
 //     returns just its routing values under Results[operation]. A worker never
 //     populates both.
