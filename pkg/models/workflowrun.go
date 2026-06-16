@@ -38,15 +38,15 @@ import (
 //     outputs (Results), and the Storage credentials to fetch the media.
 //   - A worker RETURNS the same envelope it received — echo RunId, Key, TraceId
 //     and User so the engine can locate and scope the run — with Storage
-//     cleared and its result in exactly ONE channel. A delegated-ingest stage
-//     (its WorkflowStage declares an ingest Kind) sets Payload to a
-//     self-describing block envelope — one or more typed blocks the shared
-//     ingest core routes by kind (e.g. a "detection" block carrying a
-//     PostDetectionsRequest, optionally followed by "marker" blocks) — which
-//     the engine persists and mirrors into Results.
-//     A self-persisting stage (no Kind) instead writes its own collection and
-//     returns just its routing values under Results[operation]. A worker never
-//     populates both.
+//     cleared and its result in exactly ONE channel. A delegated-ingest worker
+//     sets Payload to a self-describing block envelope — one or more typed
+//     blocks the shared ingest core routes by each block's own type (e.g. a
+//     "detection" block carrying a PostDetectionsRequest, optionally followed by
+//     "marker" blocks) — which the engine persists and mirrors, grouped by block
+//     type, into Results.
+//     A self-persisting worker instead writes its own collection and returns
+//     just its routing values under Results[operation]. A worker never populates
+//     both.
 //
 // Tag discipline keeps the two representations from bleeding into each other:
 //   - `bson:"-"` marks WIRE-ONLY fields (transport role, curated projections,
@@ -144,25 +144,28 @@ type WorkflowRun struct {
 	// with Inputs it is the durable condition bag (Results wins on any overlap).
 	Results map[string]interface{} `json:"results,omitempty" bson:"results,omitempty"`
 
-	// Payload is the raw, typed result body a delegated-ingest stage hands back
-	// for the platform to persist — the single operation in Operation, in its
-	// kind's contract shape (e.g. a detection-run body). It is the channel the
-	// shared ingest core reads from, distinct from Results:
+	// Payload is the self-describing block envelope a delegated-ingest worker
+	// hands back for the platform to persist: one or more typed blocks (e.g. a
+	// "detection" block carrying a PostDetectionsRequest, optionally followed by
+	// "marker" blocks). It is the channel the shared ingest core reads from,
+	// distinct from Results:
 	//
 	//   - Results is the multi-operation, decoded routing/state ledger the
 	//     condition matcher reads and the run persists.
-	//   - Payload is a single stage's raw typed bytes for one ingest hop.
+	//   - Payload is one worker's block envelope for a single ingest hop.
 	//
 	// Lifecycle mirrors Storage and is one-directional (worker → engine):
-	//   - A delegated-ingest stage (its WorkflowStage declares an ingest Kind)
-	//     sets Payload on its result; the engine routes it through ingest.Ingest
-	//     into the stage's platform-owned collection and mirrors its decoded form
-	//     into Results so downstream conditions can branch on it. The engine
-	//     targets the run's own recording (Key/User/Device), so a payload that
-	//     also carries its own recording reference (e.g. a PostDetectionsRequest
-	//     mediaKey/analysisId) has that reference ignored on the queue path.
-	//   - A self-persisting stage (no Kind) writes its own collection and returns
-	//     its routing values in Results instead; Payload is empty.
+	//   - A delegated-ingest worker sets Payload on its result; the engine routes
+	//     it through ingest.IngestBlocks, persisting each block by its own type
+	//     into the platform-owned collection, and mirrors the envelope's blocks
+	//     grouped by type into Results[operation] (one array per block type, e.g.
+	//     results.<op>.detections) so a downstream conditional stage can test what
+	//     the stage produced. The engine targets the run's own recording
+	//     (Key/User/Device), so a payload that also carries its own recording
+	//     reference (e.g. a PostDetectionsRequest mediaKey/analysisId) has that
+	//     reference ignored on the queue path.
+	//   - A self-persisting worker writes its own collection and returns its
+	//     routing values in Results instead; Payload is empty.
 	//
 	// `bson:"-"` is load-bearing: the raw body is ingested into its own
 	// collection, never duplicated into the run's persisted state. The engine
