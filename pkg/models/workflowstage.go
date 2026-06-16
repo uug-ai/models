@@ -66,7 +66,7 @@ const (
 //   - inputs.<op>.<field>   — the run's immutable start context (e.g.
 //     inputs.classify.properties).
 //   - results.<op>.<field>  — an upstream stage's accumulated output (e.g.
-//     results.anpr.plates).
+//     results.anpr.tracks).
 //   - device.<field>        — the recording source (deviceKey, deviceName,
 //     provider, storageSolution).
 //   - user.<field>          — the owning account (organisationId only).
@@ -74,9 +74,15 @@ const (
 //
 // Credentials are deliberately unreachable: the run's Storage block and
 // user.storage are excluded from the matchable root, so a condition can never
-// match a secret. The lookup walks string-keyed maps only — it cannot index
-// into arrays (no results.anpr.items.0.x), so an array/scalar field is matchable
-// only at its own segment.
+// match a secret.
+//
+// A "*" path segment fans out across the elements of the array at that position
+// and continues resolving from each element, so results.anpr.detections.*.confidence
+// matches per detection. The predicate then holds when ANY element satisfies a
+// positive operator (eq/contains/in/gt/gte/lt/lte/exists), and when EVERY element
+// differs for ne. Numeric indices are not supported (no results.anpr.tracks.0.id):
+// use "*" to reach into array elements, or match the array itself at its own
+// segment (contains/exists).
 type StageCondition struct {
 	Path  string      `json:"path" bson:"path"`   // absolute dot-path into the run root (see type doc)
 	Op    ConditionOp `json:"op" bson:"op"`       // see the ConditionOp consts
@@ -258,17 +264,6 @@ type WorkflowStage struct {
 	// a single implicit default port.
 	Inputs  []StagePort `json:"inputs,omitempty" bson:"inputs,omitempty"`
 	Outputs []StagePort `json:"outputs,omitempty" bson:"outputs,omitempty"`
-
-	// Kind names the ingest handler the platform routes this stage's typed result
-	// through (e.g. "detection"). When set, the stage is delegated-ingest: its
-	// worker hands the typed result back in WorkflowRun.Payload and the engine
-	// calls the shared ingest core to persist it into the kind's platform-owned
-	// collection (and mirrors the decoded form into the run's Results for
-	// routing). When empty the stage is self-persisting: its worker writes its
-	// own collection and the engine only records the result it returns in
-	// Results. A Kind with no handler registered in the ingest core is treated as
-	// self-persist — the result is recorded, not ingested.
-	Kind string `json:"kind,omitempty" bson:"kind,omitempty"`
 
 	// --- Deployment ---
 
