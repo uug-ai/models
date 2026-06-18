@@ -50,8 +50,9 @@ import (
 //
 // Tag discipline keeps the two representations from bleeding into each other:
 //   - `bson:"-"` marks WIRE-ONLY fields (transport role, curated projections,
-//     the credential-bearing Storage) so they NEVER persist to Mongo — most
-//     importantly Storage, so credentials can never land in run state.
+//     the credential-bearing Storage and SignedURL) so they NEVER persist to
+//     Mongo — most importantly the credential carriers, so secrets can never
+//     land in run state.
 //   - `json:"-"` marks PERSISTENCE-ONLY fields (the run's stored identity and
 //     progress tiers) so they never appear on the queue contract.
 //   - Fields tagged for both (Key, TraceId, WorkflowId, WorkflowName) are the
@@ -179,6 +180,17 @@ type WorkflowRun struct {
 	// result. `bson:"-"` is load-bearing: credentials never sit in the run's
 	// persisted state.
 	Storage *WorkflowStorage `json:"storage,omitempty" bson:"-"`
+
+	// SignedURL is a vault-signed, short-lived URL (HMAC signature + TTL) a
+	// dispatched stage worker can use to fetch the run's media directly, instead
+	// of constructing the request from the raw Storage credentials. It is the
+	// signed URL the upstream pipeline already holds for the recording (the same
+	// one carried on PipelinePayload.SignedURL), copied onto the run at the
+	// analysis hand-off and carried on the engine→worker dispatch alongside
+	// Storage. `bson:"-"` is load-bearing: a signed URL is credential-equivalent
+	// and short-lived, so — like Storage — it is wire-only and never lands in the
+	// run's persisted state; a stage dispatched after a reload fetches via Storage.
+	SignedURL string `json:"signedUrl,omitempty" bson:"-"`
 
 	// DispatchedOperations are the operation ids the engine has enqueued for this
 	// run — the always-stages seeded at open plus any conditional stages that
