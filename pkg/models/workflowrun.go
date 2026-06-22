@@ -106,9 +106,9 @@ type WorkflowRun struct {
 	// contract.
 	RecordingTimestamp int64 `json:"recordingTimestamp,omitempty" bson:"recordingtimestamp,omitempty"`
 
-	// UserId scopes the run to an account (the organisation id). Persistence-only:
+	// OrganisationId scopes the run to the owning organisation. Persistence-only:
 	// on the wire the same identity travels in the richer User projection.
-	UserId string `json:"-" bson:"userid"`
+	OrganisationId string `json:"-" bson:"organisationId"`
 
 	// TraceId continues the distributed trace across the workflow tail.
 	TraceId string `json:"traceId,omitempty" bson:"traceid"`
@@ -122,7 +122,7 @@ type WorkflowRun struct {
 	// Storage block used to resolve a per-recording vault override. Copied (and
 	// scrubbed) from the analysis monitor stage — credential/secret fields and the
 	// individual user id never cross the boundary. Wire-only; the persisted scope
-	// is UserId (which holds the organisation id).
+	// is OrganisationId.
 	User WorkflowUser `json:"user,omitempty" bson:"-"`
 
 	// Device identifies the recording the run derives from, with the few fields
