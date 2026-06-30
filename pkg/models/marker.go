@@ -47,6 +47,43 @@ func (m *Marker) Validate() error {
 
 type MarkerMetadata struct {
 	Comments *Comment `json:"comments,omitempty" bson:"comments,omitempty"` // Additional comments or description of the marker
+
+	// Confidence is the certainty of the detection that produced this marker, in the
+	// range [0,1] (e.g. an ANPR plate-read or object-detection score). A nil pointer
+	// means no confidence was reported; this keeps the value optional and lets a
+	// genuine 0 be distinguished from "unset".
+	Confidence *float64 `json:"confidence,omitempty" bson:"confidence,omitempty" example:"0.92"`
+
+	// Source identifies the pipeline that produced this marker (e.g. "anpr",
+	// "loitering", "dominantcolors"). This is provenance, distinct from the
+	// user-facing Categories on the marker.
+	Source string `json:"source,omitempty" bson:"source,omitempty" example:"anpr"`
+
+	// Engine identifies the concrete backend used within the pipeline
+	// (e.g. "fast-onnx", "tesseract", "http").
+	Engine string `json:"engine,omitempty" bson:"engine,omitempty" example:"fast-onnx"`
+
+	// ModelVersion records the version of the model that produced the detection,
+	// so detections can be correlated with model changes after the fact.
+	ModelVersion string `json:"modelVersion,omitempty" bson:"modelVersion,omitempty" example:"v1.4.0"`
+
+	// BoundingBox is the normalized [0,1] region of the detection within the frame,
+	// suitable for drawing overlays. Nil when no spatial information is available.
+	BoundingBox *MarkerBox `json:"boundingBox,omitempty" bson:"boundingBox,omitempty"`
+
+	// Raw is an escape hatch for pipeline-specific metadata that does not warrant a
+	// first-class field. Values here are not indexed or validated; promote anything
+	// you need to query into a typed field instead.
+	Raw map[string]any `json:"raw,omitempty" bson:"raw,omitempty"`
+}
+
+// MarkerBox is a normalized bounding box in the range [0,1], where (X, Y) is the
+// top-left corner and Width/Height are relative to the frame dimensions.
+type MarkerBox struct {
+	X      float64 `json:"x" bson:"x" example:"0.12"`           // Left edge, fraction of frame width
+	Y      float64 `json:"y" bson:"y" example:"0.34"`           // Top edge, fraction of frame height
+	Width  float64 `json:"width" bson:"width" example:"0.20"`   // Box width, fraction of frame width
+	Height float64 `json:"height" bson:"height" example:"0.10"` // Box height, fraction of frame height
 }
 
 type MarkerAtRuntimeMetadata struct {
