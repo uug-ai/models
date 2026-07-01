@@ -14,6 +14,15 @@ type Marker struct {
 	GroupId        string `json:"groupId,omitempty" bson:"groupId,omitempty" example:"686a906345c1df594pmt41w4"`  // GroupId is used to identify the group of markers
 	OrganisationId string `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"`        // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
 
+	// MediaKeys optionally pins this marker to specific recordings by their stable
+	// key (media.videoFile). When set, the marker writer links the marker to
+	// exactly these recordings — scoped to the marker's device and organisation —
+	// instead of inferring the link from timestamp overlap. This is authoritative:
+	// the producer (e.g. a stage worker) knows precisely which recording a
+	// detection came from, so it is immune to timing/fps drift. Leave empty to keep
+	// the default timestamp-overlap association.
+	MediaKeys []string `json:"mediaKeys,omitempty" bson:"mediaKeys,omitempty" example:"1752482068_...device_1920_1080_10000.mp4"` // Recording keys (media.videoFile) this marker attaches to
+
 	// Timing information (all timestamps are in seconds)
 	StartTimestamp int64 `json:"startTimestamp" bson:"startTimestamp" example:"1752482068" required:"true"` // Start timestamp of the marker in seconds since epoch
 	EndTimestamp   int64 `json:"endTimestamp" bson:"endTimestamp" example:"1752482079" required:"true"`     // End timestamp of the marker in seconds since epoch
