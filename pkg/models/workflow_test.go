@@ -197,3 +197,133 @@ func TestWorkflowTrigger_Matches(t *testing.T) {
 		t.Fatal("empty automatic trigger should match any device/time")
 	}
 }
+
+func TestWorkflow_EffectiveSourceAndIsGlobal(t *testing.T) {
+	// Empty Source defaults to user and is never global.
+	w := Workflow{}
+	if got := w.EffectiveSource(); got != WorkflowSourceUser {
+		t.Fatalf("empty Source should default to user, got %q", got)
+	}
+	if w.IsGlobal() {
+		t.Fatal("a user workflow must not be global")
+	}
+	// A config workflow with no org is global.
+	cfg := Workflow{Source: WorkflowSourceConfig}
+	if !cfg.IsGlobal() {
+		t.Fatal("a config workflow with empty org should be global")
+	}
+	// A config workflow pinned to an org is not global.
+	scoped := Workflow{Source: WorkflowSourceConfig, OrganisationId: "org-1"}
+	if scoped.IsGlobal() {
+		t.Fatal("a config workflow scoped to an org must not be global")
+	}
+}
+
+func TestWorkflow_SourceJSONOmitsWhenEmpty(t *testing.T) {
+	b, err := json.Marshal(Workflow{Name: "w"})
+	if err != nil {
+		t.Fatalf("marshal: %v", err)
+	}
+	if strings.Contains(string(b), `"source"`) {
+		t.Fatalf("empty Source should be omitted, got %s", b)
+	}
+	b, err = json.Marshal(Workflow{Name: "w", Source: WorkflowSourceConfig})
+	if err != nil {
+		t.Fatalf("marshal: %v", err)
+	}
+	if !strings.Contains(string(b), `"source":"config"`) {
+		t.Fatalf("expected source in %s", b)
+	}
+}
+
+func TestWorkflow_CompileStages_FromGraph(t *testing.T) {
+	// classify --(unconditional)--> anpr --(conditional)--> notify
+	w := Workflow{
+		Nodes: []WorkflowNode{
+			{Id: "n1", StageRef: "classify"},
+			{Id: "n2", StageRef: "anpr"},
+			{Id: "n3", StageRef: "notify"},
+		},
+		Edges: []WorkflowEdge{
+			{Id: "e1", Source: "n1", Target: "n2"},
+			{Id: "e2", Source: "n2", Target: "n3", Condition: &StageCondition{Path: "results.anpr.tracks", Op: ConditionOpExists}},
+		},
+	}
+	stages := w.CompileStages()
+	if len(stages) != 3 {
+		t.Fatalf("expected 3 stages, got %d", len(stages))
+	}
+	byOp := map[string]WorkflowStage{}
+	for _, s := range stages {
+		byOp[s.Operation] = s
+	}
+	// Root node has no incoming edges -> always.
+	if byOp["classify"].Dispatch != DispatchAlways {
+		t.Fatalf("classify should dispatch always, got %q", byOp["classify"].Dispatch)
+	}
+	// anpr has an unconditional incoming edge -> conditional with a gated, nil-condition need.
+	anpr := byOp["anpr"]
+	if anpr.Dispatch != DispatchConditional || len(anpr.Needs) != 1 {
+		t.Fatalf("anpr should be conditional with one need, got %+v", anpr)
+	}
+	if anpr.Needs[0].Operation != "classify" || anpr.Needs[0].Condition != nil {
+		t.Fatalf("anpr need should gate on classify with no condition, got %+v", anpr.Needs[0])
+	}
+	// notify has a conditional incoming edge -> its condition is projected onto the need.
+	notify := byOp["notify"]
+	if notify.Dispatch != DispatchConditional || len(notify.Needs) != 1 {
+		t.Fatalf("notify should be conditional with one need, got %+v", notify)
+	}
+	if notify.Needs[0].Operation != "anpr" || notify.Needs[0].Condition == nil || notify.Needs[0].Condition.Path != "results.anpr.tracks" {
+		t.Fatalf("notify need should gate on anpr with the edge condition, got %+v", notify.Needs[0])
+	}
+}
+
+func TestWorkflow_CompileStages_PrefersStoredStages(t *testing.T) {
+	stored := []WorkflowStage{{Operation: "loitering", Dispatch: DispatchAlways}}
+	w := Workflow{
+		Stages: stored,
+		// A graph that would compile differently must be ignored when Stages is set.
+		Nodes: []WorkflowNode{{Id: "n1", StageRef: "somethingelse"}},
+	}
+	stages := w.CompileStages()
+	if len(stages) != 1 || stages[0].Operation != "loitering" {
+		t.Fatalf("stored Stages should be returned as-is, got %+v", stages)
+	}
+}
+
+func TestWorkflow_AutomaticMatches(t *testing.T) {
+	loc, err := time.LoadLocation("Europe/Brussels")
+	if err != nil {
+		t.Fatalf("load location: %v", err)
+	}
+	wed := time.Date(2024, 1, 3, 9, 0, 0, 0, loc)
+	w := Workflow{
+		Enabled: true,
+		Triggers: []WorkflowTrigger{
+			// A manual trigger must never activate automatically.
+			{Type: WorkflowTriggerManual, Surfaces: []WorkflowTriggerSurface{WorkflowSurfaceCase}},
+			// An automatic trigger scoped to cam-1.
+			{Type: WorkflowTriggerAutomatic, Devices: []DeviceKey{{Key: "cam-1"}}},
+		},
+	}
+	if !w.AutomaticMatches("cam-1", wed) {
+		t.Fatal("expected in-scope device to activate the automatic trigger")
+	}
+	if w.AutomaticMatches("cam-9", wed) {
+		t.Fatal("out-of-scope device must not activate")
+	}
+	// A disabled workflow never activates, even with a matching trigger.
+	disabled := w
+	disabled.Enabled = false
+	if disabled.AutomaticMatches("cam-1", wed) {
+		t.Fatal("a disabled workflow must not activate")
+	}
+	// A manual-only workflow never activates automatically.
+	manualOnly := Workflow{Enabled: true, Triggers: []WorkflowTrigger{
+		{Type: WorkflowTriggerManual, Surfaces: []WorkflowTriggerSurface{WorkflowSurfaceCase}},
+	}}
+	if manualOnly.AutomaticMatches("cam-1", wed) {
+		t.Fatal("a manual-only workflow must not activate automatically")
+	}
+}

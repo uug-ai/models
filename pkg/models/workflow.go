@@ -188,6 +188,25 @@ func (t WorkflowTrigger) Matches(deviceKey string, at time.Time) bool {
 	return t.MatchesDevice(deviceKey) && t.IsScheduledAt(at)
 }
 
+// WorkflowSource is the provenance of a workflow document, which also decides
+// its availability. It is a named string (not a boolean) so further provenances
+// can be added without a schema change. An empty Source is treated as
+// WorkflowSourceUser.
+type WorkflowSource string
+
+const (
+	// WorkflowSourceUser is a workflow authored by a user through the API and
+	// scoped to that user's organisation. It is the default (an empty Source is
+	// treated as this) and is editable in the UI.
+	WorkflowSourceUser WorkflowSource = "user"
+	// WorkflowSourceConfig is a workflow seeded from deployment configuration
+	// (helm). It is deployment-global — available to every organisation — and
+	// ops-managed: created and updated only by the seeding reconcile, and
+	// read-only in the UI. A config workflow carries an empty OrganisationId to
+	// signal its global scope (see IsGlobal).
+	WorkflowSourceConfig WorkflowSource = "config"
+)
+
 // Workflow is a user-defined automation graph composed of stage-instance nodes
 // and the edges that route between them. Triggers say what activates it (a
 // workflow may have several — e.g. an automatic trigger and a manual one); the
@@ -197,6 +216,12 @@ type Workflow struct {
 	Name        string             `json:"name" bson:"name,omitempty"`
 	Description string             `json:"description" bson:"description,omitempty"`
 	Enabled     bool               `json:"enabled" bson:"enabled"`
+	// Source is the workflow's provenance and availability (see WorkflowSource).
+	// Empty means WorkflowSourceUser: an ordinary user workflow scoped to its
+	// OrganisationId. WorkflowSourceConfig marks a helm-seeded, deployment-global,
+	// read-only workflow. Every workflow persisted before this field existed
+	// decodes as user.
+	Source WorkflowSource `json:"source,omitempty" bson:"source,omitempty"`
 	// Triggers is the set of activation modes for this workflow. A workflow may
 	// carry both an automatic and a manual trigger so it runs on its own for
 	// matching recordings and can also be launched on demand from a surface.
@@ -207,14 +232,91 @@ type Workflow struct {
 	// fold any legacy value into Triggers.
 	//
 	// Deprecated: use Triggers.
-	Trigger        *WorkflowTrigger `json:"trigger,omitempty" bson:"trigger,omitempty"`
-	Nodes          []WorkflowNode   `json:"nodes" bson:"nodes"`
-	Edges          []WorkflowEdge   `json:"edges" bson:"edges"`
-	UserId         string           `json:"user_id" bson:"user_id,omitempty"`
-	Username       string           `json:"username" bson:"username,omitempty"`
-	OrganisationId string           `json:"organisation_id" bson:"organisation_id,omitempty"`
-	CreatedAt      int64            `json:"created_at" bson:"created_at,omitempty"`
-	UpdatedAt      int64            `json:"updated_at" bson:"updated_at,omitempty"`
+	Trigger *WorkflowTrigger `json:"trigger,omitempty" bson:"trigger,omitempty"`
+	Nodes   []WorkflowNode   `json:"nodes" bson:"nodes"`
+	Edges   []WorkflowEdge   `json:"edges" bson:"edges"`
+	// Stages is the workflow's executable stage set: the runtime-authoritative
+	// projection the engine dispatches against. When set it is used as-is (config
+	// workflows author it directly in the helm registry form: operation, dispatch,
+	// needs, needsMode); when empty it is derived from Nodes+Edges on demand (UI
+	// workflows author the graph and CompileStages projects it). Read it through
+	// CompileStages, never directly, so both authoring styles resolve uniformly.
+	//
+	// Only the routing fields (Operation, Dispatch, Needs, NeedsMode) are
+	// meaningful here; a stage's deployment fields (image, queue, replicas, …) are
+	// resolved by Operation against the shared deployed catalog, not per workflow.
+	// Operations need only be unique within a single workflow, not globally.
+	Stages         []WorkflowStage `json:"stages,omitempty" bson:"stages,omitempty"`
+	UserId         string          `json:"user_id" bson:"user_id,omitempty"`
+	Username       string          `json:"username" bson:"username,omitempty"`
+	OrganisationId string          `json:"organisation_id" bson:"organisation_id,omitempty"`
+	CreatedAt      int64           `json:"created_at" bson:"created_at,omitempty"`
+	UpdatedAt      int64           `json:"updated_at" bson:"updated_at,omitempty"`
+}
+
+// EffectiveSource returns the workflow's provenance, defaulting an empty Source
+// to WorkflowSourceUser so workflows persisted before Source existed keep their
+// original (user) behaviour.
+func (w *Workflow) EffectiveSource() WorkflowSource {
+	if w.Source == "" {
+		return WorkflowSourceUser
+	}
+	return w.Source
+}
+
+// IsGlobal reports whether this workflow is available to every organisation. A
+// global workflow is one seeded from deployment configuration
+// (WorkflowSourceConfig) with no owning organisation, so surfaces list it
+// alongside the caller's own workflows without any per-org copy.
+func (w *Workflow) IsGlobal() bool {
+	return w.EffectiveSource() == WorkflowSourceConfig && w.OrganisationId == ""
+}
+
+// CompileStages returns the workflow's executable stage set — the routing the
+// engine dispatches against. It is the single entry point for both authoring
+// styles: if Stages is populated (config workflows, authored directly in the
+// helm registry form) it is returned as-is; otherwise it is derived from the
+// graph, projecting each node into a stage and each incoming edge into a need.
+//
+// The projection follows the graph's routing contract (see WorkflowEdge and
+// WorkflowStage.Needs): a node with no incoming edges dispatches always (a start
+// stage); a node with one or more incoming edges dispatches conditionally, with
+// one need per incoming edge — the need's Operation is the edge's source stage
+// (its readiness gate) and the need's Condition is the edge's predicate (nil for
+// an unconditional dependency). NeedsMode is left at its default (any). Only
+// routing fields are populated; deployment is resolved elsewhere by Operation.
+func (w *Workflow) CompileStages() []WorkflowStage {
+	if len(w.Stages) > 0 {
+		return w.Stages
+	}
+	opByNode := make(map[string]string, len(w.Nodes))
+	for _, n := range w.Nodes {
+		opByNode[n.Id] = n.StageRef
+	}
+	incoming := make(map[string][]WorkflowEdge, len(w.Nodes))
+	for _, e := range w.Edges {
+		incoming[e.Target] = append(incoming[e.Target], e)
+	}
+	stages := make([]WorkflowStage, 0, len(w.Nodes))
+	for _, n := range w.Nodes {
+		stage := WorkflowStage{Operation: n.StageRef}
+		edges := incoming[n.Id]
+		if len(edges) == 0 {
+			stage.Dispatch = DispatchAlways
+		} else {
+			stage.Dispatch = DispatchConditional
+			needs := make([]StageDependency, 0, len(edges))
+			for _, e := range edges {
+				needs = append(needs, StageDependency{
+					Operation: opByNode[e.Source],
+					Condition: e.Condition,
+				})
+			}
+			stage.Needs = needs
+		}
+		stages = append(stages, stage)
+	}
+	return stages
 }
 
 // NormalizeTriggers folds a legacy single Trigger into the Triggers list and
@@ -242,6 +344,25 @@ func (w *Workflow) ManualTriggersForSurface(surface WorkflowTriggerSurface) []Wo
 		}
 	}
 	return out
+}
+
+// AutomaticMatches reports whether a recording from deviceKey at instant at
+// activates this workflow automatically. It normalizes legacy triggers, then is
+// true when the workflow is Enabled and any of its automatic triggers matches
+// the recording's device and time (see WorkflowTrigger.Matches). It is the
+// single gate the engine uses to fan an event out to the workflows it should
+// open a run for; manual triggers never activate this way.
+func (w *Workflow) AutomaticMatches(deviceKey string, at time.Time) bool {
+	if !w.Enabled {
+		return false
+	}
+	w.NormalizeTriggers()
+	for _, t := range w.Triggers {
+		if t.EffectiveType() == WorkflowTriggerAutomatic && t.Matches(deviceKey, at) {
+			return true
+		}
+	}
+	return false
 }
 
 // Input / Output types for repository operations
