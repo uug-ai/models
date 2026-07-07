@@ -1,9 +1,25 @@
 package models
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
+)
+
+// WorkflowRunOrigin records how a run was opened: automatically (teed off the
+// pipeline by analysis for a matching recording) or manually (launched on demand
+// by a user from a surface). It is the run-side counterpart of a Workflow
+// trigger's Type, and shares its values.
+type WorkflowRunOrigin string
+
+const (
+	// WorkflowOriginAutomatic is a run opened by the automatic pipeline tee. It is
+	// also the default for runs opened before origins were recorded.
+	WorkflowOriginAutomatic WorkflowRunOrigin = "automatic"
+	// WorkflowOriginManual is a run launched on demand by a user from a surface.
+	// The engine skips automatic selection/time gating for manual runs.
+	WorkflowOriginManual WorkflowRunOrigin = "manual"
 )
 
 // WorkflowRun is the single type the workflow subsystem uses for a run, in both
@@ -73,10 +89,18 @@ type WorkflowRun struct {
 	// is empty on the analysis hand-off — the run is keyed by Key until the
 	// engine opens it — and set on every engine→worker dispatch. The persisted
 	// identity is Id, so RunId itself is wire-only.
+	//
+	// It is never set by hand: MarshalJSON derives it from Id whenever a run that
+	// has been opened (its _id is set) is serialized, so a producer only has to
+	// stamp Id and the two representations can never drift. A run without an Id
+	// yet (the analysis hand-off) keeps whatever RunId it was given (normally
+	// empty, so runId is omitted).
 	RunId string `json:"runId,omitempty" bson:"-"`
 
 	// Id is the run document's Mongo identity. Persistence-only — on the wire the
-	// run is referenced by RunId (Id.Hex()).
+	// run is referenced by RunId (Id.Hex()). Setting Id is sufficient for the
+	// wire identity: MarshalJSON emits RunId from it, so callers never derive the
+	// hex themselves.
 	Id primitive.ObjectID `json:"-" bson:"_id,omitempty"`
 
 	// WorkflowId is the id of the Workflow definition (models.Workflow) this run
@@ -90,6 +114,22 @@ type WorkflowRun struct {
 	// dispatch/result is legible in worker context and logs without a lookup.
 	// Populated alongside WorkflowId.
 	WorkflowName string `json:"workflowName,omitempty" bson:"workflowname,omitempty"`
+
+	// Origin records how this run was opened — the run-side counterpart of the
+	// Workflow's trigger Type. An automatic run was teed off the pipeline by
+	// analysis for a matching recording; a manual run was launched on demand by a
+	// user from a surface. The engine reads it to skip automatic selection/time
+	// gating for on-demand runs; it is persisted so "all runs for a media key" can
+	// be filtered by how they started. Empty is treated as automatic for runs
+	// opened before origins existed.
+	Origin WorkflowRunOrigin `json:"origin,omitempty" bson:"origin,omitempty"`
+
+	// SourceRef ties a manual run back to the thing it was launched from — e.g.
+	// the case id when launched from a case surface — so sibling runs fanned out
+	// from one user action (one seed per selected media key) can be grouped above
+	// the run. Empty for automatic runs. It generalises to any run-grouping handle
+	// (a case id today; a temporal device-series id is a forward-looking twin).
+	SourceRef string `json:"sourceRef,omitempty" bson:"sourceref,omitempty"`
 
 	// Key is the media key the run is about: its natural identity, used to load
 	// or open the run document. Copied from the recording at hand-off time.
@@ -212,6 +252,51 @@ type WorkflowRun struct {
 	// that seeds Inputs but never resolves as a stage and so never appears here.
 	// Persistence-only.
 	ResolvedOperations []string `json:"-" bson:"resolvedoperations,omitempty"`
+}
+
+// MarshalJSON is the single place the persisted identity (Id) is projected onto
+// the wire identity (RunId), so the two representations can never drift. A value
+// ObjectID cannot itself represent "no id yet" in JSON (its zero marshals to the
+// all-zero hex, which encoding/json's omitempty does not drop), so the identity
+// is carried on the wire by the companion RunId string instead: whenever a run
+// that has been opened (its _id is set) is serialized, RunId is emitted as
+// Id.Hex(); a run without an Id keeps whatever RunId it was given (normally
+// empty, so runId is omitted). Producers therefore only ever set Id — the hex
+// projection is automatic and impossible to forget.
+//
+// The alias type strips WorkflowRun's own MarshalJSON for the inner encode, so
+// this does not recurse.
+func (r WorkflowRun) MarshalJSON() ([]byte, error) {
+	type wire WorkflowRun
+	w := wire(r)
+	if !r.Id.IsZero() {
+		w.RunId = r.Id.Hex()
+	}
+	return json.Marshal(w)
+}
+
+// AutomaticRunObjectID derives the DETERMINISTIC run identity for an automatic
+// run of a given workflow over a given recording, from the natural triple
+// (media key, organisation, workflow). It is the single source of truth both the
+// producer (analysis, which mints it) and any consumer that re-derives it must
+// agree on, so the same recording teed into the same workflow always maps to the
+// same run: a redelivered pipeline event upserts the one run document rather than
+// opening a duplicate. Because it returns a primitive.ObjectID it becomes the
+// run's _id, and the wire RunId falls out of it for free via MarshalJSON
+// (RunId == Id.Hex()) — the identity is minted once and projected everywhere.
+//
+// It is intentionally NOT used for manual runs: those mint a fresh ObjectID per
+// launch (primitive.NewObjectID) so re-pressing a button opens a new run, while a
+// redelivered copy of that one launch still dedupes on its already-minted id.
+//
+// The triple is hashed with a NUL separator so the field boundaries are
+// unambiguous (no two distinct triples can concatenate to the same input), and
+// the first 12 bytes of the digest form the ObjectID.
+func AutomaticRunObjectID(mediaKey, organisationId, workflowId string) primitive.ObjectID {
+	sum := sha256.Sum256([]byte(mediaKey + "\x00" + organisationId + "\x00" + workflowId))
+	var id primitive.ObjectID
+	copy(id[:], sum[:])
+	return id
 }
 
 // WorkflowUser is the secret-free projection of the owning account carried on a
