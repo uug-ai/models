@@ -1,6 +1,10 @@
 package models
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 // WorkflowNode is a single stage instance placed on the workflow canvas. Every
 // node is an instance of a catalog stage: StageRef holds the referenced stage's
@@ -69,11 +73,11 @@ type WorkflowTriggerType string
 
 const (
 	// WorkflowTriggerAutomatic fires for every matching recording without user
-	// action. Automatic triggers honour Selection and the time window.
+	// action. Automatic triggers honour Devices and the weekly schedule.
 	WorkflowTriggerAutomatic WorkflowTriggerType = "automatic"
 	// WorkflowTriggerManual is user-launched from a surface against an explicit
-	// media selection. Manual triggers ignore Selection / the time window and
-	// instead advertise where they can be launched from via Surfaces.
+	// media selection. Manual triggers ignore Devices / the schedule and instead
+	// advertise where they can be launched from via Surfaces.
 	WorkflowTriggerManual WorkflowTriggerType = "manual"
 )
 
@@ -92,23 +96,31 @@ const (
 )
 
 // WorkflowTrigger defines what activates a workflow. Type selects the activation
-// mode; the remaining fields are mode-specific. For automatic triggers,
-// Selection/StartAt/EndAt/Weekdays scope which recordings and times the workflow
-// is eligible for (an empty automatic trigger leaves it eligible at all times for
-// everything routed to it). For manual triggers those scheduling fields are
-// ignored and Surfaces lists the UI surfaces the workflow can be launched from.
+// mode; the remaining fields are mode-specific. For automatic triggers, Devices
+// and WeeklySchedule scope which recordings and times the workflow is eligible
+// for (an empty automatic trigger leaves it eligible at all times for everything
+// routed to it). For manual triggers those scoping fields are ignored and
+// Surfaces lists the UI surfaces the workflow can be launched from.
+//
+// Devices and WeeklySchedule deliberately reuse the same shapes the alert/
+// videowall schedules use (DeviceKey, WeeklySchedule/DayTimeRange), so the same
+// device pickers and weekly-schedule editors — and the same weekday convention
+// (time.Weekday: 0=Sunday) and per-schedule IANA Timezone — apply here.
 type WorkflowTrigger struct {
 	// Type is the activation mode. An empty Type is treated as
 	// WorkflowTriggerAutomatic for backwards compatibility with triggers authored
 	// before manual triggers existed.
 	Type WorkflowTriggerType `json:"type,omitempty" bson:"type,omitempty"`
-	// Selection is the set of devices/streams the workflow applies to (automatic).
-	Selection string `json:"selection,omitempty" bson:"selection,omitempty"`
-	// StartAt and EndAt bound a daily time window, e.g. "08:00"/"18:00" (automatic).
-	StartAt string `json:"startAt,omitempty" bson:"startAt,omitempty"`
-	EndAt   string `json:"endAt,omitempty" bson:"endAt,omitempty"`
-	// Weekdays restricts the workflow to the listed days of week (automatic).
-	Weekdays []int `json:"weekdays,omitempty" bson:"weekdays,omitempty"`
+	// Devices restricts the automatic trigger to recordings from the listed
+	// devices, matched by DeviceKey.Key. An empty list means every device is
+	// eligible. Mirrors the alert device selection (see CustomAlert.DevicesList).
+	Devices []DeviceKey `json:"devices,omitempty" bson:"devices,omitempty"`
+	// WeeklySchedule bounds the automatic trigger to recurring weekly windows,
+	// each with its own day, time segments and IANA Timezone. An empty schedule
+	// means any time is eligible. Reuses the alert weekly-schedule shape so the
+	// same editor and evaluation semantics apply. The Timezone on each entry is
+	// the user's timezone captured when the schedule was authored.
+	WeeklySchedule []*WeeklySchedule `json:"weeklySchedule,omitempty" bson:"weeklySchedule,omitempty"`
 	// Surfaces lists the UI surfaces a manual trigger can be launched from
 	// (manual). Ignored for automatic triggers.
 	Surfaces []WorkflowTriggerSurface `json:"surfaces,omitempty" bson:"surfaces,omitempty"`
@@ -131,6 +143,49 @@ func (t WorkflowTrigger) HasSurface(surface WorkflowTriggerSurface) bool {
 		}
 	}
 	return false
+}
+
+// MatchesDevice reports whether a recording from deviceKey is in scope for this
+// automatic trigger. An empty Devices list matches every device; otherwise the
+// key must appear in the list (compared against DeviceKey.Key, like a stage's
+// device.deviceKey need).
+func (t WorkflowTrigger) MatchesDevice(deviceKey string) bool {
+	if len(t.Devices) == 0 {
+		return true
+	}
+	for _, d := range t.Devices {
+		if d.Key == deviceKey {
+			return true
+		}
+	}
+	return false
+}
+
+// IsScheduledAt reports whether at falls within this automatic trigger's weekly
+// schedule. An empty schedule matches any time; otherwise at must fall within an
+// enabled weekly segment. Each schedule entry is evaluated in its own IANA
+// Timezone (the user's timezone captured at authoring time), so at may be any
+// absolute instant — typically the recording timestamp.
+func (t WorkflowTrigger) IsScheduledAt(at time.Time) bool {
+	if len(t.WeeklySchedule) == 0 {
+		return true
+	}
+	for _, ws := range t.WeeklySchedule {
+		if ws.IsActiveAt(at) {
+			return true
+		}
+	}
+	return false
+}
+
+// Matches reports whether a recording from deviceKey at instant at satisfies this
+// automatic trigger's scope (device selection AND weekly schedule). It is the
+// single source of truth for the automatic activation gate, evaluated by the
+// producer before a WorkflowRun is minted. It is pure: the caller resolves the
+// recording's device key and timestamp and passes them in. Manual triggers do
+// not use this predicate — they are gated by surface, not by device/time.
+func (t WorkflowTrigger) Matches(deviceKey string, at time.Time) bool {
+	return t.MatchesDevice(deviceKey) && t.IsScheduledAt(at)
 }
 
 // Workflow is a user-defined automation graph composed of stage-instance nodes

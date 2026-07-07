@@ -1,6 +1,7 @@
 package models
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -272,6 +273,30 @@ func (r WorkflowRun) MarshalJSON() ([]byte, error) {
 		w.RunId = r.Id.Hex()
 	}
 	return json.Marshal(w)
+}
+
+// AutomaticRunObjectID derives the DETERMINISTIC run identity for an automatic
+// run of a given workflow over a given recording, from the natural triple
+// (media key, organisation, workflow). It is the single source of truth both the
+// producer (analysis, which mints it) and any consumer that re-derives it must
+// agree on, so the same recording teed into the same workflow always maps to the
+// same run: a redelivered pipeline event upserts the one run document rather than
+// opening a duplicate. Because it returns a primitive.ObjectID it becomes the
+// run's _id, and the wire RunId falls out of it for free via MarshalJSON
+// (RunId == Id.Hex()) — the identity is minted once and projected everywhere.
+//
+// It is intentionally NOT used for manual runs: those mint a fresh ObjectID per
+// launch (primitive.NewObjectID) so re-pressing a button opens a new run, while a
+// redelivered copy of that one launch still dedupes on its already-minted id.
+//
+// The triple is hashed with a NUL separator so the field boundaries are
+// unambiguous (no two distinct triples can concatenate to the same input), and
+// the first 12 bytes of the digest form the ObjectID.
+func AutomaticRunObjectID(mediaKey, organisationId, workflowId string) primitive.ObjectID {
+	sum := sha256.Sum256([]byte(mediaKey + "\x00" + organisationId + "\x00" + workflowId))
+	var id primitive.ObjectID
+	copy(id[:], sum[:])
+	return id
 }
 
 // WorkflowUser is the secret-free projection of the owning account carried on a

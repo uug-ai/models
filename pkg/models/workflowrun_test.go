@@ -69,3 +69,48 @@ func TestWorkflowRun_MarshalJSON_ProjectsRunIdFromId(t *testing.T) {
 		}
 	})
 }
+
+// TestAutomaticRunObjectID asserts the deterministic automatic run identity:
+// stable for a given (key, org, workflow) triple, distinct across triples, never
+// zero, and — via MarshalJSON — projected onto the wire RunId so producer and
+// engine agree on the same runId.
+func TestAutomaticRunObjectID(t *testing.T) {
+	a := AutomaticRunObjectID("media-1", "org-1", "wf-1")
+
+	t.Run("deterministic for the same triple", func(t *testing.T) {
+		if b := AutomaticRunObjectID("media-1", "org-1", "wf-1"); a != b {
+			t.Errorf("same triple produced different ids: %s vs %s", a.Hex(), b.Hex())
+		}
+	})
+
+	t.Run("not the zero id", func(t *testing.T) {
+		if a.IsZero() {
+			t.Error("derived id should never be zero")
+		}
+	})
+
+	t.Run("distinct per field, with unambiguous boundaries", func(t *testing.T) {
+		cases := map[string]primitive.ObjectID{
+			"other key":      AutomaticRunObjectID("media-2", "org-1", "wf-1"),
+			"other org":      AutomaticRunObjectID("media-1", "org-2", "wf-1"),
+			"other workflow": AutomaticRunObjectID("media-1", "org-1", "wf-2"),
+			// Without a separator these two would hash the same bytes.
+			"boundary shift": AutomaticRunObjectID("media", "1org", "1wf-1"),
+		}
+		for name, id := range cases {
+			if id == a {
+				t.Errorf("%s should differ from the base id", name)
+			}
+		}
+	})
+
+	t.Run("projects onto the wire runId via MarshalJSON", func(t *testing.T) {
+		b, err := json.Marshal(WorkflowRun{Operation: "event", Key: "media-1", Id: a})
+		if err != nil {
+			t.Fatalf("marshal: %v", err)
+		}
+		if want := `"runId":"` + a.Hex() + `"`; !strings.Contains(string(b), want) {
+			t.Errorf("expected %s in %s", want, b)
+		}
+	})
+}
