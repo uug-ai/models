@@ -1,6 +1,7 @@
 package models
 
 import (
+	"crypto/sha256"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -270,6 +271,26 @@ func (w *Workflow) EffectiveSource() WorkflowSource {
 // alongside the caller's own workflows without any per-org copy.
 func (w *Workflow) IsGlobal() bool {
 	return w.EffectiveSource() == WorkflowSourceConfig && w.OrganisationId == ""
+}
+
+// EffectiveID resolves the stable, run-facing id of a workflow and is the single
+// source of truth for that derivation. A workflow with an explicit Id (a
+// persisted user workflow, or a config workflow that carries one) uses it; a
+// config workflow seeded from helm without an id gets a deterministic id derived
+// from its Name, so the same definition always yields the same id across
+// restarts and every service agrees on its identity without persisting it — a
+// run one service seeds resolves to the workflow another service loaded from the
+// same definition. The first 12 bytes of a SHA-256 digest form a valid 24-char
+// ObjectID hex; callers that need that hex string (a run's WorkflowId) use
+// EffectiveID().Hex().
+func (w *Workflow) EffectiveID() primitive.ObjectID {
+	if !w.Id.IsZero() {
+		return w.Id
+	}
+	sum := sha256.Sum256([]byte(w.Name))
+	var id primitive.ObjectID
+	copy(id[:], sum[:12])
+	return id
 }
 
 // CompileStages returns the workflow's executable stage set — the routing the

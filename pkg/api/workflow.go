@@ -63,8 +63,25 @@ func (cs WorkflowStatus) Translate(lang string) string {
 	return cs.String()
 }
 
+// WorkflowFilter narrows a workflow listing. Every field is optional; an unset
+// field does not constrain the result. Scalars are pointers so "not provided" is
+// distinct from a zero value, and DeviceKeys is a set matched against automatic
+// triggers' device scope. It is the workflow counterpart to MediaFilter, posted
+// to /workflows/filter for criteria (notably a set of device keys) that GET
+// query params fit poorly.
+type WorkflowFilter struct {
+	Source      *models.WorkflowSource         `json:"source,omitempty" bson:"source,omitempty"`
+	Surface     *models.WorkflowTriggerSurface `json:"surface,omitempty" bson:"surface,omitempty"`
+	TriggerType *models.WorkflowTriggerType    `json:"triggerType,omitempty" bson:"triggerType,omitempty"`
+	Enabled     *bool                          `json:"enabled,omitempty" bson:"enabled,omitempty"`
+	DeviceKeys  []string                       `json:"deviceKeys,omitempty" bson:"deviceKeys,omitempty"`
+}
+
 // GetWorkflows
-type GetWorkflowsRequest struct{}
+// @Router /workflows/filter [post]
+type GetWorkflowsRequest struct {
+	Filter WorkflowFilter `json:"filter" bson:"filter"`
+}
 type GetWorkflowsResponse struct {
 	Workflows []models.Workflow `json:"workflows"`
 }
