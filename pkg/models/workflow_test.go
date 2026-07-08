@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func TestWorkflowTrigger_EffectiveType(t *testing.T) {
@@ -327,3 +328,33 @@ func TestWorkflow_AutomaticMatches(t *testing.T) {
 		t.Fatal("a manual-only workflow must not activate automatically")
 	}
 }
+
+// TestWorkflow_EffectiveID_GoldenVectors pins the deterministic id derivation so
+// it cannot drift. Every service that reads WORKFLOW_DEFINITIONS (hub-api, the
+// workflows engine) relies on this exact scheme to agree on a config workflow's
+// identity without persisting it; if these fixed name→id vectors ever change,
+// runs one service seeds would stop resolving to the workflow another loaded.
+func TestWorkflow_EffectiveID_GoldenVectors(t *testing.T) {
+	vectors := map[string]string{
+		"tracking-workflow":        "ec7e72bc4cedd32018e1f92a",
+		"objecttracking-on-demand": "1d07bbe3a979822d7a60b857",
+	}
+	for name, want := range vectors {
+		got := (&Workflow{Name: name}).EffectiveID().Hex()
+		if got != want {
+			t.Fatalf("EffectiveID(%q) = %q, want %q (id scheme changed?)", name, got, want)
+		}
+	}
+}
+
+// TestWorkflow_EffectiveID_PrefersExplicitID confirms a workflow that already
+// carries an id keeps it rather than deriving one from its name — so persisted
+// user workflows resolve by their stored id.
+func TestWorkflow_EffectiveID_PrefersExplicitID(t *testing.T) {
+	id := primitive.NewObjectID()
+	w := Workflow{Id: id, Name: "tracking-workflow"}
+	if got := w.EffectiveID(); got != id {
+		t.Fatalf("EffectiveID should return the explicit id %s, got %s", id.Hex(), got.Hex())
+	}
+}
+
