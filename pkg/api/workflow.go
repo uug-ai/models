@@ -20,6 +20,9 @@ const (
 	WorkflowDeleteFailed     WorkflowStatus = "workflow_delete_failed"
 	WorkflowDuplicateName    WorkflowStatus = "workflow_duplicate_name"
 	WorkflowForbidden        WorkflowStatus = "workflow_forbidden"
+	WorkflowRunSuccess       WorkflowStatus = "workflow_run_success"
+	WorkflowRunFailed        WorkflowStatus = "workflow_run_failed"
+	WorkflowRunNoMedia       WorkflowStatus = "workflow_run_no_media"
 )
 
 // String returns the string representation of the workflow status.
@@ -45,6 +48,9 @@ func (cs WorkflowStatus) Translate(lang string) string {
 			WorkflowDeleteFailed:     "Workflow failed to delete",
 			WorkflowDuplicateName:    "Workflow with this name already exists",
 			WorkflowForbidden:        "You do not have permission for this action",
+			WorkflowRunSuccess:       "Workflow run(s) launched successfully",
+			WorkflowRunFailed:        "Workflow run(s) failed to launch",
+			WorkflowRunNoMedia:       "No eligible media to run the workflow on",
 		},
 	}
 
@@ -144,5 +150,35 @@ type DeleteWorkflowSuccessResponse struct {
 	Data DeleteWorkflowResponse `json:"data"`
 }
 type DeleteWorkflowErrorResponse struct {
+	ErrorResponse
+}
+
+// RunWorkflow launches a workflow on demand over a set of a case's source
+// media. It is the manual counterpart to the automatic analysis hand-off: the
+// caller picks a workflow and the media to send through, and the server fans
+// out one run per selected recording onto the workflows queue.
+//
+// @Router /tasks/{taskId}/workflows [post]
+//
+// WorkflowId is the id of the workflow to run (a config or user workflow that
+// exposes a manual trigger on the case surface). MediaIds is the set of
+// case_media source-row ids to run it over; an empty MediaIds means "every
+// source media on the case".
+type RunWorkflowRequest struct {
+	WorkflowId string   `json:"workflowId" bson:"workflowId"`
+	MediaIds   []string `json:"mediaIds,omitempty" bson:"mediaIds,omitempty"`
+}
+
+// RunWorkflowResponse reports the runs opened by the launch: the freshly minted
+// run ids (one per selected media) and their count.
+type RunWorkflowResponse struct {
+	RunIds []string `json:"runIds"`
+	Count  int      `json:"count"`
+}
+type RunWorkflowSuccessResponse struct {
+	SuccessResponse
+	Data RunWorkflowResponse `json:"data"`
+}
+type RunWorkflowErrorResponse struct {
 	ErrorResponse
 }

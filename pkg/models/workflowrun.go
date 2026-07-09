@@ -319,10 +319,11 @@ type WorkflowUser struct {
 // served from — exactly the inputs vault-override resolution and logging need,
 // without the rest of the Media/Device documents.
 type WorkflowDevice struct {
-	DeviceKey       string `json:"deviceKey,omitempty"`
-	DeviceName      string `json:"deviceName,omitempty"`
-	Provider        string `json:"provider,omitempty"`        // media VideoProvider: where the media is served from
-	StorageSolution string `json:"storageSolution,omitempty"` // media StorageSolution: where the media is stored
+	DeviceKey       string   `json:"deviceKey,omitempty"`
+	DeviceName      string   `json:"deviceName,omitempty"`
+	Provider        string   `json:"provider,omitempty"`        // media VideoProvider: where the media is served from
+	StorageSolution string   `json:"storageSolution,omitempty"` // media StorageSolution: where the media is stored
+	SiteIds         []string `json:"siteIds,omitempty"`         // site ids the device is linked to (Device.SiteIds); a gate value, matchable with contains/in/exists/matches
 }
 
 // WorkflowStorage carries the storage credentials a dispatched stage worker
