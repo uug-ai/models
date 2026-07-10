@@ -504,11 +504,18 @@ type CreateMediaEditRequest struct {
 	// existing row with the same video_file when present), and then
 	// applies the edit to that row. Lets pre-migration cases be
 	// redacted without requiring a workspace-wide backfill.
-	SourceVideoFile string                   `json:"sourceVideoFile,omitempty"`
-	Action          models.CaseMediaAction   `json:"action"`
-	EditType        models.CaseMediaEditType `json:"editType,omitempty"`
-	Params          map[string]interface{}   `json:"params,omitempty"`
-	SupersedesId    string                   `json:"supersedesId,omitempty"`
+	SourceVideoFile string `json:"sourceVideoFile,omitempty"`
+	// SourceAttachmentId points at a video CaseAttachment by its id.
+	// When both SourceCaseMediaId and SourceVideoFile are empty the API
+	// materialises (idempotently — reuses the attachment's linked row
+	// when present) a Role=source CaseMedia from the attachment's stored
+	// video and applies the edit to that row, so an attached video can
+	// be redacted with the same flow as a device recording.
+	SourceAttachmentId string                   `json:"sourceAttachmentId,omitempty"`
+	Action             models.CaseMediaAction   `json:"action"`
+	EditType           models.CaseMediaEditType `json:"editType,omitempty"`
+	Params             map[string]interface{}   `json:"params,omitempty"`
+	SupersedesId       string                   `json:"supersedesId,omitempty"`
 }
 
 type CreateMediaEditResponse struct {

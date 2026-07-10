@@ -22,6 +22,34 @@ const (
 	WorkflowOriginManual WorkflowRunOrigin = "manual"
 )
 
+// WorkflowRunState is the coarse, client-facing lifecycle of a run, derived
+// from the persisted Start/End and the dispatched/resolved operation sets. It
+// is NOT stored on the run — the run carries only the raw lifecycle fields —
+// but computed on read (see WorkflowRun.LifecycleState) so a surface polling a
+// run can render "still working" vs "results are in" without duplicating the
+// derivation. A dedicated "failed" state is intentionally absent: the run
+// document has no failure marker (the engine either finalises a run or leaves
+// it open), so a run that never ends reads as running until a caller-side
+// deadline gives up on it.
+type WorkflowRunState string
+
+const (
+	// WorkflowRunStateRunning is an open run: it has not been finalised (End is
+	// unset), so at least one dispatched stage is still outstanding.
+	WorkflowRunStateRunning WorkflowRunState = "running"
+	// WorkflowRunStateCompleted is a finalised run that produced output: it has
+	// ended and at least one stage resolved (or accumulated Results), so there is
+	// something for the surface to surface.
+	WorkflowRunStateCompleted WorkflowRunState = "completed"
+	// WorkflowRunStateNoResult is a finalised run that produced nothing: it ended
+	// having dispatched and resolved no stages. This is the visible face of the
+	// silent no-op — a conditional workflow whose gates matched nothing, or a
+	// workflow the engine could not dispatch (e.g. a user/DB workflow absent from
+	// its registry) — so a surface can say "completed, no results" rather than
+	// implying success.
+	WorkflowRunStateNoResult WorkflowRunState = "noResult"
+)
+
 // WorkflowRun is the single type the workflow subsystem uses for a run, in both
 // of its representations:
 //
@@ -286,6 +314,35 @@ func (r WorkflowRun) MarshalJSON() ([]byte, error) {
 		w.RunId = r.Id.Hex()
 	}
 	return json.Marshal(w)
+}
+
+// LifecycleState derives the coarse, client-facing run state from the raw
+// persisted lifecycle fields (Start/End and the dispatched/resolved sets). It
+// is the single source of truth for "is this run still working, done, or done
+// with nothing to show" so every surface reading a run agrees on the meaning
+// without re-implementing the rule:
+//
+//   - End == 0                                  -> running   (not finalised)
+//   - End > 0 && (resolved>0 || Results present) -> completed (finalised, produced)
+//   - End > 0 && dispatched==0 && resolved==0    -> noResult  (finalised, no-op)
+//
+// The lifecycle fields are persistence-only (json:"-"), so this is meant to run
+// server-side against a decoded run document; the derived state is what crosses
+// the wire.
+func (r WorkflowRun) LifecycleState() WorkflowRunState {
+	if r.End == 0 {
+		return WorkflowRunStateRunning
+	}
+	if len(r.ResolvedOperations) > 0 || len(r.Results) > 0 {
+		return WorkflowRunStateCompleted
+	}
+	if len(r.DispatchedOperations) == 0 {
+		return WorkflowRunStateNoResult
+	}
+	// Finalised with stages dispatched but none recorded as resolved. The engine
+	// only ends a run once every dispatched op resolves, so this is not expected
+	// in practice; treat it as completed (work was done) rather than no-op.
+	return WorkflowRunStateCompleted
 }
 
 // AutomaticRunObjectID derives the DETERMINISTIC run identity for an automatic
