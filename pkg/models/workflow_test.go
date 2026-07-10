@@ -124,7 +124,7 @@ func TestWorkflowTrigger_JSONOmitsEmptyMode(t *testing.T) {
 }
 
 func TestWorkflowTrigger_MatchesDevice(t *testing.T) {
-	// Empty Devices matches every device.
+	// Empty Devices matches every device (device-key-only convenience).
 	if !(WorkflowTrigger{}).MatchesDevice("cam-9") {
 		t.Fatal("empty device list should match any device")
 	}
@@ -134,6 +134,71 @@ func TestWorkflowTrigger_MatchesDevice(t *testing.T) {
 	}
 	if trg.MatchesDevice("cam-9") {
 		t.Fatal("did not expect unlisted device to match")
+	}
+}
+
+func TestWorkflowTrigger_MatchesEnvelope(t *testing.T) {
+	root := func(key, name string) map[string]any {
+		return AutomaticTriggerRoot(WorkflowDevice{DeviceKey: key, DeviceName: name}, WorkflowUser{})
+	}
+	// A bare trigger (no devices, no conditions) matches every recording.
+	if !(WorkflowTrigger{}).MatchesEnvelope(root("cam-9", "")) {
+		t.Fatal("empty scope should match any device")
+	}
+	// The Devices shorthand compiles into a single device.deviceKey `in`
+	// condition, so device scoping runs through the same operator engine stages
+	// use.
+	trg := WorkflowTrigger{Devices: []DeviceKey{{Key: "cam-1"}, {Key: "cam-2"}}}
+	if got := trg.CompiledConditions(); len(got) != 1 || got[0].Path != "device.deviceKey" || got[0].Op != ConditionOpIn {
+		t.Fatalf("Devices should compile into one device.deviceKey `in` condition, got %+v", got)
+	}
+	if !trg.MatchesEnvelope(root("cam-2", "")) {
+		t.Fatal("expected listed device to match")
+	}
+	if trg.MatchesEnvelope(root("cam-9", "")) {
+		t.Fatal("did not expect unlisted device to match")
+	}
+	// Explicit conditions apply any stage operator to the envelope — here a
+	// device-name regex via `matches`.
+	named := WorkflowTrigger{Conditions: []StageCondition{
+		{Path: "device.deviceName", Op: ConditionOpMatches, Value: "^lobby-"},
+	}}
+	if !named.MatchesEnvelope(root("cam-7", "lobby-north")) {
+		t.Fatal("expected device-name pattern to match")
+	}
+	if named.MatchesEnvelope(root("cam-7", "garage-1")) {
+		t.Fatal("did not expect non-matching device name to match")
+	}
+	// Devices AND Conditions: both must hold.
+	both := WorkflowTrigger{
+		Devices:    []DeviceKey{{Key: "cam-1"}},
+		Conditions: []StageCondition{{Path: "device.deviceName", Op: ConditionOpMatches, Value: "^lobby-"}},
+	}
+	if !both.MatchesEnvelope(root("cam-1", "lobby-north")) {
+		t.Fatal("expected device key and name to both match")
+	}
+	if both.MatchesEnvelope(root("cam-1", "garage-1")) {
+		t.Fatal("device key matches but name does not — must not match")
+	}
+	if both.MatchesEnvelope(root("cam-2", "lobby-north")) {
+		t.Fatal("name matches but device key does not — must not match")
+	}
+	// device.siteIds is an array gate value: match site membership with
+	// `contains` (and it also works with `matches`/`exists`).
+	siteRoot := func(sites ...string) map[string]any {
+		return AutomaticTriggerRoot(WorkflowDevice{DeviceKey: "cam-1", SiteIds: sites}, WorkflowUser{})
+	}
+	inSite := WorkflowTrigger{Conditions: []StageCondition{
+		{Path: "device.siteIds", Op: ConditionOpContains, Value: "site-42"},
+	}}
+	if !inSite.MatchesEnvelope(siteRoot("site-7", "site-42")) {
+		t.Fatal("expected a device linked to site-42 to match")
+	}
+	if inSite.MatchesEnvelope(siteRoot("site-7")) {
+		t.Fatal("did not expect a device without site-42 to match")
+	}
+	if inSite.MatchesEnvelope(siteRoot()) {
+		t.Fatal("did not expect a device with no sites to match a site membership gate")
 	}
 }
 
@@ -184,17 +249,19 @@ func TestWorkflowTrigger_Matches(t *testing.T) {
 			Segments: []DayTimeRange{{Start: 8 * 3600, End: 18 * 3600}},
 		}},
 	}
-	if !trg.Matches("cam-1", wed) {
+	inScope := AutomaticTriggerRoot(WorkflowDevice{DeviceKey: "cam-1"}, WorkflowUser{})
+	outScope := AutomaticTriggerRoot(WorkflowDevice{DeviceKey: "cam-9"}, WorkflowUser{})
+	if !trg.Matches(inScope, wed) {
 		t.Fatal("expected in-scope device and time to match")
 	}
-	if trg.Matches("cam-9", wed) {
+	if trg.Matches(outScope, wed) {
 		t.Fatal("wrong device should not match even when time is in window")
 	}
-	if trg.Matches("cam-1", wed.Add(24*time.Hour)) {
+	if trg.Matches(inScope, wed.Add(24*time.Hour)) {
 		t.Fatal("right device but out-of-schedule time should not match")
 	}
 	// A bare automatic trigger (no scoping) matches everything.
-	if !(WorkflowTrigger{}).Matches("anything", wed) {
+	if !(WorkflowTrigger{}).Matches(outScope, wed) {
 		t.Fatal("empty automatic trigger should match any device/time")
 	}
 }
@@ -308,23 +375,25 @@ func TestWorkflow_AutomaticMatches(t *testing.T) {
 			{Type: WorkflowTriggerAutomatic, Devices: []DeviceKey{{Key: "cam-1"}}},
 		},
 	}
-	if !w.AutomaticMatches("cam-1", wed) {
+	inScope := AutomaticTriggerRoot(WorkflowDevice{DeviceKey: "cam-1"}, WorkflowUser{})
+	outScope := AutomaticTriggerRoot(WorkflowDevice{DeviceKey: "cam-9"}, WorkflowUser{})
+	if !w.AutomaticMatches(inScope, wed) {
 		t.Fatal("expected in-scope device to activate the automatic trigger")
 	}
-	if w.AutomaticMatches("cam-9", wed) {
+	if w.AutomaticMatches(outScope, wed) {
 		t.Fatal("out-of-scope device must not activate")
 	}
 	// A disabled workflow never activates, even with a matching trigger.
 	disabled := w
 	disabled.Enabled = false
-	if disabled.AutomaticMatches("cam-1", wed) {
+	if disabled.AutomaticMatches(inScope, wed) {
 		t.Fatal("a disabled workflow must not activate")
 	}
 	// A manual-only workflow never activates automatically.
 	manualOnly := Workflow{Enabled: true, Triggers: []WorkflowTrigger{
 		{Type: WorkflowTriggerManual, Surfaces: []WorkflowTriggerSurface{WorkflowSurfaceCase}},
 	}}
-	if manualOnly.AutomaticMatches("cam-1", wed) {
+	if manualOnly.AutomaticMatches(inScope, wed) {
 		t.Fatal("a manual-only workflow must not activate automatically")
 	}
 }
@@ -357,4 +426,3 @@ func TestWorkflow_EffectiveID_PrefersExplicitID(t *testing.T) {
 		t.Fatalf("EffectiveID should return the explicit id %s, got %s", id.Hex(), got.Hex())
 	}
 }
-

@@ -50,6 +50,7 @@ const (
 	ConditionOpContains ConditionOp = "contains" // field (array element / string substring) contains Value
 	ConditionOpIn       ConditionOp = "in"       // field value is one of Value (a list); inverse of contains
 	ConditionOpExists   ConditionOp = "exists"   // path present (Value ignored)
+	ConditionOpMatches  ConditionOp = "matches"  // string field matches the RE2 regular expression in Value (partial match)
 	ConditionOpGt       ConditionOp = "gt"       // greater than (numeric)
 	ConditionOpGte      ConditionOp = "gte"      // greater than or equal (numeric)
 	ConditionOpLt       ConditionOp = "lt"       // less than (numeric)
@@ -79,10 +80,18 @@ const (
 // A "*" path segment fans out across the elements of the array at that position
 // and continues resolving from each element, so results.anpr.detections.*.confidence
 // matches per detection. The predicate then holds when ANY element satisfies a
-// positive operator (eq/contains/in/gt/gte/lt/lte/exists), and when EVERY element
+// positive operator (eq/contains/in/matches/gt/gte/lt/lte/exists), and when EVERY element
 // differs for ne. Numeric indices are not supported (no results.anpr.tracks.0.id):
 // use "*" to reach into array elements, or match the array itself at its own
 // segment (contains/exists).
+//
+// matches is a partial (unanchored) RE2 regular-expression test that mirrors
+// contains' string/array duality: Value is the pattern and the predicate holds
+// when the pattern is found anywhere in a STRING candidate, or in ANY string
+// element of an ARRAY candidate (so it works on an array field without a "*"
+// fan-out). Anchor with ^…$ for a full match. Numbers, bools, maps, and
+// non-string array elements never match, and an invalid pattern is rejected when
+// the registry loads.
 type StageCondition struct {
 	Path  string      `json:"path" bson:"path"`   // absolute dot-path into the run root (see type doc)
 	Op    ConditionOp `json:"op" bson:"op"`       // see the ConditionOp consts

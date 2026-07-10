@@ -115,12 +115,27 @@ type WorkflowTrigger struct {
 	// Devices restricts the automatic trigger to recordings from the listed
 	// devices, matched by DeviceKey.Key. An empty list means every device is
 	// eligible. Mirrors the alert device selection (see CustomAlert.DevicesList).
+	//
+	// It is a convenience shorthand: a non-empty list compiles (see
+	// CompiledConditions) into a single StageCondition — device.deviceKey `in`
+	// [keys…] — evaluated by the same operator engine stage conditions use, so
+	// device scoping and stage matching stay consistent. Author richer scoping
+	// (a device-name pattern, an organisation check, …) with Conditions.
 	Devices []DeviceKey `json:"devices,omitempty" bson:"devices,omitempty"`
+	// Conditions further scopes the automatic trigger with the same structured
+	// (path, op, value) predicates a stage uses, evaluated against the pre-run
+	// envelope (device.*, user.*, and the identity scalars known when a recording
+	// arrives). All conditions must hold (AND) and they combine with the compiled
+	// Devices shorthand, so `matches`, `in`, `eq`, … apply to device matching the
+	// way they do to stages. An empty list adds no constraint. See
+	// CompiledConditions and StageCondition.
+	Conditions []StageCondition `json:"conditions,omitempty" bson:"conditions,omitempty"`
 	// WeeklySchedule bounds the automatic trigger to recurring weekly windows,
 	// each with its own day, time segments and IANA Timezone. An empty schedule
 	// means any time is eligible. Reuses the alert weekly-schedule shape so the
 	// same editor and evaluation semantics apply. The Timezone on each entry is
-	// the user's timezone captured when the schedule was authored.
+	// the user's timezone captured when the schedule was authored. Time is not
+	// path-expressible, so it stays a dedicated field rather than a condition.
 	WeeklySchedule []*WeeklySchedule `json:"weeklySchedule,omitempty" bson:"weeklySchedule,omitempty"`
 	// Surfaces lists the UI surfaces a manual trigger can be launched from
 	// (manual). Ignored for automatic triggers.
@@ -146,10 +161,14 @@ func (t WorkflowTrigger) HasSurface(surface WorkflowTriggerSurface) bool {
 	return false
 }
 
-// MatchesDevice reports whether a recording from deviceKey is in scope for this
-// automatic trigger. An empty Devices list matches every device; otherwise the
-// key must appear in the list (compared against DeviceKey.Key, like a stage's
-// device.deviceKey need).
+// MatchesDevice reports whether deviceKey is in this automatic trigger's device
+// list: an empty Devices list matches every device, otherwise the key must
+// appear in the list (compared against DeviceKey.Key). It is a device-key-only
+// convenience used to answer "does this workflow run for this device?" (e.g.
+// hub-api's device filter) and deliberately ignores the trigger's richer
+// Conditions. The full activation gate the engine evaluates is Matches, which
+// runs every compiled condition (see CompiledConditions) against the recording
+// envelope.
 func (t WorkflowTrigger) MatchesDevice(deviceKey string) bool {
 	if len(t.Devices) == 0 {
 		return true
@@ -160,6 +179,79 @@ func (t WorkflowTrigger) MatchesDevice(deviceKey string) bool {
 		}
 	}
 	return false
+}
+
+// CompiledConditions returns the automatic trigger's device/envelope scope as a
+// flat list of StageConditions, ANDed together, so trigger matching runs through
+// the very same operator engine stage conditions use. It folds the Devices
+// shorthand into a leading device.deviceKey `in` [keys…] condition (mirroring a
+// stage's device.deviceKey need) and appends any explicit Conditions verbatim.
+// An empty result means "match everything" (no device list, no conditions), so a
+// bare automatic trigger stays eligible for every recording — the historical
+// behaviour. It is the single place the Devices field is turned into a condition.
+func (t WorkflowTrigger) CompiledConditions() []StageCondition {
+	out := make([]StageCondition, 0, 1+len(t.Conditions))
+	if len(t.Devices) > 0 {
+		keys := make([]any, 0, len(t.Devices))
+		for _, d := range t.Devices {
+			keys = append(keys, d.Key)
+		}
+		out = append(out, StageCondition{Path: "device.deviceKey", Op: ConditionOpIn, Value: keys})
+	}
+	out = append(out, t.Conditions...)
+	return out
+}
+
+// MatchesEnvelope reports whether root — the credential-free pre-run projection
+// of a recording (device.*, user.*, identity scalars; see AutomaticTriggerRoot)
+// — satisfies this automatic trigger's device/envelope scope. Every compiled
+// condition must hold (AND); an empty scope matches everything. It shares the
+// pure EvaluateCondition engine with stage conditions, so `matches`, `in`, `eq`,
+// … behave identically here and in a stage need.
+func (t WorkflowTrigger) MatchesEnvelope(root map[string]any) bool {
+	for _, c := range t.CompiledConditions() {
+		cc := c
+		if !EvaluateCondition(&cc, root) {
+			return false
+		}
+	}
+	return true
+}
+
+// AutomaticTriggerRoot builds the pre-run envelope an automatic trigger's
+// conditions match against: the device and user scalars known when a recording
+// arrives, in the same nested shape stage conditions read (device.<field>,
+// user.<field>). It is the trigger-time counterpart of the engine's fuller run
+// root, minus the inputs/results a run only accrues after it opens.
+func AutomaticTriggerRoot(device WorkflowDevice, user WorkflowUser) map[string]any {
+	return map[string]any{
+		"device": map[string]any{
+			"deviceKey":       device.DeviceKey,
+			"deviceName":      device.DeviceName,
+			"provider":        device.Provider,
+			"storageSolution": device.StorageSolution,
+			// siteIds is an array gate value: stored as []any so the shared
+			// evaluator's contains/in/matches array handling applies (a bare
+			// []string is not recognised by the type switches).
+			"siteIds": StringsToAny(device.SiteIds),
+		},
+		"user": map[string]any{
+			"organisationId": user.OrganisationId,
+		},
+	}
+}
+
+// StringsToAny widens a []string into the []any shape the condition evaluator's
+// array operators (contains, in, matches, and "*" fan-out) recognise — the
+// engine's operation bags arrive as []any via a JSON round-trip, so a natively
+// typed []string field (e.g. WorkflowDevice.SiteIds) must be widened the same
+// way to be matchable. A nil or empty input yields an empty, non-nil slice.
+func StringsToAny(ss []string) []any {
+	out := make([]any, len(ss))
+	for i, s := range ss {
+		out[i] = s
+	}
+	return out
 }
 
 // IsScheduledAt reports whether at falls within this automatic trigger's weekly
@@ -179,14 +271,15 @@ func (t WorkflowTrigger) IsScheduledAt(at time.Time) bool {
 	return false
 }
 
-// Matches reports whether a recording from deviceKey at instant at satisfies this
-// automatic trigger's scope (device selection AND weekly schedule). It is the
-// single source of truth for the automatic activation gate, evaluated by the
-// producer before a WorkflowRun is minted. It is pure: the caller resolves the
-// recording's device key and timestamp and passes them in. Manual triggers do
-// not use this predicate — they are gated by surface, not by device/time.
-func (t WorkflowTrigger) Matches(deviceKey string, at time.Time) bool {
-	return t.MatchesDevice(deviceKey) && t.IsScheduledAt(at)
+// Matches reports whether the recording described by root at instant at satisfies
+// this automatic trigger's scope (device/envelope conditions AND weekly
+// schedule). It is the single source of truth for the automatic activation gate,
+// evaluated by the engine before a WorkflowRun is opened. It is pure: the caller
+// builds the envelope (see AutomaticTriggerRoot) and passes the recording
+// timestamp. Manual triggers do not use this predicate — they are gated by
+// surface, not by device/time.
+func (t WorkflowTrigger) Matches(root map[string]any, at time.Time) bool {
+	return t.MatchesEnvelope(root) && t.IsScheduledAt(at)
 }
 
 // WorkflowSource is the provenance of a workflow document, which also decides
@@ -367,19 +460,19 @@ func (w *Workflow) ManualTriggersForSurface(surface WorkflowTriggerSurface) []Wo
 	return out
 }
 
-// AutomaticMatches reports whether a recording from deviceKey at instant at
+// AutomaticMatches reports whether the recording described by root at instant at
 // activates this workflow automatically. It normalizes legacy triggers, then is
 // true when the workflow is Enabled and any of its automatic triggers matches
-// the recording's device and time (see WorkflowTrigger.Matches). It is the
+// the recording's envelope and time (see WorkflowTrigger.Matches). It is the
 // single gate the engine uses to fan an event out to the workflows it should
 // open a run for; manual triggers never activate this way.
-func (w *Workflow) AutomaticMatches(deviceKey string, at time.Time) bool {
+func (w *Workflow) AutomaticMatches(root map[string]any, at time.Time) bool {
 	if !w.Enabled {
 		return false
 	}
 	w.NormalizeTriggers()
 	for _, t := range w.Triggers {
-		if t.EffectiveType() == WorkflowTriggerAutomatic && t.Matches(deviceKey, at) {
+		if t.EffectiveType() == WorkflowTriggerAutomatic && t.Matches(root, at) {
 			return true
 		}
 	}
