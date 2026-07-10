@@ -66,6 +66,17 @@ type CaseMedia struct {
 	// matching one of the single-op CaseMediaAction values.
 	Params map[string]interface{} `json:"params,omitempty" bson:"params,omitempty"`
 
+	// OriginAttachmentId marks a Role=source row that was materialised
+	// from a video CaseAttachment (see the case_attachments collection)
+	// so a case's attached videos can flow through the same
+	// workflow-run and redaction machinery as device recordings. It
+	// back-links to the CaseAttachment.Id. Rows carrying it are kept
+	// out of the normal media playlist and default to
+	// IncludeInExport=false / IncludeInShare=false at insert time (the
+	// owning attachment carries its own export/share curation). Only
+	// meaningful on Role = "source".
+	OriginAttachmentId *primitive.ObjectID `json:"originAttachmentId,omitempty" bson:"origin_attachment_id,omitempty"`
+
 	// Source snapshot fields (populated on Role = "source"; mirrored from
 	// Media at attach time so the case stays self-contained even after
 	// the original media document is cleaned up).
@@ -217,7 +228,10 @@ func (cm *CaseMedia) Validate() error {
 
 	switch cm.Role {
 	case CaseMediaRoleSource:
-		if cm.SourceMediaId == nil || cm.SourceMediaId.IsZero() {
+		// Attachment-origin sources are materialised from a
+		// CaseAttachment (no backing Media document), so they identify
+		// themselves via OriginAttachmentId instead of SourceMediaId.
+		if cm.OriginAttachmentId == nil && (cm.SourceMediaId == nil || cm.SourceMediaId.IsZero()) {
 			return fmt.Errorf("case_media: source row requires sourceMediaId")
 		}
 		if cm.VideoFile == "" {
