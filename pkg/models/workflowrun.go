@@ -115,6 +115,19 @@ type WorkflowRun struct {
 	// Populated alongside WorkflowId.
 	WorkflowName string `json:"workflowName,omitempty" bson:"workflowname,omitempty"`
 
+	// Stages is the run's self-describing routing: the compiled stage set of the
+	// workflow this run executes (the output of Workflow.CompileStages) embedded
+	// on the hand-off so the engine can dispatch a workflow it does not hold in
+	// its boot-loaded config registry — a user/DB workflow launched manually.
+	// Only routing fields are meaningful here (Operation, Dispatch, Needs,
+	// NeedsMode; Queue when the source workflow set one); the engine compiles
+	// these into the same validated registry a config workflow gets. Empty is the
+	// legacy/config path: the engine falls back to the config registry keyed by
+	// WorkflowId, so config workflows and older hand-offs are unchanged. It is
+	// persisted so the return path — a stage result reopening the run on any
+	// replica — resolves the same routing without re-fetching the definition.
+	Stages []WorkflowStage `json:"stages,omitempty" bson:"stages,omitempty"`
+
 	// Origin records how this run was opened — the run-side counterpart of the
 	// Workflow's trigger Type. An automatic run was teed off the pipeline by
 	// analysis for a matching recording; a manual run was launched on demand by a
