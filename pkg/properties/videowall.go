@@ -24,4 +24,6 @@ const (
 	VideowallLiveview = "liveview"
 	VideowallIO = "io"
 	VideowallAssignedUsers = "assigned_users"
+	VideowallWeeklySchedule = "weeklySchedule"
+	VideowallDefaultViewingMode = "default_viewing_mode"
 )

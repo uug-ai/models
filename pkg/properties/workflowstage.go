@@ -16,6 +16,22 @@ const (
 	StageDependencyCondition = "condition"
 )
 
+// StageParam property field names (BSON)
+const (
+	StageParamName = "name"
+	StageParamLabel = "label"
+	StageParamType = "type"
+	StageParamRequired = "required"
+	StageParamDefault = "default"
+	StageParamOptions = "options"
+)
+
+// StagePort property field names (BSON)
+const (
+	StagePortName = "name"
+	StagePortLabel = "label"
+)
+
 // StageResourceList property field names (BSON)
 const (
 	StageResourceListCPU = "cpu"
@@ -36,6 +52,10 @@ const (
 	WorkflowStageOperation = "operation"
 	WorkflowStageDispatch = "dispatch"
 	WorkflowStageNeeds = "needs"
+	WorkflowStageNeedsMode = "needsMode"
+	WorkflowStageParams = "params"
+	WorkflowStageInputs = "inputs"
+	WorkflowStageOutputs = "outputs"
 	WorkflowStageRepository = "repository"
 	WorkflowStageTag = "tag"
 	WorkflowStagePullPolicy = "pullPolicy"

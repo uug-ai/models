@@ -6,6 +6,8 @@ package properties
 // CaseAttachment property field names (BSON)
 const (
 	CaseAttachmentId = "_id"
+	CaseAttachmentTaskId = "task_id"
+	CaseAttachmentOrganisationId = "organisation_id"
 	CaseAttachmentType = "type"
 	CaseAttachmentMimeType = "mime_type"
 	CaseAttachmentName = "name"

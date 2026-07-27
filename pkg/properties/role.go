@@ -20,6 +20,7 @@ const (
 	FeaturePermissionsGroups = "groups"
 	FeaturePermissionsRoles = "roles"
 	FeaturePermissionsSettings = "settings"
+	FeaturePermissionsDownloadRecordings = "download_recordings"
 )
 
 // Role property field names (BSON)

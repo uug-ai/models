@@ -102,6 +102,54 @@ const (
 	CountingRecordDuration = "duration"
 )
 
+// DetectionCategory property field names (BSON)
+const (
+	DetectionCategoryId = "id"
+	DetectionCategoryName = "name"
+	DetectionCategoryAlias = "alias"
+)
+
+// DetectionMedia property field names (BSON)
+const (
+	DetectionMediaWidth = "width"
+	DetectionMediaHeight = "height"
+	DetectionMediaFps = "fps"
+	DetectionMediaFrameCount = "frameCount"
+	DetectionMediaRotation = "rotation"
+)
+
+// DetectionRun property field names (BSON)
+const (
+	DetectionRunId = "_id"
+	DetectionRunKey = "key"
+	DetectionRunOrganisationId = "organisationId"
+	DetectionRunDeviceId = "deviceId"
+	DetectionRunTask = "task"
+	DetectionRunSource = "source"
+	DetectionRunSchemaVersion = "schemaVersion"
+	DetectionRunMedia = "media"
+	DetectionRunCategories = "categories"
+	DetectionRunTracks = "tracks"
+	DetectionRunOriginalCoordinateSpace = "originalCoordinateSpace"
+	DetectionRunOriginalBoxForm = "originalBoxForm"
+	DetectionRunCreatedAt = "createdAt"
+	DetectionRunUpdatedAt = "updatedAt"
+	DetectionRunRecordingTimestamp = "recordingTimestamp"
+)
+
+// DetectionSource property field names (BSON)
+const (
+	DetectionSourceKind = "kind"
+	DetectionSourceName = "name"
+	DetectionSourceVersion = "version"
+	DetectionSourceRunId = "runId"
+	DetectionSourceInputWidth = "inputWidth"
+	DetectionSourceInputHeight = "inputHeight"
+	DetectionSourceScoreThreshold = "scoreThreshold"
+	DetectionSourceNmsIou = "nmsIou"
+	DetectionSourceRotationApplied = "rotationApplied"
+)
+
 // DominantColor property field names (BSON)
 const (
 	DominantColorRgbs = "rgbs"
@@ -125,6 +173,9 @@ const (
 	FaceRedactionTrackSelected = "selected"
 	FaceRedactionTrackDeletedFrames = "deletedFrames"
 	FaceRedactionTrackFrameCoordinates = "frameCoordinates"
+	FaceRedactionTrackConfidence = "confidence"
+	FaceRedactionTrackClassId = "classId"
+	FaceRedactionTrackShape = "shape"
 )
 
 // Sprite property field names (BSON)
@@ -157,4 +208,7 @@ const (
 	TrackBoxTrackId = "trackId"
 	TrackBoxSmoothed = "smoothed"
 	TrackBoxEdited = "edited"
+	TrackBoxConfidence = "confidence"
+	TrackBoxClassId = "classId"
+	TrackBoxLabel = "label"
 )

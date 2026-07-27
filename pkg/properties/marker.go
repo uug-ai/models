@@ -10,6 +10,7 @@ const (
 	MarkerSiteId = "siteId"
 	MarkerGroupId = "groupId"
 	MarkerOrganisationId = "organisationId"
+	MarkerMediaKeys = "mediaKeys"
 	MarkerStartTimestamp = "startTimestamp"
 	MarkerEndTimestamp = "endTimestamp"
 	MarkerDuration = "duration"
@@ -29,6 +30,14 @@ const (
 	MarkerAtRuntimeMetadataMarkerRanges = "markerRanges"
 	MarkerAtRuntimeMetadataTagRanges = "tagRanges"
 	MarkerAtRuntimeMetadataEventRanges = "eventRanges"
+)
+
+// MarkerBox property field names (BSON)
+const (
+	MarkerBoxX = "x"
+	MarkerBoxY = "y"
+	MarkerBoxWidth = "width"
+	MarkerBoxHeight = "height"
 )
 
 // MarkerCategory property field names (BSON)
@@ -82,6 +91,12 @@ const (
 // MarkerMetadata property field names (BSON)
 const (
 	MarkerMetadataComments = "comments"
+	MarkerMetadataConfidence = "confidence"
+	MarkerMetadataSource = "source"
+	MarkerMetadataEngine = "engine"
+	MarkerMetadataModelVersion = "modelVersion"
+	MarkerMetadataBoundingBox = "boundingBox"
+	MarkerMetadataRaw = "raw"
 )
 
 // MarkerOption property field names (BSON)
