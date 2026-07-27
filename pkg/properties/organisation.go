@@ -96,7 +96,6 @@ const (
 	OrganisationUserInvitedAt = "invited_at"
 	OrganisationUserJoinedAt = "joined_at"
 	OrganisationUserExpiresAt = "expires_at"
-	OrganisationUserPermissions = "permissions"
 	OrganisationUserAudit = "audit"
 )
 
@@ -107,13 +106,4 @@ const (
 	OrganisationUserDetailsOrganisation = "organisation"
 	OrganisationUserDetailsRoleAssignments = "role_assignments"
 	OrganisationUserDetailsRoles = "roles"
-)
-
-// UserOrgPermissions property field names (BSON)
-const (
-	UserOrgPermissionsCanInviteUsers = "can_invite_users"
-	UserOrgPermissionsCanManageRoles = "can_manage_roles"
-	UserOrgPermissionsCanManageDevices = "can_manage_devices"
-	UserOrgPermissionsCanManageSites = "can_manage_sites"
-	UserOrgPermissionsCanManageGroups = "can_manage_groups"
 )

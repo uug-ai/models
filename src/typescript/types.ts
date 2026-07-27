@@ -25081,45 +25081,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/userorgpermissions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get UserOrgPermissions (schema generation only)
-         * @description Internal endpoint used only to ensure UserOrgPermissions schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.UserOrgPermissions"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/userprofile": {
         parameters: {
             query?: never;
@@ -32040,8 +32001,6 @@ export interface components {
             invited_by?: string;
             joined_at?: string;
             organisation_id?: string;
-            /** @description Additional permissions specific to this membership */
-            permissions?: components["schemas"]["models.UserOrgPermissions"];
             /** @description "pending", "active", "suspended", "revoked" */
             status?: string;
             user_id?: string;
@@ -32895,13 +32854,6 @@ export interface components {
             user_id?: string;
             username?: string;
         };
-        "models.UserOrgPermissions": {
-            can_invite_users?: boolean;
-            can_manage_devices?: boolean;
-            can_manage_groups?: boolean;
-            can_manage_roles?: boolean;
-            can_manage_sites?: boolean;
-        };
         "models.UserProfile": {
             card?: components["schemas"]["models.Card"];
             user?: components["schemas"]["models.User"];
@@ -33673,7 +33625,6 @@ export namespace models {
     export type UpdateWorkflowStageInput = components['schemas']['models.UpdateWorkflowStageInput'];
     export type UpdateWorkflowStageOutput = components['schemas']['models.UpdateWorkflowStageOutput'];
     export type User = components['schemas']['models.User'];
-    export type UserOrgPermissions = components['schemas']['models.UserOrgPermissions'];
     export type UserProfile = components['schemas']['models.UserProfile'];
     export type UserProfileSettings = components['schemas']['models.UserProfileSettings'];
     export type UserRoleAssignments = components['schemas']['models.UserRoleAssignments'];

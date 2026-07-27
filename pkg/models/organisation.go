@@ -86,23 +86,8 @@ type OrganisationUser struct {
 	InvitedBy      primitive.ObjectID `json:"invited_by" bson:"invited_by,omitempty"`
 	InvitedAt      time.Time          `json:"invited_at" bson:"invited_at,omitempty"`
 	JoinedAt       time.Time          `json:"joined_at" bson:"joined_at,omitempty"`
-	ExpiresAt      time.Time          `json:"expires_at" bson:"expires_at,omitempty"`   // Optional expiration for temporary access
-	Permissions    UserOrgPermissions `json:"permissions" bson:"permissions,omitempty"` // Additional permissions specific to this membership
+	ExpiresAt      time.Time          `json:"expires_at" bson:"expires_at,omitempty"` // Optional expiration for temporary access
 	Audit          Audit              `json:"audit" bson:"audit,omitempty"`
-}
-
-// UserOrgPermissions defines specific organisation-level management capabilities a
-// user has within an organisation (membership-level flags only).
-//
-// NOTE: Resource scope (which sites/groups/devices a user can act on) is NOT stored
-// here. Scope is owned solely by RoleAssignment.Scope (RoleScope) to keep a single
-// source of truth for authorization. Do not reintroduce SiteIds/GroupIds/DeviceIds.
-type UserOrgPermissions struct {
-	CanInviteUsers   bool `json:"can_invite_users" bson:"can_invite_users,omitempty"`
-	CanManageRoles   bool `json:"can_manage_roles" bson:"can_manage_roles,omitempty"`
-	CanManageDevices bool `json:"can_manage_devices" bson:"can_manage_devices,omitempty"`
-	CanManageSites   bool `json:"can_manage_sites" bson:"can_manage_sites,omitempty"`
-	CanManageGroups  bool `json:"can_manage_groups" bson:"can_manage_groups,omitempty"`
 }
 
 // OrganisationInvitation represents a pending invitation to join an organisation.
