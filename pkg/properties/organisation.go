@@ -116,7 +116,4 @@ const (
 	UserOrgPermissionsCanManageDevices = "can_manage_devices"
 	UserOrgPermissionsCanManageSites = "can_manage_sites"
 	UserOrgPermissionsCanManageGroups = "can_manage_groups"
-	UserOrgPermissionsSiteIds = "site_ids"
-	UserOrgPermissionsGroupIds = "group_ids"
-	UserOrgPermissionsDeviceIds = "device_ids"
 )
