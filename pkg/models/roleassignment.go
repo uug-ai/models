@@ -21,11 +21,16 @@ type RoleAssignment struct {
 
 // RoleScope defines the scope/context where the role assignment applies.
 // This allows for granular role assignments at different levels.
+//
+// Scope resolution: if AllOrganisation is true, the assignment applies to the
+// entire organisation and the id lists are ignored. Otherwise the assignment is
+// limited to the listed sites/groups/devices; empty lists mean NO access (never
+// "everything").
 type RoleScope struct {
-	Type      string   `json:"type" bson:"type,omitempty"`             // e.g., "global", "site", "group", "device"
-	SiteIds   []string `json:"site_ids" bson:"site_ids,omitempty"`     // Sites where the role applies
-	GroupIds  []string `json:"group_ids" bson:"group_ids,omitempty"`   // Groups where the role applies
-	DeviceIds []string `json:"device_ids" bson:"device_ids,omitempty"` // Devices where the role applies
+	AllOrganisation bool     `json:"all_organisation" bson:"all_organisation,omitempty"` // Applies org-wide (ignores the id lists)
+	SiteIds         []string `json:"site_ids" bson:"site_ids,omitempty"`                 // Sites where the role applies
+	GroupIds        []string `json:"group_ids" bson:"group_ids,omitempty"`               // Groups where the role applies
+	DeviceIds       []string `json:"device_ids" bson:"device_ids,omitempty"`             // Devices where the role applies
 }
 
 // UserRoleAssignments is a helper struct to include role details with assignments

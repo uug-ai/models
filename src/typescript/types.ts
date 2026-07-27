@@ -32217,14 +32217,14 @@ export interface components {
             user_id?: string;
         };
         "models.RoleScope": {
+            /** @description Applies org-wide (ignores the id lists) */
+            all_organisation?: boolean;
             /** @description Devices where the role applies */
             device_ids?: string[];
             /** @description Groups where the role applies */
             group_ids?: string[];
             /** @description Sites where the role applies */
             site_ids?: string[];
-            /** @description e.g., "global", "site", "group", "device" */
-            type?: string;
         };
         "models.RuntimeConfig": {
             mqttPassword?: string;

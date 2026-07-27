@@ -17,7 +17,7 @@ const (
 
 // RoleScope property field names (BSON)
 const (
-	RoleScopeType = "type"
+	RoleScopeAllOrganisation = "all_organisation"
 	RoleScopeSiteIds = "site_ids"
 	RoleScopeGroupIds = "group_ids"
 	RoleScopeDeviceIds = "device_ids"
