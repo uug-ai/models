@@ -31113,7 +31113,7 @@ export interface components {
             /** @description 0=none, 1=read, 2=write, 3=admin */
             devices?: components["schemas"]["models.AccessLevel"];
             /** @description 0=none, 1=read, 2=write, 3=admin */
-            download_recordings?: components["schemas"]["models.AccessLevel"];
+            downloadRecordings?: components["schemas"]["models.AccessLevel"];
             /** @description 0=none, 1=read, 2=write, 3=admin */
             export?: components["schemas"]["models.AccessLevel"];
             /** @description 0=none, 1=read, 2=write, 3=admin */
@@ -31131,7 +31131,7 @@ export interface components {
             /** @description 0=none, 1=read, 2=write, 3=admin */
             ptz?: components["schemas"]["models.AccessLevel"];
             /** @description 0=none, 1=read, 2=write, 3=admin */
-            remote_config?: components["schemas"]["models.AccessLevel"];
+            remoteConfig?: components["schemas"]["models.AccessLevel"];
             /** @description 0=none, 1=read, 2=write, 3=admin */
             roles?: components["schemas"]["models.AccessLevel"];
             /** @description 0=none, 1=read, 2=write, 3=admin */
@@ -32154,7 +32154,7 @@ export interface components {
             id?: string;
             isActive?: number;
             /** @description Organisation this role belongs to */
-            organisation_id?: string;
+            organisationId?: string;
             pages?: string[];
             role?: string;
             roleName?: string;

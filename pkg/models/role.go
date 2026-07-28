@@ -16,7 +16,7 @@ const (
 
 type Role struct {
 	Id                 primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
-	OrganisationId     primitive.ObjectID `json:"organisation_id" bson:"organisation_id,omitempty"` // Organisation this role belongs to
+	OrganisationId     primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"` // Organisation this role belongs to
 	Name               string             `json:"roleName" bson:"roleName,omitempty"`
 	Description        string             `json:"description" bson:"description,omitempty"`
 	ParentRole         string             `json:"role" bson:"role,omitempty"`
@@ -29,22 +29,22 @@ type Role struct {
 }
 
 type FeaturePermissions struct {
-	PTZ          AccessLevel `json:"ptz" bson:"ptz"`                     // 0=none, 1=read, 2=write, 3=admin
-	Liveview     AccessLevel `json:"liveview" bson:"liveview"`           // 0=none, 1=read, 2=write, 3=admin
-	RemoteConfig AccessLevel `json:"remote_config" bson:"remote_config"` // 0=none, 1=read, 2=write, 3=admin
-	IO           AccessLevel `json:"io" bson:"io"`                       // 0=none, 1=read, 2=write, 3=admin
-	FloorPlans   AccessLevel `json:"floorPlans" bson:"floorPlans"`       // 0=none, 1=read, 2=write, 3=admin
-	Playback     AccessLevel `json:"playback" bson:"playback"`           // 0=none, 1=read, 2=write, 3=admin
-	Export       AccessLevel `json:"export" bson:"export"`               // 0=none, 1=read, 2=write, 3=admin
-	Markers      AccessLevel `json:"markers" bson:"markers"`             // 0=none, 1=read, 2=write, 3=admin
-	Alerts       AccessLevel `json:"alerts" bson:"alerts"`               // 0=none, 1=read, 2=write, 3=admin
-	Users        AccessLevel `json:"users" bson:"users"`                 // 0=none, 1=read, 2=write, 3=admin
-	Devices      AccessLevel `json:"devices" bson:"devices"`             // 0=none, 1=read, 2=write, 3=admin
-	Sites        AccessLevel `json:"sites" bson:"sites"`                 // 0=none, 1=read, 2=write, 3=admin
-	Groups       AccessLevel `json:"groups" bson:"groups"`               // 0=none, 1=read, 2=write, 3=admin
-	Roles              AccessLevel `json:"roles" bson:"roles"`                             // 0=none, 1=read, 2=write, 3=admin
-	Settings           AccessLevel `json:"settings" bson:"settings"`                       // 0=none, 1=read, 2=write, 3=admin
-	DownloadRecordings AccessLevel `json:"download_recordings" bson:"download_recordings"` // 0=none, 1=read, 2=write, 3=admin
+	PTZ                AccessLevel `json:"ptz" bson:"ptz"`                               // 0=none, 1=read, 2=write, 3=admin
+	Liveview           AccessLevel `json:"liveview" bson:"liveview"`                     // 0=none, 1=read, 2=write, 3=admin
+	RemoteConfig       AccessLevel `json:"remoteConfig" bson:"remoteConfig"`             // 0=none, 1=read, 2=write, 3=admin
+	IO                 AccessLevel `json:"io" bson:"io"`                                 // 0=none, 1=read, 2=write, 3=admin
+	FloorPlans         AccessLevel `json:"floorPlans" bson:"floorPlans"`                 // 0=none, 1=read, 2=write, 3=admin
+	Playback           AccessLevel `json:"playback" bson:"playback"`                     // 0=none, 1=read, 2=write, 3=admin
+	Export             AccessLevel `json:"export" bson:"export"`                         // 0=none, 1=read, 2=write, 3=admin
+	Markers            AccessLevel `json:"markers" bson:"markers"`                       // 0=none, 1=read, 2=write, 3=admin
+	Alerts             AccessLevel `json:"alerts" bson:"alerts"`                         // 0=none, 1=read, 2=write, 3=admin
+	Users              AccessLevel `json:"users" bson:"users"`                           // 0=none, 1=read, 2=write, 3=admin
+	Devices            AccessLevel `json:"devices" bson:"devices"`                       // 0=none, 1=read, 2=write, 3=admin
+	Sites              AccessLevel `json:"sites" bson:"sites"`                           // 0=none, 1=read, 2=write, 3=admin
+	Groups             AccessLevel `json:"groups" bson:"groups"`                         // 0=none, 1=read, 2=write, 3=admin
+	Roles              AccessLevel `json:"roles" bson:"roles"`                           // 0=none, 1=read, 2=write, 3=admin
+	Settings           AccessLevel `json:"settings" bson:"settings"`                     // 0=none, 1=read, 2=write, 3=admin
+	DownloadRecordings AccessLevel `json:"downloadRecordings" bson:"downloadRecordings"` // 0=none, 1=read, 2=write, 3=admin
 }
 
 type TimeWindow struct {
