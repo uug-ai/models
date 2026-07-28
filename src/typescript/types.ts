@@ -30166,6 +30166,8 @@ export interface components {
             updatedAt?: number;
             updatedBy?: string;
         };
+        /** @enum {string} */
+        "models.BaseRole": "guest" | "editor" | "admin" | "owner" | "application";
         "models.CameraMetadata": {
             /** @description Bitrate in kbps */
             bitrate?: number;
@@ -31968,6 +31970,11 @@ export interface components {
             organisationId?: string;
             /** @description Roles to assign upon acceptance */
             roleIds?: string[];
+            /** @description Scope is the granular scope applied to every role in RoleIds when the
+             *     invitation is accepted, i.e. it seeds the Scope of each resulting
+             *     RoleAssignment. A zero value with AllOrganisation=false means the created
+             *     assignments start with NO access until scoped (see RoleAssignmentScope). */
+            scope?: components["schemas"]["models.RoleAssignmentScope"];
             status?: components["schemas"]["models.InvitationStatus"];
             token?: string;
         };
@@ -32159,8 +32166,17 @@ export interface components {
             isActive?: boolean;
             /** @description Organisation this role belongs to */
             organisationId?: string;
+            /** @description Pages and FeaturePermissions are two orthogonal authorization axes:
+             *       - Pages controls which UI/nav pages are visible (coarse allow-list).
+             *       - FeaturePermissions controls the CRUD AccessLevel per feature.
+             *     Some names appear in both (e.g. sites/groups/roles/settings); that overlap
+             *     is intentional - visibility and capability are decided independently, and
+             *     the consuming service resolves them together (page hidden => not shown;
+             *     feature level => what may be done once on the page). */
             pages?: string[];
-            role?: string;
+            /** @description ParentRole is the built-in BaseRole tier this custom role extends (it is a
+             *     tier identifier, NOT an ObjectID reference to another Role document). */
+            role?: components["schemas"]["models.BaseRole"];
             roleName?: string;
             timeWindow?: components["schemas"]["models.TimeWindow"];
             timeWindowActive?: number;

@@ -58,6 +58,7 @@ const (
 	OrganisationInvitationOrganisationId = "organisationId"
 	OrganisationInvitationEmail = "email"
 	OrganisationInvitationRoleIds = "roleIds"
+	OrganisationInvitationScope = "scope"
 	OrganisationInvitationToken = "token"
 	OrganisationInvitationInvitedBy = "invitedBy"
 	OrganisationInvitationStatus = "status"

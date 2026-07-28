@@ -14,12 +14,35 @@ const (
 	AccessLevelAdmin AccessLevel = 3 // Full administrative access
 )
 
+// BaseRole enumerates the built-in role tiers a custom Role derives from.
+// These tiers are hard-coded on the platform (they are never stored as Role
+// documents); a custom Role points at one via ParentRole to inherit its
+// baseline behaviour and then overrides Pages/FeaturePermissions on top.
+type BaseRole string
+
+const (
+	BaseRoleGuest       BaseRole = "guest"
+	BaseRoleEditor      BaseRole = "editor"
+	BaseRoleAdmin       BaseRole = "admin"
+	BaseRoleOwner       BaseRole = "owner"
+	BaseRoleApplication BaseRole = "application" // Service/API account tier
+)
+
 type Role struct {
-	Id                 primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
-	OrganisationId     primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"` // Organisation this role belongs to
-	Name               string             `json:"roleName" bson:"roleName,omitempty"`
-	Description        string             `json:"description" bson:"description,omitempty"`
-	ParentRole         string             `json:"role" bson:"role,omitempty"`
+	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"` // Organisation this role belongs to
+	Name           string             `json:"roleName" bson:"roleName,omitempty"`
+	Description    string             `json:"description" bson:"description,omitempty"`
+	// ParentRole is the built-in BaseRole tier this custom role extends (it is a
+	// tier identifier, NOT an ObjectID reference to another Role document).
+	ParentRole BaseRole `json:"role" bson:"role,omitempty"`
+	// Pages and FeaturePermissions are two orthogonal authorization axes:
+	//   - Pages controls which UI/nav pages are visible (coarse allow-list).
+	//   - FeaturePermissions controls the CRUD AccessLevel per feature.
+	// Some names appear in both (e.g. sites/groups/roles/settings); that overlap
+	// is intentional - visibility and capability are decided independently, and
+	// the consuming service resolves them together (page hidden => not shown;
+	// feature level => what may be done once on the page).
 	Pages              []string           `json:"pages" bson:"pages"`
 	TimeWindow         TimeWindow         `json:"timeWindow" bson:"timeWindow"`
 	IsActive           bool               `json:"isActive" bson:"isActive"`

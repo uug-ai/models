@@ -131,11 +131,16 @@ type OrganisationInvitation struct {
 	OrganisationId primitive.ObjectID   `json:"organisationId" bson:"organisationId,omitempty"`
 	Email          string               `json:"email" bson:"email,omitempty"`
 	RoleIds        []primitive.ObjectID `json:"roleIds" bson:"roleIds,omitempty"` // Roles to assign upon acceptance
-	Token          string               `json:"token" bson:"token,omitempty"`
-	InvitedBy      primitive.ObjectID   `json:"invitedBy" bson:"invitedBy,omitempty"`
-	Status         InvitationStatus     `json:"status" bson:"status,omitempty"`
-	ExpiresAt      time.Time            `json:"expiresAt" bson:"expiresAt,omitempty"`
-	Audit          Audit                `json:"audit" bson:"audit,omitempty"`
+	// Scope is the granular scope applied to every role in RoleIds when the
+	// invitation is accepted, i.e. it seeds the Scope of each resulting
+	// RoleAssignment. A zero value with AllOrganisation=false means the created
+	// assignments start with NO access until scoped (see RoleAssignmentScope).
+	Scope     RoleAssignmentScope `json:"scope" bson:"scope,omitempty"`
+	Token     string              `json:"token" bson:"token,omitempty"`
+	InvitedBy primitive.ObjectID  `json:"invitedBy" bson:"invitedBy,omitempty"`
+	Status    InvitationStatus    `json:"status" bson:"status,omitempty"`
+	ExpiresAt time.Time           `json:"expiresAt" bson:"expiresAt,omitempty"`
+	Audit     Audit               `json:"audit" bson:"audit,omitempty"`
 }
 
 // OrganisationUserDetails is a helper struct that includes full organisation and role details
