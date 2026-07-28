@@ -9,24 +9,24 @@ import (
 // RoleAssignment represents the assignment of an organisation-specific role to a user.
 // This allows users to have multiple roles assigned to them within an organisation.
 type RoleAssignment struct {
-	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
-	UserId         primitive.ObjectID `json:"user_id" bson:"user_id,omitempty"`
-	RoleId         primitive.ObjectID `json:"role_id" bson:"role_id,omitempty"`                 // Reference to the organisation-specific Role
-	OrganisationId primitive.ObjectID `json:"organisation_id" bson:"organisation_id,omitempty"` // Organisation context for this assignment
-	ExpiresAt      time.Time          `json:"expires_at" bson:"expires_at,omitempty"`           // Optional expiration for temporary assignments
-	IsActive       int                `json:"is_active" bson:"is_active"`
-	Scope          RoleScope          `json:"scope" bson:"scope,omitempty"` // Optional granular scope within organisation
-	Audit          Audit              `json:"audit" bson:"audit,omitempty"`
+	Id             primitive.ObjectID  `json:"id" bson:"_id,omitempty"`
+	UserId         primitive.ObjectID  `json:"user_id" bson:"user_id,omitempty"`
+	RoleId         primitive.ObjectID  `json:"role_id" bson:"role_id,omitempty"`                 // Reference to the organisation-specific Role
+	OrganisationId primitive.ObjectID  `json:"organisation_id" bson:"organisation_id,omitempty"` // Organisation context for this assignment
+	ExpiresAt      time.Time           `json:"expires_at" bson:"expires_at,omitempty"`           // Optional expiration for temporary assignments
+	IsActive       int                 `json:"is_active" bson:"is_active"`
+	Scope          RoleAssignmentScope `json:"scope" bson:"scope,omitempty"` // Optional granular scope within organisation
+	Audit          Audit               `json:"audit" bson:"audit,omitempty"`
 }
 
-// RoleScope defines the scope/context where the role assignment applies.
+// RoleAssignmentScope defines the scope/context where the role assignment applies.
 // This allows for granular role assignments at different levels.
 //
 // Scope resolution: if AllOrganisation is true, the assignment applies to the
 // entire organisation and the id lists are ignored. Otherwise the assignment is
 // limited to the listed sites/groups/devices; empty lists mean NO access (never
 // "everything").
-type RoleScope struct {
+type RoleAssignmentScope struct {
 	AllOrganisation bool     `json:"all_organisation" bson:"all_organisation,omitempty"` // Applies org-wide (ignores the id lists)
 	SiteIds         []string `json:"site_ids" bson:"site_ids,omitempty"`                 // Sites where the role applies
 	GroupIds        []string `json:"group_ids" bson:"group_ids,omitempty"`               // Groups where the role applies

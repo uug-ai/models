@@ -20089,7 +20089,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/rolescope": {
+    "/internal/roleassignmentscope": {
         parameters: {
             query?: never;
             header?: never;
@@ -20097,8 +20097,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get RoleScope (schema generation only)
-         * @description Internal endpoint used only to ensure RoleScope schema is generated in OpenAPI spec
+         * Get RoleAssignmentScope (schema generation only)
+         * @description Internal endpoint used only to ensure RoleAssignmentScope schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -20115,7 +20115,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.RoleScope"];
+                        "application/json": components["schemas"]["models.RoleAssignmentScope"];
                     };
                 };
             };
@@ -32172,10 +32172,10 @@ export interface components {
             /** @description Reference to the organisation-specific Role */
             role_id?: string;
             /** @description Optional granular scope within organisation */
-            scope?: components["schemas"]["models.RoleScope"];
+            scope?: components["schemas"]["models.RoleAssignmentScope"];
             user_id?: string;
         };
-        "models.RoleScope": {
+        "models.RoleAssignmentScope": {
             /** @description Applies org-wide (ignores the id lists) */
             all_organisation?: boolean;
             /** @description Devices where the role applies */
@@ -33578,7 +33578,7 @@ export namespace models {
     export type RemoveAlertInput = components['schemas']['models.RemoveAlertInput'];
     export type Role = components['schemas']['models.Role'];
     export type RoleAssignment = components['schemas']['models.RoleAssignment'];
-    export type RoleScope = components['schemas']['models.RoleScope'];
+    export type RoleAssignmentScope = components['schemas']['models.RoleAssignmentScope'];
     export type RuntimeConfig = components['schemas']['models.RuntimeConfig'];
     export type Sequence = components['schemas']['models.Sequence'];
     export type SequenceStage = components['schemas']['models.SequenceStage'];

@@ -15,12 +15,12 @@ const (
 	RoleAssignmentAudit = "audit"
 )
 
-// RoleScope property field names (BSON)
+// RoleAssignmentScope property field names (BSON)
 const (
-	RoleScopeAllOrganisation = "all_organisation"
-	RoleScopeSiteIds = "site_ids"
-	RoleScopeGroupIds = "group_ids"
-	RoleScopeDeviceIds = "device_ids"
+	RoleAssignmentScopeAllOrganisation = "all_organisation"
+	RoleAssignmentScopeSiteIds = "site_ids"
+	RoleAssignmentScopeGroupIds = "group_ids"
+	RoleAssignmentScopeDeviceIds = "device_ids"
 )
 
 // UserRoleAssignments property field names (BSON)
