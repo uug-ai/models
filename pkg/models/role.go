@@ -16,8 +16,16 @@ const (
 
 // BaseRole enumerates the built-in role tiers a custom Role derives from.
 // These tiers are hard-coded on the platform (they are never stored as Role
-// documents); a custom Role points at one via ParentRole to inherit its
-// baseline behaviour and then overrides Pages/FeaturePermissions on top.
+// documents). A custom Role binds to one via ParentRole; the tier is a live
+// binding (not a one-time creation default) that governs two things:
+//   - the effective tier/level used for coarse tier-gating at runtime (the
+//     consuming service resolves ParentRole to a numeric level: guest=1,
+//     editor=2, admin=3, owner=4), and
+//   - the ceiling of pages the custom Role may grant (the editor only offers
+//     pages allowed for the selected base tier).
+//
+// Pages/FeaturePermissions are the fine-grained overrides layered on top,
+// within that ceiling.
 type BaseRole string
 
 const (
@@ -33,8 +41,10 @@ type Role struct {
 	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"` // Organisation this role belongs to
 	Name           string             `json:"roleName" bson:"roleName,omitempty"`
 	Description    string             `json:"description" bson:"description,omitempty"`
-	// ParentRole is the built-in BaseRole tier this custom role extends (it is a
-	// tier identifier, NOT an ObjectID reference to another Role document).
+	// ParentRole is the built-in BaseRole tier this custom role extends. It is a
+	// live tier identifier (NOT an ObjectID reference to another Role document):
+	// it sets the effective tier/RoleLevel for coarse gating and bounds which
+	// pages the role may grant. See BaseRole.
 	ParentRole BaseRole `json:"role" bson:"role,omitempty"`
 	// Pages and FeaturePermissions are two orthogonal authorization axes:
 	//   - Pages controls which UI/nav pages are visible (coarse allow-list).
