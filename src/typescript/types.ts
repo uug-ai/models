@@ -32201,13 +32201,11 @@ export interface components {
             userId?: string;
         };
         "models.RoleAssignmentScope": {
-            /** @description Applies org-wide (ignores the id lists) */
-            allOrganisation?: boolean;
-            /** @description Devices where the role applies */
+            /** @description Restrict to these devices (empty = all devices) */
             deviceIds?: string[];
-            /** @description Groups where the role applies */
+            /** @description Restrict to these groups (empty = all groups) */
             groupIds?: string[];
-            /** @description Sites where the role applies */
+            /** @description Restrict to these sites (empty = all sites) */
             siteIds?: string[];
         };
         "models.RuntimeConfig": {

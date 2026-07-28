@@ -17,7 +17,6 @@ const (
 
 // RoleAssignmentScope property field names (BSON)
 const (
-	RoleAssignmentScopeAllOrganisation = "allOrganisation"
 	RoleAssignmentScopeSiteIds = "siteIds"
 	RoleAssignmentScopeGroupIds = "groupIds"
 	RoleAssignmentScopeDeviceIds = "deviceIds"

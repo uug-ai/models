@@ -34,18 +34,32 @@ func (a RoleAssignment) IsEffectivelyActive() bool {
 	return a.IsActive && !a.IsExpired()
 }
 
-// RoleAssignmentScope defines the scope/context where the role assignment applies.
-// This allows for granular role assignments at different levels.
+// RoleAssignmentScope narrows a RoleAssignment to a subset of the organisation's
+// resources. It follows the Kubernetes RBAC convention (resourceNames: an empty
+// set means "everything"): each dimension is an independent allow-list where an
+// empty list places NO restriction on that dimension (i.e. all sites / all groups
+// / all devices). A zero-value scope therefore grants the role across the whole
+// organisation; populate a list to restrict the assignment to those specific
+// resources on that dimension.
 //
-// Scope resolution: if AllOrganisation is true, the assignment applies to the
-// entire organisation and the id lists are ignored. Otherwise the assignment is
-// limited to the listed sites/groups/devices; empty lists mean NO access (never
-// "everything").
+// Deny-by-default lives one level up: a user only has access where a
+// RoleAssignment exists and IsEffectivelyActive() is true. The scope only ever
+// narrows an existing grant — it can widen nothing.
+//
+// The dimensions are orthogonal facets: the permission resolver applies SiteIds
+// to site-level access, GroupIds to group-level access and DeviceIds to
+// device-level access, each with "empty = all". This makes combinations such as
+// "all sites, but only two devices" expressible (SiteIds empty, DeviceIds set).
 type RoleAssignmentScope struct {
-	AllOrganisation bool                 `json:"allOrganisation" bson:"allOrganisation,omitempty"` // Applies org-wide (ignores the id lists)
-	SiteIds         []primitive.ObjectID `json:"siteIds" bson:"siteIds,omitempty"`                 // Sites where the role applies
-	GroupIds        []primitive.ObjectID `json:"groupIds" bson:"groupIds,omitempty"`               // Groups where the role applies
-	DeviceIds       []primitive.ObjectID `json:"deviceIds" bson:"deviceIds,omitempty"`             // Devices where the role applies
+	SiteIds   []primitive.ObjectID `json:"siteIds" bson:"siteIds,omitempty"`     // Restrict to these sites (empty = all sites)
+	GroupIds  []primitive.ObjectID `json:"groupIds" bson:"groupIds,omitempty"`   // Restrict to these groups (empty = all groups)
+	DeviceIds []primitive.ObjectID `json:"deviceIds" bson:"deviceIds,omitempty"` // Restrict to these devices (empty = all devices)
+}
+
+// IsOrganisationWide reports whether the scope places no restriction on any
+// dimension, i.e. the assignment applies to the entire organisation.
+func (s RoleAssignmentScope) IsOrganisationWide() bool {
+	return len(s.SiteIds) == 0 && len(s.GroupIds) == 0 && len(s.DeviceIds) == 0
 }
 
 // UserRoleAssignments is a helper struct to include role details with assignments
