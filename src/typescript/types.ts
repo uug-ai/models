@@ -29980,14 +29980,14 @@ export interface components {
             /** @description ISO country code */
             country?: string;
             /** @description Full country name */
-            country_name?: string;
-            postal_code?: string;
+            countryName?: string;
+            postalCode?: string;
             /** @description State/Province/Region */
             region?: string;
             street?: string;
-            street_number?: string;
             /** @description Additional address line */
             street2?: string;
+            streetNumber?: string;
         };
         "models.AlertFeatures": {
             createMarker?: boolean;
@@ -30545,19 +30545,19 @@ export interface components {
             /** @description Industry/sector */
             industry?: string;
             /** @description Official registered company name */
-            legal_name?: string;
+            legalName?: string;
             /** @description Company logo URL */
             logo?: string;
             /** @description Main company phone */
             phone?: string;
             /** @description Company registration number */
-            registration_number?: string;
+            registrationNumber?: string;
             /** @description Alternative tax identifier */
-            tax_id?: string;
+            taxId?: string;
             /** @description Trading/DBA name if different */
-            trading_name?: string;
+            tradingName?: string;
             /** @description VAT/Tax ID number */
-            vat_number?: string;
+            vatNumber?: string;
             /** @description Company website */
             website?: string;
         };
@@ -31941,16 +31941,16 @@ export interface components {
         };
         "models.Organisation": {
             audit?: components["schemas"]["models.Audit"];
-            billing_address?: components["schemas"]["models.Address"];
+            billingAddress?: components["schemas"]["models.Address"];
             /** @description Company Details */
             company?: components["schemas"]["models.CompanyDetails"];
             description?: string;
             domain?: string;
             id?: string;
-            is_active?: number;
+            isActive?: number;
             name?: string;
             /** @description The user who owns this organisation */
-            owner_id?: string;
+            ownerId?: string;
             settings?: components["schemas"]["models.OrganisationSettings"];
             /** @description Billing & Subscription */
             subscription?: components["schemas"]["models.Subscription"];
@@ -31958,61 +31958,61 @@ export interface components {
         "models.OrganisationInvitation": {
             audit?: components["schemas"]["models.Audit"];
             email?: string;
-            expires_at?: string;
+            expiresAt?: string;
             id?: string;
-            invited_by?: string;
-            organisation_id?: string;
+            invitedBy?: string;
+            organisationId?: string;
             /** @description Roles to assign upon acceptance */
-            role_ids?: string[];
+            roleIds?: string[];
             /** @description "pending", "accepted", "expired", "revoked" */
             status?: string;
             token?: string;
         };
         "models.OrganisationMember": {
             membership?: components["schemas"]["models.OrganisationUser"];
-            organisation_id?: string;
+            organisationId?: string;
             /** @description Member's role assignments */
-            role_assignments?: components["schemas"]["models.RoleAssignment"][];
+            roleAssignments?: components["schemas"]["models.RoleAssignment"][];
             /** @description Populated role details */
             roles?: components["schemas"]["models.Role"][];
             user?: components["schemas"]["models.User"];
         };
         "models.OrganisationSettings": {
-            allow_invitations?: boolean;
+            allowInvitations?: boolean;
             /** @description Email domains allowed for membership */
-            allowed_domains?: string[];
+            allowedDomains?: string[];
             /** @description Default role for new members */
-            default_role_id?: string;
+            defaultRoleId?: string;
             /** @description Contacts for different purposes */
-            financial_contact?: components["schemas"]["models.Contact"];
-            force_mfa?: boolean;
-            max_members?: number;
+            financialContact?: components["schemas"]["models.Contact"];
+            forceMFA?: boolean;
+            maxMembers?: number;
             /** @description Main point of contact */
-            primary_contact?: components["schemas"]["models.Contact"];
+            primaryContact?: components["schemas"]["models.Contact"];
             /** @description Technical/support contact */
-            technical_contact?: components["schemas"]["models.Contact"];
+            technicalContact?: components["schemas"]["models.Contact"];
         };
         "models.OrganisationUser": {
             audit?: components["schemas"]["models.Audit"];
             /** @description Optional expiration for temporary access */
-            expires_at?: string;
+            expiresAt?: string;
             id?: string;
-            invited_at?: string;
-            invited_by?: string;
-            joined_at?: string;
-            organisation_id?: string;
+            invitedAt?: string;
+            invitedBy?: string;
+            joinedAt?: string;
+            organisationId?: string;
             /** @description "pending", "active", "suspended", "revoked" */
             status?: string;
-            user_id?: string;
+            userId?: string;
         };
         "models.OrganisationUserDetails": {
             membership?: components["schemas"]["models.OrganisationUser"];
             organisation?: components["schemas"]["models.Organisation"];
             /** @description User's role assignments in this organisation */
-            role_assignments?: components["schemas"]["models.RoleAssignment"][];
+            roleAssignments?: components["schemas"]["models.RoleAssignment"][];
             /** @description Populated role details */
             roles?: components["schemas"]["models.Role"][];
-            user_id?: string;
+            userId?: string;
         };
         "models.PatchVideowallInput": {
             updates?: {
@@ -32164,26 +32164,26 @@ export interface components {
         "models.RoleAssignment": {
             audit?: components["schemas"]["models.Audit"];
             /** @description Optional expiration for temporary assignments */
-            expires_at?: string;
+            expiresAt?: string;
             id?: string;
-            is_active?: number;
+            isActive?: number;
             /** @description Organisation context for this assignment */
-            organisation_id?: string;
+            organisationId?: string;
             /** @description Reference to the organisation-specific Role */
-            role_id?: string;
+            roleId?: string;
             /** @description Optional granular scope within organisation */
             scope?: components["schemas"]["models.RoleAssignmentScope"];
-            user_id?: string;
+            userId?: string;
         };
         "models.RoleAssignmentScope": {
             /** @description Applies org-wide (ignores the id lists) */
-            all_organisation?: boolean;
+            allOrganisation?: boolean;
             /** @description Devices where the role applies */
-            device_ids?: string[];
+            deviceIds?: string[];
             /** @description Groups where the role applies */
-            group_ids?: string[];
+            groupIds?: string[];
             /** @description Sites where the role applies */
-            site_ids?: string[];
+            siteIds?: string[];
         };
         "models.RuntimeConfig": {
             mqttPassword?: string;
@@ -32885,7 +32885,7 @@ export interface components {
             assignments?: components["schemas"]["models.RoleAssignment"][];
             /** @description Populated role details */
             roles?: components["schemas"]["models.Role"][];
-            user_id?: string;
+            userId?: string;
         };
         "models.UserSettings": {
             hls_callback_url?: string;

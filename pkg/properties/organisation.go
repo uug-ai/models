@@ -5,23 +5,23 @@ package properties
 
 // Address property field names (BSON)
 const (
-	AddressStreetNumber = "street_number"
+	AddressStreetNumber = "streetNumber"
 	AddressStreet = "street"
 	AddressStreet2 = "street2"
 	AddressCity = "city"
-	AddressPostalCode = "postal_code"
+	AddressPostalCode = "postalCode"
 	AddressRegion = "region"
 	AddressCountry = "country"
-	AddressCountryName = "country_name"
+	AddressCountryName = "countryName"
 )
 
 // CompanyDetails property field names (BSON)
 const (
-	CompanyDetailsLegalName = "legal_name"
-	CompanyDetailsTradingName = "trading_name"
-	CompanyDetailsRegistrationNumber = "registration_number"
-	CompanyDetailsVATNumber = "vat_number"
-	CompanyDetailsTaxId = "tax_id"
+	CompanyDetailsLegalName = "legalName"
+	CompanyDetailsTradingName = "tradingName"
+	CompanyDetailsRegistrationNumber = "registrationNumber"
+	CompanyDetailsVATNumber = "vatNumber"
+	CompanyDetailsTaxId = "taxId"
 	CompanyDetailsIndustry = "industry"
 	CompanyDetailsWebsite = "website"
 	CompanyDetailsPhone = "phone"
@@ -43,67 +43,67 @@ const (
 	OrganisationName = "name"
 	OrganisationDescription = "description"
 	OrganisationDomain = "domain"
-	OrganisationOwnerId = "owner_id"
+	OrganisationOwnerId = "ownerId"
 	OrganisationSettings = "settings"
-	OrganisationIsActive = "is_active"
+	OrganisationIsActive = "isActive"
 	OrganisationCompany = "company"
 	OrganisationSubscription = "subscription"
-	OrganisationBillingAddress = "billing_address"
+	OrganisationBillingAddress = "billingAddress"
 	OrganisationAudit = "audit"
 )
 
 // OrganisationInvitation property field names (BSON)
 const (
 	OrganisationInvitationId = "_id"
-	OrganisationInvitationOrganisationId = "organisation_id"
+	OrganisationInvitationOrganisationId = "organisationId"
 	OrganisationInvitationEmail = "email"
-	OrganisationInvitationRoleIds = "role_ids"
+	OrganisationInvitationRoleIds = "roleIds"
 	OrganisationInvitationToken = "token"
-	OrganisationInvitationInvitedBy = "invited_by"
+	OrganisationInvitationInvitedBy = "invitedBy"
 	OrganisationInvitationStatus = "status"
-	OrganisationInvitationExpiresAt = "expires_at"
+	OrganisationInvitationExpiresAt = "expiresAt"
 	OrganisationInvitationAudit = "audit"
 )
 
 // OrganisationMember property field names (BSON)
 const (
-	OrganisationMemberOrganisationId = "organisation_id"
+	OrganisationMemberOrganisationId = "organisationId"
 	OrganisationMemberMembership = "membership"
 	OrganisationMemberUser = "user"
-	OrganisationMemberRoleAssignments = "role_assignments"
+	OrganisationMemberRoleAssignments = "roleAssignments"
 	OrganisationMemberRoles = "roles"
 )
 
 // OrganisationSettings property field names (BSON)
 const (
-	OrganisationSettingsForceMFA = "force_mfa"
-	OrganisationSettingsAllowedDomains = "allowed_domains"
-	OrganisationSettingsDefaultRoleId = "default_role_id"
-	OrganisationSettingsMaxMembers = "max_members"
-	OrganisationSettingsAllowInvitations = "allow_invitations"
-	OrganisationSettingsFinancialContact = "financial_contact"
-	OrganisationSettingsTechnicalContact = "technical_contact"
-	OrganisationSettingsPrimaryContact = "primary_contact"
+	OrganisationSettingsForceMFA = "forceMFA"
+	OrganisationSettingsAllowedDomains = "allowedDomains"
+	OrganisationSettingsDefaultRoleId = "defaultRoleId"
+	OrganisationSettingsMaxMembers = "maxMembers"
+	OrganisationSettingsAllowInvitations = "allowInvitations"
+	OrganisationSettingsFinancialContact = "financialContact"
+	OrganisationSettingsTechnicalContact = "technicalContact"
+	OrganisationSettingsPrimaryContact = "primaryContact"
 )
 
 // OrganisationUser property field names (BSON)
 const (
 	OrganisationUserId = "_id"
-	OrganisationUserUserId = "user_id"
-	OrganisationUserOrganisationId = "organisation_id"
+	OrganisationUserUserId = "userId"
+	OrganisationUserOrganisationId = "organisationId"
 	OrganisationUserStatus = "status"
-	OrganisationUserInvitedBy = "invited_by"
-	OrganisationUserInvitedAt = "invited_at"
-	OrganisationUserJoinedAt = "joined_at"
-	OrganisationUserExpiresAt = "expires_at"
+	OrganisationUserInvitedBy = "invitedBy"
+	OrganisationUserInvitedAt = "invitedAt"
+	OrganisationUserJoinedAt = "joinedAt"
+	OrganisationUserExpiresAt = "expiresAt"
 	OrganisationUserAudit = "audit"
 )
 
 // OrganisationUserDetails property field names (BSON)
 const (
-	OrganisationUserDetailsUserId = "user_id"
+	OrganisationUserDetailsUserId = "userId"
 	OrganisationUserDetailsMembership = "membership"
 	OrganisationUserDetailsOrganisation = "organisation"
-	OrganisationUserDetailsRoleAssignments = "role_assignments"
+	OrganisationUserDetailsRoleAssignments = "roleAssignments"
 	OrganisationUserDetailsRoles = "roles"
 )

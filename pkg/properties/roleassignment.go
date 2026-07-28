@@ -6,26 +6,26 @@ package properties
 // RoleAssignment property field names (BSON)
 const (
 	RoleAssignmentId = "_id"
-	RoleAssignmentUserId = "user_id"
-	RoleAssignmentRoleId = "role_id"
-	RoleAssignmentOrganisationId = "organisation_id"
-	RoleAssignmentExpiresAt = "expires_at"
-	RoleAssignmentIsActive = "is_active"
+	RoleAssignmentUserId = "userId"
+	RoleAssignmentRoleId = "roleId"
+	RoleAssignmentOrganisationId = "organisationId"
+	RoleAssignmentExpiresAt = "expiresAt"
+	RoleAssignmentIsActive = "isActive"
 	RoleAssignmentScope = "scope"
 	RoleAssignmentAudit = "audit"
 )
 
 // RoleAssignmentScope property field names (BSON)
 const (
-	RoleAssignmentScopeAllOrganisation = "all_organisation"
-	RoleAssignmentScopeSiteIds = "site_ids"
-	RoleAssignmentScopeGroupIds = "group_ids"
-	RoleAssignmentScopeDeviceIds = "device_ids"
+	RoleAssignmentScopeAllOrganisation = "allOrganisation"
+	RoleAssignmentScopeSiteIds = "siteIds"
+	RoleAssignmentScopeGroupIds = "groupIds"
+	RoleAssignmentScopeDeviceIds = "deviceIds"
 )
 
 // UserRoleAssignments property field names (BSON)
 const (
-	UserRoleAssignmentsUserId = "user_id"
+	UserRoleAssignmentsUserId = "userId"
 	UserRoleAssignmentsAssignments = "assignments"
 	UserRoleAssignmentsRoles = "roles"
 )
