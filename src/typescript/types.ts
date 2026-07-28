@@ -32174,8 +32174,10 @@ export interface components {
              *     the consuming service resolves them together (page hidden => not shown;
              *     feature level => what may be done once on the page). */
             pages?: string[];
-            /** @description ParentRole is the built-in BaseRole tier this custom role extends (it is a
-             *     tier identifier, NOT an ObjectID reference to another Role document). */
+            /** @description ParentRole is the built-in BaseRole tier this custom role extends. It is a
+             *     live tier identifier (NOT an ObjectID reference to another Role document):
+             *     it sets the effective tier/RoleLevel for coarse gating and bounds which
+             *     pages the role may grant. See BaseRole. */
             role?: components["schemas"]["models.BaseRole"];
             roleName?: string;
             timeWindow?: components["schemas"]["models.TimeWindow"];

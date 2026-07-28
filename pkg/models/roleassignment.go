@@ -42,10 +42,10 @@ func (a RoleAssignment) IsEffectivelyActive() bool {
 // limited to the listed sites/groups/devices; empty lists mean NO access (never
 // "everything").
 type RoleAssignmentScope struct {
-	AllOrganisation bool     `json:"allOrganisation" bson:"allOrganisation,omitempty"` // Applies org-wide (ignores the id lists)
-	SiteIds         []string `json:"siteIds" bson:"siteIds,omitempty"`                 // Sites where the role applies
-	GroupIds        []string `json:"groupIds" bson:"groupIds,omitempty"`               // Groups where the role applies
-	DeviceIds       []string `json:"deviceIds" bson:"deviceIds,omitempty"`             // Devices where the role applies
+	AllOrganisation bool                 `json:"allOrganisation" bson:"allOrganisation,omitempty"` // Applies org-wide (ignores the id lists)
+	SiteIds         []primitive.ObjectID `json:"siteIds" bson:"siteIds,omitempty"`                 // Sites where the role applies
+	GroupIds        []primitive.ObjectID `json:"groupIds" bson:"groupIds,omitempty"`               // Groups where the role applies
+	DeviceIds       []primitive.ObjectID `json:"deviceIds" bson:"deviceIds,omitempty"`             // Devices where the role applies
 }
 
 // UserRoleAssignments is a helper struct to include role details with assignments
