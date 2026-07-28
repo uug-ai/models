@@ -9,14 +9,29 @@ import (
 // RoleAssignment represents the assignment of an organisation-specific role to a user.
 // This allows users to have multiple roles assigned to them within an organisation.
 type RoleAssignment struct {
-	Id             primitive.ObjectID  `json:"id" bson:"_id,omitempty"`
-	UserId         primitive.ObjectID  `json:"userId" bson:"userId,omitempty"`
-	RoleId         primitive.ObjectID  `json:"roleId" bson:"roleId,omitempty"`                 // Reference to the organisation-specific Role
-	OrganisationId primitive.ObjectID  `json:"organisationId" bson:"organisationId,omitempty"` // Organisation context for this assignment
-	ExpiresAt      time.Time           `json:"expiresAt" bson:"expiresAt,omitempty"`           // Optional expiration for temporary assignments
-	IsActive       int                 `json:"isActive" bson:"isActive"`
-	Scope          RoleAssignmentScope `json:"scope" bson:"scope,omitempty"` // Optional granular scope within organisation
-	Audit          Audit               `json:"audit" bson:"audit,omitempty"`
+	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	UserId         primitive.ObjectID `json:"userId" bson:"userId,omitempty"`
+	RoleId         primitive.ObjectID `json:"roleId" bson:"roleId,omitempty"`                 // Reference to the organisation-specific Role
+	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"` // Organisation context for this assignment
+	// ExpiresAt optionally bounds the assignment in time. It is an overlay on
+	// IsActive: an assignment is only effectively active when IsActive is true
+	// AND ExpiresAt is unset or in the future. Use IsEffectivelyActive().
+	ExpiresAt time.Time           `json:"expiresAt" bson:"expiresAt,omitempty"`
+	IsActive  bool                `json:"isActive" bson:"isActive"`     // Administrative enable/disable switch (independent of expiry)
+	Scope     RoleAssignmentScope `json:"scope" bson:"scope,omitempty"` // Optional granular scope within organisation
+	Audit     Audit               `json:"audit" bson:"audit,omitempty"`
+}
+
+// IsExpired reports whether the assignment has a set expiry that is in the past.
+func (a RoleAssignment) IsExpired() bool {
+	return !a.ExpiresAt.IsZero() && a.ExpiresAt.Before(time.Now())
+}
+
+// IsEffectivelyActive reports whether the assignment is currently in force:
+// administratively active and not past its expiry. This is the single source
+// of truth consumers should use for access decisions.
+func (a RoleAssignment) IsEffectivelyActive() bool {
+	return a.IsActive && !a.IsExpired()
 }
 
 // RoleAssignmentScope defines the scope/context where the role assignment applies.

@@ -22,7 +22,7 @@ type Role struct {
 	ParentRole         string             `json:"role" bson:"role,omitempty"`
 	Pages              []string           `json:"pages" bson:"pages"`
 	TimeWindow         TimeWindow         `json:"timeWindow" bson:"timeWindow"`
-	IsActive           int                `json:"isActive" bson:"isActive"`
+	IsActive           bool               `json:"isActive" bson:"isActive"`
 	FeaturePermissions FeaturePermissions `json:"featurePermissions" bson:"featurePermissions"`
 	TimeWindowActive   int                `json:"timeWindowActive" bson:"timeWindowActive"`
 	Audit              Audit              `json:"audit" bson:"audit,omitempty"`

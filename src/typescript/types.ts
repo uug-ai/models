@@ -31354,6 +31354,8 @@ export interface components {
             token?: string;
             valid?: boolean;
         };
+        /** @enum {string} */
+        "models.InvitationStatus": "pending" | "accepted" | "expired" | "revoked";
         "models.KeyPair": {
             amazon_access_key_id?: string;
             amazon_secret_access_key?: string;
@@ -31842,6 +31844,8 @@ export interface components {
             type?: string;
             vault?: boolean;
         };
+        /** @enum {string} */
+        "models.MembershipStatus": "pending" | "active" | "suspended" | "revoked";
         "models.Message": {
             alert_id?: string;
             alert_master_user?: string;
@@ -31947,7 +31951,7 @@ export interface components {
             description?: string;
             domain?: string;
             id?: string;
-            isActive?: number;
+            isActive?: boolean;
             name?: string;
             /** @description The user who owns this organisation */
             ownerId?: string;
@@ -31964,8 +31968,7 @@ export interface components {
             organisationId?: string;
             /** @description Roles to assign upon acceptance */
             roleIds?: string[];
-            /** @description "pending", "accepted", "expired", "revoked" */
-            status?: string;
+            status?: components["schemas"]["models.InvitationStatus"];
             token?: string;
         };
         "models.OrganisationMember": {
@@ -31994,15 +31997,16 @@ export interface components {
         };
         "models.OrganisationUser": {
             audit?: components["schemas"]["models.Audit"];
-            /** @description Optional expiration for temporary access */
+            /** @description ExpiresAt optionally bounds the membership in time. It is an overlay on
+             *     Status: a membership is only effectively active when Status is
+             *     MembershipStatusActive AND ExpiresAt is unset or in the future. */
             expiresAt?: string;
             id?: string;
             invitedAt?: string;
             invitedBy?: string;
             joinedAt?: string;
             organisationId?: string;
-            /** @description "pending", "active", "suspended", "revoked" */
-            status?: string;
+            status?: components["schemas"]["models.MembershipStatus"];
             userId?: string;
         };
         "models.OrganisationUserDetails": {
@@ -32152,7 +32156,7 @@ export interface components {
             description?: string;
             featurePermissions?: components["schemas"]["models.FeaturePermissions"];
             id?: string;
-            isActive?: number;
+            isActive?: boolean;
             /** @description Organisation this role belongs to */
             organisationId?: string;
             pages?: string[];
@@ -32163,10 +32167,13 @@ export interface components {
         };
         "models.RoleAssignment": {
             audit?: components["schemas"]["models.Audit"];
-            /** @description Optional expiration for temporary assignments */
+            /** @description ExpiresAt optionally bounds the assignment in time. It is an overlay on
+             *     IsActive: an assignment is only effectively active when IsActive is true
+             *     AND ExpiresAt is unset or in the future. Use IsEffectivelyActive(). */
             expiresAt?: string;
             id?: string;
-            isActive?: number;
+            /** @description Administrative enable/disable switch (independent of expiry) */
+            isActive?: boolean;
             /** @description Organisation context for this assignment */
             organisationId?: string;
             /** @description Reference to the organisation-specific Role */

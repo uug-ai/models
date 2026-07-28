@@ -14,7 +14,7 @@ type Organisation struct {
 	Domain      string               `json:"domain" bson:"domain,omitempty"`
 	OwnerId     primitive.ObjectID   `json:"ownerId" bson:"ownerId,omitempty"` // The user who owns this organisation
 	Settings    OrganisationSettings `json:"settings" bson:"settings,omitempty"`
-	IsActive    int                  `json:"isActive" bson:"isActive"`
+	IsActive    bool                 `json:"isActive" bson:"isActive"`
 
 	// Company Details
 	Company CompanyDetails `json:"company" bson:"company,omitempty"`
@@ -74,6 +74,16 @@ type OrganisationSettings struct {
 	PrimaryContact   Contact `json:"primaryContact" bson:"primaryContact,omitempty"`     // Main point of contact
 }
 
+// MembershipStatus enumerates the lifecycle states of an organisation membership.
+type MembershipStatus string
+
+const (
+	MembershipStatusPending   MembershipStatus = "pending"   // Invited/awaiting acceptance
+	MembershipStatusActive    MembershipStatus = "active"    // Full member
+	MembershipStatusSuspended MembershipStatus = "suspended" // Temporarily disabled by an admin
+	MembershipStatusRevoked   MembershipStatus = "revoked"   // Access permanently removed
+)
+
 // OrganisationUser represents a user's membership in an organisation.
 // This is the join table between users and organisations, allowing users
 // to belong to multiple organisations. Role assignments are managed separately
@@ -82,13 +92,38 @@ type OrganisationUser struct {
 	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	UserId         primitive.ObjectID `json:"userId" bson:"userId,omitempty"`
 	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"`
-	Status         string             `json:"status" bson:"status,omitempty"` // "pending", "active", "suspended", "revoked"
+	Status         MembershipStatus   `json:"status" bson:"status,omitempty"`
 	InvitedBy      primitive.ObjectID `json:"invitedBy" bson:"invitedBy,omitempty"`
 	InvitedAt      time.Time          `json:"invitedAt" bson:"invitedAt,omitempty"`
 	JoinedAt       time.Time          `json:"joinedAt" bson:"joinedAt,omitempty"`
-	ExpiresAt      time.Time          `json:"expiresAt" bson:"expiresAt,omitempty"` // Optional expiration for temporary access
-	Audit          Audit              `json:"audit" bson:"audit,omitempty"`
+	// ExpiresAt optionally bounds the membership in time. It is an overlay on
+	// Status: a membership is only effectively active when Status is
+	// MembershipStatusActive AND ExpiresAt is unset or in the future.
+	ExpiresAt time.Time `json:"expiresAt" bson:"expiresAt,omitempty"`
+	Audit     Audit     `json:"audit" bson:"audit,omitempty"`
 }
+
+// IsExpired reports whether the membership has a set expiry that is in the past.
+func (u OrganisationUser) IsExpired() bool {
+	return !u.ExpiresAt.IsZero() && u.ExpiresAt.Before(time.Now())
+}
+
+// IsEffectivelyActive reports whether the membership is currently in force:
+// its status is active and it has not expired. This is the single source of
+// truth consumers should use.
+func (u OrganisationUser) IsEffectivelyActive() bool {
+	return u.Status == MembershipStatusActive && !u.IsExpired()
+}
+
+// InvitationStatus enumerates the lifecycle states of an organisation invitation.
+type InvitationStatus string
+
+const (
+	InvitationStatusPending  InvitationStatus = "pending"  // Awaiting acceptance
+	InvitationStatusAccepted InvitationStatus = "accepted" // Redeemed by the invitee
+	InvitationStatusExpired  InvitationStatus = "expired"  // Passed ExpiresAt without acceptance
+	InvitationStatusRevoked  InvitationStatus = "revoked"  // Cancelled by an admin
+)
 
 // OrganisationInvitation represents a pending invitation to join an organisation.
 type OrganisationInvitation struct {
@@ -98,7 +133,7 @@ type OrganisationInvitation struct {
 	RoleIds        []primitive.ObjectID `json:"roleIds" bson:"roleIds,omitempty"` // Roles to assign upon acceptance
 	Token          string               `json:"token" bson:"token,omitempty"`
 	InvitedBy      primitive.ObjectID   `json:"invitedBy" bson:"invitedBy,omitempty"`
-	Status         string               `json:"status" bson:"status,omitempty"` // "pending", "accepted", "expired", "revoked"
+	Status         InvitationStatus     `json:"status" bson:"status,omitempty"`
 	ExpiresAt      time.Time            `json:"expiresAt" bson:"expiresAt,omitempty"`
 	Audit          Audit                `json:"audit" bson:"audit,omitempty"`
 }
