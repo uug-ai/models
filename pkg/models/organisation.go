@@ -8,8 +8,12 @@ import (
 
 // Organisation represents an organization entity that users can belong to.
 type Organisation struct {
-	Id          primitive.ObjectID   `json:"id" bson:"_id,omitempty"`
-	Name        string               `json:"name" bson:"name,omitempty"`
+	Id   primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	Name string             `json:"name" bson:"name,omitempty"`
+	// Slug is a stable, URL-friendly handle for the organisation (e.g. "acme-corp").
+	// It is unique and decoupled from the display Name so it can be used in URLs
+	// and references without breaking when the name changes.
+	Slug        string               `json:"slug" bson:"slug,omitempty"`
 	Description string               `json:"description" bson:"description,omitempty"`
 	Domain      string               `json:"domain" bson:"domain,omitempty"`
 	OwnerId     primitive.ObjectID   `json:"ownerId" bson:"ownerId,omitempty"` // The user who owns this organisation
@@ -67,6 +71,12 @@ type OrganisationSettings struct {
 	DefaultRoleId    primitive.ObjectID `json:"defaultRoleId" bson:"defaultRoleId,omitempty"`   // Default role for new members
 	MaxMembers       int                `json:"maxMembers" bson:"maxMembers,omitempty"`
 	AllowInvitations bool               `json:"allowInvitations" bson:"allowInvitations,omitempty"`
+
+	// Regional defaults applied across the organisation for display, scheduling
+	// and billing.
+	Timezone string `json:"timezone" bson:"timezone,omitempty"` // IANA timezone, e.g. "Europe/Brussels"
+	Locale   string `json:"locale" bson:"locale,omitempty"`     // BCP-47 locale tag, e.g. "en-US"
+	Currency string `json:"currency" bson:"currency,omitempty"` // ISO 4217 currency code, e.g. "EUR"
 
 	// Contacts for different purposes
 	FinancialContact Contact `json:"financialContact" bson:"financialContact"` // Billing/finance contact

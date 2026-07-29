@@ -32071,6 +32071,10 @@ export interface components {
             /** @description The user who owns this organisation */
             ownerId?: string;
             settings?: components["schemas"]["models.OrganisationSettings"];
+            /** @description Slug is a stable, URL-friendly handle for the organisation (e.g. "acme-corp").
+             *     It is unique and decoupled from the display Name so it can be used in URLs
+             *     and references without breaking when the name changes. */
+            slug?: string;
             /** @description Billing & Subscription */
             subscription?: components["schemas"]["models.Subscription"];
         };
@@ -32105,16 +32109,23 @@ export interface components {
             allowInvitations?: boolean;
             /** @description Email domains allowed for membership */
             allowedDomains?: string[];
+            /** @description ISO 4217 currency code, e.g. "EUR" */
+            currency?: string;
             /** @description Default role for new members */
             defaultRoleId?: string;
             /** @description Contacts for different purposes */
             financialContact?: components["schemas"]["models.Contact"];
             forceMFA?: boolean;
+            /** @description BCP-47 locale tag, e.g. "en-US" */
+            locale?: string;
             maxMembers?: number;
             /** @description Main point of contact */
             primaryContact?: components["schemas"]["models.Contact"];
             /** @description Technical/support contact */
             technicalContact?: components["schemas"]["models.Contact"];
+            /** @description Regional defaults applied across the organisation for display, scheduling
+             *     and billing. */
+            timezone?: string;
         };
         "models.OrganisationUser": {
             audit?: components["schemas"]["models.Audit"];

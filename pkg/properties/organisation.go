@@ -41,6 +41,7 @@ const (
 const (
 	OrganisationId = "_id"
 	OrganisationName = "name"
+	OrganisationSlug = "slug"
 	OrganisationDescription = "description"
 	OrganisationDomain = "domain"
 	OrganisationOwnerId = "ownerId"
@@ -82,6 +83,9 @@ const (
 	OrganisationSettingsDefaultRoleId = "defaultRoleId"
 	OrganisationSettingsMaxMembers = "maxMembers"
 	OrganisationSettingsAllowInvitations = "allowInvitations"
+	OrganisationSettingsTimezone = "timezone"
+	OrganisationSettingsLocale = "locale"
+	OrganisationSettingsCurrency = "currency"
 	OrganisationSettingsFinancialContact = "financialContact"
 	OrganisationSettingsTechnicalContact = "technicalContact"
 	OrganisationSettingsPrimaryContact = "primaryContact"
