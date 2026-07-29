@@ -40,7 +40,7 @@ func GetOrganisationObjectId(user User) primitive.ObjectID {
 }
 
 type User struct {
-	Id                    primitive.ObjectID     `json:"id" bson:"_id,omitempty,omitempty"`
+	Id                    primitive.ObjectID     `json:"id" bson:"_id,omitempty"`
 	OrganisationId        primitive.ObjectID     `json:"organisation_id" bson:"organisation_id,omitempty"`
 	Username              string                 `json:"username" bson:"username,omitempty"`
 	Password              string                 `json:"password" bson:"password,omitempty"`
@@ -212,9 +212,9 @@ type AccountBody struct {
 }
 
 type Credentials struct {
-	CurrentPassword   string `json:"currentPassword" bson:"username,currentPassword"`
-	NewPassword       string `json:"newPassword" bson:"password,newPassword"`
-	NewPasswordRepeat string `json:"newPasswordRepeat" bson:"role,newPasswordRepeat"`
+	CurrentPassword   string `json:"currentPassword" bson:"currentPassword,omitempty"`
+	NewPassword       string `json:"newPassword" bson:"newPassword,omitempty"`
+	NewPasswordRepeat string `json:"newPasswordRepeat" bson:"newPasswordRepeat,omitempty"`
 }
 
 type Encryption struct {
@@ -233,7 +233,7 @@ type KeyPair struct {
 }
 
 type UserShort struct {
-	Id               primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	Id               primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Username         string             `json:"username" bson:"username,omitempty"`
 	Password         string             `json:"password" bson:"password,omitempty"`
 	Email            string             `json:"email" bson:"email,omitempty"`

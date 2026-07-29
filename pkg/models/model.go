@@ -10,7 +10,7 @@ import (
 
 type Model struct {
 	// Unique identifier for the model, this is used to retrieve the model from the database by its unique ID.
-	Id primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	Id primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 
 	// Important information about the model, that you would like to display everytime the model is retrieved (for example in a table or list).
 	// e.g.

@@ -17,9 +17,9 @@ type RoleAssignment struct {
 	// IsActive: an assignment is only effectively active when IsActive is true
 	// AND ExpiresAt is unset or in the future. Use IsEffectivelyActive().
 	ExpiresAt time.Time           `json:"expiresAt" bson:"expiresAt,omitempty"`
-	IsActive  bool                `json:"isActive" bson:"isActive"`     // Administrative enable/disable switch (independent of expiry)
-	Scope     RoleAssignmentScope `json:"scope" bson:"scope,omitempty"` // Optional granular scope within organisation
-	Audit     Audit               `json:"audit" bson:"audit,omitempty"`
+	IsActive  bool                `json:"isActive" bson:"isActive"` // Administrative enable/disable switch (independent of expiry)
+	Scope     RoleAssignmentScope `json:"scope" bson:"scope"`       // Optional granular scope within organisation
+	Audit     Audit               `json:"audit" bson:"audit"`
 }
 
 // IsExpired reports whether the assignment has a set expiry that is in the past.

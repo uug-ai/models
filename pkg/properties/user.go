@@ -35,9 +35,9 @@ const (
 
 // Credentials property field names (BSON)
 const (
-	CredentialsCurrentPassword = "username"
-	CredentialsNewPassword = "password"
-	CredentialsNewPasswordRepeat = "role"
+	CredentialsCurrentPassword = "currentPassword"
+	CredentialsNewPassword = "newPassword"
+	CredentialsNewPasswordRepeat = "newPasswordRepeat"
 )
 
 // DeviceData property field names (BSON)

@@ -13,17 +13,17 @@ type Organisation struct {
 	Description string               `json:"description" bson:"description,omitempty"`
 	Domain      string               `json:"domain" bson:"domain,omitempty"`
 	OwnerId     primitive.ObjectID   `json:"ownerId" bson:"ownerId,omitempty"` // The user who owns this organisation
-	Settings    OrganisationSettings `json:"settings" bson:"settings,omitempty"`
+	Settings    OrganisationSettings `json:"settings" bson:"settings"`
 	IsActive    bool                 `json:"isActive" bson:"isActive"`
 
 	// Company Details
-	Company CompanyDetails `json:"company" bson:"company,omitempty"`
+	Company CompanyDetails `json:"company" bson:"company"`
 
 	// Billing & Subscription
-	Subscription   Subscription `json:"subscription" bson:"subscription,omitempty"`
-	BillingAddress Address      `json:"billingAddress" bson:"billingAddress,omitempty"`
+	Subscription   Subscription `json:"subscription" bson:"subscription"`
+	BillingAddress Address      `json:"billingAddress" bson:"billingAddress"`
 
-	Audit Audit `json:"audit" bson:"audit,omitempty"`
+	Audit Audit `json:"audit" bson:"audit"`
 }
 
 // CompanyDetails contains the legal and business information for an organisation.
@@ -69,9 +69,9 @@ type OrganisationSettings struct {
 	AllowInvitations bool               `json:"allowInvitations" bson:"allowInvitations,omitempty"`
 
 	// Contacts for different purposes
-	FinancialContact Contact `json:"financialContact" bson:"financialContact,omitempty"` // Billing/finance contact
-	TechnicalContact Contact `json:"technicalContact" bson:"technicalContact,omitempty"` // Technical/support contact
-	PrimaryContact   Contact `json:"primaryContact" bson:"primaryContact,omitempty"`     // Main point of contact
+	FinancialContact Contact `json:"financialContact" bson:"financialContact"` // Billing/finance contact
+	TechnicalContact Contact `json:"technicalContact" bson:"technicalContact"` // Technical/support contact
+	PrimaryContact   Contact `json:"primaryContact" bson:"primaryContact"`     // Main point of contact
 }
 
 // MembershipStatus enumerates the lifecycle states of an organisation membership.
@@ -100,7 +100,7 @@ type OrganisationUser struct {
 	// Status: a membership is only effectively active when Status is
 	// MembershipStatusActive AND ExpiresAt is unset or in the future.
 	ExpiresAt time.Time `json:"expiresAt" bson:"expiresAt,omitempty"`
-	Audit     Audit     `json:"audit" bson:"audit,omitempty"`
+	Audit     Audit     `json:"audit" bson:"audit"`
 }
 
 // IsExpired reports whether the membership has a set expiry that is in the past.
@@ -136,12 +136,12 @@ type OrganisationInvitation struct {
 	// RoleAssignment. Following the RoleAssignmentScope convention, a zero value
 	// grants the roles organisation-wide; populate a dimension to restrict the
 	// resulting assignments to specific resources (see RoleAssignmentScope).
-	Scope     RoleAssignmentScope `json:"scope" bson:"scope,omitempty"`
+	Scope     RoleAssignmentScope `json:"scope" bson:"scope"`
 	Token     string              `json:"token" bson:"token,omitempty"`
 	InvitedBy primitive.ObjectID  `json:"invitedBy" bson:"invitedBy,omitempty"`
 	Status    InvitationStatus    `json:"status" bson:"status,omitempty"`
 	ExpiresAt time.Time           `json:"expiresAt" bson:"expiresAt,omitempty"`
-	Audit     Audit               `json:"audit" bson:"audit,omitempty"`
+	Audit     Audit               `json:"audit" bson:"audit"`
 }
 
 // OrganisationUserDetails is a helper struct that includes full organisation and role details

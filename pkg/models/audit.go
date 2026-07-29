@@ -2,7 +2,7 @@ package models
 
 // Audit contains common audit fields for tracking creation and updates.
 type Audit struct {
-	Create AuditCreate      `json:"create,omitempty" bson:"create,omitempty"`
+	Create AuditCreate `json:"create,omitempty" bson:"create,omitempty"`
 	// UpdateHistory is a chronological list of updates, ordered by UpdatedAt.
 	UpdateHistory []AuditUpdate `json:"updateHistory,omitempty" bson:"updateHistory,omitempty"`
 }

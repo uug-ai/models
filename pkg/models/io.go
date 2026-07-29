@@ -3,7 +3,7 @@ package models
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type IO struct {
-	Id                primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	Id                primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Hash              string             `json:"hash" bson:"hash,omitempty"`
 	DeviceId          string             `json:"deviceId" bson:"deviceId,omitempty"` // device identifier
 	Type              string             `json:"type" bson:"type,omitempty"`         // input or output

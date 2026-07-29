@@ -37,7 +37,7 @@ const (
 )
 
 type Role struct {
-	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"` // Organisation this role belongs to
 	Name           string             `json:"roleName" bson:"roleName,omitempty"`
 	Description    string             `json:"description" bson:"description,omitempty"`
@@ -58,7 +58,7 @@ type Role struct {
 	IsActive           bool               `json:"isActive" bson:"isActive"`
 	FeaturePermissions FeaturePermissions `json:"featurePermissions" bson:"featurePermissions"`
 	TimeWindowActive   bool               `json:"timeWindowActive" bson:"timeWindowActive"`
-	Audit              Audit              `json:"audit" bson:"audit,omitempty"`
+	Audit              Audit              `json:"audit" bson:"audit"`
 }
 
 type FeaturePermissions struct {
