@@ -57,7 +57,7 @@ type User struct {
 	GoogleMFAEnabled      bool                   `json:"google2fa_enabled" bson:"google2fa_enabled,omitempty"`
 	Mfa                   bool                   `json:"mfa" bson:"mfa,omitempty"`
 	ForceMFA              int                    `json:"force_mfa" bson:"force_mfa"`
-	Audit                 []Audit                `json:"audit" bson:"audit,omitempty"`
+	Audit                 Audit                  `json:"audit" bson:"audit,omitempty"`
 	Nickname              string                 `json:"nickname" bson:"nickname,omitempty"`
 	FirstName             string                 `json:"firstname" bson:"firstname,omitempty"`
 	LastName              string                 `json:"lastname" bson:"lastname,omitempty"`

@@ -32795,7 +32795,7 @@ export interface components {
             amazon_access_key_id?: string;
             amazon_secret_access_key?: string;
             archive_storage?: components["schemas"]["models.Storage"];
-            audit?: components["schemas"]["models.Audit"][];
+            audit?: components["schemas"]["models.Audit"];
             bucket?: string;
             camera_brands?: components["schemas"]["models.Settings"];
             cameras?: string[];
