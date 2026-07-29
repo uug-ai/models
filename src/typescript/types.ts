@@ -1720,45 +1720,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/auditcreate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get AuditCreate (schema generation only)
-         * @description Internal endpoint used only to ensure AuditCreate schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.AuditCreate"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/auditevent": {
         parameters: {
             query?: never;
@@ -1825,45 +1786,6 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.AuditFieldChange"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/auditupdate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get AuditUpdate (schema generation only)
-         * @description Internal endpoint used only to ensure AuditUpdate schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.AuditUpdate"];
                     };
                 };
             };
@@ -30232,14 +30154,14 @@ export interface components {
             totalRegions?: number;
         };
         "models.Audit": {
-            create?: components["schemas"]["models.AuditCreate"];
-            /** @description Update records only the most recent modification. For the complete
-             *     history, query AuditEvent by TargetType/TargetId. */
-            update?: components["schemas"]["models.AuditUpdate"];
-        };
-        "models.AuditCreate": {
-            createdAt?: number;
+            createdAt?: string;
             createdBy?: string;
+            /** @description LastAction is a short semantic label describing the most recent change
+             *     (e.g. "role.assigned", "member.suspended", "device.renamed"). For the
+             *     complete history, query AuditEvent by TargetType/TargetId. */
+            lastAction?: string;
+            updatedAt?: string;
+            updatedBy?: string;
         };
         "models.AuditEvent": {
             /** @description Action is a short semantic label, e.g. "case.commented", "device.renamed",
@@ -30271,13 +30193,6 @@ export interface components {
             field?: string;
             newValue?: string;
             oldValue?: string;
-        };
-        "models.AuditUpdate": {
-            /** @description Action is a short semantic label describing what changed in this update
-             *     (e.g. "role.assigned", "member.suspended", "device.renamed"). */
-            action?: string;
-            updatedAt?: number;
-            updatedBy?: string;
         };
         /** @enum {string} */
         "models.BaseRole": "guest" | "editor" | "admin" | "owner" | "application";
@@ -33562,10 +33477,8 @@ export namespace models {
     export type AnalyticsLists = components['schemas']['models.AnalyticsLists'];
     export type AnalyticsSummary = components['schemas']['models.AnalyticsSummary'];
     export type Audit = components['schemas']['models.Audit'];
-    export type AuditCreate = components['schemas']['models.AuditCreate'];
     export type AuditEvent = components['schemas']['models.AuditEvent'];
     export type AuditFieldChange = components['schemas']['models.AuditFieldChange'];
-    export type AuditUpdate = components['schemas']['models.AuditUpdate'];
     export type CameraMetadata = components['schemas']['models.CameraMetadata'];
     export type CameraPreset = components['schemas']['models.CameraPreset'];
     export type CameraTour = components['schemas']['models.CameraTour'];

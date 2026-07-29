@@ -5,19 +5,9 @@ package properties
 
 // Audit property field names (BSON)
 const (
-	AuditCreate = "create"
-	AuditUpdate = "update"
-)
-
-// AuditCreate property field names (BSON)
-const (
-	AuditCreateCreatedBy = "createdBy"
-	AuditCreateCreatedAt = "createdAt"
-)
-
-// AuditUpdate property field names (BSON)
-const (
-	AuditUpdateUpdatedBy = "updatedBy"
-	AuditUpdateUpdatedAt = "updatedAt"
-	AuditUpdateAction = "action"
+	AuditCreatedBy = "createdBy"
+	AuditCreatedAt = "createdAt"
+	AuditUpdatedBy = "updatedBy"
+	AuditUpdatedAt = "updatedAt"
+	AuditLastAction = "lastAction"
 )
