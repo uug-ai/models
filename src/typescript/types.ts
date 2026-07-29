@@ -1759,6 +1759,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/auditevent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AuditEvent (schema generation only)
+         * @description Internal endpoint used only to ensure AuditEvent schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AuditEvent"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/auditfieldchange": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AuditFieldChange (schema generation only)
+         * @description Internal endpoint used only to ensure AuditFieldChange schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AuditFieldChange"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/auditupdate": {
         parameters: {
             query?: never;
@@ -30155,12 +30233,44 @@ export interface components {
         };
         "models.Audit": {
             create?: components["schemas"]["models.AuditCreate"];
-            /** @description UpdateHistory is a chronological list of updates, ordered by UpdatedAt. */
-            updateHistory?: components["schemas"]["models.AuditUpdate"][];
+            /** @description Update records only the most recent modification. For the complete
+             *     history, query AuditEvent by TargetType/TargetId. */
+            update?: components["schemas"]["models.AuditUpdate"];
         };
         "models.AuditCreate": {
             createdAt?: number;
             createdBy?: string;
+        };
+        "models.AuditEvent": {
+            /** @description Action is a short semantic label, e.g. "case.commented", "device.renamed",
+             *     "member.suspended". */
+            action?: string;
+            /** @description ActorId is the user who performed the action; ActorName is denormalised so
+             *     history can be rendered without a lookup. */
+            actorId?: string;
+            actorName?: string;
+            /** @description Changes optionally captures the field-level diff for this event. */
+            changes?: components["schemas"]["models.AuditFieldChange"][];
+            id?: string;
+            /** @description Metadata holds contextual key/value pairs (ip, userAgent, requestId, ...). */
+            metadata?: {
+                [key: string]: string;
+            };
+            /** @description OrganisationId scopes the event to a tenant for org-wide audit queries. */
+            organisationId?: string;
+            targetId?: string;
+            /** @description TargetType and TargetId identify the entity the action was performed on
+             *     (e.g. TargetType "case" with the case id). Query these to render an
+             *     entity's audit history. TargetId is a string so it can hold either an
+             *     ObjectID hex or a non-ObjectID key (such as a media key). */
+            targetType?: string;
+            /** @description Timestamp is when the action occurred. */
+            timestamp?: string;
+        };
+        "models.AuditFieldChange": {
+            field?: string;
+            newValue?: string;
+            oldValue?: string;
         };
         "models.AuditUpdate": {
             /** @description Action is a short semantic label describing what changed in this update
@@ -33442,6 +33552,8 @@ export namespace models {
     export type AnalyticsSummary = components['schemas']['models.AnalyticsSummary'];
     export type Audit = components['schemas']['models.Audit'];
     export type AuditCreate = components['schemas']['models.AuditCreate'];
+    export type AuditEvent = components['schemas']['models.AuditEvent'];
+    export type AuditFieldChange = components['schemas']['models.AuditFieldChange'];
     export type AuditUpdate = components['schemas']['models.AuditUpdate'];
     export type CameraMetadata = components['schemas']['models.CameraMetadata'];
     export type CameraPreset = components['schemas']['models.CameraPreset'];

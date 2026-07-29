@@ -6,7 +6,7 @@ package properties
 // Audit property field names (BSON)
 const (
 	AuditCreate = "create"
-	AuditUpdateHistory = "updateHistory"
+	AuditUpdate = "update"
 )
 
 // AuditCreate property field names (BSON)

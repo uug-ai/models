@@ -1,10 +1,14 @@
 package models
 
-// Audit contains common audit fields for tracking creation and updates.
+// Audit holds bounded creation and last-update stamps embedded directly on an
+// entity for cheap "who/when" display. The full, filterable change history
+// lives in the separate AuditEvent collection (query it by target) so audited
+// documents never accumulate an unbounded history array.
 type Audit struct {
 	Create AuditCreate `json:"create,omitempty" bson:"create,omitempty"`
-	// UpdateHistory is a chronological list of updates, ordered by UpdatedAt.
-	UpdateHistory []AuditUpdate `json:"updateHistory,omitempty" bson:"updateHistory,omitempty"`
+	// Update records only the most recent modification. For the complete
+	// history, query AuditEvent by TargetType/TargetId.
+	Update AuditUpdate `json:"update,omitempty" bson:"update,omitempty"`
 }
 
 type AuditCreate struct {
