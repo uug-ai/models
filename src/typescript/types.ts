@@ -32181,7 +32181,7 @@ export interface components {
             role?: components["schemas"]["models.BaseRole"];
             roleName?: string;
             timeWindow?: components["schemas"]["models.TimeWindow"];
-            timeWindowActive?: number;
+            timeWindowActive?: boolean;
         };
         "models.RoleAssignment": {
             audit?: components["schemas"]["models.Audit"];

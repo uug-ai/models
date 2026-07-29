@@ -57,7 +57,7 @@ type Role struct {
 	TimeWindow         TimeWindow         `json:"timeWindow" bson:"timeWindow"`
 	IsActive           bool               `json:"isActive" bson:"isActive"`
 	FeaturePermissions FeaturePermissions `json:"featurePermissions" bson:"featurePermissions"`
-	TimeWindowActive   int                `json:"timeWindowActive" bson:"timeWindowActive"`
+	TimeWindowActive   bool               `json:"timeWindowActive" bson:"timeWindowActive"`
 	Audit              Audit              `json:"audit" bson:"audit,omitempty"`
 }
 
