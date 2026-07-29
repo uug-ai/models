@@ -15,4 +15,7 @@ type AuditCreate struct {
 type AuditUpdate struct {
 	UpdatedBy string `json:"updatedBy,omitempty" bson:"updatedBy,omitempty"`
 	UpdatedAt int64  `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+	// Action is a short semantic label describing what changed in this update
+	// (e.g. "role.assigned", "member.suspended", "device.renamed").
+	Action string `json:"action,omitempty" bson:"action,omitempty"`
 }

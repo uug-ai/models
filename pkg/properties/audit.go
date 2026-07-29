@@ -19,4 +19,5 @@ const (
 const (
 	AuditUpdateUpdatedBy = "updatedBy"
 	AuditUpdateUpdatedAt = "updatedAt"
+	AuditUpdateAction = "action"
 )

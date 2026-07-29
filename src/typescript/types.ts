@@ -30163,6 +30163,9 @@ export interface components {
             createdBy?: string;
         };
         "models.AuditUpdate": {
+            /** @description Action is a short semantic label describing what changed in this update
+             *     (e.g. "role.assigned", "member.suspended", "device.renamed"). */
+            action?: string;
             updatedAt?: number;
             updatedBy?: string;
         };
