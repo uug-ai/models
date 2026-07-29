@@ -17,17 +17,26 @@ type UserProfile struct {
 }
 
 func GetUserIdFromAccountOrMaster(user User) string {
-	if user.MasterAccount != "" {
-		return user.Master.Id.Hex()
-	}
-	return user.Id.Hex()
+	return GetOrganisationObjectId(user).Hex()
 }
 
+// GetOrganisationId returns the hex-string organisation id for this user. It is
+// retained for the legacy ownership fields that are still stored as strings
+// (e.g. Device/AccessToken/CaseMedia organisationId). New org/RBAC code that
+// works with primitive.ObjectID should use GetOrganisationObjectId instead.
 func GetOrganisationId(user User) string {
-	if user.MasterAccount != "" {
-		return user.Master.Id.Hex()
+	return GetOrganisationObjectId(user).Hex()
+}
+
+// GetOrganisationObjectId returns the organisation id as a primitive.ObjectID.
+// The organisation id is the master account's _id (or the user's own _id when
+// they are not a sub-user). The nil check on Master guards against a populated
+// MasterAccount string without a hydrated Master document, avoiding a panic.
+func GetOrganisationObjectId(user User) primitive.ObjectID {
+	if user.MasterAccount != "" && !user.Master.Id.IsZero() {
+		return user.Master.Id
 	}
-	return user.Id.Hex()
+	return user.Id
 }
 
 type User struct {

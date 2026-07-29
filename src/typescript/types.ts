@@ -31972,8 +31972,9 @@ export interface components {
             roleIds?: string[];
             /** @description Scope is the granular scope applied to every role in RoleIds when the
              *     invitation is accepted, i.e. it seeds the Scope of each resulting
-             *     RoleAssignment. A zero value with AllOrganisation=false means the created
-             *     assignments start with NO access until scoped (see RoleAssignmentScope). */
+             *     RoleAssignment. Following the RoleAssignmentScope convention, a zero value
+             *     grants the roles organisation-wide; populate a dimension to restrict the
+             *     resulting assignments to specific resources (see RoleAssignmentScope). */
             scope?: components["schemas"]["models.RoleAssignmentScope"];
             status?: components["schemas"]["models.InvitationStatus"];
             token?: string;
