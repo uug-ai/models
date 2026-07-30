@@ -1,5 +1,7 @@
 package api
 
+import "github.com/uug-ai/models/pkg/models"
+
 // OrganisationStatus represents specific status codes for organisation operations.
 type OrganisationStatus string
 
@@ -60,4 +62,69 @@ func (s OrganisationStatus) Translate(lang string) string {
 	}
 
 	return s.String()
+}
+
+// ---------- Request / Response DTOs (organisation domain) ----------
+//
+// These are the typed request bodies and response envelopes for the versioned
+// organisation CRUD endpoints, mirroring the workflow/videowall domains. The
+// admin-facing organisation DTOs (loosely typed, see admin.go) are a separate,
+// legacy surface and are intentionally left untouched.
+
+// GetOrganisations
+// @Router /organisations [get]
+type GetOrganisationsResponse struct {
+	Organisations []models.Organisation `json:"organisations"`
+}
+type GetOrganisationsSuccessResponse struct {
+	SuccessResponse
+	Data GetOrganisationsResponse `json:"data"`
+}
+type GetOrganisationsErrorResponse struct {
+	ErrorResponse
+}
+
+// GetOrganisation resolves a single organisation, either by id
+// (/organisations/{id}) or the caller's active one (/organisations/current).
+type GetOrganisationResponse struct {
+	Organisation models.Organisation `json:"organisation"`
+}
+type GetOrganisationSuccessResponse struct {
+	SuccessResponse
+	Data GetOrganisationResponse `json:"data"`
+}
+type GetOrganisationErrorResponse struct {
+	ErrorResponse
+}
+
+// CreateOrganisation
+// @Router /organisations [post]
+type CreateOrganisationRequest struct {
+	Organisation models.Organisation `json:"organisation"`
+}
+type CreateOrganisationResponse struct {
+	Organisation models.Organisation `json:"organisation"`
+}
+type CreateOrganisationSuccessResponse struct {
+	SuccessResponse
+	Data CreateOrganisationResponse `json:"data"`
+}
+type CreateOrganisationErrorResponse struct {
+	ErrorResponse
+}
+
+// UpdateOrganisation applies a partial update.
+// @Router /organisations/{id} [patch]
+type UpdateOrganisationRequest struct {
+	Organisation models.Organisation `json:"organisation"`
+}
+type UpdateOrganisationResponse struct {
+	Organisation models.Organisation `json:"organisation"`
+}
+type UpdateOrganisationSuccessResponse struct {
+	SuccessResponse
+	Data UpdateOrganisationResponse `json:"data"`
+}
+type UpdateOrganisationErrorResponse struct {
+	ErrorResponse
 }

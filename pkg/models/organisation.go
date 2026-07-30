@@ -171,3 +171,64 @@ type OrganisationMember struct {
 	RoleAssignments []RoleAssignment   `json:"roleAssignments" bson:"roleAssignments,omitempty"` // Member's role assignments
 	Roles           []Role             `json:"roles" bson:"roles,omitempty"`                     // Populated role details
 }
+
+// Input / Output types for organisation repository operations.
+//
+// These mirror the repository-operation DTO convention used across the domain
+// packages (see the workflow and videowall equivalents): each operation takes a
+// single typed Input and returns a single typed Output, keeping the repository
+// interface stable as fields are added.
+
+// GetOrganisationsInput lists the organisations the caller can see (the ones
+// they belong to or own).
+type GetOrganisationsInput struct {
+	User User `json:"user"`
+}
+
+type GetOrganisationsOutput struct {
+	Organisations []Organisation `json:"organisations"`
+}
+
+// GetOrganisationInput fetches a single organisation by id, scoped to what the
+// caller is allowed to access.
+type GetOrganisationInput struct {
+	User           User   `json:"user"`
+	OrganisationId string `json:"organisationId"`
+}
+
+type GetOrganisationOutput struct {
+	Organisation *Organisation `json:"organisation"`
+}
+
+// GetCurrentOrganisationInput resolves the caller's active organisation (the one
+// whose canonical id equals the caller's organisation id).
+type GetCurrentOrganisationInput struct {
+	User User `json:"user"`
+}
+
+type GetCurrentOrganisationOutput struct {
+	Organisation *Organisation `json:"organisation"`
+}
+
+// CreateOrganisationInput creates a new organisation owned by the caller.
+type CreateOrganisationInput struct {
+	User         User         `json:"user"`
+	Organisation Organisation `json:"organisation"`
+}
+
+type CreateOrganisationOutput struct {
+	Organisation *Organisation `json:"organisation"`
+}
+
+// UpdateOrganisationInput applies a partial update to an organisation the caller
+// is allowed to modify. Only a whitelisted set of profile/settings fields is
+// applied by the repository; ownership and audit stamps are managed server-side.
+type UpdateOrganisationInput struct {
+	User           User         `json:"user"`
+	OrganisationId string       `json:"organisationId"`
+	Organisation   Organisation `json:"organisation"`
+}
+
+type UpdateOrganisationOutput struct {
+	Organisation *Organisation `json:"organisation"`
+}

@@ -3553,6 +3553,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/createorganisationerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateOrganisationErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateOrganisationErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateOrganisationErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createorganisationinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateOrganisationInput (schema generation only)
+         * @description Internal endpoint used only to ensure CreateOrganisationInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CreateOrganisationInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createorganisationoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateOrganisationOutput (schema generation only)
+         * @description Internal endpoint used only to ensure CreateOrganisationOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CreateOrganisationOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createorganisationrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateOrganisationRequest (schema generation only)
+         * @description Internal endpoint used only to ensure CreateOrganisationRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateOrganisationRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createorganisationresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateOrganisationResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateOrganisationResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateOrganisationResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createorganisationsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateOrganisationSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateOrganisationSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateOrganisationSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/createvideowallerrorresponse": {
         parameters: {
             query?: never;
@@ -9715,6 +9949,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getcurrentorganisationinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCurrentOrganisationInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetCurrentOrganisationInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetCurrentOrganisationInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcurrentorganisationoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCurrentOrganisationOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetCurrentOrganisationOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetCurrentOrganisationOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getcustomalertserrorresponse": {
         parameters: {
             query?: never;
@@ -12121,6 +12433,396 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetMediaSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getorganisationerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetOrganisationErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetOrganisationErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetOrganisationErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getorganisationinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetOrganisationInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetOrganisationInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetOrganisationInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getorganisationoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetOrganisationOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetOrganisationOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetOrganisationOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getorganisationresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetOrganisationResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetOrganisationResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetOrganisationResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getorganisationserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetOrganisationsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetOrganisationsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetOrganisationsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getorganisationsinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetOrganisationsInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetOrganisationsInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetOrganisationsInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getorganisationsoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetOrganisationsOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetOrganisationsOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetOrganisationsOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getorganisationsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetOrganisationsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetOrganisationsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetOrganisationsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getorganisationssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetOrganisationsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetOrganisationsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetOrganisationsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getorganisationsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetOrganisationSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetOrganisationSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetOrganisationSuccessResponse"];
                     };
                 };
             };
@@ -24067,6 +24769,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/updateorganisationerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateOrganisationErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateOrganisationErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateOrganisationErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateorganisationinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateOrganisationInput (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateOrganisationInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UpdateOrganisationInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateorganisationoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateOrganisationOutput (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateOrganisationOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UpdateOrganisationOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateorganisationrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateOrganisationRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateOrganisationRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateOrganisationRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateorganisationresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateOrganisationResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateOrganisationResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateOrganisationResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateorganisationsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateOrganisationSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateOrganisationSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateOrganisationSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/updateuserprofileerrorresponse": {
         parameters: {
             query?: never;
@@ -26696,6 +27632,37 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.CreateOrganisationErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CreateOrganisationRequest": {
+            organisation?: components["schemas"]["models.Organisation"];
+        };
+        "api.CreateOrganisationResponse": {
+            organisation?: components["schemas"]["models.Organisation"];
+        };
+        "api.CreateOrganisationSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.CreateOrganisationResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.CreateVideowallErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -28118,6 +29085,62 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetMediaResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetOrganisationErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetOrganisationResponse": {
+            organisation?: components["schemas"]["models.Organisation"];
+        };
+        "api.GetOrganisationSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetOrganisationResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetOrganisationsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetOrganisationsResponse": {
+            organisations?: components["schemas"]["models.Organisation"][];
+        };
+        "api.GetOrganisationsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetOrganisationsResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -29720,6 +30743,37 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.UpdateOrganisationErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateOrganisationRequest": {
+            organisation?: components["schemas"]["models.Organisation"];
+        };
+        "api.UpdateOrganisationResponse": {
+            organisation?: components["schemas"]["models.Organisation"];
+        };
+        "api.UpdateOrganisationSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateOrganisationResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.UpdateUserProfileErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -30645,6 +31699,13 @@ export interface components {
         "models.CreateCaseShareOutput": {
             share?: components["schemas"]["models.CaseShare"];
         };
+        "models.CreateOrganisationInput": {
+            organisation?: components["schemas"]["models.Organisation"];
+            user?: components["schemas"]["models.User"];
+        };
+        "models.CreateOrganisationOutput": {
+            organisation?: components["schemas"]["models.Organisation"];
+        };
         "models.CreateVideowallInput": {
             user?: components["schemas"]["models.User"];
             videowall?: components["schemas"]["models.Videowall"];
@@ -31225,6 +32286,25 @@ export interface components {
         };
         "models.GetCaseSharesForTaskOutput": {
             shares?: components["schemas"]["models.CaseShare"][];
+        };
+        "models.GetCurrentOrganisationInput": {
+            user?: components["schemas"]["models.User"];
+        };
+        "models.GetCurrentOrganisationOutput": {
+            organisation?: components["schemas"]["models.Organisation"];
+        };
+        "models.GetOrganisationInput": {
+            organisationId?: string;
+            user?: components["schemas"]["models.User"];
+        };
+        "models.GetOrganisationOutput": {
+            organisation?: components["schemas"]["models.Organisation"];
+        };
+        "models.GetOrganisationsInput": {
+            user?: components["schemas"]["models.User"];
+        };
+        "models.GetOrganisationsOutput": {
+            organisations?: components["schemas"]["models.Organisation"][];
         };
         "models.GetVideowallInput": {
             user?: components["schemas"]["models.User"];
@@ -32804,6 +33884,14 @@ export interface components {
             token?: string;
         };
         "models.UpdateCaseShareOTPOutput": Record<string, never>;
+        "models.UpdateOrganisationInput": {
+            organisation?: components["schemas"]["models.Organisation"];
+            organisationId?: string;
+            user?: components["schemas"]["models.User"];
+        };
+        "models.UpdateOrganisationOutput": {
+            organisation?: components["schemas"]["models.Organisation"];
+        };
         "models.UpdateVideowallInput": {
             user?: components["schemas"]["models.User"];
             videowall?: components["schemas"]["models.Videowall"];
@@ -33030,6 +34118,8 @@ export interface components {
             bytes_range_on_time?: components["schemas"]["models.FragmentedBytesRangeOnTime"][];
             bytes_ranges?: string;
             duration?: number;
+            /** @description frames per second, derived from the parsed MP4 samples */
+            fps?: number;
             is_fragmented?: boolean;
             timescale?: number;
         };
@@ -33508,6 +34598,8 @@ export namespace models {
     export type CreateAlertOutput = components['schemas']['models.CreateAlertOutput'];
     export type CreateCaseShareInput = components['schemas']['models.CreateCaseShareInput'];
     export type CreateCaseShareOutput = components['schemas']['models.CreateCaseShareOutput'];
+    export type CreateOrganisationInput = components['schemas']['models.CreateOrganisationInput'];
+    export type CreateOrganisationOutput = components['schemas']['models.CreateOrganisationOutput'];
     export type CreateVideowallInput = components['schemas']['models.CreateVideowallInput'];
     export type CreateVideowallOutput = components['schemas']['models.CreateVideowallOutput'];
     export type CreateWorkflowInput = components['schemas']['models.CreateWorkflowInput'];
@@ -33558,6 +34650,12 @@ export namespace models {
     export type GetCaseShareByTokenOutput = components['schemas']['models.GetCaseShareByTokenOutput'];
     export type GetCaseSharesForTaskInput = components['schemas']['models.GetCaseSharesForTaskInput'];
     export type GetCaseSharesForTaskOutput = components['schemas']['models.GetCaseSharesForTaskOutput'];
+    export type GetCurrentOrganisationInput = components['schemas']['models.GetCurrentOrganisationInput'];
+    export type GetCurrentOrganisationOutput = components['schemas']['models.GetCurrentOrganisationOutput'];
+    export type GetOrganisationInput = components['schemas']['models.GetOrganisationInput'];
+    export type GetOrganisationOutput = components['schemas']['models.GetOrganisationOutput'];
+    export type GetOrganisationsInput = components['schemas']['models.GetOrganisationsInput'];
+    export type GetOrganisationsOutput = components['schemas']['models.GetOrganisationsOutput'];
     export type GetVideowallInput = components['schemas']['models.GetVideowallInput'];
     export type GetVideowallOutput = components['schemas']['models.GetVideowallOutput'];
     export type GetVideowallsInput = components['schemas']['models.GetVideowallsInput'];
@@ -33681,6 +34779,8 @@ export namespace models {
     export type UpdateAlertInput = components['schemas']['models.UpdateAlertInput'];
     export type UpdateAlertOutput = components['schemas']['models.UpdateAlertOutput'];
     export type UpdateCaseShareOTPInput = components['schemas']['models.UpdateCaseShareOTPInput'];
+    export type UpdateOrganisationInput = components['schemas']['models.UpdateOrganisationInput'];
+    export type UpdateOrganisationOutput = components['schemas']['models.UpdateOrganisationOutput'];
     export type UpdateVideowallInput = components['schemas']['models.UpdateVideowallInput'];
     export type UpdateVideowallOutput = components['schemas']['models.UpdateVideowallOutput'];
     export type UpdateWorkflowInput = components['schemas']['models.UpdateWorkflowInput'];
@@ -33752,6 +34852,10 @@ export namespace api {
     export type CreateMediaEditRequest = components['schemas']['api.CreateMediaEditRequest'];
     export type CreateMediaEditResponse = components['schemas']['api.CreateMediaEditResponse'];
     export type CreateMediaEditSuccessResponse = components['schemas']['api.CreateMediaEditSuccessResponse'];
+    export type CreateOrganisationErrorResponse = components['schemas']['api.CreateOrganisationErrorResponse'];
+    export type CreateOrganisationRequest = components['schemas']['api.CreateOrganisationRequest'];
+    export type CreateOrganisationResponse = components['schemas']['api.CreateOrganisationResponse'];
+    export type CreateOrganisationSuccessResponse = components['schemas']['api.CreateOrganisationSuccessResponse'];
     export type CreateVideowallErrorResponse = components['schemas']['api.CreateVideowallErrorResponse'];
     export type CreateVideowallRequest = components['schemas']['api.CreateVideowallRequest'];
     export type CreateVideowallResponse = components['schemas']['api.CreateVideowallResponse'];
@@ -33907,6 +35011,12 @@ export namespace api {
     export type GetMediaRequest = components['schemas']['api.GetMediaRequest'];
     export type GetMediaResponse = components['schemas']['api.GetMediaResponse'];
     export type GetMediaSuccessResponse = components['schemas']['api.GetMediaSuccessResponse'];
+    export type GetOrganisationErrorResponse = components['schemas']['api.GetOrganisationErrorResponse'];
+    export type GetOrganisationResponse = components['schemas']['api.GetOrganisationResponse'];
+    export type GetOrganisationSuccessResponse = components['schemas']['api.GetOrganisationSuccessResponse'];
+    export type GetOrganisationsErrorResponse = components['schemas']['api.GetOrganisationsErrorResponse'];
+    export type GetOrganisationsResponse = components['schemas']['api.GetOrganisationsResponse'];
+    export type GetOrganisationsSuccessResponse = components['schemas']['api.GetOrganisationsSuccessResponse'];
     export type GetRuntimeConfigErrorResponse = components['schemas']['api.GetRuntimeConfigErrorResponse'];
     export type GetRuntimeConfigResponse = components['schemas']['api.GetRuntimeConfigResponse'];
     export type GetRuntimeConfigSuccessResponse = components['schemas']['api.GetRuntimeConfigSuccessResponse'];
@@ -34079,6 +35189,10 @@ export namespace api {
     export type UpdateMediaRequest = components['schemas']['api.UpdateMediaRequest'];
     export type UpdateMediaResponse = components['schemas']['api.UpdateMediaResponse'];
     export type UpdateMediaSuccessResponse = components['schemas']['api.UpdateMediaSuccessResponse'];
+    export type UpdateOrganisationErrorResponse = components['schemas']['api.UpdateOrganisationErrorResponse'];
+    export type UpdateOrganisationRequest = components['schemas']['api.UpdateOrganisationRequest'];
+    export type UpdateOrganisationResponse = components['schemas']['api.UpdateOrganisationResponse'];
+    export type UpdateOrganisationSuccessResponse = components['schemas']['api.UpdateOrganisationSuccessResponse'];
     export type UpdateUserProfileErrorResponse = components['schemas']['api.UpdateUserProfileErrorResponse'];
     export type UpdateUserProfileResponse = components['schemas']['api.UpdateUserProfileResponse'];
     export type UpdateUserProfileSuccessResponse = components['schemas']['api.UpdateUserProfileSuccessResponse'];
