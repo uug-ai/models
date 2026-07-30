@@ -7,7 +7,7 @@ package properties
 const (
 	FeaturePermissionsPTZ = "ptz"
 	FeaturePermissionsLiveview = "liveview"
-	FeaturePermissionsRemoteConfig = "remote_config"
+	FeaturePermissionsRemoteConfig = "remoteConfig"
 	FeaturePermissionsIO = "io"
 	FeaturePermissionsFloorPlans = "floorPlans"
 	FeaturePermissionsPlayback = "playback"
@@ -20,12 +20,13 @@ const (
 	FeaturePermissionsGroups = "groups"
 	FeaturePermissionsRoles = "roles"
 	FeaturePermissionsSettings = "settings"
+	FeaturePermissionsDownloadRecordings = "downloadRecordings"
 )
 
 // Role property field names (BSON)
 const (
 	RoleId = "_id"
-	RoleOrganisationId = "organisation_id"
+	RoleOrganisationId = "organisationId"
 	RoleName = "roleName"
 	RoleDescription = "description"
 	RoleParentRole = "role"

@@ -10,7 +10,7 @@ const (
 )
 
 type AccessToken struct {
-	Id primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	Id primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 
 	Name        string             `json:"name" bson:"name,omitempty"`                         // Name of the access token
 	Description string             `json:"description,omitempty" bson:"description,omitempty"` // Description of the access token

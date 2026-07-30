@@ -12,7 +12,7 @@ import (
 // This is the main struct for Device
 
 type Device struct {
-	Id primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	Id primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 
 	// Device information
 	// Note: DeviceId is a unique identifier for the device, it can be used to identify the device in the system.

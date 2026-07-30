@@ -35,10 +35,10 @@ type AnalyticsSummary struct {
 
 // AnalyticsCharts contains the time-series charts rendered on the analysis page.
 type AnalyticsCharts struct {
-	RecordingsPerHour          TimeSeriesChart           `json:"recordingsPerHour" bson:"recordingsPerHour"`
-	CountsPerHourByDevice      TimeSeriesChart           `json:"countsPerHourByDevice" bson:"countsPerHourByDevice"`
+	RecordingsPerHour          TimeSeriesChart            `json:"recordingsPerHour" bson:"recordingsPerHour"`
+	CountsPerHourByDevice      TimeSeriesChart            `json:"countsPerHourByDevice" bson:"countsPerHourByDevice"`
 	CountsPerHourByAlert       DirectionalTimeSeriesChart `json:"countsPerHourByAlert" bson:"countsPerHourByAlert"`
-	RegionDurationPerHourAlert TimeSeriesChart           `json:"regionDurationPerHourAlert" bson:"regionDurationPerHourAlert"`
+	RegionDurationPerHourAlert TimeSeriesChart            `json:"regionDurationPerHourAlert" bson:"regionDurationPerHourAlert"`
 }
 
 // DirectionalTimeSeriesChart stores parallel chart variants for all/in/out views.

@@ -17,21 +17,30 @@ type UserProfile struct {
 }
 
 func GetUserIdFromAccountOrMaster(user User) string {
-	if user.MasterAccount != "" {
-		return user.Master.Id.Hex()
-	}
-	return user.Id.Hex()
+	return GetOrganisationObjectId(user).Hex()
 }
 
+// GetOrganisationId returns the hex-string organisation id for this user. It is
+// retained for the legacy ownership fields that are still stored as strings
+// (e.g. Device/AccessToken/CaseMedia organisationId). New org/RBAC code that
+// works with primitive.ObjectID should use GetOrganisationObjectId instead.
 func GetOrganisationId(user User) string {
-	if user.MasterAccount != "" {
-		return user.Master.Id.Hex()
+	return GetOrganisationObjectId(user).Hex()
+}
+
+// GetOrganisationObjectId returns the organisation id as a primitive.ObjectID.
+// The organisation id is the master account's _id (or the user's own _id when
+// they are not a sub-user). The nil check on Master guards against a populated
+// MasterAccount string without a hydrated Master document, avoiding a panic.
+func GetOrganisationObjectId(user User) primitive.ObjectID {
+	if user.MasterAccount != "" && !user.Master.Id.IsZero() {
+		return user.Master.Id
 	}
-	return user.Id.Hex()
+	return user.Id
 }
 
 type User struct {
-	Id                    primitive.ObjectID     `json:"id" bson:"_id,omitempty,omitempty"`
+	Id                    primitive.ObjectID     `json:"id" bson:"_id,omitempty"`
 	OrganisationId        primitive.ObjectID     `json:"organisation_id" bson:"organisation_id,omitempty"`
 	Username              string                 `json:"username" bson:"username,omitempty"`
 	Password              string                 `json:"password" bson:"password,omitempty"`
@@ -48,7 +57,7 @@ type User struct {
 	GoogleMFAEnabled      bool                   `json:"google2fa_enabled" bson:"google2fa_enabled,omitempty"`
 	Mfa                   bool                   `json:"mfa" bson:"mfa,omitempty"`
 	ForceMFA              int                    `json:"force_mfa" bson:"force_mfa"`
-	Audit                 []Audit                `json:"audit" bson:"audit,omitempty"`
+	Audit                 Audit                  `json:"audit" bson:"audit,omitempty"`
 	Nickname              string                 `json:"nickname" bson:"nickname,omitempty"`
 	FirstName             string                 `json:"firstname" bson:"firstname,omitempty"`
 	LastName              string                 `json:"lastname" bson:"lastname,omitempty"`
@@ -203,9 +212,9 @@ type AccountBody struct {
 }
 
 type Credentials struct {
-	CurrentPassword   string `json:"currentPassword" bson:"username,currentPassword"`
-	NewPassword       string `json:"newPassword" bson:"password,newPassword"`
-	NewPasswordRepeat string `json:"newPasswordRepeat" bson:"role,newPasswordRepeat"`
+	CurrentPassword   string `json:"currentPassword" bson:"currentPassword,omitempty"`
+	NewPassword       string `json:"newPassword" bson:"newPassword,omitempty"`
+	NewPasswordRepeat string `json:"newPasswordRepeat" bson:"newPasswordRepeat,omitempty"`
 }
 
 type Encryption struct {
@@ -224,7 +233,7 @@ type KeyPair struct {
 }
 
 type UserShort struct {
-	Id               primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	Id               primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Username         string             `json:"username" bson:"username,omitempty"`
 	Password         string             `json:"password" bson:"password,omitempty"`
 	Email            string             `json:"email" bson:"email,omitempty"`

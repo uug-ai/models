@@ -3,7 +3,7 @@ package models
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type Comment struct {
-	Id primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	Id primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 
 	// RBAC information
 	// DeviceId is a unique identifier for the device, it can be used to identify the device in the system.

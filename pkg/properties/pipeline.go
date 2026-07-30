@@ -8,4 +8,5 @@ const (
 	PipelinePayloadIsFragmented = "is_fragmented"
 	PipelinePayloadBytesRanges = "bytes_ranges"
 	PipelinePayloadBytesRangeOnTime = "bytes_range_on_time"
+	PipelinePayloadResult = "result"
 )

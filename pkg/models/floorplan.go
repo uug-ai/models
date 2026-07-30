@@ -3,7 +3,7 @@ package models
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type FloorPlan struct {
-	Id               primitive.ObjectID `json:"id" bson:"_id,omitempty,omitempty"`
+	Id               primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Name             string             `json:"name" bson:"name,omitempty"`                         // Name of the floor plan
 	Image            string             `json:"image" bson:"image,omitempty"`                       // Base64 encoded image of the floor plan
 	Width            int                `json:"width" bson:"width,omitempty"`                       // Dimensions of the floor plan in pixels
