@@ -158,6 +158,7 @@ type VaultMediaMetadata struct {
 	IsFragmented     bool                         `json:"is_fragmented" bson:"is_fragmented"`
 	Duration         uint64                       `json:"duration" bson:"duration"`
 	Timescale        uint32                       `json:"timescale" bson:"timescale"`
+	FPS              int                          `json:"fps" bson:"fps"` // frames per second, derived from the parsed MP4 samples
 }
 
 type VaultMediaEvent struct {
