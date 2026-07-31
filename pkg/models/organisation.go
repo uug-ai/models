@@ -220,13 +220,30 @@ type CreateOrganisationOutput struct {
 	Organisation *Organisation `json:"organisation"`
 }
 
+// OrganisationUpdate is a partial-update (PATCH) payload for an organisation.
+// Every field is a pointer so a nil value means "not provided" (leave the stored
+// value untouched), which is distinct from an explicit zero value (e.g. clearing
+// a string or setting IsActive to false). Identity, ownership and audit fields
+// are intentionally absent because they are managed server-side.
+type OrganisationUpdate struct {
+	Name           *string               `json:"name,omitempty"`
+	Slug           *string               `json:"slug,omitempty"`
+	Description    *string               `json:"description,omitempty"`
+	Domain         *string               `json:"domain,omitempty"`
+	IsActive       *bool                 `json:"isActive,omitempty"`
+	Settings       *OrganisationSettings `json:"settings,omitempty"`
+	Company        *CompanyDetails       `json:"company,omitempty"`
+	Subscription   *Subscription         `json:"subscription,omitempty"`
+	BillingAddress *Address              `json:"billingAddress,omitempty"`
+}
+
 // UpdateOrganisationInput applies a partial update to an organisation the caller
-// is allowed to modify. Only a whitelisted set of profile/settings fields is
-// applied by the repository; ownership and audit stamps are managed server-side.
+// is allowed to modify. Only the fields set on the OrganisationUpdate payload
+// are changed; ownership and audit stamps are managed server-side.
 type UpdateOrganisationInput struct {
-	User           User         `json:"user"`
-	OrganisationId string       `json:"organisationId"`
-	Organisation   Organisation `json:"organisation"`
+	User           User               `json:"user"`
+	OrganisationId string             `json:"organisationId"`
+	Organisation   OrganisationUpdate `json:"organisation"`
 }
 
 type UpdateOrganisationOutput struct {

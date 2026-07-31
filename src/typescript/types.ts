@@ -19192,6 +19192,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/organisationupdate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get OrganisationUpdate (schema generation only)
+         * @description Internal endpoint used only to ensure OrganisationUpdate schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.OrganisationUpdate"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/organisationuser": {
         parameters: {
             query?: never;
@@ -26485,6 +26524,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/videowalllayout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get VideowallLayout (schema generation only)
+         * @description Internal endpoint used only to ensure VideowallLayout schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.VideowallLayout"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/videowalllayouttile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get VideowallLayoutTile (schema generation only)
+         * @description Internal endpoint used only to ensure VideowallLayoutTile schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.VideowallLayoutTile"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/warningresponse": {
         parameters: {
             query?: never;
@@ -30323,6 +30440,12 @@ export interface components {
             faceRedaction?: components["schemas"]["models.FaceRedaction"];
             fileName?: string;
             mode?: components["schemas"]["models.RedactionMode"];
+            /** @description OrganisationId scopes the redaction job to the owning organisation. It is
+             *     carried on the request struct itself (not only on the transport envelope)
+             *     so the worker can resolve the same Request whether the struct arrives on an
+             *     on-demand PipelineEvent (event.Payload) or a hub-workflows stage dispatch
+             *     (run.User) — i.e. the request is self-contained and transport agnostic. */
+            organisationId?: string;
             signedUrl?: string;
             taskId?: string;
         };
@@ -30756,7 +30879,7 @@ export interface components {
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.UpdateOrganisationRequest": {
-            organisation?: components["schemas"]["models.Organisation"];
+            organisation?: components["schemas"]["models.OrganisationUpdate"];
         };
         "api.UpdateOrganisationResponse": {
             organisation?: components["schemas"]["models.Organisation"];
@@ -33122,6 +33245,17 @@ export interface components {
              *     and billing. */
             timezone?: string;
         };
+        "models.OrganisationUpdate": {
+            billingAddress?: components["schemas"]["models.Address"];
+            company?: components["schemas"]["models.CompanyDetails"];
+            description?: string;
+            domain?: string;
+            isActive?: boolean;
+            name?: string;
+            settings?: components["schemas"]["models.OrganisationSettings"];
+            slug?: string;
+            subscription?: components["schemas"]["models.Subscription"];
+        };
         "models.OrganisationUser": {
             audit?: components["schemas"]["models.Audit"];
             /** @description ExpiresAt optionally bounds the membership in time. It is an overlay on
@@ -33885,7 +34019,7 @@ export interface components {
         };
         "models.UpdateCaseShareOTPOutput": Record<string, never>;
         "models.UpdateOrganisationInput": {
-            organisation?: components["schemas"]["models.Organisation"];
+            organisation?: components["schemas"]["models.OrganisationUpdate"];
             organisationId?: string;
             user?: components["schemas"]["models.User"];
         };
@@ -34129,6 +34263,9 @@ export interface components {
             time?: string;
         };
         "models.Videowall": {
+            /** @description AllowLayoutEdits lets any signed-in viewer (not just the owner) persist
+             *     changes to Layout. When false only the owner may save. */
+            allow_layout_edits?: boolean;
             assigned_users?: string[];
             cameras?: string[];
             /** @description DefaultViewingMode chooses which stream quality the wall loads with:
@@ -34143,6 +34280,11 @@ export interface components {
             id?: string;
             io?: number;
             isActive?: number;
+            /** @description Layout stores a shareable custom arrangement of the wall's camera tiles
+             *     (order + per-tile column/row spans). When nil the wall falls back to the
+             *     default responsive grid. It travels with the wall so it is shared with
+             *     everyone the wall is shared with. */
+            layout?: components["schemas"]["models.VideowallLayout"];
             liveview?: number;
             master_user_id?: string;
             name?: string;
@@ -34154,6 +34296,17 @@ export interface components {
             user_id?: string;
             username?: string;
             weeklySchedule?: components["schemas"]["models.WeeklySchedule"][];
+        };
+        "models.VideowallLayout": {
+            /** @description Columns is the grid column count the layout was authored against (1-5). */
+            columns?: number;
+            /** @description Tiles lists each placed camera in display order with its span. */
+            tiles?: components["schemas"]["models.VideowallLayoutTile"][];
+        };
+        "models.VideowallLayoutTile": {
+            cameraKey?: string;
+            colSpan?: number;
+            rowSpan?: number;
         };
         "models.Webhook": {
             enabled?: boolean;
@@ -34720,6 +34873,7 @@ export namespace models {
     export type OrganisationInvitation = components['schemas']['models.OrganisationInvitation'];
     export type OrganisationMember = components['schemas']['models.OrganisationMember'];
     export type OrganisationSettings = components['schemas']['models.OrganisationSettings'];
+    export type OrganisationUpdate = components['schemas']['models.OrganisationUpdate'];
     export type OrganisationUser = components['schemas']['models.OrganisationUser'];
     export type OrganisationUserDetails = components['schemas']['models.OrganisationUserDetails'];
     export type PatchVideowallInput = components['schemas']['models.PatchVideowallInput'];
@@ -34800,6 +34954,8 @@ export namespace models {
     export type VaultMediaMetadata = components['schemas']['models.VaultMediaMetadata'];
     export type VideoBytesRangeOnTime = components['schemas']['models.VideoBytesRangeOnTime'];
     export type Videowall = components['schemas']['models.Videowall'];
+    export type VideowallLayout = components['schemas']['models.VideowallLayout'];
+    export type VideowallLayoutTile = components['schemas']['models.VideowallLayoutTile'];
     export type Webhook = components['schemas']['models.Webhook'];
     export type WeeklySchedule = components['schemas']['models.WeeklySchedule'];
     export type Workflow = components['schemas']['models.Workflow'];

@@ -113,10 +113,11 @@ type CreateOrganisationErrorResponse struct {
 	ErrorResponse
 }
 
-// UpdateOrganisation applies a partial update.
+// UpdateOrganisation applies a partial update. The body is an OrganisationUpdate
+// patch: only the fields present are changed (each field is optional).
 // @Router /organisations/{id} [patch]
 type UpdateOrganisationRequest struct {
-	Organisation models.Organisation `json:"organisation"`
+	Organisation models.OrganisationUpdate `json:"organisation"`
 }
 type UpdateOrganisationResponse struct {
 	Organisation models.Organisation `json:"organisation"`
