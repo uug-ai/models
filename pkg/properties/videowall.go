@@ -26,4 +26,19 @@ const (
 	VideowallAssignedUsers = "assigned_users"
 	VideowallWeeklySchedule = "weeklySchedule"
 	VideowallDefaultViewingMode = "default_viewing_mode"
+	VideowallLayout = "layout"
+	VideowallAllowLayoutEdits = "allow_layout_edits"
+)
+
+// VideowallLayout property field names (BSON)
+const (
+	VideowallLayoutColumns = "columns"
+	VideowallLayoutTiles = "tiles"
+)
+
+// VideowallLayoutTile property field names (BSON)
+const (
+	VideowallLayoutTileCameraKey = "cameraKey"
+	VideowallLayoutTileColSpan = "colSpan"
+	VideowallLayoutTileRowSpan = "rowSpan"
 )

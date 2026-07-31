@@ -32,6 +32,29 @@ type Videowall struct {
 	// "preview" (SD) or "live" (HD). Empty defaults to "live". Always clamped
 	// to "preview" when Liveview only grants preview permission.
 	DefaultViewingMode string `json:"default_viewing_mode" bson:"default_viewing_mode,omitempty"`
+	// Layout stores a shareable custom arrangement of the wall's camera tiles
+	// (order + per-tile column/row spans). When nil the wall falls back to the
+	// default responsive grid. It travels with the wall so it is shared with
+	// everyone the wall is shared with.
+	Layout *VideowallLayout `json:"layout,omitempty" bson:"layout,omitempty"`
+	// AllowLayoutEdits lets any signed-in viewer (not just the owner) persist
+	// changes to Layout. When false only the owner may save.
+	AllowLayoutEdits bool `json:"allow_layout_edits" bson:"allow_layout_edits"`
+}
+
+// VideowallLayout is the persisted, shareable tile arrangement of a videowall.
+type VideowallLayout struct {
+	// Columns is the grid column count the layout was authored against (1-5).
+	Columns int `json:"columns" bson:"columns"`
+	// Tiles lists each placed camera in display order with its span.
+	Tiles []VideowallLayoutTile `json:"tiles" bson:"tiles"`
+}
+
+// VideowallLayoutTile is a single camera's position and size within a layout.
+type VideowallLayoutTile struct {
+	CameraKey string `json:"cameraKey" bson:"cameraKey"`
+	ColSpan   int    `json:"colSpan" bson:"colSpan"`
+	RowSpan   int    `json:"rowSpan" bson:"rowSpan"`
 }
 
 // IsScheduledAt reports whether unixTs falls within the videowall's weekly

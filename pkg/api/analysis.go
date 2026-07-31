@@ -365,8 +365,14 @@ func (fs FlexibleString) String() string {
 // exactly where to upload the rendered artefact so the storage layout
 // stays under hub-api's control.
 type SubmitFaceRedactionRequest struct {
-	AnalysisId          string                        `json:"analysisId"`
-	TaskId              string                        `json:"taskId"`
+	AnalysisId string `json:"analysisId"`
+	TaskId     string `json:"taskId"`
+	// OrganisationId scopes the redaction job to the owning organisation. It is
+	// carried on the request struct itself (not only on the transport envelope)
+	// so the worker can resolve the same Request whether the struct arrives on an
+	// on-demand PipelineEvent (event.Payload) or a hub-workflows stage dispatch
+	// (run.User) — i.e. the request is self-contained and transport agnostic.
+	OrganisationId      string                        `json:"organisationId,omitempty"`
 	CaseMediaId         string                        `json:"caseMediaId"`
 	SignedUrl           string                        `json:"signedUrl"`
 	FileName            string                        `json:"fileName"`
