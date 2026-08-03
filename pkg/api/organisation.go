@@ -97,6 +97,22 @@ type GetOrganisationErrorResponse struct {
 	ErrorResponse
 }
 
+// SetCurrentOrganisation selects the active organisation for the caller.
+// @Router /organisations/current [patch]
+type SetCurrentOrganisationRequest struct {
+	OrganisationId string `json:"organisationId"`
+}
+type SetCurrentOrganisationResponse struct {
+	Organisation models.Organisation `json:"organisation"`
+}
+type SetCurrentOrganisationSuccessResponse struct {
+	SuccessResponse
+	Data SetCurrentOrganisationResponse `json:"data"`
+}
+type SetCurrentOrganisationErrorResponse struct {
+	ErrorResponse
+}
+
 // CreateOrganisation
 // @Router /organisations [post]
 type CreateOrganisationRequest struct {

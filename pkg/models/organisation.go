@@ -210,6 +210,17 @@ type GetCurrentOrganisationOutput struct {
 	Organisation *Organisation `json:"organisation"`
 }
 
+// SetCurrentOrganisationInput selects the organisation used to scope subsequent
+// requests for the caller.
+type SetCurrentOrganisationInput struct {
+	User           User   `json:"user"`
+	OrganisationId string `json:"organisationId"`
+}
+
+type SetCurrentOrganisationOutput struct {
+	Organisation *Organisation `json:"organisation"`
+}
+
 // CreateOrganisationInput creates a new organisation owned by the caller.
 type CreateOrganisationInput struct {
 	User         User         `json:"user"`

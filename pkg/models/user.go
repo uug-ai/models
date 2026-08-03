@@ -28,12 +28,16 @@ func GetOrganisationId(user User) string {
 	return GetOrganisationObjectId(user).Hex()
 }
 
-// GetOrganisationObjectId returns the organisation id as a primitive.ObjectID.
-// The organisation id is the master account's _id (or the user's own _id when
-// they are not a sub-user). The nil check on Master guards against a populated
-// MasterAccount string without a hydrated Master document, avoiding a panic.
+// GetOrganisationObjectId returns the user's explicitly selected organisation,
+// falling back to the legacy master-account identity for unmigrated users.
 func GetOrganisationObjectId(user User) primitive.ObjectID {
-	if user.MasterAccount != "" && !user.Master.Id.IsZero() {
+	if !user.OrganisationId.IsZero() {
+		return user.OrganisationId
+	}
+	if user.MasterAccount != "" && user.Master != nil && !user.Master.Id.IsZero() {
+		if !user.Master.OrganisationId.IsZero() {
+			return user.Master.OrganisationId
+		}
 		return user.Master.Id
 	}
 	return user.Id
