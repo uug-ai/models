@@ -55,6 +55,7 @@ const (
 	MediaEventNames            = "eventNames"
 	MediaTagNames              = "tagNames"
 	MediaCategoryNames         = "categoryNames"
+	MediaMarkerSummary         = "markerSummary"
 	MediaDeviceName            = "deviceName"
 	MediaMetadata              = "metadata"
 	MediaAtRuntimeMetadata     = "atRuntimeMetadata"
