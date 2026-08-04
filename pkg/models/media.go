@@ -43,6 +43,13 @@ type Media struct {
 	TagNames      []string `json:"tagNames,omitempty" bson:"tagNames,omitempty"`
 	CategoryNames []string `json:"categoryNames,omitempty" bson:"categoryNames,omitempty"`
 
+	// MarkerSummary is a per-occurrence denormalisation of the markers that overlap
+	// this media. Unlike the flat markerNames/eventNames/tagNames/categoryNames
+	// arrays that back filtering, each entry preserves the correlation between a
+	// single marker's name, its category/event/tag names and its time range, for
+	// display/detail rendering (icons, listings).
+	MarkerSummary []MarkerSummary `json:"markerSummary,omitempty" bson:"markerSummary,omitempty"`
+
 	// Name of the device that uploaded media
 	DeviceName string `json:"deviceName,omitempty" bson:"deviceName,omitempty"`
 
@@ -56,6 +63,19 @@ type Media struct {
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
+}
+
+// MarkerSummary captures a single marker occurrence denormalised onto a media
+// document. It is written (append-only, bounded) alongside the flat name arrays
+// so the frontend can render per-marker detail (name, categories, events, tags)
+// and the marker's time range without a second query.
+type MarkerSummary struct {
+	Name           string   `json:"name,omitempty" bson:"name,omitempty"`
+	CategoryNames  []string `json:"categoryNames,omitempty" bson:"categoryNames,omitempty"`
+	EventNames     []string `json:"eventNames,omitempty" bson:"eventNames,omitempty"`
+	TagNames       []string `json:"tagNames,omitempty" bson:"tagNames,omitempty"`
+	StartTimestamp int64    `json:"startTimestamp,omitempty" bson:"startTimestamp,omitempty"`
+	EndTimestamp   int64    `json:"endTimestamp,omitempty" bson:"endTimestamp,omitempty"`
 }
 
 // We can store additional metadata for media files, such as tags and classifications.

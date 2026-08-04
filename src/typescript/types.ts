@@ -32939,6 +32939,14 @@ export interface components {
             device?: components["schemas"]["models.Device"];
             markers?: components["schemas"]["models.MarkerGroup"][];
         };
+        "models.MarkerSummary": {
+            name?: string;
+            categoryNames?: string[];
+            eventNames?: string[];
+            tagNames?: string[];
+            startTimestamp?: number;
+            endTimestamp?: number;
+        };
         "models.Media": {
             /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
              *     more verbose information about the device's current state, capabilities, or configuration.
@@ -32964,6 +32972,7 @@ export interface components {
             /** @description Unique identifier for the media file */
             id?: string;
             markerNames?: string[];
+            markerSummary?: components["schemas"]["models.MarkerSummary"][];
             /** @description Metadata */
             metadata?: components["schemas"]["models.MediaMetadata"];
             organisationId?: string;
