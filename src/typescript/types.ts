@@ -32946,6 +32946,7 @@ export interface components {
             atRuntimeMetadata?: components["schemas"]["models.MediaAtRuntimeMetadata"];
             /** @description Audit information */
             audit?: components["schemas"]["models.Audit"];
+            categoryNames?: string[];
             classificationSummary?: components["schemas"]["models.ClassificationSummary"][];
             countingSummary?: components["schemas"]["models.CountingSummary"][];
             /** @description RBAC information
