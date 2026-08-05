@@ -34689,7 +34689,7 @@ export interface components {
             weeklySchedule?: components["schemas"]["models.WeeklySchedule"][];
         };
         /** @enum {string} */
-        "models.WorkflowTriggerSurface": "case" | "media";
+        "models.WorkflowTriggerSurface": "case" | "media" | "redaction";
         /** @enum {string} */
         "models.WorkflowTriggerType": "automatic" | "manual";
         "models.WorkflowUser": {

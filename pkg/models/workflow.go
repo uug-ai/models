@@ -94,6 +94,14 @@ const (
 	WorkflowSurfaceCase WorkflowTriggerSurface = "case"
 	// WorkflowSurfaceMedia exposes a manual trigger on an individual media item.
 	WorkflowSurfaceMedia WorkflowTriggerSurface = "media"
+	// WorkflowSurfaceRedaction exposes a manual trigger on the redaction editor's
+	// submit control, launched against the media being redacted. It is a distinct
+	// launch point from the generic case/media "Run workflow" surfaces: a workflow
+	// opts in to it (typically a detector→redaction graph, e.g. objecttracking →
+	// redaction) so the editor lists the applicable workflows purely as data,
+	// without a hard-coded workflow id. The reviewed inline-regions submit stays a
+	// private one-stage run and does not use this surface.
+	WorkflowSurfaceRedaction WorkflowTriggerSurface = "redaction"
 )
 
 // WorkflowTrigger defines what activates a workflow. Type selects the activation
