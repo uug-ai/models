@@ -331,6 +331,7 @@ func TestPipelineEvent_GetMedia(t *testing.T) {
 						DeviceName: "Front Camera",
 						Duration:   "300",
 						Timestamp:  "1706000000",
+						FPS:        "17.35",
 					},
 				},
 			},
@@ -342,6 +343,7 @@ func TestPipelineEvent_GetMedia(t *testing.T) {
 				StartTimestamp:  1706000000,
 				StorageSolution: "s3",
 				VideoProvider:   "aws",
+				Metadata:        &MediaMetadata{FPS: 17.35},
 			},
 			expectError: false,
 		},
@@ -524,6 +526,9 @@ func TestPipelineEvent_GetMedia(t *testing.T) {
 			}
 			if media.VideoProvider != tt.expectedMedia.VideoProvider {
 				t.Errorf("VideoProvider: got %q, want %q", media.VideoProvider, tt.expectedMedia.VideoProvider)
+			}
+			if media.Metadata != nil && tt.expectedMedia.Metadata != nil && media.Metadata.FPS != tt.expectedMedia.Metadata.FPS {
+				t.Errorf("Metadata.FPS: got %v, want %v", media.Metadata.FPS, tt.expectedMedia.Metadata.FPS)
 			}
 		})
 	}

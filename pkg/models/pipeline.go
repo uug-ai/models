@@ -95,7 +95,7 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		media.Metadata = &MediaMetadata{}
 		media.Metadata.MotionPixels = 0
 		media.Metadata.FileSize = pe.Payload.FileSize
-		if fps, err := strconv.Atoi(pe.Payload.Metadata.FPS); err == nil {
+		if fps, err := strconv.ParseFloat(pe.Payload.Metadata.FPS, 64); err == nil {
 			media.Metadata.FPS = fps
 		}
 

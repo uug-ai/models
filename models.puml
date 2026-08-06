@@ -592,7 +592,7 @@ namespace models {
         + Resolution string
         + Codec string
         + Bitrate int
-        + FPS int
+        + FPS float64
         + Tags []string
         + SpriteInterval int
         + AnalysisId string
