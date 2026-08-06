@@ -81,14 +81,14 @@ type MarkerSummary struct {
 // We can store additional metadata for media files, such as tags and classifications.
 type MediaMetadata struct {
 	// Media containers related information
-	Container  string `json:"containerType,omitempty" bson:"containerType,omitempty"` // e.g., mp4, mkv, avi
-	Resolution string `json:"resolution,omitempty" bson:"resolution,omitempty"`       // e.g., 1920x1080
-	Width      int    `json:"width,omitempty" bson:"width,omitempty"`                 // in pixels
-	Height     int    `json:"height,omitempty" bson:"height,omitempty"`               // in pixels
-	Codec      string `json:"codec,omitempty" bson:"codec,omitempty"`                 // e.g., H.264, VP9
-	Bitrate    int    `json:"bitrate,omitempty" bson:"bitrate,omitempty"`             // in kbps
-	FPS        int    `json:"fps,omitempty" bson:"fps,omitempty"`                     // frames per second
-	FileSize   int64  `json:"fileSize,omitempty" bson:"fileSize,omitempty"`           // in bytes
+	Container  string  `json:"containerType,omitempty" bson:"containerType,omitempty"` // e.g., mp4, mkv, avi
+	Resolution string  `json:"resolution,omitempty" bson:"resolution,omitempty"`       // e.g., 1920x1080
+	Width      int     `json:"width,omitempty" bson:"width,omitempty"`                 // in pixels
+	Height     int     `json:"height,omitempty" bson:"height,omitempty"`               // in pixels
+	Codec      string  `json:"codec,omitempty" bson:"codec,omitempty"`                 // e.g., H.264, VP9
+	Bitrate    int     `json:"bitrate,omitempty" bson:"bitrate,omitempty"`             // in kbps
+	FPS        float64 `json:"fps,omitempty" bson:"fps,omitempty"`                     // frames per second
+	FileSize   int64   `json:"fileSize,omitempty" bson:"fileSize,omitempty"`           // in bytes
 
 	// Tags associated to give some context about the media file
 	Tags []string `json:"tags,omitempty" bson:"tags,omitempty"`
@@ -179,7 +179,7 @@ type VaultMediaMetadata struct {
 	IsFragmented     bool                         `json:"is_fragmented" bson:"is_fragmented"`
 	Duration         uint64                       `json:"duration" bson:"duration"`
 	Timescale        uint32                       `json:"timescale" bson:"timescale"`
-	FPS              int                          `json:"fps" bson:"fps"` // frames per second, derived from the parsed MP4 samples
+	FPS              float64                      `json:"fps" bson:"fps"` // frames per second, derived from the parsed MP4 samples
 }
 
 type VaultMediaEvent struct {
