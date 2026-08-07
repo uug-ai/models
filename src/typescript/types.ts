@@ -18100,6 +18100,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/markersummary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MarkerSummary (schema generation only)
+         * @description Internal endpoint used only to ensure MarkerSummary schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MarkerSummary"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/markertag": {
         parameters: {
             query?: never;
@@ -20050,6 +20089,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/project": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Project (schema generation only)
+         * @description Internal endpoint used only to ensure Project schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Project"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/projectresourcescope": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ProjectResourceScope (schema generation only)
+         * @description Internal endpoint used only to ensure ProjectResourceScope schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ProjectResourceScope"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/publishfileerrorresponse": {
         parameters: {
             query?: never;
@@ -21286,6 +21403,240 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.SequenceStage"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/setcurrentorganisationerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SetCurrentOrganisationErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SetCurrentOrganisationErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SetCurrentOrganisationErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/setcurrentorganisationinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SetCurrentOrganisationInput (schema generation only)
+         * @description Internal endpoint used only to ensure SetCurrentOrganisationInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.SetCurrentOrganisationInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/setcurrentorganisationoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SetCurrentOrganisationOutput (schema generation only)
+         * @description Internal endpoint used only to ensure SetCurrentOrganisationOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.SetCurrentOrganisationOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/setcurrentorganisationrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SetCurrentOrganisationRequest (schema generation only)
+         * @description Internal endpoint used only to ensure SetCurrentOrganisationRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SetCurrentOrganisationRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/setcurrentorganisationresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SetCurrentOrganisationResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SetCurrentOrganisationResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SetCurrentOrganisationResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/setcurrentorganisationsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SetCurrentOrganisationSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SetCurrentOrganisationSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SetCurrentOrganisationSuccessResponse"];
                     };
                 };
             };
@@ -30402,6 +30753,37 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.SetCurrentOrganisationErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.SetCurrentOrganisationRequest": {
+            organisationId?: string;
+        };
+        "api.SetCurrentOrganisationResponse": {
+            organisation?: components["schemas"]["models.Organisation"];
+        };
+        "api.SetCurrentOrganisationSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.SetCurrentOrganisationResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.SingleSignOnDomainsRequest": Record<string, never>;
         "api.SingleSignOnDomainsResponse": {
             domains?: string[];
@@ -32343,6 +32725,8 @@ export interface components {
             /** @description 0=none, 1=read, 2=write, 3=admin */
             playback?: components["schemas"]["models.AccessLevel"];
             /** @description 0=none, 1=read, 2=write, 3=admin */
+            projects?: components["schemas"]["models.AccessLevel"];
+            /** @description 0=none, 1=read, 2=write, 3=admin */
             ptz?: components["schemas"]["models.AccessLevel"];
             /** @description 0=none, 1=read, 2=write, 3=admin */
             remoteConfig?: components["schemas"]["models.AccessLevel"];
@@ -32896,6 +33280,14 @@ export interface components {
             updatedAt?: number;
             value?: string;
         };
+        "models.MarkerSummary": {
+            categoryNames?: string[];
+            endTimestamp?: number;
+            eventNames?: string[];
+            name?: string;
+            startTimestamp?: number;
+            tagNames?: string[];
+        };
         "models.MarkerTag": {
             /** @example Motion Detected */
             name?: string;
@@ -32939,14 +33331,6 @@ export interface components {
             device?: components["schemas"]["models.Device"];
             markers?: components["schemas"]["models.MarkerGroup"][];
         };
-        "models.MarkerSummary": {
-            name?: string;
-            categoryNames?: string[];
-            eventNames?: string[];
-            tagNames?: string[];
-            startTimestamp?: number;
-            endTimestamp?: number;
-        };
         "models.Media": {
             /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
              *     more verbose information about the device's current state, capabilities, or configuration.
@@ -32972,6 +33356,11 @@ export interface components {
             /** @description Unique identifier for the media file */
             id?: string;
             markerNames?: string[];
+            /** @description MarkerSummary is a per-occurrence denormalisation of the markers that overlap
+             *     this media. Unlike the flat markerNames/eventNames/tagNames/categoryNames
+             *     arrays that back filtering, each entry preserves the correlation between a
+             *     single marker's name, its category/event/tag names and its time range, for
+             *     display/detail rendering (icons, listings). */
             markerSummary?: components["schemas"]["models.MarkerSummary"][];
             /** @description Metadata */
             metadata?: components["schemas"]["models.MediaMetadata"];
@@ -33392,6 +33781,19 @@ export interface components {
         "models.ProfileSettings": {
             defaultFloorPlanLabelsHidden?: boolean;
         };
+        "models.Project": {
+            audit?: components["schemas"]["models.Audit"];
+            description?: string;
+            id?: string;
+            isActive?: boolean;
+            name?: string;
+            organisationId?: string;
+            slug?: string;
+        };
+        "models.ProjectResourceScope": {
+            projectId?: string;
+            sharedWithProjectIds?: string[];
+        };
         "models.Pushbullet": {
             apikey?: string;
             enabled?: boolean;
@@ -33469,6 +33871,8 @@ export interface components {
             deviceIds?: string[];
             /** @description Restrict to these groups (empty = all groups) */
             groupIds?: string[];
+            /** @description Restrict to these projects (empty = all projects and organisation-wide resources) */
+            projectIds?: string[];
             /** @description Restrict to these sites (empty = all sites) */
             siteIds?: string[];
         };
@@ -33494,6 +33898,13 @@ export interface components {
             name?: string;
             /** @description Add fields relevant to sequence stage */
             sequenceId?: number;
+        };
+        "models.SetCurrentOrganisationInput": {
+            organisationId?: string;
+            user?: components["schemas"]["models.User"];
+        };
+        "models.SetCurrentOrganisationOutput": {
+            organisation?: components["schemas"]["models.Organisation"];
         };
         "models.Settings": {
             id?: string;
@@ -34120,7 +34531,7 @@ export interface components {
             oauth_client_id?: string;
             oauth_client_name?: string;
             oauth_client_secret?: string;
-            organisation_id?: string;
+            organisationId?: string;
             password?: string;
             permissions?: components["schemas"]["models.Permissions"];
             /** @description Subscription - Credentials */
@@ -34859,6 +35270,7 @@ export namespace models {
     export type MarkerMetadata = components['schemas']['models.MarkerMetadata'];
     export type MarkerOption = components['schemas']['models.MarkerOption'];
     export type MarkerOptionTimeRange = components['schemas']['models.MarkerOptionTimeRange'];
+    export type MarkerSummary = components['schemas']['models.MarkerSummary'];
     export type MarkerTag = components['schemas']['models.MarkerTag'];
     export type MarkerTagOption = components['schemas']['models.MarkerTagOption'];
     export type MarkerTagTimeRange = components['schemas']['models.MarkerTagTimeRange'];
@@ -34896,6 +35308,8 @@ export namespace models {
     export type Plan = components['schemas']['models.Plan'];
     export type Point = components['schemas']['models.Point'];
     export type ProfileSettings = components['schemas']['models.ProfileSettings'];
+    export type Project = components['schemas']['models.Project'];
+    export type ProjectResourceScope = components['schemas']['models.ProjectResourceScope'];
     export type Pushbullet = components['schemas']['models.Pushbullet'];
     export type Pushover = components['schemas']['models.Pushover'];
     export type Region = components['schemas']['models.Region'];
@@ -34907,6 +35321,8 @@ export namespace models {
     export type RuntimeConfig = components['schemas']['models.RuntimeConfig'];
     export type Sequence = components['schemas']['models.Sequence'];
     export type SequenceStage = components['schemas']['models.SequenceStage'];
+    export type SetCurrentOrganisationInput = components['schemas']['models.SetCurrentOrganisationInput'];
+    export type SetCurrentOrganisationOutput = components['schemas']['models.SetCurrentOrganisationOutput'];
     export type Settings = components['schemas']['models.Settings'];
     export type Site = components['schemas']['models.Site'];
     export type SiteMetadata = components['schemas']['models.SiteMetadata'];
@@ -35304,6 +35720,10 @@ export namespace api {
     export type SaveFaceRedactionRequest = components['schemas']['api.SaveFaceRedactionRequest'];
     export type SaveFaceRedactionResponse = components['schemas']['api.SaveFaceRedactionResponse'];
     export type SaveFaceRedactionSuccessResponse = components['schemas']['api.SaveFaceRedactionSuccessResponse'];
+    export type SetCurrentOrganisationErrorResponse = components['schemas']['api.SetCurrentOrganisationErrorResponse'];
+    export type SetCurrentOrganisationRequest = components['schemas']['api.SetCurrentOrganisationRequest'];
+    export type SetCurrentOrganisationResponse = components['schemas']['api.SetCurrentOrganisationResponse'];
+    export type SetCurrentOrganisationSuccessResponse = components['schemas']['api.SetCurrentOrganisationSuccessResponse'];
     export type SingleSignOnDomainsResponse = components['schemas']['api.SingleSignOnDomainsResponse'];
     export type SiteFilter = components['schemas']['api.SiteFilter'];
     export type SiteFlags = components['schemas']['api.SiteFlags'];

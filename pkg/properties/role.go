@@ -18,6 +18,7 @@ const (
 	FeaturePermissionsDevices = "devices"
 	FeaturePermissionsSites = "sites"
 	FeaturePermissionsGroups = "groups"
+	FeaturePermissionsProjects = "projects"
 	FeaturePermissionsRoles = "roles"
 	FeaturePermissionsSettings = "settings"
 	FeaturePermissionsDownloadRecordings = "downloadRecordings"

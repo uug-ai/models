@@ -46,20 +46,22 @@ func (a RoleAssignment) IsEffectivelyActive() bool {
 // RoleAssignment exists and IsEffectivelyActive() is true. The scope only ever
 // narrows an existing grant — it can widen nothing.
 //
-// The dimensions are orthogonal facets: the permission resolver applies SiteIds
-// to site-level access, GroupIds to group-level access and DeviceIds to
-// device-level access, each with "empty = all". This makes combinations such as
-// "all sites, but only two devices" expressible (SiteIds empty, DeviceIds set).
+// The dimensions are orthogonal facets: the permission resolver applies ProjectIds
+// to project-level access, SiteIds to site-level access, GroupIds to group-level
+// access and DeviceIds to device-level access, each with "empty = all". This makes
+// combinations such as "one project, all its sites, but only two devices"
+// expressible (ProjectIds set, SiteIds empty, DeviceIds set).
 type RoleAssignmentScope struct {
-	SiteIds   []primitive.ObjectID `json:"siteIds" bson:"siteIds,omitempty"`     // Restrict to these sites (empty = all sites)
-	GroupIds  []primitive.ObjectID `json:"groupIds" bson:"groupIds,omitempty"`   // Restrict to these groups (empty = all groups)
-	DeviceIds []primitive.ObjectID `json:"deviceIds" bson:"deviceIds,omitempty"` // Restrict to these devices (empty = all devices)
+	ProjectIds []primitive.ObjectID `json:"projectIds" bson:"projectIds,omitempty"` // Restrict to these projects (empty = all projects and organisation-wide resources)
+	SiteIds    []primitive.ObjectID `json:"siteIds" bson:"siteIds,omitempty"`       // Restrict to these sites (empty = all sites)
+	GroupIds   []primitive.ObjectID `json:"groupIds" bson:"groupIds,omitempty"`     // Restrict to these groups (empty = all groups)
+	DeviceIds  []primitive.ObjectID `json:"deviceIds" bson:"deviceIds,omitempty"`   // Restrict to these devices (empty = all devices)
 }
 
 // IsOrganisationWide reports whether the scope places no restriction on any
 // dimension, i.e. the assignment applies to the entire organisation.
 func (s RoleAssignmentScope) IsOrganisationWide() bool {
-	return len(s.SiteIds) == 0 && len(s.GroupIds) == 0 && len(s.DeviceIds) == 0
+	return len(s.ProjectIds) == 0 && len(s.SiteIds) == 0 && len(s.GroupIds) == 0 && len(s.DeviceIds) == 0
 }
 
 // UserRoleAssignments is a helper struct to include role details with assignments
