@@ -45,7 +45,7 @@ func GetOrganisationObjectId(user User) primitive.ObjectID {
 
 type User struct {
 	Id                    primitive.ObjectID     `json:"id" bson:"_id,omitempty"`
-	OrganisationId        primitive.ObjectID     `json:"organisation_id" bson:"organisation_id,omitempty"`
+	OrganisationId        primitive.ObjectID     `json:"organisationId" bson:"organisationId,omitempty"`
 	Username              string                 `json:"username" bson:"username,omitempty"`
 	Password              string                 `json:"password" bson:"password,omitempty"`
 	ForgotPassword        string                 `json:"forgotPassword" bson:"forgotPassword,omitempty"`

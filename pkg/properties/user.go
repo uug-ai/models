@@ -86,7 +86,7 @@ const (
 // User property field names (BSON)
 const (
 	UserId = "_id"
-	UserOrganisationId = "organisation_id"
+	UserOrganisationId = "organisationId"
 	UserUsername = "username"
 	UserPassword = "password"
 	UserForgotPassword = "forgotPassword"
