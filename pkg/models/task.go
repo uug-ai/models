@@ -26,6 +26,7 @@ type TaskStatistics struct {
 
 type Task struct {
 	Id                primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	OrganisationId    string             `json:"organisationId" bson:"organisationId,omitempty"`
 	CreationDate      int64              `json:"creation_date" bson:"creation_date,omitempty"`
 	CreationDateTime  string             `json:"creation_datetime" bson:"creation_datetime,omitempty"`
 	Date              int64              `json:"date" bson:"date,omitempty"`

@@ -27861,6 +27861,7 @@ export interface components {
             notes?: string;
             notes_short?: string;
             notify_assignees?: boolean;
+            organisationId?: string;
             reporter_email?: string;
             reporter_id?: string;
             reporter_profile?: string;
@@ -31642,6 +31643,7 @@ export interface components {
             id?: string;
             in_process?: number;
             key?: string;
+            organisationId?: string;
             provider?: string;
             requiredOperations?: string[];
             resolvedOperations?: string[];
@@ -32962,6 +32964,7 @@ export interface components {
             key?: string;
             /** @description last time the IO was seen */
             lastSeenTimestamp?: number;
+            organisationId?: string;
             /** @description input or output */
             type?: string;
             value?: string;
@@ -33891,6 +33894,7 @@ export interface components {
             id?: string;
             images?: components["schemas"]["models.Media"][];
             notified?: boolean;
+            organisationId?: string;
             start?: number;
             user_id?: string;
         };
@@ -34216,6 +34220,7 @@ export interface components {
             notes?: string;
             notes_short?: string;
             notify_assignees?: boolean;
+            organisationId?: string;
             reporter_email?: string;
             reporter_id?: string;
             reporter_profile?: string;
@@ -34709,6 +34714,7 @@ export interface components {
             liveview?: number;
             master_user_id?: string;
             name?: string;
+            organisationId?: string;
             pass_code?: string;
             /** @description ForceMFA    int      `json:"force_mfa" bson:"force_mfa"` */
             ptz?: number;

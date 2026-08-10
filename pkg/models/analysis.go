@@ -4,6 +4,7 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type AnalysisWrapper struct {
 	Id                 primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	OrganisationId     string             `json:"organisationId" bson:"organisationId,omitempty"`
 	Key                string             `json:"key,omitempty"`
 	Provider           string             `json:"provider" bson:"provider"`
 	Source             string             `json:"source" bson:"source"`

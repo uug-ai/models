@@ -6,6 +6,7 @@ package properties
 // IO property field names (BSON)
 const (
 	IOId = "_id"
+	IOOrganisationId = "organisationId"
 	IOHash = "hash"
 	IODeviceId = "deviceId"
 	IOType = "type"

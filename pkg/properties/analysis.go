@@ -32,6 +32,7 @@ const (
 // AnalysisWrapper property field names (BSON)
 const (
 	AnalysisWrapperId = "_id"
+	AnalysisWrapperOrganisationId = "organisationId"
 	AnalysisWrapperProvider = "provider"
 	AnalysisWrapperSource = "source"
 )

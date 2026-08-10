@@ -42,6 +42,7 @@ const (
 // Task property field names (BSON)
 const (
 	TaskId = "_id"
+	TaskOrganisationId = "organisationId"
 	TaskCreationDate = "creation_date"
 	TaskCreationDateTime = "creation_datetime"
 	TaskDate = "date"
