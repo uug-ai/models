@@ -3,6 +3,7 @@ package models
 type Message struct {
 	Type              string            `json:"type,omitempty" bson:"type,omitempty"`
 	Id                string            `json:"id,omitempty" bson:"id,omitempty"`
+	OrganisationId    string            `json:"organisationId,omitempty" bson:"organisationId,omitempty"`
 	AlertId           string            `json:"alert_id,omitempty" bson:"alert_id,omitempty"`
 	AlertName         string            `json:"alert_name,omitempty" bson:"alert_name,omitempty"`
 	AlertUser         string            `json:"alert_user,omitempty" bson:"alert_user,omitempty"`

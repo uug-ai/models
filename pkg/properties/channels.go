@@ -60,6 +60,14 @@ const (
 	IftttToken = "token"
 )
 
+// OrganisationChannels property field names (BSON)
+const (
+	OrganisationChannelsId = "_id"
+	OrganisationChannelsOrganisationId = "organisationId"
+	OrganisationChannelsChannels = "channels"
+	OrganisationChannelsAudit = "audit"
+)
+
 // Pushbullet property field names (BSON)
 const (
 	PushbulletEnabled = "enabled"

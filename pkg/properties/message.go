@@ -7,6 +7,7 @@ package properties
 const (
 	MessageType = "type"
 	MessageId = "id"
+	MessageOrganisationId = "organisationId"
 	MessageAlertId = "alert_id"
 	MessageAlertName = "alert_name"
 	MessageAlertUser = "alert_user"

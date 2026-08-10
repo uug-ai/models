@@ -1447,6 +1447,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/analyticscount": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AnalyticsCount (schema generation only)
+         * @description Internal endpoint used only to ensure AnalyticsCount schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AnalyticsCount"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/analyticsdashboard": {
         parameters: {
             query?: never;
@@ -16735,6 +16774,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/heatmap": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Heatmap (schema generation only)
+         * @description Internal endpoint used only to ensure Heatmap schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Heatmap"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/highupload": {
         parameters: {
             query?: never;
@@ -17152,6 +17230,84 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.KeyPair"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/label": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Label (schema generation only)
+         * @description Internal endpoint used only to ensure Label schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Label"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/labelwrapper": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get LabelWrapper (schema generation only)
+         * @description Internal endpoint used only to ensure LabelWrapper schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.LabelWrapper"];
                     };
                 };
             };
@@ -18919,6 +19075,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/notificationevent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get NotificationEvent (schema generation only)
+         * @description Internal endpoint used only to ensure NotificationEvent schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.NotificationEvent"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/notificationsettings": {
         parameters: {
             query?: never;
@@ -19102,6 +19297,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Organisation"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/organisationchannels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get OrganisationChannels (schema generation only)
+         * @description Internal endpoint used only to ensure OrganisationChannels schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.OrganisationChannels"];
                     };
                 };
             };
@@ -26407,6 +26641,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/usernotificationmailbox": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UserNotificationMailbox (schema generation only)
+         * @description Internal endpoint used only to ensure UserNotificationMailbox schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UserNotificationMailbox"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/userprofile": {
         parameters: {
             query?: never;
@@ -31670,6 +31943,24 @@ export interface components {
             recordingsPerHour?: components["schemas"]["models.TimeSeriesChart"];
             regionDurationPerHourAlert?: components["schemas"]["models.TimeSeriesChart"];
         };
+        "models.AnalyticsCount": {
+            alert_id?: string;
+            alert_name?: string;
+            count?: number;
+            device_id?: string;
+            duration?: number;
+            id?: string;
+            key?: string;
+            object_id?: string;
+            object_name?: string;
+            organisationId?: string;
+            segment_id?: string;
+            sequence_id?: string;
+            timestamp?: number;
+            type?: string;
+            user_id?: string;
+            username?: string;
+        };
         "models.AnalyticsDashboard": {
             alerts?: components["schemas"]["models.AnalyticsAlertSummary"][];
             charts?: components["schemas"]["models.AnalyticsCharts"];
@@ -32918,6 +33209,17 @@ export interface components {
         "models.HealthMetadata": {
             licenseExpiryDate?: string;
         };
+        "models.Heatmap": {
+            coordinates?: number[][];
+            device_id?: string;
+            frame_height?: number;
+            frame_width?: number;
+            id?: string;
+            key?: string;
+            organisationId?: string;
+            timestamp?: number;
+            user_id?: string;
+        };
         "models.HighUpload": {
             notification?: number;
             requests?: number;
@@ -32979,6 +33281,22 @@ export interface components {
         "models.KeyPair": {
             amazon_access_key_id?: string;
             amazon_secret_access_key?: string;
+        };
+        "models.Label": {
+            audit?: components["schemas"]["models.Audit"];
+            color?: string;
+            created_at?: number;
+            description?: string;
+            id?: string;
+            is_private?: boolean;
+            name?: string;
+            organisationId?: string;
+            owner_id?: string;
+            type?: string[];
+            user_id?: string;
+        };
+        "models.LabelWrapper": {
+            label?: components["schemas"]["models.Label"];
         };
         "models.LightSensorMetadata": {
             /** @description CurrentLux is the latest measured light level in lux */
@@ -33504,6 +33822,7 @@ export interface components {
             /** @description generic, counting, region */
             notification_type?: string;
             number_of_media?: string;
+            organisationId?: string;
             sequence_id?: string;
             sites?: components["schemas"]["models.Site"][];
             spriteFile?: string;
@@ -33561,6 +33880,46 @@ export interface components {
         };
         /** @enum {string} */
         "models.NeedsMode": "any" | "all";
+        "models.NotificationEvent": {
+            alert_id?: string;
+            alert_master_user?: string;
+            alert_name?: string;
+            alert_user?: string;
+            body?: string;
+            classifications?: string[];
+            data?: {
+                [key: string]: string;
+            };
+            data_usage?: string;
+            device_id?: string;
+            device_name?: string;
+            email?: string;
+            groups?: components["schemas"]["models.Group"][];
+            id?: string;
+            media?: components["schemas"]["models.Media"][];
+            media_key?: string;
+            media_provider?: string;
+            media_source?: string;
+            /** @description generic, counting, region */
+            notification_type?: string;
+            number_of_media?: string;
+            organisationId?: string;
+            sequence_id?: string;
+            sites?: components["schemas"]["models.Site"][];
+            spriteFile?: string;
+            spriteInterval?: number;
+            spriteProvider?: string;
+            thumbnail?: string;
+            thumbnailFile?: string;
+            thumbnailProvider?: string;
+            timestamp?: number;
+            timezone?: string;
+            title?: string;
+            type?: string;
+            unread?: boolean;
+            user?: string;
+            userid?: string;
+        };
         "models.NotificationSettings": {
             detections?: components["schemas"]["models.Detections"];
             devices?: components["schemas"]["models.Devices"];
@@ -33597,6 +33956,12 @@ export interface components {
             slug?: string;
             /** @description Billing & Subscription */
             subscription?: components["schemas"]["models.Subscription"];
+        };
+        "models.OrganisationChannels": {
+            audit?: components["schemas"]["models.Audit"];
+            channels?: components["schemas"]["models.Channels"];
+            id?: string;
+            organisationId?: string;
         };
         "models.OrganisationInvitation": {
             audit?: components["schemas"]["models.Audit"];
@@ -34565,6 +34930,11 @@ export interface components {
             user_id?: string;
             username?: string;
         };
+        "models.UserNotificationMailbox": {
+            data?: components["schemas"]["models.Message"][];
+            id?: string;
+            user_id?: string;
+        };
         "models.UserProfile": {
             card?: components["schemas"]["models.Card"];
             user?: components["schemas"]["models.User"];
@@ -35140,6 +35510,7 @@ export namespace models {
     export type AnalysisWrapper = components['schemas']['models.AnalysisWrapper'];
     export type AnalyticsAlertSummary = components['schemas']['models.AnalyticsAlertSummary'];
     export type AnalyticsCharts = components['schemas']['models.AnalyticsCharts'];
+    export type AnalyticsCount = components['schemas']['models.AnalyticsCount'];
     export type AnalyticsDashboard = components['schemas']['models.AnalyticsDashboard'];
     export type AnalyticsEvent = components['schemas']['models.AnalyticsEvent'];
     export type AnalyticsFilter = components['schemas']['models.AnalyticsFilter'];
@@ -35253,6 +35624,7 @@ export namespace models {
     export type GroupOption = components['schemas']['models.GroupOption'];
     export type Health = components['schemas']['models.Health'];
     export type HealthMetadata = components['schemas']['models.HealthMetadata'];
+    export type Heatmap = components['schemas']['models.Heatmap'];
     export type HighUpload = components['schemas']['models.HighUpload'];
     export type Highupload = components['schemas']['models.Highupload'];
     export type HourRange = components['schemas']['models.HourRange'];
@@ -35261,6 +35633,8 @@ export namespace models {
     export type IO = components['schemas']['models.IO'];
     export type Ifttt = components['schemas']['models.Ifttt'];
     export type KeyPair = components['schemas']['models.KeyPair'];
+    export type Label = components['schemas']['models.Label'];
+    export type LabelWrapper = components['schemas']['models.LabelWrapper'];
     export type LightSensorMetadata = components['schemas']['models.LightSensorMetadata'];
     export type Livestream = components['schemas']['models.Livestream'];
     export type Location = components['schemas']['models.Location'];
@@ -35293,11 +35667,13 @@ export namespace models {
     export type Model = components['schemas']['models.Model'];
     export type ModelOption = components['schemas']['models.ModelOption'];
     export type MonitorStage = components['schemas']['models.MonitorStage'];
+    export type NotificationEvent = components['schemas']['models.NotificationEvent'];
     export type NotificationSettings = components['schemas']['models.NotificationSettings'];
     export type NotificationStage = components['schemas']['models.NotificationStage'];
     export type NotificationUpdate = components['schemas']['models.NotificationUpdate'];
     export type NotificationUpdatePayload = components['schemas']['models.NotificationUpdatePayload'];
     export type Organisation = components['schemas']['models.Organisation'];
+    export type OrganisationChannels = components['schemas']['models.OrganisationChannels'];
     export type OrganisationInvitation = components['schemas']['models.OrganisationInvitation'];
     export type OrganisationMember = components['schemas']['models.OrganisationMember'];
     export type OrganisationSettings = components['schemas']['models.OrganisationSettings'];
@@ -35374,6 +35750,7 @@ export namespace models {
     export type UpdateWorkflowStageInput = components['schemas']['models.UpdateWorkflowStageInput'];
     export type UpdateWorkflowStageOutput = components['schemas']['models.UpdateWorkflowStageOutput'];
     export type User = components['schemas']['models.User'];
+    export type UserNotificationMailbox = components['schemas']['models.UserNotificationMailbox'];
     export type UserProfile = components['schemas']['models.UserProfile'];
     export type UserProfileSettings = components['schemas']['models.UserProfileSettings'];
     export type UserRoleAssignments = components['schemas']['models.UserRoleAssignments'];
