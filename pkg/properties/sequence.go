@@ -6,6 +6,7 @@ package properties
 // Sequence property field names (BSON)
 const (
 	SequenceId = "_id"
+	SequenceOrganisationId = "organisationId"
 	SequenceUserId = "user_id"
 	SequenceAnalysis = "analysis"
 )

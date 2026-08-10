@@ -25,6 +25,26 @@ const (
 	AnalyticsChartsRegionDurationPerHourAlert = "regionDurationPerHourAlert"
 )
 
+// AnalyticsCount property field names (BSON)
+const (
+	AnalyticsCountId = "_id"
+	AnalyticsCountOrganisationId = "organisationId"
+	AnalyticsCountKey = "key"
+	AnalyticsCountTimestamp = "timestamp"
+	AnalyticsCountUsername = "username"
+	AnalyticsCountUserId = "user_id"
+	AnalyticsCountDeviceId = "device_id"
+	AnalyticsCountSegmentId = "segment_id"
+	AnalyticsCountObjectId = "object_id"
+	AnalyticsCountObjectName = "object_name"
+	AnalyticsCountCount = "count"
+	AnalyticsCountDuration = "duration"
+	AnalyticsCountAlertId = "alert_id"
+	AnalyticsCountAlertName = "alert_name"
+	AnalyticsCountSequenceId = "sequence_id"
+	AnalyticsCountType = "type"
+)
+
 // AnalyticsDashboard property field names (BSON)
 const (
 	AnalyticsDashboardSummary = "summary"
@@ -84,4 +104,17 @@ const (
 	DirectionalTimeSeriesChartAll = "all"
 	DirectionalTimeSeriesChartIn = "in"
 	DirectionalTimeSeriesChartOut = "out"
+)
+
+// Heatmap property field names (BSON)
+const (
+	HeatmapId = "_id"
+	HeatmapOrganisationId = "organisationId"
+	HeatmapKey = "key"
+	HeatmapTimestamp = "timestamp"
+	HeatmapUserId = "user_id"
+	HeatmapDeviceId = "device_id"
+	HeatmapFrameWidth = "frame_width"
+	HeatmapFrameHeight = "frame_height"
+	HeatmapCoordinates = "coordinates"
 )

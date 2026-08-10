@@ -6,6 +6,7 @@ package properties
 // Videowall property field names (BSON)
 const (
 	VideowallId = "_id"
+	VideowallOrganisationId = "organisationId"
 	VideowallName = "name"
 	VideowallDescription = "description"
 	VideowallSites = "sites"

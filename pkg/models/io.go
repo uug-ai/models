@@ -4,6 +4,7 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type IO struct {
 	Id                primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	OrganisationId    string             `json:"organisationId" bson:"organisationId,omitempty"`
 	Hash              string             `json:"hash" bson:"hash,omitempty"`
 	DeviceId          string             `json:"deviceId" bson:"deviceId,omitempty"` // device identifier
 	Type              string             `json:"type" bson:"type,omitempty"`         // input or output

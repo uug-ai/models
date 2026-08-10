@@ -1,5 +1,14 @@
 package models
 
+import "go.mongodb.org/mongo-driver/bson/primitive"
+
+type OrganisationChannels struct {
+	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
+	Channels       Channels           `json:"channels" bson:"channels"`
+	Audit          *Audit             `json:"audit,omitempty" bson:"audit,omitempty"`
+}
+
 type Channels struct {
 	Pushbullet Pushbullet `json:"pushbullet" bson:"pushbullet,omitempty"`
 	Email      Email      `json:"email" bson:"email,omitempty"`
