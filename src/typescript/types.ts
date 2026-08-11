@@ -31043,7 +31043,9 @@ export interface components {
             organisationId?: string;
         };
         "api.SetCurrentOrganisationResponse": {
+            expire?: string;
             organisation?: components["schemas"]["models.Organisation"];
+            token?: string;
         };
         "api.SetCurrentOrganisationSuccessResponse": {
             /** @description Application-specific status code */

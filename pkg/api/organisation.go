@@ -104,6 +104,8 @@ type SetCurrentOrganisationRequest struct {
 }
 type SetCurrentOrganisationResponse struct {
 	Organisation models.Organisation `json:"organisation"`
+	Token        string              `json:"token"`
+	Expire       string              `json:"expire"`
 }
 type SetCurrentOrganisationSuccessResponse struct {
 	SuccessResponse
