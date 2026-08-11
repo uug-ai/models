@@ -76,6 +76,11 @@ type MarkerSummary struct {
 	TagNames       []string `json:"tagNames,omitempty" bson:"tagNames,omitempty"`
 	StartTimestamp int64    `json:"startTimestamp,omitempty" bson:"startTimestamp,omitempty"`
 	EndTimestamp   int64    `json:"endTimestamp,omitempty" bson:"endTimestamp,omitempty"`
+
+	// Detections mirrors the source marker's Detections so the frontend can map a
+	// summarised marker to its detection track(s) — and toggle their bounding-box
+	// overlay — without a second query. Empty when the marker has no detection link.
+	Detections []DetectionRef `json:"detections,omitempty" bson:"detections,omitempty"`
 }
 
 // We can store additional metadata for media files, such as tags and classifications.

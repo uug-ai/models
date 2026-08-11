@@ -37,6 +37,12 @@ type Marker struct {
 	// Additional metadata
 	Metadata *MarkerMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"` // Metadata associated with the marker, such as comments and tags
 
+	// Detections links this marker to the detection track(s) it was derived from,
+	// enabling on-demand bounding-box overlays on the recording. Each entry points
+	// at a stored detection track (see DetectionRef). A marker usually links to a
+	// single track but may reference several; empty when no detection link is known.
+	Detections []DetectionRef `json:"detections,omitempty" bson:"detections,omitempty"`
+
 	// AtRuntimeMetadata contains metadata that is generated at runtime, which can include
 	// more verbose information about the device's current state, capabilities, or configuration.
 	// for example the linked sites details, etc.
@@ -93,6 +99,18 @@ type MarkerBox struct {
 	Y      float64 `json:"y" bson:"y" example:"0.34"`           // Top edge, fraction of frame height
 	Width  float64 `json:"width" bson:"width" example:"0.20"`   // Box width, fraction of frame width
 	Height float64 `json:"height" bson:"height" example:"0.10"` // Box height, fraction of frame height
+}
+
+// DetectionRef links a marker to a specific detection track it was derived from,
+// so the UI can toggle that detection's bounding-box overlay on the recording on
+// demand. It points into the dedicated "detections" collection: RunId is the
+// DetectionRun's Source.RunId and TrackId is the FaceRedactionTrack.Id within
+// that run. Both resolve against the same recording the marker attaches to (see
+// Marker.MediaKeys / DetectionRun.Key), so no organisation/device scoping is
+// duplicated here.
+type DetectionRef struct {
+	RunId   string `json:"runId" bson:"runId" example:"01J8Z9Q2A7K3"` // DetectionRun.Source.RunId
+	TrackId string `json:"trackId" bson:"trackId" example:"track-3"` // FaceRedactionTrack.Id within the run
 }
 
 type MarkerAtRuntimeMetadata struct {

@@ -37,6 +37,7 @@ const (
 	MarkerSummaryTagNames = "tagNames"
 	MarkerSummaryStartTimestamp = "startTimestamp"
 	MarkerSummaryEndTimestamp = "endTimestamp"
+	MarkerSummaryDetections = "detections"
 )
 
 // Media property field names (BSON)
