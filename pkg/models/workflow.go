@@ -351,7 +351,13 @@ type Workflow struct {
 	Stages         []WorkflowStage `json:"stages,omitempty" bson:"stages,omitempty"`
 	UserId         string          `json:"user_id" bson:"user_id,omitempty"`
 	Username       string          `json:"username" bson:"username,omitempty"`
-	OrganisationId string          `json:"organisation_id" bson:"organisation_id,omitempty"`
+	// OrganisationId is the canonical tenant key. It is persisted as the
+	// camelCase `organisationId` field to match the platform-wide convention for
+	// organisation-owned domain resources; the JSON tag stays `organisation_id`
+	// for API back-compatibility. Documents written before this spelling change
+	// carry the legacy snake-case `organisation_id` field and are matched by the
+	// reader's legacy fallback until a Phase 4 backfill rewrites them.
+	OrganisationId string          `json:"organisation_id" bson:"organisationId,omitempty"`
 	CreatedAt      int64           `json:"created_at" bson:"created_at,omitempty"`
 	UpdatedAt      int64           `json:"updated_at" bson:"updated_at,omitempty"`
 }

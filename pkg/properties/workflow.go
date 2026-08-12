@@ -17,7 +17,7 @@ const (
 	WorkflowStages = "stages"
 	WorkflowUserId = "user_id"
 	WorkflowUsername = "username"
-	WorkflowOrganisationId = "organisation_id"
+	WorkflowOrganisationId = "organisationId"
 	WorkflowCreatedAt = "created_at"
 	WorkflowUpdatedAt = "updated_at"
 )
