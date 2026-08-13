@@ -307,7 +307,7 @@ type GetWorkflowStagesOutput struct {
 
 type GetWorkflowStageInput struct {
 	User    User   `json:"user"`
-	StageId string `json:"stage_id"`
+	StageId string `json:"stageId"`
 }
 
 type GetWorkflowStageOutput struct {
@@ -325,7 +325,7 @@ type CreateWorkflowStageOutput struct {
 
 type UpdateWorkflowStageInput struct {
 	User    User          `json:"user"`
-	StageId string        `json:"stage_id"`
+	StageId string        `json:"stageId"`
 	Stage   WorkflowStage `json:"stage"`
 }
 
@@ -335,7 +335,7 @@ type UpdateWorkflowStageOutput struct {
 
 type DeleteWorkflowStageInput struct {
 	User    User   `json:"user"`
-	StageId string `json:"stage_id"`
+	StageId string `json:"stageId"`
 }
 
 type DeleteWorkflowStageOutput struct{}

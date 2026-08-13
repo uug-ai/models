@@ -15,11 +15,12 @@ const (
 	WorkflowNodes = "nodes"
 	WorkflowEdges = "edges"
 	WorkflowStages = "stages"
-	WorkflowUserId = "user_id"
+	WorkflowUserId = "userId"
 	WorkflowUsername = "username"
-	WorkflowOrganisationId = "organisation_id"
-	WorkflowCreatedAt = "created_at"
-	WorkflowUpdatedAt = "updated_at"
+	WorkflowOrganisationId = "organisationId"
+	WorkflowCreatedAt = "createdAt"
+	WorkflowUpdatedAt = "updatedAt"
+	WorkflowAudit = "audit"
 )
 
 // WorkflowEdge property field names (BSON)

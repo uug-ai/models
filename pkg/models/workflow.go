@@ -2,8 +2,10 @@ package models
 
 import (
 	"crypto/sha256"
+	"encoding/json"
 	"time"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -301,9 +303,9 @@ const (
 	// scoped to that user's organisation. It is the default (an empty Source is
 	// treated as this) and is editable in the UI.
 	WorkflowSourceUser WorkflowSource = "user"
-	// WorkflowSourceConfig is a workflow seeded from deployment configuration
+	// WorkflowSourceConfig is a workflow loaded from deployment configuration
 	// (helm). It is deployment-global — available to every organisation — and
-	// ops-managed: created and updated only by the seeding reconcile, and
+	// ops-managed: created and updated only through deployment configuration, and
 	// read-only in the UI. A config workflow carries an empty OrganisationId to
 	// signal its global scope (see IsGlobal).
 	WorkflowSourceConfig WorkflowSource = "config"
@@ -320,7 +322,7 @@ type Workflow struct {
 	Enabled     bool               `json:"enabled" bson:"enabled"`
 	// Source is the workflow's provenance and availability (see WorkflowSource).
 	// Empty means WorkflowSourceUser: an ordinary user workflow scoped to its
-	// OrganisationId. WorkflowSourceConfig marks a helm-seeded, deployment-global,
+	// OrganisationId. WorkflowSourceConfig marks a Helm-defined, deployment-global,
 	// read-only workflow. Every workflow persisted before this field existed
 	// decodes as user.
 	Source WorkflowSource `json:"source,omitempty" bson:"source,omitempty"`
@@ -348,12 +350,87 @@ type Workflow struct {
 	// meaningful here; a stage's deployment fields (image, queue, replicas, …) are
 	// resolved by Operation against the shared deployed catalog, not per workflow.
 	// Operations need only be unique within a single workflow, not globally.
-	Stages         []WorkflowStage `json:"stages,omitempty" bson:"stages,omitempty"`
-	UserId         string          `json:"user_id" bson:"user_id,omitempty"`
-	Username       string          `json:"username" bson:"username,omitempty"`
-	OrganisationId string          `json:"organisation_id" bson:"organisation_id,omitempty"`
-	CreatedAt      int64           `json:"created_at" bson:"created_at,omitempty"`
-	UpdatedAt      int64           `json:"updated_at" bson:"updated_at,omitempty"`
+	Stages   []WorkflowStage `json:"stages,omitempty" bson:"stages,omitempty"`
+	UserId   string          `json:"userId" bson:"userId,omitempty"`
+	Username string          `json:"username" bson:"username,omitempty"`
+	// OrganisationId is the canonical tenant key. It is persisted as the
+	// camelCase `organisationId` field to match the platform-wide convention for
+	// organisation-owned domain resources. Database-backed workflows are not yet
+	// materially used in deployments, so new documents start with this canonical
+	// contract while readers may retain a legacy `organisation_id` fallback.
+	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
+	CreatedAt      int64  `json:"createdAt" bson:"createdAt,omitempty"`
+	UpdatedAt      int64  `json:"updatedAt" bson:"updatedAt,omitempty"`
+	// Audit carries bounded actor/timestamp metadata for database-backed user
+	// workflows. It is omitted from Helm-defined global workflows unless set.
+	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
+}
+
+// UnmarshalJSON accepts the pre-canonical snake_case ownership and timestamp
+// fields during the migration window. Marshal output remains canonical because
+// the Workflow field tags above are camelCase. A populated canonical field wins
+// when both representations are present.
+func (w *Workflow) UnmarshalJSON(data []byte) error {
+	type workflowAlias Workflow
+	decoded := struct {
+		*workflowAlias
+		LegacyUserId         string `json:"user_id"`
+		LegacyOrganisationId string `json:"organisation_id"`
+		LegacyCreatedAt      int64  `json:"created_at"`
+		LegacyUpdatedAt      int64  `json:"updated_at"`
+	}{workflowAlias: (*workflowAlias)(w)}
+
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	w.populateLegacyFields(
+		decoded.LegacyUserId,
+		decoded.LegacyOrganisationId,
+		decoded.LegacyCreatedAt,
+		decoded.LegacyUpdatedAt,
+	)
+	return nil
+}
+
+// UnmarshalBSON provides the same transitional compatibility for existing
+// workflow documents. New and updated documents are always written using the
+// canonical camelCase BSON tags on Workflow.
+func (w *Workflow) UnmarshalBSON(data []byte) error {
+	type workflowAlias Workflow
+	var decoded struct {
+		Workflow             workflowAlias `bson:",inline"`
+		LegacyUserId         string        `bson:"user_id"`
+		LegacyOrganisationId string        `bson:"organisation_id"`
+		LegacyCreatedAt      int64         `bson:"created_at"`
+		LegacyUpdatedAt      int64         `bson:"updated_at"`
+	}
+
+	if err := bson.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*w = Workflow(decoded.Workflow)
+	w.populateLegacyFields(
+		decoded.LegacyUserId,
+		decoded.LegacyOrganisationId,
+		decoded.LegacyCreatedAt,
+		decoded.LegacyUpdatedAt,
+	)
+	return nil
+}
+
+func (w *Workflow) populateLegacyFields(userId, organisationId string, createdAt, updatedAt int64) {
+	if w.UserId == "" {
+		w.UserId = userId
+	}
+	if w.OrganisationId == "" {
+		w.OrganisationId = organisationId
+	}
+	if w.CreatedAt == 0 {
+		w.CreatedAt = createdAt
+	}
+	if w.UpdatedAt == 0 {
+		w.UpdatedAt = updatedAt
+	}
 }
 
 // EffectiveSource returns the workflow's provenance, defaulting an empty Source
@@ -367,7 +444,7 @@ func (w *Workflow) EffectiveSource() WorkflowSource {
 }
 
 // IsGlobal reports whether this workflow is available to every organisation. A
-// global workflow is one seeded from deployment configuration
+// global workflow is one loaded from deployment configuration
 // (WorkflowSourceConfig) with no owning organisation, so surfaces list it
 // alongside the caller's own workflows without any per-org copy.
 func (w *Workflow) IsGlobal() bool {
@@ -377,7 +454,7 @@ func (w *Workflow) IsGlobal() bool {
 // EffectiveID resolves the stable, run-facing id of a workflow and is the single
 // source of truth for that derivation. A workflow with an explicit Id (a
 // persisted user workflow, or a config workflow that carries one) uses it; a
-// config workflow seeded from helm without an id gets a deterministic id derived
+// config workflow loaded from Helm without an id gets a deterministic id derived
 // from its Name, so the same definition always yields the same id across
 // restarts and every service agrees on its identity without persisting it — a
 // run one service seeds resolves to the workflow another service loaded from the
@@ -499,7 +576,7 @@ type GetWorkflowsOutput struct {
 
 type GetWorkflowInput struct {
 	User       User   `json:"user"`
-	WorkflowId string `json:"workflow_id"`
+	WorkflowId string `json:"workflowId"`
 }
 
 type GetWorkflowOutput struct {
@@ -517,7 +594,7 @@ type CreateWorkflowOutput struct {
 
 type UpdateWorkflowInput struct {
 	User       User     `json:"user"`
-	WorkflowId string   `json:"workflow_id"`
+	WorkflowId string   `json:"workflowId"`
 	Workflow   Workflow `json:"workflow"`
 }
 
@@ -527,7 +604,7 @@ type UpdateWorkflowOutput struct {
 
 type DeleteWorkflowInput struct {
 	User       User   `json:"user"`
-	WorkflowId string `json:"workflow_id"`
+	WorkflowId string `json:"workflowId"`
 }
 
 type DeleteWorkflowOutput struct{}

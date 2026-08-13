@@ -6244,6 +6244,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/detectionref": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DetectionRef (schema generation only)
+         * @description Internal endpoint used only to ensure DetectionRef schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DetectionRef"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/detectionrejection": {
         parameters: {
             query?: never;
@@ -32604,11 +32643,11 @@ export interface components {
         "models.DeleteVideowallOutput": Record<string, never>;
         "models.DeleteWorkflowInput": {
             user?: components["schemas"]["models.User"];
-            workflow_id?: string;
+            workflowId?: string;
         };
         "models.DeleteWorkflowOutput": Record<string, never>;
         "models.DeleteWorkflowStageInput": {
-            stage_id?: string;
+            stageId?: string;
             user?: components["schemas"]["models.User"];
         };
         "models.DeleteWorkflowStageOutput": Record<string, never>;
@@ -32677,6 +32716,18 @@ export interface components {
             height?: number;
             rotation?: number;
             width?: number;
+        };
+        "models.DetectionRef": {
+            /**
+             * @description DetectionRun.Source.RunId
+             * @example 01J8Z9Q2A7K3
+             */
+            runId?: string;
+            /**
+             * @description FaceRedactionTrack.Id within the run
+             * @example track-3
+             */
+            trackId?: string;
         };
         "models.DetectionRun": {
             categories?: components["schemas"]["models.DetectionCategory"][];
@@ -33123,13 +33174,13 @@ export interface components {
         };
         "models.GetWorkflowInput": {
             user?: components["schemas"]["models.User"];
-            workflow_id?: string;
+            workflowId?: string;
         };
         "models.GetWorkflowOutput": {
             workflow?: components["schemas"]["models.Workflow"];
         };
         "models.GetWorkflowStageInput": {
-            stage_id?: string;
+            stageId?: string;
             user?: components["schemas"]["models.User"];
         };
         "models.GetWorkflowStageOutput": {
@@ -33337,6 +33388,11 @@ export interface components {
              * @example Person forcably opened a door
              */
             description?: string;
+            /** @description Detections links this marker to the detection track(s) it was derived from,
+             *     enabling on-demand bounding-box overlays on the recording. Each entry points
+             *     at a stored detection track (see DetectionRef). A marker usually links to a
+             *     single track but may reference several; empty when no detection link is known. */
+            detections?: components["schemas"]["models.DetectionRef"][];
             /**
              * @description RBAC information
              * @example 686a906345c1df594939f9j25f4
@@ -33605,6 +33661,10 @@ export interface components {
         };
         "models.MarkerSummary": {
             categoryNames?: string[];
+            /** @description Detections mirrors the source marker's Detections so the frontend can map a
+             *     summarised marker to its detection track(s) — and toggle their bounding-box
+             *     overlay — without a second query. Empty when the marker has no detection link. */
+            detections?: components["schemas"]["models.DetectionRef"][];
             endTimestamp?: number;
             eventNames?: string[];
             name?: string;
@@ -34830,14 +34890,14 @@ export interface components {
         "models.UpdateWorkflowInput": {
             user?: components["schemas"]["models.User"];
             workflow?: components["schemas"]["models.Workflow"];
-            workflow_id?: string;
+            workflowId?: string;
         };
         "models.UpdateWorkflowOutput": {
             workflow?: components["schemas"]["models.Workflow"];
         };
         "models.UpdateWorkflowStageInput": {
             stage?: components["schemas"]["models.WorkflowStage"];
-            stage_id?: string;
+            stageId?: string;
             user?: components["schemas"]["models.User"];
         };
         "models.UpdateWorkflowStageOutput": {
@@ -35119,17 +35179,25 @@ export interface components {
             timezone?: string;
         };
         "models.Workflow": {
-            created_at?: number;
+            /** @description Audit carries bounded actor/timestamp metadata for database-backed user
+             *     workflows. It is omitted from Helm-defined global workflows unless set. */
+            audit?: components["schemas"]["models.Audit"];
+            createdAt?: number;
             description?: string;
             edges?: components["schemas"]["models.WorkflowEdge"][];
             enabled?: boolean;
             id?: string;
             name?: string;
             nodes?: components["schemas"]["models.WorkflowNode"][];
-            organisation_id?: string;
+            /** @description OrganisationId is the canonical tenant key. It is persisted as the
+             *     camelCase `organisationId` field to match the platform-wide convention for
+             *     organisation-owned domain resources. Database-backed workflows are not yet
+             *     materially used in deployments, so new documents start with this canonical
+             *     contract while readers may retain a legacy `organisation_id` fallback. */
+            organisationId?: string;
             /** @description Source is the workflow's provenance and availability (see WorkflowSource).
              *     Empty means WorkflowSourceUser: an ordinary user workflow scoped to its
-             *     OrganisationId. WorkflowSourceConfig marks a helm-seeded, deployment-global,
+             *     OrganisationId. WorkflowSourceConfig marks a Helm-defined, deployment-global,
              *     read-only workflow. Every workflow persisted before this field existed
              *     decodes as user. */
             source?: components["schemas"]["models.WorkflowSource"];
@@ -35156,8 +35224,8 @@ export interface components {
              *     carry both an automatic and a manual trigger so it runs on its own for
              *     matching recordings and can also be launched on demand from a surface. */
             triggers?: components["schemas"]["models.WorkflowTrigger"][];
-            updated_at?: number;
-            user_id?: string;
+            updatedAt?: number;
+            userId?: string;
             username?: string;
         };
         "models.WorkflowDevice": {
@@ -35572,6 +35640,7 @@ export namespace models {
     export type DeprecatedPreset = components['schemas']['models.DeprecatedPreset'];
     export type DetectionCategory = components['schemas']['models.DetectionCategory'];
     export type DetectionMedia = components['schemas']['models.DetectionMedia'];
+    export type DetectionRef = components['schemas']['models.DetectionRef'];
     export type DetectionRun = components['schemas']['models.DetectionRun'];
     export type DetectionSource = components['schemas']['models.DetectionSource'];
     export type Detections = components['schemas']['models.Detections'];
