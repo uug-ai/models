@@ -114,8 +114,9 @@ type WorkflowRun struct {
 	Operation string `json:"operation,omitempty" bson:"-"`
 
 	// RunId is the run's identifier on the wire (the hex of the document Id). It
-	// is empty on the analysis hand-off — the run is keyed by Key until the
-	// engine opens it — and set on every engine→worker dispatch. The persisted
+	// is empty on an untargeted analysis hand-off; after workflow matching, the
+	// engine derives a distinct document identity per recording, organisation,
+	// and workflow. It is set on every engine→worker dispatch. The persisted
 	// identity is Id, so RunId itself is wire-only.
 	//
 	// It is never set by hand: MarshalJSON derives it from Id whenever a run that
@@ -132,10 +133,9 @@ type WorkflowRun struct {
 	Id primitive.ObjectID `json:"-" bson:"_id,omitempty"`
 
 	// WorkflowId is the id of the Workflow definition (models.Workflow) this run
-	// executes — the authored graph (nodes/edges/trigger) the run is an execution
-	// of, as opposed to the global stage registry. Forward-looking: it is set once
-	// the engine executes Workflow graphs; while the engine is driven by the flat
-	// stage registry it is empty.
+	// executes — the authored graph (nodes/edges/triggers) the run is an execution
+	// of. It is empty only on an untargeted analysis hand-off; the engine stamps it
+	// as it fans that recording out to each matching config or database workflow.
 	WorkflowId string `json:"workflowId,omitempty" bson:"workflowid,omitempty"`
 
 	// WorkflowName is the human-readable name of that Workflow, carried so a
@@ -172,8 +172,10 @@ type WorkflowRun struct {
 	// (a case id today; a temporal device-series id is a forward-looking twin).
 	SourceRef string `json:"sourceRef,omitempty" bson:"sourceref,omitempty"`
 
-	// Key is the media key the run is about: its natural identity, used to load
-	// or open the run document. Copied from the recording at hand-off time.
+	// Key is the media key the run is about. It is copied from the recording at
+	// hand-off time and can group all runs for that recording, but is not unique:
+	// run state is correlated by Id/RunId because several workflows and manual
+	// re-runs may execute over the same key.
 	Key string `json:"key,omitempty" bson:"key"`
 
 	// RecordingTimestamp is the recording's start time (unix seconds), copied
