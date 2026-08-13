@@ -10,6 +10,188 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+func TestWorkflowSerializationUsesCanonicalFieldNames(t *testing.T) {
+	now := time.Now().UTC().Truncate(time.Millisecond)
+	workflow := Workflow{
+		UserId:         "user-1",
+		OrganisationId: "org-1",
+		CreatedAt:      1,
+		UpdatedAt:      2,
+		Audit: &Audit{
+			CreatedBy: "user-1",
+			CreatedAt: now,
+			UpdatedBy: "user-1",
+			UpdatedAt: now,
+		},
+	}
+
+	jsonData, err := json.Marshal(workflow)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var jsonDocument map[string]any
+	if err := json.Unmarshal(jsonData, &jsonDocument); err != nil {
+		t.Fatal(err)
+	}
+	for _, key := range []string{"userId", "organisationId", "createdAt", "updatedAt", "audit"} {
+		if _, exists := jsonDocument[key]; !exists {
+			t.Errorf("canonical JSON field %q was not emitted", key)
+		}
+	}
+	for _, key := range []string{"user_id", "organisation_id", "created_at", "updated_at"} {
+		if _, exists := jsonDocument[key]; exists {
+			t.Errorf("legacy JSON field %q was emitted", key)
+		}
+	}
+
+	bsonData, err := bson.Marshal(workflow)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var bsonDocument bson.M
+	if err := bson.Unmarshal(bsonData, &bsonDocument); err != nil {
+		t.Fatal(err)
+	}
+	for _, key := range []string{"userId", "organisationId", "createdAt", "updatedAt", "audit"} {
+		if _, exists := bsonDocument[key]; !exists {
+			t.Errorf("canonical BSON field %q was not emitted", key)
+		}
+	}
+	for _, key := range []string{"user_id", "organisation_id", "created_at", "updated_at"} {
+		if _, exists := bsonDocument[key]; exists {
+			t.Errorf("legacy BSON field %q was emitted", key)
+		}
+	}
+}
+
+func TestWorkflowDeserializationAcceptsLegacyFieldNames(t *testing.T) {
+	tests := []struct {
+		name     string
+		decode   func(*Workflow) error
+		workflow Workflow
+	}{
+		{
+			name: "JSON",
+			decode: func(workflow *Workflow) error {
+				return json.Unmarshal([]byte(`{
+					"user_id":"legacy-user",
+					"organisation_id":"legacy-org",
+					"created_at":1,
+					"updated_at":2
+				}`), workflow)
+			},
+		},
+		{
+			name: "BSON",
+			decode: func(workflow *Workflow) error {
+				data, err := bson.Marshal(bson.M{
+					"user_id":         "legacy-user",
+					"organisation_id": "legacy-org",
+					"created_at":      int64(1),
+					"updated_at":      int64(2),
+				})
+				if err != nil {
+					return err
+				}
+				return bson.Unmarshal(data, workflow)
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			var workflow Workflow
+			if err := tc.decode(&workflow); err != nil {
+				t.Fatal(err)
+			}
+			if workflow.UserId != "legacy-user" || workflow.OrganisationId != "legacy-org" || workflow.CreatedAt != 1 || workflow.UpdatedAt != 2 {
+				t.Fatalf("legacy fields were not decoded: %+v", workflow)
+			}
+		})
+	}
+}
+
+func TestWorkflowDeserializationPrefersCanonicalFieldNames(t *testing.T) {
+	tests := []struct {
+		name   string
+		decode func(*Workflow) error
+	}{
+		{
+			name: "JSON",
+			decode: func(workflow *Workflow) error {
+				return json.Unmarshal([]byte(`{
+					"userId":"canonical-user","user_id":"legacy-user",
+					"organisationId":"canonical-org","organisation_id":"legacy-org",
+					"createdAt":10,"created_at":1,
+					"updatedAt":20,"updated_at":2
+				}`), workflow)
+			},
+		},
+		{
+			name: "BSON",
+			decode: func(workflow *Workflow) error {
+				data, err := bson.Marshal(bson.M{
+					"userId":          "canonical-user",
+					"user_id":         "legacy-user",
+					"organisationId":  "canonical-org",
+					"organisation_id": "legacy-org",
+					"createdAt":       int64(10),
+					"created_at":      int64(1),
+					"updatedAt":       int64(20),
+					"updated_at":      int64(2),
+				})
+				if err != nil {
+					return err
+				}
+				return bson.Unmarshal(data, workflow)
+			},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			var workflow Workflow
+			if err := tc.decode(&workflow); err != nil {
+				t.Fatal(err)
+			}
+			if workflow.UserId != "canonical-user" || workflow.OrganisationId != "canonical-org" || workflow.CreatedAt != 10 || workflow.UpdatedAt != 20 {
+				t.Fatalf("canonical fields did not take precedence: %+v", workflow)
+			}
+		})
+	}
+}
+
+func TestWorkflowRepositoryInputSerializationUsesCamelCaseIds(t *testing.T) {
+	tests := []struct {
+		name string
+		in   any
+		key  string
+	}{
+		{name: "get workflow", in: GetWorkflowInput{WorkflowId: "workflow-1"}, key: "workflowId"},
+		{name: "update workflow", in: UpdateWorkflowInput{WorkflowId: "workflow-1"}, key: "workflowId"},
+		{name: "delete workflow", in: DeleteWorkflowInput{WorkflowId: "workflow-1"}, key: "workflowId"},
+		{name: "get workflow stage", in: GetWorkflowStageInput{StageId: "stage-1"}, key: "stageId"},
+		{name: "update workflow stage", in: UpdateWorkflowStageInput{StageId: "stage-1"}, key: "stageId"},
+		{name: "delete workflow stage", in: DeleteWorkflowStageInput{StageId: "stage-1"}, key: "stageId"},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			data, err := json.Marshal(tc.in)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var document map[string]any
+			if err := json.Unmarshal(data, &document); err != nil {
+				t.Fatal(err)
+			}
+			if _, exists := document[tc.key]; !exists {
+				t.Fatalf("canonical JSON field %q was not emitted", tc.key)
+			}
+		})
+	}
+}
+
 func TestWorkflowTrigger_EffectiveType(t *testing.T) {
 	if got := (WorkflowTrigger{}).EffectiveType(); got != WorkflowTriggerAutomatic {
 		t.Fatalf("empty Type should default to automatic, got %q", got)

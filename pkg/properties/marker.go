@@ -3,6 +3,12 @@
 
 package properties
 
+// DetectionRef property field names (BSON)
+const (
+	DetectionRefRunId = "runId"
+	DetectionRefTrackId = "trackId"
+)
+
 // Marker property field names (BSON)
 const (
 	MarkerId = "_id"
@@ -20,6 +26,7 @@ const (
 	MarkerDescription = "description"
 	MarkerCategories = "categories"
 	MarkerMetadata = "metadata"
+	MarkerDetections = "detections"
 	MarkerAtRuntimeMetadata = "atRuntimeMetadata"
 	MarkerSynchronize = "synchronize"
 	MarkerAudit = "audit"
