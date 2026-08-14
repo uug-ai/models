@@ -3,22 +3,27 @@ package models
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type AnalysisWrapper struct {
-	Id                 primitive.ObjectID `json:"id" bson:"_id,omitempty"`
-	OrganisationId     string             `json:"organisationId" bson:"organisationId,omitempty"`
-	Key                string             `json:"key,omitempty"`
-	Provider           string             `json:"provider" bson:"provider"`
-	Source             string             `json:"source" bson:"source"`
-	InProcess          int64              `json:"in_process,omitempty"`
-	Timestamp          int64              `json:"timestamp,omitempty"`
-	Start              int64              `json:"start,omitempty"`
-	End                int64              `json:"end,omitempty"`
-	UserId             string             `json:"user_id,omitempty"`
-	DeviceId           string             `json:"device_id,omitempty"`
-	AsyncOperations    []string           `json:"asyncOperations,omitempty"`
-	RequiredOperations []string           `json:"requiredOperations,omitempty"`
-	ResolvedOperations []string           `json:"resolvedOperations,omitempty"`
-	Favourite          bool               `json:"favourite,omitempty"`
-	Data               Analysis           `json:"data,omitempty"`
+	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
+
+	// ProjectId optionally places the analysis in a project within its organisation.
+	// A nil value keeps the analysis organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
+	Key                string   `json:"key,omitempty"`
+	Provider           string   `json:"provider" bson:"provider"`
+	Source             string   `json:"source" bson:"source"`
+	InProcess          int64    `json:"in_process,omitempty"`
+	Timestamp          int64    `json:"timestamp,omitempty"`
+	Start              int64    `json:"start,omitempty"`
+	End                int64    `json:"end,omitempty"`
+	UserId             string   `json:"user_id,omitempty"`
+	DeviceId           string   `json:"device_id,omitempty"`
+	AsyncOperations    []string `json:"asyncOperations,omitempty"`
+	RequiredOperations []string `json:"requiredOperations,omitempty"`
+	ResolvedOperations []string `json:"resolvedOperations,omitempty"`
+	Favourite          bool     `json:"favourite,omitempty"`
+	Data               Analysis `json:"data,omitempty"`
 }
 
 type AnalysisShort struct {

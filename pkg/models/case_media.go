@@ -22,6 +22,10 @@ type CaseMedia struct {
 	TaskId         primitive.ObjectID `json:"taskId" bson:"task_id"`
 	OrganisationId string             `json:"organisationId" bson:"organisation_id"`
 
+	// ProjectId optionally places the case media in a project within its organisation.
+	// A nil value keeps it organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
 	// Role describes whether this entry represents a source attached to
 	// the case or an edit derived from another entry. See CaseMediaRole.
 	Role CaseMediaRole `json:"role" bson:"role"`

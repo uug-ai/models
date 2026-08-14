@@ -14,6 +14,10 @@ type Marker struct {
 	GroupId        string `json:"groupId,omitempty" bson:"groupId,omitempty" example:"686a906345c1df594pmt41w4"`  // GroupId is used to identify the group of markers
 	OrganisationId string `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"`        // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
 
+	// ProjectId optionally places the marker in a project within its organisation.
+	// A nil value keeps the marker organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
 	// MediaKeys optionally pins this marker to specific recordings by their stable
 	// key (media.videoFile). When set, the marker writer links the marker to
 	// exactly these recordings — scoped to the marker's device and organisation —
@@ -110,7 +114,7 @@ type MarkerBox struct {
 // duplicated here.
 type DetectionRef struct {
 	RunId   string `json:"runId" bson:"runId" example:"01J8Z9Q2A7K3"` // DetectionRun.Source.RunId
-	TrackId string `json:"trackId" bson:"trackId" example:"track-3"` // FaceRedactionTrack.Id within the run
+	TrackId string `json:"trackId" bson:"trackId" example:"track-3"`  // FaceRedactionTrack.Id within the run
 }
 
 type MarkerAtRuntimeMetadata struct {

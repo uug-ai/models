@@ -25,25 +25,30 @@ type TaskStatistics struct {
 }
 
 type Task struct {
-	Id                primitive.ObjectID `json:"id" bson:"_id,omitempty"`
-	OrganisationId    string             `json:"organisationId" bson:"organisationId,omitempty"`
-	CreationDate      int64              `json:"creation_date" bson:"creation_date,omitempty"`
-	CreationDateTime  string             `json:"creation_datetime" bson:"creation_datetime,omitempty"`
-	Date              int64              `json:"date" bson:"date,omitempty"`
-	MediaTimestamp    int64              `json:"media_timestamp" bson:"media_timestamp,omitempty"`
-	MediaDate         string             `json:"media_date" bson:"media_date,omitempty"`
-	MediaDateTime     string             `json:"media_datetime" bson:"media_datetime,omitempty"`
-	MediaEndTimestamp int64              `json:"media_end_timestamp" bson:"media_end_timestamp,omitempty"`
-	MediaEndDateTime  string             `json:"media_end_datetime" bson:"media_end_datetime,omitempty"`
-	UserId            string             `json:"user_id" bson:"user_id,omitempty"`
-	Username          string             `json:"username" bson:"username,omitempty"`
-	ReporterId        string             `json:"reporter_id" bson:"reporter_id,omitempty"`
-	Title             string             `json:"title" bson:"title,omitempty"`
-	Notes             string             `json:"notes" bson:"notes,omitempty"`
-	NotesShort        string             `json:"notes_short" bson:"notes_short,omitempty"`
-	Status            string             `json:"status" bson:"status,omitempty"` // open, approved, rejected
-	SequenceId        string             `json:"sequenceId" bson:"sequenceId,omitempty"`
-	IsPrivate         bool               `json:"is_private" bson:"is_private"`
+	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
+
+	// ProjectId optionally places the case/task in a project within its organisation.
+	// A nil value keeps it organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
+	CreationDate      int64  `json:"creation_date" bson:"creation_date,omitempty"`
+	CreationDateTime  string `json:"creation_datetime" bson:"creation_datetime,omitempty"`
+	Date              int64  `json:"date" bson:"date,omitempty"`
+	MediaTimestamp    int64  `json:"media_timestamp" bson:"media_timestamp,omitempty"`
+	MediaDate         string `json:"media_date" bson:"media_date,omitempty"`
+	MediaDateTime     string `json:"media_datetime" bson:"media_datetime,omitempty"`
+	MediaEndTimestamp int64  `json:"media_end_timestamp" bson:"media_end_timestamp,omitempty"`
+	MediaEndDateTime  string `json:"media_end_datetime" bson:"media_end_datetime,omitempty"`
+	UserId            string `json:"user_id" bson:"user_id,omitempty"`
+	Username          string `json:"username" bson:"username,omitempty"`
+	ReporterId        string `json:"reporter_id" bson:"reporter_id,omitempty"`
+	Title             string `json:"title" bson:"title,omitempty"`
+	Notes             string `json:"notes" bson:"notes,omitempty"`
+	NotesShort        string `json:"notes_short" bson:"notes_short,omitempty"`
+	Status            string `json:"status" bson:"status,omitempty"` // open, approved, rejected
+	SequenceId        string `json:"sequenceId" bson:"sequenceId,omitempty"`
+	IsPrivate         bool   `json:"is_private" bson:"is_private"`
 
 	// A task can be assigned to a single camera or multiple cameras (depending of the export)
 	Camera      string   `json:"camera" bson:"camera"`             // this is legacy we know use the array object.

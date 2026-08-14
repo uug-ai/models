@@ -191,6 +191,10 @@ type WorkflowRun struct {
 	// on the wire the same identity travels in the richer User projection.
 	OrganisationId string `json:"-" bson:"organisationId"`
 
+	// ProjectId optionally narrows the run to a project within its organisation.
+	// Persistence-only, like OrganisationId. A nil value keeps it organisation-wide.
+	ProjectId *primitive.ObjectID `json:"-" bson:"projectId,omitempty"`
+
 	// TraceId continues the distributed trace across the workflow tail.
 	TraceId string `json:"traceId,omitempty" bson:"traceid"`
 

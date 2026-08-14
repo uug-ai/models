@@ -359,8 +359,11 @@ type Workflow struct {
 	// materially used in deployments, so new documents start with this canonical
 	// contract while readers may retain a legacy `organisation_id` fallback.
 	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
-	CreatedAt      int64  `json:"createdAt" bson:"createdAt,omitempty"`
-	UpdatedAt      int64  `json:"updatedAt" bson:"updatedAt,omitempty"`
+	// ProjectId optionally places the workflow in a project within its organisation.
+	// A nil value keeps the workflow organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+	CreatedAt int64               `json:"createdAt" bson:"createdAt,omitempty"`
+	UpdatedAt int64               `json:"updatedAt" bson:"updatedAt,omitempty"`
 	// Audit carries bounded actor/timestamp metadata for database-backed user
 	// workflows. It is omitted from Helm-defined global workflows unless set.
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`

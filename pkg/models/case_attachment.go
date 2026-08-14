@@ -25,6 +25,10 @@ type CaseAttachment struct {
 	TaskId         primitive.ObjectID `json:"taskId"         bson:"task_id"`
 	OrganisationId string             `json:"organisationId" bson:"organisation_id"`
 
+	// ProjectId optionally places the attachment in a project within its organisation.
+	// A nil value keeps it organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
 	// Type is a coarse classification of the attachment used by the UI
 	// to pick an icon / viewer. MimeType is the source of truth for
 	// content negotiation; Type is derived from it at upload time.

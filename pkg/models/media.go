@@ -23,6 +23,10 @@ type Media struct {
 	SiteId         string `json:"siteId" bson:"siteId,omitempty"`
 	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
 
+	// ProjectId optionally places the media in a project within its organisation.
+	// A nil value keeps the media organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
 	// Media file information (by default "vault", however might change
 	// in the future (integration with other storage solutions, next to Vault).
 	StorageSolution       string                  `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`

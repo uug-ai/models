@@ -49,6 +49,10 @@ type CustomAlert struct {
 	DateRangeSchedule   []*DateRangeSchedule `json:"dateRangeSchedule" bson:"dateRangeSchedule"`
 	OrganisationId      string               `json:"organisationId" bson:"organisationId"`
 
+	// ProjectId optionally places the alert in a project within its organisation.
+	// A nil value keeps the alert organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
 	// Deprecated: legacy time range fields. Use WeeklySchedule/DateRangeSchedule instead.
 	TimeRange1Max int32 `json:"timeRange1Max" bson:"timeRange1Max"`
 	TimeRange1Min int32 `json:"timeRange1Min" bson:"timeRange1Min"`
