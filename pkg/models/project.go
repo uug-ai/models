@@ -3,7 +3,7 @@ package models
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 // Project is an optional access boundary within an organisation. Resources
-// remain organisation-wide unless they are assigned a ProjectResourceScope.
+// remain organisation-wide unless their ProjectId is set.
 type Project struct {
 	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId"`
@@ -14,15 +14,38 @@ type Project struct {
 	Audit          Audit              `json:"audit" bson:"audit"`
 }
 
-// ProjectResourceScope optionally places a resource in one owning project and
-// shares it with additional projects. A nil ProjectId keeps the resource at
-// organisation scope; SharedWithProjectIds must then be empty.
-type ProjectResourceScope struct {
-	ProjectId            *primitive.ObjectID  `json:"projectId,omitempty" bson:"projectId,omitempty"`
-	SharedWithProjectIds []primitive.ObjectID `json:"sharedWithProjectIds,omitempty" bson:"sharedWithProjectIds,omitempty"`
+// DefaultProjectSlug is the reserved slug of the single default project minted
+// per organisation. The default project is the sentinel-free "organisation-wide"
+// selection: it is a real document (never a stored NilObjectID) so a user's
+// active project can always point at something concrete.
+const DefaultProjectSlug = "default"
+
+// GetProjectsInput lists the projects in the caller's active organisation.
+type GetProjectsInput struct {
+	User User `json:"user"`
 }
 
-// IsOrganisationWide reports whether the resource remains at organisation scope.
-func (s ProjectResourceScope) IsOrganisationWide() bool {
-	return s.ProjectId == nil
+type GetProjectsOutput struct {
+	Projects []Project `json:"projects"`
+}
+
+// GetCurrentProjectInput resolves the caller's active project (the one whose id
+// equals the caller's projectId, or the organisation default when unset).
+type GetCurrentProjectInput struct {
+	User User `json:"user"`
+}
+
+type GetCurrentProjectOutput struct {
+	Project *Project `json:"project"`
+}
+
+// SetCurrentProjectInput selects the project used to scope subsequent requests
+// for the caller. The project must belong to the caller's active organisation.
+type SetCurrentProjectInput struct {
+	User      User   `json:"user"`
+	ProjectId string `json:"projectId"`
+}
+
+type SetCurrentProjectOutput struct {
+	Project *Project `json:"project"`
 }

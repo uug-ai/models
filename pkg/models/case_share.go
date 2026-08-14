@@ -8,15 +8,20 @@ type CaseShare struct {
 	UserId         string             `json:"user_id" bson:"user_id"`
 	UserEmail      string             `json:"user_email" bson:"user_email"`
 	OrganisationId string             `json:"organisation_id" bson:"organisation_id"`
-	Email          string             `json:"email" bson:"email"`
-	Token          string             `json:"token" bson:"token"`
-	Permissions    []string           `json:"permissions" bson:"permissions"` // e.g. ["view"]
-	IsActive       bool               `json:"is_active" bson:"is_active"`
-	ExpiresAt      int64              `json:"expires_at" bson:"expires_at"`
-	CreatedAt      int64              `json:"created_at" bson:"created_at"`
-	OTPCode        string             `json:"-" bson:"otp_code,omitempty"`
-	OTPExpiry      int64              `json:"-" bson:"otp_expiry,omitempty"`
-	OTPAttempts    int                `json:"-" bson:"otp_attempts,omitempty"`
+
+	// ProjectId optionally places the case share in a project within its organisation.
+	// A nil value keeps it organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
+	Email       string   `json:"email" bson:"email"`
+	Token       string   `json:"token" bson:"token"`
+	Permissions []string `json:"permissions" bson:"permissions"` // e.g. ["view"]
+	IsActive    bool     `json:"is_active" bson:"is_active"`
+	ExpiresAt   int64    `json:"expires_at" bson:"expires_at"`
+	CreatedAt   int64    `json:"created_at" bson:"created_at"`
+	OTPCode     string   `json:"-" bson:"otp_code,omitempty"`
+	OTPExpiry   int64    `json:"-" bson:"otp_expiry,omitempty"`
+	OTPAttempts int      `json:"-" bson:"otp_attempts,omitempty"`
 
 	// Selection is the per-share snapshot of the case_media ids the
 	// recipient is allowed to browse, captured at CreateShare time.

@@ -11,6 +11,10 @@ type Comment struct {
 	DeviceId       string `json:"deviceId" bson:"deviceId,omitempty"` // device identifier
 	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
 
+	// ProjectId optionally places the comment in a project within its organisation.
+	// A nil value keeps the comment organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
 	// Comment information
 	Type       string  `json:"type" bson:"type,omitempty"`
 	Author     string  `json:"author" bson:"author,omitempty"`

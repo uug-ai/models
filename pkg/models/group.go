@@ -14,6 +14,10 @@ type Group struct {
 	Groups         []string `json:"groups" bson:"groups"` // Nested groups
 	Sites          []string `json:"sites" bson:"sites"`   // Nested sites
 
+	// ProjectId optionally places the group in a project within its organisation.
+	// A nil value keeps the group organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
 	// Media file information (by default "vault", however might change
 	// in the future (integration with other storage solutions, next to Vault).
 	StorageSolution string `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`
