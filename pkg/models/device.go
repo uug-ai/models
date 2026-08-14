@@ -38,6 +38,11 @@ type Device struct {
 	SiteIds        []string `json:"siteIds" bson:"siteIds,omitempty"`
 	GroupIds       []string `json:"groupIds" bson:"groupIds,omitempty"`
 
+	// ProjectId optionally places the device in a project within its
+	// organisation. A nil value keeps the device organisation-wide. It narrows
+	// access on top of OrganisationId; it never replaces it.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
 	// @LEGACY FIELDS - to be removed in future versions
 	UserId string `json:"user_id" bson:"user_id,omitempty"`
 

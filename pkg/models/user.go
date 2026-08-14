@@ -43,9 +43,19 @@ func GetOrganisationObjectId(user User) primitive.ObjectID {
 	return user.Id
 }
 
+// GetProjectObjectId returns the user's currently selected project, or the zero
+// ObjectID when no project is active. Unlike GetOrganisationObjectId there is no
+// fallback chain: a zero value is a valid, first-class state meaning "no active
+// project" (the organisation-wide view). Projects are net-new, so there is no
+// legacy identity to fall back to.
+func GetProjectObjectId(user User) primitive.ObjectID {
+	return user.ProjectId
+}
+
 type User struct {
 	Id                    primitive.ObjectID     `json:"id" bson:"_id,omitempty"`
 	OrganisationId        primitive.ObjectID     `json:"organisationId" bson:"organisationId,omitempty"`
+	ProjectId             primitive.ObjectID     `json:"projectId" bson:"projectId,omitempty"`
 	Username              string                 `json:"username" bson:"username,omitempty"`
 	Password              string                 `json:"password" bson:"password,omitempty"`
 	ForgotPassword        string                 `json:"forgotPassword" bson:"forgotPassword,omitempty"`
