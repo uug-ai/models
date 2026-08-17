@@ -90,30 +90,40 @@ type AnalyticsEvent struct {
 type AnalyticsCount struct {
 	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
-	Key            string             `json:"key,omitempty" bson:"key,omitempty"`
-	Timestamp      int64              `json:"timestamp,omitempty" bson:"timestamp,omitempty"`
-	Username       string             `json:"username,omitempty" bson:"username,omitempty"`
-	UserId         string             `json:"user_id,omitempty" bson:"user_id,omitempty"`
-	DeviceId       string             `json:"device_id,omitempty" bson:"device_id,omitempty"`
-	SegmentId      string             `json:"segment_id,omitempty" bson:"segment_id,omitempty"`
-	ObjectId       string             `json:"object_id,omitempty" bson:"object_id,omitempty"`
-	ObjectName     string             `json:"object_name,omitempty" bson:"object_name,omitempty"`
-	Count          int                `json:"count,omitempty" bson:"count,omitempty"`
-	Duration       float64            `json:"duration,omitempty" bson:"duration,omitempty"`
-	AlertId        string             `json:"alert_id,omitempty" bson:"alert_id,omitempty"`
-	AlertName      string             `json:"alert_name,omitempty" bson:"alert_name,omitempty"`
-	SequenceId     string             `json:"sequence_id,omitempty" bson:"sequence_id,omitempty"`
-	Type           string             `json:"type,omitempty" bson:"type,omitempty"`
+
+	// ProjectId optionally places the count in a project within its organisation.
+	// A nil value keeps the count organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
+	Key        string  `json:"key,omitempty" bson:"key,omitempty"`
+	Timestamp  int64   `json:"timestamp,omitempty" bson:"timestamp,omitempty"`
+	Username   string  `json:"username,omitempty" bson:"username,omitempty"`
+	UserId     string  `json:"user_id,omitempty" bson:"user_id,omitempty"`
+	DeviceId   string  `json:"device_id,omitempty" bson:"device_id,omitempty"`
+	SegmentId  string  `json:"segment_id,omitempty" bson:"segment_id,omitempty"`
+	ObjectId   string  `json:"object_id,omitempty" bson:"object_id,omitempty"`
+	ObjectName string  `json:"object_name,omitempty" bson:"object_name,omitempty"`
+	Count      int     `json:"count,omitempty" bson:"count,omitempty"`
+	Duration   float64 `json:"duration,omitempty" bson:"duration,omitempty"`
+	AlertId    string  `json:"alert_id,omitempty" bson:"alert_id,omitempty"`
+	AlertName  string  `json:"alert_name,omitempty" bson:"alert_name,omitempty"`
+	SequenceId string  `json:"sequence_id,omitempty" bson:"sequence_id,omitempty"`
+	Type       string  `json:"type,omitempty" bson:"type,omitempty"`
 }
 
 type Heatmap struct {
 	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
-	Key            string             `json:"key" bson:"key"`
-	Timestamp      int64              `json:"timestamp" bson:"timestamp"`
-	UserId         string             `json:"user_id" bson:"user_id"`
-	DeviceId       string             `json:"device_id" bson:"device_id"`
-	FrameWidth     int                `json:"frame_width" bson:"frame_width"`
-	FrameHeight    int                `json:"frame_height" bson:"frame_height"`
-	Coordinates    [][]int            `json:"coordinates" bson:"coordinates"`
+
+	// ProjectId optionally places the heatmap in a project within its organisation.
+	// A nil value keeps the heatmap organisation-wide.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
+	Key         string  `json:"key" bson:"key"`
+	Timestamp   int64   `json:"timestamp" bson:"timestamp"`
+	UserId      string  `json:"user_id" bson:"user_id"`
+	DeviceId    string  `json:"device_id" bson:"device_id"`
+	FrameWidth  int     `json:"frame_width" bson:"frame_width"`
+	FrameHeight int     `json:"frame_height" bson:"frame_height"`
+	Coordinates [][]int `json:"coordinates" bson:"coordinates"`
 }

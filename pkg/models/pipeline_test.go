@@ -1,8 +1,72 @@
 package models
 
 import (
+	"encoding/json"
 	"testing"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
+
+func TestPipelineEventProjectSnapshotRoundTripAndGetMedia(t *testing.T) {
+	projectId := primitive.NewObjectID()
+	activeUserProjectId := primitive.NewObjectID()
+	event := PipelineEvent{
+		MonitorStage: &MonitorStage{
+			ProjectId: &projectId,
+			User:      User{ProjectId: activeUserProjectId},
+		},
+		Payload: PipelinePayload{
+			FileName: "user/video.mp4",
+			Metadata: PipelineMetadata{
+				DeviceId:  "device-1",
+				Timestamp: "1706000000",
+				Duration:  "3000",
+			},
+		},
+	}
+
+	encoded, err := json.Marshal(event)
+	if err != nil {
+		t.Fatalf("marshal pipeline event: %v", err)
+	}
+	var decoded PipelineEvent
+	if err := json.Unmarshal(encoded, &decoded); err != nil {
+		t.Fatalf("unmarshal pipeline event: %v", err)
+	}
+	if decoded.MonitorStage == nil || decoded.MonitorStage.ProjectId == nil || *decoded.MonitorStage.ProjectId != projectId {
+		t.Fatalf("monitor projectId = %#v, want %s", decoded.MonitorStage, projectId.Hex())
+	}
+
+	media, err := decoded.GetMedia()
+	if err != nil {
+		t.Fatalf("get media: %v", err)
+	}
+	if media.ProjectId == nil || *media.ProjectId != projectId {
+		t.Fatalf("media projectId = %v, want %s", media.ProjectId, projectId.Hex())
+	}
+	if *media.ProjectId == activeUserProjectId {
+		t.Fatalf("media projectId followed mutable user selection %s", activeUserProjectId.Hex())
+	}
+	if media.ProjectId == decoded.MonitorStage.ProjectId {
+		t.Fatal("media projectId must be a copy, not alias monitor-stage storage")
+	}
+}
+
+func TestPipelineEventWithoutProjectSnapshotRemainsCompatible(t *testing.T) {
+	legacyJSON := []byte(`{"monitorStage":{"name":"monitor"},"payload":{"key":"user/video.mp4","metadata":{"productid":"device-1","event-timestamp":"1706000000","duration":"3000"}}}`)
+
+	var event PipelineEvent
+	if err := json.Unmarshal(legacyJSON, &event); err != nil {
+		t.Fatalf("unmarshal legacy pipeline event: %v", err)
+	}
+	media, err := event.GetMedia()
+	if err != nil {
+		t.Fatalf("get media from legacy event: %v", err)
+	}
+	if media.ProjectId != nil {
+		t.Fatalf("legacy media projectId = %s, want nil", media.ProjectId.Hex())
+	}
+}
 
 func TestGetMediaFromPipelineEvent_LegacyFormat(t *testing.T) {
 	tests := []struct {

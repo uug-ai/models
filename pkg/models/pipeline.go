@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // --------------------------------------------------------------------------------------------------------------------------------
@@ -98,6 +100,7 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		if fps, err := strconv.ParseFloat(pe.Payload.Metadata.FPS, 64); err == nil {
 			media.Metadata.FPS = fps
 		}
+		pe.copyProjectToMedia(&media)
 
 		return media, nil
 	}
@@ -139,11 +142,25 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		media.Metadata = &MediaMetadata{}
 		media.Metadata.MotionPixels = 0
 		media.Metadata.FileSize = pe.Payload.FileSize
+		pe.copyProjectToMedia(&media)
 
 		return media, nil
 	}
 	return media, fmt.Errorf("invalid attributes format in video file name: %s, expected 6 attributes, got: %d", videoFileName, len(attributes)) // Return empty media if attributes format is invalid
 
+}
+
+// copyProjectToMedia carries the immutable source-device project snapshot set
+// by the monitor stage into the media object. It deliberately does not inspect
+// MonitorStage.User.ProjectId: that value is the user's mutable selection and
+// must never relabel media from a device assigned to another project.
+func (pe *PipelineEvent) copyProjectToMedia(media *Media) {
+	if pe.MonitorStage == nil || pe.MonitorStage.ProjectId == nil {
+		media.ProjectId = nil
+		return
+	}
+	projectId := *pe.MonitorStage.ProjectId
+	media.ProjectId = &projectId
 }
 
 type PipelinePayload struct {
@@ -242,6 +259,11 @@ func (e EventStage) GetName() string { return e.Name }
 type MonitorStage struct {
 	Name        string `json:"name,omitempty"`
 	MonitorData string `json:"monitorData,omitempty"` // Add fields relevant to monitor stage
+
+	// ProjectId is the immutable project snapshot resolved from the stored source
+	// device by the monitor. It is intentionally separate from User.ProjectId,
+	// which represents the user's mutable current selection.
+	ProjectId *primitive.ObjectID `json:"projectId,omitempty"`
 
 	// Add more fields as needed
 	User         User            `json:"user,omitempty"`
