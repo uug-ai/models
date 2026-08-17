@@ -7,6 +7,7 @@ package properties
 const (
 	SequenceId = "_id"
 	SequenceOrganisationId = "organisationId"
+	SequenceProjectId = "projectId"
 	SequenceUserId = "user_id"
 	SequenceAnalysis = "analysis"
 )

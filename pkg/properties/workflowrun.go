@@ -14,6 +14,7 @@ const (
 	WorkflowRunKey = "key"
 	WorkflowRunRecordingTimestamp = "recordingtimestamp"
 	WorkflowRunOrganisationId = "organisationId"
+	WorkflowRunProjectId = "projectId"
 	WorkflowRunTraceId = "traceid"
 	WorkflowRunStart = "start"
 	WorkflowRunEnd = "end"

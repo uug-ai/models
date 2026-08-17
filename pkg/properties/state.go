@@ -12,6 +12,7 @@ const (
 	StateSiteId = "siteId"
 	StateGroupId = "groupId"
 	StateOrganisationId = "organisationId"
+	StateProjectId = "projectId"
 	StateDevices = "devices"
 	StateDesiredState = "desiredState"
 	StateDesiredStateStartTimestamp = "desiredStateStartTimestamp"

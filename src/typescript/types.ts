@@ -10105,6 +10105,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getcurrentprojectinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCurrentProjectInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetCurrentProjectInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetCurrentProjectInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getcurrentprojectoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetCurrentProjectOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetCurrentProjectOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetCurrentProjectOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getcustomalertserrorresponse": {
         parameters: {
             query?: never;
@@ -12901,6 +12979,318 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetOrganisationSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getprojecterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetProjectErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetProjectErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetProjectErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getprojectresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetProjectResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetProjectResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetProjectResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getprojectserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetProjectsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetProjectsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetProjectsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getprojectsinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetProjectsInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetProjectsInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetProjectsInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getprojectsoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetProjectsOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetProjectsOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetProjectsOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getprojectsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetProjectsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetProjectsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetProjectsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getprojectssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetProjectsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetProjectsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetProjectsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getprojectsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetProjectSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetProjectSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetProjectSuccessResponse"];
                     };
                 };
             };
@@ -20401,45 +20791,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/projectresourcescope": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get ProjectResourceScope (schema generation only)
-         * @description Internal endpoint used only to ensure ProjectResourceScope schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.ProjectResourceScope"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/publishfileerrorresponse": {
         parameters: {
             query?: never;
@@ -21910,6 +22261,240 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.SetCurrentOrganisationSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/setcurrentprojecterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SetCurrentProjectErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SetCurrentProjectErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SetCurrentProjectErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/setcurrentprojectinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SetCurrentProjectInput (schema generation only)
+         * @description Internal endpoint used only to ensure SetCurrentProjectInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.SetCurrentProjectInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/setcurrentprojectoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SetCurrentProjectOutput (schema generation only)
+         * @description Internal endpoint used only to ensure SetCurrentProjectOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.SetCurrentProjectOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/setcurrentprojectrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SetCurrentProjectRequest (schema generation only)
+         * @description Internal endpoint used only to ensure SetCurrentProjectRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SetCurrentProjectRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/setcurrentprojectresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SetCurrentProjectResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SetCurrentProjectResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SetCurrentProjectResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/setcurrentprojectsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get SetCurrentProjectSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure SetCurrentProjectSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.SetCurrentProjectSuccessResponse"];
                     };
                 };
             };
@@ -28174,6 +28759,9 @@ export interface components {
             notes_short?: string;
             notify_assignees?: boolean;
             organisationId?: string;
+            /** @description ProjectId optionally places the case/task in a project within its organisation.
+             *     A nil value keeps it organisation-wide. */
+            projectId?: string;
             reporter_email?: string;
             reporter_id?: string;
             reporter_profile?: string;
@@ -29931,6 +30519,62 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetProjectErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetProjectResponse": {
+            project?: components["schemas"]["models.Project"];
+        };
+        "api.GetProjectSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetProjectResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetProjectsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetProjectsResponse": {
+            projects?: components["schemas"]["models.Project"][];
+        };
+        "api.GetProjectsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetProjectsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetRuntimeConfigErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -31099,6 +31743,37 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.SetCurrentProjectErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.SetCurrentProjectRequest": {
+            projectId?: string;
+        };
+        "api.SetCurrentProjectResponse": {
+            project?: components["schemas"]["models.Project"];
+        };
+        "api.SetCurrentProjectSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.SetCurrentProjectResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.SingleSignOnDomainsRequest": Record<string, never>;
         "api.SingleSignOnDomainsResponse": {
             domains?: string[];
@@ -31958,6 +32633,9 @@ export interface components {
             in_process?: number;
             key?: string;
             organisationId?: string;
+            /** @description ProjectId optionally places the analysis in a project within its organisation.
+             *     A nil value keeps the analysis organisation-wide. */
+            projectId?: string;
             provider?: string;
             requiredOperations?: string[];
             resolvedOperations?: string[];
@@ -31995,6 +32673,7 @@ export interface components {
             object_id?: string;
             object_name?: string;
             organisationId?: string;
+            projectId?: string;
             segment_id?: string;
             sequence_id?: string;
             timestamp?: number;
@@ -32165,6 +32844,9 @@ export interface components {
              *     in Vault. */
             name?: string;
             organisationId?: string;
+            /** @description ProjectId optionally places the attachment in a project within its organisation.
+             *     A nil value keeps it organisation-wide. */
+            projectId?: string;
             provider?: string;
             /** @description RelatedCaseMediaId optionally links the attachment to a specific
              *     case_media entry it documents or annotates (for example, an
@@ -32279,6 +32961,9 @@ export interface components {
              *     was produced from. For composite edits the parent is still a single
              *     source — the individual operations are described in Params. */
             parentId?: string;
+            /** @description ProjectId optionally places the case media in a project within its organisation.
+             *     A nil value keeps it organisation-wide. */
+            projectId?: string;
             provider?: string;
             /** @description Role describes whether this entry represents a source attached to
              *     the case or an edit derived from another entry. See CaseMediaRole. */
@@ -32349,6 +33034,9 @@ export interface components {
             organisation_id?: string;
             /** @description e.g. ["view"] */
             permissions?: string[];
+            /** @description ProjectId optionally places the case share in a project within its organisation.
+             *     A nil value keeps it organisation-wide. */
+            projectId?: string;
             /** @description Selection is the per-share snapshot of the case_media ids the
              *     recipient is allowed to browse, captured at CreateShare time.
              *     It is the source of truth for what this specific token resolves
@@ -32455,6 +33143,9 @@ export interface components {
             organisationId?: string;
             /** @description ID of the parent comment, if this is a reply */
             parentId?: string;
+            /** @description ProjectId optionally places the comment in a project within its organisation.
+             *     A nil value keeps the comment organisation-wide. */
+            projectId?: string;
             timestamps?: number[];
             /** @description Comment information */
             type?: string;
@@ -32596,6 +33287,9 @@ export interface components {
             motionRegions?: components["schemas"]["models.Region"][];
             organisationId?: string;
             outputList?: string[];
+            /** @description ProjectId optionally places the alert in a project within its organisation.
+             *     A nil value keeps the alert organisation-wide. */
+            projectId?: string;
             pushbullet_apikey?: string;
             pushover_apikey?: string;
             pushover_sendto?: string;
@@ -32851,6 +33545,10 @@ export interface components {
              *     OrganisationId is used to identify the organisation that owns the device.
              *     FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc. */
             organisationId?: string;
+            /** @description ProjectId optionally places the device in a project within its
+             *     organisation. A nil value keeps the device organisation-wide. It narrows
+             *     access on top of OrganisationId; it never replaces it. */
+            projectId?: string;
             /** @description Versioning information
              *     Note: Version is used to identify the version of the device software.
              *     ReleaseHash is used to identify the release hash of the device software, it can be used to identify the specific build of the device software.
@@ -33146,6 +33844,12 @@ export interface components {
         "models.GetCurrentOrganisationOutput": {
             organisation?: components["schemas"]["models.Organisation"];
         };
+        "models.GetCurrentProjectInput": {
+            user?: components["schemas"]["models.User"];
+        };
+        "models.GetCurrentProjectOutput": {
+            project?: components["schemas"]["models.Project"];
+        };
         "models.GetOrganisationInput": {
             organisationId?: string;
             user?: components["schemas"]["models.User"];
@@ -33158,6 +33862,12 @@ export interface components {
         };
         "models.GetOrganisationsOutput": {
             organisations?: components["schemas"]["models.Organisation"][];
+        };
+        "models.GetProjectsInput": {
+            user?: components["schemas"]["models.User"];
+        };
+        "models.GetProjectsOutput": {
+            projects?: components["schemas"]["models.Project"][];
         };
         "models.GetVideowallInput": {
             user?: components["schemas"]["models.User"];
@@ -33215,6 +33925,9 @@ export interface components {
             name?: string;
             /** @description RBAC information */
             organisationId?: string;
+            /** @description ProjectId optionally places the group in a project within its organisation.
+             *     A nil value keeps the group organisation-wide. */
+            projectId?: string;
             /** @description Nested sites */
             sites?: string[];
             /** @description Media file information (by default "vault", however might change
@@ -33270,6 +33983,7 @@ export interface components {
             id?: string;
             key?: string;
             organisationId?: string;
+            projectId?: string;
             timestamp?: number;
             user_id?: string;
         };
@@ -33320,6 +34034,9 @@ export interface components {
             /** @description last time the IO was seen */
             lastSeenTimestamp?: number;
             organisationId?: string;
+            /** @description ProjectId optionally places the IO in a project within its organisation.
+             *     A nil value keeps the IO organisation-wide. */
+            projectId?: string;
             /** @description input or output */
             type?: string;
             value?: string;
@@ -33345,6 +34062,9 @@ export interface components {
             name?: string;
             organisationId?: string;
             owner_id?: string;
+            /** @description ProjectId optionally places the label in a project within its organisation.
+             *     A nil value keeps the label organisation-wide. */
+            projectId?: string;
             type?: string[];
             user_id?: string;
         };
@@ -33445,6 +34165,9 @@ export interface components {
              * @example 686a906345c1df594pad69f0
              */
             organisationId?: string;
+            /** @description ProjectId optionally places the marker in a project within its organisation.
+             *     A nil value keeps the marker organisation-wide. */
+            projectId?: string;
             /**
              * @description SiteId is used to identify the site where the marker is located
              * @example 686a906345c1df594pcsr3r45
@@ -33748,6 +34471,9 @@ export interface components {
             /** @description Metadata */
             metadata?: components["schemas"]["models.MediaMetadata"];
             organisationId?: string;
+            /** @description ProjectId optionally places the media in a project within its organisation.
+             *     A nil value keeps the media organisation-wide. */
+            projectId?: string;
             siteId?: string;
             spriteFile?: string;
             spriteProvider?: string;
@@ -33885,6 +34611,9 @@ export interface components {
             notification_type?: string;
             number_of_media?: string;
             organisationId?: string;
+            /** @description ProjectId optionally places the message in a project within its organisation.
+             *     A nil value keeps the message organisation-wide. */
+            projectId?: string;
             sequence_id?: string;
             sites?: components["schemas"]["models.Site"][];
             spriteFile?: string;
@@ -33930,14 +34659,16 @@ export interface components {
         "models.MonitorStage": {
             activity?: components["schemas"]["models.Activity"];
             highUpload?: components["schemas"]["models.HighUpload"];
-            /** @description Add fields relevant to monitor stage */
             monitorData?: string;
             name?: string;
+            /** @description OrganisationId and ProjectId snapshot the stored source device's ownership;
+             *     nested user and payload fields are mutable actor/request context instead. */
+            organisationId?: string;
             plans?: {
                 [key: string]: components["schemas"]["models.Plan"];
             };
+            projectId?: string;
             subscription?: components["schemas"]["models.Subscription"];
-            /** @description Add more fields as needed */
             user?: components["schemas"]["models.User"];
         };
         /** @enum {string} */
@@ -33966,6 +34697,9 @@ export interface components {
             notification_type?: string;
             number_of_media?: string;
             organisationId?: string;
+            /** @description ProjectId optionally places the message in a project within its organisation.
+             *     A nil value keeps the message organisation-wide. */
+            projectId?: string;
             sequence_id?: string;
             sites?: components["schemas"]["models.Site"][];
             spriteFile?: string;
@@ -34220,10 +34954,6 @@ export interface components {
             organisationId?: string;
             slug?: string;
         };
-        "models.ProjectResourceScope": {
-            projectId?: string;
-            sharedWithProjectIds?: string[];
-        };
         "models.Pushbullet": {
             apikey?: string;
             enabled?: boolean;
@@ -34322,6 +35052,9 @@ export interface components {
             images?: components["schemas"]["models.Media"][];
             notified?: boolean;
             organisationId?: string;
+            /** @description ProjectId optionally places the sequence in a project within its organisation.
+             *     A nil value keeps the sequence organisation-wide. */
+            projectId?: string;
             start?: number;
             user_id?: string;
         };
@@ -34336,6 +35069,13 @@ export interface components {
         };
         "models.SetCurrentOrganisationOutput": {
             organisation?: components["schemas"]["models.Organisation"];
+        };
+        "models.SetCurrentProjectInput": {
+            projectId?: string;
+            user?: components["schemas"]["models.User"];
+        };
+        "models.SetCurrentProjectOutput": {
+            project?: components["schemas"]["models.Project"];
         };
         "models.Settings": {
             id?: string;
@@ -34362,6 +35102,9 @@ export interface components {
             name?: string;
             /** @description RBAC information */
             organisationId?: string;
+            /** @description ProjectId optionally places the site in a project within its organisation.
+             *     A nil value keeps the site organisation-wide. */
+            projectId?: string;
             secret_key?: string;
             storage_uri?: string;
             /** @description Media file information (by default "vault", however might change
@@ -34513,6 +35256,8 @@ export interface components {
              * @example 686a906345c1df594pad69f0
              */
             organisationId?: string;
+            /** @description ProjectId optionally places the state in a project within its organisation; nil keeps it organisation-wide. */
+            projectId?: string;
             /**
              * @description SiteId is used to identify the site for which the state is relevant
              * @example 686a906345c1df594pcsr3r45
@@ -34648,6 +35393,9 @@ export interface components {
             notes_short?: string;
             notify_assignees?: boolean;
             organisationId?: string;
+            /** @description ProjectId optionally places the case/task in a project within its organisation.
+             *     A nil value keeps it organisation-wide. */
+            projectId?: string;
             reporter_email?: string;
             reporter_id?: string;
             reporter_profile?: string;
@@ -34972,6 +35720,7 @@ export interface components {
             private_cloud_plan?: string;
             profileCompleted?: boolean;
             profileSettings?: components["schemas"]["models.ProfileSettings"];
+            projectId?: string;
             reachedLimit?: boolean;
             reachedLimitTimestamp?: number;
             region?: string;
@@ -35148,6 +35897,9 @@ export interface components {
             name?: string;
             organisationId?: string;
             pass_code?: string;
+            /** @description ProjectId optionally places the videowall in a project within its
+             *     organisation. A nil value keeps it organisation-wide. */
+            projectId?: string;
             /** @description ForceMFA    int      `json:"force_mfa" bson:"force_mfa"` */
             ptz?: number;
             short_link?: string;
@@ -35195,6 +35947,9 @@ export interface components {
              *     materially used in deployments, so new documents start with this canonical
              *     contract while readers may retain a legacy `organisation_id` fallback. */
             organisationId?: string;
+            /** @description ProjectId optionally places the workflow in a project within its organisation.
+             *     A nil value keeps the workflow organisation-wide. */
+            projectId?: string;
             /** @description Source is the workflow's provenance and availability (see WorkflowSource).
              *     Empty means WorkflowSourceUser: an ordinary user workflow scoped to its
              *     OrganisationId. WorkflowSourceConfig marks a Helm-defined, deployment-global,
@@ -35553,6 +36308,7 @@ export interface components {
         "models.WorkflowTriggerType": "automatic" | "manual";
         "models.WorkflowUser": {
             organisationId?: string;
+            projectId?: string;
             storage?: components["schemas"]["models.Storage"];
         };
     };
@@ -35676,10 +36432,14 @@ export namespace models {
     export type GetCaseSharesForTaskOutput = components['schemas']['models.GetCaseSharesForTaskOutput'];
     export type GetCurrentOrganisationInput = components['schemas']['models.GetCurrentOrganisationInput'];
     export type GetCurrentOrganisationOutput = components['schemas']['models.GetCurrentOrganisationOutput'];
+    export type GetCurrentProjectInput = components['schemas']['models.GetCurrentProjectInput'];
+    export type GetCurrentProjectOutput = components['schemas']['models.GetCurrentProjectOutput'];
     export type GetOrganisationInput = components['schemas']['models.GetOrganisationInput'];
     export type GetOrganisationOutput = components['schemas']['models.GetOrganisationOutput'];
     export type GetOrganisationsInput = components['schemas']['models.GetOrganisationsInput'];
     export type GetOrganisationsOutput = components['schemas']['models.GetOrganisationsOutput'];
+    export type GetProjectsInput = components['schemas']['models.GetProjectsInput'];
+    export type GetProjectsOutput = components['schemas']['models.GetProjectsOutput'];
     export type GetVideowallInput = components['schemas']['models.GetVideowallInput'];
     export type GetVideowallOutput = components['schemas']['models.GetVideowallOutput'];
     export type GetVideowallsInput = components['schemas']['models.GetVideowallsInput'];
@@ -35764,7 +36524,6 @@ export namespace models {
     export type Point = components['schemas']['models.Point'];
     export type ProfileSettings = components['schemas']['models.ProfileSettings'];
     export type Project = components['schemas']['models.Project'];
-    export type ProjectResourceScope = components['schemas']['models.ProjectResourceScope'];
     export type Pushbullet = components['schemas']['models.Pushbullet'];
     export type Pushover = components['schemas']['models.Pushover'];
     export type Region = components['schemas']['models.Region'];
@@ -35778,6 +36537,8 @@ export namespace models {
     export type SequenceStage = components['schemas']['models.SequenceStage'];
     export type SetCurrentOrganisationInput = components['schemas']['models.SetCurrentOrganisationInput'];
     export type SetCurrentOrganisationOutput = components['schemas']['models.SetCurrentOrganisationOutput'];
+    export type SetCurrentProjectInput = components['schemas']['models.SetCurrentProjectInput'];
+    export type SetCurrentProjectOutput = components['schemas']['models.SetCurrentProjectOutput'];
     export type Settings = components['schemas']['models.Settings'];
     export type Site = components['schemas']['models.Site'];
     export type SiteMetadata = components['schemas']['models.SiteMetadata'];
@@ -36055,6 +36816,12 @@ export namespace api {
     export type GetOrganisationsErrorResponse = components['schemas']['api.GetOrganisationsErrorResponse'];
     export type GetOrganisationsResponse = components['schemas']['api.GetOrganisationsResponse'];
     export type GetOrganisationsSuccessResponse = components['schemas']['api.GetOrganisationsSuccessResponse'];
+    export type GetProjectErrorResponse = components['schemas']['api.GetProjectErrorResponse'];
+    export type GetProjectResponse = components['schemas']['api.GetProjectResponse'];
+    export type GetProjectSuccessResponse = components['schemas']['api.GetProjectSuccessResponse'];
+    export type GetProjectsErrorResponse = components['schemas']['api.GetProjectsErrorResponse'];
+    export type GetProjectsResponse = components['schemas']['api.GetProjectsResponse'];
+    export type GetProjectsSuccessResponse = components['schemas']['api.GetProjectsSuccessResponse'];
     export type GetRuntimeConfigErrorResponse = components['schemas']['api.GetRuntimeConfigErrorResponse'];
     export type GetRuntimeConfigResponse = components['schemas']['api.GetRuntimeConfigResponse'];
     export type GetRuntimeConfigSuccessResponse = components['schemas']['api.GetRuntimeConfigSuccessResponse'];
@@ -36180,6 +36947,10 @@ export namespace api {
     export type SetCurrentOrganisationRequest = components['schemas']['api.SetCurrentOrganisationRequest'];
     export type SetCurrentOrganisationResponse = components['schemas']['api.SetCurrentOrganisationResponse'];
     export type SetCurrentOrganisationSuccessResponse = components['schemas']['api.SetCurrentOrganisationSuccessResponse'];
+    export type SetCurrentProjectErrorResponse = components['schemas']['api.SetCurrentProjectErrorResponse'];
+    export type SetCurrentProjectRequest = components['schemas']['api.SetCurrentProjectRequest'];
+    export type SetCurrentProjectResponse = components['schemas']['api.SetCurrentProjectResponse'];
+    export type SetCurrentProjectSuccessResponse = components['schemas']['api.SetCurrentProjectSuccessResponse'];
     export type SingleSignOnDomainsResponse = components['schemas']['api.SingleSignOnDomainsResponse'];
     export type SiteFilter = components['schemas']['api.SiteFilter'];
     export type SiteFlags = components['schemas']['api.SiteFlags'];

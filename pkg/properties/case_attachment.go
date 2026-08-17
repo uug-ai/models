@@ -8,6 +8,7 @@ const (
 	CaseAttachmentId = "_id"
 	CaseAttachmentTaskId = "task_id"
 	CaseAttachmentOrganisationId = "organisation_id"
+	CaseAttachmentProjectId = "projectId"
 	CaseAttachmentType = "type"
 	CaseAttachmentMimeType = "mime_type"
 	CaseAttachmentName = "name"

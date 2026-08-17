@@ -33,6 +33,7 @@ const (
 const (
 	AnalysisWrapperId = "_id"
 	AnalysisWrapperOrganisationId = "organisationId"
+	AnalysisWrapperProjectId = "projectId"
 	AnalysisWrapperProvider = "provider"
 	AnalysisWrapperSource = "source"
 )
@@ -124,6 +125,7 @@ const (
 	DetectionRunId = "_id"
 	DetectionRunKey = "key"
 	DetectionRunOrganisationId = "organisationId"
+	DetectionRunProjectId = "projectId"
 	DetectionRunDeviceId = "deviceId"
 	DetectionRunTask = "task"
 	DetectionRunSource = "source"

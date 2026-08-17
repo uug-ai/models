@@ -8,6 +8,7 @@ const (
 	CaseMediaId = "_id"
 	CaseMediaTaskId = "task_id"
 	CaseMediaOrganisationId = "organisation_id"
+	CaseMediaProjectId = "projectId"
 	CaseMediaRole = "role"
 	CaseMediaParentId = "parent_id"
 	CaseMediaAction = "action"

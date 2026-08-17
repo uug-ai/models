@@ -99,6 +99,7 @@ const (
 	DeviceOrganisationId = "organisationId"
 	DeviceSiteIds = "siteIds"
 	DeviceGroupIds = "groupIds"
+	DeviceProjectId = "projectId"
 	DeviceUserId = "user_id"
 	DeviceLatestMedia = "latestMedia"
 	DeviceLatestMediaTimestamp = "latestMediaTimestamp"

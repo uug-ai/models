@@ -29,6 +29,7 @@ const (
 const (
 	AnalyticsCountId = "_id"
 	AnalyticsCountOrganisationId = "organisationId"
+	AnalyticsCountProjectId = "projectId"
 	AnalyticsCountKey = "key"
 	AnalyticsCountTimestamp = "timestamp"
 	AnalyticsCountUsername = "username"
@@ -110,6 +111,7 @@ const (
 const (
 	HeatmapId = "_id"
 	HeatmapOrganisationId = "organisationId"
+	HeatmapProjectId = "projectId"
 	HeatmapKey = "key"
 	HeatmapTimestamp = "timestamp"
 	HeatmapUserId = "user_id"

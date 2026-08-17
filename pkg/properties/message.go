@@ -8,6 +8,7 @@ const (
 	MessageType = "type"
 	MessageId = "id"
 	MessageOrganisationId = "organisationId"
+	MessageProjectId = "projectId"
 	MessageAlertId = "alert_id"
 	MessageAlertName = "alert_name"
 	MessageAlertUser = "alert_user"

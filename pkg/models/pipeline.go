@@ -150,20 +150,14 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 
 }
 
-// copyOwnershipToMedia carries the immutable source-device ownership snapshot
-// set by the monitor stage into the media object. It deliberately does not
-// inspect MonitorStage.User or PipelinePayload.OrganisationId: those values are
-// mutable actor/request context and must never relabel media from another device.
+// copyOwnershipToMedia copies the trusted monitor snapshot into parsed media.
 func (pe *PipelineEvent) copyOwnershipToMedia(media *Media) {
 	if pe.MonitorStage == nil {
-		media.OrganisationId = ""
-		media.ProjectId = nil
 		return
 	}
 
 	media.OrganisationId = pe.MonitorStage.OrganisationId
 	if pe.MonitorStage.ProjectId == nil {
-		media.ProjectId = nil
 		return
 	}
 	projectId := *pe.MonitorStage.ProjectId
@@ -265,20 +259,13 @@ func (e EventStage) GetName() string { return e.Name }
 
 type MonitorStage struct {
 	Name        string `json:"name,omitempty"`
-	MonitorData string `json:"monitorData,omitempty"` // Add fields relevant to monitor stage
+	MonitorData string `json:"monitorData,omitempty"`
 
-	// OrganisationId is the immutable canonical organisation snapshot resolved
-	// from the stored source device by the monitor. It is intentionally separate
-	// from User.OrganisationId and PipelinePayload.OrganisationId, which represent
-	// mutable actor/request context.
-	OrganisationId string `json:"organisationId,omitempty"`
+	// OrganisationId and ProjectId snapshot the stored source device's ownership;
+	// nested user and payload fields are mutable actor/request context instead.
+	OrganisationId string              `json:"organisationId,omitempty"`
+	ProjectId      *primitive.ObjectID `json:"projectId,omitempty"`
 
-	// ProjectId is the immutable project snapshot resolved from the stored source
-	// device by the monitor. It is intentionally separate from User.ProjectId,
-	// which represents the user's mutable current selection.
-	ProjectId *primitive.ObjectID `json:"projectId,omitempty"`
-
-	// Add more fields as needed
 	User         User            `json:"user,omitempty"`
 	Subscription Subscription    `json:"subscription,omitempty"`
 	Plans        map[string]Plan `json:"plans,omitempty"`

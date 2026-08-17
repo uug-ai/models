@@ -10,6 +10,7 @@ const (
 	CaseShareUserId = "user_id"
 	CaseShareUserEmail = "user_email"
 	CaseShareOrganisationId = "organisation_id"
+	CaseShareProjectId = "projectId"
 	CaseShareEmail = "email"
 	CaseShareToken = "token"
 	CaseSharePermissions = "permissions"

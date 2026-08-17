@@ -13,9 +13,3 @@ const (
 	ProjectIsActive = "isActive"
 	ProjectAudit = "audit"
 )
-
-// ProjectResourceScope property field names (BSON)
-const (
-	ProjectResourceScopeProjectId = "projectId"
-	ProjectResourceScopeSharedWithProjectIds = "sharedWithProjectIds"
-)

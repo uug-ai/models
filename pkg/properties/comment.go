@@ -8,6 +8,7 @@ const (
 	CommentId = "_id"
 	CommentDeviceId = "deviceId"
 	CommentOrganisationId = "organisationId"
+	CommentProjectId = "projectId"
 	CommentType = "type"
 	CommentAuthor = "author"
 	CommentContent = "comment"

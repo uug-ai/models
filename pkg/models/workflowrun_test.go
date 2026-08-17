@@ -68,6 +68,36 @@ func TestWorkflowRun_MarshalJSON_ProjectsRunIdFromId(t *testing.T) {
 			t.Errorf("Id = %s, want zero (Id is json:\"-\", never read off the wire)", r.Id.Hex())
 		}
 	})
+
+	t.Run("project ownership travels only in the workflow user", func(t *testing.T) {
+		projectId := primitive.NewObjectID()
+		b, err := json.Marshal(WorkflowRun{
+			ProjectId: &projectId,
+			User:      WorkflowUser{OrganisationId: "org-1", ProjectId: &projectId},
+		})
+		if err != nil {
+			t.Fatalf("marshal: %v", err)
+		}
+
+		var wire map[string]any
+		if err := json.Unmarshal(b, &wire); err != nil {
+			t.Fatalf("unmarshal wire map: %v", err)
+		}
+		if _, ok := wire["projectId"]; ok {
+			t.Fatal("persisted projectId must not appear at the run wire root")
+		}
+
+		var decoded WorkflowRun
+		if err := json.Unmarshal(b, &decoded); err != nil {
+			t.Fatalf("unmarshal run: %v", err)
+		}
+		if decoded.User.ProjectId == nil || *decoded.User.ProjectId != projectId {
+			t.Fatalf("wire user projectId = %v, want %s", decoded.User.ProjectId, projectId.Hex())
+		}
+		if decoded.ProjectId != nil {
+			t.Fatal("wire projectId must not populate persistence ownership")
+		}
+	})
 }
 
 // TestAutomaticRunObjectID asserts the deterministic automatic run identity:

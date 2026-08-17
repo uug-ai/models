@@ -206,9 +206,7 @@ type DetectionRun struct {
 	// OrganisationId scopes the run to the owning organisation (matched on the
 	// "organisationId" field, consistent with media). Never serialised out.
 	OrganisationId string `json:"-" bson:"organisationId,omitempty"`
-	// ProjectId optionally narrows the run to its source media's project. It is
-	// persistence-only and must be copied by the server, never trusted from a
-	// detection producer payload.
+	// ProjectId is server-derived from source media, never producer JSON.
 	ProjectId *primitive.ObjectID `json:"-" bson:"projectId,omitempty"`
 	// DeviceId is denormalised from the recording for convenient filtering and
 	// cascade cleanup; it is not authoritative.
