@@ -7,16 +7,23 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func TestPipelineEventProjectSnapshotRoundTripAndGetMedia(t *testing.T) {
+func TestPipelineEventOwnershipSnapshotRoundTripAndGetMedia(t *testing.T) {
+	organisationId := primitive.NewObjectID().Hex()
 	projectId := primitive.NewObjectID()
+	activeUserOrganisationId := primitive.NewObjectID()
 	activeUserProjectId := primitive.NewObjectID()
 	event := PipelineEvent{
 		MonitorStage: &MonitorStage{
-			ProjectId: &projectId,
-			User:      User{ProjectId: activeUserProjectId},
+			OrganisationId: organisationId,
+			ProjectId:      &projectId,
+			User: User{
+				OrganisationId: activeUserOrganisationId,
+				ProjectId:      activeUserProjectId,
+			},
 		},
 		Payload: PipelinePayload{
-			FileName: "user/video.mp4",
+			FileName:       "user/video.mp4",
+			OrganisationId: primitive.NewObjectID().Hex(),
 			Metadata: PipelineMetadata{
 				DeviceId:  "device-1",
 				Timestamp: "1706000000",
@@ -36,6 +43,9 @@ func TestPipelineEventProjectSnapshotRoundTripAndGetMedia(t *testing.T) {
 	if decoded.MonitorStage == nil || decoded.MonitorStage.ProjectId == nil || *decoded.MonitorStage.ProjectId != projectId {
 		t.Fatalf("monitor projectId = %#v, want %s", decoded.MonitorStage, projectId.Hex())
 	}
+	if decoded.MonitorStage.OrganisationId != organisationId {
+		t.Fatalf("monitor organisationId = %q, want %q", decoded.MonitorStage.OrganisationId, organisationId)
+	}
 
 	media, err := decoded.GetMedia()
 	if err != nil {
@@ -43,6 +53,15 @@ func TestPipelineEventProjectSnapshotRoundTripAndGetMedia(t *testing.T) {
 	}
 	if media.ProjectId == nil || *media.ProjectId != projectId {
 		t.Fatalf("media projectId = %v, want %s", media.ProjectId, projectId.Hex())
+	}
+	if media.OrganisationId != organisationId {
+		t.Fatalf("media organisationId = %q, want %q", media.OrganisationId, organisationId)
+	}
+	if media.OrganisationId == activeUserOrganisationId.Hex() {
+		t.Fatalf("media organisationId followed mutable user selection %s", activeUserOrganisationId.Hex())
+	}
+	if media.OrganisationId == decoded.Payload.OrganisationId {
+		t.Fatalf("media organisationId followed request payload %s", decoded.Payload.OrganisationId)
 	}
 	if *media.ProjectId == activeUserProjectId {
 		t.Fatalf("media projectId followed mutable user selection %s", activeUserProjectId.Hex())
@@ -52,8 +71,8 @@ func TestPipelineEventProjectSnapshotRoundTripAndGetMedia(t *testing.T) {
 	}
 }
 
-func TestPipelineEventWithoutProjectSnapshotRemainsCompatible(t *testing.T) {
-	legacyJSON := []byte(`{"monitorStage":{"name":"monitor"},"payload":{"key":"user/video.mp4","metadata":{"productid":"device-1","event-timestamp":"1706000000","duration":"3000"}}}`)
+func TestPipelineEventWithoutOwnershipSnapshotRemainsCompatible(t *testing.T) {
+	legacyJSON := []byte(`{"monitorStage":{"name":"monitor","user":{"organisationId":"111111111111111111111111","projectId":"222222222222222222222222"}},"payload":{"key":"user/video.mp4","organisationId":"333333333333333333333333","metadata":{"productid":"device-1","event-timestamp":"1706000000","duration":"3000"}}}`)
 
 	var event PipelineEvent
 	if err := json.Unmarshal(legacyJSON, &event); err != nil {
@@ -65,6 +84,34 @@ func TestPipelineEventWithoutProjectSnapshotRemainsCompatible(t *testing.T) {
 	}
 	if media.ProjectId != nil {
 		t.Fatalf("legacy media projectId = %s, want nil", media.ProjectId.Hex())
+	}
+	if media.OrganisationId != "" {
+		t.Fatalf("legacy media organisationId = %q, want empty", media.OrganisationId)
+	}
+}
+
+func TestPipelineEventOwnershipSnapshotAppliesToLegacyMedia(t *testing.T) {
+	organisationId := primitive.NewObjectID().Hex()
+	projectId := primitive.NewObjectID()
+	event := PipelineEvent{
+		MonitorStage: &MonitorStage{
+			OrganisationId: organisationId,
+			ProjectId:      &projectId,
+		},
+		Payload: PipelinePayload{
+			FileName: "username/1640000000_region_devicename_motion_1234_5000.mp4",
+		},
+	}
+
+	media, err := event.GetMedia()
+	if err != nil {
+		t.Fatalf("get media from legacy filename: %v", err)
+	}
+	if media.OrganisationId != organisationId {
+		t.Fatalf("media organisationId = %q, want %q", media.OrganisationId, organisationId)
+	}
+	if media.ProjectId == nil || *media.ProjectId != projectId {
+		t.Fatalf("media projectId = %v, want %s", media.ProjectId, projectId.Hex())
 	}
 }
 

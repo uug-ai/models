@@ -100,7 +100,7 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		if fps, err := strconv.ParseFloat(pe.Payload.Metadata.FPS, 64); err == nil {
 			media.Metadata.FPS = fps
 		}
-		pe.copyProjectToMedia(&media)
+		pe.copyOwnershipToMedia(&media)
 
 		return media, nil
 	}
@@ -142,7 +142,7 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		media.Metadata = &MediaMetadata{}
 		media.Metadata.MotionPixels = 0
 		media.Metadata.FileSize = pe.Payload.FileSize
-		pe.copyProjectToMedia(&media)
+		pe.copyOwnershipToMedia(&media)
 
 		return media, nil
 	}
@@ -150,12 +150,19 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 
 }
 
-// copyProjectToMedia carries the immutable source-device project snapshot set
-// by the monitor stage into the media object. It deliberately does not inspect
-// MonitorStage.User.ProjectId: that value is the user's mutable selection and
-// must never relabel media from a device assigned to another project.
-func (pe *PipelineEvent) copyProjectToMedia(media *Media) {
-	if pe.MonitorStage == nil || pe.MonitorStage.ProjectId == nil {
+// copyOwnershipToMedia carries the immutable source-device ownership snapshot
+// set by the monitor stage into the media object. It deliberately does not
+// inspect MonitorStage.User or PipelinePayload.OrganisationId: those values are
+// mutable actor/request context and must never relabel media from another device.
+func (pe *PipelineEvent) copyOwnershipToMedia(media *Media) {
+	if pe.MonitorStage == nil {
+		media.OrganisationId = ""
+		media.ProjectId = nil
+		return
+	}
+
+	media.OrganisationId = pe.MonitorStage.OrganisationId
+	if pe.MonitorStage.ProjectId == nil {
 		media.ProjectId = nil
 		return
 	}
@@ -259,6 +266,12 @@ func (e EventStage) GetName() string { return e.Name }
 type MonitorStage struct {
 	Name        string `json:"name,omitempty"`
 	MonitorData string `json:"monitorData,omitempty"` // Add fields relevant to monitor stage
+
+	// OrganisationId is the immutable canonical organisation snapshot resolved
+	// from the stored source device by the monitor. It is intentionally separate
+	// from User.OrganisationId and PipelinePayload.OrganisationId, which represent
+	// mutable actor/request context.
+	OrganisationId string `json:"organisationId,omitempty"`
 
 	// ProjectId is the immutable project snapshot resolved from the stored source
 	// device by the monitor. It is intentionally separate from User.ProjectId,
