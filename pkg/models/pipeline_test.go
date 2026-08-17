@@ -1,8 +1,119 @@
 package models
 
 import (
+	"encoding/json"
 	"testing"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
+
+func TestPipelineEventOwnershipSnapshotRoundTripAndGetMedia(t *testing.T) {
+	organisationId := primitive.NewObjectID().Hex()
+	projectId := primitive.NewObjectID()
+	activeUserOrganisationId := primitive.NewObjectID()
+	activeUserProjectId := primitive.NewObjectID()
+	event := PipelineEvent{
+		MonitorStage: &MonitorStage{
+			OrganisationId: organisationId,
+			ProjectId:      &projectId,
+			User: User{
+				OrganisationId: activeUserOrganisationId,
+				ProjectId:      activeUserProjectId,
+			},
+		},
+		Payload: PipelinePayload{
+			FileName:       "user/video.mp4",
+			OrganisationId: primitive.NewObjectID().Hex(),
+			Metadata: PipelineMetadata{
+				DeviceId:  "device-1",
+				Timestamp: "1706000000",
+				Duration:  "3000",
+			},
+		},
+	}
+
+	encoded, err := json.Marshal(event)
+	if err != nil {
+		t.Fatalf("marshal pipeline event: %v", err)
+	}
+	var decoded PipelineEvent
+	if err := json.Unmarshal(encoded, &decoded); err != nil {
+		t.Fatalf("unmarshal pipeline event: %v", err)
+	}
+	if decoded.MonitorStage == nil || decoded.MonitorStage.ProjectId == nil || *decoded.MonitorStage.ProjectId != projectId {
+		t.Fatalf("monitor projectId = %#v, want %s", decoded.MonitorStage, projectId.Hex())
+	}
+	if decoded.MonitorStage.OrganisationId != organisationId {
+		t.Fatalf("monitor organisationId = %q, want %q", decoded.MonitorStage.OrganisationId, organisationId)
+	}
+
+	media, err := decoded.GetMedia()
+	if err != nil {
+		t.Fatalf("get media: %v", err)
+	}
+	if media.ProjectId == nil || *media.ProjectId != projectId {
+		t.Fatalf("media projectId = %v, want %s", media.ProjectId, projectId.Hex())
+	}
+	if media.OrganisationId != organisationId {
+		t.Fatalf("media organisationId = %q, want %q", media.OrganisationId, organisationId)
+	}
+	if media.OrganisationId == activeUserOrganisationId.Hex() {
+		t.Fatalf("media organisationId followed mutable user selection %s", activeUserOrganisationId.Hex())
+	}
+	if media.OrganisationId == decoded.Payload.OrganisationId {
+		t.Fatalf("media organisationId followed request payload %s", decoded.Payload.OrganisationId)
+	}
+	if *media.ProjectId == activeUserProjectId {
+		t.Fatalf("media projectId followed mutable user selection %s", activeUserProjectId.Hex())
+	}
+	if media.ProjectId == decoded.MonitorStage.ProjectId {
+		t.Fatal("media projectId must be a copy, not alias monitor-stage storage")
+	}
+}
+
+func TestPipelineEventWithoutOwnershipSnapshotRemainsCompatible(t *testing.T) {
+	legacyJSON := []byte(`{"monitorStage":{"name":"monitor","user":{"organisationId":"111111111111111111111111","projectId":"222222222222222222222222"}},"payload":{"key":"user/video.mp4","organisationId":"333333333333333333333333","metadata":{"productid":"device-1","event-timestamp":"1706000000","duration":"3000"}}}`)
+
+	var event PipelineEvent
+	if err := json.Unmarshal(legacyJSON, &event); err != nil {
+		t.Fatalf("unmarshal legacy pipeline event: %v", err)
+	}
+	media, err := event.GetMedia()
+	if err != nil {
+		t.Fatalf("get media from legacy event: %v", err)
+	}
+	if media.ProjectId != nil {
+		t.Fatalf("legacy media projectId = %s, want nil", media.ProjectId.Hex())
+	}
+	if media.OrganisationId != "" {
+		t.Fatalf("legacy media organisationId = %q, want empty", media.OrganisationId)
+	}
+}
+
+func TestPipelineEventOwnershipSnapshotAppliesToLegacyMedia(t *testing.T) {
+	organisationId := primitive.NewObjectID().Hex()
+	projectId := primitive.NewObjectID()
+	event := PipelineEvent{
+		MonitorStage: &MonitorStage{
+			OrganisationId: organisationId,
+			ProjectId:      &projectId,
+		},
+		Payload: PipelinePayload{
+			FileName: "username/1640000000_region_devicename_motion_1234_5000.mp4",
+		},
+	}
+
+	media, err := event.GetMedia()
+	if err != nil {
+		t.Fatalf("get media from legacy filename: %v", err)
+	}
+	if media.OrganisationId != organisationId {
+		t.Fatalf("media organisationId = %q, want %q", media.OrganisationId, organisationId)
+	}
+	if media.ProjectId == nil || *media.ProjectId != projectId {
+		t.Fatalf("media projectId = %v, want %s", media.ProjectId, projectId.Hex())
+	}
+}
 
 func TestGetMediaFromPipelineEvent_LegacyFormat(t *testing.T) {
 	tests := []struct {

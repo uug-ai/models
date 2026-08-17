@@ -7,6 +7,7 @@ package properties
 const (
 	IOId = "_id"
 	IOOrganisationId = "organisationId"
+	IOProjectId = "projectId"
 	IOHash = "hash"
 	IODeviceId = "deviceId"
 	IOType = "type"

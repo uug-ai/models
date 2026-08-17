@@ -13,6 +13,7 @@ const (
 	GroupDevices = "devices"
 	GroupGroups = "groups"
 	GroupSites = "sites"
+	GroupProjectId = "projectId"
 	GroupStorageSolution = "storageSolution"
 	GroupVaultAccessKey = "vaultAccessKey"
 	GroupVaultSecretKey = "vaultSecretKey"

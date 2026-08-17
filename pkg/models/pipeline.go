@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // --------------------------------------------------------------------------------------------------------------------------------
@@ -98,6 +100,7 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		if fps, err := strconv.ParseFloat(pe.Payload.Metadata.FPS, 64); err == nil {
 			media.Metadata.FPS = fps
 		}
+		pe.copyOwnershipToMedia(&media)
 
 		return media, nil
 	}
@@ -139,11 +142,26 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		media.Metadata = &MediaMetadata{}
 		media.Metadata.MotionPixels = 0
 		media.Metadata.FileSize = pe.Payload.FileSize
+		pe.copyOwnershipToMedia(&media)
 
 		return media, nil
 	}
 	return media, fmt.Errorf("invalid attributes format in video file name: %s, expected 6 attributes, got: %d", videoFileName, len(attributes)) // Return empty media if attributes format is invalid
 
+}
+
+// copyOwnershipToMedia copies the trusted monitor snapshot into parsed media.
+func (pe *PipelineEvent) copyOwnershipToMedia(media *Media) {
+	if pe.MonitorStage == nil {
+		return
+	}
+
+	media.OrganisationId = pe.MonitorStage.OrganisationId
+	if pe.MonitorStage.ProjectId == nil {
+		return
+	}
+	projectId := *pe.MonitorStage.ProjectId
+	media.ProjectId = &projectId
 }
 
 type PipelinePayload struct {
@@ -241,9 +259,13 @@ func (e EventStage) GetName() string { return e.Name }
 
 type MonitorStage struct {
 	Name        string `json:"name,omitempty"`
-	MonitorData string `json:"monitorData,omitempty"` // Add fields relevant to monitor stage
+	MonitorData string `json:"monitorData,omitempty"`
 
-	// Add more fields as needed
+	// OrganisationId and ProjectId snapshot the stored source device's ownership;
+	// nested user and payload fields are mutable actor/request context instead.
+	OrganisationId string              `json:"organisationId,omitempty"`
+	ProjectId      *primitive.ObjectID `json:"projectId,omitempty"`
+
 	User         User            `json:"user,omitempty"`
 	Subscription Subscription    `json:"subscription,omitempty"`
 	Plans        map[string]Plan `json:"plans,omitempty"`

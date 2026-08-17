@@ -18,6 +18,7 @@ const (
 	WorkflowUserId = "userId"
 	WorkflowUsername = "username"
 	WorkflowOrganisationId = "organisationId"
+	WorkflowProjectId = "projectId"
 	WorkflowCreatedAt = "createdAt"
 	WorkflowUpdatedAt = "updatedAt"
 	WorkflowAudit = "audit"

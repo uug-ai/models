@@ -7,6 +7,7 @@ package properties
 const (
 	VideowallId = "_id"
 	VideowallOrganisationId = "organisationId"
+	VideowallProjectId = "projectId"
 	VideowallName = "name"
 	VideowallDescription = "description"
 	VideowallSites = "sites"

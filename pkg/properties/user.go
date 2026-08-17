@@ -87,6 +87,7 @@ const (
 const (
 	UserId = "_id"
 	UserOrganisationId = "organisationId"
+	UserProjectId = "projectId"
 	UserUsername = "username"
 	UserPassword = "password"
 	UserForgotPassword = "forgotPassword"

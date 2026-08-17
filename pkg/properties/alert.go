@@ -105,6 +105,7 @@ const (
 	CustomAlertWeeklySchedule = "weeklySchedule"
 	CustomAlertDateRangeSchedule = "dateRangeSchedule"
 	CustomAlertOrganisationId = "organisationId"
+	CustomAlertProjectId = "projectId"
 	CustomAlertTimeRange1Max = "timeRange1Max"
 	CustomAlertTimeRange1Min = "timeRange1Min"
 	CustomAlertTimeRange2Max = "timeRange2Max"

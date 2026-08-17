@@ -16,6 +16,7 @@ const (
 	MarkerSiteId = "siteId"
 	MarkerGroupId = "groupId"
 	MarkerOrganisationId = "organisationId"
+	MarkerProjectId = "projectId"
 	MarkerMediaKeys = "mediaKeys"
 	MarkerStartTimestamp = "startTimestamp"
 	MarkerEndTimestamp = "endTimestamp"

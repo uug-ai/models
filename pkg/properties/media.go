@@ -52,6 +52,7 @@ const (
 	MediaGroupId = "groupId"
 	MediaSiteId = "siteId"
 	MediaOrganisationId = "organisationId"
+	MediaProjectId = "projectId"
 	MediaStorageSolution = "storageSolution"
 	MediaVideoFile = "videoFile"
 	MediaVideoProvider = "videoProvider"

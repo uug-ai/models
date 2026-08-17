@@ -193,8 +193,7 @@ type WorkflowRun struct {
 	// on the wire the same identity travels in the richer User projection.
 	OrganisationId string `json:"-" bson:"organisationId"`
 
-	// ProjectId optionally narrows the run to a project within its organisation.
-	// Persistence-only, like OrganisationId. A nil value keeps it organisation-wide.
+	// ProjectId is persisted here; its wire value travels in User.
 	ProjectId *primitive.ObjectID `json:"-" bson:"projectId,omitempty"`
 
 	// TraceId continues the distributed trace across the workflow tail.
@@ -375,19 +374,12 @@ func AutomaticRunObjectID(mediaKey, organisationId, workflowId string) primitive
 	return id
 }
 
-// WorkflowUser is the secret-free projection of the owning account carried on a
-// WorkflowRun. A run derives from a recording, which is owned by an
-// organisation (and device), not an individual user, so the scope is the
-// OrganisationId — the run document is keyed by (Key, OrganisationId) and every
-// ingested artifact is scoped to it. The individual user id is deliberately NOT
-// carried: it would imply a user↔recording link that does not exist and is not
-// needed by any stage. The account-level Storage block rides along only to
-// resolve a per-recording vault override. Every credential/secret/billing field
-// of the full User is omitted so it can never reach the workflows queue or its
-// logs.
+// WorkflowUser carries secret-free source ownership and storage context from
+// analysis to the workflow engine.
 type WorkflowUser struct {
-	OrganisationId string  `json:"organisationId,omitempty"`
-	Storage        Storage `json:"storage,omitempty"`
+	OrganisationId string              `json:"organisationId,omitempty"`
+	ProjectId      *primitive.ObjectID `json:"projectId,omitempty"`
+	Storage        Storage             `json:"storage,omitempty"`
 }
 
 // WorkflowDevice is the projection of a recording's device carried on a

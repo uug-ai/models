@@ -11,6 +11,7 @@ const (
 	SiteOrganisationId = "organisationId"
 	SiteDevices = "devices"
 	SiteGroups = "groups"
+	SiteProjectId = "projectId"
 	SiteStorageSolution = "storageSolution"
 	SiteVaultAccessKey = "vaultAccessKey"
 	SiteVaultSecretKey = "vaultSecretKey"

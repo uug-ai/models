@@ -12,6 +12,7 @@ const (
 	LabelColor = "color"
 	LabelIsPrivate = "is_private"
 	LabelTypes = "type"
+	LabelProjectId = "projectId"
 	LabelUserId = "user_id"
 	LabelOwnerId = "owner_id"
 	LabelCreatedAt = "created_at"

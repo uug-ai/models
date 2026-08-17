@@ -43,6 +43,7 @@ const (
 const (
 	TaskId = "_id"
 	TaskOrganisationId = "organisationId"
+	TaskProjectId = "projectId"
 	TaskCreationDate = "creation_date"
 	TaskCreationDateTime = "creation_datetime"
 	TaskDate = "date"
