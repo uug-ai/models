@@ -1,4 +1,8 @@
-// Package projectscope defines which project owns an organisation's resources
+package models
+
+import "go.mongodb.org/mongo-driver/bson/primitive"
+
+// The two helpers below define which project owns an organisation's resources
 // during the hidden single-project rollout.
 //
 // The rollout has no project UI, no switcher, and no API surface, so there is
@@ -17,10 +21,10 @@
 // A pure function cannot diverge. It performs no I/O, so it returns the same
 // value on every instance regardless of deployment order or collection state,
 // and it produces exactly the value the project materialisation will persist.
-// Callers must therefore never "improve" these helpers by adding a query.
-package projectscope
-
-import "go.mongodb.org/mongo-driver/bson/primitive"
+// Callers must therefore never "improve" these helpers by adding a query, and
+// they must stay free of any dependency that would make one possible — that is
+// why they live in this module rather than alongside the device ownership
+// resolution in the database module, which does query records.
 
 // DefaultProjectId returns the project that owns an organisation's resources
 // while no project has been explicitly assigned.
