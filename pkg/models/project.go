@@ -21,12 +21,25 @@ type Project struct {
 const DefaultProjectSlug = "default"
 
 // GetProjectsInput lists the projects in the caller's active organisation.
+// Soft-deleted (inactive) projects are omitted unless IncludeInactive is set.
 type GetProjectsInput struct {
-	User User `json:"user"`
+	User            User `json:"user"`
+	IncludeInactive bool `json:"includeInactive"`
 }
 
 type GetProjectsOutput struct {
 	Projects []Project `json:"projects"`
+}
+
+// GetProjectInput resolves a single project by id within the caller's active
+// organisation.
+type GetProjectInput struct {
+	User      User   `json:"user"`
+	ProjectId string `json:"projectId"`
+}
+
+type GetProjectOutput struct {
+	Project *Project `json:"project"`
 }
 
 // GetCurrentProjectInput resolves the caller's active project (the one whose id
@@ -47,5 +60,54 @@ type SetCurrentProjectInput struct {
 }
 
 type SetCurrentProjectOutput struct {
+	Project *Project `json:"project"`
+}
+
+// CreateProjectInput creates a project inside the caller's active organisation.
+// Ownership, identity and audit stamps are server-managed and ignored on the
+// supplied Project.
+type CreateProjectInput struct {
+	User    User    `json:"user"`
+	Project Project `json:"project"`
+}
+
+type CreateProjectOutput struct {
+	Project *Project `json:"project"`
+}
+
+// ProjectUpdate is a partial-update (PATCH) payload for a project. Every field
+// is a pointer so a nil value means "not provided" (leave the stored value
+// untouched), which is distinct from an explicit zero value (e.g. clearing the
+// description or setting IsActive to false). Identity, ownership and audit
+// fields are intentionally absent because they are managed server-side.
+type ProjectUpdate struct {
+	Name        *string `json:"name,omitempty"`
+	Slug        *string `json:"slug,omitempty"`
+	Description *string `json:"description,omitempty"`
+	IsActive    *bool   `json:"isActive,omitempty"`
+}
+
+// UpdateProjectInput applies a partial update to a project in the caller's
+// active organisation. Only the fields set on the ProjectUpdate payload are
+// changed.
+type UpdateProjectInput struct {
+	User      User          `json:"user"`
+	ProjectId string        `json:"projectId"`
+	Project   ProjectUpdate `json:"project"`
+}
+
+type UpdateProjectOutput struct {
+	Project *Project `json:"project"`
+}
+
+// DeleteProjectInput soft-deletes a project: the document is retained and its
+// IsActive flag is cleared, so resources that still carry its id keep a
+// resolvable owner. The organisation's default project cannot be deleted.
+type DeleteProjectInput struct {
+	User      User   `json:"user"`
+	ProjectId string `json:"projectId"`
+}
+
+type DeleteProjectOutput struct {
 	Project *Project `json:"project"`
 }
