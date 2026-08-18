@@ -13,5 +13,6 @@ const (
 	AccessTokenToken = "token"
 	AccessTokenOrganisationId = "organisationId"
 	AccessTokenUserId = "userId"
+	AccessTokenProjectId = "projectId"
 	AccessTokenAudit = "audit"
 )
