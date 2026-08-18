@@ -19,8 +19,9 @@ type AccessToken struct {
 	Token       string             `json:"token,omitempty" bson:"token,omitempty"`             // The actual access token value, should be kept secret (will be trimmed before saving)
 
 	// RBAC information
-	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"` // OrganisationId is used to identify the organisation that owns the marker
-	UserId         string `json:"userId" bson:"userId,omitempty"`                 // UserId is used to identify the user that created the marker
+	OrganisationId string              `json:"organisationId" bson:"organisationId,omitempty"` // OrganisationId is used to identify the organisation that owns the marker
+	UserId         string              `json:"userId" bson:"userId,omitempty"`                 // UserId is used to identify the user that created the marker
+	ProjectId      *primitive.ObjectID `json:"-" bson:"projectId,omitempty"`
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"` // Audit information for tracking changes to the access token
