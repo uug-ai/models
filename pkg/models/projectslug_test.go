@@ -43,6 +43,8 @@ func TestValidateProjectSlugFormatRejectsNonCanonicalForms(t *testing.T) {
 		{name: "leading space", slug: " warehouse-north"},
 		{name: "trailing space", slug: "warehouse-north "},
 		{name: "uppercase", slug: "Warehouse-North"},
+		{name: "default slug in another case", slug: "Project-1"},
+		{name: "default slug shouting", slug: "PROJECT-1"},
 		{name: "reserved slug in another case", slug: "Default"},
 		{name: "reserved slug shouting", slug: "DEFAULT"},
 		{name: "underscore", slug: "warehouse_north"},
@@ -114,7 +116,7 @@ func TestDefaultProjectSlugIsReserved(t *testing.T) {
 // on: this check assumes canonical input and is not a substitute for format
 // validation.
 func TestIsReservedProjectSlugIsCaseSensitive(t *testing.T) {
-	for _, slug := range []string{"Default", "DEFAULT", "Admin", "warehouse-north", ""} {
+	for _, slug := range []string{"Project-1", "PROJECT-1", "Default", "DEFAULT", "Admin", "warehouse-north", ""} {
 		if IsReservedProjectSlug(slug) {
 			t.Errorf("IsReservedProjectSlug(%q) = true, want false", slug)
 		}

@@ -14,11 +14,26 @@ type Project struct {
 	Audit          Audit              `json:"audit" bson:"audit"`
 }
 
-// DefaultProjectSlug is the reserved slug of the single default project minted
-// per organisation. The default project is the sentinel-free "organisation-wide"
-// selection: it is a real document (never a stored NilObjectID) so a user's
-// active project can always point at something concrete.
-const DefaultProjectSlug = "default"
+// DefaultProjectSlug and DefaultProjectName identify the single default project
+// minted per organisation. The default project is the sentinel-free
+// "organisation-wide" selection: it is a real document (never a stored
+// NilObjectID) so a user's active project can always point at something
+// concrete.
+//
+// The slug reads as an ordinary first project rather than as a sentinel,
+// deliberately: a slug that looks like a system value invites code that
+// special-cases it as one. It is reserved all the same — see
+// IsReservedProjectSlug — so only the server can mint it and nothing can rename
+// itself onto it. The name is not protected: a user may rename their own
+// default, and this is only the value it is minted with.
+//
+// Both constants live here, rather than as literals at each write site, because
+// a document written by the bulk migration and one minted lazily by Hub API are
+// supposed to be interchangeable.
+const (
+	DefaultProjectSlug = "project-1"
+	DefaultProjectName = "Project 1"
+)
 
 // GetProjectsInput lists the projects in the caller's active organisation.
 // Soft-deleted (inactive) projects are omitted unless IncludeInactive is set.

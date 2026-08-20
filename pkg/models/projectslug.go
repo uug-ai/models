@@ -25,10 +25,11 @@ const MaxProjectSlugLength = maxSlugLength
 // The groups below are the reasons a word is here; they are not a taxonomy
 // anyone needs to preserve when editing the list.
 var reservedProjectSlugs = map[string]struct{}{
-	// The default project identity, plus the words that read as "no project" or
-	// "every project". A slug that looks like a sentinel invites code that
-	// special-cases it as one.
-	"default": {}, "none": {}, "null": {}, "nil": {}, "undefined": {},
+	// DefaultProjectSlug, which only the server may mint, plus the words that
+	// read as "no project" or "every project". A slug that looks like a sentinel
+	// invites code that special-cases it as one.
+	"project-1": {},
+	"default":   {}, "none": {}, "null": {}, "nil": {}, "undefined": {},
 	"all": {}, "any": {}, "unassigned": {},
 
 	// Path segments a future /<orgSlug>/<projectSlug> scheme would collide with,
@@ -64,7 +65,7 @@ var reservedProjectSlugs = map[string]struct{}{
 // two checks and this one cannot.
 //
 // The argument is case-sensitive and assumes canonical form. Pass it through
-// ValidateProjectSlugFormat first: without that, "Default" misses this check,
+// ValidateProjectSlugFormat first: without that, "Project-1" misses this check,
 // misses an exact comparison against DefaultProjectSlug, and misses a
 // byte-comparison unique index.
 func IsReservedProjectSlug(slug string) bool {
