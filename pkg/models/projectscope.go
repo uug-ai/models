@@ -1,8 +1,11 @@
 package models
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
-// The two helpers below define which project owns an organisation's resources
+// The helpers below define which project owns an organisation's resources
 // during the hidden single-project rollout.
 //
 // The rollout has no project UI, no switcher, and no API surface, so there is
@@ -51,4 +54,70 @@ func ResolveProjectId(organisationId primitive.ObjectID, stored *primitive.Objec
 		return *stored
 	}
 	return DefaultProjectId(organisationId)
+}
+
+// ProjectScopeFilter returns the clause a reader adds to narrow an
+// organisation's documents to one project.
+//
+// It is the read half of ResolveProjectId, and it lives here for the same
+// reason that function does: a writer stamps whatever ResolveProjectId returns,
+// and a reader must match exactly that. Split the two across modules and they
+// drift — silently, because a predicate that no longer matches what was stamped
+// returns zero documents rather than an error. Keeping the pair in one file is
+// what makes the drift impossible.
+//
+// This is NOT a tenant boundary. It narrows within an organisation, so callers
+// must apply their own organisation clause alongside it; on its own it would
+// match another tenant's documents that happen to share a project id.
+//
+// The predicate has two shapes, and the asymmetry is deliberate:
+//
+//   - For a real project it is strict equality. Only documents explicitly
+//     stamped for that project belong to it.
+//   - For the organisation's default project it also matches documents with no
+//     project at all. Every document written before the project axis existed is
+//     unstamped, and the default project is where they belong; a strict clause
+//     would make the entire pre-rollout history vanish from the UI.
+//
+// Relaxing only for the default project is the important half. An unconditional
+// tolerance reads identically today — during the rollout every project IS the
+// organisation default — but the moment a second project exists it would make
+// that project's reads match every unstamped document in the organisation. That
+// is a cross-project leak that no test written today would catch, because today
+// there is no second project to catch it with.
+//
+// A zero project, or an organisation id that is not an ObjectID, yields nil:
+// "do not narrow". That degrades a read to organisation-wide rather than to
+// nothing, mirroring the writer's own degradation for an unresolvable
+// organisation. It is not a leak — the caller's organisation clause still
+// bounds the result — whereas failing to an unmatchable predicate would blank a
+// tenant's screen over a resolution glitch.
+//
+// The tolerant form carries both a null arm and an $exists arm even though
+// {projectId: nil} already matches a missing field in MongoDB. The redundancy
+// is intentional: it is the exact shape the Hub API already hand-rolls, so
+// those call sites can adopt this helper as a pure substitution with no
+// behaviour change to argue about in review.
+func ProjectScopeFilter(organisationId string, projectId primitive.ObjectID) bson.M {
+	if projectId.IsZero() {
+		return nil
+	}
+
+	organisation, err := primitive.ObjectIDFromHex(organisationId)
+	if err != nil {
+		return nil
+	}
+
+	// Asking DefaultProjectId rather than comparing the hex strings directly
+	// keeps this in step with the definition: if the default ever stops being
+	// the organisation id, the tolerance follows it automatically.
+	if DefaultProjectId(organisation) != projectId {
+		return bson.M{"projectId": projectId}
+	}
+
+	return bson.M{"$or": []bson.M{
+		{"projectId": projectId},
+		{"projectId": bson.M{"$exists": false}},
+		{"projectId": nil},
+	}}
 }
