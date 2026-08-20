@@ -152,12 +152,19 @@ func TestOrganisationAndProjectSlugSetsAreIndependent(t *testing.T) {
 		t.Fatal("no organisation-only reserved slugs, want the sets to differ")
 	}
 
-	// The default project slug is reserved for projects because a real document
-	// holds it. Nothing holds it for organisations, but an organisation called
-	// "default" reads as "no organisation" everywhere the project sentinel reads
-	// as "no project", so it is reserved on both sides for different reasons.
-	if !IsReservedOrganisationSlug(DefaultProjectSlug) {
-		t.Errorf("IsReservedOrganisationSlug(%q) = false, want true", DefaultProjectSlug)
+	// The sentinel words are reserved on both sides, for different reasons: an
+	// organisation called "default" reads as "no organisation" everywhere a
+	// project called "default" reads as "no project". DefaultProjectSlug itself
+	// is deliberately *not* checked here — it names a real document only on the
+	// project side, and nothing mints an organisation slug, so there is no reason
+	// for the organisation set to carry it.
+	for _, sentinel := range []string{"default", "none", "all"} {
+		if !IsReservedOrganisationSlug(sentinel) {
+			t.Errorf("IsReservedOrganisationSlug(%q) = false, want true", sentinel)
+		}
+		if !IsReservedProjectSlug(sentinel) {
+			t.Errorf("IsReservedProjectSlug(%q) = false, want true", sentinel)
+		}
 	}
 }
 
