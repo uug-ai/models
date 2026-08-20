@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/uug-ai/models/pkg/models"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // AnalysisStatus represents specific status codes for analysis operations
@@ -373,6 +374,7 @@ type SubmitFaceRedactionRequest struct {
 	// on-demand PipelineEvent (event.Payload) or a hub-workflows stage dispatch
 	// (run.User) — i.e. the request is self-contained and transport agnostic.
 	OrganisationId      string                        `json:"organisationId,omitempty"`
+	ProjectId           *primitive.ObjectID           `json:"projectId,omitempty"`
 	CaseMediaId         string                        `json:"caseMediaId"`
 	SignedUrl           string                        `json:"signedUrl"`
 	FileName            string                        `json:"fileName"`
@@ -419,6 +421,7 @@ type CaseMediaStatusEvent struct {
 	TaskId         string                 `json:"taskId"`
 	CaseMediaId    string                 `json:"caseMediaId"`
 	OrganisationId string                 `json:"organisationId"`
+	ProjectId      *primitive.ObjectID    `json:"projectId,omitempty"`
 	Status         models.CaseMediaStatus `json:"status"`
 	StatusError    string                 `json:"statusError,omitempty"`
 	File           string                 `json:"file,omitempty"`
