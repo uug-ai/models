@@ -93,11 +93,22 @@ func ResolveProjectId(organisationId primitive.ObjectID, stored *primitive.Objec
 // bounds the result — whereas failing to an unmatchable predicate would blank a
 // tenant's screen over a resolution glitch.
 //
-// The tolerant form carries both a null arm and an $exists arm even though
-// {projectId: nil} already matches a missing field in MongoDB. The redundancy
-// is intentional: it is the exact shape the Hub API already hand-rolls, so
-// those call sites can adopt this helper as a pure substitution with no
-// behaviour change to argue about in review.
+// The tolerant form is a two-element $in rather than an $or over an equality,
+// an $exists and a null arm. All three shapes select the same documents —
+// {projectId: nil} already matches a missing field in MongoDB, so the $exists
+// arm never added a document — but only the $in is answerable from an index.
+// A branch testing {$exists: false} cannot be: a missing field and an explicit
+// null are stored as the same index entry, so the planner cannot decide the
+// difference without fetching the document, and an AND-ed clause it cannot
+// push into an index turns an otherwise-indexed read into a full collection
+// scan followed by a blocking sort. The $in yields two point bounds instead,
+// which is what lets a reader keep using an existing {organisationId, sort key}
+// index.
+//
+// The redundant $or shape this replaces was chosen so the Hub API call sites
+// that hand-rolled it could adopt this helper as a pure substitution. They have
+// all adopted it, so that reason is spent and the shape is now free to be the
+// one the planner can use.
 func ProjectScopeFilter(organisationId string, projectId primitive.ObjectID) bson.M {
 	if projectId.IsZero() {
 		return nil
@@ -115,9 +126,5 @@ func ProjectScopeFilter(organisationId string, projectId primitive.ObjectID) bso
 		return bson.M{"projectId": projectId}
 	}
 
-	return bson.M{"$or": []bson.M{
-		{"projectId": projectId},
-		{"projectId": bson.M{"$exists": false}},
-		{"projectId": nil},
-	}}
+	return bson.M{"projectId": bson.M{"$in": bson.A{projectId, nil}}}
 }
