@@ -77,9 +77,35 @@ func TestProjectScopeFilterDoesNotRelaxForARealProject(t *testing.T) {
 	organisationId := primitive.NewObjectID()
 	projectId := primitive.NewObjectID()
 
-	if _, relaxed := ProjectScopeFilter(organisationId.Hex(), projectId)["$or"]; relaxed {
+	if toleratesUnstampedDocuments(ProjectScopeFilter(organisationId.Hex(), projectId)) {
 		t.Fatal("a real project must not match documents that carry no project")
 	}
+}
+
+// toleratesUnstampedDocuments reports whether a clause would select a document
+// that carries no projectId at all.
+//
+// It reads the predicate's meaning rather than its spelling. The tolerant form
+// has been an $or over an $exists arm and is now a two-element $in; both select
+// the same documents, and it is that selection — not the syntax — these tests
+// exist to pin down.
+func toleratesUnstampedDocuments(filter bson.M) bool {
+	// A bare equality never matches an absent field.
+	operators, ok := filter["projectId"].(bson.M)
+	if !ok {
+		return false
+	}
+	candidates, ok := operators["$in"].(bson.A)
+	if !ok {
+		return false
+	}
+	for _, candidate := range candidates {
+		// null matches both an explicit null and a missing field.
+		if candidate == nil {
+			return true
+		}
+	}
+	return false
 }
 
 func TestProjectScopeFilterRelaxesForTheDefaultProject(t *testing.T) {
@@ -90,14 +116,36 @@ func TestProjectScopeFilterRelaxesForTheDefaultProject(t *testing.T) {
 	defaultProjectId := DefaultProjectId(organisationId)
 
 	got := ProjectScopeFilter(organisationId.Hex(), defaultProjectId)
-	want := bson.M{"$or": []bson.M{
-		{"projectId": defaultProjectId},
-		{"projectId": bson.M{"$exists": false}},
-		{"projectId": nil},
-	}}
+	want := bson.M{"projectId": bson.M{"$in": bson.A{defaultProjectId, nil}}}
 
 	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("ProjectScopeFilter() = %v, want %v", got, want)
+	}
+}
+
+// The tolerant clause must stay a single key holding point-matchable values.
+// An $exists arm, or any other operator the planner cannot turn into index
+// bounds, selects exactly the same documents but forces the reader that ANDs
+// this clause onto an organisation scope into a full collection scan.
+func TestProjectScopeFilterTolerantFormIsIndexBounded(t *testing.T) {
+	organisationId := primitive.NewObjectID()
+
+	filter := ProjectScopeFilter(organisationId.Hex(), DefaultProjectId(organisationId))
+	if len(filter) != 1 {
+		t.Fatalf("tolerant filter must be a single key, got %v", filter)
+	}
+
+	candidates, ok := filter["projectId"].(bson.M)["$in"].(bson.A)
+	if !ok {
+		t.Fatalf("tolerant filter must narrow projectId with $in, got %v", filter)
+	}
+	for _, candidate := range candidates {
+		if candidate == nil {
+			continue
+		}
+		if _, isOperator := candidate.(bson.M); isOperator {
+			t.Fatalf("$in must hold plain values, got operator %v", candidate)
+		}
 	}
 }
 
@@ -126,7 +174,7 @@ func TestProjectScopeFilterAcceptsAnUppercaseOrganisationId(t *testing.T) {
 	organisationId := primitive.NewObjectID()
 	upper := strings.ToUpper(organisationId.Hex())
 
-	if _, relaxed := ProjectScopeFilter(upper, DefaultProjectId(organisationId))["$or"]; !relaxed {
+	if !toleratesUnstampedDocuments(ProjectScopeFilter(upper, DefaultProjectId(organisationId))) {
 		t.Fatal("an uppercase organisation id must still resolve to the default project")
 	}
 }
