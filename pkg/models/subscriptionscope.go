@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -34,6 +36,34 @@ func SubscriptionOwnershipFilter(organisationId primitive.ObjectID) bson.M {
 			"organisation_id": bson.M{"$exists": false},
 			"user_id":         organisationId.Hex(),
 		},
+	}}
+}
+
+// ActiveSubscriptionFilter selects the subscriptions that have not lapsed.
+//
+// A subscription is active while ends_at lies in the future, and indefinitely
+// while ends_at is unset — an open-ended subscription is the normal state, and
+// cancelling is what writes the field. Resuming clears it again, so a document
+// moves between the two arms over its life rather than belonging to one.
+//
+// The nil comparison is doing more work than it looks. MongoDB matches both an
+// explicit null and a missing key, which is what makes the second arm cover the
+// never-cancelled documents that carry no ends_at at all. Rewriting it as an
+// $exists test would quietly drop the ones holding an explicit null.
+//
+// Callers pass the instant rather than letting this read the clock, so a query
+// built from several parts compares every one of them against the same now, and
+// so a test can pick an instant either side of a fixture's ends_at.
+//
+// Pair this with SubscriptionOwnershipFilter and the {organisation_id, ends_at}
+// and {user_id, ends_at} indexes cover the result. Note this is a read-side
+// filter only: a write that has to find a cancelled subscription in order to
+// resume it must not apply it, or the document it exists to revive is exactly
+// the one it excludes.
+func ActiveSubscriptionFilter(now time.Time) bson.M {
+	return bson.M{"$or": bson.A{
+		bson.M{"ends_at": bson.M{"$gt": now}},
+		bson.M{"ends_at": nil},
 	}}
 }
 

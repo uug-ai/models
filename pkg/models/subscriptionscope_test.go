@@ -3,6 +3,7 @@ package models
 import (
 	"reflect"
 	"testing"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -47,6 +48,57 @@ func TestSubscriptionOwnershipFilterGuardsTheLegacyArm(t *testing.T) {
 	}
 	if legacy["user_id"] != organisationId.Hex() {
 		t.Fatalf("legacy arm user_id = %v, want %s", legacy["user_id"], organisationId.Hex())
+	}
+}
+
+func TestActiveSubscriptionFilterCoversOpenEndedSubscriptions(t *testing.T) {
+	now := time.Date(2026, 8, 24, 12, 0, 0, 0, time.UTC)
+
+	want := bson.M{"$or": bson.A{
+		bson.M{"ends_at": bson.M{"$gt": now}},
+		bson.M{"ends_at": nil},
+	}}
+
+	if got := ActiveSubscriptionFilter(now); !reflect.DeepEqual(got, want) {
+		t.Fatalf("ActiveSubscriptionFilter() = %#v, want %#v", got, want)
+	}
+}
+
+func TestActiveSubscriptionFilterMatchesAbsentEndsAtViaNil(t *testing.T) {
+	// The nil arm is load-bearing in a way an $exists rewrite would break in one
+	// direction only. MongoDB matches nil against both an explicit null and a
+	// missing key, so this one arm covers the never-cancelled documents that
+	// carry no ends_at and the resumed ones that carry null. {$exists: false}
+	// would silently drop the latter, and every fixture built by resuming a
+	// subscription would stop matching.
+	arms, ok := ActiveSubscriptionFilter(time.Now())["$or"].(bson.A)
+	if !ok || len(arms) != 2 {
+		t.Fatalf("filter is not a two-armed $or: %#v", ActiveSubscriptionFilter(time.Now()))
+	}
+
+	openEnded, ok := arms[1].(bson.M)
+	if !ok {
+		t.Fatalf("open-ended arm = %#v, want bson.M", arms[1])
+	}
+	endsAt, present := openEnded["ends_at"]
+	if !present {
+		t.Fatalf("open-ended arm does not test ends_at: %#v", openEnded)
+	}
+	if endsAt != nil {
+		t.Fatalf("open-ended arm ends_at = %#v, want a literal nil rather than an operator document", endsAt)
+	}
+}
+
+func TestActiveSubscriptionFilterUsesTheCallersInstant(t *testing.T) {
+	// The instant is a parameter so a query assembled from several parts compares
+	// all of them against one now. Reading the clock here would also make the
+	// filter untestable against a fixture's ends_at.
+	past := time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)
+
+	arms := ActiveSubscriptionFilter(past)["$or"].(bson.A)
+	active := arms[0].(bson.M)["ends_at"].(bson.M)
+	if active["$gt"] != past {
+		t.Fatalf("active arm compares against %#v, want the caller's instant %v", active["$gt"], past)
 	}
 }
 
