@@ -33545,9 +33545,9 @@ export interface components {
              *     OrganisationId is used to identify the organisation that owns the device.
              *     FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc. */
             organisationId?: string;
-            /** @description ProjectId optionally places the device in a project within its
-             *     organisation. A nil value keeps the device organisation-wide. It narrows
-             *     access on top of OrganisationId; it never replaces it. */
+            /** @description ProjectId places the device in exactly one project within its organisation.
+             *     A nil or zero legacy value resolves to that organisation's default project;
+             *     it does not make the device organisation-wide. */
             projectId?: string;
             /** @description Versioning information
              *     Note: Version is used to identify the version of the device software.
