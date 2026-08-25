@@ -250,13 +250,15 @@ type EventStage struct {
 	// Add more fields as needed
 }
 
-// PipelineSourceDevice is trusted ingress identity resolved from authenticated
-// credentials before an event enters the processing queues. DeviceKey remains
-// a consistency guard; DeviceId is the canonical registry identity. Legacy
-// events omit this block and follow explicit compatibility handling.
+// PipelineSourceDevice carries the source-device locator and any identity
+// resolved by trusted pipeline stages. Vault initially supplies CloudKey and
+// DeviceKey after authenticating the upload account. Monitor resolves and fills
+// the canonical fields before downstream persistence. Legacy events omit this
+// block and follow explicit compatibility handling.
 type PipelineSourceDevice struct {
 	DeviceId       primitive.ObjectID  `json:"deviceId,omitempty"`
 	DeviceKey      string              `json:"deviceKey,omitempty"`
+	CloudKey       string              `json:"cloudKey,omitempty"`
 	OrganisationId string              `json:"organisationId,omitempty"`
 	ProjectId      *primitive.ObjectID `json:"projectId,omitempty"`
 	OwnerUserId    string              `json:"ownerUserId,omitempty"`

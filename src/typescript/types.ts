@@ -34926,6 +34926,7 @@ export interface components {
             timestamp?: number;
         };
         "models.PipelineSourceDevice": {
+            cloudKey?: string;
             deviceId?: string;
             deviceKey?: string;
             organisationId?: string;
