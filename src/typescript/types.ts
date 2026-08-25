@@ -34929,6 +34929,7 @@ export interface components {
             deviceId?: string;
             deviceKey?: string;
             organisationId?: string;
+            ownerUserId?: string;
             projectId?: string;
         };
         "models.Plan": {

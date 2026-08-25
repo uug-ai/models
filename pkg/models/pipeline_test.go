@@ -94,12 +94,14 @@ func TestPipelineSourceDeviceRoundTripsCanonicalIdentity(t *testing.T) {
 	deviceId := primitive.NewObjectID()
 	organisationId := primitive.NewObjectID()
 	projectId := primitive.NewObjectID()
+	ownerUserId := primitive.NewObjectID()
 	event := PipelineEvent{
 		EventStage: &EventStage{SourceDevice: &PipelineSourceDevice{
 			DeviceId:       deviceId,
 			DeviceKey:      "device-1",
 			OrganisationId: organisationId.Hex(),
 			ProjectId:      &projectId,
+			OwnerUserId:    ownerUserId.Hex(),
 		}},
 	}
 
@@ -115,7 +117,7 @@ func TestPipelineSourceDeviceRoundTripsCanonicalIdentity(t *testing.T) {
 		t.Fatalf("source device = %#v", decoded.EventStage)
 	}
 	got := decoded.EventStage.SourceDevice
-	if got.DeviceId != deviceId || got.DeviceKey != "device-1" || got.OrganisationId != organisationId.Hex() {
+	if got.DeviceId != deviceId || got.DeviceKey != "device-1" || got.OrganisationId != organisationId.Hex() || got.OwnerUserId != ownerUserId.Hex() {
 		t.Fatalf("source device = %#v", got)
 	}
 	if got.ProjectId == nil || *got.ProjectId != projectId {

@@ -259,6 +259,7 @@ type PipelineSourceDevice struct {
 	DeviceKey      string              `json:"deviceKey,omitempty"`
 	OrganisationId string              `json:"organisationId,omitempty"`
 	ProjectId      *primitive.ObjectID `json:"projectId,omitempty"`
+	OwnerUserId    string              `json:"ownerUserId,omitempty"`
 }
 
 // Constructor function for EventStage
