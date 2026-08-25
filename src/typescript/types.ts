@@ -33702,6 +33702,7 @@ export interface components {
             /** @description Add fields relevant to event stage */
             eventData?: string;
             name?: string;
+            sourceDevice?: components["schemas"]["models.PipelineSourceDevice"];
         };
         "models.ExportFile": {
             camera_id?: string;
@@ -34923,6 +34924,12 @@ export interface components {
             /** @description Signed URL */
             signedUrl?: string;
             timestamp?: number;
+        };
+        "models.PipelineSourceDevice": {
+            deviceId?: string;
+            deviceKey?: string;
+            organisationId?: string;
+            projectId?: string;
         };
         "models.Plan": {
             /** @description AnalysisLimit is the maximum number of analysis operations allowed */

@@ -244,9 +244,21 @@ type Stage interface {
 }
 
 type EventStage struct {
-	Name      string `json:"name,omitempty"`
-	EventData string `json:"eventData,omitempty"` // Add fields relevant to event stage
+	Name         string                `json:"name,omitempty"`
+	EventData    string                `json:"eventData,omitempty"` // Add fields relevant to event stage
+	SourceDevice *PipelineSourceDevice `json:"sourceDevice,omitempty"`
 	// Add more fields as needed
+}
+
+// PipelineSourceDevice is trusted ingress identity resolved from authenticated
+// credentials before an event enters the processing queues. DeviceKey remains
+// a consistency guard; DeviceId is the canonical registry identity. Legacy
+// events omit this block and follow explicit compatibility handling.
+type PipelineSourceDevice struct {
+	DeviceId       primitive.ObjectID  `json:"deviceId,omitempty"`
+	DeviceKey      string              `json:"deviceKey,omitempty"`
+	OrganisationId string              `json:"organisationId,omitempty"`
+	ProjectId      *primitive.ObjectID `json:"projectId,omitempty"`
 }
 
 // Constructor function for EventStage
