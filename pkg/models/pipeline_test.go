@@ -90,6 +90,41 @@ func TestPipelineEventWithoutOwnershipSnapshotRemainsCompatible(t *testing.T) {
 	}
 }
 
+func TestPipelineSourceDeviceRoundTripsCanonicalIdentity(t *testing.T) {
+	deviceId := primitive.NewObjectID()
+	organisationId := primitive.NewObjectID()
+	projectId := primitive.NewObjectID()
+	ownerUserId := primitive.NewObjectID()
+	event := PipelineEvent{
+		EventStage: &EventStage{SourceDevice: &PipelineSourceDevice{
+			DeviceId:       deviceId,
+			DeviceKey:      "device-1",
+			OrganisationId: organisationId.Hex(),
+			ProjectId:      &projectId,
+			OwnerUserId:    ownerUserId.Hex(),
+		}},
+	}
+
+	encoded, err := json.Marshal(event)
+	if err != nil {
+		t.Fatalf("marshal pipeline event: %v", err)
+	}
+	var decoded PipelineEvent
+	if err := json.Unmarshal(encoded, &decoded); err != nil {
+		t.Fatalf("unmarshal pipeline event: %v", err)
+	}
+	if decoded.EventStage == nil || decoded.EventStage.SourceDevice == nil {
+		t.Fatalf("source device = %#v", decoded.EventStage)
+	}
+	got := decoded.EventStage.SourceDevice
+	if got.DeviceId != deviceId || got.DeviceKey != "device-1" || got.OrganisationId != organisationId.Hex() || got.OwnerUserId != ownerUserId.Hex() {
+		t.Fatalf("source device = %#v", got)
+	}
+	if got.ProjectId == nil || *got.ProjectId != projectId {
+		t.Fatalf("source project = %v, want %s", got.ProjectId, projectId.Hex())
+	}
+}
+
 func TestPipelineEventOwnershipSnapshotAppliesToLegacyMedia(t *testing.T) {
 	organisationId := primitive.NewObjectID().Hex()
 	projectId := primitive.NewObjectID()
