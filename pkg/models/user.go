@@ -20,6 +20,17 @@ func GetUserIdFromAccountOrMaster(user User) string {
 	return GetOrganisationObjectId(user).Hex()
 }
 
+// StableOwnerObjectId returns the user's durable legacy owner identity without
+// consulting mutable organisation selection. Sub-users resolve through their
+// stored master account; owners and malformed legacy relationships use their
+// own ID.
+func StableOwnerObjectId(user User) primitive.ObjectID {
+	if masterId, err := primitive.ObjectIDFromHex(user.MasterAccount); err == nil && !masterId.IsZero() {
+		return masterId
+	}
+	return user.Id
+}
+
 // GetOrganisationId returns the hex-string organisation id for this user. It is
 // retained for the legacy ownership fields that are still stored as strings
 // (e.g. Device/AccessToken/CaseMedia organisationId). New org/RBAC code that

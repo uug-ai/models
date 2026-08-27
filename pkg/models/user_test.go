@@ -79,3 +79,27 @@ func TestGetOrganisationObjectIdHandlesUnhydratedMaster(t *testing.T) {
 		t.Fatalf("organisation id = %s, want %s", got.Hex(), userId.Hex())
 	}
 }
+
+func TestStableOwnerObjectIdIgnoresActiveOrganisation(t *testing.T) {
+	userId := primitive.NewObjectID()
+	masterId := primitive.NewObjectID()
+	activeOrganisationId := primitive.NewObjectID()
+
+	if got := StableOwnerObjectId(User{
+		Id:             userId,
+		MasterAccount:  masterId.Hex(),
+		OrganisationId: activeOrganisationId,
+	}); got != masterId {
+		t.Fatalf("stable owner = %s, want master %s", got.Hex(), masterId.Hex())
+	}
+	if got := StableOwnerObjectId(User{Id: userId, OrganisationId: activeOrganisationId}); got != userId {
+		t.Fatalf("stable owner = %s, want own ID %s", got.Hex(), userId.Hex())
+	}
+}
+
+func TestStableOwnerObjectIdRejectsMalformedMaster(t *testing.T) {
+	userId := primitive.NewObjectID()
+	if got := StableOwnerObjectId(User{Id: userId, MasterAccount: "invalid"}); got != userId {
+		t.Fatalf("stable owner = %s, want own ID %s", got.Hex(), userId.Hex())
+	}
+}
