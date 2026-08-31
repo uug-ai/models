@@ -14,5 +14,6 @@ const (
 	ProjectPublicKey = "publicKey"
 	ProjectPrivateKey = "privateKey"
 	ProjectEncryptionKey = "encryptionKey"
+	ProjectHasPincode = "hasPincode"
 	ProjectAudit = "audit"
 )

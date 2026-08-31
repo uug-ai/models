@@ -14,7 +14,7 @@ type Project struct {
 	PublicKey      string             `json:"-" bson:"publicKey,omitempty"`
 	PrivateKey     string             `json:"-" bson:"privateKey,omitempty"`
 	EncryptionKey  string             `json:"-" bson:"encryptionKey,omitempty"`
-	HasPincode     bool               `json:"hasPincode" bson:"hasPincode,omitempty"`
+	HasPincode     bool               `json:"hasPincode" bson:"hasPincode"`
 	Audit          Audit              `json:"audit" bson:"audit"`
 }
 

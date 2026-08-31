@@ -39,6 +39,13 @@ func TestProjectCredentialsPersistButDoNotAppearInJSON(t *testing.T) {
 	}
 }
 
+func TestProjectHasPincodePersistsFalseExplicitly(t *testing.T) {
+	document := marshalM(Project{})
+	if value, exists := document["hasPincode"]; !exists || value != false {
+		t.Fatalf("project false PIN marker BSON = %#v", document)
+	}
+}
+
 func containsJSONValue(encoded []byte, value string) bool {
 	var document map[string]any
 	if err := json.Unmarshal(encoded, &document); err != nil {
