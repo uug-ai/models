@@ -46,6 +46,31 @@ func TestProjectHasPincodePersistsFalseExplicitly(t *testing.T) {
 	}
 }
 
+func TestProjectDaysUseDatesContract(t *testing.T) {
+	project := Project{Days: []string{"30-08-2026", "31-08-2026"}}
+	document := marshalM(project)
+	dates, ok := document["dates"].(bson.A)
+	if !ok || len(dates) != 2 || dates[0] != "30-08-2026" {
+		t.Fatalf("project dates BSON = %#v", document["dates"])
+	}
+
+	encoded, err := json.Marshal(project)
+	if err != nil {
+		t.Fatalf("marshal project JSON: %v", err)
+	}
+	var payload map[string]any
+	if err := json.Unmarshal(encoded, &payload); err != nil {
+		t.Fatalf("decode project JSON: %v", err)
+	}
+	if dates, ok := payload["dates"].([]any); !ok || len(dates) != 2 {
+		t.Fatalf("project dates JSON = %s", encoded)
+	}
+
+	if _, exists := marshalM(Project{})["dates"]; exists {
+		t.Fatal("empty project dates must be omitted")
+	}
+}
+
 func containsJSONValue(encoded []byte, value string) bool {
 	var document map[string]any
 	if err := json.Unmarshal(encoded, &document); err != nil {
