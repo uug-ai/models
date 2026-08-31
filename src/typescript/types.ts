@@ -3826,6 +3826,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/createprojecterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateProjectErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateProjectErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateProjectErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createprojectinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateProjectInput (schema generation only)
+         * @description Internal endpoint used only to ensure CreateProjectInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CreateProjectInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createprojectoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateProjectOutput (schema generation only)
+         * @description Internal endpoint used only to ensure CreateProjectOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.CreateProjectOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createprojectrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateProjectRequest (schema generation only)
+         * @description Internal endpoint used only to ensure CreateProjectRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateProjectRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createprojectresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateProjectResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateProjectResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateProjectResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createprojectsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateProjectSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateProjectSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateProjectSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/createvideowallerrorresponse": {
         parameters: {
             query?: never;
@@ -5062,6 +5296,201 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.DeleteDetectionRunSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteprojecterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteProjectErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteProjectErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteProjectErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteprojectinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteProjectInput (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteProjectInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeleteProjectInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteprojectoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteProjectOutput (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteProjectOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeleteProjectOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteprojectresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteProjectResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteProjectResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteProjectResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deleteprojectsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteProjectSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteProjectSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteProjectSuccessResponse"];
                     };
                 };
             };
@@ -13030,6 +13459,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getprojectinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetProjectInput (schema generation only)
+         * @description Internal endpoint used only to ensure GetProjectInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetProjectInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getprojectoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetProjectOutput (schema generation only)
+         * @description Internal endpoint used only to ensure GetProjectOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GetProjectOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getprojectresponse": {
         parameters: {
             query?: never;
@@ -20479,6 +20986,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/pipelinesourcedevice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PipelineSourceDevice (schema generation only)
+         * @description Internal endpoint used only to ensure PipelineSourceDevice schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.PipelineSourceDevice"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/plan": {
         parameters: {
             query?: never;
@@ -20779,6 +21325,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Project"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/projectupdate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ProjectUpdate (schema generation only)
+         * @description Internal endpoint used only to ensure ProjectUpdate schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ProjectUpdate"];
                     };
                 };
             };
@@ -26251,6 +26836,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/updateprojecterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateProjectErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateProjectErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateProjectErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateprojectinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateProjectInput (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateProjectInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UpdateProjectInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateprojectoutput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateProjectOutput (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateProjectOutput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.UpdateProjectOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateprojectrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateProjectRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateProjectRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateProjectRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateprojectresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateProjectResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateProjectResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateProjectResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updateprojectsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateProjectSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateProjectSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateProjectSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/updateuserprofileerrorresponse": {
         parameters: {
             query?: never;
@@ -28857,6 +29676,7 @@ export interface components {
             caseMediaId?: string;
             file?: string;
             organisationId?: string;
+            projectId?: string;
             provider?: string;
             status?: components["schemas"]["models.CaseMediaStatus"];
             statusError?: string;
@@ -29032,6 +29852,37 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.CreateProjectErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CreateProjectRequest": {
+            project?: components["schemas"]["models.Project"];
+        };
+        "api.CreateProjectResponse": {
+            project?: components["schemas"]["models.Project"];
+        };
+        "api.CreateProjectSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.CreateProjectResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.CreateVideowallErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -29098,6 +29949,20 @@ export interface components {
             /** @description Request fields (sent by client) */
             cursor?: string;
             hasMore?: boolean;
+            /** @description IncludeTotal asks the server to also count everything the filter matches,
+             *     not just the page being returned, and report it as Total.
+             *
+             *     It is opt-in because the count is a second query over the whole matched
+             *     set while the page itself stops at Limit, so its cost scales with the
+             *     tenant rather than with the response. Most callers page for display and
+             *     never read Total; making them pay for it is how a cheap list turns into
+             *     an expensive one, and it is why this defaults to off.
+             *
+             *     A caller that omits it gets Total unset rather than zero-as-a-count:
+             *     Total is omitempty, so "not asked for" and "asked for, and the answer is
+             *     nought" are the same wire value. Callers that need to tell the two apart
+             *     must rely on having asked. */
+            includeTotal?: boolean;
             limit?: number;
             /** @description Response fields (returned by server) */
             nextCursor?: string;
@@ -29105,6 +29970,8 @@ export interface components {
             page?: number;
             pageSize?: number;
             prevCursor?: string;
+            /** @description Total is the size of the whole matched set, populated only when the
+             *     request set IncludeTotal. It is not the length of the page. */
             total?: number;
         };
         "api.DebugResponse": {
@@ -29196,6 +30063,34 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.DeleteDetectionRunResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteProjectErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteProjectResponse": {
+            project?: components["schemas"]["models.Project"];
+        };
+        "api.DeleteProjectSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.DeleteProjectResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -31820,6 +32715,7 @@ export interface components {
              *     on-demand PipelineEvent (event.Payload) or a hub-workflows stage dispatch
              *     (run.User) — i.e. the request is self-contained and transport agnostic. */
             organisationId?: string;
+            projectId?: string;
             signedUrl?: string;
             taskId?: string;
         };
@@ -32262,6 +33158,37 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.UpdateOrganisationResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateProjectErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateProjectRequest": {
+            project?: components["schemas"]["models.ProjectUpdate"];
+        };
+        "api.UpdateProjectResponse": {
+            project?: components["schemas"]["models.Project"];
+        };
+        "api.UpdateProjectSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateProjectResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -32745,6 +33672,10 @@ export interface components {
              *     history can be rendered without a lookup. */
             actorId?: string;
             actorName?: string;
+            /** @description ActorType identifies the principal kind, e.g. "user", "apikey" or "system". */
+            actorType?: string;
+            /** @description Category groups the action by subsystem. */
+            category?: string;
             /** @description Changes optionally captures the field-level diff for this event. */
             changes?: components["schemas"]["models.AuditFieldChange"][];
             id?: string;
@@ -32752,13 +33683,22 @@ export interface components {
             metadata?: {
                 [key: string]: string;
             };
+            /** @description Operation is the coarse CRUD-style action class. */
+            operation?: string;
             /** @description OrganisationId scopes the event to a tenant for org-wide audit queries. */
             organisationId?: string;
+            /** @description Outcome records whether the action succeeded. */
+            outcome?: string;
+            /** @description ProjectId optionally narrows the event to a project within the organisation.
+             *     Organisation-wide actions leave it nil. */
+            projectId?: string;
             targetId?: string;
+            targetName?: string;
             /** @description TargetType and TargetId identify the entity the action was performed on
              *     (e.g. TargetType "case" with the case id). Query these to render an
              *     entity's audit history. TargetId is a string so it can hold either an
-             *     ObjectID hex or a non-ObjectID key (such as a media key). */
+             *     ObjectID hex or a non-ObjectID key (such as a media key). TargetName is the
+             *     denormalised point-in-time label of the target. */
             targetType?: string;
             /** @description Timestamp is when the action occurred. */
             timestamp?: string;
@@ -33238,6 +34178,13 @@ export interface components {
         "models.CreateOrganisationOutput": {
             organisation?: components["schemas"]["models.Organisation"];
         };
+        "models.CreateProjectInput": {
+            project?: components["schemas"]["models.Project"];
+            user?: components["schemas"]["models.User"];
+        };
+        "models.CreateProjectOutput": {
+            project?: components["schemas"]["models.Project"];
+        };
         "models.CreateVideowallInput": {
             user?: components["schemas"]["models.User"];
             videowall?: components["schemas"]["models.Videowall"];
@@ -33332,6 +34279,13 @@ export interface components {
             user_id?: string;
         };
         "models.DeleteCaseShareOutput": Record<string, never>;
+        "models.DeleteProjectInput": {
+            projectId?: string;
+            user?: components["schemas"]["models.User"];
+        };
+        "models.DeleteProjectOutput": {
+            project?: components["schemas"]["models.Project"];
+        };
         "models.DeleteVideowallInput": {
             user?: components["schemas"]["models.User"];
             videowall_id?: string;
@@ -33868,7 +34822,15 @@ export interface components {
         "models.GetOrganisationsOutput": {
             organisations?: components["schemas"]["models.Organisation"][];
         };
+        "models.GetProjectInput": {
+            projectId?: string;
+            user?: components["schemas"]["models.User"];
+        };
+        "models.GetProjectOutput": {
+            project?: components["schemas"]["models.Project"];
+        };
         "models.GetProjectsInput": {
+            includeInactive?: boolean;
             user?: components["schemas"]["models.User"];
         };
         "models.GetProjectsOutput": {
@@ -34961,10 +35923,17 @@ export interface components {
         "models.Project": {
             audit?: components["schemas"]["models.Audit"];
             description?: string;
+            hasPincode?: boolean;
             id?: string;
             isActive?: boolean;
             name?: string;
             organisationId?: string;
+            slug?: string;
+        };
+        "models.ProjectUpdate": {
+            description?: string;
+            isActive?: boolean;
+            name?: string;
             slug?: string;
         };
         "models.Pushbullet": {
@@ -35639,6 +36608,14 @@ export interface components {
         };
         "models.UpdateOrganisationOutput": {
             organisation?: components["schemas"]["models.Organisation"];
+        };
+        "models.UpdateProjectInput": {
+            project?: components["schemas"]["models.ProjectUpdate"];
+            projectId?: string;
+            user?: components["schemas"]["models.User"];
+        };
+        "models.UpdateProjectOutput": {
+            project?: components["schemas"]["models.Project"];
         };
         "models.UpdateVideowallInput": {
             user?: components["schemas"]["models.User"];
@@ -36392,6 +37369,8 @@ export namespace models {
     export type CreateCaseShareOutput = components['schemas']['models.CreateCaseShareOutput'];
     export type CreateOrganisationInput = components['schemas']['models.CreateOrganisationInput'];
     export type CreateOrganisationOutput = components['schemas']['models.CreateOrganisationOutput'];
+    export type CreateProjectInput = components['schemas']['models.CreateProjectInput'];
+    export type CreateProjectOutput = components['schemas']['models.CreateProjectOutput'];
     export type CreateVideowallInput = components['schemas']['models.CreateVideowallInput'];
     export type CreateVideowallOutput = components['schemas']['models.CreateVideowallOutput'];
     export type CreateWorkflowInput = components['schemas']['models.CreateWorkflowInput'];
@@ -36403,6 +37382,8 @@ export namespace models {
     export type DateRangeSchedule = components['schemas']['models.DateRangeSchedule'];
     export type DayTimeRange = components['schemas']['models.DayTimeRange'];
     export type DeleteCaseShareInput = components['schemas']['models.DeleteCaseShareInput'];
+    export type DeleteProjectInput = components['schemas']['models.DeleteProjectInput'];
+    export type DeleteProjectOutput = components['schemas']['models.DeleteProjectOutput'];
     export type DeleteVideowallInput = components['schemas']['models.DeleteVideowallInput'];
     export type DeleteWorkflowInput = components['schemas']['models.DeleteWorkflowInput'];
     export type DeleteWorkflowStageInput = components['schemas']['models.DeleteWorkflowStageInput'];
@@ -36451,6 +37432,8 @@ export namespace models {
     export type GetOrganisationOutput = components['schemas']['models.GetOrganisationOutput'];
     export type GetOrganisationsInput = components['schemas']['models.GetOrganisationsInput'];
     export type GetOrganisationsOutput = components['schemas']['models.GetOrganisationsOutput'];
+    export type GetProjectInput = components['schemas']['models.GetProjectInput'];
+    export type GetProjectOutput = components['schemas']['models.GetProjectOutput'];
     export type GetProjectsInput = components['schemas']['models.GetProjectsInput'];
     export type GetProjectsOutput = components['schemas']['models.GetProjectsOutput'];
     export type GetVideowallInput = components['schemas']['models.GetVideowallInput'];
@@ -36533,10 +37516,12 @@ export namespace models {
     export type PipelineMetadata = components['schemas']['models.PipelineMetadata'];
     export type PipelineMetrics = components['schemas']['models.PipelineMetrics'];
     export type PipelinePayload = components['schemas']['models.PipelinePayload'];
+    export type PipelineSourceDevice = components['schemas']['models.PipelineSourceDevice'];
     export type Plan = components['schemas']['models.Plan'];
     export type Point = components['schemas']['models.Point'];
     export type ProfileSettings = components['schemas']['models.ProfileSettings'];
     export type Project = components['schemas']['models.Project'];
+    export type ProjectUpdate = components['schemas']['models.ProjectUpdate'];
     export type Pushbullet = components['schemas']['models.Pushbullet'];
     export type Pushover = components['schemas']['models.Pushover'];
     export type Region = components['schemas']['models.Region'];
@@ -36590,6 +37575,8 @@ export namespace models {
     export type UpdateCaseShareOTPInput = components['schemas']['models.UpdateCaseShareOTPInput'];
     export type UpdateOrganisationInput = components['schemas']['models.UpdateOrganisationInput'];
     export type UpdateOrganisationOutput = components['schemas']['models.UpdateOrganisationOutput'];
+    export type UpdateProjectInput = components['schemas']['models.UpdateProjectInput'];
+    export type UpdateProjectOutput = components['schemas']['models.UpdateProjectOutput'];
     export type UpdateVideowallInput = components['schemas']['models.UpdateVideowallInput'];
     export type UpdateVideowallOutput = components['schemas']['models.UpdateVideowallOutput'];
     export type UpdateWorkflowInput = components['schemas']['models.UpdateWorkflowInput'];
@@ -36668,6 +37655,10 @@ export namespace api {
     export type CreateOrganisationRequest = components['schemas']['api.CreateOrganisationRequest'];
     export type CreateOrganisationResponse = components['schemas']['api.CreateOrganisationResponse'];
     export type CreateOrganisationSuccessResponse = components['schemas']['api.CreateOrganisationSuccessResponse'];
+    export type CreateProjectErrorResponse = components['schemas']['api.CreateProjectErrorResponse'];
+    export type CreateProjectRequest = components['schemas']['api.CreateProjectRequest'];
+    export type CreateProjectResponse = components['schemas']['api.CreateProjectResponse'];
+    export type CreateProjectSuccessResponse = components['schemas']['api.CreateProjectSuccessResponse'];
     export type CreateVideowallErrorResponse = components['schemas']['api.CreateVideowallErrorResponse'];
     export type CreateVideowallRequest = components['schemas']['api.CreateVideowallRequest'];
     export type CreateVideowallResponse = components['schemas']['api.CreateVideowallResponse'];
@@ -36686,6 +37677,9 @@ export namespace api {
     export type DeleteDetectionRunErrorResponse = components['schemas']['api.DeleteDetectionRunErrorResponse'];
     export type DeleteDetectionRunResponse = components['schemas']['api.DeleteDetectionRunResponse'];
     export type DeleteDetectionRunSuccessResponse = components['schemas']['api.DeleteDetectionRunSuccessResponse'];
+    export type DeleteProjectErrorResponse = components['schemas']['api.DeleteProjectErrorResponse'];
+    export type DeleteProjectResponse = components['schemas']['api.DeleteProjectResponse'];
+    export type DeleteProjectSuccessResponse = components['schemas']['api.DeleteProjectSuccessResponse'];
     export type DeleteStateErrorResponse = components['schemas']['api.DeleteStateErrorResponse'];
     export type DeleteStateSuccessResponse = components['schemas']['api.DeleteStateSuccessResponse'];
     export type DeleteTaskCommentErrorResponse = components['schemas']['api.DeleteTaskCommentErrorResponse'];
@@ -37019,6 +38013,10 @@ export namespace api {
     export type UpdateOrganisationRequest = components['schemas']['api.UpdateOrganisationRequest'];
     export type UpdateOrganisationResponse = components['schemas']['api.UpdateOrganisationResponse'];
     export type UpdateOrganisationSuccessResponse = components['schemas']['api.UpdateOrganisationSuccessResponse'];
+    export type UpdateProjectErrorResponse = components['schemas']['api.UpdateProjectErrorResponse'];
+    export type UpdateProjectRequest = components['schemas']['api.UpdateProjectRequest'];
+    export type UpdateProjectResponse = components['schemas']['api.UpdateProjectResponse'];
+    export type UpdateProjectSuccessResponse = components['schemas']['api.UpdateProjectSuccessResponse'];
     export type UpdateUserProfileErrorResponse = components['schemas']['api.UpdateUserProfileErrorResponse'];
     export type UpdateUserProfileResponse = components['schemas']['api.UpdateUserProfileResponse'];
     export type UpdateUserProfileSuccessResponse = components['schemas']['api.UpdateUserProfileSuccessResponse'];

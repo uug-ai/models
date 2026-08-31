@@ -13,11 +13,15 @@ func TestProjectCredentialsPersistButDoNotAppearInJSON(t *testing.T) {
 		PublicKey:     "public-id",
 		PrivateKey:    "private-secret",
 		EncryptionKey: "encryption-secret",
+		HasPincode:    true,
 	}
 
 	document := marshalM(project)
 	if document["publicKey"] != "public-id" || document["privateKey"] != "private-secret" || document["encryptionKey"] != "encryption-secret" {
 		t.Fatalf("project credential BSON = %#v", document)
+	}
+	if document["hasPincode"] != true {
+		t.Fatalf("project PIN marker BSON = %#v", document)
 	}
 
 	encoded, err := json.Marshal(project)
@@ -28,6 +32,17 @@ func TestProjectCredentialsPersistButDoNotAppearInJSON(t *testing.T) {
 		if string(encoded) == secret || containsJSONValue(encoded, secret) {
 			t.Fatalf("ordinary project JSON leaked credential %q: %s", secret, encoded)
 		}
+	}
+	var payload map[string]any
+	if err := json.Unmarshal(encoded, &payload); err != nil || payload["hasPincode"] != true {
+		t.Fatalf("project PIN marker JSON = %s, error = %v", encoded, err)
+	}
+}
+
+func TestProjectHasPincodePersistsFalseExplicitly(t *testing.T) {
+	document := marshalM(Project{})
+	if value, exists := document["hasPincode"]; !exists || value != false {
+		t.Fatalf("project false PIN marker BSON = %#v", document)
 	}
 }
 
