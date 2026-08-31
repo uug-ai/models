@@ -123,6 +123,7 @@ const (
 // DetectionRun property field names (BSON)
 const (
 	DetectionRunId = "_id"
+	DetectionRunName = "name"
 	DetectionRunKey = "key"
 	DetectionRunOrganisationId = "organisationId"
 	DetectionRunProjectId = "projectId"
