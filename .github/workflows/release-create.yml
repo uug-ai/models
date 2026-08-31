@@ -2,6 +2,16 @@ name: Create a new release
 on:
   release:
     types: [created]
+  workflow_call:
+    inputs:
+      tag:
+        description: "Release tag to build and publish"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   release:
@@ -9,7 +19,7 @@ jobs:
     with:
       organization: uug-ai
       project: ${{ github.event.repository.name }}
-      tag: ${{ github.event.release.tag_name }}
+      tag: ${{ inputs.tag || github.event.release.tag_name }}
       docker_context: "."
       runner_matrix: >-
         [
@@ -25,7 +35,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+        with:
+          ref: ${{ inputs.tag || github.event.release.tag_name }}
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -33,7 +45,7 @@ jobs:
           registry-url: ${{ env.NODE_REGISTRY_URL }}
           
       - name: Set up Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v6
         with:
           go-version: ${{ env.GO_VERSION }}
 
@@ -55,11 +67,12 @@ jobs:
         
       - name: Update package version
         working-directory: ./src/typescript
+        env:
+          RELEASE_TAG: ${{ inputs.tag || github.event.release.tag_name }}
         run: |
-          RELEASE_VERSION=${GITHUB_REF#refs/tags/}
-          RELEASE_VERSION=${RELEASE_VERSION#v}
+          RELEASE_VERSION=${RELEASE_TAG#v}
           echo "Setting version from release tag: $RELEASE_VERSION"
-          npm version $RELEASE_VERSION --no-git-tag-version
+          npm version "$RELEASE_VERSION" --no-git-tag-version
           
       - name: Authenticate with NPM
         working-directory: ./src/typescript
