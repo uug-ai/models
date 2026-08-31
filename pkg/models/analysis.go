@@ -200,6 +200,8 @@ type FaceRedaction struct {
 type DetectionRun struct {
 	// Id is the MongoDB document id, assigned on first insert.
 	Id primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty"`
+	// Name is an optional user-facing label for the run.
+	Name string `json:"name,omitempty" bson:"name,omitempty"`
 	// Key is the recording/media key the run belongs to. It is the stable
 	// identity the collection is keyed by (survives re-analysis).
 	Key string `json:"key,omitempty" bson:"key,omitempty"`

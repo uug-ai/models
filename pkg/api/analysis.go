@@ -222,6 +222,8 @@ type PostDetectionsRequest struct {
 	// AnalysisId targets the recording via its analysis document _id (an
 	// ObjectID hex), as an alternative to MediaKey.
 	AnalysisId string `json:"analysisId,omitempty"`
+	// Name is an optional user-facing label for the run.
+	Name string `json:"name,omitempty"`
 	// Task is an optional run discriminator; defaults to "detection".
 	Task            string                     `json:"task,omitempty"`
 	SchemaVersion   string                     `json:"schemaVersion,omitempty"`

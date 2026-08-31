@@ -31522,6 +31522,8 @@ export interface components {
              *     _id). The server resolves it against analysis.key. Provide this or
              *     AnalysisId (MediaKey wins when both are present). */
             mediaKey?: string;
+            /** @description Name is an optional user-facing label for the run. */
+            name?: string;
             schemaVersion?: string;
             source?: components["schemas"]["models.DetectionSource"];
             /** @description Task is an optional run discriminator; defaults to "detection". */
@@ -33436,6 +33438,8 @@ export interface components {
              *     identity the collection is keyed by (survives re-analysis). */
             key?: string;
             media?: components["schemas"]["models.DetectionMedia"];
+            /** @description Name is an optional user-facing label for the run. */
+            name?: string;
             /** @description OriginalBoxForm records the box geometry form the producer sent
              *     ("xywh", "xyxy", or "mixed") before conversion to the editor's TrackBox. */
             originalBoxForm?: string;
