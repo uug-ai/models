@@ -1,9 +1,40 @@
 package models
 
 import (
+	"fmt"
+	"strings"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
+
+// TenancyMode selects the persisted ownership contract used by readers during
+// the organisation/project migration.
+type TenancyMode string
+
+const (
+	TenancyModeLegacy        TenancyMode = "legacy"
+	TenancyModeCompatibility TenancyMode = "compatibility"
+	TenancyModeCanonical     TenancyMode = "canonical"
+)
+
+// ParseTenancyMode parses deployment configuration. An empty value preserves
+// migration-safe compatibility reads; unknown values are rejected so a typo
+// cannot silently select a different ownership contract.
+func ParseTenancyMode(value string) (TenancyMode, error) {
+	mode := TenancyMode(strings.ToLower(strings.TrimSpace(value)))
+	if mode == "" {
+		return TenancyModeCompatibility, nil
+	}
+	if !mode.IsValid() {
+		return "", fmt.Errorf("invalid tenancy mode %q", value)
+	}
+	return mode, nil
+}
+
+func (m TenancyMode) IsValid() bool {
+	return m == TenancyModeLegacy || m == TenancyModeCompatibility || m == TenancyModeCanonical
+}
 
 // The helpers below define which project owns an organisation's resources
 // during the hidden single-project rollout.
@@ -110,8 +141,22 @@ func ResolveProjectId(organisationId primitive.ObjectID, stored *primitive.Objec
 // all adopted it, so that reason is spent and the shape is now free to be the
 // one the planner can use.
 func ProjectScopeFilter(organisationId string, projectId primitive.ObjectID) bson.M {
-	if projectId.IsZero() {
+	return ProjectScopeFilterForMode(TenancyModeCompatibility, organisationId, projectId)
+}
+
+// ProjectScopeFilterForMode returns the project predicate for the selected
+// migration contract. Legacy mode has no project boundary, compatibility mode
+// admits unstamped rows only into the deterministic default project, and
+// canonical mode requires an exact projectId.
+func ProjectScopeFilterForMode(mode TenancyMode, organisationId string, projectId primitive.ObjectID) bson.M {
+	if !mode.IsValid() {
+		mode = TenancyModeCompatibility
+	}
+	if mode == TenancyModeLegacy || projectId.IsZero() {
 		return nil
+	}
+	if mode == TenancyModeCanonical {
+		return bson.M{"projectId": projectId}
 	}
 
 	organisation, err := primitive.ObjectIDFromHex(organisationId)

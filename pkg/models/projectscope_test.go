@@ -9,6 +9,61 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+func TestParseTenancyMode(t *testing.T) {
+	for input, want := range map[string]TenancyMode{
+		"":                TenancyModeCompatibility,
+		"  ":              TenancyModeCompatibility,
+		"legacy":          TenancyModeLegacy,
+		" COMPATIBILITY ": TenancyModeCompatibility,
+		"Canonical":       TenancyModeCanonical,
+	} {
+		got, err := ParseTenancyMode(input)
+		if err != nil {
+			t.Fatalf("ParseTenancyMode(%q) error = %v", input, err)
+		}
+		if got != want {
+			t.Fatalf("ParseTenancyMode(%q) = %q, want %q", input, got, want)
+		}
+	}
+
+	if _, err := ParseTenancyMode("mixed"); err == nil {
+		t.Fatal("ParseTenancyMode must reject an unknown mode")
+	}
+}
+
+func TestProjectScopeFilterForMode(t *testing.T) {
+	organisationId := primitive.NewObjectID()
+	defaultProjectId := DefaultProjectId(organisationId)
+
+	tests := []struct {
+		name string
+		mode TenancyMode
+		want bson.M
+	}{
+		{name: "legacy", mode: TenancyModeLegacy, want: nil},
+		{
+			name: "compatibility",
+			mode: TenancyModeCompatibility,
+			want: bson.M{"projectId": bson.M{"$in": bson.A{defaultProjectId, nil}}},
+		},
+		{name: "canonical", mode: TenancyModeCanonical, want: bson.M{"projectId": defaultProjectId}},
+		{
+			name: "invalid defaults to compatibility",
+			mode: TenancyMode("invalid"),
+			want: bson.M{"projectId": bson.M{"$in": bson.A{defaultProjectId, nil}}},
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			got := ProjectScopeFilterForMode(test.mode, organisationId.Hex(), defaultProjectId)
+			if !reflect.DeepEqual(got, test.want) {
+				t.Fatalf("ProjectScopeFilterForMode() = %#v, want %#v", got, test.want)
+			}
+		})
+	}
+}
+
 func TestDefaultProjectIdReusesOrganisationId(t *testing.T) {
 	organisationId := primitive.NewObjectID()
 	if got := DefaultProjectId(organisationId); got != organisationId {
