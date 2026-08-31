@@ -1,11 +1,48 @@
 package models
 
 import (
+	"encoding/json"
 	"testing"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
+
+func TestProjectCredentialsPersistButDoNotAppearInJSON(t *testing.T) {
+	project := Project{
+		PublicKey:     "public-id",
+		PrivateKey:    "private-secret",
+		EncryptionKey: "encryption-secret",
+	}
+
+	document := marshalM(project)
+	if document["publicKey"] != "public-id" || document["privateKey"] != "private-secret" || document["encryptionKey"] != "encryption-secret" {
+		t.Fatalf("project credential BSON = %#v", document)
+	}
+
+	encoded, err := json.Marshal(project)
+	if err != nil {
+		t.Fatalf("marshal project JSON: %v", err)
+	}
+	for _, secret := range []string{"public-id", "private-secret", "encryption-secret"} {
+		if string(encoded) == secret || containsJSONValue(encoded, secret) {
+			t.Fatalf("ordinary project JSON leaked credential %q: %s", secret, encoded)
+		}
+	}
+}
+
+func containsJSONValue(encoded []byte, value string) bool {
+	var document map[string]any
+	if err := json.Unmarshal(encoded, &document); err != nil {
+		return true
+	}
+	for _, fieldValue := range document {
+		if fieldValue == value {
+			return true
+		}
+	}
+	return false
+}
 
 func TestRoleAssignmentScopeWithProjectsIsNotOrganisationWide(t *testing.T) {
 	scope := RoleAssignmentScope{ProjectIds: []primitive.ObjectID{primitive.NewObjectID()}}

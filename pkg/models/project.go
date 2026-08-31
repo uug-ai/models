@@ -11,6 +11,9 @@ type Project struct {
 	Slug           string             `json:"slug" bson:"slug"`
 	Description    string             `json:"description,omitempty" bson:"description,omitempty"`
 	IsActive       bool               `json:"isActive" bson:"isActive"`
+	PublicKey      string             `json:"-" bson:"publicKey,omitempty"`
+	PrivateKey     string             `json:"-" bson:"privateKey,omitempty"`
+	EncryptionKey  string             `json:"-" bson:"encryptionKey,omitempty"`
 	Audit          Audit              `json:"audit" bson:"audit"`
 }
 

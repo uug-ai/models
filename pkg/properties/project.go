@@ -11,5 +11,8 @@ const (
 	ProjectSlug = "slug"
 	ProjectDescription = "description"
 	ProjectIsActive = "isActive"
+	ProjectPublicKey = "publicKey"
+	ProjectPrivateKey = "privateKey"
+	ProjectEncryptionKey = "encryptionKey"
 	ProjectAudit = "audit"
 )
