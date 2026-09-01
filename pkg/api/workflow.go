@@ -215,6 +215,12 @@ type WorkflowRunStatus struct {
 	// operation sets, exposed as a coarse progress hint.
 	Dispatched int `json:"dispatched"`
 	Resolved   int `json:"resolved"`
+	// DispatchedOperations / ResolvedOperations name the stages behind the
+	// Dispatched / Resolved counts, in dispatch/resolution order, so a surface
+	// can render per-stage progress (e.g. "pose done, redaction running")
+	// instead of only a run-level running/completed flip for multi-stage runs.
+	DispatchedOperations []string `json:"dispatchedOperations,omitempty"`
+	ResolvedOperations   []string `json:"resolvedOperations,omitempty"`
 	// HasResults is true when the run accumulated any stage output.
 	HasResults bool `json:"hasResults"`
 }
