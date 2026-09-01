@@ -13,6 +13,8 @@ const (
 	ProjectIsActive = "isActive"
 	ProjectPublicKey = "publicKey"
 	ProjectPrivateKey = "privateKey"
+	ProjectLegacyPublicKey = "legacyPublicKey"
+	ProjectLegacyPrivateKey = "legacyPrivateKey"
 	ProjectEncryptionKey = "encryptionKey"
 	ProjectHasPincode = "hasPincode"
 	ProjectDays = "dates"

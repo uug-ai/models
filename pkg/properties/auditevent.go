@@ -5,21 +5,27 @@ package properties
 
 // AuditEvent property field names (BSON)
 const (
-	AuditEventId             = "_id"
+	AuditEventId = "_id"
 	AuditEventOrganisationId = "organisationId"
-	AuditEventActorId        = "actorId"
-	AuditEventActorName      = "actorName"
-	AuditEventAction         = "action"
-	AuditEventTargetType     = "targetType"
-	AuditEventTargetId       = "targetId"
-	AuditEventChanges        = "changes"
-	AuditEventMetadata       = "metadata"
-	AuditEventTimestamp      = "timestamp"
+	AuditEventProjectId = "projectId"
+	AuditEventActorId = "actorId"
+	AuditEventActorName = "actorName"
+	AuditEventActorType = "actorType"
+	AuditEventAction = "action"
+	AuditEventOperation = "operation"
+	AuditEventCategory = "category"
+	AuditEventOutcome = "outcome"
+	AuditEventTargetType = "targetType"
+	AuditEventTargetId = "targetId"
+	AuditEventTargetName = "targetName"
+	AuditEventChanges = "changes"
+	AuditEventMetadata = "metadata"
+	AuditEventTimestamp = "timestamp"
 )
 
 // AuditFieldChange property field names (BSON)
 const (
-	AuditFieldChangeField    = "field"
+	AuditFieldChangeField = "field"
 	AuditFieldChangeOldValue = "oldValue"
 	AuditFieldChangeNewValue = "newValue"
 )

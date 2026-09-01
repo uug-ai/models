@@ -5,18 +5,20 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 // Project is an optional access boundary within an organisation. Resources
 // remain organisation-wide unless their ProjectId is set.
 type Project struct {
-	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
-	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId"`
-	Name           string             `json:"name" bson:"name"`
-	Slug           string             `json:"slug" bson:"slug"`
-	Description    string             `json:"description,omitempty" bson:"description,omitempty"`
-	IsActive       bool               `json:"isActive" bson:"isActive"`
-	PublicKey      string             `json:"-" bson:"publicKey,omitempty"`
-	PrivateKey     string             `json:"-" bson:"privateKey,omitempty"`
-	EncryptionKey  string             `json:"-" bson:"encryptionKey,omitempty"`
-	HasPincode     bool               `json:"hasPincode" bson:"hasPincode"`
-	Days           []string           `json:"dates,omitempty" bson:"dates,omitempty"`
-	Audit          Audit              `json:"audit" bson:"audit"`
+	Id               primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	OrganisationId   primitive.ObjectID `json:"organisationId" bson:"organisationId"`
+	Name             string             `json:"name" bson:"name"`
+	Slug             string             `json:"slug" bson:"slug"`
+	Description      string             `json:"description,omitempty" bson:"description,omitempty"`
+	IsActive         bool               `json:"isActive" bson:"isActive"`
+	PublicKey        string             `json:"-" bson:"publicKey,omitempty"`
+	PrivateKey       string             `json:"-" bson:"privateKey,omitempty"`
+	LegacyPublicKey  string             `json:"-" bson:"legacyPublicKey,omitempty"`
+	LegacyPrivateKey string             `json:"-" bson:"legacyPrivateKey,omitempty"`
+	EncryptionKey    string             `json:"-" bson:"encryptionKey,omitempty"`
+	HasPincode       bool               `json:"hasPincode" bson:"hasPincode"`
+	Days             []string           `json:"dates,omitempty" bson:"dates,omitempty"`
+	Audit            Audit              `json:"audit" bson:"audit"`
 }
 
 // DefaultProjectSlug and DefaultProjectName identify the single default project

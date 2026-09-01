@@ -10,14 +10,16 @@ import (
 
 func TestProjectCredentialsPersistButDoNotAppearInJSON(t *testing.T) {
 	project := Project{
-		PublicKey:     "public-id",
-		PrivateKey:    "private-secret",
-		EncryptionKey: "encryption-secret",
-		HasPincode:    true,
+		PublicKey:        "rsa-public",
+		PrivateKey:       "rsa-private",
+		LegacyPublicKey:  "legacy-public",
+		LegacyPrivateKey: "legacy-private",
+		EncryptionKey:    "encryption-secret",
+		HasPincode:       true,
 	}
 
 	document := marshalM(project)
-	if document["publicKey"] != "public-id" || document["privateKey"] != "private-secret" || document["encryptionKey"] != "encryption-secret" {
+	if document["publicKey"] != "rsa-public" || document["privateKey"] != "rsa-private" || document["legacyPublicKey"] != "legacy-public" || document["legacyPrivateKey"] != "legacy-private" || document["encryptionKey"] != "encryption-secret" {
 		t.Fatalf("project credential BSON = %#v", document)
 	}
 	if document["hasPincode"] != true {
@@ -28,7 +30,7 @@ func TestProjectCredentialsPersistButDoNotAppearInJSON(t *testing.T) {
 	if err != nil {
 		t.Fatalf("marshal project JSON: %v", err)
 	}
-	for _, secret := range []string{"public-id", "private-secret", "encryption-secret"} {
+	for _, secret := range []string{"rsa-public", "rsa-private", "legacy-public", "legacy-private", "encryption-secret"} {
 		if string(encoded) == secret || containsJSONValue(encoded, secret) {
 			t.Fatalf("ordinary project JSON leaked credential %q: %s", secret, encoded)
 		}

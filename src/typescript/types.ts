@@ -35922,6 +35922,7 @@ export interface components {
         };
         "models.Project": {
             audit?: components["schemas"]["models.Audit"];
+            dates?: string[];
             description?: string;
             hasPincode?: boolean;
             id?: string;
