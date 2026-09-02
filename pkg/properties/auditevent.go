@@ -13,6 +13,7 @@ const (
 	AuditEventActorType = "actorType"
 	AuditEventAction = "action"
 	AuditEventOperation = "operation"
+	AuditEventRequiredPermission = "requiredPermission"
 	AuditEventCategory = "category"
 	AuditEventOutcome = "outcome"
 	AuditEventTargetType = "targetType"

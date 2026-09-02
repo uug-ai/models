@@ -12,8 +12,9 @@ func TestAuditEventProjectIdBSON(t *testing.T) {
 	projectId := primitive.NewObjectID()
 
 	encoded, err := bson.Marshal(AuditEvent{
-		OrganisationId: organisationId,
-		ProjectId:      &projectId,
+		OrganisationId:     organisationId,
+		ProjectId:          &projectId,
+		RequiredPermission: "media.read",
 	})
 	if err != nil {
 		t.Fatalf("marshal project audit event: %v", err)
@@ -29,6 +30,9 @@ func TestAuditEventProjectIdBSON(t *testing.T) {
 	if got := document["projectId"]; got != projectId {
 		t.Fatalf("projectId = %#v, want %s", got, projectId.Hex())
 	}
+	if got := document["requiredPermission"]; got != "media.read" {
+		t.Fatalf("requiredPermission = %#v, want media.read", got)
+	}
 
 	encoded, err = bson.Marshal(AuditEvent{OrganisationId: organisationId})
 	if err != nil {
@@ -40,5 +44,8 @@ func TestAuditEventProjectIdBSON(t *testing.T) {
 	}
 	if _, exists := document["projectId"]; exists {
 		t.Fatalf("organisation-only audit event persisted projectId: %#v", document["projectId"])
+	}
+	if _, exists := document["requiredPermission"]; exists {
+		t.Fatalf("audit event without a permission persisted requiredPermission: %#v", document["requiredPermission"])
 	}
 }
