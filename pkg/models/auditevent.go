@@ -29,6 +29,11 @@ type AuditEvent struct {
 	Action string `json:"action" bson:"action,omitempty"`
 	// Operation is the coarse CRUD-style action class.
 	Operation string `json:"operation,omitempty" bson:"operation,omitempty"`
+	// RequiredPermission is the canonical RBAC capability associated with the
+	// action, expressed as "resource.action" (for example, "media.read").
+	// Events such as authentication that do not require a resource permission
+	// leave it empty.
+	RequiredPermission string `json:"requiredPermission,omitempty" bson:"requiredPermission,omitempty"`
 	// Category groups the action by subsystem.
 	Category string `json:"category,omitempty" bson:"category,omitempty"`
 	// Outcome records whether the action succeeded.

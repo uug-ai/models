@@ -33380,12 +33380,18 @@ export interface components {
             /** @description Dispatched / Resolved are the sizes of the run's dispatched and resolved
              *     operation sets, exposed as a coarse progress hint. */
             dispatched?: number;
+            /** @description DispatchedOperations / ResolvedOperations name the stages behind the
+             *     Dispatched / Resolved counts, in dispatch/resolution order, so a surface
+             *     can render per-stage progress (e.g. "pose done, redaction running")
+             *     instead of only a run-level running/completed flip for multi-stage runs. */
+            dispatchedOperations?: string[];
             end?: number;
             /** @description HasResults is true when the run accumulated any stage output. */
             hasResults?: boolean;
             key?: string;
             origin?: string;
             resolved?: number;
+            resolvedOperations?: string[];
             runId?: string;
             sourceRef?: string;
             /** @description Start / End are unix seconds; End is 0 while the run is still open. */
@@ -33692,6 +33698,11 @@ export interface components {
             /** @description ProjectId optionally narrows the event to a project within the organisation.
              *     Organisation-wide actions leave it nil. */
             projectId?: string;
+            /** @description RequiredPermission is the canonical RBAC capability associated with the
+             *     action, expressed as "resource.action" (for example, "media.read").
+             *     Events such as authentication that do not require a resource permission
+             *     leave it empty. */
+            requiredPermission?: string;
             targetId?: string;
             targetName?: string;
             /** @description TargetType and TargetId identify the entity the action was performed on
