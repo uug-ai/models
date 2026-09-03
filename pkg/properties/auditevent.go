@@ -3,9 +3,20 @@
 
 package properties
 
+// AuditAuthorizationInfo property field names (BSON)
+const (
+	AuditAuthorizationInfoPermission = "permission"
+	AuditAuthorizationInfoResourceType = "resourceType"
+	AuditAuthorizationInfoResourceId = "resourceId"
+	AuditAuthorizationInfoScope = "scope"
+	AuditAuthorizationInfoGranted = "granted"
+	AuditAuthorizationInfoPolicy = "policy"
+)
+
 // AuditEvent property field names (BSON)
 const (
 	AuditEventId = "_id"
+	AuditEventSchemaVersion = "schemaVersion"
 	AuditEventOrganisationId = "organisationId"
 	AuditEventProjectId = "projectId"
 	AuditEventActorId = "actorId"
@@ -13,14 +24,22 @@ const (
 	AuditEventActorType = "actorType"
 	AuditEventAction = "action"
 	AuditEventOperation = "operation"
+	AuditEventAuthorizationInfo = "authorizationInfo"
 	AuditEventCategory = "category"
-	AuditEventOutcome = "outcome"
+	AuditEventStatus = "status"
 	AuditEventTargetType = "targetType"
 	AuditEventTargetId = "targetId"
 	AuditEventTargetName = "targetName"
 	AuditEventChanges = "changes"
+	AuditEventRequest = "request"
 	AuditEventMetadata = "metadata"
 	AuditEventTimestamp = "timestamp"
+)
+
+// AuditEventStatus property field names (BSON)
+const (
+	AuditEventStatusOutcome = "outcome"
+	AuditEventStatusCode = "code"
 )
 
 // AuditFieldChange property field names (BSON)
@@ -28,4 +47,15 @@ const (
 	AuditFieldChangeField = "field"
 	AuditFieldChangeOldValue = "oldValue"
 	AuditFieldChangeNewValue = "newValue"
+)
+
+// AuditRequestInfo property field names (BSON)
+const (
+	AuditRequestInfoId = "id"
+	AuditRequestInfoCorrelationId = "correlationId"
+	AuditRequestInfoTraceId = "traceId"
+	AuditRequestInfoIP = "ip"
+	AuditRequestInfoUserAgent = "userAgent"
+	AuditRequestInfoMethod = "method"
+	AuditRequestInfoPath = "path"
 )

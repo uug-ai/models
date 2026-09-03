@@ -1759,6 +1759,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/auditauthorizationinfo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AuditAuthorizationInfo (schema generation only)
+         * @description Internal endpoint used only to ensure AuditAuthorizationInfo schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AuditAuthorizationInfo"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/auditevent": {
         parameters: {
             query?: never;
@@ -1798,6 +1837,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/auditeventstatus": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AuditEventStatus (schema generation only)
+         * @description Internal endpoint used only to ensure AuditEventStatus schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AuditEventStatus"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/auditfieldchange": {
         parameters: {
             query?: never;
@@ -1825,6 +1903,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.AuditFieldChange"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/auditrequestinfo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AuditRequestInfo (schema generation only)
+         * @description Internal endpoint used only to ensure AuditRequestInfo schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AuditRequestInfo"];
                     };
                 };
             };
@@ -33380,12 +33497,18 @@ export interface components {
             /** @description Dispatched / Resolved are the sizes of the run's dispatched and resolved
              *     operation sets, exposed as a coarse progress hint. */
             dispatched?: number;
+            /** @description DispatchedOperations / ResolvedOperations name the stages behind the
+             *     Dispatched / Resolved counts, in dispatch/resolution order, so a surface
+             *     can render per-stage progress (e.g. "pose done, redaction running")
+             *     instead of only a run-level running/completed flip for multi-stage runs. */
+            dispatchedOperations?: string[];
             end?: number;
             /** @description HasResults is true when the run accumulated any stage output. */
             hasResults?: boolean;
             key?: string;
             origin?: string;
             resolved?: number;
+            resolvedOperations?: string[];
             runId?: string;
             sourceRef?: string;
             /** @description Start / End are unix seconds; End is 0 while the run is still open. */
@@ -33664,6 +33787,14 @@ export interface components {
             updatedAt?: string;
             updatedBy?: string;
         };
+        "models.AuditAuthorizationInfo": {
+            granted?: boolean;
+            permission?: string;
+            policy?: string;
+            resourceId?: string;
+            resourceType?: string;
+            scope?: string;
+        };
         "models.AuditEvent": {
             /** @description Action is a short semantic label, e.g. "case.commented", "device.renamed",
              *     "member.suspended". */
@@ -33674,12 +33805,15 @@ export interface components {
             actorName?: string;
             /** @description ActorType identifies the principal kind, e.g. "user", "apikey" or "system". */
             actorType?: string;
+            /** @description AuthorizationInfo records the permission decisions actually made for the
+             *     operation. Authentication and trusted system events may leave it empty. */
+            authorizationInfo?: components["schemas"]["models.AuditAuthorizationInfo"][];
             /** @description Category groups the action by subsystem. */
             category?: string;
             /** @description Changes optionally captures the field-level diff for this event. */
             changes?: components["schemas"]["models.AuditFieldChange"][];
             id?: string;
-            /** @description Metadata holds contextual key/value pairs (ip, userAgent, requestId, ...). */
+            /** @description Metadata holds additional action-specific context. */
             metadata?: {
                 [key: string]: string;
             };
@@ -33687,11 +33821,15 @@ export interface components {
             operation?: string;
             /** @description OrganisationId scopes the event to a tenant for org-wide audit queries. */
             organisationId?: string;
-            /** @description Outcome records whether the action succeeded. */
-            outcome?: string;
             /** @description ProjectId optionally narrows the event to a project within the organisation.
              *     Organisation-wide actions leave it nil. */
             projectId?: string;
+            /** @description Request contains transport and correlation evidence captured at ingress. */
+            request?: components["schemas"]["models.AuditRequestInfo"];
+            /** @description SchemaVersion identifies the persisted audit event contract. */
+            schemaVersion?: number;
+            /** @description Status records the operation result independently of authorization. */
+            status?: components["schemas"]["models.AuditEventStatus"];
             targetId?: string;
             targetName?: string;
             /** @description TargetType and TargetId identify the entity the action was performed on
@@ -33703,10 +33841,23 @@ export interface components {
             /** @description Timestamp is when the action occurred. */
             timestamp?: string;
         };
+        "models.AuditEventStatus": {
+            code?: string;
+            outcome?: string;
+        };
         "models.AuditFieldChange": {
             field?: string;
             newValue?: string;
             oldValue?: string;
+        };
+        "models.AuditRequestInfo": {
+            correlationId?: string;
+            id?: string;
+            ip?: string;
+            method?: string;
+            path?: string;
+            traceId?: string;
+            userAgent?: string;
         };
         /** @enum {string} */
         "models.BaseRole": "guest" | "editor" | "admin" | "owner" | "application";
@@ -37337,8 +37488,11 @@ export namespace models {
     export type AnalyticsLists = components['schemas']['models.AnalyticsLists'];
     export type AnalyticsSummary = components['schemas']['models.AnalyticsSummary'];
     export type Audit = components['schemas']['models.Audit'];
+    export type AuditAuthorizationInfo = components['schemas']['models.AuditAuthorizationInfo'];
     export type AuditEvent = components['schemas']['models.AuditEvent'];
+    export type AuditEventStatus = components['schemas']['models.AuditEventStatus'];
     export type AuditFieldChange = components['schemas']['models.AuditFieldChange'];
+    export type AuditRequestInfo = components['schemas']['models.AuditRequestInfo'];
     export type CameraMetadata = components['schemas']['models.CameraMetadata'];
     export type CameraPreset = components['schemas']['models.CameraPreset'];
     export type CameraTour = components['schemas']['models.CameraTour'];
