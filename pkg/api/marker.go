@@ -159,9 +159,10 @@ type MarkerTagFilter struct {
 }
 
 type MarkerCategoryFilter struct {
-	Names []*string `json:"names,omitempty" bson:"names,omitempty"`
-	Name  *string   `json:"name,omitempty" bson:"name,omitempty"`
-	Sort  *string   `json:"sort,omitempty" bson:"sort,omitempty"`
+	Names      []*string           `json:"names,omitempty" bson:"names,omitempty"`
+	Name       *string             `json:"name,omitempty" bson:"name,omitempty"`
+	TimeRanges []*models.TimeRange `json:"timeRanges,omitempty" bson:"timeRanges,omitempty"`
+	Sort       *string             `json:"sort,omitempty" bson:"sort,omitempty"`
 }
 
 // GetMarkers
