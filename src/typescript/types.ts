@@ -32378,6 +32378,7 @@ export interface components {
             name?: string;
             names?: string[];
             sort?: string;
+            timeRanges?: components["schemas"]["models.TimeRange"][];
         };
         "api.MarkerEventFilter": {
             deviceKeys?: string[];
