@@ -17,6 +17,7 @@ const (
 const (
 	AuditEventId = "_id"
 	AuditEventSchemaVersion = "schemaVersion"
+	AuditEventSource = "source"
 	AuditEventOrganisationId = "organisationId"
 	AuditEventProjectId = "projectId"
 	AuditEventActorId = "actorId"
