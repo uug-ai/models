@@ -13,6 +13,7 @@ func TestAuditEventProjectIdBSON(t *testing.T) {
 
 	encoded, err := bson.Marshal(AuditEvent{
 		SchemaVersion:  AuditEventSchemaVersion,
+		Source:         "hub-api",
 		OrganisationId: organisationId,
 		ProjectId:      &projectId,
 		AuthorizationInfo: []AuditAuthorizationInfo{{
@@ -37,6 +38,9 @@ func TestAuditEventProjectIdBSON(t *testing.T) {
 	}
 	if got := document["schemaVersion"]; got != int32(AuditEventSchemaVersion) {
 		t.Fatalf("schemaVersion = %#v, want %d", got, AuditEventSchemaVersion)
+	}
+	if got := document["source"]; got != "hub-api" {
+		t.Fatalf("source = %#v, want hub-api", got)
 	}
 	decisions := document["authorizationInfo"].(primitive.A)
 	decision := decisions[0].(bson.M)
