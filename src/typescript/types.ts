@@ -33829,6 +33829,8 @@ export interface components {
             request?: components["schemas"]["models.AuditRequestInfo"];
             /** @description SchemaVersion identifies the persisted audit event contract. */
             schemaVersion?: number;
+            /** @description Source identifies the service that produced the event. */
+            source?: string;
             /** @description Status records the operation result independently of authorization. */
             status?: components["schemas"]["models.AuditEventStatus"];
             targetId?: string;

@@ -18,6 +18,8 @@ type AuditEvent struct {
 	Id primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	// SchemaVersion identifies the persisted audit event contract.
 	SchemaVersion int `json:"schemaVersion" bson:"schemaVersion"`
+	// Source identifies the service that produced the event.
+	Source string `json:"source,omitempty" bson:"source,omitempty"`
 	// OrganisationId scopes the event to a tenant for org-wide audit queries.
 	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"`
 	// ProjectId optionally narrows the event to a project within the organisation.
