@@ -35596,6 +35596,8 @@ export interface components {
              *     A nil value keeps the media organisation-wide. */
             projectId?: string;
             siteId?: string;
+            sourceMediaId?: string;
+            sourceVaultId?: string;
             spriteFile?: string;
             spriteProvider?: string;
             star?: boolean;
@@ -36043,6 +36045,8 @@ export interface components {
             result?: number[];
             /** @description Signed URL */
             signedUrl?: string;
+            sourceMediaId?: string;
+            sourceVaultId?: string;
             timestamp?: number;
         };
         "models.PipelineSourceDevice": {
@@ -36972,6 +36976,7 @@ export interface components {
             forwarder_id?: string;
             forwarder_type?: string;
             forwarder_worker?: string;
+            id?: string;
             main_provider?: boolean;
             metadata?: components["schemas"]["models.VaultMediaMetadata"];
             provider?: string;
