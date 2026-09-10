@@ -128,11 +128,13 @@ func TestPipelineSourceDeviceRoundTripsCanonicalIdentity(t *testing.T) {
 
 func TestPipelineEventGetMediaCopiesSourceVaultProvenance(t *testing.T) {
 	sourceMediaId := primitive.NewObjectID()
+	forwardedAt := int64(1789063200123)
 	event := PipelineEvent{
 		Payload: PipelinePayload{
 			FileName:      "account/1720000000_6-967009_back_200-200-400-400_0_769.mp4",
 			SourceVaultId: "vault-site-a",
 			SourceMediaId: &sourceMediaId,
+			ForwardedAt:   forwardedAt,
 		},
 	}
 
@@ -145,6 +147,9 @@ func TestPipelineEventGetMediaCopiesSourceVaultProvenance(t *testing.T) {
 	}
 	if media.SourceMediaId == nil || *media.SourceMediaId != sourceMediaId {
 		t.Fatalf("SourceMediaId = %v, want %s", media.SourceMediaId, sourceMediaId.Hex())
+	}
+	if media.ForwardedAt != forwardedAt {
+		t.Fatalf("ForwardedAt = %d, want %d", media.ForwardedAt, forwardedAt)
 	}
 }
 
