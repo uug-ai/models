@@ -47,15 +47,18 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
-          go-version: ${{ env.GO_VERSION }}
+          go-version-file: go.mod
 
       - name: Install swag
-        run: go install github.com/swaggo/swag/cmd/swag@latest  
-          
-      - name: Install dependencies
+        run: go install github.com/swaggo/swag/cmd/swag@latest
+
+      - name: Install generator dependencies
+        run: npm ci
+
+      - name: Install TypeScript dependencies
         working-directory: ./src/typescript
         run: npm ci
-             
+
       - name: Generate openapi
         run: npm run generate:openapi
 

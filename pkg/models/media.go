@@ -33,6 +33,8 @@ type Media struct {
 	VideoFile             string                  `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
 	VideoProvider         string                  `json:"videoProvider,omitempty" bson:"videoProvider,omitempty"`
 	VideoBytesRangeOnTime []VideoBytesRangeOnTime `json:"videoBytesRangeOnTime,omitempty"  bson:"videoBytesRangeOnTime,omitempty"`
+	SourceVaultId         string                  `json:"sourceVaultId,omitempty" bson:"sourceVaultId,omitempty"`
+	SourceMediaId         *primitive.ObjectID     `json:"sourceMediaId,omitempty" bson:"sourceMediaId,omitempty"`
 
 	ThumbnailFile     string `json:"thumbnailFile,omitempty" bson:"thumbnailFile,omitempty"`
 	ThumbnailProvider string `json:"thumbnailProvider,omitempty" bson:"thumbnailProvider,omitempty"`
@@ -159,6 +161,7 @@ Media object as used in Vault, should be more aligned with how we store in Hub
 */
 
 type VaultMedia struct {
+	Id                primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Timestamp         int64              `json:"timestamp" bson:"timestamp"`
 	FileName          string             `json:"filename" bson:"filename"`
 	FileSize          int64              `json:"filesize" bson:"filesize"`

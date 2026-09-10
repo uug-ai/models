@@ -126,6 +126,28 @@ func TestPipelineSourceDeviceRoundTripsCanonicalIdentity(t *testing.T) {
 	}
 }
 
+func TestPipelineEventGetMediaCopiesSourceVaultProvenance(t *testing.T) {
+	sourceMediaId := primitive.NewObjectID()
+	event := PipelineEvent{
+		Payload: PipelinePayload{
+			FileName:      "account/1720000000_6-967009_back_200-200-400-400_0_769.mp4",
+			SourceVaultId: "vault-site-a",
+			SourceMediaId: &sourceMediaId,
+		},
+	}
+
+	media, err := event.GetMedia()
+	if err != nil {
+		t.Fatalf("GetMedia() error = %v", err)
+	}
+	if media.SourceVaultId != "vault-site-a" {
+		t.Fatalf("SourceVaultId = %q, want vault-site-a", media.SourceVaultId)
+	}
+	if media.SourceMediaId == nil || *media.SourceMediaId != sourceMediaId {
+		t.Fatalf("SourceMediaId = %v, want %s", media.SourceMediaId, sourceMediaId.Hex())
+	}
+}
+
 func TestPipelineEventOwnershipSnapshotAppliesToLegacyMedia(t *testing.T) {
 	organisationId := primitive.NewObjectID().Hex()
 	projectId := primitive.NewObjectID()

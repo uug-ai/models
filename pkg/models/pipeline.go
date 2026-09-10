@@ -67,7 +67,10 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 	// 1. The old way, we need to parse the filename (all info is stored in the filename).
 	// 2. (or) Use the metadata attributes.
 
-	media := Media{}
+	media := Media{
+		SourceVaultId: pe.Payload.SourceVaultId,
+		SourceMediaId: pe.Payload.SourceMediaId,
+	}
 
 	pathParts := strings.Split(pe.Payload.FileName, "/")
 	if len(pathParts) < 2 {
@@ -165,10 +168,12 @@ func (pe *PipelineEvent) copyOwnershipToMedia(media *Media) {
 }
 
 type PipelinePayload struct {
-	Timestamp int64  `json:"timestamp,omitempty"`
-	FileName  string `json:"key,omitempty"`
-	FileSize  int64  `json:"fileSize,omitempty"`
-	Duration  string `json:"duration,omitempty"`
+	Timestamp     int64               `json:"timestamp,omitempty"`
+	FileName      string              `json:"key,omitempty"`
+	FileSize      int64               `json:"fileSize,omitempty"`
+	Duration      string              `json:"duration,omitempty"`
+	SourceVaultId string              `json:"sourceVaultId,omitempty"`
+	SourceMediaId *primitive.ObjectID `json:"sourceMediaId,omitempty"`
 
 	// Signed URL
 	SignedURL string `json:"signedUrl,omitempty"`

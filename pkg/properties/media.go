@@ -57,6 +57,8 @@ const (
 	MediaVideoFile = "videoFile"
 	MediaVideoProvider = "videoProvider"
 	MediaVideoBytesRangeOnTime = "videoBytesRangeOnTime"
+	MediaSourceVaultId = "sourceVaultId"
+	MediaSourceMediaId = "sourceMediaId"
 	MediaThumbnailFile = "thumbnailFile"
 	MediaThumbnailProvider = "thumbnailProvider"
 	MediaSpriteFile = "spriteFile"
@@ -134,6 +136,7 @@ const (
 
 // VaultMedia property field names (BSON)
 const (
+	VaultMediaId = "_id"
 	VaultMediaTimestamp = "timestamp"
 	VaultMediaFileName = "filename"
 	VaultMediaFileSize = "filesize"
