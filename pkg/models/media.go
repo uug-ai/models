@@ -161,7 +161,7 @@ Media object as used in Vault, should be more aligned with how we store in Hub
 */
 
 type VaultMedia struct {
-	Id                primitive.ObjectID  `json:"id" bson:"_id,omitempty"`
+	Id                primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Timestamp         int64              `json:"timestamp" bson:"timestamp"`
 	FileName          string             `json:"filename" bson:"filename"`
 	FileSize          int64              `json:"filesize" bson:"filesize"`
