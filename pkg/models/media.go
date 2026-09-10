@@ -35,6 +35,7 @@ type Media struct {
 	VideoBytesRangeOnTime []VideoBytesRangeOnTime `json:"videoBytesRangeOnTime,omitempty"  bson:"videoBytesRangeOnTime,omitempty"`
 	SourceVaultId         string                  `json:"sourceVaultId,omitempty" bson:"sourceVaultId,omitempty"`
 	SourceMediaId         *primitive.ObjectID     `json:"sourceMediaId,omitempty" bson:"sourceMediaId,omitempty"`
+	ForwardedAt           int64                   `json:"forwardedAt,omitempty" bson:"forwardedAt,omitempty"`
 
 	ThumbnailFile     string `json:"thumbnailFile,omitempty" bson:"thumbnailFile,omitempty"`
 	ThumbnailProvider string `json:"thumbnailProvider,omitempty" bson:"thumbnailProvider,omitempty"`
@@ -178,6 +179,7 @@ type VaultMedia struct {
 	ForwarderType     string             `json:"forwarder_type" bson:"forwarder_type"`
 	ForwarderWorker   string             `json:"forwarder_worker" bson:"forwarder_worker"`
 	ForwardTimestamp  int64              `json:"forward_timestamp" bson:"forward_timestamp"`
+	ForwardedAt       int64              `json:"forwarded_at" bson:"forwarded_at"`
 	Events            []VaultMediaEvent  `json:"events" bson:"events"`
 	MainProvider      bool               `json:"main_provider" bson:"main_provider"`
 	SecondaryProvider bool               `json:"secondary_provider" bson:"secondary_provider"`

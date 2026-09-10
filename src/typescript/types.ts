@@ -35579,6 +35579,7 @@ export interface components {
             duration?: number;
             endTimestamp?: number;
             eventNames?: string[];
+            forwardedAt?: number;
             groupId?: string;
             /** @description Unique identifier for the media file */
             id?: string;
@@ -36030,6 +36031,7 @@ export interface components {
             deviceName?: string;
             duration?: string;
             fileSize?: number;
+            forwardedAt?: number;
             /** @description MP4 fragmentation */
             is_fragmented?: boolean;
             key?: string;
@@ -36973,6 +36975,7 @@ export interface components {
             finished?: boolean;
             forward_timestamp?: number;
             forwarded?: boolean;
+            forwarded_at?: number;
             forwarder_id?: string;
             forwarder_type?: string;
             forwarder_worker?: string;
