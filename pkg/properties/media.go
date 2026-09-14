@@ -56,6 +56,7 @@ const (
 	MediaStorageSolution = "storageSolution"
 	MediaVideoFile = "videoFile"
 	MediaVideoProvider = "videoProvider"
+	MediaEncrypted = "encrypted"
 	MediaVideoBytesRangeOnTime = "videoBytesRangeOnTime"
 	MediaSourceVaultId = "sourceVaultId"
 	MediaSourceMediaId = "sourceMediaId"

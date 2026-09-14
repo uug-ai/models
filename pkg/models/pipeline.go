@@ -71,6 +71,7 @@ func (pe *PipelineEvent) GetMedia() (Media, error) {
 		SourceVaultId: pe.Payload.SourceVaultId,
 		SourceMediaId: pe.Payload.SourceMediaId,
 		ForwardedAt:   pe.Payload.ForwardedAt,
+		Encrypted:     pe.Payload.Encrypted,
 	}
 
 	pathParts := strings.Split(pe.Payload.FileName, "/")
@@ -176,6 +177,7 @@ type PipelinePayload struct {
 	SourceVaultId string              `json:"sourceVaultId,omitempty"`
 	SourceMediaId *primitive.ObjectID `json:"sourceMediaId,omitempty"`
 	ForwardedAt   int64               `json:"forwardedAt,omitempty"`
+	Encrypted     bool                `json:"encrypted,omitempty"`
 
 	// Signed URL
 	SignedURL string `json:"signedUrl,omitempty"`
