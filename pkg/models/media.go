@@ -32,6 +32,7 @@ type Media struct {
 	StorageSolution       string                  `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`
 	VideoFile             string                  `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
 	VideoProvider         string                  `json:"videoProvider,omitempty" bson:"videoProvider,omitempty"`
+	Encrypted             bool                    `json:"encrypted,omitempty" bson:"encrypted,omitempty"`
 	VideoBytesRangeOnTime []VideoBytesRangeOnTime `json:"videoBytesRangeOnTime,omitempty"  bson:"videoBytesRangeOnTime,omitempty"`
 	SourceVaultId         string                  `json:"sourceVaultId,omitempty" bson:"sourceVaultId,omitempty"`
 	SourceMediaId         *primitive.ObjectID     `json:"sourceMediaId,omitempty" bson:"sourceMediaId,omitempty"`

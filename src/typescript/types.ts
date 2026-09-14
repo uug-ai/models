@@ -35577,6 +35577,7 @@ export interface components {
             /** @description Name of the device that uploaded media */
             deviceName?: string;
             duration?: number;
+            encrypted?: boolean;
             endTimestamp?: number;
             eventNames?: string[];
             forwardedAt?: number;
@@ -36030,6 +36031,7 @@ export interface components {
             deviceId?: string;
             deviceName?: string;
             duration?: string;
+            encrypted?: boolean;
             fileSize?: number;
             forwardedAt?: number;
             /** @description MP4 fragmentation */

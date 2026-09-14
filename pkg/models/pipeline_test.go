@@ -71,6 +71,37 @@ func TestPipelineEventOwnershipSnapshotRoundTripAndGetMedia(t *testing.T) {
 	}
 }
 
+func TestPipelineEventEncryptedRoundTripAndGetMedia(t *testing.T) {
+	event := PipelineEvent{
+		Storage:  "kstorage",
+		Provider: "provider",
+		Payload: PipelinePayload{
+			FileName:  "directory/recording.mp4",
+			Encrypted: true,
+			Metadata: PipelineMetadata{
+				DeviceId: "device-key",
+			},
+		},
+	}
+
+	encoded, err := json.Marshal(event)
+	if err != nil {
+		t.Fatalf("marshal event: %v", err)
+	}
+	var decoded PipelineEvent
+	if err := json.Unmarshal(encoded, &decoded); err != nil {
+		t.Fatalf("unmarshal event: %v", err)
+	}
+
+	media, err := decoded.GetMedia()
+	if err != nil {
+		t.Fatalf("GetMedia() error = %v", err)
+	}
+	if !media.Encrypted {
+		t.Fatal("GetMedia() did not propagate encrypted recording flag")
+	}
+}
+
 func TestPipelineEventWithoutOwnershipSnapshotRemainsCompatible(t *testing.T) {
 	legacyJSON := []byte(`{"monitorStage":{"name":"monitor","user":{"organisationId":"111111111111111111111111","projectId":"222222222222222222222222"}},"payload":{"key":"user/video.mp4","organisationId":"333333333333333333333333","metadata":{"productid":"device-1","event-timestamp":"1706000000","duration":"3000"}}}`)
 
