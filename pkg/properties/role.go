@@ -31,6 +31,7 @@ const (
 	RoleName = "roleName"
 	RoleDescription = "description"
 	RoleParentRole = "role"
+	RolePermissions = "permissions"
 	RolePages = "pages"
 	RoleTimeWindow = "timeWindow"
 	RoleIsActive = "isActive"

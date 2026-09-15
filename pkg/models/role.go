@@ -46,6 +46,9 @@ type Role struct {
 	// it sets the effective tier/RoleLevel for coarse gating and bounds which
 	// pages the role may grant. See BaseRole.
 	ParentRole BaseRole `json:"role" bson:"role,omitempty"`
+	// Permissions is the canonical set of domain.action grants carried by this
+	// role. FeaturePermissions remains available during legacy migration.
+	Permissions []Permission `json:"permissions,omitempty" bson:"permissions,omitempty"`
 	// Pages and FeaturePermissions are two orthogonal authorization axes:
 	//   - Pages controls which UI/nav pages are visible (coarse allow-list).
 	//   - FeaturePermissions controls the CRUD AccessLevel per feature.
@@ -59,6 +62,12 @@ type Role struct {
 	FeaturePermissions FeaturePermissions `json:"featurePermissions" bson:"featurePermissions"`
 	TimeWindowActive   bool               `json:"timeWindowActive" bson:"timeWindowActive"`
 	Audit              Audit              `json:"audit" bson:"audit"`
+}
+
+// ValidatePermissions verifies that the role contains only unique permissions
+// from the canonical catalog.
+func (r Role) ValidatePermissions() error {
+	return ValidatePermissions(r.Permissions)
 }
 
 type FeaturePermissions struct {

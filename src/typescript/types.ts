@@ -35977,6 +35977,8 @@ export interface components {
         "models.PatchVideowallOutput": {
             videowall?: components["schemas"]["models.Videowall"];
         };
+        /** @enum {string} */
+        "models.Permission": "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete";
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.Permissions": {
@@ -36145,6 +36147,9 @@ export interface components {
              *     the consuming service resolves them together (page hidden => not shown;
              *     feature level => what may be done once on the page). */
             pages?: string[];
+            /** @description Permissions is the canonical set of domain.action grants carried by this
+             *     role. FeaturePermissions remains available during legacy migration. */
+            permissions?: components["schemas"]["models.Permission"][];
             /** @description ParentRole is the built-in BaseRole tier this custom role extends. It is a
              *     live tier identifier (NOT an ObjectID reference to another Role document):
              *     it sets the effective tier/RoleLevel for coarse gating and bounds which
