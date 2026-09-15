@@ -210,6 +210,7 @@ const (
 	TrackBoxX2 = "x2"
 	TrackBoxY2 = "y2"
 	TrackBoxTrackId = "trackId"
+	TrackBoxTimestampMs = "timestampMs"
 	TrackBoxSmoothed = "smoothed"
 	TrackBoxEdited = "edited"
 	TrackBoxConfidence = "confidence"
