@@ -64,6 +64,12 @@ type Role struct {
 	Audit              Audit              `json:"audit" bson:"audit"`
 }
 
+// ValidatePermissions verifies that the role contains only unique permissions
+// from the canonical catalog.
+func (r Role) ValidatePermissions() error {
+	return ValidatePermissions(r.Permissions)
+}
+
 type FeaturePermissions struct {
 	PTZ                AccessLevel `json:"ptz" bson:"ptz"`                               // 0=none, 1=read, 2=write, 3=admin
 	Liveview           AccessLevel `json:"liveview" bson:"liveview"`                     // 0=none, 1=read, 2=write, 3=admin

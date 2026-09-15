@@ -1,6 +1,10 @@
 package models
 
-import "testing"
+import (
+	"errors"
+	"slices"
+	"testing"
+)
 
 func TestPermissionCatalogContainsUniqueValidPermissions(t *testing.T) {
 	seen := make(map[Permission]struct{})
@@ -24,8 +28,52 @@ func TestPermissionCatalogContainsUniqueValidPermissions(t *testing.T) {
 }
 
 func TestParsePermissionRejectsUnknownPermission(t *testing.T) {
-	if _, err := ParsePermission("media.unknown"); err == nil {
-		t.Fatal("ParsePermission must reject an unknown permission")
+	if _, err := ParsePermission("media.unknown"); !errors.Is(err, ErrPermissionUnknown) {
+		t.Fatalf("ParsePermission error = %v, want ErrPermissionUnknown", err)
+	}
+}
+
+func TestValidatePermissions(t *testing.T) {
+	tests := []struct {
+		name        string
+		permissions []Permission
+		wantErr     error
+	}{
+		{name: "empty"},
+		{name: "valid", permissions: []Permission{PermissionMediaRead, PermissionCasesExport}},
+		{name: "unknown", permissions: []Permission{"media.unknown"}, wantErr: ErrPermissionUnknown},
+		{name: "duplicate", permissions: []Permission{PermissionMediaRead, PermissionMediaRead}, wantErr: ErrPermissionDuplicate},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			err := ValidatePermissions(test.permissions)
+			if !errors.Is(err, test.wantErr) {
+				t.Fatalf("ValidatePermissions() error = %v, want %v", err, test.wantErr)
+			}
+		})
+	}
+}
+
+func TestRoleValidatePermissions(t *testing.T) {
+	role := Role{Permissions: []Permission{PermissionCasesRead, "cases.unknown"}}
+	if err := role.ValidatePermissions(); !errors.Is(err, ErrPermissionUnknown) {
+		t.Fatalf("Role.ValidatePermissions() error = %v, want ErrPermissionUnknown", err)
+	}
+}
+
+func TestCasePermissionsStableOrder(t *testing.T) {
+	want := []Permission{
+		PermissionCasesRead,
+		PermissionCasesCreate,
+		PermissionCasesUpdate,
+		PermissionCasesShare,
+		PermissionCasesExport,
+		PermissionCasesRunWorkflow,
+		PermissionCasesDelete,
+	}
+	if got := CasePermissions(); !slices.Equal(got, want) {
+		t.Fatalf("CasePermissions() = %v, want %v", got, want)
 	}
 }
 

@@ -35978,7 +35978,7 @@ export interface components {
             videowall?: components["schemas"]["models.Videowall"];
         };
         /** @enum {string} */
-        "models.Permission": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.delete";
+        "models.Permission": "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete";
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.Permissions": {

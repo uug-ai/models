@@ -7,11 +7,13 @@ import (
 )
 
 const (
-	PermissionCasesRead   Permission = "cases.read"
-	PermissionCasesCreate Permission = "cases.create"
-	PermissionCasesUpdate Permission = "cases.update"
-	PermissionCasesShare  Permission = "cases.share"
-	PermissionCasesDelete Permission = "cases.delete"
+	PermissionCasesRead        Permission = "cases.read"
+	PermissionCasesCreate      Permission = "cases.create"
+	PermissionCasesUpdate      Permission = "cases.update"
+	PermissionCasesShare       Permission = "cases.share"
+	PermissionCasesExport      Permission = "cases.export"
+	PermissionCasesRunWorkflow Permission = "cases.runWorkflow"
+	PermissionCasesDelete      Permission = "cases.delete"
 )
 
 var casePermissions = []Permission{
@@ -19,6 +21,8 @@ var casePermissions = []Permission{
 	PermissionCasesCreate,
 	PermissionCasesUpdate,
 	PermissionCasesShare,
+	PermissionCasesExport,
+	PermissionCasesRunWorkflow,
 	PermissionCasesDelete,
 }
 
