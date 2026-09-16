@@ -30365,6 +30365,8 @@ export interface components {
                 [key: string]: unknown;
             };
             smoothed?: boolean;
+            /** @description TimestampMs is the decoded image's presentation timestamp on the annotated
+             *     media asset's timeline. Zero is valid; nil means it was not supplied. */
             timestampMs?: number;
             w?: number;
             x?: number;
@@ -36749,6 +36751,8 @@ export interface components {
             edited?: boolean;
             label?: string;
             smoothed?: boolean;
+            /** @description TimestampMs is the box's optional presentation time on the media timeline. */
+            timestampMs?: number;
             trackId?: string;
             x1?: number;
             x2?: number;

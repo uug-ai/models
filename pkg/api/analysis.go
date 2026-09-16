@@ -252,8 +252,10 @@ type DetectionTrackInput struct {
 // the preferred {x, y, w, h} (top-left + size) and the legacy {x1, y1, x2, y2}
 // forms; pointers let the server detect which form was sent.
 type DetectionBoxInput struct {
-	Frame       int64                  `json:"frame"`
-	TimestampMs int64                  `json:"timestampMs,omitempty"`
+	Frame int64 `json:"frame"`
+	// TimestampMs is the decoded image's presentation timestamp on the annotated
+	// media asset's timeline. Zero is valid; nil means it was not supplied.
+	TimestampMs *int64                 `json:"timestampMs,omitempty"`
 	X           *float64               `json:"x,omitempty"`
 	Y           *float64               `json:"y,omitempty"`
 	W           *float64               `json:"w,omitempty"`

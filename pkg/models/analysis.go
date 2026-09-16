@@ -164,13 +164,15 @@ type FaceRedactionTrack struct {
 }
 
 type TrackBox struct {
-	X1       float64 `json:"x1" bson:"x1"`
-	Y1       float64 `json:"y1" bson:"y1"`
-	X2       float64 `json:"x2" bson:"x2"`
-	Y2       float64 `json:"y2" bson:"y2"`
-	TrackId  string  `json:"trackId,omitempty" bson:"trackId,omitempty"`
-	Smoothed bool    `json:"smoothed" bson:"smoothed"`
-	Edited   bool    `json:"edited" bson:"edited"`
+	X1      float64 `json:"x1" bson:"x1"`
+	Y1      float64 `json:"y1" bson:"y1"`
+	X2      float64 `json:"x2" bson:"x2"`
+	Y2      float64 `json:"y2" bson:"y2"`
+	TrackId string  `json:"trackId,omitempty" bson:"trackId,omitempty"`
+	// TimestampMs is the box's optional presentation time on the media timeline.
+	TimestampMs *int64 `json:"timestampMs,omitempty" bson:"timestampMs,omitempty"`
+	Smoothed    bool   `json:"smoothed" bson:"smoothed"`
+	Edited      bool   `json:"edited" bson:"edited"`
 	// Confidence, ClassId and Label preserve the producer's per-box model
 	// output so a stored detection run can be re-thresholded or audited later.
 	Confidence float64 `json:"confidence,omitempty" bson:"confidence,omitempty"`
