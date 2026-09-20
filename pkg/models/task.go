@@ -101,6 +101,8 @@ type Task struct {
 	SpriteFile         string `json:"spriteFile" bson:"spriteFile"`
 	SpriteProvider     string `json:"spriteProvider" bson:"spriteProvider"`
 	SpriteInterval     int    `json:"spriteInterval" bson:"spriteInterval"`
+	SpriteWidth        int    `json:"spriteWidth,omitempty" bson:"spriteWidth,omitempty"`
+	SpriteHeight       int    `json:"spriteHeight,omitempty" bson:"spriteHeight,omitempty"`
 	CompressedUrl      string `json:"compressed_url" bson:"compressed_url,omitempty"`
 	CompressedFile     string `json:"compressedFile" bson:"compressedFile"`
 	CompressedProvider string `json:"compressedProvider" bson:"compressedProvider"`
@@ -202,6 +204,8 @@ type ExportFile struct {
 	SpriteProvider    string `json:"spriteProvider" bson:"spriteProvider"`
 	SpriteUrl         string `json:"sprite_url,omitempty" bson:"sprite_url,omitempty"`
 	SpriteInterval    int    `json:"spriteInterval" bson:"spriteInterval"`
+	SpriteWidth       int    `json:"spriteWidth,omitempty" bson:"spriteWidth,omitempty"`
+	SpriteHeight      int    `json:"spriteHeight,omitempty" bson:"spriteHeight,omitempty"`
 	ThumbnailFile     string `json:"thumbnailFile" bson:"thumbnailFile"`
 	ThumbnailProvider string `json:"thumbnailProvider" bson:"thumbnailProvider"`
 	ThumbnailUrl      string `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`

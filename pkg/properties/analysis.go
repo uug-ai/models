@@ -187,6 +187,8 @@ const (
 	SpriteSpriteFile = "filename"
 	SpriteProvider = "provider"
 	SpriteInterval = "interval"
+	SpriteWidth = "width"
+	SpriteHeight = "height"
 )
 
 // Thumbnail property field names (BSON)

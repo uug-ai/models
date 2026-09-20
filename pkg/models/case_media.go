@@ -96,6 +96,8 @@ type CaseMedia struct {
 	SpriteFile        string              `json:"spriteFile,omitempty" bson:"sprite_file,omitempty"`
 	SpriteProvider    string              `json:"spriteProvider,omitempty" bson:"sprite_provider,omitempty"`
 	SpriteInterval    int                 `json:"spriteInterval,omitempty" bson:"sprite_interval,omitempty"`
+	SpriteWidth       int                 `json:"spriteWidth,omitempty" bson:"sprite_width,omitempty"`
+	SpriteHeight      int                 `json:"spriteHeight,omitempty" bson:"sprite_height,omitempty"`
 
 	// Media is a full snapshot of the source Media document captured at
 	// attach time. It is only populated on Role = "source" and is what

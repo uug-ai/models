@@ -30,6 +30,8 @@ const (
 	CaseMediaSpriteFile = "sprite_file"
 	CaseMediaSpriteProvider = "sprite_provider"
 	CaseMediaSpriteInterval = "sprite_interval"
+	CaseMediaSpriteWidth = "sprite_width"
+	CaseMediaSpriteHeight = "sprite_height"
 	CaseMediaMedia = "media"
 	CaseMediaAnalysis = "analysis"
 	CaseMediaFile = "file"
