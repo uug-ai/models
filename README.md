@@ -103,6 +103,21 @@ const device: models.Device = {
 
 ## Core Concepts
 
+### Pipeline transport compatibility
+
+`MonitorStage` JSON serialization omits `user.audit` and the audit field of
+every nested `user.master`. Pipeline workers do not use this audit history.
+`json.Unmarshal` into `PipelineEvent` accepts and ignores absent, null, legacy
+array, and current object audit values before queue handlers run; forwarding
+and worker fanout through `json.Marshal` omit them for old and new readers.
+All other user and pipeline fields retain their existing JSON representation.
+Reusing a decode destination retains absent fields as usual; decoding a user
+object clears its audit instead of retaining stale audit data.
+
+This is a pipeline-only transport boundary: standalone `User`/`Audit` JSON
+(including API responses) and all BSON persistence remain unchanged. No data
+migration is required.
+
 ### Automatic Type Generation
 
 This project bridges Go and TypeScript using an automated pipeline:
