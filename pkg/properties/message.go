@@ -28,6 +28,8 @@ const (
 	MessageThumbnailProvider = "thumbnailProvider"
 	MessageSpriteFile = "spriteFile"
 	MessageSpriteInterval = "spriteInterval"
+	MessageSpriteWidth = "spriteWidth"
+	MessageSpriteHeight = "spriteHeight"
 	MessageSpriteProvider = "spriteProvider"
 	MessageDeviceId = "device_id"
 	MessageDeviceName = "device_name"

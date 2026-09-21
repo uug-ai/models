@@ -28,6 +28,8 @@ type Message struct {
 	ThumbnailProvider string              `json:"thumbnailProvider,omitempty" bson:"thumbnailProvider,omitempty"`
 	SpriteFile        string              `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
 	SpriteInterval    int                 `json:"spriteInterval,omitempty" bson:"spriteInterval,omitempty"`
+	SpriteWidth       int                 `json:"spriteWidth,omitempty" bson:"spriteWidth,omitempty"`
+	SpriteHeight      int                 `json:"spriteHeight,omitempty" bson:"spriteHeight,omitempty"`
 	SpriteProvider    string              `json:"spriteProvider,omitempty" bson:"spriteProvider,omitempty"`
 	DeviceId          string              `json:"device_id,omitempty" bson:"device_id,omitempty"`
 	DeviceName        string              `json:"device_name,omitempty" bson:"device_name,omitempty"`

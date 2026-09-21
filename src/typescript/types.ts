@@ -29733,8 +29733,10 @@ export interface components {
             sequenceId?: string;
             sprite_url?: string;
             spriteFile?: string;
+            spriteHeight?: number;
             spriteInterval?: number;
             spriteProvider?: string;
+            spriteWidth?: number;
             /** @description open, approved, rejected */
             status?: string;
             /** @description base 64 encoded */
@@ -32906,8 +32908,10 @@ export interface components {
             source?: string;
             sprite_url?: string;
             spriteFile?: string;
+            spriteHeight?: number;
             spriteInterval?: number;
             spriteProvider?: string;
+            spriteWidth?: number;
             thumbnail_url?: string;
             thumbnailFile?: string;
             thumbnailProvider?: string;
@@ -34080,11 +34084,13 @@ export interface components {
              *     the original media document is cleaned up). */
             sourceMediaId?: string;
             spriteFile?: string;
+            spriteHeight?: number;
             spriteInterval?: number;
             spriteProvider?: string;
             /** @description SpriteUrl is a signed playback URL for SpriteFile and is populated
              *     by the API at fetch time. Not persisted. */
             spriteUrl?: string;
+            spriteWidth?: number;
             /** @description Lifecycle (only meaningful on Role = "edit"). For sources this is
              *     implicitly Completed at creation time. */
             status?: components["schemas"]["models.CaseMediaStatus"];
@@ -34825,8 +34831,10 @@ export interface components {
             source?: string;
             sprite_url?: string;
             spriteFile?: string;
+            spriteHeight?: number;
             spriteInterval?: number;
             spriteProvider?: string;
+            spriteWidth?: number;
             thumbnail_url?: string;
             thumbnailFile?: string;
             thumbnailProvider?: string;
@@ -35744,8 +35752,10 @@ export interface components {
             sequence_id?: string;
             sites?: components["schemas"]["models.Site"][];
             spriteFile?: string;
+            spriteHeight?: number;
             spriteInterval?: number;
             spriteProvider?: string;
+            spriteWidth?: number;
             thumbnail?: string;
             thumbnailFile?: string;
             thumbnailProvider?: string;
@@ -35830,8 +35840,10 @@ export interface components {
             sequence_id?: string;
             sites?: components["schemas"]["models.Site"][];
             spriteFile?: string;
+            spriteHeight?: number;
             spriteInterval?: number;
             spriteProvider?: string;
+            spriteWidth?: number;
             thumbnail?: string;
             thumbnailFile?: string;
             thumbnailProvider?: string;
@@ -36301,8 +36313,10 @@ export interface components {
         };
         "models.Sprite": {
             filename?: string;
+            height?: number;
             interval?: number;
             provider?: string;
+            width?: number;
         };
         "models.StageCondition": {
             /** @description see the ConditionOp consts */
@@ -36583,8 +36597,10 @@ export interface components {
             sequenceId?: string;
             sprite_url?: string;
             spriteFile?: string;
+            spriteHeight?: number;
             spriteInterval?: number;
             spriteProvider?: string;
+            spriteWidth?: number;
             /** @description open, approved, rejected */
             status?: string;
             /** @description base 64 encoded */

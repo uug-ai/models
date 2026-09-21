@@ -133,6 +133,8 @@ type Sprite struct {
 	SpriteFile string `json:"filename" bson:"filename"`
 	Provider   string `json:"provider" bson:"provider"`
 	Interval   int    `json:"interval" bson:"interval"`
+	Width      int    `json:"width,omitempty" bson:"width,omitempty"`
+	Height     int    `json:"height,omitempty" bson:"height,omitempty"`
 }
 
 type AnalysisFilter struct {
