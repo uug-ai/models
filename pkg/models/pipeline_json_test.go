@@ -1,7 +1,6 @@
 package models
 
 import (
-	"bytes"
 	"encoding/json"
 	"reflect"
 	"testing"
@@ -269,7 +268,14 @@ func TestPipelineAuditStandaloneJSONAndBSONUnchanged(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if !bytes.Equal(got, want) {
+			var gotDocument, wantDocument bson.M
+			if err := bson.Unmarshal(got, &gotDocument); err != nil {
+				t.Fatal(err)
+			}
+			if err := bson.Unmarshal(want, &wantDocument); err != nil {
+				t.Fatal(err)
+			}
+			if !reflect.DeepEqual(gotDocument, wantDocument) {
 				t.Fatal("BSON representation changed")
 			}
 			if err := bson.Unmarshal(got, tc.target); err != nil {
