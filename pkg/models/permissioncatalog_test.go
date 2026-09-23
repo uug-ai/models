@@ -150,3 +150,12 @@ func TestAccessTokenScopesContainCanonicalPermissions(t *testing.T) {
 		t.Fatalf("AccessTokenScopes() = %v, want %v", got, want)
 	}
 }
+
+func TestPrivilegedPermissionsAreNotGrantableAccessTokenScopes(t *testing.T) {
+	scopes := AccessTokenScopes()
+	for _, permission := range []Permission{PermissionApplication, PermissionMarkersAll} {
+		if slices.Contains(scopes, permission) {
+			t.Fatalf("AccessTokenScopes() contains privileged permission %q", permission)
+		}
+	}
+}

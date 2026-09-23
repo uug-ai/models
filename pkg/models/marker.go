@@ -8,6 +8,7 @@ import (
 const (
 	PermissionMarkersRead  Permission = "markers.read"
 	PermissionMarkersWrite Permission = "markers.write"
+	PermissionMarkersAll   Permission = "markers.all"
 )
 
 var markerPermissions = []Permission{
