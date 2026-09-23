@@ -11041,6 +11041,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getdayserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDaysErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDaysErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDaysErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdaysrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDaysRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetDaysRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDaysRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdaysresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDaysResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDaysResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDaysResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getdayssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetDaysSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetDaysSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetDaysSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getdetectionrunerrorresponse": {
         parameters: {
             query?: never;
@@ -31493,6 +31649,35 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetDaysErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetDaysRequest": Record<string, never>;
+        "api.GetDaysResponse": {
+            days?: string[];
+        };
+        "api.GetDaysSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetDaysResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetDetectionRunErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -34051,7 +34236,7 @@ export interface components {
             userId?: string;
         };
         /** @enum {string} */
-        "models.AccessTokenScope": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "markers.read" | "markers.write" | "markers.all" | "application" | "workflow-runs.create" | "workflow-runs.update";
+        "models.AccessTokenScope": "workflow-runs.create" | "workflow-runs.update" | "days.read" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "application" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "markers.read" | "markers.write" | "markers.all" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete";
         "models.Account": {
             account?: components["schemas"]["models.AccountBody"];
         };
@@ -36489,7 +36674,7 @@ export interface components {
             videowall?: components["schemas"]["models.Videowall"];
         };
         /** @enum {string} */
-        "models.Permission": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "markers.read" | "markers.write" | "markers.all" | "application" | "workflow-runs.create" | "workflow-runs.update";
+        "models.Permission": "workflow-runs.create" | "workflow-runs.update" | "days.read" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "application" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "markers.read" | "markers.write" | "markers.all" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete";
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.Permissions": {
@@ -38509,6 +38694,9 @@ export namespace api {
     export type GetCustomAlertsErrorResponse = components['schemas']['api.GetCustomAlertsErrorResponse'];
     export type GetCustomAlertsResponse = components['schemas']['api.GetCustomAlertsResponse'];
     export type GetCustomAlertsSuccessResponse = components['schemas']['api.GetCustomAlertsSuccessResponse'];
+    export type GetDaysErrorResponse = components['schemas']['api.GetDaysErrorResponse'];
+    export type GetDaysResponse = components['schemas']['api.GetDaysResponse'];
+    export type GetDaysSuccessResponse = components['schemas']['api.GetDaysSuccessResponse'];
     export type GetDetectionRunErrorResponse = components['schemas']['api.GetDetectionRunErrorResponse'];
     export type GetDetectionRunSuccessResponse = components['schemas']['api.GetDetectionRunSuccessResponse'];
     export type GetDetectionsErrorResponse = components['schemas']['api.GetDetectionsErrorResponse'];

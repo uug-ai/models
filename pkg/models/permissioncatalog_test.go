@@ -87,6 +87,13 @@ func TestMarkerPermissionsStableOrder(t *testing.T) {
 	}
 }
 
+func TestDayPermissionsStableOrder(t *testing.T) {
+	want := []Permission{PermissionDaysRead}
+	if got := DayPermissions(); !slices.Equal(got, want) {
+		t.Fatalf("DayPermissions() = %v, want %v", got, want)
+	}
+}
+
 func TestWorkflowPermissionsStableOrder(t *testing.T) {
 	want := []Permission{
 		PermissionWorkflowsRead,
@@ -113,6 +120,7 @@ func TestPermissionCatalogAccessorsReturnCopies(t *testing.T) {
 	all := AllPermissions()
 	markers := MarkerPermissions()
 	media := MediaPermissions()
+	days := DayPermissions()
 	cases := CasePermissions()
 	workflows := WorkflowPermissions()
 	workflowRuns := WorkflowRunPermissions()
@@ -120,6 +128,7 @@ func TestPermissionCatalogAccessorsReturnCopies(t *testing.T) {
 	all[0] = "changed"
 	markers[0] = "changed"
 	media[0] = "changed"
+	days[0] = "changed"
 	cases[0] = "changed"
 	workflows[0] = "changed"
 	workflowRuns[0] = "changed"
@@ -132,6 +141,9 @@ func TestPermissionCatalogAccessorsReturnCopies(t *testing.T) {
 	}
 	if MediaPermissions()[0] != PermissionMediaRead {
 		t.Fatal("MediaPermissions returned mutable catalog storage")
+	}
+	if DayPermissions()[0] != PermissionDaysRead {
+		t.Fatal("DayPermissions returned mutable catalog storage")
 	}
 	if CasePermissions()[0] != PermissionCasesRead {
 		t.Fatal("CasePermissions returned mutable catalog storage")
