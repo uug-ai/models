@@ -6,17 +6,18 @@ import "github.com/uug-ai/models/pkg/models"
 type AccessTokenStatus string
 
 const (
-	AccessTokenBindingFailed AccessTokenStatus = "accesstoken_binding_failed"
-	AccessTokenNameExists    AccessTokenStatus = "accesstoken_name_exists"
-	AccessTokenMissingInfo   AccessTokenStatus = "accesstoken_missing_info"
-	AccessTokenFound         AccessTokenStatus = "accesstoken_found"
-	AccessTokenNotFound      AccessTokenStatus = "accesstoken_not_found"
-	AccessTokenAddSuccess    AccessTokenStatus = "accesstoken_add_success"
-	AccessTokenAddFailed     AccessTokenStatus = "accesstoken_add_failed"
-	AccessTokenUpdateSuccess AccessTokenStatus = "accesstoken_update_success"
-	AccessTokenUpdateFailed  AccessTokenStatus = "accesstoken_update_failed"
-	AccessTokenDeleteSuccess AccessTokenStatus = "accesstoken_delete_success"
-	AccessTokenDeleteFailed  AccessTokenStatus = "accesstoken_1delete_failed"
+	AccessTokenBindingFailed    AccessTokenStatus = "accesstoken_binding_failed"
+	AccessTokenPermissionsFound AccessTokenStatus = "accesstoken_permissions_found"
+	AccessTokenNameExists       AccessTokenStatus = "accesstoken_name_exists"
+	AccessTokenMissingInfo      AccessTokenStatus = "accesstoken_missing_info"
+	AccessTokenFound            AccessTokenStatus = "accesstoken_found"
+	AccessTokenNotFound         AccessTokenStatus = "accesstoken_not_found"
+	AccessTokenAddSuccess       AccessTokenStatus = "accesstoken_add_success"
+	AccessTokenAddFailed        AccessTokenStatus = "accesstoken_add_failed"
+	AccessTokenUpdateSuccess    AccessTokenStatus = "accesstoken_update_success"
+	AccessTokenUpdateFailed     AccessTokenStatus = "accesstoken_update_failed"
+	AccessTokenDeleteSuccess    AccessTokenStatus = "accesstoken_delete_success"
+	AccessTokenDeleteFailed     AccessTokenStatus = "accesstoken_1delete_failed"
 )
 
 // String returns the string representation of the access token status
@@ -28,17 +29,18 @@ func (ds AccessTokenStatus) String() string {
 func (ds AccessTokenStatus) Translate(lang string) string {
 	translations := map[string]map[AccessTokenStatus]string{
 		"en": {
-			AccessTokenBindingFailed: "Access token binding failed",
-			AccessTokenNameExists:    "Access token with the same name already exists",
-			AccessTokenMissingInfo:   "Access token is missing required information",
-			AccessTokenFound:         "Access token found",
-			AccessTokenNotFound:      "Access token not found",
-			AccessTokenAddSuccess:    "Access token added successfully",
-			AccessTokenAddFailed:     "Failed to add access token",
-			AccessTokenUpdateSuccess: "Access token updated successfully",
-			AccessTokenUpdateFailed:  "Failed to update access token",
-			AccessTokenDeleteSuccess: "Access token deleted successfully",
-			AccessTokenDeleteFailed:  "Failed to delete access token",
+			AccessTokenBindingFailed:    "Access token binding failed",
+			AccessTokenPermissionsFound: "Access token permissions found",
+			AccessTokenNameExists:       "Access token with the same name already exists",
+			AccessTokenMissingInfo:      "Access token is missing required information",
+			AccessTokenFound:            "Access token found",
+			AccessTokenNotFound:         "Access token not found",
+			AccessTokenAddSuccess:       "Access token added successfully",
+			AccessTokenAddFailed:        "Failed to add access token",
+			AccessTokenUpdateSuccess:    "Access token updated successfully",
+			AccessTokenUpdateFailed:     "Failed to update access token",
+			AccessTokenDeleteSuccess:    "Access token deleted successfully",
+			AccessTokenDeleteFailed:     "Failed to delete access token",
 		},
 	}
 
@@ -71,6 +73,21 @@ type GetAccessTokensSuccessResponse struct {
 	Data GetAccessTokensResponse `json:"data"`
 }
 type GetAccessTokensErrorResponse struct {
+	ErrorResponse
+}
+
+// GetAccessTokenPermissions
+// @Router /profile/tokens/permissions [get]
+type GetAccessTokenPermissionsRequest struct {
+}
+type GetAccessTokenPermissionsResponse struct {
+	Permissions []models.AccessTokenScope `json:"permissions"`
+}
+type GetAccessTokenPermissionsSuccessResponse struct {
+	SuccessResponse
+	Data GetAccessTokenPermissionsResponse `json:"data"`
+}
+type GetAccessTokenPermissionsErrorResponse struct {
 	ErrorResponse
 }
 
