@@ -8428,6 +8428,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getaccesstokenpermissionserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAccessTokenPermissionsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAccessTokenPermissionsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAccessTokenPermissionsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getaccesstokenpermissionsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAccessTokenPermissionsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetAccessTokenPermissionsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAccessTokenPermissionsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getaccesstokenpermissionsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAccessTokenPermissionsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAccessTokenPermissionsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAccessTokenPermissionsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getaccesstokenpermissionssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetAccessTokenPermissionsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetAccessTokenPermissionsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetAccessTokenPermissionsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getaccesstokenserrorresponse": {
         parameters: {
             query?: never;
@@ -30847,6 +31003,35 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetAccessTokenPermissionsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetAccessTokenPermissionsRequest": Record<string, never>;
+        "api.GetAccessTokenPermissionsResponse": {
+            permissions?: components["schemas"]["models.AccessTokenScope"][];
+        };
+        "api.GetAccessTokenPermissionsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetAccessTokenPermissionsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetAccessTokensErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -33866,7 +34051,7 @@ export interface components {
             userId?: string;
         };
         /** @enum {string} */
-        "models.AccessTokenScope": "markers.read" | "markers.write" | "markers.all" | "workflow-runs.create" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application";
+        "models.AccessTokenScope": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "markers.read" | "markers.write" | "markers.all" | "application" | "workflow-runs.create" | "workflow-runs.update";
         "models.Account": {
             account?: components["schemas"]["models.AccountBody"];
         };
@@ -36304,7 +36489,7 @@ export interface components {
             videowall?: components["schemas"]["models.Videowall"];
         };
         /** @enum {string} */
-        "models.Permission": "markers.read" | "markers.write" | "markers.all" | "workflow-runs.create" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application";
+        "models.Permission": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "markers.read" | "markers.write" | "markers.all" | "application" | "workflow-runs.create" | "workflow-runs.update";
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.Permissions": {
@@ -38270,6 +38455,9 @@ export namespace api {
     export type GenerateAdminUserKeyErrorResponse = components['schemas']['api.GenerateAdminUserKeyErrorResponse'];
     export type GenerateAdminUserKeyResponse = components['schemas']['api.GenerateAdminUserKeyResponse'];
     export type GenerateAdminUserKeySuccessResponse = components['schemas']['api.GenerateAdminUserKeySuccessResponse'];
+    export type GetAccessTokenPermissionsErrorResponse = components['schemas']['api.GetAccessTokenPermissionsErrorResponse'];
+    export type GetAccessTokenPermissionsResponse = components['schemas']['api.GetAccessTokenPermissionsResponse'];
+    export type GetAccessTokenPermissionsSuccessResponse = components['schemas']['api.GetAccessTokenPermissionsSuccessResponse'];
     export type GetAccessTokensErrorResponse = components['schemas']['api.GetAccessTokensErrorResponse'];
     export type GetAccessTokensResponse = components['schemas']['api.GetAccessTokensResponse'];
     export type GetAccessTokensSuccessResponse = components['schemas']['api.GetAccessTokensSuccessResponse'];
