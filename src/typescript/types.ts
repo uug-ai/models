@@ -33554,7 +33554,7 @@ export interface components {
             userId?: string;
         };
         /** @enum {string} */
-        "models.AccessTokenScope": "markers.read" | "markers.write" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "workflow-runs.create" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete";
+        "models.AccessTokenScope": "markers.read" | "markers.write" | "markers.all" | "workflow-runs.create" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application";
         "models.Account": {
             account?: components["schemas"]["models.AccountBody"];
         };
@@ -35992,7 +35992,7 @@ export interface components {
             videowall?: components["schemas"]["models.Videowall"];
         };
         /** @enum {string} */
-        "models.Permission": "markers.read" | "markers.write" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "workflow-runs.create" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete";
+        "models.Permission": "markers.read" | "markers.write" | "markers.all" | "workflow-runs.create" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application";
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.Permissions": {

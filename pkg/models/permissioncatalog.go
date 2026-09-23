@@ -8,6 +8,8 @@ import (
 // Permission is a stable domain.action identifier granted through a role.
 type Permission string
 
+const PermissionApplication Permission = "application"
+
 var (
 	ErrPermissionUnknown   = errors.New("unknown permission")
 	ErrPermissionDuplicate = errors.New("duplicate permission")
