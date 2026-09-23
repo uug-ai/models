@@ -7,6 +7,21 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+const (
+	PermissionWorkflowRunsCreate Permission = "workflow-runs.create"
+	PermissionWorkflowRunsUpdate Permission = "workflow-runs.update"
+)
+
+var workflowRunPermissions = []Permission{
+	PermissionWorkflowRunsCreate,
+	PermissionWorkflowRunsUpdate,
+}
+
+// WorkflowRunPermissions returns the canonical workflow-run permission catalog.
+func WorkflowRunPermissions() []Permission {
+	return append([]Permission(nil), workflowRunPermissions...)
+}
+
 // WorkflowRunOrigin records how a run was opened: automatically (teed off the
 // pipeline by analysis for a matching recording) or manually (launched on demand
 // by a user from a surface). It is the run-side counterpart of a Workflow

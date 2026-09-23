@@ -13,7 +13,12 @@ var (
 	ErrPermissionDuplicate = errors.New("duplicate permission")
 )
 
-var allPermissions = appendPermissions(mediaPermissions, casePermissions)
+var allPermissions = appendPermissions(
+	mediaPermissions,
+	casePermissions,
+	workflowPermissions,
+	workflowRunPermissions,
+)
 
 var permissionSet = func() map[Permission]struct{} {
 	permissions := make(map[Permission]struct{}, len(allPermissions))
