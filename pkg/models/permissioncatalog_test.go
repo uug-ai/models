@@ -77,6 +77,16 @@ func TestCasePermissionsStableOrder(t *testing.T) {
 	}
 }
 
+func TestMarkerPermissionsStableOrder(t *testing.T) {
+	want := []Permission{
+		PermissionMarkersRead,
+		PermissionMarkersWrite,
+	}
+	if got := MarkerPermissions(); !slices.Equal(got, want) {
+		t.Fatalf("MarkerPermissions() = %v, want %v", got, want)
+	}
+}
+
 func TestWorkflowPermissionsStableOrder(t *testing.T) {
 	want := []Permission{
 		PermissionWorkflowsRead,
@@ -101,19 +111,24 @@ func TestWorkflowRunPermissionsStableOrder(t *testing.T) {
 
 func TestPermissionCatalogAccessorsReturnCopies(t *testing.T) {
 	all := AllPermissions()
+	markers := MarkerPermissions()
 	media := MediaPermissions()
 	cases := CasePermissions()
 	workflows := WorkflowPermissions()
 	workflowRuns := WorkflowRunPermissions()
 
 	all[0] = "changed"
+	markers[0] = "changed"
 	media[0] = "changed"
 	cases[0] = "changed"
 	workflows[0] = "changed"
 	workflowRuns[0] = "changed"
 
-	if AllPermissions()[0] != PermissionMediaRead {
+	if AllPermissions()[0] != PermissionMarkersRead {
 		t.Fatal("AllPermissions returned mutable catalog storage")
+	}
+	if MarkerPermissions()[0] != PermissionMarkersRead {
+		t.Fatal("MarkerPermissions returned mutable catalog storage")
 	}
 	if MediaPermissions()[0] != PermissionMediaRead {
 		t.Fatal("MediaPermissions returned mutable catalog storage")
@@ -126,5 +141,12 @@ func TestPermissionCatalogAccessorsReturnCopies(t *testing.T) {
 	}
 	if WorkflowRunPermissions()[0] != PermissionWorkflowRunsCreate {
 		t.Fatal("WorkflowRunPermissions returned mutable catalog storage")
+	}
+}
+
+func TestAccessTokenScopesContainCanonicalPermissions(t *testing.T) {
+	want := AllPermissions()
+	if got := AccessTokenScopes(); !slices.Equal(got, want) {
+		t.Fatalf("AccessTokenScopes() = %v, want %v", got, want)
 	}
 }
