@@ -77,14 +77,40 @@ func TestCasePermissionsStableOrder(t *testing.T) {
 	}
 }
 
+func TestWorkflowPermissionsStableOrder(t *testing.T) {
+	want := []Permission{
+		PermissionWorkflowsRead,
+		PermissionWorkflowsCreate,
+		PermissionWorkflowsUpdate,
+		PermissionWorkflowsDelete,
+	}
+	if got := WorkflowPermissions(); !slices.Equal(got, want) {
+		t.Fatalf("WorkflowPermissions() = %v, want %v", got, want)
+	}
+}
+
+func TestWorkflowRunPermissionsStableOrder(t *testing.T) {
+	want := []Permission{
+		PermissionWorkflowRunsCreate,
+		PermissionWorkflowRunsUpdate,
+	}
+	if got := WorkflowRunPermissions(); !slices.Equal(got, want) {
+		t.Fatalf("WorkflowRunPermissions() = %v, want %v", got, want)
+	}
+}
+
 func TestPermissionCatalogAccessorsReturnCopies(t *testing.T) {
 	all := AllPermissions()
 	media := MediaPermissions()
 	cases := CasePermissions()
+	workflows := WorkflowPermissions()
+	workflowRuns := WorkflowRunPermissions()
 
 	all[0] = "changed"
 	media[0] = "changed"
 	cases[0] = "changed"
+	workflows[0] = "changed"
+	workflowRuns[0] = "changed"
 
 	if AllPermissions()[0] != PermissionMediaRead {
 		t.Fatal("AllPermissions returned mutable catalog storage")
@@ -94,5 +120,11 @@ func TestPermissionCatalogAccessorsReturnCopies(t *testing.T) {
 	}
 	if CasePermissions()[0] != PermissionCasesRead {
 		t.Fatal("CasePermissions returned mutable catalog storage")
+	}
+	if WorkflowPermissions()[0] != PermissionWorkflowsRead {
+		t.Fatal("WorkflowPermissions returned mutable catalog storage")
+	}
+	if WorkflowRunPermissions()[0] != PermissionWorkflowRunsCreate {
+		t.Fatal("WorkflowRunPermissions returned mutable catalog storage")
 	}
 }

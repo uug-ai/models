@@ -9,6 +9,25 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+const (
+	PermissionWorkflowsRead   Permission = "workflows.read"
+	PermissionWorkflowsCreate Permission = "workflows.create"
+	PermissionWorkflowsUpdate Permission = "workflows.update"
+	PermissionWorkflowsDelete Permission = "workflows.delete"
+)
+
+var workflowPermissions = []Permission{
+	PermissionWorkflowsRead,
+	PermissionWorkflowsCreate,
+	PermissionWorkflowsUpdate,
+	PermissionWorkflowsDelete,
+}
+
+// WorkflowPermissions returns the canonical workflow permission catalog.
+func WorkflowPermissions() []Permission {
+	return append([]Permission(nil), workflowPermissions...)
+}
+
 // WorkflowNode is a single stage instance placed on the workflow canvas. Every
 // node is an instance of a catalog stage: StageRef holds the referenced stage's
 // Operation key, and the stage definition itself (image, queue, resources,
