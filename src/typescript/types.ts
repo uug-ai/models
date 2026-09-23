@@ -28942,6 +28942,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/workflowcallback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowCallback (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowCallback schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowCallback"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/workflowdevice": {
         parameters: {
             query?: never;
@@ -28969,6 +29008,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.WorkflowDevice"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowdevicereference": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowDeviceReference (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowDeviceReference schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowDeviceReference"];
                     };
                 };
             };
@@ -29059,6 +29137,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/workflowinvocation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowInvocation (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowInvocation schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowInvocation"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowinvocationworkflow": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowInvocationWorkflow (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowInvocationWorkflow schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowInvocationWorkflow"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowmediareference": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowMediaReference (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowMediaReference schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowMediaReference"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/workflownode": {
         parameters: {
             query?: never;
@@ -29086,6 +29281,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.WorkflowNode"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowresult": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowResult (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowResult schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowResult"];
                     };
                 };
             };
@@ -29254,6 +29488,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/workflowstagereference": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowStageReference (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowStageReference schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowStageReference"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/workflowstorage": {
         parameters: {
             query?: never;
@@ -29281,6 +29554,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.WorkflowStorage"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowtenantreference": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowTenantReference (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowTenantReference schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowTenantReference"];
                     };
                 };
             };
@@ -37163,6 +37475,11 @@ export interface components {
             userId?: string;
             username?: string;
         };
+        "models.WorkflowCallback": {
+            method?: string;
+            resultSchema?: string;
+            url?: string;
+        };
         "models.WorkflowDevice": {
             deviceKey?: string;
             deviceName?: string;
@@ -37172,6 +37489,11 @@ export interface components {
             siteIds?: string[];
             /** @description media StorageSolution: where the media is stored */
             storageSolution?: string;
+        };
+        "models.WorkflowDeviceReference": {
+            key?: string;
+            name?: string;
+            siteIds?: string[];
         };
         "models.WorkflowEdge": {
             /** @description Condition is the structured predicate evaluated against the source stage's
@@ -37190,6 +37512,29 @@ export interface components {
             /** @description TargetPort optionally selects which of the target stage's declared Inputs
              *     (see WorkflowStage.Inputs) this edge feeds. Empty means the default port. */
             targetPort?: string;
+        };
+        "models.WorkflowInvocation": {
+            callback?: components["schemas"]["models.WorkflowCallback"];
+            data?: {
+                [key: string]: unknown;
+            };
+            device?: components["schemas"]["models.WorkflowDeviceReference"];
+            executionId?: string;
+            media?: components["schemas"]["models.WorkflowMediaReference"];
+            runId?: string;
+            schema?: string;
+            stage?: components["schemas"]["models.WorkflowStageReference"];
+            tenant?: components["schemas"]["models.WorkflowTenantReference"];
+            traceId?: string;
+            workflow?: components["schemas"]["models.WorkflowInvocationWorkflow"];
+        };
+        "models.WorkflowInvocationWorkflow": {
+            id?: string;
+            name?: string;
+        };
+        "models.WorkflowMediaReference": {
+            key?: string;
+            signedUrl?: string;
         };
         "models.WorkflowNode": {
             /** @description Data holds optional per-instance parameter values for this placement, keyed
@@ -37210,6 +37555,13 @@ export interface components {
             stageRef?: string;
             x?: number;
             y?: number;
+        };
+        "models.WorkflowResult": {
+            result?: {
+                [key: string]: unknown;
+            };
+            schema?: string;
+            stage?: components["schemas"]["models.WorkflowStageReference"];
         };
         "models.WorkflowRun": {
             /** @description Device identifies the recording the run derives from, with the few fields
@@ -37439,6 +37791,9 @@ export interface components {
             /** @description Tag is the image tag deployed for the stage. */
             tag?: string;
         };
+        "models.WorkflowStageReference": {
+            operation?: string;
+        };
         "models.WorkflowStorage": {
             accessKey?: string;
             secret?: string;
@@ -37447,6 +37802,10 @@ export interface components {
             vaultOverrideProvider?: string;
             vaultOverrideSecret?: string;
             vaultOverrideUri?: string;
+        };
+        "models.WorkflowTenantReference": {
+            organisationId?: string;
+            projectId?: string;
         };
         "models.WorkflowTrigger": {
             /** @description Conditions further scopes the automatic trigger with the same structured
@@ -37795,12 +38154,20 @@ export namespace models {
     export type Webhook = components['schemas']['models.Webhook'];
     export type WeeklySchedule = components['schemas']['models.WeeklySchedule'];
     export type Workflow = components['schemas']['models.Workflow'];
+    export type WorkflowCallback = components['schemas']['models.WorkflowCallback'];
     export type WorkflowDevice = components['schemas']['models.WorkflowDevice'];
+    export type WorkflowDeviceReference = components['schemas']['models.WorkflowDeviceReference'];
     export type WorkflowEdge = components['schemas']['models.WorkflowEdge'];
+    export type WorkflowInvocation = components['schemas']['models.WorkflowInvocation'];
+    export type WorkflowInvocationWorkflow = components['schemas']['models.WorkflowInvocationWorkflow'];
+    export type WorkflowMediaReference = components['schemas']['models.WorkflowMediaReference'];
     export type WorkflowNode = components['schemas']['models.WorkflowNode'];
+    export type WorkflowResult = components['schemas']['models.WorkflowResult'];
     export type WorkflowRun = components['schemas']['models.WorkflowRun'];
     export type WorkflowStage = components['schemas']['models.WorkflowStage'];
+    export type WorkflowStageReference = components['schemas']['models.WorkflowStageReference'];
     export type WorkflowStorage = components['schemas']['models.WorkflowStorage'];
+    export type WorkflowTenantReference = components['schemas']['models.WorkflowTenantReference'];
     export type WorkflowTrigger = components['schemas']['models.WorkflowTrigger'];
     export type WorkflowUser = components['schemas']['models.WorkflowUser'];
 }
