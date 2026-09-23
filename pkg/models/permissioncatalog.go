@@ -21,6 +21,7 @@ var allPermissions = appendPermissions(
 	casePermissions,
 	workflowPermissions,
 	workflowRunPermissions,
+	dayPermissions,
 )
 
 var permissionSet = func() map[Permission]struct{} {
