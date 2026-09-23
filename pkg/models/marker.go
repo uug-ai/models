@@ -5,6 +5,21 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+const (
+	PermissionMarkersRead  Permission = "markers.read"
+	PermissionMarkersWrite Permission = "markers.write"
+)
+
+var markerPermissions = []Permission{
+	PermissionMarkersRead,
+	PermissionMarkersWrite,
+}
+
+// MarkerPermissions returns the canonical marker permission catalog.
+func MarkerPermissions() []Permission {
+	return append([]Permission(nil), markerPermissions...)
+}
+
 type Marker struct {
 	Id primitive.ObjectID `json:"id" bson:"_id" example:"507f1f77bcf86cd799439011" required:"true"` // Unique identifier for the marker, generated automatically§§§
 

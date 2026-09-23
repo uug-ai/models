@@ -2,12 +2,13 @@ package models
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
-type AccessTokenScope string
+type AccessTokenScope = Permission
 
-const (
-	MarkersWrite AccessTokenScope = "markers:write"
-	MarkersRead  AccessTokenScope = "markers:read"
-)
+// AccessTokenScopes returns every canonical scope that may be granted to an
+// access token.
+func AccessTokenScopes() []AccessTokenScope {
+	return AllPermissions()
+}
 
 type AccessToken struct {
 	Id primitive.ObjectID `json:"id" bson:"_id,omitempty"`

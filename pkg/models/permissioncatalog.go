@@ -14,6 +14,7 @@ var (
 )
 
 var allPermissions = appendPermissions(
+	markerPermissions,
 	mediaPermissions,
 	casePermissions,
 	workflowPermissions,
