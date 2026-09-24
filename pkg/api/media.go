@@ -122,6 +122,23 @@ type GetMediaErrorResponse struct {
 	ErrorResponse
 }
 
+// CountMedia
+// @Router /media/count [post]
+type CountMediaRequest struct {
+	Filter MediaFilter `json:"filter" bson:"filter"`
+	Limit  int64       `json:"limit" bson:"limit"`
+}
+type CountMediaResponse struct {
+	models.MediaCount
+}
+type CountMediaSuccessResponse struct {
+	SuccessResponse
+	Data CountMediaResponse `json:"data"`
+}
+type CountMediaErrorResponse struct {
+	ErrorResponse
+}
+
 // GetMediaById
 // @Router /media/{mediaId} [get]
 type GetMediaByIdRequest struct {
