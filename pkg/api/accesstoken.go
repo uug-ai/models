@@ -18,6 +18,10 @@ const (
 	AccessTokenUpdateFailed     AccessTokenStatus = "accesstoken_update_failed"
 	AccessTokenDeleteSuccess    AccessTokenStatus = "accesstoken_delete_success"
 	AccessTokenDeleteFailed     AccessTokenStatus = "accesstoken_1delete_failed"
+	AccessTokenRotateSuccess    AccessTokenStatus = "accesstoken_rotate_success"
+	AccessTokenRotateFailed     AccessTokenStatus = "accesstoken_rotate_failed"
+	AccessTokenExpired          AccessTokenStatus = "accesstoken_expired"
+	AccessTokenForbidden        AccessTokenStatus = "accesstoken_forbidden"
 )
 
 // String returns the string representation of the access token status
@@ -41,6 +45,10 @@ func (ds AccessTokenStatus) Translate(lang string) string {
 			AccessTokenUpdateFailed:     "Failed to update access token",
 			AccessTokenDeleteSuccess:    "Access token deleted successfully",
 			AccessTokenDeleteFailed:     "Failed to delete access token",
+			AccessTokenRotateSuccess:    "Access token rotated successfully",
+			AccessTokenRotateFailed:     "Failed to rotate access token",
+			AccessTokenExpired:          "Access token has expired",
+			AccessTokenForbidden:        "You are not allowed to manage this access token",
 		},
 	}
 
@@ -134,5 +142,23 @@ type DeleteAccessTokenSuccessResponse struct {
 	Data DeleteAccessTokenResponse `json:"data"`
 }
 type DeleteAccessTokenErrorResponse struct {
+	ErrorResponse
+}
+
+// RotateAccessToken
+// @Router /profile/tokens/{id}/rotate [post]
+// Rotation issues a new secret with the same name, description, scopes and
+// expiration, and revokes the previous secret immediately. The returned token
+// contains the full secret, which is only shown once.
+type RotateAccessTokenRequest struct {
+}
+type RotateAccessTokenResponse struct {
+	Token models.AccessToken `json:"token"`
+}
+type RotateAccessTokenSuccessResponse struct {
+	SuccessResponse
+	Data RotateAccessTokenResponse `json:"data"`
+}
+type RotateAccessTokenErrorResponse struct {
 	ErrorResponse
 }
