@@ -47,18 +47,82 @@ func TestWorkflowInvocationJSONContract(t *testing.T) {
 }
 
 func TestWorkflowResultJSONContract(t *testing.T) {
-	result := WorkflowResult{
-		Schema: WorkflowResultSchemaV1,
-		Stage:  WorkflowStageReference{Operation: "external"},
-		Result: map[string]any{"label": "person"},
+	tests := []struct {
+		name     string
+		result   WorkflowResult
+		expected string
+	}{
+		{
+			name: "routing result",
+			result: WorkflowResult{
+				Schema: WorkflowResultSchemaV1,
+				Stage:  WorkflowStageReference{Operation: "external"},
+				Result: map[string]any{"label": "person"},
+			},
+			expected: `{"schema":"uug.ai/workflow-result/v1","stage":{"operation":"external"},"result":{"label":"person"}}`,
+		},
+		{
+			name: "ingest payload",
+			result: WorkflowResult{
+				Schema:  WorkflowResultSchemaV1,
+				Stage:   WorkflowStageReference{Operation: "external"},
+				Payload: json.RawMessage(`{"blocks":[{"type":"marker","data":{"name":"person"}}]}`),
+			},
+			expected: `{"schema":"uug.ai/workflow-result/v1","stage":{"operation":"external"},"payload":{"blocks":[{"type":"marker","data":{"name":"person"}}]}}`,
+		},
 	}
 
-	encoded, err := json.Marshal(result)
-	if err != nil {
-		t.Fatalf("json.Marshal() error = %v", err)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			encoded, err := json.Marshal(tt.result)
+			if err != nil {
+				t.Fatalf("json.Marshal() error = %v", err)
+			}
+			if string(encoded) != tt.expected {
+				t.Fatalf("workflow result = %s, want %s", encoded, tt.expected)
+			}
+		})
 	}
-	const expected = `{"schema":"uug.ai/workflow-result/v1","stage":{"operation":"external"},"result":{"label":"person"}}`
-	if string(encoded) != expected {
-		t.Fatalf("workflow result = %s, want %s", encoded, expected)
+}
+
+func TestWorkflowOutputDigest(t *testing.T) {
+	first, err := WorkflowOutputDigest(
+		map[string]any{"confidence": 0.98, "label": "person"},
+		json.RawMessage(`{"blocks":[{"type":"marker","data":{"name":"person"}}]}`),
+	)
+	if err != nil {
+		t.Fatalf("WorkflowOutputDigest() error = %v", err)
+	}
+	second, err := WorkflowOutputDigest(
+		map[string]any{"label": "person", "confidence": 0.98},
+		json.RawMessage(`{ "blocks": [ { "type": "marker", "data": { "name": "person" } } ] }`),
+	)
+	if err != nil {
+		t.Fatalf("WorkflowOutputDigest() error = %v", err)
+	}
+	if first != second {
+		t.Fatalf("equivalent output digests differ: %q != %q", first, second)
+	}
+	const expected = "e198de7c5b4578fa8daed48ad1fdeb5eb807d425799da3617938419f3770dca3"
+	payloadOnly, err := WorkflowOutputDigest(
+		nil,
+		json.RawMessage(`{"blocks":[{"type":"marker","data":{"name":"person"}}]}`),
+	)
+	if err != nil {
+		t.Fatalf("WorkflowOutputDigest() error = %v", err)
+	}
+	if payloadOnly != expected {
+		t.Fatalf("payload digest = %q, want %q", payloadOnly, expected)
+	}
+
+	different, err := WorkflowOutputDigest(
+		map[string]any{"label": "vehicle", "confidence": 0.98},
+		json.RawMessage(`{"blocks":[{"type":"marker","data":{"name":"person"}}]}`),
+	)
+	if err != nil {
+		t.Fatalf("WorkflowOutputDigest() error = %v", err)
+	}
+	if first == different {
+		t.Fatal("different outputs produced the same digest")
 	}
 }

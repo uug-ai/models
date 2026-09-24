@@ -1,5 +1,11 @@
 package models
 
+import (
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+)
+
 const (
 	WorkflowInvocationSchemaV1 = "uug.ai/workflow-invocation/v1"
 	WorkflowResultSchemaV1     = "uug.ai/workflow-result/v1"
@@ -61,8 +67,29 @@ type WorkflowCallback struct {
 }
 
 // WorkflowResult is the versioned request body submitted by an external stage.
+// Result carries routing values from a self-persisting stage, while Payload
+// carries a block envelope for Hub to ingest. A result submission uses exactly
+// one of these output channels.
 type WorkflowResult struct {
-	Schema string                 `json:"schema" bson:"-"`
-	Stage  WorkflowStageReference `json:"stage" bson:"-"`
-	Result map[string]any         `json:"result" bson:"-"`
+	Schema  string                 `json:"schema" bson:"-"`
+	Stage   WorkflowStageReference `json:"stage" bson:"-"`
+	Result  map[string]any         `json:"result,omitempty" bson:"-"`
+	Payload json.RawMessage        `json:"payload,omitempty" bson:"-"`
+}
+
+// WorkflowOutputDigest returns the stable identity used to compare stage
+// outputs across HTTP callbacks and the internal workflow queue.
+func WorkflowOutputDigest(result map[string]any, payload json.RawMessage) (string, error) {
+	canonical, err := json.Marshal(struct {
+		Result  map[string]any  `json:"result"`
+		Payload json.RawMessage `json:"payload,omitempty"`
+	}{
+		Result:  result,
+		Payload: payload,
+	})
+	if err != nil {
+		return "", err
+	}
+	sum := sha256.Sum256(canonical)
+	return hex.EncodeToString(sum[:]), nil
 }
