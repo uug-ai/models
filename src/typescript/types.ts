@@ -3007,6 +3007,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/countmediaerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CountMediaErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CountMediaErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CountMediaErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/countmediarequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CountMediaRequest (schema generation only)
+         * @description Internal endpoint used only to ensure CountMediaRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CountMediaRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/countmediaresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CountMediaResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CountMediaResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CountMediaResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/countmediasuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CountMediaSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CountMediaSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CountMediaSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/createadminorganisationerrorresponse": {
         parameters: {
             query?: never;
@@ -19894,6 +20050,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/mediacount": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get MediaCount (schema generation only)
+         * @description Internal endpoint used only to ensure MediaCount schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.MediaCount"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/mediafilter": {
         parameters: {
             query?: never;
@@ -30581,6 +30776,39 @@ export interface components {
             statusError?: string;
             taskId?: string;
         };
+        "api.CountMediaErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CountMediaRequest": {
+            filter?: components["schemas"]["api.MediaFilter"];
+            limit?: number;
+        };
+        "api.CountMediaResponse": {
+            count?: number;
+            limitReached?: boolean;
+        };
+        "api.CountMediaSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.CountMediaResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.CreateAdminOrganisationErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -36504,6 +36732,10 @@ export interface components {
             thumbnailUrl?: string;
             videoUrl?: string;
         };
+        "models.MediaCount": {
+            count?: number;
+            limitReached?: boolean;
+        };
         "models.MediaGroup": {
             count?: number;
             endTimestamp?: number;
@@ -38593,6 +38825,7 @@ export namespace models {
     export type MarkerTimeline = components['schemas']['models.MarkerTimeline'];
     export type Media = components['schemas']['models.Media'];
     export type MediaAtRuntimeMetadata = components['schemas']['models.MediaAtRuntimeMetadata'];
+    export type MediaCount = components['schemas']['models.MediaCount'];
     export type MediaGroup = components['schemas']['models.MediaGroup'];
     export type MediaMetadata = components['schemas']['models.MediaMetadata'];
     export type MediaTimeline = components['schemas']['models.MediaTimeline'];
@@ -38752,6 +38985,10 @@ export namespace api {
     export type AdminRecentSubscription = components['schemas']['api.AdminRecentSubscription'];
     export type CallerInfo = components['schemas']['api.CallerInfo'];
     export type CaseMediaStatusEvent = components['schemas']['api.CaseMediaStatusEvent'];
+    export type CountMediaErrorResponse = components['schemas']['api.CountMediaErrorResponse'];
+    export type CountMediaRequest = components['schemas']['api.CountMediaRequest'];
+    export type CountMediaResponse = components['schemas']['api.CountMediaResponse'];
+    export type CountMediaSuccessResponse = components['schemas']['api.CountMediaSuccessResponse'];
     export type CreateAdminOrganisationErrorResponse = components['schemas']['api.CreateAdminOrganisationErrorResponse'];
     export type CreateAdminOrganisationResponse = components['schemas']['api.CreateAdminOrganisationResponse'];
     export type CreateAdminOrganisationSuccessResponse = components['schemas']['api.CreateAdminOrganisationSuccessResponse'];
