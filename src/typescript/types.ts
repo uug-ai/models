@@ -22624,6 +22624,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/rotateaccesstokenerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RotateAccessTokenErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure RotateAccessTokenErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RotateAccessTokenErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/rotateaccesstokenrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RotateAccessTokenRequest (schema generation only)
+         * @description Internal endpoint used only to ensure RotateAccessTokenRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RotateAccessTokenRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/rotateaccesstokenresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RotateAccessTokenResponse (schema generation only)
+         * @description Internal endpoint used only to ensure RotateAccessTokenResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RotateAccessTokenResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/rotateaccesstokensuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get RotateAccessTokenSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure RotateAccessTokenSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.RotateAccessTokenSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/runtimeconfig": {
         parameters: {
             query?: never;
@@ -33344,6 +33500,35 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.RotateAccessTokenErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.RotateAccessTokenRequest": Record<string, never>;
+        "api.RotateAccessTokenResponse": {
+            token?: components["schemas"]["models.AccessToken"];
+        };
+        "api.RotateAccessTokenSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.RotateAccessTokenResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.RunWorkflowErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -34236,7 +34421,7 @@ export interface components {
             userId?: string;
         };
         /** @enum {string} */
-        "models.AccessTokenScope": "workflow-runs.create" | "workflow-runs.update" | "days.read" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "application" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "markers.read" | "markers.write" | "markers.all" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete";
+        "models.AccessTokenScope": "markers.read" | "markers.write" | "markers.all" | "days.read" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "workflow-runs.create" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "application";
         "models.Account": {
             account?: components["schemas"]["models.AccountBody"];
         };
@@ -36674,7 +36859,7 @@ export interface components {
             videowall?: components["schemas"]["models.Videowall"];
         };
         /** @enum {string} */
-        "models.Permission": "workflow-runs.create" | "workflow-runs.update" | "days.read" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "application" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "markers.read" | "markers.write" | "markers.all" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete";
+        "models.Permission": "markers.read" | "markers.write" | "markers.all" | "days.read" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "workflow-runs.create" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "application";
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.Permissions": {
@@ -38878,6 +39063,9 @@ export namespace api {
     export type RequestTaskExportErrorResponse = components['schemas']['api.RequestTaskExportErrorResponse'];
     export type RequestTaskExportResponse = components['schemas']['api.RequestTaskExportResponse'];
     export type RequestTaskExportSuccessResponse = components['schemas']['api.RequestTaskExportSuccessResponse'];
+    export type RotateAccessTokenErrorResponse = components['schemas']['api.RotateAccessTokenErrorResponse'];
+    export type RotateAccessTokenResponse = components['schemas']['api.RotateAccessTokenResponse'];
+    export type RotateAccessTokenSuccessResponse = components['schemas']['api.RotateAccessTokenSuccessResponse'];
     export type RunWorkflowErrorResponse = components['schemas']['api.RunWorkflowErrorResponse'];
     export type RunWorkflowRequest = components['schemas']['api.RunWorkflowRequest'];
     export type RunWorkflowResponse = components['schemas']['api.RunWorkflowResponse'];
