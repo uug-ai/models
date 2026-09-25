@@ -30229,6 +30229,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/workflowrunoperationstatus": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowRunOperationStatus (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowRunOperationStatus schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.WorkflowRunOperationStatus"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/workflowrunstatus": {
         parameters: {
             query?: never;
@@ -34832,6 +34871,10 @@ export interface components {
             to?: number;
             workflowIds?: string[];
         };
+        "api.WorkflowRunOperationStatus": {
+            operation?: string;
+            status?: components["schemas"]["models.WorkflowRunOperationState"];
+        };
         "api.WorkflowRunStatus": {
             deviceKey?: string;
             deviceName?: string;
@@ -34848,6 +34891,10 @@ export interface components {
             hasResults?: boolean;
             key?: string;
             mediaId?: string;
+            /** @description Operations provides the same lifecycle as the operation sets in a
+             *     render-ready form. It contains every dispatched operation in dispatch
+             *     order, marked dispatched until it appears in ResolvedOperations. */
+            operations?: components["schemas"]["api.WorkflowRunOperationStatus"][];
             origin?: string;
             recordingTimestamp?: number;
             resolved?: number;
@@ -34890,7 +34937,7 @@ export interface components {
             userId?: string;
         };
         /** @enum {string} */
-        "models.AccessTokenScope": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "days.read" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "markers.read" | "markers.write" | "markers.all" | "application";
+        "models.AccessTokenScope": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "markers.read" | "markers.write" | "markers.all" | "days.read" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "application";
         "models.Account": {
             account?: components["schemas"]["models.AccountBody"];
         };
@@ -37332,7 +37379,7 @@ export interface components {
             videowall?: components["schemas"]["models.Videowall"];
         };
         /** @enum {string} */
-        "models.Permission": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "days.read" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "markers.read" | "markers.write" | "markers.all" | "application";
+        "models.Permission": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "markers.read" | "markers.write" | "markers.all" | "days.read" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "application";
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.Permissions": {
@@ -38741,6 +38788,8 @@ export interface components {
             workflowName?: string;
         };
         /** @enum {string} */
+        "models.WorkflowRunOperationState": "dispatched" | "resolved";
+        /** @enum {string} */
         "models.WorkflowRunOrigin": "automatic" | "manual";
         /** @enum {string} */
         "models.WorkflowRunState": "running" | "completed" | "noResult";
@@ -39648,6 +39697,7 @@ export namespace api {
     export type WarningResponse = components['schemas']['api.WarningResponse'];
     export type WorkflowFilter = components['schemas']['api.WorkflowFilter'];
     export type WorkflowRunFilter = components['schemas']['api.WorkflowRunFilter'];
+    export type WorkflowRunOperationStatus = components['schemas']['api.WorkflowRunOperationStatus'];
     export type WorkflowRunStatus = components['schemas']['api.WorkflowRunStatus'];
     export type WorkflowRunStatusSummary = components['schemas']['api.WorkflowRunStatusSummary'];
 }

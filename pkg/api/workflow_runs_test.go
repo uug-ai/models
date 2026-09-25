@@ -50,6 +50,10 @@ func TestListWorkflowRunsJSONContract(t *testing.T) {
 			DeviceName:         "Lobby",
 			RecordingTimestamp: 1699999990,
 			Start:              1700000000,
+			Operations: []WorkflowRunOperationStatus{{
+				Operation: "forwarder",
+				Status:    models.WorkflowRunOperationStateResolved,
+			}},
 		}},
 		Summary:    WorkflowRunStatusSummary{Total: 1, Running: 1},
 		Pagination: CursorPagination{NextCursor: "cursor-2", HasMore: true, PageSize: 25},
@@ -63,6 +67,7 @@ func TestListWorkflowRunsJSONContract(t *testing.T) {
 		`"deviceKey":"camera-1"`,
 		`"deviceName":"Lobby"`,
 		`"recordingTimestamp":1699999990`,
+		`"operations":[{"operation":"forwarder","status":"resolved"}]`,
 		`"summary":{"total":1,"running":1`,
 		`"nextCursor":"cursor-2"`,
 	} {

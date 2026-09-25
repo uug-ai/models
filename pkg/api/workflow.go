@@ -225,8 +225,17 @@ type WorkflowRunStatus struct {
 	// instead of only a run-level running/completed flip for multi-stage runs.
 	DispatchedOperations []string `json:"dispatchedOperations,omitempty"`
 	ResolvedOperations   []string `json:"resolvedOperations,omitempty"`
+	// Operations provides the same lifecycle as the operation sets in a
+	// render-ready form. It contains every dispatched operation in dispatch
+	// order, marked dispatched until it appears in ResolvedOperations.
+	Operations []WorkflowRunOperationStatus `json:"operations,omitempty"`
 	// HasResults is true when the run accumulated any stage output.
 	HasResults bool `json:"hasResults"`
+}
+
+type WorkflowRunOperationStatus struct {
+	Operation string                           `json:"operation"`
+	Status    models.WorkflowRunOperationState `json:"status"`
 }
 
 // WorkflowRunFilter narrows the cross-workflow run overview. Every field is
