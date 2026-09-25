@@ -109,6 +109,7 @@ func TestWorkflowPermissionsStableOrder(t *testing.T) {
 func TestWorkflowRunPermissionsStableOrder(t *testing.T) {
 	want := []Permission{
 		PermissionWorkflowRunsCreate,
+		PermissionWorkflowRunsRead,
 		PermissionWorkflowRunsUpdate,
 	}
 	if got := WorkflowRunPermissions(); !slices.Equal(got, want) {

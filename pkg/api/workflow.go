@@ -199,12 +199,16 @@ type RunWorkflowErrorResponse struct {
 // WorkflowRun.LifecycleState) and carried here instead. It is surface-agnostic:
 // the same shape serves a case today and any future launch surface.
 type WorkflowRunStatus struct {
-	RunId        string `json:"runId"`
-	WorkflowId   string `json:"workflowId,omitempty"`
-	WorkflowName string `json:"workflowName,omitempty"`
-	Origin       string `json:"origin,omitempty"`
-	SourceRef    string `json:"sourceRef,omitempty"`
-	Key          string `json:"key,omitempty"`
+	RunId              string `json:"runId"`
+	WorkflowId         string `json:"workflowId,omitempty"`
+	WorkflowName       string `json:"workflowName,omitempty"`
+	Origin             string `json:"origin,omitempty"`
+	SourceRef          string `json:"sourceRef,omitempty"`
+	Key                string `json:"key,omitempty"`
+	MediaId            string `json:"mediaId,omitempty"`
+	DeviceKey          string `json:"deviceKey,omitempty"`
+	DeviceName         string `json:"deviceName,omitempty"`
+	RecordingTimestamp int64  `json:"recordingTimestamp,omitempty"`
 	// State is the derived lifecycle: running | completed | noResult
 	// (models.WorkflowRunState).
 	State string `json:"state"`
@@ -223,6 +227,20 @@ type WorkflowRunStatus struct {
 	ResolvedOperations   []string `json:"resolvedOperations,omitempty"`
 	// HasResults is true when the run accumulated any stage output.
 	HasResults bool `json:"hasResults"`
+}
+
+// WorkflowRunFilter narrows the cross-workflow run overview. Every field is
+// optional and sets are ORed within one field and ANDed across fields. From and
+// To are inclusive workflow start timestamps in Unix seconds. Search performs a
+// case-insensitive match over workflow identity/name and visible media/device
+// identity/name.
+type WorkflowRunFilter struct {
+	WorkflowIds []string                   `json:"workflowIds,omitempty" bson:"workflowIds,omitempty"`
+	States      []models.WorkflowRunState  `json:"states,omitempty" bson:"states,omitempty"`
+	Origins     []models.WorkflowRunOrigin `json:"origins,omitempty" bson:"origins,omitempty"`
+	From        int64                      `json:"from,omitempty" bson:"from,omitempty"`
+	To          int64                      `json:"to,omitempty" bson:"to,omitempty"`
+	Search      string                     `json:"search,omitempty" bson:"search,omitempty"`
 }
 
 // WorkflowRunStatusSummary aggregates a run set by state so a surface can render
@@ -249,5 +267,27 @@ type GetWorkflowRunsSuccessResponse struct {
 	Data GetWorkflowRunsResponse `json:"data"`
 }
 type GetWorkflowRunsErrorResponse struct {
+	ErrorResponse
+}
+
+// ListWorkflowRuns returns a stable newest-first page across all workflows in
+// the caller's visible project. Cursor pagination is ordered by (start, runId)
+// descending. Summary describes the complete filtered set, not only this page.
+//
+// @Router /workflows/runs [get]
+type ListWorkflowRunsRequest struct {
+	Filter     WorkflowRunFilter `json:"filter" bson:"filter"`
+	Pagination CursorPagination  `json:"pagination" bson:"pagination"`
+}
+type ListWorkflowRunsResponse struct {
+	Runs       []WorkflowRunStatus      `json:"runs"`
+	Summary    WorkflowRunStatusSummary `json:"summary"`
+	Pagination CursorPagination         `json:"pagination"`
+}
+type ListWorkflowRunsSuccessResponse struct {
+	SuccessResponse
+	Data ListWorkflowRunsResponse `json:"data"`
+}
+type ListWorkflowRunsErrorResponse struct {
 	ErrorResponse
 }
