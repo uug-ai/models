@@ -118,6 +118,21 @@ This is a pipeline-only transport boundary: standalone `User`/`Audit` JSON
 (including API responses) and all BSON persistence remain unchanged. No data
 migration is required.
 
+### VLM scene and stable states
+
+`MediaMetadata.VLM` (`metadata.vlm` on media) stores the structured
+vision-language model result: a `VLMScene` (summary, static elements, zones,
+lighting) and `VLMObservation` entries (`marker`, `event`, `tags`) that map onto
+markers in category `vlm`, for example marker `person`, event `walking`, tags
+`red`, `sweater`.
+
+`DeviceMetadata.VLM` (`metadata.vlm` on devices) holds up to
+`VLMMaxStableStates` named `VLMStableState` entries promoted from a recording's
+scene. Promoting the same recording again replaces its entry; VLM analysis uses
+these states as the device's "normal" scene so it reports changes instead of
+repeating the scene. Both fields are optional and omitted when empty, so
+existing media and devices need no migration.
+
 ### Automatic Type Generation
 
 This project bridges Go and TypeScript using an automated pipeline:

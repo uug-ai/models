@@ -185,3 +185,39 @@ type UpdateMediaSuccessResponse struct {
 type UpdateMediaErrorResponse struct {
 	ErrorResponse
 }
+
+// GetMediaVLMContext
+// @Router /media/{mediaId}/vlm [get]
+type GetMediaVLMContextRequest struct {
+	MediaId string `json:"mediaId" bson:"mediaId"`
+}
+type GetMediaVLMContextResponse struct {
+	// Media is the VLM analysis of the recording; nil when the recording has not been analysed yet.
+	Media *models.VLMMediaMetadata `json:"media,omitempty"`
+	// StableStates are the stable scenes of the recording's device.
+	StableStates []models.VLMStableState `json:"stableStates"`
+}
+type GetMediaVLMContextSuccessResponse struct {
+	SuccessResponse
+	Data GetMediaVLMContextResponse `json:"data"`
+}
+type GetMediaVLMContextErrorResponse struct {
+	ErrorResponse
+}
+
+// PromoteMediaVLMStableState copies the VLM scene of a recording to its device as a named stable state.
+// @Router /media/{mediaId}/vlm-baseline [post]
+type PromoteMediaVLMStableStateRequest struct {
+	// Name labels the stable state, e.g. "Daytime, gate closed". Defaults to the scene summary.
+	Name string `json:"name,omitempty" bson:"name,omitempty"`
+}
+type PromoteMediaVLMStableStateResponse struct {
+	StableState models.VLMStableState `json:"stableState"`
+}
+type PromoteMediaVLMStableStateSuccessResponse struct {
+	SuccessResponse
+	Data PromoteMediaVLMStableStateResponse `json:"data"`
+}
+type PromoteMediaVLMStableStateErrorResponse struct {
+	ErrorResponse
+}
