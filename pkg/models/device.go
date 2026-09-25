@@ -128,6 +128,9 @@ type DeviceMetadata struct {
 	EncryptedData    []byte   `json:"encryptedData" bson:"encryptedData,omitempty"`
 	HubEncryption    string   `json:"hubEncryption" bson:"hubEncryption,omitempty"`
 	E2EEncryption    string   `json:"e2eEncryption" bson:"e2eEncryption,omitempty"`
+
+	// VLM holds the stable ("normal") scenes used as context for VLM analysis.
+	VLM *DeviceVLMMetadata `json:"vlm,omitempty" bson:"vlm,omitempty"`
 }
 
 // CameraMetadata contains metadata specific to camera devices.

@@ -153,6 +153,9 @@ type MediaMetadata struct {
 	DominantColors  []string         `json:"dominantColors,omitempty" bson:"dominantColors,omitempty"`
 	Count           int              `json:"count,omitempty" bson:"count,omitempty"`
 	Embedding       []int            `json:"embedding,omitempty" bson:"embedding,omitempty"`
+
+	// VLM contains the structured vision-language model analysis (scene and observations).
+	VLM *VLMMediaMetadata `json:"vlm,omitempty" bson:"vlm,omitempty"`
 }
 
 // MediaAtRuntimeMetadata contains metadata that is generated at runtime, which can include

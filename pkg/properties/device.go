@@ -157,6 +157,7 @@ const (
 	DeviceMetadataEncryptedData = "encryptedData"
 	DeviceMetadataHubEncryption = "hubEncryption"
 	DeviceMetadataE2EEncryption = "e2eEncryption"
+	DeviceMetadataVLM = "vlm"
 )
 
 // DeviceOption property field names (BSON)
