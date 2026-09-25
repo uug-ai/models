@@ -19114,6 +19114,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/listworkflowrunserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ListWorkflowRunsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure ListWorkflowRunsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.ListWorkflowRunsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/listworkflowrunsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ListWorkflowRunsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure ListWorkflowRunsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.ListWorkflowRunsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/listworkflowrunsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ListWorkflowRunsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure ListWorkflowRunsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.ListWorkflowRunsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/listworkflowrunssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ListWorkflowRunsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure ListWorkflowRunsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.ListWorkflowRunsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/livestream": {
         parameters: {
             query?: never;
@@ -30034,6 +30190,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/workflowrunfilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowRunFilter (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowRunFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.WorkflowRunFilter"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/workflowrunstatus": {
         parameters: {
             query?: never;
@@ -33444,6 +33639,40 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.ListWorkflowRunsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.ListWorkflowRunsRequest": {
+            filter?: components["schemas"]["api.WorkflowRunFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
+        };
+        "api.ListWorkflowRunsResponse": {
+            pagination?: components["schemas"]["api.CursorPagination"];
+            runs?: components["schemas"]["api.WorkflowRunStatus"][];
+            summary?: components["schemas"]["api.WorkflowRunStatusSummary"];
+        };
+        "api.ListWorkflowRunsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.ListWorkflowRunsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.MarkerCategoryFilter": {
             name?: string;
             names?: string[];
@@ -34595,7 +34824,17 @@ export interface components {
             surface?: components["schemas"]["models.WorkflowTriggerSurface"];
             triggerType?: components["schemas"]["models.WorkflowTriggerType"];
         };
+        "api.WorkflowRunFilter": {
+            from?: number;
+            origins?: components["schemas"]["models.WorkflowRunOrigin"][];
+            search?: string;
+            states?: components["schemas"]["models.WorkflowRunState"][];
+            to?: number;
+            workflowIds?: string[];
+        };
         "api.WorkflowRunStatus": {
+            deviceKey?: string;
+            deviceName?: string;
             /** @description Dispatched / Resolved are the sizes of the run's dispatched and resolved
              *     operation sets, exposed as a coarse progress hint. */
             dispatched?: number;
@@ -34608,7 +34847,9 @@ export interface components {
             /** @description HasResults is true when the run accumulated any stage output. */
             hasResults?: boolean;
             key?: string;
+            mediaId?: string;
             origin?: string;
+            recordingTimestamp?: number;
             resolved?: number;
             resolvedOperations?: string[];
             runId?: string;
@@ -34649,7 +34890,7 @@ export interface components {
             userId?: string;
         };
         /** @enum {string} */
-        "models.AccessTokenScope": "markers.read" | "markers.write" | "markers.all" | "days.read" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "workflow-runs.create" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "application";
+        "models.AccessTokenScope": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "days.read" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "markers.read" | "markers.write" | "markers.all" | "application";
         "models.Account": {
             account?: components["schemas"]["models.AccountBody"];
         };
@@ -37091,7 +37332,7 @@ export interface components {
             videowall?: components["schemas"]["models.Videowall"];
         };
         /** @enum {string} */
-        "models.Permission": "markers.read" | "markers.write" | "markers.all" | "days.read" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "workflow-runs.create" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "application";
+        "models.Permission": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "days.read" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "markers.read" | "markers.write" | "markers.all" | "application";
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.Permissions": {
@@ -38344,6 +38585,7 @@ export interface components {
             y?: number;
         };
         "models.WorkflowResult": {
+            payload?: number[];
             result?: {
                 [key: string]: unknown;
             };
@@ -38500,6 +38742,8 @@ export interface components {
         };
         /** @enum {string} */
         "models.WorkflowRunOrigin": "automatic" | "manual";
+        /** @enum {string} */
+        "models.WorkflowRunState": "running" | "completed" | "noResult";
         /** @enum {string} */
         "models.WorkflowSource": "user" | "config";
         "models.WorkflowStage": {
@@ -39274,6 +39518,10 @@ export namespace api {
     export type ListCaseMediaErrorResponse = components['schemas']['api.ListCaseMediaErrorResponse'];
     export type ListCaseMediaResponse = components['schemas']['api.ListCaseMediaResponse'];
     export type ListCaseMediaSuccessResponse = components['schemas']['api.ListCaseMediaSuccessResponse'];
+    export type ListWorkflowRunsErrorResponse = components['schemas']['api.ListWorkflowRunsErrorResponse'];
+    export type ListWorkflowRunsRequest = components['schemas']['api.ListWorkflowRunsRequest'];
+    export type ListWorkflowRunsResponse = components['schemas']['api.ListWorkflowRunsResponse'];
+    export type ListWorkflowRunsSuccessResponse = components['schemas']['api.ListWorkflowRunsSuccessResponse'];
     export type MarkerCategoryFilter = components['schemas']['api.MarkerCategoryFilter'];
     export type MarkerEventFilter = components['schemas']['api.MarkerEventFilter'];
     export type MarkerFilter = components['schemas']['api.MarkerFilter'];
@@ -39399,6 +39647,7 @@ export namespace api {
     export type UpsertStateSuccessResponse = components['schemas']['api.UpsertStateSuccessResponse'];
     export type WarningResponse = components['schemas']['api.WarningResponse'];
     export type WorkflowFilter = components['schemas']['api.WorkflowFilter'];
+    export type WorkflowRunFilter = components['schemas']['api.WorkflowRunFilter'];
     export type WorkflowRunStatus = components['schemas']['api.WorkflowRunStatus'];
     export type WorkflowRunStatusSummary = components['schemas']['api.WorkflowRunStatusSummary'];
 }

@@ -9,11 +9,13 @@ import (
 
 const (
 	PermissionWorkflowRunsCreate Permission = "workflow-runs.create"
+	PermissionWorkflowRunsRead   Permission = "workflow-runs.read"
 	PermissionWorkflowRunsUpdate Permission = "workflow-runs.update"
 )
 
 var workflowRunPermissions = []Permission{
 	PermissionWorkflowRunsCreate,
+	PermissionWorkflowRunsRead,
 	PermissionWorkflowRunsUpdate,
 }
 
