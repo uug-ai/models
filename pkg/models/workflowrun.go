@@ -67,6 +67,15 @@ const (
 	WorkflowRunStateNoResult WorkflowRunState = "noResult"
 )
 
+// WorkflowRunOperationState reports whether a dispatched workflow operation is
+// still outstanding or has been resolved by the engine.
+type WorkflowRunOperationState string
+
+const (
+	WorkflowRunOperationStateDispatched WorkflowRunOperationState = "dispatched"
+	WorkflowRunOperationStateResolved   WorkflowRunOperationState = "resolved"
+)
+
 // WorkflowRun is the single type the workflow subsystem uses for a run, in both
 // of its representations:
 //
