@@ -185,3 +185,82 @@ type UpdateMediaSuccessResponse struct {
 type UpdateMediaErrorResponse struct {
 	ErrorResponse
 }
+<<<<<<< Updated upstream
+=======
+
+// GetMediaVLMContext
+// @Router /media/{mediaId}/vlm [get]
+type GetMediaVLMContextRequest struct {
+	MediaId string `json:"mediaId" bson:"mediaId"`
+}
+type GetMediaVLMContextResponse struct {
+	// Media is the VLM analysis of the recording; nil when the recording has not been analysed yet.
+	Media *models.VLMMediaMetadata `json:"media,omitempty"`
+	// StableStates are the stable scenes of the recording's device.
+	StableStates []models.VLMStableState `json:"stableStates"`
+}
+type GetMediaVLMContextSuccessResponse struct {
+	SuccessResponse
+	Data GetMediaVLMContextResponse `json:"data"`
+}
+type GetMediaVLMContextErrorResponse struct {
+	ErrorResponse
+}
+
+// PromoteMediaVLMStableState copies the VLM scene of a recording to its device as a named stable state.
+// @Router /media/{mediaId}/vlm-baseline [post]
+type PromoteMediaVLMStableStateRequest struct {
+	// Name labels the stable state, e.g. "Daytime, gate closed". Defaults to the scene summary.
+	Name string `json:"name,omitempty" bson:"name,omitempty"`
+	// Scene optionally narrows the recording's scene before it is saved. It may only
+	// drop the summary, static elements, zones or lighting; it cannot add values.
+	Scene *models.VLMScene `json:"scene,omitempty" bson:"scene,omitempty"`
+}
+type PromoteMediaVLMStableStateResponse struct {
+	StableState models.VLMStableState `json:"stableState"`
+}
+type PromoteMediaVLMStableStateSuccessResponse struct {
+	SuccessResponse
+	Data PromoteMediaVLMStableStateResponse `json:"data"`
+}
+type PromoteMediaVLMStableStateErrorResponse struct {
+	ErrorResponse
+}
+
+// UpdateMediaVLMStableState renames or narrows a stable state of the recording's device.
+// @Router /media/{mediaId}/vlm-baseline/{stableStateId} [patch]
+type UpdateMediaVLMStableStateRequest struct {
+	// Name relabels the stable state; an empty name keeps the current one.
+	Name string `json:"name,omitempty" bson:"name,omitempty"`
+	// Scene optionally narrows the stored scene. It may only drop the summary,
+	// static elements, zones or lighting; it cannot add values.
+	Scene *models.VLMScene `json:"scene,omitempty" bson:"scene,omitempty"`
+}
+type UpdateMediaVLMStableStateResponse struct {
+	StableState models.VLMStableState `json:"stableState"`
+}
+type UpdateMediaVLMStableStateSuccessResponse struct {
+	SuccessResponse
+	Data UpdateMediaVLMStableStateResponse `json:"data"`
+}
+type UpdateMediaVLMStableStateErrorResponse struct {
+	ErrorResponse
+}
+
+// DeleteMediaVLMStableState removes a stable state from the recording's device.
+// @Router /media/{mediaId}/vlm-baseline/{stableStateId} [delete]
+type DeleteMediaVLMStableStateRequest struct {
+	MediaId       string `json:"mediaId" bson:"mediaId"`
+	StableStateId string `json:"stableStateId" bson:"stableStateId"`
+}
+type DeleteMediaVLMStableStateResponse struct {
+	StableStateId string `json:"stableStateId"`
+}
+type DeleteMediaVLMStableStateSuccessResponse struct {
+	SuccessResponse
+	Data DeleteMediaVLMStableStateResponse `json:"data"`
+}
+type DeleteMediaVLMStableStateErrorResponse struct {
+	ErrorResponse
+}
+>>>>>>> Stashed changes
