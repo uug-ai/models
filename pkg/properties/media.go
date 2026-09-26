@@ -118,6 +118,7 @@ const (
 	MediaMetadataDominantColors = "dominantColors"
 	MediaMetadataCount = "count"
 	MediaMetadataEmbedding = "embedding"
+	MediaMetadataVLM = "vlm"
 )
 
 // Region property field names (BSON)

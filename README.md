@@ -118,8 +118,6 @@ This is a pipeline-only transport boundary: standalone `User`/`Audit` JSON
 (including API responses) and all BSON persistence remain unchanged. No data
 migration is required.
 
-<<<<<<< Updated upstream
-=======
 ### VLM scene and stable states
 
 `MediaMetadata.VLM` (`metadata.vlm` on media) stores the structured
@@ -137,7 +135,10 @@ these states as the device's "normal" scene so it reports changes instead of
 repeating the scene. Both fields are optional and omitted when empty, so
 existing media and devices need no migration.
 
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> ab6f241cc5fcf4f75c03b37e0d18ef686700ce18
 ### Automatic Type Generation
 
 This project bridges Go and TypeScript using an automated pipeline:
