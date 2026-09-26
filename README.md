@@ -130,15 +130,10 @@ markers in category `vlm`, for example marker `person`, event `walking`, tags
 `VLMMaxStableStates` named `VLMStableState` entries promoted from a recording's
 scene. Promoting the same recording again replaces its entry. A promotion or a
 later update may rename a state and drop scene values, but never add them; a
-state can also be deleted. VLM analysis uses
-these states as the device's "normal" scene so it reports changes instead of
+state can also be deleted. VLM analysis uses these states as the device's "normal" scene so it reports changes instead of
 repeating the scene. Both fields are optional and omitted when empty, so
 existing media and devices need no migration.
 
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> ab6f241cc5fcf4f75c03b37e0d18ef686700ce18
 ### Automatic Type Generation
 
 This project bridges Go and TypeScript using an automated pipeline:

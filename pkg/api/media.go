@@ -224,7 +224,6 @@ type PromoteMediaVLMStableStateSuccessResponse struct {
 type PromoteMediaVLMStableStateErrorResponse struct {
 	ErrorResponse
 }
-<<<<<<< HEAD
 
 // UpdateMediaVLMStableState renames or narrows a stable state of the recording's device.
 // @Router /media/{mediaId}/vlm-baseline/{stableStateId} [patch]
@@ -262,6 +261,3 @@ type DeleteMediaVLMStableStateSuccessResponse struct {
 type DeleteMediaVLMStableStateErrorResponse struct {
 	ErrorResponse
 }
->>>>>>> Stashed changes
-=======
->>>>>>> ab6f241cc5fcf4f75c03b37e0d18ef686700ce18
