@@ -28,6 +28,28 @@ func WorkflowPermissions() []Permission {
 	return append([]Permission(nil), workflowPermissions...)
 }
 
+// WorkflowNodeType is what a canvas node represents. An empty Type is a stage,
+// so graphs authored before node types existed compile unchanged.
+type WorkflowNodeType string
+
+const (
+	// WorkflowNodeStage is an instance of a catalog stage, dispatched to its worker.
+	WorkflowNodeStage WorkflowNodeType = "stage"
+	// WorkflowNodeDevice is the graph's recording source. It selects the devices
+	// whose recordings open the workflow and compiles to the automatic trigger
+	// (see SyncGraphTriggers), never to a dispatched stage.
+	WorkflowNodeDevice WorkflowNodeType = "device"
+)
+
+// WorkflowDeviceGateOperation is the operation a condition on a device node's
+// outgoing edge gates on: the classifier result every automatic hand-off seeds
+// into the run's Inputs.
+const WorkflowDeviceGateOperation = "classify"
+
+// WorkflowSeedOperation is the run-opening hand-off operation. It is reserved:
+// a stage with this operation would re-enter the engine as a new run.
+const WorkflowSeedOperation = "event"
+
 // WorkflowNode is a single stage instance placed on the workflow canvas. Every
 // node is an instance of a catalog stage: StageRef holds the referenced stage's
 // Operation key, and the stage definition itself (image, queue, resources,
@@ -36,24 +58,40 @@ func WorkflowPermissions() []Permission {
 // node carries only what is specific to this placement: identity, canvas
 // position/label, and optional per-instance parameters (Data). How and when the
 // instance fires is expressed by the edges feeding it (see WorkflowEdge.Condition);
-// what activates the workflow as a whole is the Workflow's Trigger.
+// what activates the workflow as a whole is the Workflow's Trigger. A device
+// node (Type WorkflowNodeDevice) is the exception: it is the graph's source and
+// carries Devices instead of a StageRef.
 type WorkflowNode struct {
 	// Id is this instance's identity within the workflow. It is the stable
 	// handle that edges connect to, and the per-instance runtime key when the
 	// same stage is placed more than once.
-	Id    string  `json:"id" bson:"id"`
-	Label string  `json:"label" bson:"label,omitempty"`
-	X     float64 `json:"x" bson:"x"`
-	Y     float64 `json:"y" bson:"y"`
+	Id string `json:"id" bson:"id"`
+	// Type is what the node represents; empty means WorkflowNodeStage.
+	Type  WorkflowNodeType `json:"type,omitempty" bson:"type,omitempty"`
+	Label string           `json:"label" bson:"label,omitempty"`
+	X     float64          `json:"x" bson:"x"`
+	Y     float64          `json:"y" bson:"y"`
 	// StageRef is the referenced stage's Operation key (the catalog key shared
-	// by platform- and user-defined stages), not its Mongo Id. Always set:
-	// every node is an instance of a catalog stage, resolved at compile time.
+	// by platform- and user-defined stages), not its Mongo Id. Set on every
+	// stage node and resolved at compile time; empty on a device node.
 	StageRef string `json:"stageRef" bson:"stageRef"`
+	// Devices scopes a device node to recordings from these devices. Empty means
+	// every device the workflow's owner can see. Ignored on stage nodes.
+	Devices []DeviceKey `json:"devices,omitempty" bson:"devices,omitempty"`
 	// Data holds optional per-instance parameter values for this placement, keyed
 	// by parameter name. They are validated against and defaulted from the
 	// referenced stage's declared Params (see WorkflowStage.Params), layered over
 	// the stage's catalog defaults.
 	Data map[string]interface{} `json:"data,omitempty" bson:"data,omitempty"`
+}
+
+// EffectiveType returns the node's type, defaulting an empty Type to
+// WorkflowNodeStage.
+func (n WorkflowNode) EffectiveType() WorkflowNodeType {
+	if n.Type == "" {
+		return WorkflowNodeStage
+	}
+	return n.Type
 }
 
 // WorkflowEdge is a directed connection from a source node to a target node,
@@ -506,12 +544,21 @@ func (w *Workflow) EffectiveID() primitive.ObjectID {
 // (its readiness gate) and the need's Condition is the edge's predicate (nil for
 // an unconditional dependency). NeedsMode is left at its default (any). Only
 // routing fields are populated; deployment is resolved elsewhere by Operation.
+//
+// Device nodes compile to no stage. An edge leaving a device node adds a need
+// only when it carries a condition, gated on WorkflowDeviceGateOperation; an
+// unconditional device edge adds nothing, so its target starts the run.
 func (w *Workflow) CompileStages() []WorkflowStage {
 	if len(w.Stages) > 0 {
 		return w.Stages
 	}
 	opByNode := make(map[string]string, len(w.Nodes))
+	deviceNodes := make(map[string]bool)
 	for _, n := range w.Nodes {
+		if n.EffectiveType() == WorkflowNodeDevice {
+			deviceNodes[n.Id] = true
+			continue
+		}
 		opByNode[n.Id] = n.StageRef
 	}
 	incoming := make(map[string][]WorkflowEdge, len(w.Nodes))
@@ -520,24 +567,61 @@ func (w *Workflow) CompileStages() []WorkflowStage {
 	}
 	stages := make([]WorkflowStage, 0, len(w.Nodes))
 	for _, n := range w.Nodes {
+		if deviceNodes[n.Id] {
+			continue
+		}
 		stage := WorkflowStage{Operation: n.StageRef}
-		edges := incoming[n.Id]
-		if len(edges) == 0 {
+		needs := make([]StageDependency, 0, len(incoming[n.Id]))
+		for _, e := range incoming[n.Id] {
+			if deviceNodes[e.Source] {
+				if e.Condition != nil {
+					needs = append(needs, StageDependency{Operation: WorkflowDeviceGateOperation, Condition: e.Condition})
+				}
+				continue
+			}
+			needs = append(needs, StageDependency{
+				Operation: opByNode[e.Source],
+				Condition: e.Condition,
+			})
+		}
+		if len(needs) == 0 {
 			stage.Dispatch = DispatchAlways
 		} else {
 			stage.Dispatch = DispatchConditional
-			needs := make([]StageDependency, 0, len(edges))
-			for _, e := range edges {
-				needs = append(needs, StageDependency{
-					Operation: opByNode[e.Source],
-					Condition: e.Condition,
-				})
-			}
 			stage.Needs = needs
 		}
 		stages = append(stages, stage)
 	}
 	return stages
+}
+
+// SyncGraphTriggers makes the graph's device node the workflow's automatic
+// trigger: every automatic trigger is replaced by one scoped to that node's
+// Devices, and manual triggers are kept. A graph without a device node leaves
+// Triggers untouched. It is idempotent.
+func (w *Workflow) SyncGraphTriggers() {
+	w.NormalizeTriggers()
+	var device *WorkflowNode
+	for i := range w.Nodes {
+		if w.Nodes[i].EffectiveType() == WorkflowNodeDevice {
+			device = &w.Nodes[i]
+			break
+		}
+	}
+	if device == nil {
+		return
+	}
+	triggers := make([]WorkflowTrigger, 0, len(w.Triggers)+1)
+	triggers = append(triggers, WorkflowTrigger{
+		Type:    WorkflowTriggerAutomatic,
+		Devices: append([]DeviceKey(nil), device.Devices...),
+	})
+	for _, t := range w.Triggers {
+		if t.EffectiveType() == WorkflowTriggerManual {
+			triggers = append(triggers, t)
+		}
+	}
+	w.Triggers = triggers
 }
 
 // NormalizeTriggers folds a legacy single Trigger into the Triggers list and
