@@ -542,6 +542,104 @@ func TestWorkflow_CompileStages_PrefersStoredStages(t *testing.T) {
 	}
 }
 
+// vlmEditorWorkflow is the editor form of the Helm vlm-workflow:
+// device --(objects detected)--> vlm --> forwarder.
+func vlmEditorWorkflow() Workflow {
+	objects := &StageCondition{Path: "inputs.classify.details.*.classified", Op: ConditionOpIn, Value: []any{"pedestrian", "car"}}
+	return Workflow{
+		Enabled: true,
+		Nodes: []WorkflowNode{
+			{Id: "device", Type: WorkflowNodeDevice, Devices: []DeviceKey{{Key: "cam-1"}}},
+			{Id: "vlm", Type: WorkflowNodeStage, StageRef: "vlm"},
+			{Id: "forwarder", StageRef: "forwarder"},
+		},
+		Edges: []WorkflowEdge{
+			{Id: "e1", Source: "device", Target: "vlm", Condition: objects},
+			{Id: "e2", Source: "vlm", Target: "forwarder"},
+		},
+	}
+}
+
+func TestWorkflow_CompileStages_DeviceNode(t *testing.T) {
+	w := vlmEditorWorkflow()
+	stages := w.CompileStages()
+	if len(stages) != 2 {
+		t.Fatalf("device node must not compile to a stage, got %+v", stages)
+	}
+	vlm, forwarder := stages[0], stages[1]
+	if vlm.Operation != "vlm" || vlm.Dispatch != DispatchConditional || len(vlm.Needs) != 1 {
+		t.Fatalf("vlm = %+v, want conditional with one need", vlm)
+	}
+	if vlm.Needs[0].Operation != WorkflowDeviceGateOperation || vlm.Needs[0].Condition != w.Edges[0].Condition {
+		t.Fatalf("vlm need = %+v, want classify gate with the device edge condition", vlm.Needs[0])
+	}
+	if forwarder.Operation != "forwarder" || forwarder.Dispatch != DispatchConditional || len(forwarder.Needs) != 1 || forwarder.Needs[0].Operation != "vlm" || forwarder.Needs[0].Condition != nil {
+		t.Fatalf("forwarder = %+v, want conditional on vlm", forwarder)
+	}
+
+	w.Edges[0].Condition = nil
+	if stages := w.CompileStages(); stages[0].Dispatch != DispatchAlways || stages[0].Needs != nil {
+		t.Fatalf("unfiltered device edge should start vlm, got %+v", stages[0])
+	}
+}
+
+func TestWorkflow_SyncGraphTriggers(t *testing.T) {
+	w := vlmEditorWorkflow()
+	w.Triggers = []WorkflowTrigger{
+		{Type: WorkflowTriggerAutomatic, Devices: []DeviceKey{{Key: "stale"}}},
+		{Type: WorkflowTriggerManual, Surfaces: []WorkflowTriggerSurface{WorkflowSurfaceCase}},
+	}
+	w.SyncGraphTriggers()
+	w.SyncGraphTriggers()
+
+	if len(w.Triggers) != 2 {
+		t.Fatalf("triggers = %+v, want graph automatic + kept manual", w.Triggers)
+	}
+	if auto := w.Triggers[0]; auto.Type != WorkflowTriggerAutomatic || len(auto.Devices) != 1 || auto.Devices[0].Key != "cam-1" {
+		t.Fatalf("automatic trigger = %+v, want device node scope", auto)
+	}
+	if w.Triggers[1].Type != WorkflowTriggerManual {
+		t.Fatalf("manual trigger dropped: %+v", w.Triggers)
+	}
+	if !w.AutomaticMatches(AutomaticTriggerRoot(WorkflowDevice{DeviceKey: "cam-1"}, WorkflowUser{}), time.Now()) {
+		t.Fatal("recording from the selected device should open the workflow")
+	}
+	if w.AutomaticMatches(AutomaticTriggerRoot(WorkflowDevice{DeviceKey: "cam-2"}, WorkflowUser{}), time.Now()) {
+		t.Fatal("recording from another device must not open the workflow")
+	}
+
+	manualOnly := Workflow{Triggers: []WorkflowTrigger{{Type: WorkflowTriggerManual}}}
+	manualOnly.SyncGraphTriggers()
+	if len(manualOnly.Triggers) != 1 || manualOnly.Triggers[0].Type != WorkflowTriggerManual {
+		t.Fatalf("graph without device node must keep its triggers, got %+v", manualOnly.Triggers)
+	}
+}
+
+func TestWorkflowNode_TypeAndDevicesRoundTrip(t *testing.T) {
+	node := WorkflowNode{Id: "device", Type: WorkflowNodeDevice, Devices: []DeviceKey{{Key: "cam-1", Name: "Front"}}}
+	encoded, err := json.Marshal(node)
+	if err != nil {
+		t.Fatalf("marshal: %v", err)
+	}
+	if !strings.Contains(string(encoded), `"type":"device"`) || !strings.Contains(string(encoded), `"devices":[{"key":"cam-1","name":"Front"}]`) {
+		t.Fatalf("encoded node = %s", encoded)
+	}
+	raw, err := bson.Marshal(node)
+	if err != nil {
+		t.Fatalf("bson marshal: %v", err)
+	}
+	var decoded WorkflowNode
+	if err := bson.Unmarshal(raw, &decoded); err != nil {
+		t.Fatalf("bson unmarshal: %v", err)
+	}
+	if decoded.EffectiveType() != WorkflowNodeDevice || len(decoded.Devices) != 1 || decoded.Devices[0].Key != "cam-1" {
+		t.Fatalf("decoded node = %+v", decoded)
+	}
+	if (WorkflowNode{}).EffectiveType() != WorkflowNodeStage {
+		t.Fatal("an untyped node must remain a stage")
+	}
+}
+
 func TestWorkflow_AutomaticMatches(t *testing.T) {
 	loc, err := time.LoadLocation("Europe/Brussels")
 	if err != nil {

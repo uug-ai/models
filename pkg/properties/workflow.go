@@ -37,10 +37,12 @@ const (
 // WorkflowNode property field names (BSON)
 const (
 	WorkflowNodeId = "id"
+	WorkflowNodeType = "type"
 	WorkflowNodeLabel = "label"
 	WorkflowNodeX = "x"
 	WorkflowNodeY = "y"
 	WorkflowNodeStageRef = "stageRef"
+	WorkflowNodeDevices = "devices"
 	WorkflowNodeData = "data"
 )
 
