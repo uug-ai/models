@@ -34886,7 +34886,9 @@ export interface components {
              *     can render per-stage progress (e.g. "pose done, redaction running")
              *     instead of only a run-level running/completed flip for multi-stage runs. */
             dispatchedOperations?: string[];
+            durationMs?: number;
             end?: number;
+            endedAtMs?: number;
             /** @description HasResults is true when the run accumulated any stage output. */
             hasResults?: boolean;
             key?: string;
@@ -34901,11 +34903,17 @@ export interface components {
             resolvedOperations?: string[];
             runId?: string;
             sourceRef?: string;
+            stages?: components["schemas"]["models.WorkflowRunStageExecution"][];
             /** @description Start / End are unix seconds; End is 0 while the run is still open. */
             start?: number;
+            /** @description Detail reads populate millisecond-precision timing, trace correlation, and
+             *     the stage execution timeline. List projections leave these fields empty so
+             *     they stay off the overview response. */
+            startedAtMs?: number;
             /** @description State is the derived lifecycle: running | completed | noResult
              *     (models.WorkflowRunState). */
             state?: string;
+            traceId?: string;
             workflowId?: string;
             workflowName?: string;
         };
@@ -38791,6 +38799,21 @@ export interface components {
         "models.WorkflowRunOperationState": "dispatched" | "resolved";
         /** @enum {string} */
         "models.WorkflowRunOrigin": "automatic" | "manual";
+        "models.WorkflowRunStageExecution": {
+            dependencies?: string[];
+            dispatchAttempts?: number;
+            dispatchedAtMs?: number;
+            durationMs?: number;
+            firstDispatchAttemptAtMs?: number;
+            lastDispatchAttemptAtMs?: number;
+            lastDispatchErrorCode?: string;
+            name?: string;
+            operation?: string;
+            resolvedAtMs?: number;
+            state?: components["schemas"]["models.WorkflowRunStageState"];
+        };
+        /** @enum {string} */
+        "models.WorkflowRunStageState": "waiting" | "retrying" | "dispatched" | "resolved" | "dispatchFailed" | "timedOut" | "skipped";
         /** @enum {string} */
         "models.WorkflowRunState": "running" | "completed" | "noResult";
         /** @enum {string} */
@@ -39245,6 +39268,7 @@ export namespace models {
     export type WorkflowNode = components['schemas']['models.WorkflowNode'];
     export type WorkflowResult = components['schemas']['models.WorkflowResult'];
     export type WorkflowRun = components['schemas']['models.WorkflowRun'];
+    export type WorkflowRunStageExecution = components['schemas']['models.WorkflowRunStageExecution'];
     export type WorkflowStage = components['schemas']['models.WorkflowStage'];
     export type WorkflowStageReference = components['schemas']['models.WorkflowStageReference'];
     export type WorkflowStorage = components['schemas']['models.WorkflowStorage'];

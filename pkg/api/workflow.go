@@ -235,6 +235,14 @@ type WorkflowRunStatus struct {
 	// Start / End are unix seconds; End is 0 while the run is still open.
 	Start int64 `json:"start,omitempty"`
 	End   int64 `json:"end,omitempty"`
+	// Detail reads populate millisecond-precision timing, trace correlation, and
+	// the stage execution timeline. List projections leave these fields empty so
+	// they stay off the overview response.
+	StartedAtMs int64                              `json:"startedAtMs,omitempty"`
+	EndedAtMs   int64                              `json:"endedAtMs,omitempty"`
+	DurationMs  int64                              `json:"durationMs,omitempty"`
+	TraceId     string                             `json:"traceId,omitempty"`
+	Stages      []models.WorkflowRunStageExecution `json:"stages,omitempty"`
 	// Dispatched / Resolved are the sizes of the run's dispatched and resolved
 	// operation sets, exposed as a coarse progress hint.
 	Dispatched int `json:"dispatched"`

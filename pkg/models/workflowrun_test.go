@@ -5,6 +5,7 @@ import (
 	"strings"
 	"testing"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -98,6 +99,81 @@ func TestWorkflowRun_MarshalJSON_ProjectsRunIdFromId(t *testing.T) {
 			t.Fatal("wire projectId must not populate persistence ownership")
 		}
 	})
+
+	t.Run("execution progress stays off the queue wire", func(t *testing.T) {
+		b, err := json.Marshal(WorkflowRun{
+			StartedAtMs: 1_000,
+			EndedAtMs:   2_000,
+			StageExecutions: []WorkflowRunStageExecution{{
+				Operation:      "anpr",
+				DispatchedAtMs: 1_100,
+				ResolvedAtMs:   1_900,
+			}},
+		})
+		if err != nil {
+			t.Fatalf("marshal: %v", err)
+		}
+
+		for _, field := range []string{"startedAtMs", "endedAtMs", "stageExecutions"} {
+			if strings.Contains(string(b), field) {
+				t.Errorf("persistence-only field %q appeared on queue wire: %s", field, b)
+			}
+		}
+	})
+}
+
+func TestWorkflowRun_StageExecutionPersistence(t *testing.T) {
+	run := WorkflowRun{
+		StartedAtMs: 1_000,
+		EndedAtMs:   2_000,
+		StageExecutions: []WorkflowRunStageExecution{{
+			Operation:                "anpr",
+			Name:                     "Number plate recognition",
+			Dependencies:             []string{"objecttracking"},
+			DispatchAttempts:         2,
+			FirstDispatchAttemptAtMs: 1_100,
+			LastDispatchAttemptAtMs:  1_200,
+			DispatchedAtMs:           1_250,
+			ResolvedAtMs:             1_900,
+			LastDispatchErrorCode:    "queue_unavailable",
+			State:                    WorkflowRunStageStateResolved,
+			DurationMs:               650,
+		}},
+	}
+
+	encoded, err := bson.Marshal(run)
+	if err != nil {
+		t.Fatalf("marshal BSON: %v", err)
+	}
+
+	var document bson.M
+	if err := bson.Unmarshal(encoded, &document); err != nil {
+		t.Fatalf("unmarshal BSON: %v", err)
+	}
+	if document["startedatms"] != int64(1_000) {
+		t.Errorf("startedatms = %v, want 1000", document["startedatms"])
+	}
+	if document["endedatms"] != int64(2_000) {
+		t.Errorf("endedatms = %v, want 2000", document["endedatms"])
+	}
+
+	executions, ok := document["stageexecutions"].(bson.A)
+	if !ok || len(executions) != 1 {
+		t.Fatalf("stageexecutions = %#v, want one execution", document["stageexecutions"])
+	}
+	execution, ok := executions[0].(bson.M)
+	if !ok {
+		t.Fatalf("stage execution = %#v, want bson.M", executions[0])
+	}
+	if execution["operation"] != "anpr" {
+		t.Errorf("operation = %v, want anpr", execution["operation"])
+	}
+	if _, ok := execution["state"]; ok {
+		t.Error("derived state must not be persisted")
+	}
+	if _, ok := execution["durationMs"]; ok {
+		t.Error("derived duration must not be persisted")
+	}
 }
 
 // TestAutomaticRunObjectID asserts the deterministic automatic run identity:

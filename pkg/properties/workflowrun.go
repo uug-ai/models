@@ -18,8 +18,24 @@ const (
 	WorkflowRunTraceId = "traceid"
 	WorkflowRunStart = "start"
 	WorkflowRunEnd = "end"
+	WorkflowRunStartedAtMs = "startedatms"
+	WorkflowRunEndedAtMs = "endedatms"
+	WorkflowRunStageExecutions = "stageexecutions"
 	WorkflowRunInputs = "inputs"
 	WorkflowRunResults = "results"
 	WorkflowRunDispatchedOperations = "dispatchedoperations"
 	WorkflowRunResolvedOperations = "resolvedoperations"
+)
+
+// WorkflowRunStageExecution property field names (BSON)
+const (
+	WorkflowRunStageExecutionOperation = "operation"
+	WorkflowRunStageExecutionName = "name"
+	WorkflowRunStageExecutionDependencies = "dependencies"
+	WorkflowRunStageExecutionDispatchAttempts = "dispatchattempts"
+	WorkflowRunStageExecutionFirstDispatchAttemptAtMs = "firstdispatchattemptatms"
+	WorkflowRunStageExecutionLastDispatchAttemptAtMs = "lastdispatchattemptatms"
+	WorkflowRunStageExecutionDispatchedAtMs = "dispatchedatms"
+	WorkflowRunStageExecutionResolvedAtMs = "resolvedatms"
+	WorkflowRunStageExecutionLastDispatchErrorCode = "lastdispatcherrorcode"
 )

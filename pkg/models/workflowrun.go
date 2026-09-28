@@ -76,6 +76,45 @@ const (
 	WorkflowRunOperationStateResolved   WorkflowRunOperationState = "resolved"
 )
 
+// WorkflowRunStageState is the client-facing lifecycle of one planned stage.
+// It is derived from the execution timestamps, dispatch attempts, and the
+// containing run's lifecycle rather than persisted independently.
+type WorkflowRunStageState string
+
+const (
+	WorkflowRunStageStateWaiting        WorkflowRunStageState = "waiting"
+	WorkflowRunStageStateRetrying       WorkflowRunStageState = "retrying"
+	WorkflowRunStageStateDispatched     WorkflowRunStageState = "dispatched"
+	WorkflowRunStageStateResolved       WorkflowRunStageState = "resolved"
+	WorkflowRunStageStateDispatchFailed WorkflowRunStageState = "dispatchFailed"
+	WorkflowRunStageStateTimedOut       WorkflowRunStageState = "timedOut"
+	WorkflowRunStageStateSkipped        WorkflowRunStageState = "skipped"
+)
+
+// WorkflowRunStageExecution is the bounded, durable execution summary for one
+// stage in a run. Operation, Name, and Dependencies snapshot the user-visible
+// stage plan without copying deployment configuration or secrets. The engine
+// owns the persisted facts; State and DurationMs are derived when a run is read.
+//
+// All timestamps are Unix milliseconds. A dispatch attempt is recorded before
+// queue publication, DispatchedAtMs after successful publication, and
+// ResolvedAtMs when the engine accepts the stage result.
+type WorkflowRunStageExecution struct {
+	Operation    string   `json:"operation" bson:"operation"`
+	Name         string   `json:"name,omitempty" bson:"name,omitempty"`
+	Dependencies []string `json:"dependencies,omitempty" bson:"dependencies,omitempty"`
+
+	DispatchAttempts         int    `json:"dispatchAttempts,omitempty" bson:"dispatchattempts,omitempty"`
+	FirstDispatchAttemptAtMs int64  `json:"firstDispatchAttemptAtMs,omitempty" bson:"firstdispatchattemptatms,omitempty"`
+	LastDispatchAttemptAtMs  int64  `json:"lastDispatchAttemptAtMs,omitempty" bson:"lastdispatchattemptatms,omitempty"`
+	DispatchedAtMs           int64  `json:"dispatchedAtMs,omitempty" bson:"dispatchedatms,omitempty"`
+	ResolvedAtMs             int64  `json:"resolvedAtMs,omitempty" bson:"resolvedatms,omitempty"`
+	LastDispatchErrorCode    string `json:"lastDispatchErrorCode,omitempty" bson:"lastdispatcherrorcode,omitempty"`
+
+	State      WorkflowRunStageState `json:"state,omitempty" bson:"-"`
+	DurationMs int64                 `json:"durationMs,omitempty" bson:"-"`
+}
+
 // WorkflowRun is the single type the workflow subsystem uses for a run, in both
 // of its representations:
 //
@@ -228,6 +267,18 @@ type WorkflowRun struct {
 	// Start and End stamp the run's lifecycle (unix seconds). Persistence-only.
 	Start int64 `json:"-" bson:"start"`
 	End   int64 `json:"-" bson:"end,omitempty"`
+
+	// StartedAtMs and EndedAtMs are the millisecond-precision counterparts of the
+	// legacy Start and End fields. New writers populate both pairs; readers fall
+	// back to Start/End for runs created before these fields existed.
+	StartedAtMs int64 `json:"-" bson:"startedatms,omitempty"`
+	EndedAtMs   int64 `json:"-" bson:"endedatms,omitempty"`
+
+	// StageExecutions is the bounded stage plan and execution summary used by run
+	// detail surfaces. It is engine-owned persistence state and therefore never
+	// crosses the queue boundary; API handlers project it explicitly after
+	// deriving State and DurationMs.
+	StageExecutions []WorkflowRunStageExecution `json:"-" bson:"stageexecutions,omitempty"`
 
 	// User is the curated, secret-free account context a run needs: the
 	// organisation that owns the recording (for logging/scoping) and the account
