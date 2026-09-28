@@ -25,6 +25,9 @@ const (
 	WorkflowRunNoMedia          WorkflowStatus = "workflow_run_no_media"
 	WorkflowRunsFound           WorkflowStatus = "workflow_runs_found"
 	WorkflowRunsRetrievalFailed WorkflowStatus = "workflow_runs_retrieval_failed"
+	WorkflowInvalidGraph        WorkflowStatus = "workflow_invalid_graph"
+	WorkflowStageNotAllowed     WorkflowStatus = "workflow_stage_not_allowed"
+	WorkflowDeviceForbidden     WorkflowStatus = "workflow_device_forbidden"
 )
 
 // String returns the string representation of the workflow status.
@@ -55,6 +58,9 @@ func (cs WorkflowStatus) Translate(lang string) string {
 			WorkflowRunNoMedia:          "No eligible media to run the workflow on",
 			WorkflowRunsFound:           "Workflow runs retrieved successfully",
 			WorkflowRunsRetrievalFailed: "Workflow runs retrieval failed",
+			WorkflowInvalidGraph:        "Workflow graph is invalid",
+			WorkflowStageNotAllowed:     "Workflow uses a stage that is not available",
+			WorkflowDeviceForbidden:     "Workflow selects a device you cannot access",
 		},
 	}
 
@@ -154,6 +160,20 @@ type DeleteWorkflowSuccessResponse struct {
 	Data DeleteWorkflowResponse `json:"data"`
 }
 type DeleteWorkflowErrorResponse struct {
+	ErrorResponse
+}
+
+// GetWorkflowCatalog lists the stages a caller may place on the workflow editor
+// canvas. The device node is always available and is not listed.
+// @Router /workflows/catalog [get]
+type GetWorkflowCatalogResponse struct {
+	Stages []models.WorkflowStage `json:"stages"`
+}
+type GetWorkflowCatalogSuccessResponse struct {
+	SuccessResponse
+	Data GetWorkflowCatalogResponse `json:"data"`
+}
+type GetWorkflowCatalogErrorResponse struct {
 	ErrorResponse
 }
 
