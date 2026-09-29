@@ -309,6 +309,75 @@ func errorHandler(w http.ResponseWriter, message string, code int) {
 }
 ```
 
+## Consolidated workflow run stages
+
+`WorkflowRun.Stages` contains `WorkflowRunStage` entries: immutable routing
+(`operation`, `name`, `dispatch`, `queue`, `needs`, `needsMode`) alongside nested
+`execution` facts (attempts, timestamps, last dispatch error). Run stages are
+distinct from reusable `WorkflowStage` catalog/deployment definitions. Routing
+never contains deployment environment, credentials, worker images or resources.
+
+```json
+{
+  "stages": [{
+    "operation": "anpr",
+    "dispatch": "conditional",
+    "queue": "hub-anpr-queue",
+    "needsMode": "all",
+    "needs": [{ "operation": "vlm" }],
+    "execution": {
+      "dispatchAttempts": 1,
+      "dispatchedAtMs": 1790681732386
+    }
+  }]
+}
+```
+
+Conditions remain on `needs`, including the shared plural conditions described
+below. Snapshot all planned stages at creation, including stages that may never
+dispatch. Only `execution` changes afterwards; its `state` and `durationMs` are
+derived read fields and never persist. The dispatched/resolved operation sets
+continue to support existing idempotency and finalization.
+
+### Models-first adoption and legacy compatibility
+
+This is a **Go source change**: `WorkflowRun.Stages` is now
+`[]WorkflowRunStage`, not `[]WorkflowStage`. Existing deployments do not change
+until they adopt this models release and update their readers/writers.
+
+- `NewWorkflowRunStages(compiled)` makes a detached routing-only copy and starts
+  each stage with `execution: {}`. The caller must validate the graph, compile it,
+  normalize dispatch defaults and resolve deployment queues first.
+- `run.RoutingStages()` produces a detached `[]WorkflowStage` projection for
+  registry compilation and existing worker messages, without execution facts.
+- `run.NormalizeStages()` explicitly joins legacy `stageExecutions` to `stages`
+  by operation. Existing non-empty stage names and entire non-null nested
+  executions win, including zero counters and cleared error strings. Matched
+  legacy records are removed. Empty/duplicate operations return an error before
+  any mutation.
+- Legacy summaries without a matching routing stage remain in the deprecated
+  field. In particular, old config runs may contain a timeline but no stage
+  snapshot. We retain that history and do not invent rules from dependency names
+  or today's workflow definition.
+- `run.StageExecutionSummaries()` projects the old timeline shape for API
+  clients, deriving dependency names from actual needs and retaining unmatched
+  legacy history. It does not mutate the run.
+- Normalize before `PopulateRuntimeFields` when reading split documents. The
+  latter derives both nested and remaining legacy lifecycle states and timings.
+
+Nil/absent/null stages mean no captured routing; an explicit `[]` means a
+captured zero-stage plan. JSON and BSON preserve that distinction. Serialization
+does **not** implicitly consolidate legacy lifecycle fields or change write paths.
+No custom BSON decoder is used, so enclosing ownership-aware document wrappers
+continue to decode their own fields.
+
+Adopt readers and compatibility projections in the API/engine first, then
+coordinate the writer switch across all engine replicas: legacy writers update
+`stageexecutions`, whereas upgraded writers must update `stages.$.execution`.
+Do not mix those authorities for the same run. Preserve old API/worker contracts
+through projections while their consumers are upgraded. These service changes
+are intentionally outside this models-only PR. No data backfill is required.
+
 ## Workflow activation and routing conditions
 
 Triggers, graph edges, and compiled stage dependencies share `conditions` and
