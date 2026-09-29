@@ -228,6 +228,15 @@ func TestWorkflowRun_PopulateRuntimeFields(t *testing.T) {
 	if run.StageExecutions[1].DurationMs != 1_000 {
 		t.Errorf("timed-out stage duration = %d, want 1000", run.StageExecutions[1].DurationMs)
 	}
+
+	projected := WorkflowRun{End: 3, HasResults: true}
+	projected.PopulateRuntimeFields(time.UnixMilli(4_000))
+	if projected.State != WorkflowRunStateCompleted {
+		t.Errorf("projected State = %q, want completed", projected.State)
+	}
+	if projected.Origin != WorkflowOriginAutomatic {
+		t.Errorf("projected Origin = %q, want automatic", projected.Origin)
+	}
 }
 
 // TestAutomaticRunObjectID asserts the deterministic automatic run identity:

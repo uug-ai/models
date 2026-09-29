@@ -438,7 +438,7 @@ func (r WorkflowRun) LifecycleState() WorkflowRunState {
 	if r.End == 0 {
 		return WorkflowRunStateRunning
 	}
-	if len(r.ResolvedOperations) > 0 || len(r.Results) > 0 {
+	if len(r.ResolvedOperations) > 0 || len(r.Results) > 0 || r.HasResults {
 		return WorkflowRunStateCompleted
 	}
 	if len(r.DispatchedOperations) == 0 {
@@ -455,6 +455,12 @@ func (r WorkflowRun) LifecycleState() WorkflowRunState {
 // persisted, while the millisecond timestamps may be normalized from legacy
 // second-precision values for the response.
 func (r *WorkflowRun) PopulateRuntimeFields(now time.Time) {
+	if r.Origin == "" {
+		r.Origin = WorkflowOriginAutomatic
+	}
+	if r.Results != nil {
+		r.HasResults = len(r.Results) > 0
+	}
 	if r.State == "" {
 		r.State = r.LifecycleState()
 	}
@@ -467,9 +473,6 @@ func (r *WorkflowRun) PopulateRuntimeFields(now time.Time) {
 
 	r.Dispatched = len(r.DispatchedOperations)
 	r.Resolved = len(r.ResolvedOperations)
-	if r.Results != nil {
-		r.HasResults = len(r.Results) > 0
-	}
 	r.Operations = workflowRunOperationStatuses(r.DispatchedOperations, r.ResolvedOperations)
 
 	endAtMs := r.EndedAtMs
