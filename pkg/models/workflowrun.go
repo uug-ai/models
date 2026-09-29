@@ -3,6 +3,7 @@ package models
 import (
 	"crypto/sha256"
 	"encoding/json"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -76,6 +77,53 @@ const (
 	WorkflowRunOperationStateResolved   WorkflowRunOperationState = "resolved"
 )
 
+// WorkflowRunOperationStatus is the render-ready lifecycle of one dispatched
+// operation. It is derived from DispatchedOperations and ResolvedOperations and
+// is never persisted.
+type WorkflowRunOperationStatus struct {
+	Operation string                    `json:"operation" bson:"-"`
+	Status    WorkflowRunOperationState `json:"status" bson:"-"`
+}
+
+// WorkflowRunStageState is the client-facing lifecycle of one planned stage.
+// It is derived from the execution timestamps, dispatch attempts, and the
+// containing run's lifecycle rather than persisted independently.
+type WorkflowRunStageState string
+
+const (
+	WorkflowRunStageStateWaiting        WorkflowRunStageState = "waiting"
+	WorkflowRunStageStateRetrying       WorkflowRunStageState = "retrying"
+	WorkflowRunStageStateDispatched     WorkflowRunStageState = "dispatched"
+	WorkflowRunStageStateResolved       WorkflowRunStageState = "resolved"
+	WorkflowRunStageStateDispatchFailed WorkflowRunStageState = "dispatchFailed"
+	WorkflowRunStageStateTimedOut       WorkflowRunStageState = "timedOut"
+	WorkflowRunStageStateSkipped        WorkflowRunStageState = "skipped"
+)
+
+// WorkflowRunStageExecution is the bounded, durable execution summary for one
+// stage in a run. Operation, Name, and Dependencies snapshot the user-visible
+// stage plan without copying deployment configuration or secrets. The engine
+// owns the persisted facts; State and DurationMs are derived when a run is read.
+//
+// All timestamps are Unix milliseconds. A dispatch attempt is recorded before
+// queue publication, DispatchedAtMs after successful publication, and
+// ResolvedAtMs when the engine accepts the stage result.
+type WorkflowRunStageExecution struct {
+	Operation    string   `json:"operation" bson:"operation"`
+	Name         string   `json:"name,omitempty" bson:"name,omitempty"`
+	Dependencies []string `json:"dependencies,omitempty" bson:"dependencies,omitempty"`
+
+	DispatchAttempts         int    `json:"dispatchAttempts,omitempty" bson:"dispatchattempts,omitempty"`
+	FirstDispatchAttemptAtMs int64  `json:"firstDispatchAttemptAtMs,omitempty" bson:"firstdispatchattemptatms,omitempty"`
+	LastDispatchAttemptAtMs  int64  `json:"lastDispatchAttemptAtMs,omitempty" bson:"lastdispatchattemptatms,omitempty"`
+	DispatchedAtMs           int64  `json:"dispatchedAtMs,omitempty" bson:"dispatchedatms,omitempty"`
+	ResolvedAtMs             int64  `json:"resolvedAtMs,omitempty" bson:"resolvedatms,omitempty"`
+	LastDispatchErrorCode    string `json:"lastDispatchErrorCode,omitempty" bson:"lastdispatcherrorcode,omitempty"`
+
+	State      WorkflowRunStageState `json:"state,omitempty" bson:"-"`
+	DurationMs int64                 `json:"durationMs,omitempty" bson:"-"`
+}
+
 // WorkflowRun is the single type the workflow subsystem uses for a run, in both
 // of its representations:
 //
@@ -123,10 +171,12 @@ const (
 //     the credential-bearing Storage and SignedURL) so they NEVER persist to
 //     Mongo — most importantly the credential carriers, so secrets can never
 //     land in run state.
-//   - `json:"-"` marks PERSISTENCE-ONLY fields (the run's stored identity and
-//     progress tiers) so they never appear on the queue contract.
-//   - Fields tagged for both (Key, TraceId, WorkflowId, WorkflowName) are the
-//     genuine overlap between message and document.
+//   - `json:"-"` marks internal ownership fields that must never leave the
+//     service boundary.
+//   - Persisted lifecycle fields are JSON-visible so API list/detail surfaces
+//     can return projected WorkflowRun values directly. They use omitempty and
+//     remain absent from the deliberately sparse queue messages.
+//   - Fields tagged for both are genuine overlap between message and document.
 type WorkflowRun struct {
 	// Operation marks the message's role on the workflows queue (wire-only):
 	//   - "event": a fresh run hand-off from analysis. It opens the run and
@@ -222,12 +272,38 @@ type WorkflowRun struct {
 	// ProjectId is persisted here; its wire value travels in User.
 	ProjectId *primitive.ObjectID `json:"-" bson:"projectId,omitempty"`
 
-	// TraceId continues the distributed trace across the workflow tail.
+	// TraceId continues the distributed trace across the workflow tail and lets
+	// authorized detail surfaces correlate the durable run with telemetry.
 	TraceId string `json:"traceId,omitempty" bson:"traceid"`
 
-	// Start and End stamp the run's lifecycle (unix seconds). Persistence-only.
-	Start int64 `json:"-" bson:"start"`
-	End   int64 `json:"-" bson:"end,omitempty"`
+	// Start and End stamp the run's lifecycle (unix seconds). They remain for
+	// compatibility with existing runs and list indexes.
+	Start int64 `json:"start,omitempty" bson:"start"`
+	End   int64 `json:"end,omitempty" bson:"end,omitempty"`
+
+	// StartedAtMs and EndedAtMs are the millisecond-precision counterparts of the
+	// legacy Start and End fields. New writers populate both pairs; readers fall
+	// back to Start/End for runs created before these fields existed.
+	StartedAtMs int64 `json:"startedAtMs,omitempty" bson:"startedatms,omitempty"`
+	EndedAtMs   int64 `json:"endedAtMs,omitempty" bson:"endedatms,omitempty"`
+
+	// StageExecutions is the bounded stage plan and execution summary used by run
+	// detail surfaces. The compiled routing plan already occupies the JSON
+	// "stages" field, so the execution timeline has its own unambiguous name.
+	// Sparse queue messages leave this field empty.
+	StageExecutions []WorkflowRunStageExecution `json:"stageExecutions,omitempty" bson:"stageexecutions,omitempty"`
+
+	// The fields below are API read projections. They are derived or joined by
+	// the service after loading a run and never persist back into workflow state.
+	State      WorkflowRunState             `json:"state,omitempty" bson:"-"`
+	DurationMs int64                        `json:"durationMs,omitempty" bson:"-"`
+	MediaId    string                       `json:"mediaId,omitempty" bson:"-"`
+	DeviceKey  string                       `json:"deviceKey,omitempty" bson:"-"`
+	DeviceName string                       `json:"deviceName,omitempty" bson:"-"`
+	Dispatched int                          `json:"dispatched,omitempty" bson:"-"`
+	Resolved   int                          `json:"resolved,omitempty" bson:"-"`
+	Operations []WorkflowRunOperationStatus `json:"operations,omitempty" bson:"-"`
+	HasResults bool                         `json:"hasResults,omitempty" bson:"-"`
 
 	// User is the curated, secret-free account context a run needs: the
 	// organisation that owns the recording (for logging/scoping) and the account
@@ -309,9 +385,8 @@ type WorkflowRun struct {
 	// matched. Every entry is a deployed stage's operation (only stages are ever
 	// dispatched), so here stage and operation coincide; the field is named by
 	// operation because the stored value is the operation id and to stay
-	// symmetric with ResolvedOperations. Persistence-only; written idempotently
-	// via $addToSet.
-	DispatchedOperations []string `json:"-" bson:"dispatchedoperations,omitempty"`
+	// symmetric with ResolvedOperations. Written idempotently via $addToSet.
+	DispatchedOperations []string `json:"dispatchedOperations,omitempty" bson:"dispatchedoperations,omitempty"`
 
 	// ResolvedOperations are the operation ids whose stage results the engine has
 	// observed (each worker hands its result back under its operation). With
@@ -322,8 +397,7 @@ type WorkflowRun struct {
 	// evaluated against the run's available operations — the keys of Inputs ∪
 	// Results, which also include the trigger analysis hands off (e.g. "classify")
 	// that seeds Inputs but never resolves as a stage and so never appears here.
-	// Persistence-only.
-	ResolvedOperations []string `json:"-" bson:"resolvedoperations,omitempty"`
+	ResolvedOperations []string `json:"resolvedOperations,omitempty" bson:"resolvedoperations,omitempty"`
 }
 
 // MarshalJSON is the single place the persisted identity (Id) is projected onto
@@ -364,7 +438,7 @@ func (r WorkflowRun) LifecycleState() WorkflowRunState {
 	if r.End == 0 {
 		return WorkflowRunStateRunning
 	}
-	if len(r.ResolvedOperations) > 0 || len(r.Results) > 0 {
+	if len(r.ResolvedOperations) > 0 || len(r.Results) > 0 || r.HasResults {
 		return WorkflowRunStateCompleted
 	}
 	if len(r.DispatchedOperations) == 0 {
@@ -374,6 +448,97 @@ func (r WorkflowRun) LifecycleState() WorkflowRunState {
 	// only ends a run once every dispatched op resolves, so this is not expected
 	// in practice; treat it as completed (work was done) rather than no-op.
 	return WorkflowRunStateCompleted
+}
+
+// PopulateRuntimeFields derives the API lifecycle projection from persisted run
+// facts. The receiver should be a read model: none of the derived fields are
+// persisted, while the millisecond timestamps may be normalized from legacy
+// second-precision values for the response.
+func (r *WorkflowRun) PopulateRuntimeFields(now time.Time) {
+	if r.Origin == "" {
+		r.Origin = WorkflowOriginAutomatic
+	}
+	if r.Results != nil {
+		r.HasResults = len(r.Results) > 0
+	}
+	if r.State == "" {
+		r.State = r.LifecycleState()
+	}
+	if r.StartedAtMs == 0 && r.Start > 0 {
+		r.StartedAtMs = r.Start * 1000
+	}
+	if r.EndedAtMs == 0 && r.End > 0 {
+		r.EndedAtMs = r.End * 1000
+	}
+
+	r.Dispatched = len(r.DispatchedOperations)
+	r.Resolved = len(r.ResolvedOperations)
+	r.Operations = workflowRunOperationStatuses(r.DispatchedOperations, r.ResolvedOperations)
+
+	endAtMs := r.EndedAtMs
+	if endAtMs == 0 && !now.IsZero() {
+		endAtMs = now.UnixMilli()
+	}
+	if r.StartedAtMs > 0 && endAtMs >= r.StartedAtMs {
+		r.DurationMs = endAtMs - r.StartedAtMs
+	}
+
+	for i := range r.StageExecutions {
+		execution := &r.StageExecutions[i]
+		execution.State = execution.lifecycleState(r.EndedAtMs > 0)
+
+		stageEndAtMs := execution.ResolvedAtMs
+		if stageEndAtMs == 0 {
+			stageEndAtMs = endAtMs
+		}
+		if execution.DispatchedAtMs > 0 && stageEndAtMs >= execution.DispatchedAtMs {
+			execution.DurationMs = stageEndAtMs - execution.DispatchedAtMs
+		}
+	}
+}
+
+func workflowRunOperationStatuses(dispatched, resolved []string) []WorkflowRunOperationStatus {
+	if len(dispatched) == 0 {
+		return nil
+	}
+	resolvedSet := make(map[string]struct{}, len(resolved))
+	for _, operation := range resolved {
+		resolvedSet[operation] = struct{}{}
+	}
+	statuses := make([]WorkflowRunOperationStatus, 0, len(dispatched))
+	for _, operation := range dispatched {
+		status := WorkflowRunOperationStateDispatched
+		if _, ok := resolvedSet[operation]; ok {
+			status = WorkflowRunOperationStateResolved
+		}
+		statuses = append(statuses, WorkflowRunOperationStatus{
+			Operation: operation,
+			Status:    status,
+		})
+	}
+	return statuses
+}
+
+func (e WorkflowRunStageExecution) lifecycleState(runEnded bool) WorkflowRunStageState {
+	if e.ResolvedAtMs > 0 {
+		return WorkflowRunStageStateResolved
+	}
+	if e.DispatchedAtMs > 0 {
+		if runEnded {
+			return WorkflowRunStageStateTimedOut
+		}
+		return WorkflowRunStageStateDispatched
+	}
+	if e.DispatchAttempts > 0 {
+		if runEnded {
+			return WorkflowRunStageStateDispatchFailed
+		}
+		return WorkflowRunStageStateRetrying
+	}
+	if runEnded {
+		return WorkflowRunStageStateSkipped
+	}
+	return WorkflowRunStageStateWaiting
 }
 
 // AutomaticRunObjectID derives the DETERMINISTIC run identity for an automatic

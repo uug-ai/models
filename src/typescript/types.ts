@@ -33510,7 +33510,7 @@ export interface components {
             metadata?: components["schemas"]["api.Metadata"];
         };
         "api.GetWorkflowRunsResponse": {
-            runs?: components["schemas"]["api.WorkflowRunStatus"][];
+            runs?: components["schemas"]["models.WorkflowRun"][];
             summary?: components["schemas"]["api.WorkflowRunStatusSummary"];
         };
         "api.GetWorkflowRunsSuccessResponse": {
@@ -33696,7 +33696,7 @@ export interface components {
         };
         "api.ListWorkflowRunsResponse": {
             pagination?: components["schemas"]["api.CursorPagination"];
-            runs?: components["schemas"]["api.WorkflowRunStatus"][];
+            runs?: components["schemas"]["models.WorkflowRun"][];
             summary?: components["schemas"]["api.WorkflowRunStatusSummary"];
         };
         "api.ListWorkflowRunsSuccessResponse": {
@@ -34871,44 +34871,8 @@ export interface components {
             to?: number;
             workflowIds?: string[];
         };
-        "api.WorkflowRunOperationStatus": {
-            operation?: string;
-            status?: components["schemas"]["models.WorkflowRunOperationState"];
-        };
-        "api.WorkflowRunStatus": {
-            deviceKey?: string;
-            deviceName?: string;
-            /** @description Dispatched / Resolved are the sizes of the run's dispatched and resolved
-             *     operation sets, exposed as a coarse progress hint. */
-            dispatched?: number;
-            /** @description DispatchedOperations / ResolvedOperations name the stages behind the
-             *     Dispatched / Resolved counts, in dispatch/resolution order, so a surface
-             *     can render per-stage progress (e.g. "pose done, redaction running")
-             *     instead of only a run-level running/completed flip for multi-stage runs. */
-            dispatchedOperations?: string[];
-            end?: number;
-            /** @description HasResults is true when the run accumulated any stage output. */
-            hasResults?: boolean;
-            key?: string;
-            mediaId?: string;
-            /** @description Operations provides the same lifecycle as the operation sets in a
-             *     render-ready form. It contains every dispatched operation in dispatch
-             *     order, marked dispatched until it appears in ResolvedOperations. */
-            operations?: components["schemas"]["api.WorkflowRunOperationStatus"][];
-            origin?: string;
-            recordingTimestamp?: number;
-            resolved?: number;
-            resolvedOperations?: string[];
-            runId?: string;
-            sourceRef?: string;
-            /** @description Start / End are unix seconds; End is 0 while the run is still open. */
-            start?: number;
-            /** @description State is the derived lifecycle: running | completed | noResult
-             *     (models.WorkflowRunState). */
-            state?: string;
-            workflowId?: string;
-            workflowName?: string;
-        };
+        "api.WorkflowRunOperationStatus": components["schemas"]["models.WorkflowRunOperationStatus"];
+        "api.WorkflowRunStatus": components["schemas"]["models.WorkflowRun"];
         "api.WorkflowRunStatusSummary": {
             completed?: number;
             noResult?: number;
@@ -38645,6 +38609,20 @@ export interface components {
              *     media is stored/served from). Copied from the recording at hand-off time.
              *     Wire-only. */
             device?: components["schemas"]["models.WorkflowDevice"];
+            deviceKey?: string;
+            deviceName?: string;
+            dispatched?: number;
+            /** @description DispatchedOperations are the operation ids the engine has enqueued for this
+             *     run — the always-stages seeded at open plus any conditional stages that
+             *     matched. Every entry is a deployed stage's operation (only stages are ever
+             *     dispatched), so here stage and operation coincide; the field is named by
+             *     operation because the stored value is the operation id and to stay
+             *     symmetric with ResolvedOperations. Written idempotently via $addToSet. */
+            dispatchedOperations?: string[];
+            durationMs?: number;
+            end?: number;
+            endedAtMs?: number;
+            hasResults?: boolean;
             /** @description Inputs is the immutable start context the run opens with, keyed by the
              *     upstream operation that produced it (e.g. "classify" → the classification
              *     result). Conditions and stages read upstream context from here; it is set
@@ -38658,6 +38636,7 @@ export interface components {
              *     run state is correlated by Id/RunId because several workflows and manual
              *     re-runs may execute over the same key. */
             key?: string;
+            mediaId?: string;
             /** @description Operation marks the message's role on the workflows queue (wire-only):
              *       - "event": a fresh run hand-off from analysis. It opens the run and
              *         carries the start context in Inputs (e.g. the classification result).
@@ -38668,6 +38647,7 @@ export interface components {
              *         a dispatch goes to the worker's own queue — so the engine never has to
              *         disambiguate a dispatch from a result. */
             operation?: string;
+            operations?: components["schemas"]["models.WorkflowRunOperationStatus"][];
             /** @description Origin records how this run was opened — the run-side counterpart of the
              *     Workflow's trigger Type. An automatic run was teed off the pipeline by
              *     analysis for a matching recording; a manual run was launched on demand by a
@@ -38713,6 +38693,12 @@ export interface components {
              *     something a worker has to echo back, so it is not part of the stage
              *     contract. */
             recordingTimestamp?: number;
+            resolved?: number;
+            /** @description ResolvedOperations are the operation ids whose stage results the engine has
+             *     observed (each worker hands its result back under its operation). With
+             *     DispatchedOperations it drives finalization — the run ends once every
+             *     dispatched operation is resolved — and idempotency. */
+            resolvedOperations?: string[];
             /** @description Results is the run's accumulated stage outputs, keyed by operation. Each
              *     stage worker writes its result under its operation on the way back, and
              *     conditions / downstream stages read upstream outputs from here. It grows
@@ -38749,6 +38735,11 @@ export interface components {
              *     the run. Empty for automatic runs. It generalises to any run-grouping handle
              *     (a case id today; a temporal device-series id is a forward-looking twin). */
             sourceRef?: string;
+            /** @description StageExecutions is the bounded stage plan and execution summary used by run
+             *     detail surfaces. The compiled routing plan already occupies the JSON
+             *     "stages" field, so the execution timeline has its own unambiguous name.
+             *     Sparse queue messages leave this field empty. */
+            stageExecutions?: components["schemas"]["models.WorkflowRunStageExecution"][];
             /** @description Stages is the run's self-describing routing: the compiled stage set of the
              *     workflow this run executes (the output of Workflow.CompileStages) embedded
              *     on the hand-off so the engine can dispatch a workflow it does not hold in
@@ -38761,6 +38752,15 @@ export interface components {
              *     persisted so the return path — a stage result reopening the run on any
              *     replica — resolves the same routing without re-fetching the definition. */
             stages?: components["schemas"]["models.WorkflowStage"][];
+            /** @description Start and End stamp the run's lifecycle (unix seconds). They remain for
+             *     compatibility with existing runs and list indexes. */
+            start?: number;
+            /** @description StartedAtMs and EndedAtMs are the millisecond-precision counterparts of the
+             *     legacy Start and End fields. New writers populate both pairs; readers fall
+             *     back to Start/End for runs created before these fields existed. */
+            startedAtMs?: number;
+            /** @description The API lifecycle state derived from persisted run facts. */
+            state?: components["schemas"]["models.WorkflowRunState"];
             /** @description Storage carries the credentials a dispatched stage worker needs to fetch
              *     the media (global Kerberos Storage plus any resolved per-recording vault
              *     override). It is populated by the engine only on the engine→worker
@@ -38789,8 +38789,27 @@ export interface components {
         };
         /** @enum {string} */
         "models.WorkflowRunOperationState": "dispatched" | "resolved";
+        "models.WorkflowRunOperationStatus": {
+            operation?: string;
+            status?: components["schemas"]["models.WorkflowRunOperationState"];
+        };
         /** @enum {string} */
         "models.WorkflowRunOrigin": "automatic" | "manual";
+        "models.WorkflowRunStageExecution": {
+            dependencies?: string[];
+            dispatchAttempts?: number;
+            dispatchedAtMs?: number;
+            durationMs?: number;
+            firstDispatchAttemptAtMs?: number;
+            lastDispatchAttemptAtMs?: number;
+            lastDispatchErrorCode?: string;
+            name?: string;
+            operation?: string;
+            resolvedAtMs?: number;
+            state?: components["schemas"]["models.WorkflowRunStageState"];
+        };
+        /** @enum {string} */
+        "models.WorkflowRunStageState": "waiting" | "retrying" | "dispatched" | "resolved" | "dispatchFailed" | "timedOut" | "skipped";
         /** @enum {string} */
         "models.WorkflowRunState": "running" | "completed" | "noResult";
         /** @enum {string} */
@@ -39245,6 +39264,8 @@ export namespace models {
     export type WorkflowNode = components['schemas']['models.WorkflowNode'];
     export type WorkflowResult = components['schemas']['models.WorkflowResult'];
     export type WorkflowRun = components['schemas']['models.WorkflowRun'];
+    export type WorkflowRunOperationStatus = components['schemas']['models.WorkflowRunOperationStatus'];
+    export type WorkflowRunStageExecution = components['schemas']['models.WorkflowRunStageExecution'];
     export type WorkflowStage = components['schemas']['models.WorkflowStage'];
     export type WorkflowStageReference = components['schemas']['models.WorkflowStageReference'];
     export type WorkflowStorage = components['schemas']['models.WorkflowStorage'];
@@ -39697,7 +39718,7 @@ export namespace api {
     export type WarningResponse = components['schemas']['api.WarningResponse'];
     export type WorkflowFilter = components['schemas']['api.WorkflowFilter'];
     export type WorkflowRunFilter = components['schemas']['api.WorkflowRunFilter'];
-    export type WorkflowRunOperationStatus = components['schemas']['api.WorkflowRunOperationStatus'];
-    export type WorkflowRunStatus = components['schemas']['api.WorkflowRunStatus'];
+    export type WorkflowRunOperationStatus = models.WorkflowRunOperationStatus;
+    export type WorkflowRunStatus = models.WorkflowRun;
     export type WorkflowRunStatusSummary = components['schemas']['api.WorkflowRunStatusSummary'];
 }
