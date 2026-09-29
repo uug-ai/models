@@ -127,8 +127,8 @@ func TestWorkflowRun_MarshalJSON_ProjectsRunIdFromId(t *testing.T) {
 
 func TestWorkflowRun_StageExecutionPersistence(t *testing.T) {
 	run := WorkflowRun{
-		StartedAtMs: 1_000,
-		EndedAtMs:   2_000,
+		Start: 1_000,
+		End:   2_000,
 		StageExecutions: []WorkflowRunStageExecution{{
 			Operation:                "anpr",
 			Name:                     "Number plate recognition",
@@ -153,11 +153,17 @@ func TestWorkflowRun_StageExecutionPersistence(t *testing.T) {
 	if err := bson.Unmarshal(encoded, &document); err != nil {
 		t.Fatalf("unmarshal BSON: %v", err)
 	}
-	if document["startedatms"] != int64(1_000) {
-		t.Errorf("startedatms = %v, want 1000", document["startedatms"])
+	if document["start"] != int64(1_000) {
+		t.Errorf("start = %v, want 1000", document["start"])
 	}
-	if document["endedatms"] != int64(2_000) {
-		t.Errorf("endedatms = %v, want 2000", document["endedatms"])
+	if document["end"] != int64(2_000) {
+		t.Errorf("end = %v, want 2000", document["end"])
+	}
+	if _, ok := document["startedatms"]; ok {
+		t.Error("deprecated startedatms must not be persisted")
+	}
+	if _, ok := document["endedatms"]; ok {
+		t.Error("deprecated endedatms must not be persisted")
 	}
 
 	executions, ok := document["stageexecutions"].(bson.A)
@@ -199,12 +205,13 @@ func TestWorkflowRun_PopulateRuntimeFields(t *testing.T) {
 	if run.State != WorkflowRunStateCompleted {
 		t.Errorf("State = %q, want completed", run.State)
 	}
-	if run.StartedAtMs != 1_000 || run.EndedAtMs != 3_000 || run.DurationMs != 2_000 {
-		t.Errorf("timing = (%d, %d, %d), want (1000, 3000, 2000)", run.StartedAtMs, run.EndedAtMs, run.DurationMs)
+	if run.Start != 1_000 || run.End != 3_000 || run.DurationMs != 2_000 {
+		t.Errorf("timing = (%d, %d, %d), want (1000, 3000, 2000)", run.Start, run.End, run.DurationMs)
 	}
 	if run.Dispatched != 2 || run.Resolved != 1 || !run.HasResults {
 		t.Errorf("progress = (%d, %d, %t), want (2, 1, true)", run.Dispatched, run.Resolved, run.HasResults)
 	}
+
 	if len(run.Operations) != 2 ||
 		run.Operations[0].Status != WorkflowRunOperationStateResolved ||
 		run.Operations[1].Status != WorkflowRunOperationStateDispatched {
@@ -236,6 +243,22 @@ func TestWorkflowRun_PopulateRuntimeFields(t *testing.T) {
 	}
 	if projected.Origin != WorkflowOriginAutomatic {
 		t.Errorf("projected Origin = %q, want automatic", projected.Origin)
+	}
+}
+
+func TestWorkflowRun_PopulateRuntimeFieldsKeepsMillisecondTimestamps(t *testing.T) {
+	run := WorkflowRun{
+		Start: 1_700_000_000_123,
+		End:   1_700_000_001_456,
+	}
+
+	run.PopulateRuntimeFields(time.Time{})
+
+	if run.Start != 1_700_000_000_123 || run.End != 1_700_000_001_456 {
+		t.Fatalf("timing = (%d, %d), want millisecond values unchanged", run.Start, run.End)
+	}
+	if run.DurationMs != 1_333 {
+		t.Fatalf("DurationMs = %d, want 1333", run.DurationMs)
 	}
 }
 

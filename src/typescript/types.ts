@@ -38923,7 +38923,6 @@ export interface components {
             dispatchedOperations?: string[];
             durationMs?: number;
             end?: number;
-            endedAtMs?: number;
             hasResults?: boolean;
             /** @description Inputs is the immutable start context the run opens with, keyed by the
              *     upstream operation that produced it (e.g. "classify" → the classification
@@ -39053,13 +39052,9 @@ export interface components {
              *     split lifecycle summaries. Nil means no captured routing (legacy fallback);
              *     an explicit empty slice is an authoritative zero-stage plan. */
             stages?: components["schemas"]["models.WorkflowRunStage"][];
-            /** @description Start and End stamp the run's lifecycle (unix seconds). They remain for
-             *     compatibility with existing runs and list indexes. */
+            /** @description Start and End stamp the run's lifecycle in Unix milliseconds. Readers
+             *     normalize legacy runs whose values were persisted in Unix seconds. */
             start?: number;
-            /** @description StartedAtMs and EndedAtMs are the millisecond-precision counterparts of the
-             *     legacy Start and End fields. New writers populate both pairs; readers fall
-             *     back to Start/End for runs created before these fields existed. */
-            startedAtMs?: number;
             /** @description The fields below are API read projections. They are derived or joined by
              *     the service after loading a run and never persist back into workflow state. */
             state?: components["schemas"]["models.WorkflowRunState"];
