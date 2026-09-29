@@ -182,17 +182,25 @@ const (
 	StageParamNumber  StageParamType = "number"
 	StageParamBoolean StageParamType = "boolean"
 	StageParamSelect  StageParamType = "select"
+	// StageParamSecret is a write-only string (e.g. a password). The API never
+	// returns its stored value: reads carry StageParamSecretMask instead, and a
+	// write that sends the mask back keeps the stored value.
+	StageParamSecret StageParamType = "secret"
 )
+
+// StageParamSecretMask stands in for a stored StageParamSecret value on reads.
+const StageParamSecretMask = "********"
 
 // StageParam declares one configurable parameter a stage accepts. The catalog
 // stage owns the declaration; a WorkflowNode supplies the per-instance value
 // under the same Name in its Data map (see WorkflowNode.Data). Declaring params
 // here is what gives Data a schema to validate against and default from.
 type StageParam struct {
-	Name     string         `json:"name" bson:"name"`
-	Label    string         `json:"label,omitempty" bson:"label,omitempty"`
-	Type     StageParamType `json:"type" bson:"type"`
-	Required bool           `json:"required,omitempty" bson:"required,omitempty"`
+	Name        string         `json:"name" bson:"name"`
+	Label       string         `json:"label,omitempty" bson:"label,omitempty"`
+	Description string         `json:"description,omitempty" bson:"description,omitempty"`
+	Type        StageParamType `json:"type" bson:"type"`
+	Required    bool           `json:"required,omitempty" bson:"required,omitempty"`
 	// Default is applied when a node supplies no value for this parameter.
 	Default any `json:"default,omitempty" bson:"default,omitempty"`
 	// Options enumerates the permitted values when Type is StageParamSelect.

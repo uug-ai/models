@@ -15,6 +15,7 @@ const (
 const (
 	StageParamName = "name"
 	StageParamLabel = "label"
+	StageParamDescription = "description"
 	StageParamType = "type"
 	StageParamRequired = "required"
 	StageParamDefault = "default"

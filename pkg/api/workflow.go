@@ -28,6 +28,7 @@ const (
 	WorkflowInvalidGraph        WorkflowStatus = "workflow_invalid_graph"
 	WorkflowStageNotAllowed     WorkflowStatus = "workflow_stage_not_allowed"
 	WorkflowDeviceForbidden     WorkflowStatus = "workflow_device_forbidden"
+	WorkflowInvalidParams       WorkflowStatus = "workflow_invalid_params"
 )
 
 // String returns the string representation of the workflow status.
@@ -61,6 +62,7 @@ func (cs WorkflowStatus) Translate(lang string) string {
 			WorkflowInvalidGraph:        "Workflow graph is invalid",
 			WorkflowStageNotAllowed:     "Workflow uses a stage that is not available",
 			WorkflowDeviceForbidden:     "Workflow selects a device you cannot access",
+			WorkflowInvalidParams:       "Workflow block settings are invalid or incomplete",
 		},
 	}
 
