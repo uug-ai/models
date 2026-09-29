@@ -1,6 +1,7 @@
 package models
 
 import (
+	"reflect"
 	"regexp"
 	"strings"
 )
@@ -104,7 +105,7 @@ func resolveParts(current any, parts []string) []any {
 	part, rest := parts[0], parts[1:]
 
 	if part == "*" {
-		items, ok := current.([]any)
+		items, ok := asList(current)
 		if !ok {
 			return nil
 		}
@@ -115,7 +116,7 @@ func resolveParts(current any, parts []string) []any {
 		return out
 	}
 
-	m, ok := current.(map[string]any)
+	m, ok := asMap(current)
 	if !ok {
 		return nil
 	}
@@ -124,6 +125,46 @@ func resolveParts(current any, parts []string) []any {
 		return nil
 	}
 	return resolveParts(next, rest)
+}
+
+// asList views any slice or array as []any. Besides a plain []any this accepts
+// named slice types such as the Mongo driver's primitive.A — which is what an
+// `any` field (a condition operand, a run input) decodes to when read back from
+// BSON — and typed slices like []string. A []byte is a scalar, not a list.
+func asList(v any) ([]any, bool) {
+	if list, ok := v.([]any); ok {
+		return list, true
+	}
+	rv := reflect.ValueOf(v)
+	if rv.Kind() != reflect.Slice && rv.Kind() != reflect.Array {
+		return nil, false
+	}
+	if rv.Type().Elem().Kind() == reflect.Uint8 {
+		return nil, false
+	}
+	out := make([]any, rv.Len())
+	for i := range out {
+		out[i] = rv.Index(i).Interface()
+	}
+	return out, true
+}
+
+// asMap views any string-keyed map (map[string]any, the driver's primitive.M,
+// map[string]string, ...) as map[string]any.
+func asMap(v any) (map[string]any, bool) {
+	if m, ok := v.(map[string]any); ok {
+		return m, true
+	}
+	rv := reflect.ValueOf(v)
+	if rv.Kind() != reflect.Map || rv.Type().Key().Kind() != reflect.String {
+		return nil, false
+	}
+	out := make(map[string]any, rv.Len())
+	iter := rv.MapRange()
+	for iter.Next() {
+		out[iter.Key().String()] = iter.Value().Interface()
+	}
+	return out, true
 }
 
 func equalValues(a, b any) bool {
@@ -139,29 +180,29 @@ func equalValues(a, b any) bool {
 // containsValue is true when actual is a slice containing the wanted value, or a
 // string containing the wanted substring.
 func containsValue(actual, wanted any) bool {
-	switch v := actual.(type) {
-	case []any:
-		for _, item := range v {
-			if equalValues(item, wanted) {
-				return true
-			}
-		}
-		return false
-	case string:
+	if v, ok := actual.(string); ok {
 		if s, ok := wanted.(string); ok {
 			return strings.Contains(v, s)
 		}
 		return false
-	default:
+	}
+	items, ok := asList(actual)
+	if !ok {
 		return false
 	}
+	for _, item := range items {
+		if equalValues(item, wanted) {
+			return true
+		}
+	}
+	return false
 }
 
 // inValue is true when actual equals one of the values in wanted, where wanted
 // is the operand list. It is the inverse of containsValue: here the operand is
 // the set and actual is the candidate member.
 func inValue(actual, wanted any) bool {
-	list, ok := wanted.([]any)
+	list, ok := asList(wanted)
 	if !ok {
 		return false
 	}
