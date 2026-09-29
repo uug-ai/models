@@ -30346,45 +30346,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/workflowrunconditiondecision": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get WorkflowRunConditionDecision (schema generation only)
-         * @description Internal endpoint used only to ensure WorkflowRunConditionDecision schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.WorkflowRunConditionDecision"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/workflowrunfilter": {
         parameters: {
             query?: never;
@@ -39248,10 +39209,6 @@ export interface components {
              *     Populated alongside WorkflowId. */
             workflowName?: string;
         };
-        "models.WorkflowRunConditionDecision": {
-            index?: number;
-            outcome?: components["schemas"]["models.WorkflowRunDecisionOutcome"];
-        };
         /** @enum {string} */
         "models.WorkflowRunDecisionOutcome": "passed" | "failed" | "waiting" | "notEvaluated";
         /** @enum {string} */
@@ -39306,10 +39263,8 @@ export interface components {
             state?: components["schemas"]["models.WorkflowRunStageState"];
         };
         "models.WorkflowRunStageNeedDecision": {
-            conditions?: components["schemas"]["models.WorkflowRunConditionDecision"][];
             index?: number;
             outcome?: components["schemas"]["models.WorkflowRunDecisionOutcome"];
-            ready?: boolean;
         };
         /** @enum {string} */
         "models.WorkflowRunStageState": "waiting" | "retrying" | "dispatched" | "resolved" | "dispatchFailed" | "timedOut" | "skipped";
@@ -39782,7 +39737,6 @@ export namespace models {
     export type WorkflowPredicateSet = components['schemas']['models.WorkflowPredicateSet'];
     export type WorkflowResult = components['schemas']['models.WorkflowResult'];
     export type WorkflowRun = components['schemas']['models.WorkflowRun'];
-    export type WorkflowRunConditionDecision = components['schemas']['models.WorkflowRunConditionDecision'];
     export type WorkflowRunOperationStatus = components['schemas']['models.WorkflowRunOperationStatus'];
     export type WorkflowRunStage = components['schemas']['models.WorkflowRunStage'];
     export type WorkflowRunStageDecision = components['schemas']['models.WorkflowRunStageDecision'];

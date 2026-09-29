@@ -3,12 +3,6 @@
 
 package properties
 
-// WorkflowRunConditionDecision property field names (BSON)
-const (
-	WorkflowRunConditionDecisionIndex = "index"
-	WorkflowRunConditionDecisionOutcome = "outcome"
-)
-
 // WorkflowRunStageDecision property field names (BSON)
 const (
 	WorkflowRunStageDecisionEvaluatedAtMs = "evaluatedatms"
@@ -19,7 +13,5 @@ const (
 // WorkflowRunStageNeedDecision property field names (BSON)
 const (
 	WorkflowRunStageNeedDecisionIndex = "index"
-	WorkflowRunStageNeedDecisionReady = "ready"
 	WorkflowRunStageNeedDecisionOutcome = "outcome"
-	WorkflowRunStageNeedDecisionConditions = "conditions"
 )

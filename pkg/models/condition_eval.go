@@ -40,10 +40,6 @@ func EvaluateCondition(c *StageCondition, root map[string]any) bool {
 // Empty sets impose no restriction, but invalid modes or group structures fail
 // closed even when another predicate would have short-circuited evaluation.
 func EvaluateConditionSet(set WorkflowConditionSet, root map[string]any) bool {
-	return evaluateConditionSet(set, root, nil)
-}
-
-func evaluateConditionSet(set WorkflowConditionSet, root map[string]any, evaluated func(int, bool)) bool {
 	if validateConditionMode(set.ConditionMode) != nil {
 		return false
 	}
@@ -57,9 +53,6 @@ func evaluateConditionSet(set WorkflowConditionSet, root map[string]any, evaluat
 	}
 	for i := range set.Conditions {
 		matched := evaluateWorkflowCondition(&set.Conditions[i], root)
-		if evaluated != nil {
-			evaluated(i, matched)
-		}
 		if set.ConditionMode == ConditionModeAny && matched {
 			return true
 		}

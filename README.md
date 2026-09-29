@@ -165,28 +165,22 @@ millisecond timestamp normalization is unchanged.
 #### Stage decisions
 
 `WorkflowRunStageExecutionDetails.Decision` (`execution.decision` in JSON/BSON)
-stores one bounded routing-evaluation snapshot: the latest while waiting, frozen
-with dispatch. `WorkflowRunStage.EvaluateDecision(root, available, at)` is a pure
-helper, not a dispatch claim. It records `evaluatedAtMs` in Unix milliseconds,
-overall `eligible`, and indexed dependency readiness and condition outcomes.
+stores one display-only summary produced alongside the engine's existing routing
+evaluation. It must never be read to drive dispatch. The summary records
+`evaluatedAtMs` in Unix milliseconds, overall `eligible`, and per-edge `outcome`
+entries referencing the containing stage's frozen `Needs[index]`.
 
-Dependency indices reference the containing stage's frozen `Needs`; condition
-indices reference each dependency's normalized `Conditions` list, with a legacy
-singular condition at index zero. Outcomes are `passed`, `failed`, `waiting`, or
-`notEvaluated`. Both dependency and condition `all`/`any` evaluation short-circuit:
-skipped checks remain `notEvaluated`, even when dependency `ready` is true.
-`waiting` means only that an upstream gate is unavailable. An `anyMatch` predicate
-is one aggregate check, never independent successes across different objects or
-a per-object evaluation log.
+Outcomes are `passed`, `failed`, `waiting` (upstream unavailable), or
+`notEvaluated` (skipped, for example by short-circuiting). This adds no evaluator,
+readiness flag, per-condition trace, raw inputs, observed values, or history.
 
-A future writer must compute decisions from authoritative run context and ignore
-decisions supplied by workers or replay messages. It must use atomic state/claim
-guards against stale evaluations,
-run closure, and dispatch: replace only the latest waiting snapshot and freeze
-the decision associated with dispatch. Retain the last snapshot for a stage that
-never dispatches. Nil means unknown for legacy or uncaptured decisions; readers
-must not reconstruct it from results, lifecycle state, or current definitions.
-The snapshot contains no raw inputs, observed values, or other evaluation history.
+Future writers retain only the latest pending summary and use existing run-state
+guards to protect the final dispatch summary from stale overwrites. Ignore
+summaries supplied by workers or replays. Keep the last summary for stages that
+never dispatch.
+Nil means unknown for legacy or uncaptured summaries; never backfill from
+results, lifecycle state, or current definitions. Engine/API adoption follows
+a models release.
 
 ### Automatic Type Generation
 
