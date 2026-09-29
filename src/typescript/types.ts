@@ -30463,6 +30463,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/workflowrunstagedecision": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowRunStageDecision (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowRunStageDecision schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowRunStageDecision"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/workflowrunstageexecution": {
         parameters: {
             query?: never;
@@ -30568,6 +30607,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.WorkflowRunStatus"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowrunstageneeddecision": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowRunStageNeedDecision (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowRunStageNeedDecision schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowRunStageNeedDecision"];
                     };
                 };
             };
@@ -39132,6 +39210,8 @@ export interface components {
             workflowName?: string;
         };
         /** @enum {string} */
+        "models.WorkflowRunDecisionOutcome": "passed" | "failed" | "waiting" | "notEvaluated";
+        /** @enum {string} */
         "models.WorkflowRunOperationState": "dispatched" | "resolved";
         "models.WorkflowRunOperationStatus": {
             operation?: string;
@@ -39150,6 +39230,11 @@ export interface components {
             operation?: string;
             queue?: string;
         };
+        "models.WorkflowRunStageDecision": {
+            eligible?: boolean;
+            evaluatedAtMs?: number;
+            needs?: components["schemas"]["models.WorkflowRunStageNeedDecision"][];
+        };
         "models.WorkflowRunStageExecution": {
             dependencies?: string[];
             dispatchAttempts?: number;
@@ -39164,6 +39249,10 @@ export interface components {
             state?: components["schemas"]["models.WorkflowRunStageState"];
         };
         "models.WorkflowRunStageExecutionDetails": {
+            /** @description Decision is the latest captured routing evaluation while waiting, then the
+             *     decision associated with dispatch. Nil means no decision was captured.
+             *     Writers preserve the dispatch decision; readers never infer it from state. */
+            decision?: components["schemas"]["models.WorkflowRunStageDecision"];
             dispatchAttempts?: number;
             dispatchedAtMs?: number;
             durationMs?: number;
@@ -39172,6 +39261,10 @@ export interface components {
             lastDispatchErrorCode?: string;
             resolvedAtMs?: number;
             state?: components["schemas"]["models.WorkflowRunStageState"];
+        };
+        "models.WorkflowRunStageNeedDecision": {
+            index?: number;
+            outcome?: components["schemas"]["models.WorkflowRunDecisionOutcome"];
         };
         /** @enum {string} */
         "models.WorkflowRunStageState": "waiting" | "retrying" | "dispatched" | "resolved" | "dispatchFailed" | "timedOut" | "skipped";
@@ -39646,8 +39739,10 @@ export namespace models {
     export type WorkflowRun = components['schemas']['models.WorkflowRun'];
     export type WorkflowRunOperationStatus = components['schemas']['models.WorkflowRunOperationStatus'];
     export type WorkflowRunStage = components['schemas']['models.WorkflowRunStage'];
+    export type WorkflowRunStageDecision = components['schemas']['models.WorkflowRunStageDecision'];
     export type WorkflowRunStageExecution = components['schemas']['models.WorkflowRunStageExecution'];
     export type WorkflowRunStageExecutionDetails = components['schemas']['models.WorkflowRunStageExecutionDetails'];
+    export type WorkflowRunStageNeedDecision = components['schemas']['models.WorkflowRunStageNeedDecision'];
     export type WorkflowRunTriggerMatch = components['schemas']['models.WorkflowRunTriggerMatch'];
     export type WorkflowStage = components['schemas']['models.WorkflowStage'];
     export type WorkflowStageReference = components['schemas']['models.WorkflowStageReference'];
