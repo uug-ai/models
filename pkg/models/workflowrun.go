@@ -242,6 +242,12 @@ type WorkflowRun struct {
 	// opened before origins existed.
 	Origin WorkflowRunOrigin `json:"origin,omitempty" bson:"origin,omitempty"`
 
+	// TriggerMatch records the first automatic trigger that selected this run.
+	// It is immutable engine-owned provenance, not stage execution state. Nil
+	// means no captured match (legacy or a launch that bypassed automatic matching).
+	// Readers must not reconstruct it from Origin or today's workflow definition.
+	TriggerMatch *WorkflowRunTriggerMatch `json:"triggerMatch,omitempty" bson:"triggermatch,omitempty"`
+
 	// SourceRef ties a manual run back to the thing it was launched from — e.g.
 	// the case id when launched from a case surface — so sibling runs fanned out
 	// from one user action (one seed per selected media key) can be grouped above

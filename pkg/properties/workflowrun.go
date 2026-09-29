@@ -10,6 +10,7 @@ const (
 	WorkflowRunWorkflowName = "workflowname"
 	WorkflowRunStages = "stages"
 	WorkflowRunOrigin = "origin"
+	WorkflowRunTriggerMatch = "triggermatch"
 	WorkflowRunSourceRef = "sourceref"
 	WorkflowRunKey = "key"
 	WorkflowRunRecordingTimestamp = "recordingtimestamp"
