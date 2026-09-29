@@ -309,6 +309,93 @@ func errorHandler(w http.ResponseWriter, message string, code int) {
 }
 ```
 
+## Workflow activation and routing conditions
+
+Triggers, graph edges, and compiled stage dependencies share `conditions` and
+`conditionMode` (`all` by default, or `any`). An empty top-level group adds no
+restriction, including in `any` mode. `WorkflowCondition` supports the existing
+`path`/`op`/`value` comparisons and `anyMatch` for same-element matching:
+
+```json
+{
+  "conditionMode": "all",
+  "conditions": [
+    {
+      "path": "inputs.classify.details",
+      "op": "anyMatch",
+      "match": {
+        "conditionMode": "all",
+        "conditions": [
+          {"path": "classified", "op": "eq", "value": "pedestrian"},
+          {"path": "moving", "op": "eq", "value": true}
+        ]
+      }
+    }
+  ]
+}
+```
+
+The fields and values above are illustrative: use the deployed classifier's
+catalog/schema. Inside `match`, paths are relative to **one array element**;
+predicates cannot contain another `anyMatch`. At least one element must match,
+and missing, non-array, or empty values do not match. Legacy wildcard predicates
+retain independent-candidate behavior; two `details.*` predicates can match two
+different detections.
+
+- **Triggers:** `type` defaults to `automatic`. `devices`, `siteIds`, and `groupIds`
+  select recording scope: OR within each category, AND across populated
+  categories. The scope, weekly active hours, and condition group must all hold.
+  Schedules filter recording events; they are not scheduled jobs. Site/group IDs
+  are stable strings, and callers must resolve effective memberships and enforce
+  tenant/project access separately.
+- **Manual triggers:** `surfaces` advertises `case`, `media`, and/or `redaction`.
+  Validation requires a supported surface; automatic-only fields remain ignored
+  for compatibility with existing documents.
+- **Edges:** `source`/`target` are node IDs. Compilation derives the source
+  operation as a dependency readiness gate. Predicate paths are absolute and
+  independent of that source; port names do not rebase them. A stage dependency
+  without predicates still waits for its operation to be available. Legacy
+  device edges with predicates gate on `classify`; those without predicates
+  start their target immediately.
+- **Two distinct modes:** a dependency's `conditionMode` combines its predicates.
+  A stage's `needsMode` combines incoming dependencies and still defaults to
+  `any`.
+
+Use `WorkflowTrigger.Validate`, `Workflow.ValidateTriggers`,
+`Workflow.ValidateGraph`, and `StageDependency.ValidateConditions` before
+accepting configurations. Use `EvaluateConditionSet` for shared evaluation and
+`StageDependency.Matches` with the available operations from run inputs/results
+for readiness plus predicates. `WorkflowTrigger.Matches` includes selectors and
+schedule; `Workflow.AutomaticMatches` provides one boolean activation decision
+across alternative triggers. `CompiledConditions` remains a deprecated flat
+inspection helper and must not be used to evaluate `any` groups.
+
+### Compatibility and rollout
+
+`StageCondition` remains source-compatible with `WorkflowCondition`. Singular
+edge/dependency `condition` remains readable without a migration: `ConditionSet`
+normalizes it in memory to a one-item `all` group. Supplying both singular and
+plural forms (including an explicit empty plural list) is rejected by validation.
+New writers should emit only plural conditions. Existing JSON/BSON field names,
+default modes, and workflow ownership normalization remain unchanged.
+
+This is a **models-first, reader-first** change, not an enabled editor feature:
+
+1. Adopt shared validation/evaluation in `hub-workflows` and `hub-api` before
+   accepting new-format writes. Older engines ignore plural edge conditions and
+   could dispatch unconditionally.
+2. Supply sanitized, already-available operation inputs through
+   `AutomaticTriggerRootWithInputs`; the original `AutomaticTriggerRoot` retains
+   its input-free behavior. Trigger predicates cannot reference future `results`.
+   Callers must also populate trusted `WorkflowDevice.GroupIds`; models do not
+   resolve site/group relationships or scrub arbitrary worker payloads.
+3. Wire the Start-node editor to the canonical `Workflow.Triggers` list and the
+   shared condition catalog. Until that integration, retain the existing device
+   node save behavior: `SyncGraphTriggers` replaces automatic triggers with
+   camera-only scope. Do not use that adapter for new full-trigger writes.
+4. Enable the new UI/writes only after all readers are updated. No data backfill
+   is required for existing workflows.
+
 ## Project Structure
 
 ```

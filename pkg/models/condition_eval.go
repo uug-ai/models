@@ -30,40 +30,105 @@ func EvaluateCondition(c *StageCondition, root map[string]any) bool {
 	if c == nil {
 		return true
 	}
+	if err := validateWorkflowConditionStructure(c); err != nil {
+		return false
+	}
+	return evaluateWorkflowCondition(c, root)
+}
 
-	candidates, found := ResolveCandidates(root, c.Path)
+// EvaluateConditionSet applies all (the default) or any to absolute predicates.
+// Empty sets impose no restriction, but invalid modes or group structures fail
+// closed even when another predicate would have short-circuited evaluation.
+func EvaluateConditionSet(set WorkflowConditionSet, root map[string]any) bool {
+	if validateConditionMode(set.ConditionMode) != nil {
+		return false
+	}
+	for i := range set.Conditions {
+		if validateWorkflowConditionStructure(&set.Conditions[i]) != nil {
+			return false
+		}
+	}
+	if len(set.Conditions) == 0 {
+		return true
+	}
+	for i := range set.Conditions {
+		matched := evaluateWorkflowCondition(&set.Conditions[i], root)
+		if set.ConditionMode == ConditionModeAny && matched {
+			return true
+		}
+		if set.ConditionMode != ConditionModeAny && !matched {
+			return false
+		}
+	}
+	return set.ConditionMode != ConditionModeAny
+}
 
-	switch c.Op {
+func evaluateWorkflowCondition(c *WorkflowCondition, root map[string]any) bool {
+	if c.Op == ConditionOpAnyMatch {
+		candidates, _ := ResolveCandidates(root, c.Path)
+		for _, candidate := range candidates {
+			items, ok := asList(candidate)
+			if !ok {
+				continue
+			}
+			for _, item := range items {
+				if object, ok := asMap(item); ok && evaluatePredicateSet(c.Match, object) {
+					return true
+				}
+			}
+		}
+		return false
+	}
+	return evaluateScalarCondition(c.Path, c.Op, c.Value, root)
+}
+
+func evaluatePredicateSet(set *WorkflowPredicateSet, root map[string]any) bool {
+	for _, p := range set.Conditions {
+		matched := evaluateScalarCondition(p.Path, p.Op, p.Value, root)
+		if set.ConditionMode == ConditionModeAny && matched {
+			return true
+		}
+		if set.ConditionMode != ConditionModeAny && !matched {
+			return false
+		}
+	}
+	return set.ConditionMode != ConditionModeAny
+}
+
+func evaluateScalarCondition(path string, op ConditionOp, value any, root map[string]any) bool {
+	candidates, found := ResolveCandidates(root, path)
+
+	switch op {
 	case ConditionOpExists:
 		return found
 	case ConditionOpNe:
 		// Universal: every candidate must differ. An empty set passes vacuously.
 		for _, actual := range candidates {
-			if equalValues(actual, c.Value) {
+			if equalValues(actual, value) {
 				return false
 			}
 		}
 		return true
 	case ConditionOpEq:
-		return anyCandidate(candidates, func(a any) bool { return equalValues(a, c.Value) })
+		return anyCandidate(candidates, func(a any) bool { return equalValues(a, value) })
 	case ConditionOpContains:
-		return anyCandidate(candidates, func(a any) bool { return containsValue(a, c.Value) })
+		return anyCandidate(candidates, func(a any) bool { return containsValue(a, value) })
 	case ConditionOpIn:
-		return anyCandidate(candidates, func(a any) bool { return inValue(a, c.Value) })
+		return anyCandidate(candidates, func(a any) bool { return inValue(a, value) })
 	case ConditionOpMatches:
-		re, ok := compileMatchPattern(c.Value)
+		re, ok := compileMatchPattern(value)
 		if !ok {
 			return false
 		}
 		return anyCandidate(candidates, func(a any) bool { return matchesRegex(a, re) })
 	case ConditionOpGt:
-		return anyCandidate(candidates, func(a any) bool { x, y, ok := numericPair(a, c.Value); return ok && x > y })
+		return anyCandidate(candidates, func(a any) bool { x, y, ok := numericPair(a, value); return ok && x > y })
 	case ConditionOpGte:
-		return anyCandidate(candidates, func(a any) bool { x, y, ok := numericPair(a, c.Value); return ok && x >= y })
+		return anyCandidate(candidates, func(a any) bool { x, y, ok := numericPair(a, value); return ok && x >= y })
 	case ConditionOpLt:
-		return anyCandidate(candidates, func(a any) bool { x, y, ok := numericPair(a, c.Value); return ok && x < y })
+		return anyCandidate(candidates, func(a any) bool { x, y, ok := numericPair(a, value); return ok && x < y })
 	case ConditionOpLte:
-		return anyCandidate(candidates, func(a any) bool { x, y, ok := numericPair(a, c.Value); return ok && x <= y })
+		return anyCandidate(candidates, func(a any) bool { x, y, ok := numericPair(a, value); return ok && x <= y })
 	default:
 		return false
 	}
@@ -174,7 +239,7 @@ func equalValues(a, b any) bool {
 		}
 		return false
 	}
-	return a == b
+	return reflect.DeepEqual(a, b)
 }
 
 // containsValue is true when actual is a slice containing the wanted value, or a
@@ -236,19 +301,19 @@ func compileMatchPattern(wanted any) (*regexp.Regexp, bool) {
 // directly, and an array candidate matches when ANY of its string elements
 // matches. Non-string, non-array values never match.
 func matchesRegex(actual any, re *regexp.Regexp) bool {
-	switch v := actual.(type) {
-	case string:
+	if v, ok := actual.(string); ok {
 		return re.MatchString(v)
-	case []any:
-		for _, item := range v {
-			if s, ok := item.(string); ok && re.MatchString(s) {
-				return true
-			}
-		}
-		return false
-	default:
+	}
+	items, ok := asList(actual)
+	if !ok {
 		return false
 	}
+	for _, item := range items {
+		if s, ok := item.(string); ok && re.MatchString(s) {
+			return true
+		}
+	}
+	return false
 }
 
 func numericPair(a, b any) (float64, float64, bool) {
@@ -265,9 +330,23 @@ func toFloat(v any) (float64, bool) {
 		return float64(n), true
 	case int:
 		return float64(n), true
+	case int8:
+		return float64(n), true
+	case int16:
+		return float64(n), true
 	case int32:
 		return float64(n), true
 	case int64:
+		return float64(n), true
+	case uint:
+		return float64(n), true
+	case uint8:
+		return float64(n), true
+	case uint16:
+		return float64(n), true
+	case uint32:
+		return float64(n), true
+	case uint64:
 		return float64(n), true
 	default:
 		return 0, false

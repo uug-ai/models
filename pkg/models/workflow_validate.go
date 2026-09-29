@@ -10,12 +10,6 @@ import (
 // map it to a client error with errors.Is.
 var ErrInvalidWorkflowGraph = errors.New("invalid workflow graph")
 
-var workflowConditionOps = map[ConditionOp]bool{
-	ConditionOpEq: true, ConditionOpNe: true, ConditionOpContains: true, ConditionOpIn: true,
-	ConditionOpExists: true, ConditionOpMatches: true, ConditionOpGt: true, ConditionOpGte: true,
-	ConditionOpLt: true, ConditionOpLte: true,
-}
-
 // ValidateGraph checks that the node/edge graph compiles to a runnable stage
 // set: unique node ids, known node types, at most one device node, one stage
 // node per operation (never the reserved seed operation), edges between existing
@@ -79,13 +73,8 @@ func (w *Workflow) ValidateGraph() error {
 		if target.EffectiveType() == WorkflowNodeDevice {
 			return invalid("edge %q feeds device node %q", e.Id, e.Target)
 		}
-		if e.Condition != nil {
-			if !workflowConditionOps[e.Condition.Op] {
-				return invalid("edge %q has unknown condition operator %q", e.Id, e.Condition.Op)
-			}
-			if err := ValidateStageCondition(e.Condition); err != nil {
-				return invalid("edge %q: %v", e.Id, err)
-			}
+		if err := e.ValidateConditions(); err != nil {
+			return invalid("edge %q: %v", e.Id, err)
 		}
 		outgoing[e.Source] = append(outgoing[e.Source], e.Target)
 	}
@@ -115,6 +104,62 @@ func (w *Workflow) ValidateGraph() error {
 	for _, n := range w.Nodes {
 		if !acyclic(n.Id) {
 			return invalid("edges form a cycle")
+		}
+	}
+	return nil
+}
+
+// Validate checks activation settings without changing legacy documents.
+// Manual triggers still ignore automatic-only fields, including conditions.
+// Membership access and deployment-specific input schemas belong to callers.
+func (t WorkflowTrigger) Validate() error {
+	switch t.EffectiveType() {
+	case WorkflowTriggerManual:
+		if len(t.Surfaces) == 0 {
+			return fmt.Errorf("manual trigger requires at least one surface")
+		}
+		for _, surface := range t.Surfaces {
+			switch surface {
+			case WorkflowSurfaceCase, WorkflowSurfaceMedia, WorkflowSurfaceRedaction:
+			default:
+				return fmt.Errorf("unknown manual trigger surface %q", surface)
+			}
+		}
+		return nil
+	case WorkflowTriggerAutomatic:
+	default:
+		return fmt.Errorf("unknown trigger type %q", t.Type)
+	}
+	for _, device := range t.Devices {
+		if strings.TrimSpace(device.Key) == "" {
+			return fmt.Errorf("trigger selects a device with an empty key")
+		}
+	}
+	for name, ids := range map[string][]string{"siteIds": t.SiteIds, "groupIds": t.GroupIds} {
+		for _, id := range ids {
+			if strings.TrimSpace(id) == "" {
+				return fmt.Errorf("trigger %s contains an empty id", name)
+			}
+		}
+	}
+	for _, c := range t.Conditions {
+		if c.Path == "results" || strings.HasPrefix(c.Path, "results.") {
+			return fmt.Errorf("automatic trigger cannot reference future results: %q", c.Path)
+		}
+	}
+	return ValidateWorkflowConditionSet(t.ConditionSet())
+}
+
+// ValidateTriggers validates the canonical list, or the legacy single trigger
+// when no list is present. It does not normalize or rewrite persisted data.
+func (w *Workflow) ValidateTriggers() error {
+	triggers := w.Triggers
+	if len(triggers) == 0 && w.Trigger != nil {
+		triggers = []WorkflowTrigger{*w.Trigger}
+	}
+	for i, trigger := range triggers {
+		if err := trigger.Validate(); err != nil {
+			return fmt.Errorf("trigger %d: %w", i, err)
 		}
 	}
 	return nil

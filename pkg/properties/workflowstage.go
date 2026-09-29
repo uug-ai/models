@@ -3,17 +3,12 @@
 
 package properties
 
-// StageCondition property field names (BSON)
-const (
-	StageConditionPath = "path"
-	StageConditionOp = "op"
-	StageConditionValue = "value"
-)
-
 // StageDependency property field names (BSON)
 const (
 	StageDependencyOperation = "operation"
 	StageDependencyCondition = "condition"
+	StageDependencyConditionMode = "conditionMode"
+	StageDependencyConditions = "conditions"
 )
 
 // StageParam property field names (BSON)
@@ -42,6 +37,14 @@ const (
 const (
 	StageResourcesRequests = "requests"
 	StageResourcesLimits = "limits"
+)
+
+// WorkflowCondition property field names (BSON)
+const (
+	WorkflowConditionPath = "path"
+	WorkflowConditionOp = "op"
+	WorkflowConditionValue = "value"
+	WorkflowConditionMatch = "match"
 )
 
 // WorkflowStage property field names (BSON)

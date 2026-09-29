@@ -31,6 +31,8 @@ const (
 	WorkflowEdgeSourcePort = "sourcePort"
 	WorkflowEdgeTarget = "target"
 	WorkflowEdgeTargetPort = "targetPort"
+	WorkflowEdgeConditionMode = "conditionMode"
+	WorkflowEdgeConditions = "conditions"
 	WorkflowEdgeCondition = "condition"
 )
 
@@ -50,6 +52,9 @@ const (
 const (
 	WorkflowTriggerType = "type"
 	WorkflowTriggerDevices = "devices"
+	WorkflowTriggerSiteIds = "siteIds"
+	WorkflowTriggerGroupIds = "groupIds"
+	WorkflowTriggerConditionMode = "conditionMode"
 	WorkflowTriggerConditions = "conditions"
 	WorkflowTriggerWeeklySchedule = "weeklySchedule"
 	WorkflowTriggerSurfaces = "surfaces"

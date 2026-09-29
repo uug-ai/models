@@ -94,33 +94,35 @@ func (n WorkflowNode) EffectiveType() WorkflowNodeType {
 	return n.Type
 }
 
-// WorkflowEdge is a directed connection from a source node to a target node,
-// and is where a workflow expresses routing. An edge with a nil Condition is an
-// unconditional dependency: the target runs after the source. An edge with a
-// Condition makes the target conditional on the source — the target's stage
-// fires only when the source stage resolves and the predicate matches its
-// result. A node with one or more conditional incoming edges compiles to a
-// DispatchConditional stage whose Needs is the set of those edges' sources;
-// otherwise it compiles to DispatchAlways. Because each incoming edge carries
-// its own Condition, per-upstream predicates are expressible — unlike a single
-// condition on the target node.
+// WorkflowEdge connects node IDs, not operations. Its source is a readiness
+// gate; its conditions read absolute paths in the run envelope independently of
+// that gate. Without predicates, a stage edge still waits for its source.
 type WorkflowEdge struct {
 	Id     string `json:"id" bson:"id"`
 	Source string `json:"source" bson:"source"`
-	// SourcePort optionally selects which of the source stage's declared Outputs
-	// (see WorkflowStage.Outputs) this edge reads; Condition is evaluated against
-	// that output's result. Empty means the stage's single implicit default port.
+	// SourcePort names a source port for the editor. It does not rebase paths.
 	SourcePort string `json:"sourcePort" bson:"sourcePort"`
 	Target     string `json:"target" bson:"target"`
 	// TargetPort optionally selects which of the target stage's declared Inputs
 	// (see WorkflowStage.Inputs) this edge feeds. Empty means the default port.
-	TargetPort string `json:"targetPort" bson:"targetPort"`
-	// Condition is the structured predicate evaluated against the source stage's
-	// result. Nil means the edge is an unconditional dependency. The edge is the
-	// authoring source of truth for routing: this Condition is what compiles into
-	// the target stage's Needs[].Condition (see WorkflowStage.Needs), which is the
-	// derived runtime projection.
+	TargetPort    string              `json:"targetPort" bson:"targetPort"`
+	ConditionMode ConditionMode       `json:"conditionMode,omitempty" bson:"conditionMode,omitempty"`
+	Conditions    []WorkflowCondition `json:"conditions,omitempty" bson:"conditions,omitempty"`
+	// Condition is the legacy single-predicate form. Do not combine it with
+	// Conditions; ConditionSet reads it as a one-item all group.
 	Condition *StageCondition `json:"condition,omitempty" bson:"condition,omitempty"`
+}
+
+func (e WorkflowEdge) ConditionSet() (WorkflowConditionSet, error) {
+	return NormalizeWorkflowConditions(e.ConditionMode, e.Conditions, e.Condition)
+}
+
+func (e WorkflowEdge) ValidateConditions() error {
+	set, err := e.ConditionSet()
+	if err != nil {
+		return err
+	}
+	return ValidateWorkflowConditionSet(set)
 }
 
 // WorkflowTriggerType is how a trigger activates its workflow. Automatic
@@ -189,14 +191,16 @@ type WorkflowTrigger struct {
 	// device scoping and stage matching stay consistent. Author richer scoping
 	// (a device-name pattern, an organisation check, …) with Conditions.
 	Devices []DeviceKey `json:"devices,omitempty" bson:"devices,omitempty"`
-	// Conditions further scopes the automatic trigger with the same structured
-	// (path, op, value) predicates a stage uses, evaluated against the pre-run
-	// envelope (device.*, user.*, and the identity scalars known when a recording
-	// arrives). All conditions must hold (AND) and they combine with the compiled
-	// Devices shorthand, so `matches`, `in`, `eq`, … apply to device matching the
-	// way they do to stages. An empty list adds no constraint. See
-	// CompiledConditions and StageCondition.
-	Conditions []StageCondition `json:"conditions,omitempty" bson:"conditions,omitempty"`
+	// SiteIds and GroupIds are stable membership IDs resolved by the caller, not
+	// names or authorization grants. Selectors are OR within each category and
+	// AND between populated categories.
+	SiteIds  []string `json:"siteIds,omitempty" bson:"siteIds,omitempty"`
+	GroupIds []string `json:"groupIds,omitempty" bson:"groupIds,omitempty"`
+	// Conditions read the pre-run envelope, including already available,
+	// sanitized inputs, never future results. Scope and schedule remain mandatory
+	// even when this group's ConditionMode is any.
+	ConditionMode ConditionMode       `json:"conditionMode,omitempty" bson:"conditionMode,omitempty"`
+	Conditions    []WorkflowCondition `json:"conditions,omitempty" bson:"conditions,omitempty"`
 	// WeeklySchedule bounds the automatic trigger to recurring weekly windows,
 	// each with its own day, time segments and IANA Timezone. An empty schedule
 	// means any time is eligible. Reuses the alert weekly-schedule shape so the
@@ -248,16 +252,15 @@ func (t WorkflowTrigger) MatchesDevice(deviceKey string) bool {
 	return false
 }
 
-// CompiledConditions returns the automatic trigger's device/envelope scope as a
-// flat list of StageConditions, ANDed together, so trigger matching runs through
-// the very same operator engine stage conditions use. It folds the Devices
-// shorthand into a leading device.deviceKey `in` [keys…] condition (mirroring a
-// stage's device.deviceKey need) and appends any explicit Conditions verbatim.
-// An empty result means "match everything" (no device list, no conditions), so a
-// bare automatic trigger stays eligible for every recording — the historical
-// behaviour. It is the single place the Devices field is turned into a condition.
+// CompiledConditions returns a flat view for legacy callers inspecting paths.
+// Deprecated: this loses ConditionMode. Use MatchesEnvelope for evaluation,
+// Validate for authoring validation, and ConditionSet for the explicit group.
 func (t WorkflowTrigger) CompiledConditions() []StageCondition {
-	out := make([]StageCondition, 0, 1+len(t.Conditions))
+	return append(t.scopeConditions(), t.Conditions...)
+}
+
+func (t WorkflowTrigger) scopeConditions() []WorkflowCondition {
+	out := make([]WorkflowCondition, 0, 3)
 	if len(t.Devices) > 0 {
 		keys := make([]any, 0, len(t.Devices))
 		for _, d := range t.Devices {
@@ -265,54 +268,62 @@ func (t WorkflowTrigger) CompiledConditions() []StageCondition {
 		}
 		out = append(out, StageCondition{Path: "device.deviceKey", Op: ConditionOpIn, Value: keys})
 	}
-	out = append(out, t.Conditions...)
+	if len(t.SiteIds) > 0 {
+		out = append(out, WorkflowCondition{Path: "device.siteIds.*", Op: ConditionOpIn, Value: StringsToAny(t.SiteIds)})
+	}
+	if len(t.GroupIds) > 0 {
+		out = append(out, WorkflowCondition{Path: "device.groupIds.*", Op: ConditionOpIn, Value: StringsToAny(t.GroupIds)})
+	}
 	return out
+}
+
+func (t WorkflowTrigger) ConditionSet() WorkflowConditionSet {
+	return WorkflowConditionSet{ConditionMode: t.ConditionMode, Conditions: t.Conditions}
 }
 
 // MatchesEnvelope reports whether root — the credential-free pre-run projection
 // of a recording (device.*, user.*, identity scalars; see AutomaticTriggerRoot)
-// — satisfies this automatic trigger's device/envelope scope. Every compiled
-// condition must hold (AND); an empty scope matches everything. It shares the
-// pure EvaluateCondition engine with stage conditions, so `matches`, `in`, `eq`,
-// … behave identically here and in a stage need.
+// — satisfies every selector category AND the explicit condition group.
 func (t WorkflowTrigger) MatchesEnvelope(root map[string]any) bool {
-	for _, c := range t.CompiledConditions() {
-		cc := c
-		if !EvaluateCondition(&cc, root) {
-			return false
-		}
-	}
-	return true
+	return EvaluateConditionSet(WorkflowConditionSet{Conditions: t.scopeConditions()}, root) &&
+		EvaluateConditionSet(t.ConditionSet(), root)
 }
 
 // AutomaticTriggerRoot builds the pre-run envelope an automatic trigger's
 // conditions match against: the device and user scalars known when a recording
 // arrives, in the same nested shape stage conditions read (device.<field>,
 // user.<field>). It is the trigger-time counterpart of the engine's fuller run
-// root, minus the inputs/results a run only accrues after it opens.
+// root, without any operation inputs or results.
 func AutomaticTriggerRoot(device WorkflowDevice, user WorkflowUser) map[string]any {
-	return map[string]any{
+	return AutomaticTriggerRootWithInputs(device, user, nil)
+}
+
+// AutomaticTriggerRootWithInputs adds operation inputs already available at
+// hand-off. Callers must supply sanitized result payloads, not raw queue messages
+// or storage credentials. It never exposes future run results. GroupIds must be
+// resolved from trusted membership data by the caller.
+func AutomaticTriggerRootWithInputs(device WorkflowDevice, user WorkflowUser, inputs map[string]any) map[string]any {
+	root := map[string]any{
 		"device": map[string]any{
 			"deviceKey":       device.DeviceKey,
 			"deviceName":      device.DeviceName,
 			"provider":        device.Provider,
 			"storageSolution": device.StorageSolution,
-			// siteIds is an array gate value: stored as []any so the shared
-			// evaluator's contains/in/matches array handling applies (a bare
-			// []string is not recognised by the type switches).
-			"siteIds": StringsToAny(device.SiteIds),
+			"siteIds":         StringsToAny(device.SiteIds),
+			"groupIds":        StringsToAny(device.GroupIds),
 		},
 		"user": map[string]any{
 			"organisationId": user.OrganisationId,
 		},
 	}
+	if len(inputs) > 0 {
+		root["inputs"] = inputs
+	}
+	return root
 }
 
-// StringsToAny widens a []string into the []any shape the condition evaluator's
-// array operators (contains, in, matches, and "*" fan-out) recognise — the
-// engine's operation bags arrive as []any via a JSON round-trip, so a natively
-// typed []string field (e.g. WorkflowDevice.SiteIds) must be widened the same
-// way to be matchable. A nil or empty input yields an empty, non-nil slice.
+// StringsToAny preserves the []any shape of legacy condition envelopes.
+// The evaluator also accepts typed slices. Empty input yields a non-nil slice.
 func StringsToAny(ss []string) []any {
 	out := make([]any, len(ss))
 	for i, s := range ss {
@@ -573,16 +584,21 @@ func (w *Workflow) CompileStages() []WorkflowStage {
 		stage := WorkflowStage{Operation: n.StageRef}
 		needs := make([]StageDependency, 0, len(incoming[n.Id]))
 		for _, e := range incoming[n.Id] {
+			need := StageDependency{
+				Operation:     opByNode[e.Source],
+				Condition:     e.Condition,
+				ConditionMode: e.ConditionMode,
+				Conditions:    e.Conditions,
+			}
 			if deviceNodes[e.Source] {
-				if e.Condition != nil {
-					needs = append(needs, StageDependency{Operation: WorkflowDeviceGateOperation, Condition: e.Condition})
+				set, err := e.ConditionSet()
+				if err != nil || len(set.Conditions) > 0 {
+					need.Operation = WorkflowDeviceGateOperation
+					needs = append(needs, need)
 				}
 				continue
 			}
-			needs = append(needs, StageDependency{
-				Operation: opByNode[e.Source],
-				Condition: e.Condition,
-			})
+			needs = append(needs, need)
 		}
 		if len(needs) == 0 {
 			stage.Dispatch = DispatchAlways
@@ -599,6 +615,8 @@ func (w *Workflow) CompileStages() []WorkflowStage {
 // trigger: every automatic trigger is replaced by one scoped to that node's
 // Devices, and manual triggers are kept. A graph without a device node leaves
 // Triggers untouched. It is idempotent.
+// This legacy editor adapter intentionally replaces richer activation settings.
+// New Start-node editors must edit Triggers directly instead of calling it.
 func (w *Workflow) SyncGraphTriggers() {
 	w.NormalizeTriggers()
 	var device *WorkflowNode
