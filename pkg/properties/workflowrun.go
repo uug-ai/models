@@ -18,8 +18,6 @@ const (
 	WorkflowRunTraceId = "traceid"
 	WorkflowRunStart = "start"
 	WorkflowRunEnd = "end"
-	WorkflowRunStartedAtMs = "startedatms"
-	WorkflowRunEndedAtMs = "endedatms"
 	WorkflowRunStageExecutions = "stageexecutions"
 	WorkflowRunInputs = "inputs"
 	WorkflowRunResults = "results"

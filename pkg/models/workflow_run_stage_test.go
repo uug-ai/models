@@ -738,7 +738,6 @@ func TestWorkflowRunNestedStageRuntimeFields(t *testing.T) {
 	for _, tc := range []struct {
 		name     string
 		end      int64
-		endedMs  int64
 		nowMs    int64
 		facts    WorkflowRunStageExecutionDetails
 		state    WorkflowRunStageState
@@ -750,8 +749,8 @@ func TestWorkflowRunNestedStageRuntimeFields(t *testing.T) {
 		{name: "resolved", nowMs: 4_000, facts: WorkflowRunStageExecutionDetails{DispatchedAtMs: 1_300, ResolvedAtMs: 1_900}, state: WorkflowRunStageStateResolved, duration: 600},
 		{name: "resolved after end", end: 3, nowMs: 4_000, facts: WorkflowRunStageExecutionDetails{DispatchedAtMs: 1_300, ResolvedAtMs: 1_900}, state: WorkflowRunStageStateResolved, duration: 600},
 		{name: "timed out legacy seconds", end: 3, nowMs: 4_000, facts: WorkflowRunStageExecutionDetails{DispatchedAtMs: 1_300}, state: WorkflowRunStageStateTimedOut, duration: 1_700},
-		{name: "timed out milliseconds take precedence", end: 3, endedMs: 3_200, nowMs: 4_000, facts: WorkflowRunStageExecutionDetails{DispatchedAtMs: 1_300}, state: WorkflowRunStageStateTimedOut, duration: 1_900},
-		{name: "dispatch failed", endedMs: 3_000, nowMs: 4_000, facts: WorkflowRunStageExecutionDetails{DispatchAttempts: 2, LastDispatchErrorCode: "queue_unavailable"}, state: WorkflowRunStageStateDispatchFailed},
+		{name: "timed out milliseconds", end: 100_000_000_200, nowMs: 100_000_000_300, facts: WorkflowRunStageExecutionDetails{DispatchedAtMs: 100_000_000_100}, state: WorkflowRunStageStateTimedOut, duration: 100},
+		{name: "dispatch failed", end: 3, nowMs: 4_000, facts: WorkflowRunStageExecutionDetails{DispatchAttempts: 2, LastDispatchErrorCode: "queue_unavailable"}, state: WorkflowRunStageStateDispatchFailed},
 		{name: "skipped", end: 3, nowMs: 4_000, state: WorkflowRunStageStateSkipped},
 		{name: "resolved without dispatch timestamp", nowMs: 4_000, facts: WorkflowRunStageExecutionDetails{ResolvedAtMs: 1_900}, state: WorkflowRunStageStateResolved},
 		{name: "future dispatch does not go negative", nowMs: 4_000, facts: WorkflowRunStageExecutionDetails{DispatchedAtMs: 5_000}, state: WorkflowRunStageStateDispatched},
@@ -761,7 +760,7 @@ func TestWorkflowRunNestedStageRuntimeFields(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			execution := tc.facts
 			run := WorkflowRun{
-				Start: 1, End: tc.end, EndedAtMs: tc.endedMs,
+				Start: 1, End: tc.end,
 				Stages: []WorkflowRunStage{
 					{Operation: "anpr", Execution: &execution},
 					{Operation: "legacy-only"},

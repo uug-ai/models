@@ -12,6 +12,10 @@ const (
 	PermissionWorkflowRunsCreate Permission = "workflow-runs.create"
 	PermissionWorkflowRunsRead   Permission = "workflow-runs.read"
 	PermissionWorkflowRunsUpdate Permission = "workflow-runs.update"
+
+	// Workflow runs only contain contemporary timestamps. Values below this
+	// boundary are legacy Unix seconds; canonical values are Unix milliseconds.
+	workflowRunMillisecondTimestampThreshold int64 = 100_000_000_000
 )
 
 var workflowRunPermissions = []Permission{
@@ -273,16 +277,10 @@ type WorkflowRun struct {
 	// authorized detail surfaces correlate the durable run with telemetry.
 	TraceId string `json:"traceId,omitempty" bson:"traceid"`
 
-	// Start and End stamp the run's lifecycle (unix seconds). They remain for
-	// compatibility with existing runs and list indexes.
+	// Start and End stamp the run's lifecycle in Unix milliseconds. Readers
+	// normalize legacy runs whose values were persisted in Unix seconds.
 	Start int64 `json:"start,omitempty" bson:"start"`
 	End   int64 `json:"end,omitempty" bson:"end,omitempty"`
-
-	// StartedAtMs and EndedAtMs are the millisecond-precision counterparts of the
-	// legacy Start and End fields. New writers populate both pairs; readers fall
-	// back to Start/End for runs created before these fields existed.
-	StartedAtMs int64 `json:"startedAtMs,omitempty" bson:"startedatms,omitempty"`
-	EndedAtMs   int64 `json:"endedAtMs,omitempty" bson:"endedatms,omitempty"`
 
 	// StageExecutions reads the legacy split timeline. NormalizeStages moves
 	// matched summaries into Stages, retaining unmatched history without
@@ -454,11 +452,21 @@ func (r WorkflowRun) LifecycleState() WorkflowRunState {
 	return WorkflowRunStateCompleted
 }
 
+func workflowRunTimestampMilliseconds(timestamp int64) int64 {
+	if timestamp > 0 && timestamp < workflowRunMillisecondTimestampThreshold {
+		return timestamp * 1000
+	}
+	return timestamp
+}
+
 // PopulateRuntimeFields derives the API lifecycle projection from persisted run
 // facts. The receiver should be a read model: none of the derived fields are
-// persisted, while the millisecond timestamps may be normalized from legacy
-// second-precision values for the response.
+// persisted, while legacy second-precision Start and End values are normalized
+// to the canonical millisecond representation.
 func (r *WorkflowRun) PopulateRuntimeFields(now time.Time) {
+	r.Start = workflowRunTimestampMilliseconds(r.Start)
+	r.End = workflowRunTimestampMilliseconds(r.End)
+
 	if r.Origin == "" {
 		r.Origin = WorkflowOriginAutomatic
 	}
@@ -468,34 +476,28 @@ func (r *WorkflowRun) PopulateRuntimeFields(now time.Time) {
 	if r.State == "" {
 		r.State = r.LifecycleState()
 	}
-	if r.StartedAtMs == 0 && r.Start > 0 {
-		r.StartedAtMs = r.Start * 1000
-	}
-	if r.EndedAtMs == 0 && r.End > 0 {
-		r.EndedAtMs = r.End * 1000
-	}
 
 	r.Dispatched = len(r.DispatchedOperations)
 	r.Resolved = len(r.ResolvedOperations)
 	r.Operations = workflowRunOperationStatuses(r.DispatchedOperations, r.ResolvedOperations)
 
-	endAtMs := r.EndedAtMs
+	endAtMs := r.End
 	if endAtMs == 0 && !now.IsZero() {
 		endAtMs = now.UnixMilli()
 	}
-	if r.StartedAtMs > 0 && endAtMs >= r.StartedAtMs {
-		r.DurationMs = endAtMs - r.StartedAtMs
+	if r.Start > 0 && endAtMs >= r.Start {
+		r.DurationMs = endAtMs - r.Start
 	}
 
 	for i := range r.Stages {
 		if execution := r.Stages[i].Execution; execution != nil {
-			execution.populateRuntimeFields(r.EndedAtMs > 0, endAtMs)
+			execution.populateRuntimeFields(r.End > 0, endAtMs)
 		}
 	}
 	for i := range r.StageExecutions {
 		execution := &r.StageExecutions[i]
 		details := execution.details()
-		details.populateRuntimeFields(r.EndedAtMs > 0, endAtMs)
+		details.populateRuntimeFields(r.End > 0, endAtMs)
 		execution.State, execution.DurationMs = details.State, details.DurationMs
 	}
 }

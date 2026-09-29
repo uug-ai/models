@@ -18,7 +18,7 @@ func TestWorkflowRun_DetailFields(t *testing.T) {
 			t.Fatalf("marshal status: %v", err)
 		}
 
-		for _, field := range []string{"startedAtMs", "endedAtMs", "durationMs", "traceId", "stageExecutions"} {
+		for _, field := range []string{"durationMs", "traceId", "stageExecutions"} {
 			if strings.Contains(string(encoded), `"`+field+`"`) {
 				t.Errorf("empty detail field %q appeared in overview status: %s", field, encoded)
 			}
@@ -27,12 +27,12 @@ func TestWorkflowRun_DetailFields(t *testing.T) {
 
 	t.Run("detail run includes execution timeline", func(t *testing.T) {
 		encoded, err := json.Marshal(models.WorkflowRun{
-			RunId:       "run-1",
-			State:       models.WorkflowRunStateCompleted,
-			StartedAtMs: 1_000,
-			EndedAtMs:   2_000,
-			DurationMs:  1_000,
-			TraceId:     "trace-1",
+			RunId:      "run-1",
+			State:      models.WorkflowRunStateCompleted,
+			Start:      1_000,
+			End:        2_000,
+			DurationMs: 1_000,
+			TraceId:    "trace-1",
 			StageExecutions: []models.WorkflowRunStageExecution{{
 				Operation:      "anpr",
 				State:          models.WorkflowRunStageStateResolved,
