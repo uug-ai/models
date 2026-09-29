@@ -108,6 +108,9 @@ const (
 // All timestamps are Unix milliseconds. A dispatch attempt is recorded before
 // queue publication, DispatchedAtMs after successful publication, and
 // ResolvedAtMs when the engine accepts the stage result.
+//
+// Deprecated: new run writers store WorkflowRunStage.Execution. Retained for
+// legacy split documents and compatibility API projections.
 type WorkflowRunStageExecution struct {
 	Operation    string   `json:"operation" bson:"operation"`
 	Name         string   `json:"name,omitempty" bson:"name,omitempty"`
@@ -219,18 +222,12 @@ type WorkflowRun struct {
 	// Populated alongside WorkflowId.
 	WorkflowName string `json:"workflowName,omitempty" bson:"workflowname,omitempty"`
 
-	// Stages is the run's self-describing routing: the compiled stage set of the
-	// workflow this run executes (the output of Workflow.CompileStages) embedded
-	// on the hand-off so the engine can dispatch a workflow it does not hold in
-	// its boot-loaded config registry — a user/DB workflow launched manually.
-	// Only routing fields are meaningful here (Operation, Dispatch, Needs,
-	// NeedsMode; Queue when the source workflow set one); the engine compiles
-	// these into the same validated registry a config workflow gets. Empty is the
-	// legacy/config path: the engine falls back to the config registry keyed by
-	// WorkflowId, so config workflows and older hand-offs are unchanged. It is
-	// persisted so the return path — a stage result reopening the run on any
-	// replica — resolves the same routing without re-fetching the definition.
-	Stages []WorkflowStage `json:"stages,omitempty" bson:"stages,omitempty"`
+	// Stages captures the run's compiled rules and per-stage execution facts.
+	// New writers use NewWorkflowRunStages after resolving queues and defaults.
+	// Legacy routing-only elements decode unchanged; NormalizeStages joins any
+	// split lifecycle summaries. Nil means no captured routing (legacy fallback);
+	// an explicit empty slice is an authoritative zero-stage plan.
+	Stages []WorkflowRunStage `json:"stages,omitempty" bson:"stages"`
 
 	// Origin records how this run was opened — the run-side counterpart of the
 	// Workflow's trigger Type. An automatic run was teed off the pipeline by
@@ -287,10 +284,10 @@ type WorkflowRun struct {
 	StartedAtMs int64 `json:"startedAtMs,omitempty" bson:"startedatms,omitempty"`
 	EndedAtMs   int64 `json:"endedAtMs,omitempty" bson:"endedatms,omitempty"`
 
-	// StageExecutions is the bounded stage plan and execution summary used by run
-	// detail surfaces. The compiled routing plan already occupies the JSON
-	// "stages" field, so the execution timeline has its own unambiguous name.
-	// Sparse queue messages leave this field empty.
+	// StageExecutions reads the legacy split timeline. NormalizeStages moves
+	// matched summaries into Stages, retaining unmatched history without
+	// reconstructing missing routing. Serialization does not normalize implicitly.
+	// Deprecated: new writers use Stages[i].Execution.
 	StageExecutions []WorkflowRunStageExecution `json:"stageExecutions,omitempty" bson:"stageexecutions,omitempty"`
 
 	// The fields below are API read projections. They are derived or joined by
@@ -418,7 +415,14 @@ func (r WorkflowRun) MarshalJSON() ([]byte, error) {
 	if !r.Id.IsZero() {
 		w.RunId = r.Id.Hex()
 	}
-	return json.Marshal(w)
+	var stages *[]WorkflowRunStage
+	if r.Stages != nil {
+		stages = &r.Stages
+	}
+	return json.Marshal(struct {
+		wire
+		Stages *[]WorkflowRunStage `json:"stages,omitempty"`
+	}{wire: w, Stages: stages})
 }
 
 // LifecycleState derives the coarse, client-facing run state from the raw
@@ -483,17 +487,16 @@ func (r *WorkflowRun) PopulateRuntimeFields(now time.Time) {
 		r.DurationMs = endAtMs - r.StartedAtMs
 	}
 
+	for i := range r.Stages {
+		if execution := r.Stages[i].Execution; execution != nil {
+			execution.populateRuntimeFields(r.EndedAtMs > 0, endAtMs)
+		}
+	}
 	for i := range r.StageExecutions {
 		execution := &r.StageExecutions[i]
-		execution.State = execution.lifecycleState(r.EndedAtMs > 0)
-
-		stageEndAtMs := execution.ResolvedAtMs
-		if stageEndAtMs == 0 {
-			stageEndAtMs = endAtMs
-		}
-		if execution.DispatchedAtMs > 0 && stageEndAtMs >= execution.DispatchedAtMs {
-			execution.DurationMs = stageEndAtMs - execution.DispatchedAtMs
-		}
+		details := execution.details()
+		details.populateRuntimeFields(r.EndedAtMs > 0, endAtMs)
+		execution.State, execution.DurationMs = details.State, details.DurationMs
 	}
 }
 
@@ -520,25 +523,7 @@ func workflowRunOperationStatuses(dispatched, resolved []string) []WorkflowRunOp
 }
 
 func (e WorkflowRunStageExecution) lifecycleState(runEnded bool) WorkflowRunStageState {
-	if e.ResolvedAtMs > 0 {
-		return WorkflowRunStageStateResolved
-	}
-	if e.DispatchedAtMs > 0 {
-		if runEnded {
-			return WorkflowRunStageStateTimedOut
-		}
-		return WorkflowRunStageStateDispatched
-	}
-	if e.DispatchAttempts > 0 {
-		if runEnded {
-			return WorkflowRunStageStateDispatchFailed
-		}
-		return WorkflowRunStageStateRetrying
-	}
-	if runEnded {
-		return WorkflowRunStageStateSkipped
-	}
-	return WorkflowRunStageStateWaiting
+	return e.details().lifecycleState(runEnded)
 }
 
 // AutomaticRunObjectID derives the DETERMINISTIC run identity for an automatic

@@ -30424,6 +30424,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/workflowrunstageexecutiondetails": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowRunStageExecutionDetails (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowRunStageExecutionDetails schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowRunStageExecutionDetails"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowrunstageexecution": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowRunStageExecution (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowRunStageExecution schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowRunStageExecution"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowrunstage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowRunStage (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowRunStage schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowRunStage"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/workflowrunstatus": {
         parameters: {
             query?: never;
@@ -38882,7 +38999,12 @@ export interface components {
             /** @description ResolvedOperations are the operation ids whose stage results the engine has
              *     observed (each worker hands its result back under its operation). With
              *     DispatchedOperations it drives finalization — the run ends once every
-             *     dispatched operation is resolved — and idempotency. */
+             *     dispatched operation is resolved — and idempotency.
+             *
+             *     This is narrower than the set a need's gate checks: gate readiness is
+             *     evaluated against the run's available operations — the keys of Inputs ∪
+             *     Results, which also include the trigger analysis hands off (e.g. "classify")
+             *     that seeds Inputs but never resolves as a stage and so never appears here. */
             resolvedOperations?: string[];
             /** @description Results is the run's accumulated stage outputs, keyed by operation. Each
              *     stage worker writes its result under its operation on the way back, and
@@ -38920,23 +39042,17 @@ export interface components {
              *     the run. Empty for automatic runs. It generalises to any run-grouping handle
              *     (a case id today; a temporal device-series id is a forward-looking twin). */
             sourceRef?: string;
-            /** @description StageExecutions is the bounded stage plan and execution summary used by run
-             *     detail surfaces. The compiled routing plan already occupies the JSON
-             *     "stages" field, so the execution timeline has its own unambiguous name.
-             *     Sparse queue messages leave this field empty. */
+            /** @description StageExecutions reads the legacy split timeline. NormalizeStages moves
+             *     matched summaries into Stages, retaining unmatched history without
+             *     reconstructing missing routing. Serialization does not normalize implicitly.
+             *     Deprecated: new writers use Stages[i].Execution. */
             stageExecutions?: components["schemas"]["models.WorkflowRunStageExecution"][];
-            /** @description Stages is the run's self-describing routing: the compiled stage set of the
-             *     workflow this run executes (the output of Workflow.CompileStages) embedded
-             *     on the hand-off so the engine can dispatch a workflow it does not hold in
-             *     its boot-loaded config registry — a user/DB workflow launched manually.
-             *     Only routing fields are meaningful here (Operation, Dispatch, Needs,
-             *     NeedsMode; Queue when the source workflow set one); the engine compiles
-             *     these into the same validated registry a config workflow gets. Empty is the
-             *     legacy/config path: the engine falls back to the config registry keyed by
-             *     WorkflowId, so config workflows and older hand-offs are unchanged. It is
-             *     persisted so the return path — a stage result reopening the run on any
-             *     replica — resolves the same routing without re-fetching the definition. */
-            stages?: components["schemas"]["models.WorkflowStage"][];
+            /** @description Stages captures the run's compiled rules and per-stage execution facts.
+             *     New writers use NewWorkflowRunStages after resolving queues and defaults.
+             *     Legacy routing-only elements decode unchanged; NormalizeStages joins any
+             *     split lifecycle summaries. Nil means no captured routing (legacy fallback);
+             *     an explicit empty slice is an authoritative zero-stage plan. */
+            stages?: components["schemas"]["models.WorkflowRunStage"][];
             /** @description Start and End stamp the run's lifecycle (unix seconds). They remain for
              *     compatibility with existing runs and list indexes. */
             start?: number;
@@ -38944,7 +39060,8 @@ export interface components {
              *     legacy Start and End fields. New writers populate both pairs; readers fall
              *     back to Start/End for runs created before these fields existed. */
             startedAtMs?: number;
-            /** @description The API lifecycle state derived from persisted run facts. */
+            /** @description The fields below are API read projections. They are derived or joined by
+             *     the service after loading a run and never persist back into workflow state. */
             state?: components["schemas"]["models.WorkflowRunState"];
             /** @description Storage carries the credentials a dispatched stage worker needs to fetch
              *     the media (global Kerberos Storage plus any resolved per-recording vault
@@ -38953,7 +39070,8 @@ export interface components {
              *     result. `bson:"-"` is load-bearing: credentials never sit in the run's
              *     persisted state. */
             storage?: components["schemas"]["models.WorkflowStorage"];
-            /** @description TraceId continues the distributed trace across the workflow tail. */
+            /** @description TraceId continues the distributed trace across the workflow tail and lets
+             *     authorized detail surfaces correlate the durable run with telemetry. */
             traceId?: string;
             /** @description User is the curated, secret-free account context a run needs: the
              *     organisation that owns the recording (for logging/scoping) and the account
@@ -38980,6 +39098,17 @@ export interface components {
         };
         /** @enum {string} */
         "models.WorkflowRunOrigin": "automatic" | "manual";
+        "models.WorkflowRunStage": {
+            dispatch?: components["schemas"]["models.Dispatch"];
+            /** @description A non-nil execution, including {}, takes precedence over the entire legacy
+             *     summary. Missing execution means lifecycle facts may still live there. */
+            execution?: components["schemas"]["models.WorkflowRunStageExecutionDetails"];
+            name?: string;
+            needs?: components["schemas"]["models.StageDependency"][];
+            needsMode?: components["schemas"]["models.NeedsMode"];
+            operation?: string;
+            queue?: string;
+        };
         "models.WorkflowRunStageExecution": {
             dependencies?: string[];
             dispatchAttempts?: number;
@@ -38990,6 +39119,16 @@ export interface components {
             lastDispatchErrorCode?: string;
             name?: string;
             operation?: string;
+            resolvedAtMs?: number;
+            state?: components["schemas"]["models.WorkflowRunStageState"];
+        };
+        "models.WorkflowRunStageExecutionDetails": {
+            dispatchAttempts?: number;
+            dispatchedAtMs?: number;
+            durationMs?: number;
+            firstDispatchAttemptAtMs?: number;
+            lastDispatchAttemptAtMs?: number;
+            lastDispatchErrorCode?: string;
             resolvedAtMs?: number;
             state?: components["schemas"]["models.WorkflowRunStageState"];
         };
@@ -39456,7 +39595,9 @@ export namespace models {
     export type WorkflowResult = components['schemas']['models.WorkflowResult'];
     export type WorkflowRun = components['schemas']['models.WorkflowRun'];
     export type WorkflowRunOperationStatus = components['schemas']['models.WorkflowRunOperationStatus'];
+    export type WorkflowRunStage = components['schemas']['models.WorkflowRunStage'];
     export type WorkflowRunStageExecution = components['schemas']['models.WorkflowRunStageExecution'];
+    export type WorkflowRunStageExecutionDetails = components['schemas']['models.WorkflowRunStageExecutionDetails'];
     export type WorkflowStage = components['schemas']['models.WorkflowStage'];
     export type WorkflowStageReference = components['schemas']['models.WorkflowStageReference'];
     export type WorkflowStorage = components['schemas']['models.WorkflowStorage'];
