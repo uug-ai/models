@@ -55,11 +55,11 @@ const (
 	ConditionOpGte      ConditionOp = "gte"      // greater than or equal (numeric)
 	ConditionOpLt       ConditionOp = "lt"       // less than (numeric)
 	ConditionOpLte      ConditionOp = "lte"      // less than or equal (numeric)
+	ConditionOpAnyMatch ConditionOp = "anyMatch" // at least one array object satisfies Match
 )
 
-// StageCondition is a structured predicate evaluated against the workflow run.
-// No free-form expressions are allowed: a condition is a single (path, op,
-// value) triple.
+// WorkflowCondition is a structured predicate evaluated against the workflow
+// run. Scalar operators use path/op/value; anyMatch uses path/op/match.
 //
 // Path is an absolute, dot-separated lookup rooted at the run object itself, not
 // at any single operation's result. The reachable roots are:
@@ -69,7 +69,7 @@ const (
 //   - results.<op>.<field>  — an upstream stage's accumulated output (e.g.
 //     results.anpr.tracks).
 //   - device.<field>        — the recording source (deviceKey, deviceName,
-//     provider, storageSolution).
+//     provider, storageSolution, siteIds, groupIds).
 //   - user.<field>          — the owning account (organisationId only).
 //   - operation, runId, key, traceId — the run's top-level identity scalars.
 //
@@ -91,22 +91,27 @@ const (
 // element of an ARRAY candidate (so it works on an array field without a "*"
 // fan-out). Anchor with ^…$ for a full match. Numbers, bools, maps, and
 // non-string array elements never match, and an invalid pattern is rejected when
-// the registry loads.
-type StageCondition struct {
-	Path  string      `json:"path" bson:"path"`   // absolute dot-path into the run root (see type doc)
-	Op    ConditionOp `json:"op" bson:"op"`       // see the ConditionOp consts
-	Value any         `json:"value" bson:"value"` // comparison operand (unused for ConditionOpExists)
+// the registry loads. anyMatch instead resolves an array and evaluates all or
+// any of Match.Conditions against each object's relative fields. One object
+// must satisfy the group; nested anyMatch groups are not supported.
+type WorkflowCondition struct {
+	Path  string                `json:"path" bson:"path"`   // absolute dot-path into the run root (see type doc)
+	Op    ConditionOp           `json:"op" bson:"op"`       // see the ConditionOp consts
+	Value any                   `json:"value" bson:"value"` // comparison operand (unused for ConditionOpExists)
+	Match *WorkflowPredicateSet `json:"match,omitempty" bson:"match,omitempty"`
 }
 
-// StageDependency is one trigger a conditional stage waits on, paired with the
-// predicate that must hold for the stage to fire. It mirrors a single incoming
-// workflow edge: Operation is the edge's source operation (the readiness gate),
-// and Condition is the edge's predicate (nil for an unconditional dependency).
+// StageCondition retains the legacy source and wire representation.
+type StageCondition = WorkflowCondition
+
+// StageDependency is one source a conditional stage waits on, paired with its
+// condition group. It mirrors a single incoming workflow edge: Operation is the
+// source operation (the readiness gate), and Conditions filters the run envelope.
 //
-// Operation and Condition are decoupled: Operation is purely a readiness gate
+// Operation and conditions are decoupled: Operation is purely a readiness gate
 // ("don't evaluate this need until that operation's data is present on the
-// run"), while Condition is an absolute predicate over the whole run root (see
-// StageCondition) — it need not reference Operation's result at all. A need may
+// run"), while each predicate reads the whole run root (see WorkflowCondition)
+// and need not reference Operation's result at all. A need may
 // gate on classify yet match device.deviceKey, for example.
 //
 // Note Operation is an OPERATION id, not necessarily a deployed STAGE: gate
@@ -123,8 +128,34 @@ type StageDependency struct {
 	// evaluated as soon as the run opens with nothing to wait for.
 	Operation string `json:"operation,omitempty" bson:"operation,omitempty"`
 	// Condition is the predicate evaluated against the run root. Nil means the
-	// need matches as soon as its gate (if any) is satisfied.
+	// need matches as soon as its gate (if any) is satisfied, unless plural
+	// Conditions are supplied. The two representations must not be combined.
 	Condition *StageCondition `json:"condition,omitempty" bson:"condition,omitempty"`
+	// ConditionMode combines this dependency's predicates, not its readiness
+	// gate or the stage's other dependencies. Empty defaults to all.
+	ConditionMode ConditionMode       `json:"conditionMode,omitempty" bson:"conditionMode,omitempty"`
+	Conditions    []WorkflowCondition `json:"conditions,omitempty" bson:"conditions,omitempty"`
+}
+
+func (d StageDependency) ConditionSet() (WorkflowConditionSet, error) {
+	return NormalizeWorkflowConditions(d.ConditionMode, d.Conditions, d.Condition)
+}
+
+func (d StageDependency) ValidateConditions() error {
+	set, err := d.ConditionSet()
+	if err != nil {
+		return err
+	}
+	return ValidateWorkflowConditionSet(set)
+}
+
+// Matches always checks operation readiness before evaluating any predicates.
+func (d StageDependency) Matches(root map[string]any, available map[string]bool) bool {
+	if d.Operation != "" && !available[d.Operation] {
+		return false
+	}
+	set, err := d.ConditionSet()
+	return err == nil && EvaluateConditionSet(set, root)
 }
 
 // StageResourceList is a compute request/limit pair for a stage's workers,

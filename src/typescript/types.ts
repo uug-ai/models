@@ -29800,6 +29800,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/workflowcondition": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowCondition (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowCondition schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowCondition"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowconditionset": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowConditionSet (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowConditionSet schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowConditionSet"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/workflowdevice": {
         parameters: {
             query?: never;
@@ -30100,6 +30178,84 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.WorkflowNode"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowpredicate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowPredicate (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowPredicate schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowPredicate"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowpredicateset": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowPredicateSet (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowPredicateSet schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowPredicateSet"];
                     };
                 };
             };
@@ -35627,7 +35783,9 @@ export interface components {
             website?: string;
         };
         /** @enum {string} */
-        "models.ConditionOp": "eq" | "ne" | "contains" | "in" | "exists" | "matches" | "gt" | "gte" | "lt" | "lte";
+        "models.ConditionMode": "all" | "any";
+        /** @enum {string} */
+        "models.ConditionOp": "eq" | "ne" | "contains" | "in" | "exists" | "matches" | "gt" | "gte" | "lt" | "lte" | "anyMatch";
         "models.Contact": {
             email?: string;
             name?: string;
@@ -37670,6 +37828,7 @@ export interface components {
             width?: number;
         };
         "models.StageCondition": {
+            match?: components["schemas"]["models.WorkflowPredicateSet"];
             /** @description see the ConditionOp consts */
             op?: components["schemas"]["models.ConditionOp"];
             /** @description absolute dot-path into the run root (see type doc) */
@@ -37679,8 +37838,13 @@ export interface components {
         };
         "models.StageDependency": {
             /** @description Condition is the predicate evaluated against the run root. Nil means the
-             *     need matches as soon as its gate (if any) is satisfied. */
+             *     need matches as soon as its gate (if any) is satisfied, unless plural
+             *     Conditions are supplied. The two representations must not be combined. */
             condition?: components["schemas"]["models.StageCondition"];
+            /** @description ConditionMode combines this dependency's predicates, not its readiness
+             *     gate or the stage's other dependencies. Empty defaults to all. */
+            conditionMode?: components["schemas"]["models.ConditionMode"];
+            conditions?: components["schemas"]["models.WorkflowCondition"][];
             /** @description Operation is the id of the operation whose presence gates this need: it must
              *     be available on the run — present in Inputs or Results — before the need's
              *     Condition is evaluated. It is an operation id, not necessarily a deployed
@@ -38519,9 +38683,24 @@ export interface components {
             resultSchema?: string;
             url?: string;
         };
+        "models.WorkflowCondition": {
+            match?: components["schemas"]["models.WorkflowPredicateSet"];
+            /** @description see the ConditionOp consts */
+            op?: components["schemas"]["models.ConditionOp"];
+            /** @description absolute dot-path into the run root (see type doc) */
+            path?: string;
+            /** @description comparison operand (unused for ConditionOpExists) */
+            value?: unknown;
+        };
+        "models.WorkflowConditionSet": {
+            conditionMode?: components["schemas"]["models.ConditionMode"];
+            conditions?: components["schemas"]["models.WorkflowCondition"][];
+        };
         "models.WorkflowDevice": {
             deviceKey?: string;
             deviceName?: string;
+            /** @description effective group memberships resolved by the caller, never an authorization grant */
+            groupIds?: string[];
             /** @description media VideoProvider: where the media is served from */
             provider?: string;
             /** @description site ids the device is linked to (Device.SiteIds); a gate value, matchable with contains/in/exists/matches */
@@ -38535,17 +38714,14 @@ export interface components {
             siteIds?: string[];
         };
         "models.WorkflowEdge": {
-            /** @description Condition is the structured predicate evaluated against the source stage's
-             *     result. Nil means the edge is an unconditional dependency. The edge is the
-             *     authoring source of truth for routing: this Condition is what compiles into
-             *     the target stage's Needs[].Condition (see WorkflowStage.Needs), which is the
-             *     derived runtime projection. */
+            /** @description Condition is the legacy single-predicate form. Do not combine it with
+             *     Conditions; ConditionSet reads it as a one-item all group. */
             condition?: components["schemas"]["models.StageCondition"];
+            conditionMode?: components["schemas"]["models.ConditionMode"];
+            conditions?: components["schemas"]["models.WorkflowCondition"][];
             id?: string;
             source?: string;
-            /** @description SourcePort optionally selects which of the source stage's declared Outputs
-             *     (see WorkflowStage.Outputs) this edge reads; Condition is evaluated against
-             *     that output's result. Empty means the stage's single implicit default port. */
+            /** @description SourcePort names a source port for the editor. It does not rebase paths. */
             sourcePort?: string;
             target?: string;
             /** @description TargetPort optionally selects which of the target stage's declared Inputs
@@ -38594,6 +38770,15 @@ export interface components {
             stageRef?: string;
             x?: number;
             y?: number;
+        };
+        "models.WorkflowPredicate": {
+            op?: components["schemas"]["models.ConditionOp"];
+            path?: string;
+            value?: unknown;
+        };
+        "models.WorkflowPredicateSet": {
+            conditionMode?: components["schemas"]["models.ConditionMode"];
+            conditions?: components["schemas"]["models.WorkflowPredicate"][];
         };
         "models.WorkflowResult": {
             payload?: number[];
@@ -38907,14 +39092,11 @@ export interface components {
             projectId?: string;
         };
         "models.WorkflowTrigger": {
-            /** @description Conditions further scopes the automatic trigger with the same structured
-             *     (path, op, value) predicates a stage uses, evaluated against the pre-run
-             *     envelope (device.*, user.*, and the identity scalars known when a recording
-             *     arrives). All conditions must hold (AND) and they combine with the compiled
-             *     Devices shorthand, so `matches`, `in`, `eq`, … apply to device matching the
-             *     way they do to stages. An empty list adds no constraint. See
-             *     CompiledConditions and StageCondition. */
-            conditions?: components["schemas"]["models.StageCondition"][];
+            /** @description Conditions read the pre-run envelope, including already available,
+             *     sanitized inputs, never future results. Scope and schedule remain mandatory
+             *     even when this group's ConditionMode is any. */
+            conditionMode?: components["schemas"]["models.ConditionMode"];
+            conditions?: components["schemas"]["models.WorkflowCondition"][];
             /** @description Devices restricts the automatic trigger to recordings from the listed
              *     devices, matched by DeviceKey.Key. An empty list means every device is
              *     eligible. Mirrors the alert device selection (see CustomAlert.DevicesList).
@@ -38925,6 +39107,11 @@ export interface components {
              *     device scoping and stage matching stay consistent. Author richer scoping
              *     (a device-name pattern, an organisation check, …) with Conditions. */
             devices?: components["schemas"]["models.DeviceKey"][];
+            groupIds?: string[];
+            /** @description SiteIds and GroupIds are stable membership IDs resolved by the caller, not
+             *     names or authorization grants. Selectors are OR within each category and
+             *     AND between populated categories. */
+            siteIds?: string[];
             /** @description Surfaces lists the UI surfaces a manual trigger can be launched from
              *     (manual). Ignored for automatic triggers. */
             surfaces?: components["schemas"]["models.WorkflowTriggerSurface"][];
@@ -39255,6 +39442,8 @@ export namespace models {
     export type WeeklySchedule = components['schemas']['models.WeeklySchedule'];
     export type Workflow = components['schemas']['models.Workflow'];
     export type WorkflowCallback = components['schemas']['models.WorkflowCallback'];
+    export type WorkflowCondition = components['schemas']['models.WorkflowCondition'];
+    export type WorkflowConditionSet = components['schemas']['models.WorkflowConditionSet'];
     export type WorkflowDevice = components['schemas']['models.WorkflowDevice'];
     export type WorkflowDeviceReference = components['schemas']['models.WorkflowDeviceReference'];
     export type WorkflowEdge = components['schemas']['models.WorkflowEdge'];
@@ -39262,6 +39451,8 @@ export namespace models {
     export type WorkflowInvocationWorkflow = components['schemas']['models.WorkflowInvocationWorkflow'];
     export type WorkflowMediaReference = components['schemas']['models.WorkflowMediaReference'];
     export type WorkflowNode = components['schemas']['models.WorkflowNode'];
+    export type WorkflowPredicate = components['schemas']['models.WorkflowPredicate'];
+    export type WorkflowPredicateSet = components['schemas']['models.WorkflowPredicateSet'];
     export type WorkflowResult = components['schemas']['models.WorkflowResult'];
     export type WorkflowRun = components['schemas']['models.WorkflowRun'];
     export type WorkflowRunOperationStatus = components['schemas']['models.WorkflowRunOperationStatus'];

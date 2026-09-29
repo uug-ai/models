@@ -31,33 +31,109 @@ var conditionOperationFields = map[string]map[string]conditionFieldKind{
 // conditionDeviceFields and conditionUserFields are the curated envelope leaves
 // a condition may target; credentials (user.storage) are deliberately absent.
 var (
-	conditionDeviceFields = map[string]bool{"deviceKey": true, "deviceName": true, "provider": true, "storageSolution": true, "siteIds": true}
-	conditionUserFields   = map[string]bool{"organisationId": true}
+	conditionDeviceFields = map[string]conditionFieldKind{
+		"deviceKey": conditionFieldLeaf, "deviceName": conditionFieldLeaf,
+		"provider": conditionFieldLeaf, "storageSolution": conditionFieldLeaf,
+		"siteIds": conditionFieldArray, "groupIds": conditionFieldArray,
+	}
+	conditionUserFields = map[string]conditionFieldKind{"organisationId": conditionFieldLeaf}
 )
 
-// ValidateStageCondition checks that a condition's path is reachable on the
-// credential-free run root (see StageCondition) and that a `matches` operand is a
-// valid RE2 pattern. A nil condition (unconditional dependency) is valid. It is
-// the shared validator for stage needs, trigger conditions, and graph edges.
+// ValidateStageCondition is the legacy entrypoint for shared validation.
 func ValidateStageCondition(c *StageCondition) error {
+	return ValidateWorkflowCondition(c)
+}
+
+// ValidateWorkflowCondition checks the credential-free path, operator, operand,
+// and anyMatch structure. A nil condition remains an unconditional predicate.
+func ValidateWorkflowCondition(c *WorkflowCondition) error {
+	if c == nil {
+		return nil
+	}
 	if err := validateConditionPath(c); err != nil {
 		return err
 	}
+	if err := validateWorkflowConditionStructure(c); err != nil {
+		return err
+	}
+	if c.Op == ConditionOpAnyMatch {
+		for i, p := range c.Match.Conditions {
+			if err := validateConditionValue(&WorkflowCondition{Path: p.Path, Op: p.Op, Value: p.Value}); err != nil {
+				return fmt.Errorf("condition %q match predicate %d: %w", c.Path, i, err)
+			}
+		}
+		return nil
+	}
 	return validateConditionValue(c)
+}
+
+func ValidateWorkflowConditionSet(set WorkflowConditionSet) error {
+	if err := validateConditionMode(set.ConditionMode); err != nil {
+		return err
+	}
+	for i := range set.Conditions {
+		if err := ValidateWorkflowCondition(&set.Conditions[i]); err != nil {
+			return fmt.Errorf("condition %d: %w", i, err)
+		}
+	}
+	return nil
+}
+
+// Structural checks also run before evaluation can short-circuit. Operand
+// validation (including regex compilation) remains an authoring/load concern.
+func validateWorkflowConditionStructure(c *WorkflowCondition) error {
+	if c.Op != ConditionOpAnyMatch {
+		if c.Match != nil {
+			return fmt.Errorf("condition %q op %q cannot have match predicates", c.Path, c.Op)
+		}
+		if !isScalarConditionOp(c.Op) {
+			return fmt.Errorf("condition %q has unknown condition operator %q", c.Path, c.Op)
+		}
+		return nil
+	}
+	if c.Value != nil {
+		return fmt.Errorf("condition %q op anyMatch uses match, not value", c.Path)
+	}
+	if c.Match == nil || len(c.Match.Conditions) == 0 {
+		return fmt.Errorf("condition %q op anyMatch requires nonempty match predicates", c.Path)
+	}
+	if err := validateConditionMode(c.Match.ConditionMode); err != nil {
+		return fmt.Errorf("condition %q match: %w", c.Path, err)
+	}
+	if err := validateConditionPath(c); err != nil {
+		return err
+	}
+	if err := validateAnyMatchPath(c.Path); err != nil {
+		return err
+	}
+	for i, p := range c.Match.Conditions {
+		if !isScalarConditionOp(p.Op) {
+			return fmt.Errorf("condition %q match predicate %d has unsupported operator %q; nested anyMatch is not allowed", c.Path, i, p.Op)
+		}
+		if err := validateRelativeConditionPath(p.Path); err != nil {
+			return fmt.Errorf("condition %q match predicate %d: %w", c.Path, i, err)
+		}
+	}
+	return nil
+}
+
+func isScalarConditionOp(op ConditionOp) bool {
+	switch op {
+	case ConditionOpEq, ConditionOpNe, ConditionOpContains, ConditionOpIn, ConditionOpExists,
+		ConditionOpMatches, ConditionOpGt, ConditionOpGte, ConditionOpLt, ConditionOpLte:
+		return true
+	default:
+		return false
+	}
 }
 
 func validateConditionPath(c *StageCondition) error {
 	if c == nil {
 		return nil
 	}
-	path := strings.TrimSpace(c.Path)
-	if path == "" {
-		return fmt.Errorf("condition has an empty path")
-	}
-	for _, seg := range strings.Split(path, ".") {
-		if seg == "" {
-			return fmt.Errorf("condition path %q has an empty segment (check for a leading, trailing, or doubled '.')", path)
-		}
+	path := c.Path
+	if err := validateConditionPathSegments(path); err != nil {
+		return err
 	}
 
 	root, rest, nested := strings.Cut(path, ".")
@@ -84,28 +160,121 @@ func validateConditionPath(c *StageCondition) error {
 }
 
 func validateConditionValue(c *StageCondition) error {
-	if c == nil || c.Op != ConditionOpMatches {
+	if c == nil {
 		return nil
 	}
-	pattern, ok := c.Value.(string)
-	if !ok {
-		return fmt.Errorf("condition %q op %q requires a string regular-expression value, got %T", c.Path, c.Op, c.Value)
-	}
-	if _, err := regexp.Compile(pattern); err != nil {
-		return fmt.Errorf("condition %q op %q has an invalid regular expression %q: %w", c.Path, c.Op, pattern, err)
+	switch c.Op {
+	case ConditionOpExists:
+		return nil // Legacy operands are intentionally ignored.
+	case ConditionOpEq, ConditionOpNe, ConditionOpContains:
+		if !isConditionScalar(c.Value) {
+			return fmt.Errorf("condition %q op %q requires a scalar value, got %T", c.Path, c.Op, c.Value)
+		}
+	case ConditionOpIn:
+		items, ok := asList(c.Value)
+		if !ok {
+			return fmt.Errorf("condition %q op in requires a list value, got %T", c.Path, c.Value)
+		}
+		for _, item := range items {
+			if !isConditionScalar(item) {
+				return fmt.Errorf("condition %q op in requires scalar list elements, got %T", c.Path, item)
+			}
+		}
+	case ConditionOpGt, ConditionOpGte, ConditionOpLt, ConditionOpLte:
+		if _, ok := toFloat(c.Value); !ok {
+			return fmt.Errorf("condition %q op %q requires a numeric value, got %T", c.Path, c.Op, c.Value)
+		}
+	case ConditionOpMatches:
+		pattern, ok := c.Value.(string)
+		if !ok {
+			return fmt.Errorf("condition %q op %q requires a string regular-expression value, got %T", c.Path, c.Op, c.Value)
+		}
+		if _, err := regexp.Compile(pattern); err != nil {
+			return fmt.Errorf("condition %q op %q has an invalid regular expression %q: %w", c.Path, c.Op, pattern, err)
+		}
+	default:
+		return fmt.Errorf("condition %q has unknown condition operator %q", c.Path, c.Op)
 	}
 	return nil
 }
 
-func validateConditionLeafNamespace(path, root, rest string, nested bool, fields map[string]bool) error {
+func isConditionScalar(v any) bool {
+	switch v.(type) {
+	case nil, string, bool:
+		return true
+	default:
+		_, ok := toFloat(v)
+		return ok
+	}
+}
+
+func validateConditionPathSegments(path string) error {
+	if strings.TrimSpace(path) == "" {
+		return fmt.Errorf("condition has an empty path")
+	}
+	for _, seg := range strings.Split(path, ".") {
+		if seg == "" {
+			return fmt.Errorf("condition path %q has an empty segment (check for a leading, trailing, or doubled '.')", path)
+		}
+		if seg != strings.TrimSpace(seg) || strings.ContainsAny(seg, "$[]") || (strings.Contains(seg, "*") && seg != "*") {
+			return fmt.Errorf("condition path %q has an invalid segment %q", path, seg)
+		}
+	}
+	return nil
+}
+
+func validateRelativeConditionPath(path string) error {
+	if err := validateConditionPathSegments(path); err != nil {
+		return err
+	}
+	root, _, _ := strings.Cut(path, ".")
+	switch root {
+	case "*", "inputs", "results", "device", "user", "storage":
+		return fmt.Errorf("match path %q must be relative to an array object, not an envelope namespace or credentials", path)
+	}
+	for _, part := range strings.Split(path, ".") {
+		if strings.Trim(part, "0123456789") == "" {
+			return fmt.Errorf("match path %q uses a numeric array index; use a wildcard instead", path)
+		}
+	}
+	return nil
+}
+
+func validateAnyMatchPath(path string) error {
+	parts := strings.Split(path, ".")
+	switch parts[0] {
+	case "operation", "runId", "key", "traceId", "user":
+		return fmt.Errorf("condition path %q is scalar, not an anyMatch array root", path)
+	case "device":
+		if len(parts) != 2 || conditionDeviceFields[parts[1]] != conditionFieldArray {
+			return fmt.Errorf("condition path %q is scalar, not an anyMatch array root", path)
+		}
+	case "inputs", "results":
+		if len(parts) == 2 {
+			return fmt.Errorf("condition path %q is an operation object, not an anyMatch array root", path)
+		}
+		if len(parts) == 3 {
+			if fields, known := conditionOperationFields[parts[1]]; known && fields[parts[2]] != conditionFieldArray {
+				return fmt.Errorf("condition path %q is not an anyMatch array root", path)
+			}
+		}
+	}
+	return nil
+}
+
+func validateConditionLeafNamespace(path, root, rest string, nested bool, fields map[string]conditionFieldKind) error {
 	if !nested {
 		return fmt.Errorf("condition path %q must name a field under %q (e.g. %s.<field>)", path, root, root)
 	}
-	field, _, deeper := strings.Cut(rest, ".")
-	if !fields[field] {
+	field, remainder, deeper := strings.Cut(rest, ".")
+	kind, known := fields[field]
+	if !known {
 		return fmt.Errorf("condition path %q targets unknown field %q under %q", path, field, root)
 	}
 	if deeper {
+		if kind == conditionFieldArray && remainder == "*" {
+			return nil
+		}
 		return fmt.Errorf("condition path %q reaches past leaf %q.%q, which cannot be traversed", path, root, field)
 	}
 	return nil

@@ -17,8 +17,8 @@ function extractStructNames(filePath) {
         structNames.push(match[1]);
     }
     
-    // Match empty structs and type aliases: "type StructName struct{}" or "type StructName TypeAlias"
-    const emptyStructRegex = /type\s+([A-Z]\w*)\s+(?:struct\s*\{\s*\}|[A-Z]\w*)/g;
+    // Include aliases so compatibility names remain exported alongside new names.
+    const emptyStructRegex = /type\s+([A-Z]\w*)\s+(?:=\s*)?(?:struct\s*\{\s*\}|[A-Z]\w*)/g;
     let emptyMatch;
     
     while ((emptyMatch = emptyStructRegex.exec(content)) !== null) {

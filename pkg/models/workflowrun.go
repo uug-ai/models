@@ -583,6 +583,7 @@ type WorkflowDevice struct {
 	Provider        string   `json:"provider,omitempty"`        // media VideoProvider: where the media is served from
 	StorageSolution string   `json:"storageSolution,omitempty"` // media StorageSolution: where the media is stored
 	SiteIds         []string `json:"siteIds,omitempty"`         // site ids the device is linked to (Device.SiteIds); a gate value, matchable with contains/in/exists/matches
+	GroupIds        []string `json:"groupIds,omitempty"`        // effective group memberships resolved by the caller, never an authorization grant
 }
 
 // WorkflowStorage carries the storage credentials a dispatched stage worker
