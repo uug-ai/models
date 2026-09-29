@@ -381,6 +381,16 @@ type WorkflowRun struct {
 	// run's persisted state; a stage dispatched after a reload fetches via Storage.
 	SignedURL string `json:"signedUrl,omitempty" bson:"-"`
 
+	// Params carries the per-placement parameter values the workflow editor
+	// stored for the dispatched stage (WorkflowNode.Data, declared by the
+	// stage's WorkflowStage.Params). The engine resolves them from the workflow
+	// definition on every engine→worker dispatch, so a worker such as the
+	// forwarder can let a tenant override deployment defaults. Values may include
+	// StageParamSecret credentials, so `bson:"-"` is load-bearing — like Storage,
+	// they never persist in run state — and a worker must never echo them back
+	// or copy them into anything it forwards.
+	Params map[string]interface{} `json:"params,omitempty" bson:"-"`
+
 	// DispatchedOperations are the operation ids the engine has enqueued for this
 	// run — the always-stages seeded at open plus any conditional stages that
 	// matched. Every entry is a deployed stage's operation (only stages are ever
