@@ -134,31 +134,6 @@ state can also be deleted. VLM analysis uses these states as the device's "norma
 repeating the scene. Both fields are optional and omitted when empty, so
 existing media and devices need no migration.
 
-### Workflow run trigger matches
-
-`WorkflowRun.TriggerMatch` (`triggerMatch` in JSON, `triggermatch` in BSON) is an
-optional, immutable run-level record of the first automatic trigger that opened
-the run. It is not a stage or a stage-execution record. `Workflow.MatchAutomaticTrigger`
-shares selection with `AutomaticMatches` and returns a detached snapshot containing:
-
-- `index`: the zero-based position in the normalized trigger list at selection
-  time, not a stable identifier into an edited workflow.
-- `evaluatedAtMs`: the supplied schedule-evaluation instant in Unix milliseconds
-  (usually recording time), not the engine's processing or run-open time.
-- `trigger`: only the selected trigger definition, with its effective automatic
-  type; no raw event envelope, credentials, or other triggers.
-
-The helper returns nil when nothing matches and an error if snapshot encoding
-fails. Callers must synchronize graph-derived triggers before selection.
-
-This is a **model-only rollout**: engine persistence and API exposure follow a
-models release. The future writer must ignore inbound `triggerMatch`, compute
-the match during authoritative automatic selection, and preserve persisted
-data on replay, including an absent match. Legacy runs and manual or explicitly
-targeted launches retain nil/unknown; never backfill a match from `Origin` or the
-current workflow definition. No migration is required, and existing workflow-run
-millisecond timestamp normalization is unchanged.
-
 ### Automatic Type Generation
 
 This project bridges Go and TypeScript using an automated pipeline:

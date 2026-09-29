@@ -30619,45 +30619,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/workflowruntriggermatch": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get WorkflowRunTriggerMatch (schema generation only)
-         * @description Internal endpoint used only to ensure WorkflowRunTriggerMatch schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["models.WorkflowRunTriggerMatch"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/workflowstage": {
         parameters: {
             query?: never;
@@ -39107,13 +39068,6 @@ export interface components {
             /** @description TraceId continues the distributed trace across the workflow tail and lets
              *     authorized detail surfaces correlate the durable run with telemetry. */
             traceId?: string;
-            /**
-             * @description TriggerMatch records the first automatic trigger that selected this run.
-             *     It is immutable engine-owned provenance, not stage execution state. Nil
-             *     means no captured match (legacy or a launch that bypassed automatic matching).
-             *     Readers must not reconstruct it from Origin or today's workflow definition.
-             */
-            triggerMatch?: components["schemas"]["models.WorkflowRunTriggerMatch"];
             /** @description User is the curated, secret-free account context a run needs: the
              *     organisation that owns the recording (for logging/scoping) and the account
              *     Storage block used to resolve a per-recording vault override. Copied (and
@@ -39177,15 +39131,6 @@ export interface components {
         "models.WorkflowRunStageState": "waiting" | "retrying" | "dispatched" | "resolved" | "dispatchFailed" | "timedOut" | "skipped";
         /** @enum {string} */
         "models.WorkflowRunState": "running" | "completed" | "noResult";
-        "models.WorkflowRunTriggerMatch": {
-            /** @description EvaluatedAtMs is the Unix-millisecond instant used for schedule matching
-             *     (usually recording time), not when the engine processed or opened the run. */
-            evaluatedAtMs?: number;
-            /** @description Index is zero-based in the normalized trigger list at selection time.
-             *     It is historical context, not a stable ID into an edited definition. */
-            index?: number;
-            trigger?: components["schemas"]["models.WorkflowTrigger"];
-        };
         /** @enum {string} */
         "models.WorkflowSource": "user" | "config";
         "models.WorkflowStage": {
@@ -39648,7 +39593,6 @@ export namespace models {
     export type WorkflowRunStage = components['schemas']['models.WorkflowRunStage'];
     export type WorkflowRunStageExecution = components['schemas']['models.WorkflowRunStageExecution'];
     export type WorkflowRunStageExecutionDetails = components['schemas']['models.WorkflowRunStageExecutionDetails'];
-    export type WorkflowRunTriggerMatch = components['schemas']['models.WorkflowRunTriggerMatch'];
     export type WorkflowStage = components['schemas']['models.WorkflowStage'];
     export type WorkflowStageReference = components['schemas']['models.WorkflowStageReference'];
     export type WorkflowStorage = components['schemas']['models.WorkflowStorage'];

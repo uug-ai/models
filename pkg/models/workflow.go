@@ -676,21 +676,16 @@ func (w *Workflow) ManualTriggersForSurface(surface WorkflowTriggerSurface) []Wo
 // single gate the engine uses to fan an event out to the workflows it should
 // open a run for; manual triggers never activate this way.
 func (w *Workflow) AutomaticMatches(root map[string]any, at time.Time) bool {
-	_, matched := w.firstMatchingAutomaticTrigger(root, at)
-	return matched
-}
-
-func (w *Workflow) firstMatchingAutomaticTrigger(root map[string]any, at time.Time) (int, bool) {
 	if !w.Enabled {
-		return -1, false
+		return false
 	}
 	w.NormalizeTriggers()
-	for i, t := range w.Triggers {
+	for _, t := range w.Triggers {
 		if t.EffectiveType() == WorkflowTriggerAutomatic && t.Matches(root, at) {
-			return i, true
+			return true
 		}
 	}
-	return -1, false
+	return false
 }
 
 // Input / Output types for repository operations
