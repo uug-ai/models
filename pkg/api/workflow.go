@@ -211,60 +211,14 @@ type RunWorkflowErrorResponse struct {
 	ErrorResponse
 }
 
-// WorkflowRunStatus is the slim, client-facing status of a single workflow run,
-// projected from a persisted models.WorkflowRun. It exists because the run's
-// lifecycle fields (start/end, dispatched/resolved) are persistence-only and
-// never cross the wire on the run itself, so the state a surface needs to render
-// "still working" vs "results are in" is derived server-side (via
-// WorkflowRun.LifecycleState) and carried here instead. It is surface-agnostic:
-// the same shape serves a case today and any future launch surface.
-type WorkflowRunStatus struct {
-	RunId              string `json:"runId"`
-	WorkflowId         string `json:"workflowId,omitempty"`
-	WorkflowName       string `json:"workflowName,omitempty"`
-	Origin             string `json:"origin,omitempty"`
-	SourceRef          string `json:"sourceRef,omitempty"`
-	Key                string `json:"key,omitempty"`
-	MediaId            string `json:"mediaId,omitempty"`
-	DeviceKey          string `json:"deviceKey,omitempty"`
-	DeviceName         string `json:"deviceName,omitempty"`
-	RecordingTimestamp int64  `json:"recordingTimestamp,omitempty"`
-	// State is the derived lifecycle: running | completed | noResult
-	// (models.WorkflowRunState).
-	State string `json:"state"`
-	// Start / End are unix seconds; End is 0 while the run is still open.
-	Start int64 `json:"start,omitempty"`
-	End   int64 `json:"end,omitempty"`
-	// Detail reads populate millisecond-precision timing, trace correlation, and
-	// the stage execution timeline. List projections leave these fields empty so
-	// they stay off the overview response.
-	StartedAtMs int64                              `json:"startedAtMs,omitempty"`
-	EndedAtMs   int64                              `json:"endedAtMs,omitempty"`
-	DurationMs  int64                              `json:"durationMs,omitempty"`
-	TraceId     string                             `json:"traceId,omitempty"`
-	Stages      []models.WorkflowRunStageExecution `json:"stages,omitempty"`
-	// Dispatched / Resolved are the sizes of the run's dispatched and resolved
-	// operation sets, exposed as a coarse progress hint.
-	Dispatched int `json:"dispatched"`
-	Resolved   int `json:"resolved"`
-	// DispatchedOperations / ResolvedOperations name the stages behind the
-	// Dispatched / Resolved counts, in dispatch/resolution order, so a surface
-	// can render per-stage progress (e.g. "pose done, redaction running")
-	// instead of only a run-level running/completed flip for multi-stage runs.
-	DispatchedOperations []string `json:"dispatchedOperations,omitempty"`
-	ResolvedOperations   []string `json:"resolvedOperations,omitempty"`
-	// Operations provides the same lifecycle as the operation sets in a
-	// render-ready form. It contains every dispatched operation in dispatch
-	// order, marked dispatched until it appears in ResolvedOperations.
-	Operations []WorkflowRunOperationStatus `json:"operations,omitempty"`
-	// HasResults is true when the run accumulated any stage output.
-	HasResults bool `json:"hasResults"`
-}
+// WorkflowRunStatus is retained as a source-compatible alias while callers
+// migrate to models.WorkflowRun. It is not a separate API model.
+//
+// Deprecated: use models.WorkflowRun.
+type WorkflowRunStatus = models.WorkflowRun
 
-type WorkflowRunOperationStatus struct {
-	Operation string                           `json:"operation"`
-	Status    models.WorkflowRunOperationState `json:"status"`
-}
+// Deprecated: use models.WorkflowRunOperationStatus.
+type WorkflowRunOperationStatus = models.WorkflowRunOperationStatus
 
 // WorkflowRunFilter narrows the cross-workflow run overview. Every field is
 // optional and sets are ORed within one field and ANDed across fields. From and
@@ -296,7 +250,7 @@ type WorkflowRunStatusSummary struct {
 //
 // @Router /tasks/{taskId}/workflow-runs [get]
 type GetWorkflowRunsResponse struct {
-	Runs    []WorkflowRunStatus      `json:"runs"`
+	Runs    []models.WorkflowRun     `json:"runs"`
 	Summary WorkflowRunStatusSummary `json:"summary"`
 }
 type GetWorkflowRunsSuccessResponse struct {
@@ -317,7 +271,7 @@ type ListWorkflowRunsRequest struct {
 	Pagination CursorPagination  `json:"pagination" bson:"pagination"`
 }
 type ListWorkflowRunsResponse struct {
-	Runs       []WorkflowRunStatus      `json:"runs"`
+	Runs       []models.WorkflowRun     `json:"runs"`
 	Summary    WorkflowRunStatusSummary `json:"summary"`
 	Pagination CursorPagination         `json:"pagination"`
 }

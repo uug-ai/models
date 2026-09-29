@@ -39,18 +39,18 @@ func TestListWorkflowRunsJSONContract(t *testing.T) {
 	}
 
 	response := ListWorkflowRunsResponse{
-		Runs: []WorkflowRunStatus{{
+		Runs: []models.WorkflowRun{{
 			RunId:              "run-1",
 			WorkflowId:         "workflow-1",
 			WorkflowName:       "People",
-			State:              string(models.WorkflowRunStateRunning),
+			State:              models.WorkflowRunStateRunning,
 			MediaId:            "media-1",
 			Key:                "recording.mp4",
 			DeviceKey:          "camera-1",
 			DeviceName:         "Lobby",
 			RecordingTimestamp: 1699999990,
 			Start:              1700000000,
-			Operations: []WorkflowRunOperationStatus{{
+			Operations: []models.WorkflowRunOperationStatus{{
 				Operation: "forwarder",
 				Status:    models.WorkflowRunOperationStateResolved,
 			}},
