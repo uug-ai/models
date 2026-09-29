@@ -22,4 +22,5 @@ const (
 	WorkflowRunStageExecutionDetailsDispatchedAtMs = "dispatchedatms"
 	WorkflowRunStageExecutionDetailsResolvedAtMs = "resolvedatms"
 	WorkflowRunStageExecutionDetailsLastDispatchErrorCode = "lastdispatcherrorcode"
+	WorkflowRunStageExecutionDetailsDecision = "decision"
 )

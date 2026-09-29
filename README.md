@@ -134,7 +134,9 @@ state can also be deleted. VLM analysis uses these states as the device's "norma
 repeating the scene. Both fields are optional and omitted when empty, so
 existing media and devices need no migration.
 
-### Workflow run trigger matches
+### Workflow run explanations (models-only additions)
+
+#### Trigger matches
 
 `WorkflowRun.TriggerMatch` (`triggerMatch` in JSON, `triggermatch` in BSON) is an
 optional, immutable run-level record of the first automatic trigger that opened
@@ -151,13 +153,40 @@ shares selection with `AutomaticMatches` and returns a detached snapshot contain
 The helper returns nil when nothing matches and an error if snapshot encoding
 fails. Callers must synchronize graph-derived triggers before selection.
 
-This is a **model-only rollout**: engine persistence and API exposure follow a
-models release. The future writer must ignore inbound `triggerMatch`, compute
-the match during authoritative automatic selection, and preserve persisted
-data on replay, including an absent match. Legacy runs and manual or explicitly
-targeted launches retain nil/unknown; never backfill a match from `Origin` or the
-current workflow definition. No migration is required, and existing workflow-run
+Trigger matches and stage decisions are **models-only additions**: engine
+persistence and API exposure follow a models release. The future writer must
+ignore inbound `triggerMatch`, compute the match during authoritative automatic
+selection, and preserve persisted data on replay, including an absent match.
+Legacy runs and manual or explicitly targeted launches retain nil/unknown;
+never backfill a match from `Origin` or the current workflow definition.
+No migration is required, and existing workflow-run
 millisecond timestamp normalization is unchanged.
+
+#### Stage decisions
+
+`WorkflowRunStageExecutionDetails.Decision` (`execution.decision` in JSON/BSON)
+stores one bounded routing-evaluation snapshot: the latest while waiting, frozen
+with dispatch. `WorkflowRunStage.EvaluateDecision(root, available, at)` is a pure
+helper, not a dispatch claim. It records `evaluatedAtMs` in Unix milliseconds,
+overall `eligible`, and indexed dependency readiness and condition outcomes.
+
+Dependency indices reference the containing stage's frozen `Needs`; condition
+indices reference each dependency's normalized `Conditions` list, with a legacy
+singular condition at index zero. Outcomes are `passed`, `failed`, `waiting`, or
+`notEvaluated`. Both dependency and condition `all`/`any` evaluation short-circuit:
+skipped checks remain `notEvaluated`, even when dependency `ready` is true.
+`waiting` means only that an upstream gate is unavailable. An `anyMatch` predicate
+is one aggregate check, never independent successes across different objects or
+a per-object evaluation log.
+
+A future writer must compute decisions from authoritative run context and ignore
+decisions supplied by workers or replay messages. It must use atomic state/claim
+guards against stale evaluations,
+run closure, and dispatch: replace only the latest waiting snapshot and freeze
+the decision associated with dispatch. Retain the last snapshot for a stage that
+never dispatches. Nil means unknown for legacy or uncaptured decisions; readers
+must not reconstruct it from results, lifecycle state, or current definitions.
+The snapshot contains no raw inputs, observed values, or other evaluation history.
 
 ### Automatic Type Generation
 

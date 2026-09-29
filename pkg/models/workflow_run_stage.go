@@ -34,6 +34,11 @@ type WorkflowRunStageExecutionDetails struct {
 	ResolvedAtMs             int64  `json:"resolvedAtMs,omitempty" bson:"resolvedatms,omitempty"`
 	LastDispatchErrorCode    string `json:"lastDispatchErrorCode,omitempty" bson:"lastdispatcherrorcode,omitempty"`
 
+	// Decision is the latest captured routing evaluation while waiting, then the
+	// decision associated with dispatch. Nil means no decision was captured.
+	// Writers preserve the dispatch decision; readers never infer it from state.
+	Decision *WorkflowRunStageDecision `json:"decision,omitempty" bson:"decision,omitempty"`
+
 	State      WorkflowRunStageState `json:"state,omitempty" bson:"-"`
 	DurationMs int64                 `json:"durationMs,omitempty" bson:"-"`
 }
