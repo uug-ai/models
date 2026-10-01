@@ -39,7 +39,7 @@ func TestListWorkflowRunsJSONContract(t *testing.T) {
 	}
 
 	response := ListWorkflowRunsResponse{
-		Runs: []WorkflowRunListItem{{
+		Runs: []WorkflowRunOverview{{
 			RunId:              "run-1",
 			WorkflowId:         "workflow-1",
 			WorkflowName:       "People",
@@ -82,10 +82,10 @@ func TestListWorkflowRunsJSONContract(t *testing.T) {
 
 }
 
-func TestWorkflowRunListItemWithoutSource(t *testing.T) {
+func TestWorkflowRunOverviewWithoutSource(t *testing.T) {
 	for _, access := range []string{"restricted", "unavailable"} {
 		t.Run(access, func(t *testing.T) {
-			encoded, err := json.Marshal(WorkflowRunListItem{
+			encoded, err := json.Marshal(WorkflowRunOverview{
 				RunId: "run-1", WorkflowId: "workflow-1",
 				State: models.WorkflowRunStateRunning, Start: 1700000000,
 				SourceAccess: access, SourceType: "case",

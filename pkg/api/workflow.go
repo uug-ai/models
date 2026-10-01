@@ -276,7 +276,7 @@ type ListWorkflowRunsRequest struct {
 	Pagination CursorPagination  `json:"pagination" bson:"pagination"`
 }
 type ListWorkflowRunsResponse struct {
-	Runs       []WorkflowRunListItem    `json:"runs"`
+	Runs       []WorkflowRunOverview    `json:"runs"`
 	Summary    WorkflowRunStatusSummary `json:"summary"`
 	Pagination CursorPagination         `json:"pagination"`
 }

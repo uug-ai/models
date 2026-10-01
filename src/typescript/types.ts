@@ -34086,7 +34086,7 @@ export interface components {
         };
         "api.ListWorkflowRunsResponse": {
             pagination?: components["schemas"]["api.CursorPagination"];
-            runs?: components["schemas"]["api.WorkflowRunListItem"][];
+            runs?: components["schemas"]["api.WorkflowRunOverview"][];
             summary?: components["schemas"]["api.WorkflowRunStatusSummary"];
         };
         "api.ListWorkflowRunsSuccessResponse": {
@@ -35268,7 +35268,7 @@ export interface components {
         };
         "api.WorkflowRunOperationStatus": components["schemas"]["models.WorkflowRunOperationStatus"];
         "api.WorkflowRunStatus": components["schemas"]["models.WorkflowRun"];
-        "api.WorkflowRunListItem": {
+        "api.WorkflowRunOverview": {
             caseMediaId?: string;
             deviceKey?: string;
             deviceName?: string;
@@ -40259,6 +40259,6 @@ export namespace api {
     export type WorkflowRunFilter = components['schemas']['api.WorkflowRunFilter'];
     export type WorkflowRunOperationStatus = models.WorkflowRunOperationStatus;
     export type WorkflowRunStatus = models.WorkflowRun;
-    export type WorkflowRunListItem = components['schemas']['api.WorkflowRunListItem'];
+    export type WorkflowRunOverview = components['schemas']['api.WorkflowRunOverview'];
     export type WorkflowRunStatusSummary = components['schemas']['api.WorkflowRunStatusSummary'];
 }

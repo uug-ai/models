@@ -2,9 +2,9 @@ package api
 
 import "github.com/uug-ai/models/pkg/models"
 
-// WorkflowRunListItem is an allowlisted operational overview, never a worker
+// WorkflowRunOverview is an allowlisted operational overview, never a worker
 // envelope. Source fields are populated only after source authorization.
-type WorkflowRunListItem struct {
+type WorkflowRunOverview struct {
 	RunId              string                              `json:"runId"`
 	WorkflowId         string                              `json:"workflowId,omitempty"`
 	WorkflowName       string                              `json:"workflowName,omitempty"`

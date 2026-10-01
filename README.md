@@ -359,7 +359,7 @@ func errorHandler(w http.ResponseWriter, message string, code int) {
 
 ## Consolidated workflow run stages
 
-Cross-workflow history uses `api.WorkflowRunListItem`, not the worker-envelope
+Cross-workflow history uses `api.WorkflowRunOverview`, not the worker-envelope
 `WorkflowRun`. Organisation/project-scoped operational rows survive missing or
 restricted sources. `sourceAccess` is `available`, `restricted`, or `unavailable`;
 `sourceType` is `media` or `case`. Source identifiers, labels, and recording
