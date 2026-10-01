@@ -255,6 +255,14 @@ type WorkflowRun struct {
 	// (a case id today; a temporal device-series id is a forward-looking twin).
 	SourceRef string `json:"sourceRef,omitempty" bson:"sourceref,omitempty"`
 
+	// SourceType disambiguates case launches from media launch-group references.
+	// Legacy readers infer case ownership from SourceRef and case input metadata.
+	SourceType string `json:"sourceType,omitempty" bson:"sourcetype,omitempty"`
+
+	SourceAccess string `json:"sourceAccess,omitempty" bson:"-"`
+	SourceLabel  string `json:"sourceLabel,omitempty" bson:"-"`
+	CaseMediaId  string `json:"caseMediaId,omitempty" bson:"-"`
+
 	// Key is the media key the run is about. It is copied from the recording at
 	// hand-off time and can group all runs for that recording, but is not unique:
 	// run state is correlated by Id/RunId because several workflows and manual

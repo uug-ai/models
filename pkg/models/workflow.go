@@ -39,6 +39,9 @@ const (
 	// whose recordings open the workflow and compiles to the automatic trigger
 	// (see SyncGraphTriggers), never to a dispatched stage.
 	WorkflowNodeDevice WorkflowNodeType = "device"
+	// WorkflowNodeStart is the explicit activation root. Its Trigger is the
+	// authority for the workflow's activation mode and manual launch surfaces.
+	WorkflowNodeStart WorkflowNodeType = "start"
 )
 
 // WorkflowDeviceGateOperation is the operation a condition on a device node's
@@ -58,9 +61,9 @@ const WorkflowSeedOperation = "event"
 // node carries only what is specific to this placement: identity, canvas
 // position/label, and optional per-instance parameters (Data). How and when the
 // instance fires is expressed by the edges feeding it (see WorkflowEdge.Condition);
-// what activates the workflow as a whole is the Workflow's Trigger. A device
-// node (Type WorkflowNodeDevice) is the exception: it is the graph's source and
-// carries Devices instead of a StageRef.
+// what activates the workflow as a whole is its effective trigger. Root nodes
+// carry Devices instead of a StageRef; explicit Start roots additionally carry
+// the authoritative Trigger.
 type WorkflowNode struct {
 	// Id is this instance's identity within the workflow. It is the stable
 	// handle that edges connect to, and the per-instance runtime key when the
@@ -73,11 +76,15 @@ type WorkflowNode struct {
 	Y     float64          `json:"y" bson:"y"`
 	// StageRef is the referenced stage's Operation key (the catalog key shared
 	// by platform- and user-defined stages), not its Mongo Id. Set on every
-	// stage node and resolved at compile time; empty on a device node.
+	// stage node and resolved at compile time; empty on a root node.
 	StageRef string `json:"stageRef" bson:"stageRef"`
-	// Devices scopes a device node to recordings from these devices. Empty means
+	// Devices scopes an automatic root to recordings from these devices. Empty means
 	// every device the workflow's owner can see. Ignored on stage nodes.
 	Devices []DeviceKey `json:"devices,omitempty" bson:"devices,omitempty"`
+	// Trigger is required on Start nodes. Automatic settings and inactive manual
+	// surface selections are retained here; NormalizeTriggers derives runtime
+	// triggers without exposing inactive settings.
+	Trigger *WorkflowTrigger `json:"trigger,omitempty" bson:"trigger,omitempty"`
 	// Data holds optional per-instance parameter values for this placement, keyed
 	// by parameter name. They are validated against and defaulted from the
 	// referenced stage's declared Params (see WorkflowStage.Params), layered over
@@ -92,6 +99,12 @@ func (n WorkflowNode) EffectiveType() WorkflowNodeType {
 		return WorkflowNodeStage
 	}
 	return n.Type
+}
+
+// IsRoot reports whether the node activates the graph rather than dispatching
+// a worker. Legacy device roots and explicit Start roots compile identically.
+func (n WorkflowNode) IsRoot() bool {
+	return n.EffectiveType() == WorkflowNodeDevice || n.EffectiveType() == WorkflowNodeStart
 }
 
 // WorkflowEdge connects node IDs, not operations. Its source is a readiness
@@ -556,7 +569,7 @@ func (w *Workflow) EffectiveID() primitive.ObjectID {
 // an unconditional dependency). NeedsMode is left at its default (any). Only
 // routing fields are populated; deployment is resolved elsewhere by Operation.
 //
-// Device nodes compile to no stage. An edge leaving a device node adds a need
+// Root nodes compile to no stage. An edge leaving a root node adds a need
 // only when it carries a condition, gated on WorkflowDeviceGateOperation; an
 // unconditional device edge adds nothing, so its target starts the run.
 func (w *Workflow) CompileStages() []WorkflowStage {
@@ -566,7 +579,7 @@ func (w *Workflow) CompileStages() []WorkflowStage {
 	opByNode := make(map[string]string, len(w.Nodes))
 	deviceNodes := make(map[string]bool)
 	for _, n := range w.Nodes {
-		if n.EffectiveType() == WorkflowNodeDevice {
+		if n.IsRoot() {
 			deviceNodes[n.Id] = true
 			continue
 		}
@@ -611,14 +624,16 @@ func (w *Workflow) CompileStages() []WorkflowStage {
 	return stages
 }
 
-// SyncGraphTriggers makes the graph's device node the workflow's automatic
-// trigger: every automatic trigger is replaced by one scoped to that node's
-// Devices, and manual triggers are kept. A graph without a device node leaves
-// Triggers untouched. It is idempotent.
-// This legacy editor adapter intentionally replaces richer activation settings.
-// New Start-node editors must edit Triggers directly instead of calling it.
+// SyncGraphTriggers derives activation from an explicit Start root, or applies
+// the legacy device adapter (replace automatic triggers, preserve manual ones).
+// Stage-only graphs retain their existing triggers. It is idempotent.
 func (w *Workflow) SyncGraphTriggers() {
 	w.NormalizeTriggers()
+	for _, node := range w.Nodes {
+		if node.EffectiveType() == WorkflowNodeStart {
+			return
+		}
+	}
 	var device *WorkflowNode
 	for i := range w.Nodes {
 		if w.Nodes[i].EffectiveType() == WorkflowNodeDevice {
@@ -642,11 +657,38 @@ func (w *Workflow) SyncGraphTriggers() {
 	w.Triggers = triggers
 }
 
-// NormalizeTriggers folds a legacy single Trigger into the Triggers list and
+// NormalizeTriggers derives the sole effective trigger from an explicit Start
+// root. Otherwise it folds a legacy single Trigger into the Triggers list and
 // clears the deprecated field, so callers only ever have to reason about
 // Triggers. It is idempotent: if Triggers is already populated the legacy field
 // is simply dropped, and if neither is set it does nothing.
 func (w *Workflow) NormalizeTriggers() {
+	for _, node := range w.Nodes {
+		if node.EffectiveType() != WorkflowNodeStart {
+			continue
+		}
+		w.Trigger = nil
+		w.Triggers = nil
+		// An incomplete Start must never fall back to stale automatic triggers.
+		if node.Trigger == nil {
+			return
+		}
+		trigger := *node.Trigger
+		switch trigger.Type {
+		case WorkflowTriggerAutomatic:
+			trigger.Devices = append([]DeviceKey(nil), node.Devices...)
+			trigger.Surfaces = nil
+		case WorkflowTriggerManual:
+			trigger = WorkflowTrigger{
+				Type:     WorkflowTriggerManual,
+				Surfaces: append([]WorkflowTriggerSurface(nil), trigger.Surfaces...),
+			}
+		default:
+			return
+		}
+		w.Triggers = []WorkflowTrigger{trigger}
+		return
+	}
 	if w.Trigger != nil {
 		if len(w.Triggers) == 0 {
 			w.Triggers = append(w.Triggers, *w.Trigger)

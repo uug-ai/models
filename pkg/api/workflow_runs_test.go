@@ -39,11 +39,13 @@ func TestListWorkflowRunsJSONContract(t *testing.T) {
 	}
 
 	response := ListWorkflowRunsResponse{
-		Runs: []models.WorkflowRun{{
+		Runs: []WorkflowRunOverview{{
 			RunId:              "run-1",
 			WorkflowId:         "workflow-1",
 			WorkflowName:       "People",
 			State:              models.WorkflowRunStateRunning,
+			SourceAccess:       "available",
+			SourceType:         "media",
 			MediaId:            "media-1",
 			Key:                "recording.mp4",
 			DeviceKey:          "camera-1",
@@ -63,6 +65,8 @@ func TestListWorkflowRunsJSONContract(t *testing.T) {
 		t.Fatalf("json.Marshal() error = %v", err)
 	}
 	for _, expected := range []string{
+		`"sourceAccess":"available"`,
+		`"sourceType":"media"`,
 		`"mediaId":"media-1"`,
 		`"deviceKey":"camera-1"`,
 		`"deviceName":"Lobby"`,
@@ -74,5 +78,39 @@ func TestListWorkflowRunsJSONContract(t *testing.T) {
 		if !strings.Contains(string(encoded), expected) {
 			t.Fatalf("workflow run response = %s, missing %s", encoded, expected)
 		}
+	}
+
+}
+
+func TestWorkflowRunOverviewWithoutSource(t *testing.T) {
+	for _, access := range []string{"restricted", "unavailable"} {
+		t.Run(access, func(t *testing.T) {
+			encoded, err := json.Marshal(WorkflowRunOverview{
+				RunId: "run-1", WorkflowId: "workflow-1",
+				State: models.WorkflowRunStateRunning, Start: 1700000000,
+				SourceAccess: access, SourceType: "case",
+			})
+			if err != nil {
+				t.Fatal(err)
+			}
+			var fields map[string]json.RawMessage
+			if err := json.Unmarshal(encoded, &fields); err != nil {
+				t.Fatal(err)
+			}
+			for _, field := range []string{
+				"sourceRef", "sourceLabel", "caseMediaId", "mediaId", "key",
+				"deviceKey", "deviceName", "recordingTimestamp", "inputs",
+				"results", "stages", "storage", "signedUrl",
+			} {
+				if _, exists := fields[field]; exists {
+					t.Errorf("source-free overview exposes %s: %s", field, encoded)
+				}
+			}
+			for _, field := range []string{"runId", "workflowId", "state", "start", "sourceAccess", "sourceType"} {
+				if _, exists := fields[field]; !exists {
+					t.Errorf("source-free overview omits %s: %s", field, encoded)
+				}
+			}
+		})
 	}
 }

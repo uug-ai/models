@@ -34086,7 +34086,7 @@ export interface components {
         };
         "api.ListWorkflowRunsResponse": {
             pagination?: components["schemas"]["api.CursorPagination"];
-            runs?: components["schemas"]["models.WorkflowRun"][];
+            runs?: components["schemas"]["api.WorkflowRunOverview"][];
             summary?: components["schemas"]["api.WorkflowRunStatusSummary"];
         };
         "api.ListWorkflowRunsSuccessResponse": {
@@ -34430,6 +34430,11 @@ export interface components {
         "api.RunWorkflowRequest": {
             attachmentIds?: string[];
             mediaIds?: string[];
+            /**
+             * @description Surface is case (the default) or redaction. The workflow must expose a
+             *     manual trigger on this surface; all case/media access checks still apply.
+             */
+            surface?: components["schemas"]["models.WorkflowTriggerSurface"];
             workflowId?: string;
         };
         "api.RunWorkflowResponse": {
@@ -35263,6 +35268,33 @@ export interface components {
         };
         "api.WorkflowRunOperationStatus": components["schemas"]["models.WorkflowRunOperationStatus"];
         "api.WorkflowRunStatus": components["schemas"]["models.WorkflowRun"];
+        "api.WorkflowRunOverview": {
+            caseMediaId?: string;
+            deviceKey?: string;
+            deviceName?: string;
+            dispatched?: number;
+            durationMs?: number;
+            end?: number;
+            hasResults?: boolean;
+            key?: string;
+            mediaId?: string;
+            operations?: components["schemas"]["models.WorkflowRunOperationStatus"][];
+            origin?: components["schemas"]["models.WorkflowRunOrigin"];
+            recordingTimestamp?: number;
+            resolved?: number;
+            runId?: string;
+            /** @enum {string} */
+            sourceAccess?: "available" | "restricted" | "unavailable";
+            sourceLabel?: string;
+            sourceRef?: string;
+            /** @enum {string} */
+            sourceType?: "media" | "case";
+            stageExecutions?: components["schemas"]["models.WorkflowRunStageExecution"][];
+            start?: number;
+            state?: components["schemas"]["models.WorkflowRunState"];
+            workflowId?: string;
+            workflowName?: string;
+        };
         "api.WorkflowRunStatusSummary": {
             completed?: number;
             noResult?: number;
@@ -38986,25 +39018,46 @@ export interface components {
             signedUrl?: string;
         };
         "models.WorkflowNode": {
-            /** @description Data holds optional per-instance parameter values for this placement, keyed
+            /**
+             * @description Data holds optional per-instance parameter values for this placement, keyed
              *     by parameter name. They are validated against and defaulted from the
              *     referenced stage's declared Params (see WorkflowStage.Params), layered over
-             *     the stage's catalog defaults. */
+             *     the stage's catalog defaults.
+             */
             data?: {
                 [key: string]: unknown;
             };
-            /** @description Id is this instance's identity within the workflow. It is the stable
+            /**
+             * @description Devices scopes an automatic root to recordings from these devices. Empty means
+             *     every device the workflow's owner can see. Ignored on stage nodes.
+             */
+            devices?: components["schemas"]["models.DeviceKey"][];
+            /**
+             * @description Id is this instance's identity within the workflow. It is the stable
              *     handle that edges connect to, and the per-instance runtime key when the
-             *     same stage is placed more than once. */
+             *     same stage is placed more than once.
+             */
             id?: string;
             label?: string;
-            /** @description StageRef is the referenced stage's Operation key (the catalog key shared
-             *     by platform- and user-defined stages), not its Mongo Id. Always set:
-             *     every node is an instance of a catalog stage, resolved at compile time. */
+            /**
+             * @description StageRef is the referenced stage's Operation key (the catalog key shared
+             *     by platform- and user-defined stages), not its Mongo Id. Set on every
+             *     stage node and resolved at compile time; empty on a root node.
+             */
             stageRef?: string;
+            /**
+             * @description Trigger is required on Start nodes. Automatic settings and inactive manual
+             *     surface selections are retained here; NormalizeTriggers derives runtime
+             *     triggers without exposing inactive settings.
+             */
+            trigger?: components["schemas"]["models.WorkflowTrigger"];
+            /** @description Type is what the node represents; empty means WorkflowNodeStage. */
+            type?: components["schemas"]["models.WorkflowNodeType"];
             x?: number;
             y?: number;
         };
+        /** @enum {string} */
+        "models.WorkflowNodeType": "stage" | "device" | "start";
         "models.WorkflowPredicate": {
             op?: components["schemas"]["models.ConditionOp"];
             path?: string;
@@ -39023,6 +39076,7 @@ export interface components {
             stage?: components["schemas"]["models.WorkflowStageReference"];
         };
         "models.WorkflowRun": {
+            caseMediaId?: string;
             /** @description Device identifies the recording the run derives from, with the few fields
              *     vault-override resolution and logging need (device key/name and where the
              *     media is stored/served from). Copied from the recording at hand-off time.
@@ -39152,12 +39206,19 @@ export interface components {
              *     and short-lived, so — like Storage — it is wire-only and never lands in the
              *     run's persisted state; a stage dispatched after a reload fetches via Storage. */
             signedUrl?: string;
+            sourceAccess?: string;
+            sourceLabel?: string;
             /** @description SourceRef ties a manual run back to the thing it was launched from — e.g.
              *     the case id when launched from a case surface — so sibling runs fanned out
              *     from one user action (one seed per selected media key) can be grouped above
              *     the run. Empty for automatic runs. It generalises to any run-grouping handle
              *     (a case id today; a temporal device-series id is a forward-looking twin). */
             sourceRef?: string;
+            /**
+             * @description SourceType disambiguates case launches from media launch-group references.
+             *     Legacy readers infer case ownership from SourceRef and case input metadata.
+             */
+            sourceType?: string;
             /** @description StageExecutions reads the legacy split timeline. NormalizeStages moves
              *     matched summaries into Stages, retaining unmatched history without
              *     reconstructing missing routing. Serialization does not normalize implicitly.
@@ -40198,5 +40259,6 @@ export namespace api {
     export type WorkflowRunFilter = components['schemas']['api.WorkflowRunFilter'];
     export type WorkflowRunOperationStatus = models.WorkflowRunOperationStatus;
     export type WorkflowRunStatus = models.WorkflowRun;
+    export type WorkflowRunOverview = components['schemas']['api.WorkflowRunOverview'];
     export type WorkflowRunStatusSummary = components['schemas']['api.WorkflowRunStatusSummary'];
 }

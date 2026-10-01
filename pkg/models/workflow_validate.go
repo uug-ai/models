@@ -11,12 +11,15 @@ import (
 var ErrInvalidWorkflowGraph = errors.New("invalid workflow graph")
 
 // ValidateGraph checks that the node/edge graph compiles to a runnable stage
-// set: unique node ids, known node types, at most one device node, one stage
+// set: unique node ids, known node types, at most one Start/device root, one stage
 // node per operation (never the reserved seed operation), edges between existing
-// nodes that never feed a device node or form a cycle, and well-formed edge
+// nodes that never feed a root or form a cycle, and well-formed edge
 // conditions. It does not check operations against a deployment catalog; callers
 // own that allow-list.
 func (w *Workflow) ValidateGraph() error {
+	if err := w.ValidateStartNodes(); err != nil {
+		return err
+	}
 	invalid := func(format string, args ...any) error {
 		return fmt.Errorf("%w: %s", ErrInvalidWorkflowGraph, fmt.Sprintf(format, args...))
 	}
@@ -33,7 +36,7 @@ func (w *Workflow) ValidateGraph() error {
 		}
 		nodes[n.Id] = n
 		switch n.EffectiveType() {
-		case WorkflowNodeDevice:
+		case WorkflowNodeDevice, WorkflowNodeStart:
 			if deviceNodes++; deviceNodes > 1 {
 				return invalid("a workflow may have only one device node")
 			}
@@ -70,9 +73,10 @@ func (w *Workflow) ValidateGraph() error {
 		if e.Source == e.Target {
 			return invalid("edge %q connects node %q to itself", e.Id, e.Source)
 		}
-		if target.EffectiveType() == WorkflowNodeDevice {
-			return invalid("edge %q feeds device node %q", e.Id, e.Target)
+		if target.IsRoot() {
+			return invalid("edge %q feeds %s node %q", e.Id, target.EffectiveType(), e.Target)
 		}
+
 		if err := e.ValidateConditions(); err != nil {
 			return invalid("edge %q: %v", e.Id, err)
 		}
@@ -104,6 +108,58 @@ func (w *Workflow) ValidateGraph() error {
 	for _, n := range w.Nodes {
 		if !acyclic(n.Id) {
 			return invalid("edges form a cycle")
+		}
+	}
+	return nil
+}
+
+// ValidateStartNodes validates the explicit activation contract, including for
+// drafts. A disabled manual Start may omit surfaces while it is being edited.
+// Legacy graphs retain their existing draft validation behavior.
+func (w *Workflow) ValidateStartNodes() error {
+	roots := 0
+	for _, node := range w.Nodes {
+		if node.IsRoot() {
+			roots++
+		}
+	}
+	for _, node := range w.Nodes {
+		if node.EffectiveType() != WorkflowNodeStart {
+			continue
+		}
+		invalid := func(message string) error {
+			return fmt.Errorf("%w: start node %q: %s", ErrInvalidWorkflowGraph, node.Id, message)
+		}
+		if roots > 1 {
+			return invalid("a workflow may have only one start or device node")
+		}
+		for _, edge := range w.Edges {
+			if edge.Target == node.Id {
+				return invalid("cannot have incoming edges")
+			}
+		}
+		if node.Trigger == nil {
+			return invalid("requires a trigger")
+		}
+		trigger := *node.Trigger
+		if trigger.Type != WorkflowTriggerAutomatic && trigger.Type != WorkflowTriggerManual {
+			return invalid(fmt.Sprintf("unknown trigger type %q", trigger.Type))
+		}
+		for _, surface := range trigger.Surfaces {
+			switch surface {
+			case WorkflowSurfaceCase, WorkflowSurfaceMedia, WorkflowSurfaceRedaction:
+			default:
+				return invalid(fmt.Sprintf("unknown trigger surface %q", surface))
+			}
+		}
+		if !w.Enabled && trigger.Type == WorkflowTriggerManual && len(trigger.Surfaces) == 0 {
+			continue
+		}
+		if trigger.Type == WorkflowTriggerAutomatic {
+			trigger.Devices = node.Devices
+		}
+		if err := trigger.Validate(); err != nil {
+			return invalid(err.Error())
 		}
 	}
 	return nil
@@ -150,9 +206,14 @@ func (t WorkflowTrigger) Validate() error {
 	return ValidateWorkflowConditionSet(t.ConditionSet())
 }
 
-// ValidateTriggers validates the canonical list, or the legacy single trigger
-// when no list is present. It does not normalize or rewrite persisted data.
+// ValidateTriggers validates an explicit Start, otherwise the canonical list or
+// legacy single trigger. It does not normalize or rewrite persisted data.
 func (w *Workflow) ValidateTriggers() error {
+	for _, node := range w.Nodes {
+		if node.EffectiveType() == WorkflowNodeStart {
+			return w.ValidateStartNodes()
+		}
+	}
 	triggers := w.Triggers
 	if len(triggers) == 0 && w.Trigger != nil {
 		triggers = []WorkflowTrigger{*w.Trigger}

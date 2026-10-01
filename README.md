@@ -359,6 +359,15 @@ func errorHandler(w http.ResponseWriter, message string, code int) {
 
 ## Consolidated workflow run stages
 
+Cross-workflow history uses `api.WorkflowRunOverview`, not the worker-envelope
+`WorkflowRun`. Organisation/project-scoped operational rows survive missing or
+restricted sources. `sourceAccess` is `available`, `restricted`, or `unavailable`;
+`sourceType` is `media` or `case`. Source identifiers, labels, and recording
+metadata are optional and require source authorization. Inputs, results, routing
+configuration and dispatch errors are never part of this list contract.
+New manual writers persist `WorkflowRun.SourceType` to distinguish case IDs from
+media launch-group references; legacy case readers still resolve `SourceRef`.
+
 `WorkflowRun.Stages` contains `WorkflowRunStage` entries: immutable routing
 (`operation`, `name`, `dispatch`, `queue`, `needs`, `needsMode`) alongside nested
 `execution` facts (attempts, timestamps, last dispatch error). Run stages are
@@ -468,6 +477,25 @@ different detections.
 - **Manual triggers:** `surfaces` advertises `case`, `media`, and/or `redaction`.
   Validation requires a supported surface; automatic-only fields remain ignored
   for compatibility with existing documents.
+- **Start roots:** new editor graphs use
+  `{"id":"recording","type":"start","trigger":{"type":"automatic"},"devices":[]}`.
+  Set `trigger.type` to `manual` and select `trigger.surfaces` for user-launched
+  workflows. `NormalizeTriggers`/`SyncGraphTriggers` derive the sole effective
+  trigger from this node, overriding stale top-level triggers. The root's
+  `devices` is authoritative for automatic device scope; its trigger retains
+  conditions, site/group selectors and weekly schedule. Inactive settings remain
+  on the node, but automatic runtime triggers omit manual surfaces and manual
+  runtime triggers omit automatic settings. A graph may have only one Start or
+  legacy device root, with no incoming edges. Start edges compile like device
+  edges, including `classify` gates. Missing/unknown Start modes and unknown
+  surfaces are invalid; disabled manual drafts may have no selected surfaces.
+  Legacy device roots still preserve their manual triggers; stage-only/config
+  workflows remain unchanged. No data migration is required.
+- **Manual launch surfaces:** `POST /tasks/{taskId}/workflows` accepts an optional
+  `surface` of `case` (default) or `redaction`; the selected workflow must be
+  enabled and expose that exact manual surface. Media launches use the existing
+  `POST /media/workflows` endpoint and require the `media` surface. Surface
+  selection does not grant access to another tenant, project, case, or recording.
 - **Edges:** `source`/`target` are node IDs. Compilation derives the source
   operation as a dependency readiness gate. Predicate paths are absolute and
   independent of that source; port names do not rebase them. A stage dependency
