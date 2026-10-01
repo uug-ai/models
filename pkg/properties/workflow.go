@@ -45,6 +45,7 @@ const (
 	WorkflowNodeY = "y"
 	WorkflowNodeStageRef = "stageRef"
 	WorkflowNodeDevices = "devices"
+	WorkflowNodeTrigger = "trigger"
 	WorkflowNodeData = "data"
 )
 

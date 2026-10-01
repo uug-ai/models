@@ -12,6 +12,7 @@ const (
 	WorkflowRunOrigin = "origin"
 	WorkflowRunTriggerMatch = "triggermatch"
 	WorkflowRunSourceRef = "sourceref"
+	WorkflowRunSourceType = "sourcetype"
 	WorkflowRunKey = "key"
 	WorkflowRunRecordingTimestamp = "recordingtimestamp"
 	WorkflowRunOrganisationId = "organisationId"

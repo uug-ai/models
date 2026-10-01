@@ -197,6 +197,9 @@ type RunWorkflowRequest struct {
 	WorkflowId    string   `json:"workflowId" bson:"workflowId"`
 	MediaIds      []string `json:"mediaIds,omitempty" bson:"mediaIds,omitempty"`
 	AttachmentIds []string `json:"attachmentIds,omitempty" bson:"attachmentIds,omitempty"`
+	// Surface is case (the default) or redaction. The workflow must expose a
+	// manual trigger on this surface; all case/media access checks still apply.
+	Surface models.WorkflowTriggerSurface `json:"surface,omitempty" bson:"surface,omitempty"`
 }
 
 // RunWorkflowResponse reports the runs opened by the launch: the freshly minted
@@ -273,7 +276,7 @@ type ListWorkflowRunsRequest struct {
 	Pagination CursorPagination  `json:"pagination" bson:"pagination"`
 }
 type ListWorkflowRunsResponse struct {
-	Runs       []models.WorkflowRun     `json:"runs"`
+	Runs       []WorkflowRunListItem    `json:"runs"`
 	Summary    WorkflowRunStatusSummary `json:"summary"`
 	Pagination CursorPagination         `json:"pagination"`
 }
