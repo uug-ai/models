@@ -93,7 +93,11 @@ type MediaFilter struct {
 	Tags            []*string           `json:"tags,omitempty" bson:"tags,omitempty"`
 	Regions         []*models.Region    `json:"regions,omitempty" bson:"regions,omitempty"`
 	Starred         *bool               `json:"starred,omitempty" bson:"starred,omitempty"`
-	SortBy          *string             `json:"sortBy,omitempty" bson:"sortBy,omitempty"`
+	// HasAnalysis keeps only media with analysis results (markers, description,
+	// detections, classification/counting summaries or VLM output) when true,
+	// and only media without any when false.
+	HasAnalysis *bool   `json:"hasAnalysis,omitempty" bson:"hasAnalysis,omitempty"`
+	SortBy      *string `json:"sortBy,omitempty" bson:"sortBy,omitempty"`
 }
 
 type MediaPatch struct {
