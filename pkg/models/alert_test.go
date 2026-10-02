@@ -1,10 +1,72 @@
 package models
 
 import (
+	"encoding/json"
 	"reflect"
 	"testing"
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson"
 )
+
+func TestAlertPrivacyCompatibility(t *testing.T) {
+	for _, private := range []bool{false, true} {
+		alert := CustomAlert{Private: private, Enabled: true, UserId: "creator"}
+		data, err := bson.Marshal(alert)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var decoded CustomAlert
+		if err := bson.Unmarshal(data, &decoded); err != nil {
+			t.Fatal(err)
+		}
+		if decoded.Private != private || !decoded.Enabled || decoded.UserId != alert.UserId {
+			t.Fatalf("alert round trip = %#v", decoded)
+		}
+	}
+	var legacy CustomAlert
+	if err := json.Unmarshal([]byte(`{"enabled":true,"user_id":"creator"}`), &legacy); err != nil {
+		t.Fatal(err)
+	}
+	if legacy.Private {
+		t.Fatal("legacy alerts must retain shared visibility")
+	}
+}
+
+func TestAlertPrivacyPatchPreservesExplicitFalse(t *testing.T) {
+	for _, test := range []struct {
+		payload string
+		want    *bool
+	}{
+		{payload: `{}`},
+		{payload: `{"private":true}`, want: boolPointer(true)},
+		{payload: `{"private":false}`, want: boolPointer(false)},
+	} {
+		var patch AlertPatch
+		if err := json.Unmarshal([]byte(test.payload), &patch); err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(patch.Private, test.want) {
+			t.Fatalf("%s: private = %v, want %v", test.payload, patch.Private, test.want)
+		}
+		data, err := bson.Marshal(patch)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var document bson.M
+		if err := bson.Unmarshal(data, &document); err != nil {
+			t.Fatal(err)
+		}
+		value, present := document["private"]
+		if present != (test.want != nil) || present && value != *test.want {
+			t.Fatalf("%s: BSON = %#v", test.payload, document)
+		}
+	}
+}
+
+func boolPointer(value bool) *bool {
+	return &value
+}
 
 func TestWeeklyScheduleIsActiveAt(t *testing.T) {
 	ts := time.Date(2026, 2, 4, 10, 30, 0, 0, time.UTC) // Wednesday

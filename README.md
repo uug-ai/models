@@ -22,6 +22,15 @@ A comprehensive Go package providing type-safe data models for media management,
 - **Auto-Discovery**: Automatic model detection and TypeScript generation
 - **Production Ready**: Battle-tested models used in production systems
 
+### Alert configuration visibility
+
+`CustomAlert.private` defaults to false (including historical documents without
+the field). When true, configuration access is restricted to the creator in
+`user_id`, including against other owners/admins. This is separate from
+organisation/project ownership and does not change alert execution, notification
+recipients, generated events, or auditing. Only the creator can change privacy;
+`AlertPatch.private` supports explicit false to restore shared visibility.
+
 ## Installation
 
 ### Go

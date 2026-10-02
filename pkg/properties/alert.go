@@ -11,6 +11,7 @@ const (
 
 // AlertPatch property field names (BSON)
 const (
+	AlertPatchPrivate = "private"
 	AlertPatchTitle = "title"
 	AlertPatchEnabled = "enabled"
 	AlertPatchDescription = "description"
@@ -65,6 +66,7 @@ const (
 
 // CustomAlert property field names (BSON)
 const (
+	CustomAlertPrivate = "private"
 	CustomAlertId = "_id"
 	CustomAlertEnabled = "enabled"
 	CustomAlertTitle = "title"
