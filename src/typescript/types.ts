@@ -35391,6 +35391,7 @@ export interface components {
             inputsAND?: boolean;
             motionRegions?: components["schemas"]["models.Region"][];
             outputList?: string[];
+            private?: boolean;
             pushbullet_apikey?: string;
             pushover_apikey?: string;
             pushover_sendto?: string;
@@ -36169,6 +36170,9 @@ export interface components {
             motionRegions?: components["schemas"]["models.Region"][];
             organisationId?: string;
             outputList?: string[];
+            /** @description Private restricts configuration access to UserId, not notification delivery.
+             *     Missing or false preserves the existing shared visibility. */
+            private?: boolean;
             /** @description ProjectId optionally places the alert in a project within its organisation.
              *     A nil value keeps the alert organisation-wide. */
             projectId?: string;

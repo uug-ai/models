@@ -8,6 +8,9 @@ import (
 )
 
 type CustomAlert struct {
+	// Private restricts configuration access to UserId, not notification delivery.
+	// Missing or false preserves the existing shared visibility.
+	Private             bool                 `json:"private,omitempty" bson:"private,omitempty"`
 	Id                  primitive.ObjectID   `json:"id" bson:"_id,omitempty"`
 	Enabled             bool                 `json:"enabled" bson:"enabled"`
 	Title               string               `json:"title" bson:"title"`
@@ -87,6 +90,7 @@ type DayTimeRange struct {
 }
 
 type AlertPatch struct {
+	Private             *bool             `json:"private,omitempty" bson:"private,omitempty"`
 	Title               *string           `json:"title,omitempty" bson:"title,omitempty"`
 	Enabled             *bool             `json:"enabled,omitempty" bson:"enabled,omitempty"`
 	Description         *string           `json:"description,omitempty" bson:"description,omitempty"`
