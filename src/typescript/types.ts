@@ -30034,6 +30034,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/workflowedgetrigger": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowEdgeTrigger (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowEdgeTrigger schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowEdgeTrigger"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/workflowinvocation": {
         parameters: {
             query?: never;
@@ -35294,6 +35333,7 @@ export interface components {
             state?: components["schemas"]["models.WorkflowRunState"];
             workflowId?: string;
             workflowName?: string;
+            matchedStartEdgeIds?: string[];
         };
         "api.WorkflowRunStatusSummary": {
             completed?: number;
@@ -36052,7 +36092,7 @@ export interface components {
         /** @enum {string} */
         "models.ConditionMode": "all" | "any";
         /** @enum {string} */
-        "models.ConditionOp": "eq" | "ne" | "contains" | "in" | "exists" | "matches" | "gt" | "gte" | "lt" | "lte" | "anyMatch";
+        "models.ConditionOp": "eq" | "ne" | "contains" | "in" | "exists" | "matches" | "gt" | "gte" | "lt" | "lte" | "anyMatch" | "all" | "any";
         "models.Contact": {
             email?: string;
             name?: string;
@@ -38105,6 +38145,7 @@ export interface components {
             path?: string;
             /** @description comparison operand (unused for ConditionOpExists) */
             value?: unknown;
+            conditions?: components["schemas"]["models.WorkflowCondition"][];
         };
         "models.StageDependency": {
             /** @description Condition is the predicate evaluated against the run root. Nil means the
@@ -38123,6 +38164,8 @@ export interface components {
              *     the run root itself (device/user/identity, or an input present from open),
              *     evaluated as soon as the run opens with nothing to wait for. */
             operation?: string;
+            startEdgeId?: string;
+            startMatched?: boolean;
         };
         "models.StageParam": {
             /** @description Default is applied when a node supplies no value for this parameter. */
@@ -38961,6 +39004,7 @@ export interface components {
             path?: string;
             /** @description comparison operand (unused for ConditionOpExists) */
             value?: unknown;
+            conditions?: components["schemas"]["models.WorkflowCondition"][];
         };
         "models.WorkflowConditionSet": {
             conditionMode?: components["schemas"]["models.ConditionMode"];
@@ -38997,6 +39041,14 @@ export interface components {
             /** @description TargetPort optionally selects which of the target stage's declared Inputs
              *     (see WorkflowStage.Inputs) this edge feeds. Empty means the default port. */
             targetPort?: string;
+            trigger?: components["schemas"]["models.WorkflowEdgeTrigger"];
+        };
+        "models.WorkflowEdgeTrigger": {
+            classifications?: string[];
+            devices?: components["schemas"]["models.DeviceKey"][];
+            groupIds?: string[];
+            siteIds?: string[];
+            weeklySchedule?: components["schemas"]["models.WeeklySchedule"][];
         };
         "models.WorkflowInvocation": {
             callback?: components["schemas"]["models.WorkflowCallback"];
@@ -39032,8 +39084,8 @@ export interface components {
                 [key: string]: unknown;
             };
             /**
-             * @description Devices scopes an automatic root to recordings from these devices. Empty means
-             *     every device the workflow's owner can see. Ignored on stage nodes.
+             * @description Devices scopes legacy automatic roots. Start edges inherit it only when
+             *     their Trigger is nil. Empty means every eligible device; ignored on stages.
              */
             devices?: components["schemas"]["models.DeviceKey"][];
             /**
@@ -39050,9 +39102,9 @@ export interface components {
              */
             stageRef?: string;
             /**
-             * @description Trigger is required on Start nodes. Automatic settings and inactive manual
-             *     surface selections are retained here; NormalizeTriggers derives runtime
-             *     triggers without exposing inactive settings.
+             * @description Trigger is required on Start nodes for Type and manual Surfaces. Legacy
+             *     automatic settings remain readable; new scopes are authored on edges.
+             *     NormalizeTriggers derives runtime triggers without exposing inactive settings.
              */
             trigger?: components["schemas"]["models.WorkflowTrigger"];
             /** @description Type is what the node represents; empty means WorkflowNodeStage. */
@@ -39106,7 +39158,8 @@ export interface components {
              *     reloaded mid-flight still sees its start context. */
             inputs?: {
                 [key: string]: unknown;
-            };
+                matchedStartEdgeIds?: string[];
+        };
             /** @description Key is the media key the run is about. It is copied from the recording at
              *     hand-off time and can group all runs for that recording, but is not unique:
              *     run state is correlated by Id/RunId because several workflows and manual
@@ -39343,6 +39396,7 @@ export interface components {
              *     It is historical context, not a stable ID into an edited definition. */
             index?: number;
             trigger?: components["schemas"]["models.WorkflowTrigger"];
+            matchedEdgeIds?: string[];
         };
         /** @enum {string} */
         "models.WorkflowSource": "user" | "config";
@@ -39439,6 +39493,7 @@ export interface components {
             projectId?: string;
         };
         "models.WorkflowTrigger": {
+            classifications?: string[];
             /** @description Conditions read the pre-run envelope, including already available,
              *     sanitized inputs, never future results. Scope and schedule remain mandatory
              *     even when this group's ConditionMode is any. */
@@ -39473,6 +39528,8 @@ export interface components {
              *     the user's timezone captured when the schedule was authored. Time is not
              *     path-expressible, so it stays a dedicated field rather than a condition. */
             weeklySchedule?: components["schemas"]["models.WeeklySchedule"][];
+            edgeId?: string;
+            sharedConditions?: components["schemas"]["models.WorkflowConditionSet"];
         };
         /** @enum {string} */
         "models.WorkflowTriggerSurface": "case" | "media" | "redaction";
@@ -39794,6 +39851,7 @@ export namespace models {
     export type WorkflowDevice = components['schemas']['models.WorkflowDevice'];
     export type WorkflowDeviceReference = components['schemas']['models.WorkflowDeviceReference'];
     export type WorkflowEdge = components['schemas']['models.WorkflowEdge'];
+    export type WorkflowEdgeTrigger = components['schemas']['models.WorkflowEdgeTrigger'];
     export type WorkflowInvocation = components['schemas']['models.WorkflowInvocation'];
     export type WorkflowInvocationWorkflow = components['schemas']['models.WorkflowInvocationWorkflow'];
     export type WorkflowMediaReference = components['schemas']['models.WorkflowMediaReference'];

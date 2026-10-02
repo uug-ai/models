@@ -45,18 +45,65 @@ func ValidateStageCondition(c *StageCondition) error {
 }
 
 // ValidateWorkflowCondition checks the credential-free path, operator, operand,
-// and anyMatch structure. A nil condition remains an unconditional predicate.
+// and bounded logical/anyMatch structure. A nil condition remains unconditional.
 func ValidateWorkflowCondition(c *WorkflowCondition) error {
+	remaining := MaxWorkflowConditionCount
+	return validateWorkflowConditionTree(c, 0, &remaining, true)
+}
+
+// Logical groups are bounded independently of anyMatch's nonrecursive,
+// same-element predicate set. The count includes groups and relative leaves.
+const (
+	MaxWorkflowConditionDepth = 8
+	MaxWorkflowConditionCount = 256
+)
+
+func validateWorkflowConditionTree(c *WorkflowCondition, depth int, remaining *int, full bool) error {
 	if c == nil {
 		return nil
 	}
-	if err := validateConditionPath(c); err != nil {
-		return err
+	*remaining -= 1
+	if *remaining < 0 {
+		return fmt.Errorf("condition set exceeds %d predicates", MaxWorkflowConditionCount)
 	}
-	if err := validateWorkflowConditionStructure(c); err != nil {
+	if c.Op == ConditionOpAll || c.Op == ConditionOpAny {
+		if depth >= MaxWorkflowConditionDepth {
+			return fmt.Errorf("logical conditions exceed depth %d", MaxWorkflowConditionDepth)
+		}
+		if len(c.Conditions) == 0 {
+			return fmt.Errorf("condition op %q requires nonempty conditions", c.Op)
+		}
+		if c.Path != "" || c.Value != nil || c.Match != nil {
+			return fmt.Errorf("condition op %q uses only conditions, not path, value or match", c.Op)
+		}
+		for i := range c.Conditions {
+			if err := validateWorkflowConditionTree(&c.Conditions[i], depth+1, remaining, full); err != nil {
+				return fmt.Errorf("condition op %q child %d: %w", c.Op, i, err)
+			}
+		}
+		return nil
+	}
+	if c.Conditions != nil {
+		return fmt.Errorf("condition %q op %q cannot have logical conditions", c.Path, c.Op)
+	}
+	if full {
+		if err := validateConditionPath(c); err != nil {
+			return err
+		}
+	}
+	if c.Op == ConditionOpAnyMatch && c.Match != nil {
+		*remaining -= len(c.Match.Conditions)
+		if *remaining < 0 {
+			return fmt.Errorf("condition set exceeds %d predicates", MaxWorkflowConditionCount)
+		}
+	}
+	if err := validateWorkflowLeafStructure(c); err != nil {
 		return err
 	}
 	if c.Op == ConditionOpAnyMatch {
+		if !full {
+			return nil
+		}
 		for i, p := range c.Match.Conditions {
 			if err := validateConditionValue(&WorkflowCondition{Path: p.Path, Op: p.Op, Value: p.Value}); err != nil {
 				return fmt.Errorf("condition %q match predicate %d: %w", c.Path, i, err)
@@ -64,15 +111,23 @@ func ValidateWorkflowCondition(c *WorkflowCondition) error {
 		}
 		return nil
 	}
+	if !full {
+		return nil
+	}
 	return validateConditionValue(c)
 }
 
 func ValidateWorkflowConditionSet(set WorkflowConditionSet) error {
+	return validateWorkflowConditionSet(set, true)
+}
+
+func validateWorkflowConditionSet(set WorkflowConditionSet, full bool) error {
 	if err := validateConditionMode(set.ConditionMode); err != nil {
 		return err
 	}
+	remaining := MaxWorkflowConditionCount
 	for i := range set.Conditions {
-		if err := ValidateWorkflowCondition(&set.Conditions[i]); err != nil {
+		if err := validateWorkflowConditionTree(&set.Conditions[i], 0, &remaining, full); err != nil {
 			return fmt.Errorf("condition %d: %w", i, err)
 		}
 	}
@@ -82,6 +137,11 @@ func ValidateWorkflowConditionSet(set WorkflowConditionSet) error {
 // Structural checks also run before evaluation can short-circuit. Operand
 // validation (including regex compilation) remains an authoring/load concern.
 func validateWorkflowConditionStructure(c *WorkflowCondition) error {
+	remaining := MaxWorkflowConditionCount
+	return validateWorkflowConditionTree(c, 0, &remaining, false)
+}
+
+func validateWorkflowLeafStructure(c *WorkflowCondition) error {
 	if c.Op != ConditionOpAnyMatch {
 		if c.Match != nil {
 			return fmt.Errorf("condition %q op %q cannot have match predicates", c.Path, c.Op)

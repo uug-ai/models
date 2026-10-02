@@ -8,4 +8,5 @@ const (
 	WorkflowRunTriggerMatchIndex = "index"
 	WorkflowRunTriggerMatchEvaluatedAtMs = "evaluatedatms"
 	WorkflowRunTriggerMatchTrigger = "trigger"
+	WorkflowRunTriggerMatchMatchedEdgeIds = "matchededgeids"
 )

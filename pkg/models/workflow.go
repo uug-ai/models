@@ -78,12 +78,12 @@ type WorkflowNode struct {
 	// by platform- and user-defined stages), not its Mongo Id. Set on every
 	// stage node and resolved at compile time; empty on a root node.
 	StageRef string `json:"stageRef" bson:"stageRef"`
-	// Devices scopes an automatic root to recordings from these devices. Empty means
-	// every device the workflow's owner can see. Ignored on stage nodes.
+	// Devices scopes legacy automatic roots. Start edges inherit it only when
+	// their Trigger is nil. Empty means every eligible device; ignored on stages.
 	Devices []DeviceKey `json:"devices,omitempty" bson:"devices,omitempty"`
-	// Trigger is required on Start nodes. Automatic settings and inactive manual
-	// surface selections are retained here; NormalizeTriggers derives runtime
-	// triggers without exposing inactive settings.
+	// Trigger is required on Start nodes for Type and manual Surfaces. Legacy
+	// automatic settings remain readable; new scopes are authored on edges.
+	// NormalizeTriggers derives runtime triggers without exposing inactive settings.
 	Trigger *WorkflowTrigger `json:"trigger,omitempty" bson:"trigger,omitempty"`
 	// Data holds optional per-instance parameter values for this placement, keyed
 	// by parameter name. They are validated against and defaulted from the
@@ -121,9 +121,42 @@ type WorkflowEdge struct {
 	TargetPort    string              `json:"targetPort" bson:"targetPort"`
 	ConditionMode ConditionMode       `json:"conditionMode,omitempty" bson:"conditionMode,omitempty"`
 	Conditions    []WorkflowCondition `json:"conditions,omitempty" bson:"conditions,omitempty"`
+	// Trigger is the complete source/classification/schedule scope of an outgoing Start edge.
+	// Nil reads the legacy node scope; a present empty object means unrestricted.
+	// Manual Start retains this configuration without activating it.
+	Trigger *WorkflowEdgeTrigger `json:"trigger,omitempty" bson:"trigger,omitempty"`
 	// Condition is the legacy single-predicate form. Do not combine it with
 	// Conditions; ConditionSet reads it as a one-item all group.
 	Condition *StageCondition `json:"condition,omitempty" bson:"condition,omitempty"`
+}
+
+// WorkflowEdgeTrigger scopes an automatic Start edge independently of its
+// outer Conditions. It is not valid on stage or legacy device edges.
+type WorkflowEdgeTrigger struct {
+	Devices         []DeviceKey       `json:"devices,omitempty" bson:"devices,omitempty"`
+	SiteIds         []string          `json:"siteIds,omitempty" bson:"siteIds,omitempty"`
+	GroupIds        []string          `json:"groupIds,omitempty" bson:"groupIds,omitempty"`
+	Classifications []string          `json:"classifications,omitempty" bson:"classifications,omitempty"`
+	WeeklySchedule  []*WeeklySchedule `json:"weeklySchedule,omitempty" bson:"weeklySchedule,omitempty"`
+}
+
+func (e WorkflowEdge) startTriggerScope(node WorkflowNode) WorkflowTrigger {
+	if e.Trigger != nil {
+		return WorkflowTrigger{
+			Devices:         append([]DeviceKey(nil), e.Trigger.Devices...),
+			SiteIds:         append([]string(nil), e.Trigger.SiteIds...),
+			GroupIds:        append([]string(nil), e.Trigger.GroupIds...),
+			Classifications: append([]string(nil), e.Trigger.Classifications...),
+			WeeklySchedule:  append([]*WeeklySchedule(nil), e.Trigger.WeeklySchedule...),
+		}
+	}
+	scope := WorkflowTrigger{Devices: append([]DeviceKey(nil), node.Devices...)}
+	if node.Trigger != nil {
+		scope.SiteIds = append([]string(nil), node.Trigger.SiteIds...)
+		scope.GroupIds = append([]string(nil), node.Trigger.GroupIds...)
+		scope.WeeklySchedule = append([]*WeeklySchedule(nil), node.Trigger.WeeklySchedule...)
+	}
+	return scope
 }
 
 func (e WorkflowEdge) ConditionSet() (WorkflowConditionSet, error) {
@@ -190,6 +223,12 @@ const (
 // device pickers and weekly-schedule editors — and the same weekday convention
 // (time.Weekday: 0=Sunday) and per-schedule IANA Timezone — apply here.
 type WorkflowTrigger struct {
+	// EdgeId identifies the outgoing automatic Start edge that derived this
+	// trigger. It is a projection, never an independently authored edge type.
+	EdgeId string `json:"edgeId,omitempty" bson:"edgeId,omitempty"`
+	// SharedConditions preserves legacy Start-level gating independently of the
+	// edge's condition mode. Both groups must match; new editors author edges.
+	SharedConditions *WorkflowConditionSet `json:"sharedConditions,omitempty" bson:"sharedConditions,omitempty"`
 	// Type is the activation mode. An empty Type is treated as
 	// WorkflowTriggerAutomatic for backwards compatibility with triggers authored
 	// before manual triggers existed.
@@ -209,6 +248,10 @@ type WorkflowTrigger struct {
 	// AND between populated categories.
 	SiteIds  []string `json:"siteIds,omitempty" bson:"siteIds,omitempty"`
 	GroupIds []string `json:"groupIds,omitempty" bson:"groupIds,omitempty"`
+	// Classifications requires at least one selected label in the initial
+	// inputs.classify.details.*.classified values, independently of ConditionMode.
+	// Empty means unrestricted; future worker results never satisfy this scope.
+	Classifications []string `json:"classifications,omitempty" bson:"classifications,omitempty"`
 	// Conditions read the pre-run envelope, including already available,
 	// sanitized inputs, never future results. Scope and schedule remain mandatory
 	// even when this group's ConditionMode is any.
@@ -273,7 +316,7 @@ func (t WorkflowTrigger) CompiledConditions() []StageCondition {
 }
 
 func (t WorkflowTrigger) scopeConditions() []WorkflowCondition {
-	out := make([]WorkflowCondition, 0, 3)
+	out := make([]WorkflowCondition, 0, 4)
 	if len(t.Devices) > 0 {
 		keys := make([]any, 0, len(t.Devices))
 		for _, d := range t.Devices {
@@ -287,6 +330,11 @@ func (t WorkflowTrigger) scopeConditions() []WorkflowCondition {
 	if len(t.GroupIds) > 0 {
 		out = append(out, WorkflowCondition{Path: "device.groupIds.*", Op: ConditionOpIn, Value: StringsToAny(t.GroupIds)})
 	}
+	if len(t.Classifications) > 0 {
+		out = append(out, WorkflowCondition{
+			Path: "inputs.classify.details.*.classified", Op: ConditionOpIn, Value: StringsToAny(t.Classifications),
+		})
+	}
 	return out
 }
 
@@ -298,6 +346,9 @@ func (t WorkflowTrigger) ConditionSet() WorkflowConditionSet {
 // of a recording (device.*, user.*, identity scalars; see AutomaticTriggerRoot)
 // — satisfies every selector category AND the explicit condition group.
 func (t WorkflowTrigger) MatchesEnvelope(root map[string]any) bool {
+	if t.SharedConditions != nil && !EvaluateConditionSet(*t.SharedConditions, root) {
+		return false
+	}
 	return EvaluateConditionSet(WorkflowConditionSet{Conditions: t.scopeConditions()}, root) &&
 		EvaluateConditionSet(t.ConditionSet(), root)
 }
@@ -420,11 +471,10 @@ type Workflow struct {
 	Trigger *WorkflowTrigger `json:"trigger,omitempty" bson:"trigger,omitempty"`
 	Nodes   []WorkflowNode   `json:"nodes" bson:"nodes"`
 	Edges   []WorkflowEdge   `json:"edges" bson:"edges"`
-	// Stages is the workflow's executable stage set: the runtime-authoritative
-	// projection the engine dispatches against. When set it is used as-is (config
-	// workflows author it directly in the helm registry form: operation, dispatch,
-	// needs, needsMode); when empty it is derived from Nodes+Edges on demand (UI
-	// workflows author the graph and CompileStages projects it). Read it through
+	// Stages is the executable stage set for stage-only/config definitions.
+	// An explicit Start graph always wins over this cached projection; otherwise
+	// populated stages are used as-is, or derived from Nodes+Edges on demand.
+	// Read it through
 	// CompileStages, never directly, so both authoring styles resolve uniformly.
 	//
 	// Only the routing fields (Operation, Dispatch, Needs, NeedsMode) are
@@ -557,8 +607,9 @@ func (w *Workflow) EffectiveID() primitive.ObjectID {
 
 // CompileStages returns the workflow's executable stage set — the routing the
 // engine dispatches against. It is the single entry point for both authoring
-// styles: if Stages is populated (config workflows, authored directly in the
-// helm registry form) it is returned as-is; otherwise it is derived from the
+// styles: an explicit Start graph is authoritative; otherwise populated Stages
+// (config workflows, authored directly in the helm registry form) is returned
+// as-is. Remaining definitions are derived from the
 // graph, projecting each node into a stage and each incoming edge into a need.
 //
 // The projection follows the graph's routing contract (see WorkflowEdge and
@@ -569,13 +620,15 @@ func (w *Workflow) EffectiveID() primitive.ObjectID {
 // an unconditional dependency). NeedsMode is left at its default (any). Only
 // routing fields are populated; deployment is resolved elsewhere by Operation.
 //
-// Root nodes compile to no stage. An edge leaving a root node adds a need
-// only when it carries a condition, gated on WorkflowDeviceGateOperation; an
-// unconditional device edge adds nothing, so its target starts the run.
+// Root nodes compile to no stage. Automatic Start edges compile into frozen
+// entry alternatives, bound with BindStartEdges after matching. Other roots
+// retain the legacy classifier gate for conditional outgoing edges.
 func (w *Workflow) CompileStages() []WorkflowStage {
-	if len(w.Stages) > 0 {
+	start := w.StartNode()
+	if len(w.Stages) > 0 && start == nil {
 		return w.Stages
 	}
+	reachable := w.startReachableNodes()
 	opByNode := make(map[string]string, len(w.Nodes))
 	deviceNodes := make(map[string]bool)
 	for _, n := range w.Nodes {
@@ -594,6 +647,9 @@ func (w *Workflow) CompileStages() []WorkflowStage {
 		if deviceNodes[n.Id] {
 			continue
 		}
+		if start != nil && !reachable[n.Id] {
+			continue
+		}
 		stage := WorkflowStage{Operation: n.StageRef}
 		needs := make([]StageDependency, 0, len(incoming[n.Id]))
 		for _, e := range incoming[n.Id] {
@@ -604,6 +660,11 @@ func (w *Workflow) CompileStages() []WorkflowStage {
 				Conditions:    e.Conditions,
 			}
 			if deviceNodes[e.Source] {
+				if start != nil && start.Trigger != nil && start.Trigger.Type == WorkflowTriggerAutomatic {
+					need.StartEdgeId = e.Id
+					needs = append(needs, need)
+					continue
+				}
 				set, err := e.ConditionSet()
 				if err != nil || len(set.Conditions) > 0 {
 					need.Operation = WorkflowDeviceGateOperation
@@ -657,8 +718,9 @@ func (w *Workflow) SyncGraphTriggers() {
 	w.Triggers = triggers
 }
 
-// NormalizeTriggers derives the sole effective trigger from an explicit Start
-// root. Otherwise it folds a legacy single Trigger into the Triggers list and
+// NormalizeTriggers derives one automatic trigger per outgoing explicit Start
+// edge, or the single manual trigger. Otherwise it folds a legacy Trigger into
+// the Triggers list and
 // clears the deprecated field, so callers only ever have to reason about
 // Triggers. It is idempotent: if Triggers is already populated the legacy field
 // is simply dropped, and if neither is set it does nothing.
@@ -676,8 +738,29 @@ func (w *Workflow) NormalizeTriggers() {
 		trigger := *node.Trigger
 		switch trigger.Type {
 		case WorkflowTriggerAutomatic:
-			trigger.Devices = append([]DeviceKey(nil), node.Devices...)
 			trigger.Surfaces = nil
+			trigger.EdgeId = ""
+			trigger.SharedConditions = nil
+			if len(trigger.Conditions) > 0 || trigger.ConditionMode != "" {
+				shared := trigger.ConditionSet()
+				trigger.SharedConditions = &shared
+			}
+			for _, edge := range w.Edges {
+				if edge.Source != node.Id || !w.runnableNode(edge.Target) {
+					continue
+				}
+				derived := edge.startTriggerScope(node)
+				derived.Type = WorkflowTriggerAutomatic
+				derived.SharedConditions = trigger.SharedConditions
+				derived.EdgeId = edge.Id
+				set, err := edge.ConditionSet()
+				if err != nil {
+					continue
+				}
+				derived.ConditionMode, derived.Conditions = set.ConditionMode, set.Conditions
+				w.Triggers = append(w.Triggers, derived)
+			}
+			return
 		case WorkflowTriggerManual:
 			trigger = WorkflowTrigger{
 				Type:     WorkflowTriggerManual,
@@ -695,6 +778,44 @@ func (w *Workflow) NormalizeTriggers() {
 		}
 		w.Trigger = nil
 	}
+}
+
+// StartNode returns the explicit activation root, if any.
+func (w *Workflow) StartNode() *WorkflowNode {
+	for i := range w.Nodes {
+		if w.Nodes[i].EffectiveType() == WorkflowNodeStart {
+			return &w.Nodes[i]
+		}
+	}
+	return nil
+}
+
+func (w *Workflow) runnableNode(id string) bool {
+	for _, node := range w.Nodes {
+		if node.Id == id {
+			return !node.IsRoot() && node.StageRef != "" && node.StageRef != WorkflowSeedOperation
+		}
+	}
+	return false
+}
+
+func (w *Workflow) startReachableNodes() map[string]bool {
+	reachable := map[string]bool{}
+	if start := w.StartNode(); start != nil {
+		reachable[start.Id] = true
+		pending := []string{start.Id}
+		for len(pending) > 0 {
+			source := pending[0]
+			pending = pending[1:]
+			for _, edge := range w.Edges {
+				if edge.Source == source && !reachable[edge.Target] {
+					reachable[edge.Target] = true
+					pending = append(pending, edge.Target)
+				}
+			}
+		}
+	}
+	return reachable
 }
 
 // ManualTriggersForSurface returns the workflow's manual triggers that are
@@ -724,6 +845,9 @@ func (w *Workflow) AutomaticMatches(root map[string]any, at time.Time) bool {
 
 func (w *Workflow) firstMatchingAutomaticTrigger(root map[string]any, at time.Time) (int, bool) {
 	if !w.Enabled {
+		return -1, false
+	}
+	if w.StartNode() != nil && w.ValidateStartNodes() != nil {
 		return -1, false
 	}
 	w.NormalizeTriggers()

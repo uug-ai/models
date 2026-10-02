@@ -56,10 +56,13 @@ const (
 	ConditionOpLt       ConditionOp = "lt"       // less than (numeric)
 	ConditionOpLte      ConditionOp = "lte"      // less than or equal (numeric)
 	ConditionOpAnyMatch ConditionOp = "anyMatch" // at least one array object satisfies Match
+	ConditionOpAll      ConditionOp = "all"      // every absolute child condition matches
+	ConditionOpAny      ConditionOp = "any"      // at least one absolute child condition matches
 )
 
 // WorkflowCondition is a structured predicate evaluated against the workflow
 // run. Scalar operators use path/op/value; anyMatch uses path/op/match.
+// Logical all/any groups use op/conditions with nonempty absolute children.
 //
 // Path is an absolute, dot-separated lookup rooted at the run object itself, not
 // at any single operation's result. The reachable roots are:
@@ -99,6 +102,9 @@ type WorkflowCondition struct {
 	Op    ConditionOp           `json:"op" bson:"op"`       // see the ConditionOp consts
 	Value any                   `json:"value" bson:"value"` // comparison operand (unused for ConditionOpExists)
 	Match *WorkflowPredicateSet `json:"match,omitempty" bson:"match,omitempty"`
+	// Conditions belongs only to logical all/any groups, which have no path,
+	// value or match. Children retain absolute paths; anyMatch stays relative.
+	Conditions []WorkflowCondition `json:"conditions,omitempty" bson:"conditions,omitempty"`
 }
 
 // StageCondition retains the legacy source and wire representation.
@@ -119,6 +125,11 @@ type StageCondition = WorkflowCondition
 // Inputs ∪ Results), which include the analysis trigger ("classify") that is not
 // a stage. See WorkflowStage.Operation for the stage/operation distinction.
 type StageDependency struct {
+	// StartEdgeId marks an automatic entry alternative. StartMatched is frozen
+	// at activation, so later worker output cannot activate a rejected branch.
+	// Entry alternatives combine with OR, independently of ordinary joins.
+	StartEdgeId  string `json:"startEdgeId,omitempty" bson:"startEdgeId,omitempty"`
+	StartMatched *bool  `json:"startMatched,omitempty" bson:"startMatched,omitempty"`
 	// Operation is the id of the operation whose presence gates this need: it must
 	// be available on the run — present in Inputs or Results — before the need's
 	// Condition is evaluated. It is an operation id, not necessarily a deployed
@@ -151,11 +162,66 @@ func (d StageDependency) ValidateConditions() error {
 
 // Matches always checks operation readiness before evaluating any predicates.
 func (d StageDependency) Matches(root map[string]any, available map[string]bool) bool {
+	if d.StartEdgeId != "" {
+		return d.StartMatched != nil && *d.StartMatched
+	}
 	if d.Operation != "" && !available[d.Operation] {
 		return false
 	}
 	set, err := d.ConditionSet()
 	return err == nil && EvaluateConditionSet(set, root)
+}
+
+// MatchesDependencies combines entry alternatives with OR and requires that
+// entry gate in addition to the normal dependency group (any/all). Stage-only
+// definitions without entry alternatives keep their historical join semantics.
+func (s WorkflowStage) MatchesDependencies(root map[string]any, available map[string]bool) bool {
+	hasStart, startMatched, ordinary := false, false, 0
+	ordinaryMatched := s.NeedsMode == NeedsModeAll
+	for _, need := range s.Needs {
+		matched := need.Matches(root, available)
+		if need.StartEdgeId != "" {
+			hasStart = true
+			startMatched = startMatched || matched
+			continue
+		}
+		ordinary++
+		if s.NeedsMode == NeedsModeAll {
+			ordinaryMatched = ordinaryMatched && matched
+		} else {
+			ordinaryMatched = ordinaryMatched || matched
+		}
+	}
+	if hasStart && !startMatched {
+		return false
+	}
+	return (hasStart && ordinary == 0) || (ordinary > 0 && ordinaryMatched)
+}
+
+// BindStartEdges returns detached routing with immutable activation decisions.
+// Original edge predicates remain available for run history, but are not
+// reevaluated against downstream results.
+func BindStartEdges(stages []WorkflowStage, match *WorkflowRunTriggerMatch) ([]WorkflowStage, error) {
+	out, err := cloneWorkflowStageSlice(stages)
+	if err != nil {
+		return nil, err
+	}
+	matched := map[string]bool{}
+	if match != nil {
+		for _, id := range match.MatchedEdgeIds {
+			matched[id] = true
+		}
+	}
+	for i := range out {
+		for j := range out[i].Needs {
+			need := &out[i].Needs[j]
+			if need.StartEdgeId != "" {
+				value := matched[need.StartEdgeId]
+				need.StartMatched = &value
+			}
+		}
+	}
+	return out, nil
 }
 
 // StageResourceList is a compute request/limit pair for a stage's workers,

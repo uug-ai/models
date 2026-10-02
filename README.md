@@ -158,13 +158,34 @@ shares selection with `AutomaticMatches` and returns a detached snapshot contain
   (usually recording time), not the engine's processing or run-open time.
 - `trigger`: only the selected trigger definition, with its effective automatic
   type; no raw event envelope, credentials, or other triggers.
+- `matchedEdgeIds`: every matching automatic Start edge's stable ID, in graph
+  order; absent for legacy trigger lists. The first trigger also carries `edgeId`.
+
+`WorkflowRun.MatchedStartEdgeIds` (`matchedStartEdgeIds` JSON, `matchedstartedgeids` BSON) stores
+the same IDs separately for safe list projections. `WorkflowRunOverview` exposes
+only this ID list, never the full trigger definition or its predicates.
+
+Logical `WorkflowCondition` groups use
+`{"op":"all"|"any","conditions":[...]}`. Children keep absolute envelope paths;
+`anyMatch.match` still contains scalar predicates relative to one array object.
+Groups require nonempty children and omit `path` (or use `""`), `value` (or use
+`null`), and `match`. Scalar/`anyMatch` conditions cannot carry `conditions`.
+Validation and evaluation cap logical nesting at eight levels and each top-level
+set at 256 nodes, including groups and `anyMatch` relative predicates. Empty
+top-level sets remain unconditional; empty nested groups are invalid. Automatic
+Start validation rejects `results.*` throughout nested groups.
+
+This permits migrating legacy Start predicates exactly: an `all` group containing
+the old Start `any` group and an edge's `any` group preserves their independent
+choices without expanding edges or retaining hidden settings in the editor.
+Old documents that have not been edited still use the shared-condition adapter.
 
 The helper returns nil when nothing matches and an error if snapshot encoding
 fails. Callers must synchronize graph-derived triggers before selection.
 
-Trigger matches and stage decisions are **models-only additions**: engine
-persistence and API exposure follow a models release. The future writer must
-ignore inbound `triggerMatch`, compute the match during authoritative automatic
+The engine persists trigger matches when selecting automatic workflows; API
+readers must use the matching models release. Writers must ignore inbound
+`triggerMatch`, compute the match during authoritative automatic
 selection, and preserve persisted data on replay, including an absent match.
 Legacy runs and manual or explicitly targeted launches retain nil/unknown;
 never backfill a match from `Origin` or the current workflow definition.
@@ -487,16 +508,41 @@ different detections.
   Validation requires a supported surface; automatic-only fields remain ignored
   for compatibility with existing documents.
 - **Start roots:** new editor graphs use
-  `{"id":"recording","type":"start","trigger":{"type":"automatic"},"devices":[]}`.
+  `{"id":"recording","type":"start","trigger":{"type":"automatic"}}`.
   Set `trigger.type` to `manual` and select `trigger.surfaces` for user-launched
-  workflows. `NormalizeTriggers`/`SyncGraphTriggers` derive the sole effective
-  trigger from this node, overriding stale top-level triggers. The root's
-  `devices` is authoritative for automatic device scope; its trigger retains
-  conditions, site/group selectors and weekly schedule. Inactive settings remain
-  on the node, but automatic runtime triggers omit manual surfaces and manual
-  runtime triggers omit automatic settings. A graph may have only one Start or
-  legacy device root, with no incoming edges. Start edges compile like device
-  edges, including `classify` gates. Missing/unknown Start modes and unknown
+  workflows. `NormalizeTriggers`/`SyncGraphTriggers` derive one automatic trigger
+  per outgoing Start edge (or one manual trigger), overriding stale top-level
+  triggers. Each outgoing edge owns an optional `trigger` object containing only
+  `devices`, `siteIds`, `groupIds`, `classifications`, and `weeklySchedule`; its `conditions` and
+  `conditionMode` remain on the edge, outside that object. A present `trigger`
+  (including `{}`) completely replaces legacy node source/schedule scope; an
+  absent/null trigger reads node `devices` and node-trigger site/group/schedule
+  fields without migration. No field-by-field merging occurs. Legacy node
+  conditions remain an independent AND gate through derived
+  `sharedConditions`, preserving both groups' `all`/`any` modes. Inactive settings remain
+  on the node/edges, but automatic runtime triggers omit manual surfaces and manual
+  runtime triggers omit automatic settings. Edge triggers are invalid on ordinary
+  stage and legacy device edges. Authored automatic edge schedules reject null
+  entries, weekdays outside 0–6, unknown non-empty timezones, and segments outside
+  `0 <= start < end <= 86400`, including on drafts. Manual edge schedules remain
+  dormant; legacy schedule readers retain their compatibility behavior.
+  Selected `classifications` require any selected label at
+  `inputs.classify.details.*.classified` in the initial handoff. This filter is
+  ANDed with source scope, schedule, and the outer predicate group—even with
+  `conditionMode: "any"`. Empty means unrestricted; missing initial classifier
+  input cannot satisfy a non-empty selection, and future results never count.
+  There is no node-level classification fallback; existing predicates are unchanged.
+  A graph may have only one Start or
+  legacy device root, with no incoming edges. An explicit Start graph supersedes
+  cached `stages`; disconnected nodes never start automatically. Automatic Start
+  edges require stable unique IDs and compile to dependencies carrying
+  `startEdgeId`. After `MatchAutomaticTrigger`, `BindStartEdges` freezes their
+  `startMatched` decisions; later results cannot open an unmatched entry.
+  Entry alternatives combine with OR, required alongside ordinary dependency
+  joins. An empty edge condition group is unconditional within its effective scope and
+  schedule; no outgoing runnable edges means no automatic activation.
+  Manual Start edges retain their existing classifier-gated routing behavior.
+  Missing/unknown Start modes and unknown
   surfaces are invalid; disabled manual drafts may have no selected surfaces.
   Legacy device roots still preserve their manual triggers; stage-only/config
   workflows remain unchanged. No data migration is required.
@@ -543,10 +589,10 @@ This is a **models-first, reader-first** change, not an enabled editor feature:
    its input-free behavior. Trigger predicates cannot reference future `results`.
    Callers must also populate trusted `WorkflowDevice.GroupIds`; models do not
    resolve site/group relationships or scrub arbitrary worker payloads.
-3. Wire the Start-node editor to the canonical `Workflow.Triggers` list and the
-   shared condition catalog. Until that integration, retain the existing device
-   node save behavior: `SyncGraphTriggers` replaces automatic triggers with
-   camera-only scope. Do not use that adapter for new full-trigger writes.
+3. Author Start-edge source/schedule in `WorkflowEdge.Trigger` and predicates in
+   the outer edge fields using the shared condition catalog. `Workflow.Triggers`
+   is the derived runtime projection, not an editor write surface. Legacy device
+   graphs retain their existing `SyncGraphTriggers` camera-only adapter.
 4. Enable the new UI/writes only after all readers are updated. No data backfill
    is required for existing workflows.
 
