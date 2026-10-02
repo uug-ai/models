@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 )
 
 // ErrInvalidWorkflowGraph wraps every ValidateGraph failure so API callers can
@@ -40,9 +41,11 @@ func (w *Workflow) ValidateGraph() error {
 			if deviceNodes++; deviceNodes > 1 {
 				return invalid("a workflow may have only one device node")
 			}
-			for _, d := range n.Devices {
-				if strings.TrimSpace(d.Key) == "" {
-					return invalid("device node %q selects a device with an empty key", n.Id)
+			if n.EffectiveType() == WorkflowNodeDevice {
+				for _, d := range n.Devices {
+					if strings.TrimSpace(d.Key) == "" {
+						return invalid("device node %q selects a device with an empty key", n.Id)
+					}
 				}
 			}
 		case WorkflowNodeStage:
@@ -118,9 +121,18 @@ func (w *Workflow) ValidateGraph() error {
 // Legacy graphs retain their existing draft validation behavior.
 func (w *Workflow) ValidateStartNodes() error {
 	roots := 0
+	startIds := make(map[string]bool)
 	for _, node := range w.Nodes {
 		if node.IsRoot() {
 			roots++
+		}
+		if node.EffectiveType() == WorkflowNodeStart {
+			startIds[node.Id] = true
+		}
+	}
+	for _, edge := range w.Edges {
+		if edge.Trigger != nil && !startIds[edge.Source] {
+			return fmt.Errorf("%w: edge %q: trigger is only supported on outgoing Start edges", ErrInvalidWorkflowGraph, edge.Id)
 		}
 	}
 	for _, node := range w.Nodes {
@@ -156,10 +168,58 @@ func (w *Workflow) ValidateStartNodes() error {
 			continue
 		}
 		if trigger.Type == WorkflowTriggerAutomatic {
-			trigger.Devices = node.Devices
+			// Source/schedule validation belongs to each edge's effective scope.
+			trigger.Devices, trigger.SiteIds, trigger.GroupIds, trigger.WeeklySchedule = nil, nil, nil, nil
+			trigger.Classifications = nil
+			ids := map[string]bool{}
+			for _, edge := range w.Edges {
+				if edge.Source != node.Id {
+					continue
+				}
+				if strings.TrimSpace(edge.Id) == "" || ids[edge.Id] {
+					return invalid("automatic Start edges require unique non-empty ids")
+				}
+				ids[edge.Id] = true
+				set, err := edge.ConditionSet()
+				if err != nil {
+					return invalid(fmt.Sprintf("edge %q: %v", edge.Id, err))
+				}
+				edgeTrigger := edge.startTriggerScope(node)
+				edgeTrigger.Conditions, edgeTrigger.ConditionMode = set.Conditions, set.ConditionMode
+				if err := edgeTrigger.Validate(); err != nil {
+					return invalid(fmt.Sprintf("edge %q: %v", edge.Id, err))
+				}
+				if edge.Trigger != nil {
+					if err := edge.Trigger.validateSchedule(); err != nil {
+						return invalid(fmt.Sprintf("edge %q: %v", edge.Id, err))
+					}
+				}
+			}
 		}
 		if err := trigger.Validate(); err != nil {
 			return invalid(err.Error())
+		}
+	}
+	return nil
+}
+
+func (t WorkflowEdgeTrigger) validateSchedule() error {
+	for i, schedule := range t.WeeklySchedule {
+		if schedule == nil {
+			return fmt.Errorf("weeklySchedule %d is null", i)
+		}
+		if schedule.Day < int(time.Sunday) || schedule.Day > int(time.Saturday) {
+			return fmt.Errorf("weeklySchedule %d has an invalid day", i)
+		}
+		if schedule.Timezone != "" {
+			if _, err := time.LoadLocation(schedule.Timezone); err != nil {
+				return fmt.Errorf("weeklySchedule %d has an invalid timezone", i)
+			}
+		}
+		for j, segment := range schedule.Segments {
+			if !isValidSegment(segment) {
+				return fmt.Errorf("weeklySchedule %d segment %d must satisfy 0 <= start < end <= 86400", i, j)
+			}
 		}
 	}
 	return nil
@@ -198,20 +258,41 @@ func (t WorkflowTrigger) Validate() error {
 			}
 		}
 	}
-	for _, c := range t.Conditions {
+	for _, classification := range t.Classifications {
+		if strings.TrimSpace(classification) == "" {
+			return fmt.Errorf("trigger classifications contains an empty label")
+		}
+	}
+	conditions := append([]WorkflowCondition(nil), t.Conditions...)
+	if err := ValidateWorkflowConditionSet(t.ConditionSet()); err != nil {
+		return err
+	}
+	if t.SharedConditions != nil {
+		if err := ValidateWorkflowConditionSet(*t.SharedConditions); err != nil {
+			return err
+		}
+		conditions = append(conditions, t.SharedConditions.Conditions...)
+	}
+	for len(conditions) > 0 {
+		c := conditions[len(conditions)-1]
+		conditions = conditions[:len(conditions)-1]
 		if c.Path == "results" || strings.HasPrefix(c.Path, "results.") {
 			return fmt.Errorf("automatic trigger cannot reference future results: %q", c.Path)
 		}
+		conditions = append(conditions, c.Conditions...)
 	}
-	return ValidateWorkflowConditionSet(t.ConditionSet())
+	return nil
 }
 
 // ValidateTriggers validates an explicit Start, otherwise the canonical list or
 // legacy single trigger. It does not normalize or rewrite persisted data.
 func (w *Workflow) ValidateTriggers() error {
+	if err := w.ValidateStartNodes(); err != nil {
+		return err
+	}
 	for _, node := range w.Nodes {
 		if node.EffectiveType() == WorkflowNodeStart {
-			return w.ValidateStartNodes()
+			return nil
 		}
 	}
 	triggers := w.Triggers

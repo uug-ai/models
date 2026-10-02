@@ -40,18 +40,19 @@ func TestListWorkflowRunsJSONContract(t *testing.T) {
 
 	response := ListWorkflowRunsResponse{
 		Runs: []WorkflowRunOverview{{
-			RunId:              "run-1",
-			WorkflowId:         "workflow-1",
-			WorkflowName:       "People",
-			State:              models.WorkflowRunStateRunning,
-			SourceAccess:       "available",
-			SourceType:         "media",
-			MediaId:            "media-1",
-			Key:                "recording.mp4",
-			DeviceKey:          "camera-1",
-			DeviceName:         "Lobby",
-			RecordingTimestamp: 1699999990,
-			Start:              1700000000,
+			RunId:               "run-1",
+			WorkflowId:          "workflow-1",
+			WorkflowName:        "People",
+			MatchedStartEdgeIds: []string{"entry-people", "entry-motion"},
+			State:               models.WorkflowRunStateRunning,
+			SourceAccess:        "available",
+			SourceType:          "media",
+			MediaId:             "media-1",
+			Key:                 "recording.mp4",
+			DeviceKey:           "camera-1",
+			DeviceName:          "Lobby",
+			RecordingTimestamp:  1699999990,
+			Start:               1700000000,
 			Operations: []models.WorkflowRunOperationStatus{{
 				Operation: "forwarder",
 				Status:    models.WorkflowRunOperationStateResolved,
@@ -71,6 +72,7 @@ func TestListWorkflowRunsJSONContract(t *testing.T) {
 		`"deviceKey":"camera-1"`,
 		`"deviceName":"Lobby"`,
 		`"recordingTimestamp":1699999990`,
+		`"matchedStartEdgeIds":["entry-people","entry-motion"]`,
 		`"operations":[{"operation":"forwarder","status":"resolved"}]`,
 		`"summary":{"total":1,"running":1`,
 		`"nextCursor":"cursor-2"`,
@@ -100,7 +102,7 @@ func TestWorkflowRunOverviewWithoutSource(t *testing.T) {
 			for _, field := range []string{
 				"sourceRef", "sourceLabel", "caseMediaId", "mediaId", "key",
 				"deviceKey", "deviceName", "recordingTimestamp", "inputs",
-				"results", "stages", "storage", "signedUrl",
+				"results", "stages", "storage", "signedUrl", "triggerMatch", "conditions", "matchedStartEdgeIds",
 			} {
 				if _, exists := fields[field]; exists {
 					t.Errorf("source-free overview exposes %s: %s", field, encoded)

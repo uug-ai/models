@@ -18,6 +18,9 @@ type WorkflowRunTriggerMatch struct {
 	// (usually recording time), not when the engine processed or opened the run.
 	EvaluatedAtMs int64           `json:"evaluatedAtMs" bson:"evaluatedatms"`
 	Trigger       WorkflowTrigger `json:"trigger" bson:"trigger"`
+	// MatchedEdgeIds captures all matching automatic Start edges in graph order.
+	// Legacy trigger lists omit it; Index/Trigger still describe the first match.
+	MatchedEdgeIds []string `json:"matchedEdgeIds,omitempty" bson:"matchededgeids,omitempty"`
 }
 
 // MatchAutomaticTrigger returns a detached snapshot of the first matching
@@ -38,6 +41,13 @@ func (w *Workflow) MatchAutomaticTrigger(root map[string]any, at time.Time) (*Wo
 		Index: index, EvaluatedAtMs: at.UnixMilli(), Trigger: w.Triggers[index],
 	}
 	match.Trigger.Type = match.Trigger.EffectiveType()
+	for i := index; i < len(w.Triggers); i++ {
+		trigger := w.Triggers[i]
+		if trigger.EdgeId != "" && trigger.EffectiveType() == WorkflowTriggerAutomatic &&
+			(i == index || trigger.Matches(root, at)) {
+			match.MatchedEdgeIds = append(match.MatchedEdgeIds, trigger.EdgeId)
+		}
+	}
 	data, err := bson.Marshal(match)
 	if err != nil {
 		return nil, fmt.Errorf("encode workflow run trigger match: %w", err)

@@ -54,7 +54,8 @@ func TestStartNodeRoundTripAndTriggerAuthority(t *testing.T) {
 				t.Fatalf("non-authoritative or non-idempotent triggers: %#v", loaded.Triggers)
 			}
 			if mode == WorkflowTriggerAutomatic {
-				if len(first[0].Surfaces) != 0 || !reflect.DeepEqual(first[0].Conditions, w.Nodes[0].Trigger.Conditions) ||
+				if len(first[0].Surfaces) != 0 || first[0].SharedConditions == nil ||
+					!reflect.DeepEqual(first[0].SharedConditions.Conditions, w.Nodes[0].Trigger.Conditions) ||
 					!reflect.DeepEqual(first[0].SiteIds, w.Nodes[0].Trigger.SiteIds) ||
 					!reflect.DeepEqual(first[0].GroupIds, w.Nodes[0].Trigger.GroupIds) ||
 					!reflect.DeepEqual(first[0].WeeklySchedule, w.Nodes[0].Trigger.WeeklySchedule) ||
@@ -84,6 +85,7 @@ func TestStartNodeModeSwitchAndDiscovery(t *testing.T) {
 	}
 	w.Nodes[0].Trigger.Type = WorkflowTriggerAutomatic
 	w.Nodes[0].Trigger.SiteIds, w.Nodes[0].Trigger.GroupIds = nil, nil
+	w.Edges[0].Condition = nil
 	if !w.AutomaticMatches(root, time.Now()) {
 		t.Fatal("automatic Start did not activate")
 	}

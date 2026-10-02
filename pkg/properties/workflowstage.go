@@ -5,6 +5,8 @@ package properties
 
 // StageDependency property field names (BSON)
 const (
+	StageDependencyStartEdgeId = "startEdgeId"
+	StageDependencyStartMatched = "startMatched"
 	StageDependencyOperation = "operation"
 	StageDependencyCondition = "condition"
 	StageDependencyConditionMode = "conditionMode"
@@ -46,6 +48,7 @@ const (
 	WorkflowConditionOp = "op"
 	WorkflowConditionValue = "value"
 	WorkflowConditionMatch = "match"
+	WorkflowConditionConditions = "conditions"
 )
 
 // WorkflowStage property field names (BSON)

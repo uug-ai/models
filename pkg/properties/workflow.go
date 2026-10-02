@@ -33,7 +33,17 @@ const (
 	WorkflowEdgeTargetPort = "targetPort"
 	WorkflowEdgeConditionMode = "conditionMode"
 	WorkflowEdgeConditions = "conditions"
+	WorkflowEdgeTrigger = "trigger"
 	WorkflowEdgeCondition = "condition"
+)
+
+// WorkflowEdgeTrigger property field names (BSON)
+const (
+	WorkflowEdgeTriggerDevices = "devices"
+	WorkflowEdgeTriggerSiteIds = "siteIds"
+	WorkflowEdgeTriggerGroupIds = "groupIds"
+	WorkflowEdgeTriggerClassifications = "classifications"
+	WorkflowEdgeTriggerWeeklySchedule = "weeklySchedule"
 )
 
 // WorkflowNode property field names (BSON)
@@ -51,10 +61,13 @@ const (
 
 // WorkflowTrigger property field names (BSON)
 const (
+	WorkflowTriggerEdgeId = "edgeId"
+	WorkflowTriggerSharedConditions = "sharedConditions"
 	WorkflowTriggerType = "type"
 	WorkflowTriggerDevices = "devices"
 	WorkflowTriggerSiteIds = "siteIds"
 	WorkflowTriggerGroupIds = "groupIds"
+	WorkflowTriggerClassifications = "classifications"
 	WorkflowTriggerConditionMode = "conditionMode"
 	WorkflowTriggerConditions = "conditions"
 	WorkflowTriggerWeeklySchedule = "weeklySchedule"

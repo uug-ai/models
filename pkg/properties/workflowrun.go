@@ -11,6 +11,7 @@ const (
 	WorkflowRunStages = "stages"
 	WorkflowRunOrigin = "origin"
 	WorkflowRunTriggerMatch = "triggermatch"
+	WorkflowRunMatchedStartEdgeIds = "matchedstartedgeids"
 	WorkflowRunSourceRef = "sourceref"
 	WorkflowRunSourceType = "sourcetype"
 	WorkflowRunKey = "key"
