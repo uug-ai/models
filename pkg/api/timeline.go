@@ -62,11 +62,13 @@ func (ms TimelineStatus) Translate(lang string) string {
 // GetTimelineMedia
 // @Router /timeline/{deviceId} [post]
 type GetTimelineMediaRequest struct {
-	Filter          MediaFilter `json:"filter" bson:"filter"`
-	DisableGrouping *bool       `json:"disableGrouping,omitempty" bson:"disableGrouping,omitempty"`
+	Filter          MediaFilter       `json:"filter" bson:"filter"`
+	DisableGrouping *bool             `json:"disableGrouping,omitempty" bson:"disableGrouping,omitempty"`
+	Pagination      *CursorPagination `json:"pagination,omitempty" bson:"pagination,omitempty"`
 }
 type GetTimelineMediaResponse struct {
-	Timelines []models.MediaTimeline `json:"timelines" bson:"timelines"`
+	Timelines             []models.MediaTimeline `json:"timelines" bson:"timelines"`
+	GroupingWindowSeconds int64                  `json:"groupingWindowSeconds" bson:"groupingWindowSeconds"`
 }
 type GetTimelineMediaErrorResponse struct {
 	ErrorResponse
@@ -79,8 +81,9 @@ type GetTimelineMediaSuccessResponse struct {
 // GetTimelineMarkers
 // @Router /timeline/{deviceId}/markers [post]
 type GetTimelineMarkersRequest struct {
-	Filter          MarkerFilter `json:"filter" bson:"filter"`
-	DisableGrouping *bool        `json:"disableGrouping,omitempty" bson:"disableGrouping,omitempty"`
+	Filter          MarkerFilter      `json:"filter" bson:"filter"`
+	DisableGrouping *bool             `json:"disableGrouping,omitempty" bson:"disableGrouping,omitempty"`
+	Pagination      *CursorPagination `json:"pagination,omitempty" bson:"pagination,omitempty"`
 }
 
 type GetTimelineMarkersResponse struct {
