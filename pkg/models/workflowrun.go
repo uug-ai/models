@@ -616,3 +616,113 @@ type WorkflowStorage struct {
 	VaultOverrideSecret    string `json:"vaultOverrideSecret,omitempty"`
 	VaultOverrideProvider  string `json:"vaultOverrideProvider,omitempty"`
 }
+
+// WorkflowConditionRootMode selects which parts of a run a condition can read.
+type WorkflowConditionRootMode string
+
+const (
+	// WorkflowConditionRootTrigger is what automatic Start triggers match
+	// against when a recording is handed off, before any run exists: the
+	// envelope, the run identity scalars and the hand-off Inputs.
+	WorkflowConditionRootTrigger WorkflowConditionRootMode = "trigger"
+	// WorkflowConditionRootRun is what conditions between stages read during a
+	// run: everything in trigger mode plus runId and accumulated Results.
+	WorkflowConditionRootRun WorkflowConditionRootMode = "run"
+)
+
+// WorkflowConditionPath describes one path a condition can read in the
+// projection built by WorkflowRun.ConditionRoot. Array element paths end in
+// ".*". Open namespaces (inputs, results) hold one object per operation whose
+// contents are described by contracts, not by this schema.
+type WorkflowConditionPath struct {
+	Path  string                      `json:"path"`
+	Type  string                      `json:"type"` // string, or object for an open namespace
+	Modes []WorkflowConditionRootMode `json:"modes"`
+	Open  bool                        `json:"open,omitempty"`
+}
+
+var bothConditionRootModes = []WorkflowConditionRootMode{WorkflowConditionRootTrigger, WorkflowConditionRootRun}
+
+// WorkflowConditionRootSchema lists every path WorkflowRun.ConditionRoot
+// exposes. It is the single description of the condition envelope and the
+// reference for every field path in workflow contracts:
+//
+//   - A Start contract field uses an absolute path in this root, for example
+//     device.deviceName, or a path inside an open namespace such as
+//     inputs.classify.details.*.classified.
+//   - A stage contract field is relative to that stage's own namespace,
+//     results.<operation>: detections.*.plate in the anpr contract resolves to
+//     results.anpr.detections.*.plate.
+//
+// Envelope paths (device, user, identity scalars) are fixed here; the contents
+// of the open namespaces inputs.<operation> and results.<operation> come from
+// workers and are described by contracts. A field added to WorkflowRun,
+// WorkflowDevice or WorkflowUser becomes matchable only when the projection and
+// this schema both add it (see the round-trip test).
+func WorkflowConditionRootSchema() []WorkflowConditionPath {
+	return []WorkflowConditionPath{
+		{Path: "device.deviceKey", Type: "string", Modes: bothConditionRootModes},
+		{Path: "device.deviceName", Type: "string", Modes: bothConditionRootModes},
+		{Path: "device.provider", Type: "string", Modes: bothConditionRootModes},
+		{Path: "device.storageSolution", Type: "string", Modes: bothConditionRootModes},
+		{Path: "device.siteIds.*", Type: "string", Modes: bothConditionRootModes},
+		{Path: "device.groupIds.*", Type: "string", Modes: bothConditionRootModes},
+		{Path: "user.organisationId", Type: "string", Modes: bothConditionRootModes},
+		{Path: "key", Type: "string", Modes: bothConditionRootModes},
+		{Path: "operation", Type: "string", Modes: bothConditionRootModes},
+		{Path: "traceId", Type: "string", Modes: bothConditionRootModes},
+		{Path: "runId", Type: "string", Modes: []WorkflowConditionRootMode{WorkflowConditionRootRun}},
+		{Path: "inputs", Type: "object", Modes: bothConditionRootModes, Open: true},
+		{Path: "results", Type: "object", Modes: []WorkflowConditionRootMode{WorkflowConditionRootRun}, Open: true},
+	}
+}
+
+// workflowConditionEnvelope is the device and user part of every condition
+// root. Credentials (user.storage) and the project scope are never exposed.
+func workflowConditionEnvelope(device WorkflowDevice, user WorkflowUser) map[string]any {
+	return map[string]any{
+		"device": map[string]any{
+			"deviceKey":       device.DeviceKey,
+			"deviceName":      device.DeviceName,
+			"provider":        device.Provider,
+			"storageSolution": device.StorageSolution,
+			// Array gate values are widened to []any so the shared evaluator's
+			// contains/in/matches array handling applies.
+			"siteIds":  StringsToAny(device.SiteIds),
+			"groupIds": StringsToAny(device.GroupIds),
+		},
+		"user": map[string]any{
+			"organisationId": user.OrganisationId,
+		},
+	}
+}
+
+// ConditionRoot projects the run onto the credential-free object conditions
+// read (see WorkflowCondition for path semantics). Its paths are listed by
+// WorkflowConditionRootSchema, which contracts reference. It is a whitelist: Storage,
+// SignedURL, Payload, Params, user.storage, the project scope and lifecycle
+// bookkeeping are never exposed. Inputs and Results are used as given; callers
+// normalize persisted (BSON) values first. runId is the persisted Id, falling
+// back to RunId when the run has not been stored.
+func (r WorkflowRun) ConditionRoot(mode WorkflowConditionRootMode) map[string]any {
+	root := workflowConditionEnvelope(r.Device, r.User)
+	root["key"], root["operation"], root["traceId"] = r.Key, r.Operation, r.TraceId
+	if mode != WorkflowConditionRootRun {
+		if len(r.Inputs) > 0 {
+			root["inputs"] = r.Inputs
+		}
+		return root
+	}
+	root["inputs"], root["results"] = r.Inputs, r.Results
+	if root["inputs"] == nil {
+		root["inputs"] = map[string]any{}
+	}
+	if root["results"] == nil {
+		root["results"] = map[string]any{}
+	}
+	root["runId"] = r.RunId
+	if !r.Id.IsZero() {
+		root["runId"] = r.Id.Hex()
+	}
+	return root
+}
