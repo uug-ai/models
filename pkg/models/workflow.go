@@ -367,19 +367,7 @@ func AutomaticTriggerRoot(device WorkflowDevice, user WorkflowUser) map[string]a
 // or storage credentials. It never exposes future run results. GroupIds must be
 // resolved from trusted membership data by the caller.
 func AutomaticTriggerRootWithInputs(device WorkflowDevice, user WorkflowUser, inputs map[string]any) map[string]any {
-	root := map[string]any{
-		"device": map[string]any{
-			"deviceKey":       device.DeviceKey,
-			"deviceName":      device.DeviceName,
-			"provider":        device.Provider,
-			"storageSolution": device.StorageSolution,
-			"siteIds":         StringsToAny(device.SiteIds),
-			"groupIds":        StringsToAny(device.GroupIds),
-		},
-		"user": map[string]any{
-			"organisationId": user.OrganisationId,
-		},
-	}
+	root := workflowConditionEnvelope(device, user)
 	if len(inputs) > 0 {
 		root["inputs"] = inputs
 	}
