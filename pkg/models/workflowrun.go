@@ -644,9 +644,21 @@ type WorkflowConditionPath struct {
 var bothConditionRootModes = []WorkflowConditionRootMode{WorkflowConditionRootTrigger, WorkflowConditionRootRun}
 
 // WorkflowConditionRootSchema lists every path WorkflowRun.ConditionRoot
-// exposes. It is the single description of the condition envelope: a field
-// added to WorkflowRun, WorkflowDevice or WorkflowUser becomes matchable only
-// when the projection and this schema both add it (see the round-trip test).
+// exposes. It is the single description of the condition envelope and the
+// reference for every field path in workflow contracts:
+//
+//   - A Start contract field uses an absolute path in this root, for example
+//     device.deviceName, or a path inside an open namespace such as
+//     inputs.classify.details.*.classified.
+//   - A stage contract field is relative to that stage's own namespace,
+//     results.<operation>: detections.*.plate in the anpr contract resolves to
+//     results.anpr.detections.*.plate.
+//
+// Envelope paths (device, user, identity scalars) are fixed here; the contents
+// of the open namespaces inputs.<operation> and results.<operation> come from
+// workers and are described by contracts. A field added to WorkflowRun,
+// WorkflowDevice or WorkflowUser becomes matchable only when the projection and
+// this schema both add it (see the round-trip test).
 func WorkflowConditionRootSchema() []WorkflowConditionPath {
 	return []WorkflowConditionPath{
 		{Path: "device.deviceKey", Type: "string", Modes: bothConditionRootModes},
@@ -686,7 +698,8 @@ func workflowConditionEnvelope(device WorkflowDevice, user WorkflowUser) map[str
 }
 
 // ConditionRoot projects the run onto the credential-free object conditions
-// read (see WorkflowCondition for path semantics). It is a whitelist: Storage,
+// read (see WorkflowCondition for path semantics). Its paths are listed by
+// WorkflowConditionRootSchema, which contracts reference. It is a whitelist: Storage,
 // SignedURL, Payload, Params, user.storage, the project scope and lifecycle
 // bookkeeping are never exposed. Inputs and Results are used as given; callers
 // normalize persisted (BSON) values first. runId is the persisted Id, falling

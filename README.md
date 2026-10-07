@@ -212,6 +212,55 @@ Nil means unknown for legacy or uncaptured summaries; never backfill from
 results, lifecycle state, or current definitions. Engine/API adoption follows
 a models release.
 
+#### Condition root and contract field paths
+
+Conditions never read a stored `WorkflowRun` directly. They read its
+credential-free projection, `WorkflowRun.ConditionRoot(mode)`, and
+`WorkflowConditionRootSchema()` lists every path in it. That schema is the
+reference for every field path a workflow contract declares.
+
+```text
+device                          envelope, from WorkflowRun.Device
+  deviceKey, deviceName         string
+  provider, storageSolution     string
+  siteIds.*, groupIds.*         string (array elements)
+user
+  organisationId                string (projectId and storage are never exposed)
+key, operation, traceId         string, run identity
+runId                           string, run mode only
+inputs.<operation>.…            open: the hand-off result that started the run
+results.<operation>.…           open, run mode only: accumulated stage outputs
+```
+
+| Mode | Used for | Contains |
+| --- | --- | --- |
+| `trigger` | automatic Start trigger matching, before a run exists | envelope, identity, `inputs` (omitted when empty) |
+| `run` | conditions between stages during a run | everything in `trigger` plus `runId` and `results` |
+
+Storage credentials, signed URLs, payloads, params, `user.storage`, the project
+scope and lifecycle bookkeeping are never projected.
+
+How contracts reference the root:
+
+| Contract | Path form | Example | Resolves to |
+| --- | --- | --- | --- |
+| Start | absolute | `device.deviceName` | `device.deviceName` |
+| Start | absolute, inside an open namespace | `inputs.classify.details.*.classified` | same |
+| Stage (`stage: anpr`) | relative to `results.<stage>` | `detections.*.plate` | `results.anpr.detections.*.plate` |
+
+Envelope paths are fixed by this module. The contents of `inputs.<operation>`
+and `results.<operation>` come from workers (for example the classifier's
+`objectCount`, `properties` and `details`), so contracts describe them and
+consumers validate those declarations against real worker output rather than
+against this schema.
+
+`AutomaticTriggerRootWithInputs` builds the same device/user envelope as trigger
+mode, without the identity scalars. Round-trip tests require the projection and
+the schema to match exactly in both modes, require every `WorkflowDevice` and
+`WorkflowUser` field to be either projected or explicitly excluded, and assert
+that credentials never appear. A new field therefore becomes matchable only by
+adding it to the projection and the schema together.
+
 ### Automatic Type Generation
 
 This project bridges Go and TypeScript using an automated pipeline:

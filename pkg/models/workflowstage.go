@@ -64,7 +64,8 @@ const (
 // run. Scalar operators use path/op/value; anyMatch uses path/op/match.
 // Logical all/any groups use op/conditions with nonempty absolute children.
 //
-// Path is an absolute, dot-separated lookup rooted at the run object itself, not
+// Path is an absolute, dot-separated lookup rooted at the run's condition root
+// (WorkflowRun.ConditionRoot; exact paths in WorkflowConditionRootSchema), not
 // at any single operation's result. The reachable roots are:
 //
 //   - inputs.<op>.<field>   — the run's immutable start context (e.g.
