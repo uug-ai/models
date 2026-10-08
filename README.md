@@ -229,6 +229,17 @@ user
 key, operation, traceId         string, run identity
 runId                           string, run mode only
 inputs.<operation>.…            open: the hand-off result that started the run
+  classify                      platform-owned, described by WorkflowClassifyInput
+    objectCount                 integer (automatic runs only)
+    properties.*                string
+    details.*                   one tracked object
+      id, classified            string
+      colorStr.*                string
+      isStatic, valid           boolean
+      distance, staticDistance  number
+      x, y                      number
+      frameWidth, frameHeight   integer
+      frame, occurence          integer
 results.<operation>.…           open, run mode only: accumulated stage outputs
 ```
 
@@ -248,11 +259,24 @@ How contracts reference the root:
 | Start | absolute, inside an open namespace | `inputs.classify.details.*.classified` | same |
 | Stage (`stage: anpr`) | relative to `results.<stage>` | `detections.*.plate` | `results.anpr.detections.*.plate` |
 
-Envelope paths are fixed by this module. The contents of `inputs.<operation>`
-and `results.<operation>` come from workers (for example the classifier's
-`objectCount`, `properties` and `details`), so contracts describe them and
-consumers validate those declarations against real worker output rather than
-against this schema.
+Envelope paths and `inputs.classify` are fixed by this module. Automatic runs
+carry the classifier result as analysis hands it off (also stored as
+`data.classify`); `WorkflowClassifyInput` types it and the schema's classify
+paths are generated from its JSON tags, skipping fields tagged
+`condition:"-"` (coordinate and colour matrices, the unused `w`). Manual
+launches seed `inputs.classify` from the stored analysis through `Classify`,
+which has no `objectCount`; such paths are marked `automaticOnly`. Tests decode
+a fixture shaped like the classifier's output strictly into
+`WorkflowClassifyInput` and resolve every classify path against both the
+automatic and the manual shape, so a classifier change fails here first.
+
+The contents of other `inputs.<operation>` and all `results.<operation>`
+namespaces come from workers, so contracts describe them and consumers validate
+those declarations against real worker output rather than against this schema.
+
+Condition validation (`ValidateWorkflowCondition`) derives its device, user and
+`inputs.classify` field lists from the same schema, so condition validation and
+contract validation cannot disagree.
 
 `AutomaticTriggerRootWithInputs` builds the same device/user envelope as trigger
 mode, without the identity scalars. Round-trip tests require the projection and

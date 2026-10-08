@@ -1,0 +1,50 @@
+{
+	"objectCount": 1,
+	"properties": ["car"],
+	"details": [
+		{
+			"id": "3",
+			"classified": "car",
+			"distance": 182.4,
+			"staticDistance": 96.1,
+			"isStatic": false,
+			"frameWidth": 1920,
+			"frameHeight": 1080,
+			"frame": 12,
+			"frames": [12, 13, 14],
+			"occurence": 3,
+			"traject": [[100.0, 200.0, 180.0, 260.0], [120.0, 205.0, 200.0, 265.0]],
+			"trajectCentroids": [[140.0, 230.0], [160.0, 235.0]],
+			"colorsBGR": [[[40.0, 40.0, 180.0]]],
+			"colorsHLS": [[[0.0, 110.0, 160.0]]],
+			"colorsStr": [["red"]],
+			"colorStr": ["red"],
+			"valid": true,
+			"w": 0,
+			"x": 100.0,
+			"y": 200.0
+		},
+		{
+			"id": "4",
+			"classified": "pedestrian",
+			"distance": 4.2,
+			"staticDistance": 3.0,
+			"isStatic": true,
+			"frameWidth": 1920,
+			"frameHeight": 1080,
+			"frame": 2,
+			"frames": [2],
+			"occurence": 1,
+			"traject": [[10.0, 20.0, 30.0, 60.0]],
+			"trajectCentroids": [[20.0, 40.0]],
+			"colorsBGR": [],
+			"colorsHLS": [],
+			"colorsStr": [],
+			"colorStr": [],
+			"valid": true,
+			"w": 0,
+			"x": 10.0,
+			"y": 20.0
+		}
+	]
+}
