@@ -29,9 +29,10 @@ func (s WorkflowStage) IsSecretParam(name string) bool {
 
 // NormalizeParamValues validates a node's Data against the stage's declared
 // Params and returns the canonical values to store. Undeclared keys and empty
-// values (nil or "") are dropped, so an omitted value falls back to the
-// parameter's default at runtime. Strings are trimmed (secrets are kept
-// verbatim), numbers are float64, and select values must be one of Options.
+// values (nil, "" or an empty list) are dropped; ApplyParamDefaults fills them
+// from declared defaults. Strings are trimmed (secrets are kept verbatim),
+// numbers are float64 within Minimum/Maximum, select values must be one of
+// Options, and multiselect values are distinct strings, each one of Options.
 // The result is nil when no value remains.
 func (s WorkflowStage) NormalizeParamValues(data map[string]any) (map[string]any, error) {
 	if len(data) == 0 {
@@ -55,6 +56,34 @@ func (s WorkflowStage) NormalizeParamValues(data map[string]any) (map[string]any
 		return nil, nil
 	}
 	return normalized, nil
+}
+
+// ApplyParamDefaults returns data with every declared, non-secret parameter
+// that has no value set to its normalized Default. Existing values are kept.
+func (s WorkflowStage) ApplyParamDefaults(data map[string]any) (map[string]any, error) {
+	result := make(map[string]any, len(data)+len(s.Params))
+	for key, value := range data {
+		result[key] = value
+	}
+	for _, param := range s.Params {
+		if param.Default == nil || param.Type == StageParamSecret {
+			continue
+		}
+		if value, ok := result[param.Name]; ok && value != nil {
+			continue
+		}
+		value, keep, err := normalizeParamValue(param, param.Default)
+		if err != nil {
+			return nil, fmt.Errorf("parameter %q default: %w", param.Name, err)
+		}
+		if keep {
+			result[param.Name] = value
+		}
+	}
+	if len(result) == 0 {
+		return nil, nil
+	}
+	return result, nil
 }
 
 // MissingRequiredParams returns, in sorted order, the required parameters that
@@ -103,7 +132,33 @@ func normalizeParamValue(param StageParam, raw any) (any, bool, error) {
 		if !ok {
 			return nil, false, fmt.Errorf("must be a finite number")
 		}
+		if param.Minimum != nil && number < *param.Minimum {
+			return nil, false, fmt.Errorf("must be at least %v", *param.Minimum)
+		}
+		if param.Maximum != nil && number > *param.Maximum {
+			return nil, false, fmt.Errorf("must be at most %v", *param.Maximum)
+		}
 		return number, true, nil
+	case StageParamMultiSelect:
+		items, ok := paramStrings(raw)
+		if !ok {
+			return nil, false, fmt.Errorf("must be a list of strings")
+		}
+		values := make([]string, 0, len(items))
+		for _, item := range items {
+			item = strings.TrimSpace(item)
+			if item == "" || slices.Contains(values, item) {
+				continue
+			}
+			if len(param.Options) > 0 && !slices.Contains(param.Options, item) {
+				return nil, false, fmt.Errorf("values must be among %s", strings.Join(param.Options, ", "))
+			}
+			values = append(values, item)
+		}
+		if len(values) == 0 {
+			return nil, false, nil
+		}
+		return values, true, nil
 	case StageParamBoolean:
 		flag, ok := raw.(bool)
 		if !ok {
@@ -113,6 +168,28 @@ func normalizeParamValue(param StageParam, raw any) (any, bool, error) {
 	default:
 		return nil, false, fmt.Errorf("has unsupported type %q", param.Type)
 	}
+}
+
+func paramStrings(raw any) ([]string, bool) {
+	switch value := raw.(type) {
+	case []string:
+		return value, true
+	case []any:
+		items := make([]string, 0, len(value))
+		for _, item := range value {
+			text, ok := item.(string)
+			if !ok {
+				return nil, false
+			}
+			items = append(items, text)
+		}
+		return items, true
+	}
+	// BSON arrays decode as primitive.A, a named []interface{}.
+	if list, ok := asList(raw); ok {
+		return paramStrings(list)
+	}
+	return nil, false
 }
 
 func paramNumber(raw any) (float64, bool) {
