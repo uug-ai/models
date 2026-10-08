@@ -250,6 +250,16 @@ inputs.<operation>.…            open: the hand-off result that started the run
       frameWidth, frameHeight   integer
       frame, occurence          integer
 results.<operation>.…           open, run mode only: accumulated stage outputs
+  anpr                          platform-owned, described by WorkflowAnprResult
+    detections.*.tracks.*.meta  one track per vehicle
+      plate                     string: uppercase A-Z0-9, no separators; "" when unread
+      unread                    boolean
+      classifiedAs              string: copied from classify, not recognised by ANPR
+    markers.*                   one marker per vehicle
+      name                      string: the plate, or "anpr unread"
+      duration                  integer seconds
+      metadata.engine           string: fast, tesseract, tesseract+opencv, http (read plates only)
+      metadata.confidence       number: OCR confidence (read plates only; not clamped for http)
 ```
 
 | Mode | Used for | Contains |
@@ -279,7 +289,20 @@ a fixture shaped like the classifier's output strictly into
 `WorkflowClassifyInput` and resolve every classify path against both the
 automatic and the manual shape, so a classifier change fails here first.
 
-The contents of other `inputs.<operation>` and all `results.<operation>`
+`results.anpr` is the ANPR stage result the engine builds from hub-anpr's
+ingest blocks (one detection run, one marker per vehicle, grouped by block type
+with an `s` appended). `WorkflowAnprResult` mirrors the wire types it is built
+from (`api.PostDetectionsRequest`, `api.DetectionTrackInput`, `Marker`,
+`MarkerMetadata`); tests require identical JSON keys, decode a result built from
+those types strictly, and resolve every `results.anpr` schema path. Constants
+(track confidence 0.9, `recognisedBy`), coordinates and bookkeeping are tagged
+`condition:"-"`. Plate and OCR confidence live in different lists (tracks and
+markers), so conditions on both cannot be tied to the same vehicle; plate,
+unread and class can, through `anyMatch` on the tracks. Condition validation
+keeps `results.*` open at runtime, so conditions stored before this type existed
+still validate.
+
+The contents of other `inputs.<operation>` and all other `results.<operation>`
 namespaces come from workers, so contracts describe them and consumers validate
 those declarations against real worker output rather than against this schema.
 

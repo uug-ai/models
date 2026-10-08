@@ -71,7 +71,7 @@ const (
 //   - inputs.<op>.<field>   — the run's immutable start context (e.g.
 //     inputs.classify.properties).
 //   - results.<op>.<field>  — an upstream stage's accumulated output (e.g.
-//     results.anpr.tracks).
+//     results.anpr.markers).
 //   - device.<field>        — the recording source (deviceKey, deviceName,
 //     provider, storageSolution, siteIds, groupIds).
 //   - user.<field>          — the owning account (organisationId only).
@@ -82,10 +82,10 @@ const (
 // match a secret.
 //
 // A "*" path segment fans out across the elements of the array at that position
-// and continues resolving from each element, so results.anpr.detections.*.confidence
-// matches per detection. The predicate then holds when ANY element satisfies a
+// and continues resolving from each element, so
+// results.anpr.markers.*.metadata.confidence matches per marker. The predicate then holds when ANY element satisfies a
 // positive operator (eq/contains/in/matches/gt/gte/lt/lte/exists), and when EVERY element
-// differs for ne. Numeric indices are not supported (no results.anpr.tracks.0.id):
+// differs for ne. Numeric indices are not supported (no results.anpr.markers.0.name):
 // use "*" to reach into array elements, or match the array itself at its own
 // segment (contains/exists).
 //

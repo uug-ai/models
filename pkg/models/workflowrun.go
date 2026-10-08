@@ -657,13 +657,14 @@ var bothConditionRootModes = []WorkflowConditionRootMode{WorkflowConditionRootTr
 //     device.deviceName, or a path inside an open namespace such as
 //     inputs.classify.details.*.classified.
 //   - A stage contract field is relative to that stage's own namespace,
-//     results.<operation>: detections.*.plate in the anpr contract resolves to
-//     results.anpr.detections.*.plate.
+//     results.<operation>: detections.*.tracks.*.meta.plate in the anpr contract
+//     resolves to results.anpr.detections.*.tracks.*.meta.plate.
 //
-// Envelope paths (device, user, identity scalars) and the platform-owned
-// classification hand-off (inputs.classify, see WorkflowClassifyInput) are
-// fixed here; the contents of other inputs.<operation> and results.<operation>
-// namespaces come from workers and are described by contracts. A field added to WorkflowRun,
+// Envelope paths (device, user, identity scalars), the platform-owned
+// classification hand-off (inputs.classify, see WorkflowClassifyInput) and the
+// ANPR stage result (results.anpr, see WorkflowAnprResult) are fixed here; the
+// contents of other inputs.<operation> and results.<operation> namespaces come
+// from workers and are described by contracts. A field added to WorkflowRun,
 // WorkflowDevice or WorkflowUser becomes matchable only when the projection and
 // this schema both add it (see the round-trip test).
 func WorkflowConditionRootSchema() []WorkflowConditionPath {
@@ -682,7 +683,8 @@ func WorkflowConditionRootSchema() []WorkflowConditionPath {
 		{Path: "inputs", Type: "object", Modes: bothConditionRootModes, Open: true},
 		{Path: "results", Type: "object", Modes: []WorkflowConditionRootMode{WorkflowConditionRootRun}, Open: true},
 	}
-	return append(schema, structConditionPaths("inputs."+WorkflowClassifyOperation, reflect.TypeOf(WorkflowClassifyInput{}))...)
+	schema = append(schema, structConditionPaths("inputs."+WorkflowClassifyOperation, reflect.TypeOf(WorkflowClassifyInput{}), bothConditionRootModes)...)
+	return append(schema, structConditionPaths("results."+WorkflowAnprOperation, reflect.TypeOf(WorkflowAnprResult{}), []WorkflowConditionRootMode{WorkflowConditionRootRun})...)
 }
 
 // WorkflowClassifyOperation is the analysis operation whose result opens
@@ -729,7 +731,7 @@ type WorkflowClassifyInputDetail struct {
 // string lists (as ".*" elements) and nested struct lists, skipping fields
 // tagged condition:"-". The result follows the struct, so its schema cannot
 // drift from the type.
-func structConditionPaths(prefix string, kind reflect.Type) []WorkflowConditionPath {
+func structConditionPaths(prefix string, kind reflect.Type, modes []WorkflowConditionRootMode) []WorkflowConditionPath {
 	var paths []WorkflowConditionPath
 	for i := 0; i < kind.NumField(); i++ {
 		field := kind.Field(i)
@@ -738,11 +740,18 @@ func structConditionPaths(prefix string, kind reflect.Type) []WorkflowConditionP
 			continue
 		}
 		path := prefix + "." + strings.Split(field.Tag.Get("json"), ",")[0]
-		entry := WorkflowConditionPath{Path: path, Modes: bothConditionRootModes, AutomaticOnly: tag == "automatic"}
+		entry := WorkflowConditionPath{Path: path, Modes: modes, AutomaticOnly: tag == "automatic"}
 		fieldType := field.Type
+		if fieldType.Kind() == reflect.Ptr {
+			fieldType = fieldType.Elem() // optional value: same path and type
+		}
+		if fieldType.Kind() == reflect.Struct {
+			paths = append(paths, structConditionPaths(path, fieldType, modes)...)
+			continue
+		}
 		if fieldType.Kind() == reflect.Slice {
 			if fieldType.Elem().Kind() == reflect.Struct {
-				paths = append(paths, structConditionPaths(path+".*", fieldType.Elem())...)
+				paths = append(paths, structConditionPaths(path+".*", fieldType.Elem(), modes)...)
 				continue
 			}
 			entry.Path, fieldType = path+".*", fieldType.Elem()
