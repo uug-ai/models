@@ -175,6 +175,15 @@ set at 256 nodes, including groups and `anyMatch` relative predicates. Empty
 top-level sets remain unconditional; empty nested groups are invalid. Automatic
 Start validation rejects `results.*` throughout nested groups.
 
+Scalar conditions and `anyMatch` predicates may carry an optional `field`: the
+contract field ID they were authored with (for example `objectCount` from a Start
+contract or `plate` from a stage contract). Editors use it to show a saved value
+in that field's section and widget again. It is metadata only: evaluation reads
+`path`, `op` and `value`, untagged conditions stay valid, and whether the ID
+exists in a contract is checked by the authoring API. Logical groups and the
+`anyMatch` condition itself never carry a `field`; IDs must match
+`^[A-Za-z][A-Za-z0-9_-]{0,79}$`.
+
 This permits migrating legacy Start predicates exactly: an `all` group containing
 the old Start `any` group and an edge's `any` group preserves their independent
 choices without expanding edges or retaining hidden settings in the editor.

@@ -99,8 +99,8 @@ func validateWorkflowConditionTree(c *WorkflowCondition, depth int, remaining *i
 		if len(c.Conditions) == 0 {
 			return fmt.Errorf("condition op %q requires nonempty conditions", c.Op)
 		}
-		if c.Path != "" || c.Value != nil || c.Match != nil {
-			return fmt.Errorf("condition op %q uses only conditions, not path, value or match", c.Op)
+		if c.Path != "" || c.Value != nil || c.Match != nil || c.Field != "" {
+			return fmt.Errorf("condition op %q uses only conditions, not path, value, match or field", c.Op)
 		}
 		for i := range c.Conditions {
 			if err := validateWorkflowConditionTree(&c.Conditions[i], depth+1, remaining, full); err != nil {
@@ -111,6 +111,12 @@ func validateWorkflowConditionTree(c *WorkflowCondition, depth int, remaining *i
 	}
 	if c.Conditions != nil {
 		return fmt.Errorf("condition %q op %q cannot have logical conditions", c.Path, c.Op)
+	}
+	if c.Op == ConditionOpAnyMatch && c.Field != "" {
+		return fmt.Errorf("condition %q op anyMatch carries no field; its match predicates carry their own", c.Path)
+	}
+	if err := validateConditionFieldID(c.Field); err != nil {
+		return fmt.Errorf("condition %q: %w", c.Path, err)
 	}
 	if full {
 		if err := validateConditionPath(c); err != nil {
@@ -199,6 +205,22 @@ func validateWorkflowLeafStructure(c *WorkflowCondition) error {
 		if err := validateRelativeConditionPath(p.Path); err != nil {
 			return fmt.Errorf("condition %q match predicate %d: %w", c.Path, i, err)
 		}
+		if err := validateConditionFieldID(p.Field); err != nil {
+			return fmt.Errorf("condition %q match predicate %d: %w", c.Path, i, err)
+		}
+	}
+	return nil
+}
+
+// conditionFieldIDPattern matches workflow contract field IDs.
+var conditionFieldIDPattern = regexp.MustCompile(`^[A-Za-z][A-Za-z0-9_-]{0,79}$`)
+
+// validateConditionFieldID accepts an empty field (an untagged condition) or a
+// contract field ID. Whether the ID exists in a contract is the authoring
+// API's concern, not the model's.
+func validateConditionFieldID(field string) error {
+	if field != "" && !conditionFieldIDPattern.MatchString(field) {
+		return fmt.Errorf("field %q is not a valid contract field ID", field)
 	}
 	return nil
 }

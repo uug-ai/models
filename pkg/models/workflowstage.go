@@ -106,6 +106,13 @@ type WorkflowCondition struct {
 	// Conditions belongs only to logical all/any groups, which have no path,
 	// value or match. Children retain absolute paths; anyMatch stays relative.
 	Conditions []WorkflowCondition `json:"conditions,omitempty" bson:"conditions,omitempty"`
+	// Field is the contract field ID a scalar condition was authored with (for
+	// example a Start or stage contract field), so editors can show the value
+	// in that field's section and widget again. It is metadata only: evaluation
+	// uses Path, Op and Value, and conditions without Field remain valid.
+	// Logical groups and anyMatch conditions carry no Field; anyMatch
+	// predicates carry their own.
+	Field string `json:"field,omitempty" bson:"field,omitempty"`
 }
 
 // StageCondition retains the legacy source and wire representation.
