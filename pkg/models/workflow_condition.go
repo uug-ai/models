@@ -24,6 +24,11 @@ type WorkflowPredicate struct {
 	Path  string      `json:"path" bson:"path"`
 	Op    ConditionOp `json:"op" bson:"op"`
 	Value any         `json:"value" bson:"value"`
+	// Field is the contract field ID the condition was authored with (for
+	// example a Start or stage contract field), so editors can show the value
+	// in that field's section and widget again. It is metadata only: evaluation
+	// uses Path, Op and Value, and conditions without Field remain valid.
+	Field string `json:"field,omitempty" bson:"field,omitempty"`
 }
 
 // WorkflowPredicateSet combines predicates against the same array object.
