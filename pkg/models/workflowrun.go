@@ -3,6 +3,8 @@ package models
 import (
 	"crypto/sha256"
 	"encoding/json"
+	"reflect"
+	"strings"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -632,13 +634,17 @@ const (
 
 // WorkflowConditionPath describes one path a condition can read in the
 // projection built by WorkflowRun.ConditionRoot. Array element paths end in
-// ".*". Open namespaces (inputs, results) hold one object per operation whose
-// contents are described by contracts, not by this schema.
+// ".*". Open namespaces (inputs, results) hold one object per operation; the
+// platform-owned inputs.classify is described here, other operations by
+// contracts. Type is string, number, integer, boolean, or object for an open
+// namespace. AutomaticOnly marks paths present only in runs opened by the
+// automatic analysis hand-off, not in manually launched runs.
 type WorkflowConditionPath struct {
-	Path  string                      `json:"path"`
-	Type  string                      `json:"type"` // string, or object for an open namespace
-	Modes []WorkflowConditionRootMode `json:"modes"`
-	Open  bool                        `json:"open,omitempty"`
+	Path          string                      `json:"path"`
+	Type          string                      `json:"type"`
+	Modes         []WorkflowConditionRootMode `json:"modes"`
+	Open          bool                        `json:"open,omitempty"`
+	AutomaticOnly bool                        `json:"automaticOnly,omitempty"`
 }
 
 var bothConditionRootModes = []WorkflowConditionRootMode{WorkflowConditionRootTrigger, WorkflowConditionRootRun}
@@ -654,13 +660,14 @@ var bothConditionRootModes = []WorkflowConditionRootMode{WorkflowConditionRootTr
 //     results.<operation>: detections.*.plate in the anpr contract resolves to
 //     results.anpr.detections.*.plate.
 //
-// Envelope paths (device, user, identity scalars) are fixed here; the contents
-// of the open namespaces inputs.<operation> and results.<operation> come from
-// workers and are described by contracts. A field added to WorkflowRun,
+// Envelope paths (device, user, identity scalars) and the platform-owned
+// classification hand-off (inputs.classify, see WorkflowClassifyInput) are
+// fixed here; the contents of other inputs.<operation> and results.<operation>
+// namespaces come from workers and are described by contracts. A field added to WorkflowRun,
 // WorkflowDevice or WorkflowUser becomes matchable only when the projection and
 // this schema both add it (see the round-trip test).
 func WorkflowConditionRootSchema() []WorkflowConditionPath {
-	return []WorkflowConditionPath{
+	schema := []WorkflowConditionPath{
 		{Path: "device.deviceKey", Type: "string", Modes: bothConditionRootModes},
 		{Path: "device.deviceName", Type: "string", Modes: bothConditionRootModes},
 		{Path: "device.provider", Type: "string", Modes: bothConditionRootModes},
@@ -675,6 +682,86 @@ func WorkflowConditionRootSchema() []WorkflowConditionPath {
 		{Path: "inputs", Type: "object", Modes: bothConditionRootModes, Open: true},
 		{Path: "results", Type: "object", Modes: []WorkflowConditionRootMode{WorkflowConditionRootRun}, Open: true},
 	}
+	return append(schema, structConditionPaths("inputs."+WorkflowClassifyOperation, reflect.TypeOf(WorkflowClassifyInput{}))...)
+}
+
+// WorkflowClassifyOperation is the analysis operation whose result opens
+// automatic workflow runs and is available as inputs.classify.
+const WorkflowClassifyOperation = "classify"
+
+// WorkflowClassifyInput is the classifier result the analysis hand-off carries
+// as inputs.classify, exactly as the classifier returns it (analysis stores
+// the same document as data.classify). Fields tagged condition:"-" are not
+// matchable (coordinate and colour matrices, unused values); condition:"automatic"
+// marks fields manual launches do not carry, because they seed inputs.classify
+// from the stored analysis through Classify.
+type WorkflowClassifyInput struct {
+	ObjectCount int                           `json:"objectCount" condition:"automatic"` // tracked objects that moved
+	Properties  []string                      `json:"properties"`                        // classes of the objects that moved
+	Details     []WorkflowClassifyInputDetail `json:"details"`                           // one entry per tracked object
+}
+
+// WorkflowClassifyInputDetail is one tracked object of a classification.
+type WorkflowClassifyInputDetail struct {
+	Id               string        `json:"id"`
+	Classified       string        `json:"classified"` // class name, e.g. car
+	Distance         float64       `json:"distance"`
+	StaticDistance   float64       `json:"staticDistance"`
+	IsStatic         bool          `json:"isStatic"`
+	FrameWidth       int           `json:"frameWidth"`
+	FrameHeight      int           `json:"frameHeight"`
+	Frame            int           `json:"frame"` // first frame the object appeared in
+	Frames           []int         `json:"frames" condition:"-"`
+	Occurence        int           `json:"occurence"` // frames the object was seen in
+	Traject          [][]float64   `json:"traject" condition:"-"`
+	TrajectCentroids [][]float64   `json:"trajectCentroids" condition:"-"`
+	ColorsBGR        [][][]float64 `json:"colorsBGR" condition:"-"`
+	ColorsHLS        [][][]float64 `json:"colorsHLS" condition:"-"`
+	ColorsStr        [][]string    `json:"colorsStr" condition:"-"`
+	ColorStr         []string      `json:"colorStr"` // primary colour names
+	Valid            bool          `json:"valid"`
+	W                float64       `json:"w" condition:"-"` // unused by the classifier
+	X                float64       `json:"x"`
+	Y                float64       `json:"y"`
+}
+
+// structConditionPaths lists the matchable paths of a JSON struct: scalars,
+// string lists (as ".*" elements) and nested struct lists, skipping fields
+// tagged condition:"-". The result follows the struct, so its schema cannot
+// drift from the type.
+func structConditionPaths(prefix string, kind reflect.Type) []WorkflowConditionPath {
+	var paths []WorkflowConditionPath
+	for i := 0; i < kind.NumField(); i++ {
+		field := kind.Field(i)
+		tag := field.Tag.Get("condition")
+		if tag == "-" {
+			continue
+		}
+		path := prefix + "." + strings.Split(field.Tag.Get("json"), ",")[0]
+		entry := WorkflowConditionPath{Path: path, Modes: bothConditionRootModes, AutomaticOnly: tag == "automatic"}
+		fieldType := field.Type
+		if fieldType.Kind() == reflect.Slice {
+			if fieldType.Elem().Kind() == reflect.Struct {
+				paths = append(paths, structConditionPaths(path+".*", fieldType.Elem())...)
+				continue
+			}
+			entry.Path, fieldType = path+".*", fieldType.Elem()
+		}
+		switch fieldType.Kind() {
+		case reflect.String:
+			entry.Type = "string"
+		case reflect.Bool:
+			entry.Type = "boolean"
+		case reflect.Int, reflect.Int32, reflect.Int64:
+			entry.Type = "integer"
+		case reflect.Float32, reflect.Float64:
+			entry.Type = "number"
+		default:
+			panic("unsupported condition field " + path)
+		}
+		paths = append(paths, entry)
+	}
+	return paths
 }
 
 // workflowConditionEnvelope is the device and user part of every condition
