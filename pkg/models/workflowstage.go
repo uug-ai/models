@@ -256,6 +256,8 @@ const (
 	StageParamNumber  StageParamType = "number"
 	StageParamBoolean StageParamType = "boolean"
 	StageParamSelect  StageParamType = "select"
+	// StageParamMultiSelect is a list of distinct values, each one of Options.
+	StageParamMultiSelect StageParamType = "multiselect"
 	// StageParamSecret is a write-only string (e.g. a password). The API never
 	// returns its stored value: reads carry StageParamSecretMask instead, and a
 	// write that sends the mask back keeps the stored value.
@@ -275,10 +277,17 @@ type StageParam struct {
 	Description string         `json:"description,omitempty" bson:"description,omitempty"`
 	Type        StageParamType `json:"type" bson:"type"`
 	Required    bool           `json:"required,omitempty" bson:"required,omitempty"`
-	// Default is applied when a node supplies no value for this parameter.
+	// Default is the value used when a node supplies none. Authoring APIs store
+	// it on the node with ApplyParamDefaults, so what an editor shows is what a
+	// worker receives; workers keep their own deployment defaults for nodes
+	// without a value.
 	Default any `json:"default,omitempty" bson:"default,omitempty"`
-	// Options enumerates the permitted values when Type is StageParamSelect.
+	// Options enumerates the permitted values when Type is StageParamSelect or
+	// StageParamMultiSelect.
 	Options []string `json:"options,omitempty" bson:"options,omitempty"`
+	// Minimum and Maximum bound a StageParamNumber value, inclusively.
+	Minimum *float64 `json:"minimum,omitempty" bson:"minimum,omitempty"`
+	Maximum *float64 `json:"maximum,omitempty" bson:"maximum,omitempty"`
 }
 
 // StagePort is a named connection point on a stage. Outputs are the results a
