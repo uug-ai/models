@@ -20,24 +20,50 @@ const (
 // conditionOperationFields declares the result fields a condition may target
 // under inputs.<op> / results.<op> for operations whose shape the platform owns.
 // Operations absent here carry worker-defined results and accept any field path.
-var conditionOperationFields = map[string]map[string]conditionFieldKind{
-	"classify": {
-		"properties":  conditionFieldArray,
-		"objectCount": conditionFieldLeaf,
-		"details":     conditionFieldArray,
-	},
-}
-
 // conditionDeviceFields and conditionUserFields are the curated envelope leaves
 // a condition may target; credentials (user.storage) are deliberately absent.
-var (
-	conditionDeviceFields = map[string]conditionFieldKind{
-		"deviceKey": conditionFieldLeaf, "deviceName": conditionFieldLeaf,
-		"provider": conditionFieldLeaf, "storageSolution": conditionFieldLeaf,
-		"siteIds": conditionFieldArray, "groupIds": conditionFieldArray,
+// All three derive from WorkflowConditionRootSchema, the single description.
+var conditionDeviceFields, conditionUserFields, conditionOperationFields = conditionSchemaFields()
+
+// conditionSchemaFields reduces the schema to the first field segment under
+// each namespace: a field followed by "*" is an array, one with deeper named
+// segments is a map, and anything else is a leaf.
+func conditionSchemaFields() (map[string]conditionFieldKind, map[string]conditionFieldKind, map[string]map[string]conditionFieldKind) {
+	device, user := map[string]conditionFieldKind{}, map[string]conditionFieldKind{}
+	operations := map[string]map[string]conditionFieldKind{}
+	record := func(fields map[string]conditionFieldKind, rest string) {
+		field, remainder, deeper := strings.Cut(rest, ".")
+		kind := conditionFieldLeaf
+		if deeper {
+			kind = conditionFieldMap
+			if next, _, _ := strings.Cut(remainder, "."); next == "*" {
+				kind = conditionFieldArray
+			}
+		}
+		if previous, seen := fields[field]; !seen || previous == conditionFieldLeaf {
+			fields[field] = kind
+		}
 	}
-	conditionUserFields = map[string]conditionFieldKind{"organisationId": conditionFieldLeaf}
-)
+	for _, entry := range WorkflowConditionRootSchema() {
+		root, rest, nested := strings.Cut(entry.Path, ".")
+		if !nested || entry.Open {
+			continue
+		}
+		switch root {
+		case "device":
+			record(device, rest)
+		case "user":
+			record(user, rest)
+		case "inputs", "results":
+			op, fieldPath, _ := strings.Cut(rest, ".")
+			if operations[op] == nil {
+				operations[op] = map[string]conditionFieldKind{}
+			}
+			record(operations[op], fieldPath)
+		}
+	}
+	return device, user, operations
+}
 
 // ValidateStageCondition is the legacy entrypoint for shared validation.
 func ValidateStageCondition(c *StageCondition) error {

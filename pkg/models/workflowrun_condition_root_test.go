@@ -98,11 +98,17 @@ func TestConditionRootMatchesSchema(t *testing.T) {
 			want, open := map[string]string{}, map[string]bool{}
 			for _, path := range WorkflowConditionRootSchema() {
 				for _, allowed := range path.Modes {
-					if allowed == mode {
+					if allowed == mode && path.Open {
+						want[path.Path], open[path.Path] = path.Type, true
+					}
+				}
+			}
+			for _, path := range WorkflowConditionRootSchema() {
+				namespace, _, _ := strings.Cut(path.Path, ".")
+				for _, allowed := range path.Modes {
+					// Paths inside open namespaces are checked against worker output below.
+					if allowed == mode && !path.Open && !open[namespace] {
 						want[path.Path] = path.Type
-						if path.Open {
-							open[path.Path] = true
-						}
 					}
 				}
 			}
