@@ -49,6 +49,11 @@ func conditionSchemaFields() (map[string]conditionFieldKind, map[string]conditio
 		if !nested || entry.Open {
 			continue
 		}
+		// Stage results stay open at runtime: stored conditions may predate a
+		// described result (results.anpr), so only inputs are narrowed.
+		if root == "results" {
+			continue
+		}
 		switch root {
 		case "device":
 			record(device, rest)
