@@ -100,10 +100,10 @@ func TestDeviceMediaRefDecodesLegacyEmbeddedMedia(t *testing.T) {
 	mediaId := primitive.NewObjectID()
 	legacy := bson.M{
 		"key":                  "cam-1",
-		"latestMediaTimestamp": int64(1706000000000),
+		"latestMediaTimestamp": int64(1706000000),
 		"latestMedia": Media{
 			Id:             mediaId,
-			StartTimestamp: 1706000000000,
+			StartTimestamp: 1706000000,
 			Duration:       30,
 			DeviceKey:      "cam-1",
 			VideoFile:      "org/cam-1/video.mp4",
@@ -135,7 +135,7 @@ func TestDeviceMediaRefDecodesLegacyEmbeddedMedia(t *testing.T) {
 	if !reflect.DeepEqual(device.LatestMedia, want) {
 		t.Fatalf("LatestMedia = %+v, want %+v", device.LatestMedia, want)
 	}
-	if device.LatestMediaTimestamp != 1706000000000 {
+	if device.LatestMediaTimestamp != 1706000000 {
 		t.Fatalf("LatestMediaTimestamp = %d", device.LatestMediaTimestamp)
 	}
 }
@@ -158,13 +158,19 @@ func TestDevicePatchToSet(t *testing.T) {
 		"metadata.color":            color,
 		"metadata.hidden":           false,
 		"metadata.installationDate": int64(1706000000000),
-		"camera.fieldOfView":        fieldOfView,
 	}
 	if got := patch.ToSet(); !reflect.DeepEqual(got, want) {
 		t.Fatalf("ToSet() = %v, want %v", got, want)
 	}
+	wantCamera := map[string]interface{}{"camera.fieldOfView": fieldOfView}
+	if got := patch.CameraToSet(); !reflect.DeepEqual(got, wantCamera) {
+		t.Fatalf("CameraToSet() = %v, want %v", got, wantCamera)
+	}
 	if got := (DevicePatch{}).ToSet(); len(got) != 0 {
 		t.Fatalf("empty patch ToSet() = %v, want empty", got)
+	}
+	if got := (DevicePatch{}).CameraToSet(); len(got) != 0 {
+		t.Fatalf("empty patch CameraToSet() = %v, want empty", got)
 	}
 }
 
@@ -225,5 +231,18 @@ func TestDeviceMediaRefRuntimeMetadataIsNotStored(t *testing.T) {
 	}
 	if !strings.Contains(string(out), `"atRuntimeMetadata":{"videoUrl":"https://signed.example/video.mp4"}`) {
 		t.Fatalf("JSON does not carry the signed URL: %s", out)
+	}
+}
+
+// JSON names that existing clients read must not change with the model.
+func TestDeviceLegacyJSONNames(t *testing.T) {
+	out, err := json.Marshal(Device{MutedUntil: 1706000000, IsActive: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{`"mute":1706000000`, `"isActive":true`} {
+		if !strings.Contains(string(out), name) {
+			t.Errorf("JSON does not contain %s: %s", name, out)
+		}
 	}
 }

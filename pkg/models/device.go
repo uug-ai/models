@@ -64,6 +64,7 @@ var deviceCapabilities = []struct {
 type DeviceConnectionStatus string
 
 const (
+	DeviceConnectionConnected    DeviceConnectionStatus = "connected"
 	DeviceConnectionHealthy      DeviceConnectionStatus = "healthy"
 	DeviceConnectionIdle         DeviceConnectionStatus = "idle"
 	DeviceConnectionDisconnected DeviceConnectionStatus = "disconnected"
@@ -87,7 +88,7 @@ const (
 type Device struct {
 	Id            primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	SchemaVersion int                `json:"schemaVersion" bson:"schemaVersion,omitempty"`
-	Key           string             `json:"key" bson:"key,omitempty"`   // Unique device key reported by the agent
+	Key           string             `json:"key" bson:"key,omitempty"`   // Device key reported by the agent, unique within its project
 	Name          string             `json:"name" bson:"name,omitempty"` // e.g. "Front Door Camera"
 	Type          DeviceType         `json:"type" bson:"type,omitempty"`
 
@@ -99,8 +100,7 @@ type Device struct {
 	GroupIds       []string            `json:"groupIds" bson:"groupIds,omitempty"`
 
 	// Lifecycle
-	Active     bool  `json:"active" bson:"isActive"`
-	MutedUntil int64 `json:"mutedUntil,omitempty" bson:"mute,omitempty"` // Notifications muted until (milliseconds since epoch)
+	MutedUntil int64 `json:"mute,omitempty" bson:"mute,omitempty"` // Notifications muted until (seconds since epoch)
 
 	// Liveness (milliseconds since epoch)
 	ConnectionStart int64             `json:"connectionStart" bson:"connectionStart,omitempty"` // Last (re)connect of the agent, e.g. after a reboot
@@ -110,7 +110,7 @@ type Device struct {
 
 	// Latest media uploaded by the device, from any capability. Kept at the top
 	// level: device lists sort on LatestMediaTimestamp.
-	LatestMediaTimestamp int64           `json:"latestMediaTimestamp" bson:"latestMediaTimestamp,omitempty"` // milliseconds since epoch
+	LatestMediaTimestamp int64           `json:"latestMediaTimestamp" bson:"latestMediaTimestamp,omitempty"` // seconds since epoch (Media.StartTimestamp)
 	LatestMedia          *DeviceMediaRef `json:"latestMedia,omitempty" bson:"latestMedia,omitempty"`
 
 	Location *Location `json:"location,omitempty" bson:"location,omitempty"` // Fixed placement, not a real-time position
@@ -135,6 +135,7 @@ type Device struct {
 
 	// @LEGACY - removed once all readers use the fields above.
 	UserId              string                 `json:"user_id,omitempty" bson:"user_id,omitempty"`
+	IsActive            bool                   `json:"isActive" bson:"isActive"`                         // No defined meaning; never set true for devices
 	Enterprise          bool                   `json:"enterprise,omitempty" bson:"enterprise,omitempty"` // Licence concept; moves to the organisation
 	DeprecatedAnalytics *[]DeprecatedHeartbeat `json:"analytics,omitempty" bson:"analytics,omitempty"`
 }
@@ -285,11 +286,10 @@ type DeviceMetadata struct {
 // configuration (users).
 type CameraMetadata struct {
 	// Stream, reported by the agent
-	Resolution  string  `json:"resolution" bson:"resolution,omitempty"` // e.g. "1920x1080"
-	FrameRate   int64   `json:"frameRate" bson:"frameRate,omitempty"`   // fps
-	Bitrate     int64   `json:"bitrate" bson:"bitrate,omitempty"`       // kbps
-	Codec       string  `json:"codec" bson:"codec,omitempty"`           // e.g. "H.264"
-	FieldOfView float64 `json:"fieldOfView" bson:"fieldOfView,omitempty"`
+	Resolution string `json:"resolution" bson:"resolution,omitempty"` // e.g. "1920x1080"
+	FrameRate  int64  `json:"frameRate" bson:"frameRate,omitempty"`   // fps
+	Bitrate    int64  `json:"bitrate" bson:"bitrate,omitempty"`       // kbps
+	Codec      string `json:"codec" bson:"codec,omitempty"`           // e.g. "H.264"
 
 	// State, reported by the agent
 	Connected           bool `json:"connected" bson:"connected"`
@@ -306,8 +306,9 @@ type CameraMetadata struct {
 	IOs          []IO           `json:"ios" bson:"ios,omitempty"`                   // Digital inputs and relay outputs (agent)
 
 	// Saved configuration, edited by users
-	Presets []CameraPreset `json:"presets" bson:"presets,omitempty"`
-	Tours   []CameraTour   `json:"tours" bson:"tours,omitempty"`
+	FieldOfView float64        `json:"fieldOfView" bson:"fieldOfView,omitempty"` // degrees, used on floor plans
+	Presets     []CameraPreset `json:"presets" bson:"presets,omitempty"`
+	Tours       []CameraTour   `json:"tours" bson:"tours,omitempty"`
 }
 
 type LightSensorMetadata struct {
@@ -346,9 +347,13 @@ type DeviceAtRuntimeMetadata struct {
 }
 
 // DevicePatch is the request body for a device update. It targets the
-// user-owned paths only; use ToSet to build the $set document. Nil fields are
-// left untouched. Dates stay time.Time in the API and are stored as
-// milliseconds since epoch.
+// user-owned paths only. Nil fields are left untouched. Dates stay time.Time
+// in the API and are stored as milliseconds since epoch.
+//
+// ToSet builds the $set for paths every device has. CameraToSet builds the
+// camera.* paths separately: apply it with {"camera": {"$exists": true}} in the
+// match, otherwise the $set creates a camera sub-document and the device gains
+// the camera capability.
 type DevicePatch struct {
 	Name               *string                   `json:"name,omitempty"`
 	Color              *string                   `json:"color,omitempty"`
@@ -374,10 +379,16 @@ func (p DevicePatch) ToSet() map[string]interface{} {
 	setIf(set, "metadata.lastMaintenance", unixMilli(p.LastMaintenance))
 	setIf(set, "metadata.installationDate", unixMilli(p.InstallationDate))
 	setIf(set, "metadata.onFloorPlans", p.OnFloorPlans)
-	setIf(set, "camera.fieldOfView", p.FieldOfView)
 	if p.FeaturePermissions != nil {
 		set["featurePermissions"] = p.FeaturePermissions
 	}
+	return set
+}
+
+// CameraToSet builds the $set for the camera.* paths; see DevicePatch.
+func (p DevicePatch) CameraToSet() map[string]interface{} {
+	set := map[string]interface{}{}
+	setIf(set, "camera.fieldOfView", p.FieldOfView)
 	return set
 }
 

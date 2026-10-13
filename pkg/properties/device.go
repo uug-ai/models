@@ -9,7 +9,6 @@ const (
 	CameraMetadataFrameRate = "frameRate"
 	CameraMetadataBitrate = "bitrate"
 	CameraMetadataCodec = "codec"
-	CameraMetadataFieldOfView = "fieldOfView"
 	CameraMetadataConnected = "connected"
 	CameraMetadataContinuousRecording = "continuousRecording"
 	CameraMetadataHasOnvif = "hasOnvif"
@@ -19,6 +18,7 @@ const (
 	CameraMetadataHasBackChannel = "hasBackChannel"
 	CameraMetadataOnvifPresets = "onvifPresets"
 	CameraMetadataIOs = "ios"
+	CameraMetadataFieldOfView = "fieldOfView"
 	CameraMetadataPresets = "presets"
 	CameraMetadataTours = "tours"
 )
@@ -99,7 +99,6 @@ const (
 	DeviceProjectId = "projectId"
 	DeviceSiteIds = "siteIds"
 	DeviceGroupIds = "groupIds"
-	DeviceActive = "isActive"
 	DeviceMutedUntil = "mute"
 	DeviceConnectionStart = "connectionStart"
 	DeviceAgentLastSeen = "agentLastSeen"
@@ -117,6 +116,7 @@ const (
 	DeviceFeaturePermissions = "featurePermissions"
 	DeviceAudit = "audit"
 	DeviceUserId = "user_id"
+	DeviceIsActive = "isActive"
 	DeviceEnterprise = "enterprise"
 	DeviceDeprecatedAnalytics = "analytics"
 )
