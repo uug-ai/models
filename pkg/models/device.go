@@ -1,211 +1,403 @@
 package models
 
 import (
+	"errors"
+	"fmt"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// DeviceSchemaVersion is the current shape of the device document. Writers
+// stamp it; the backfill upgrades documents below it.
+const DeviceSchemaVersion = 2
+
+// --------------------------------------------------------------------
+// Device type, capabilities and status
+
+// DeviceType is the device's primary kind. It drives the icon, default view
+// and grouping in the UI. What a device can do is given by which capability
+// sub-documents are set, not by its type.
+type DeviceType string
+
+const (
+	DeviceTypeCamera        DeviceType = "camera"
+	DeviceTypeSensor        DeviceType = "sensor"
+	DeviceTypeAccessControl DeviceType = "access_control"
+	DeviceTypeGateway       DeviceType = "gateway"
+)
+
+func (t DeviceType) Valid() bool {
+	switch t {
+	case DeviceTypeCamera, DeviceTypeSensor, DeviceTypeAccessControl, DeviceTypeGateway:
+		return true
+	}
+	return false
+}
+
+// DeviceCapability names a capability sub-document on Device. Each value
+// equals the BSON field name of that sub-document.
+type DeviceCapability string
+
+const (
+	DeviceCapabilityCamera         DeviceCapability = "camera"
+	DeviceCapabilityLightSensor    DeviceCapability = "lightSensor"
+	DeviceCapabilityHumiditySensor DeviceCapability = "humiditySensor"
+	DeviceCapabilityGPS            DeviceCapability = "gps"
+)
+
+// deviceCapabilities is the single registry of capability sub-documents.
+// Adding a capability: add the *XxxMetadata field on Device, a constant above
+// and an entry here. TestDeviceCapabilitiesRegistered enforces it.
+var deviceCapabilities = []struct {
+	Capability DeviceCapability
+	Has        func(Device) bool
+}{
+	{DeviceCapabilityCamera, func(d Device) bool { return d.Camera != nil }},
+	{DeviceCapabilityLightSensor, func(d Device) bool { return d.LightSensor != nil }},
+	{DeviceCapabilityHumiditySensor, func(d Device) bool { return d.HumiditySensor != nil }},
+	{DeviceCapabilityGPS, func(d Device) bool { return d.GPS != nil }},
+}
+
+// DeviceConnectionStatus is derived at read time from the last-seen
+// timestamps and thresholds; it is never stored.
+type DeviceConnectionStatus string
+
+const (
+	DeviceConnectionHealthy      DeviceConnectionStatus = "healthy"
+	DeviceConnectionIdle         DeviceConnectionStatus = "idle"
+	DeviceConnectionDisconnected DeviceConnectionStatus = "disconnected"
+)
+
 // --------------------------------------------------------------------
 // Data model for device
 //
-// This is the main struct for Device
+// Device is the persisted document. API responses are built from it in
+// pkg/api and never serialise it directly.
+//
+// Ownership of sub-documents:
+//   - top level:    identity, tenancy, credential and lifecycle (hub-api)
+//   - Agent:        written only by the heartbeat
+//   - Metadata:     written only by user edits (DevicePatch)
+//   - capabilities: reported fields by the heartbeat, saved configuration by users
+//
+// Writers $set explicit paths, never the whole struct, so a nil capability
+// never removes one registered elsewhere. Removing a capability is an explicit
+// $unset. Booleans that can flip back to false carry no omitempty.
 
 type Device struct {
-	Id primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	Id            primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	SchemaVersion int                `json:"schemaVersion" bson:"schemaVersion,omitempty"`
+	Key           string             `json:"key" bson:"key,omitempty"`   // Unique device key reported by the agent
+	Name          string             `json:"name" bson:"name,omitempty"` // e.g. "Front Door Camera"
+	Type          DeviceType         `json:"type" bson:"type,omitempty"`
 
-	// Device information
-	// Note: DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
-	// DeviceType is used to identify the type of device, such as camera, sensor, access control, etc.
-	Key  string `json:"key" bson:"key,omitempty"`
-	Name string `json:"name" bson:"name,omitempty"` // e.g. "Front Door Camera"
-	Type string `json:"type" bson:"type,omitempty"` // Type of device e.g. "camera", "sensor", "access_control"
+	// Tenancy
+	OrganisationId string              `json:"organisationId" bson:"organisationId,omitempty"`
+	ProjectId      *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"` // nil or zero resolves to the organisation's default project
+	SiteIds        []string            `json:"siteIds" bson:"siteIds,omitempty"`
+	GroupIds       []string            `json:"groupIds" bson:"groupIds,omitempty"`
 
-	// Versioning information
-	// Note: Version is used to identify the version of the device software.
-	// ReleaseHash is used to identify the release hash of the device software, it can be used to identify the specific build of the device software.
-	// Deployment is used to identify the deployment type of the device, such as factory, docker, docker compose, kubernetes, etc.
-	Repository string `json:"repository" bson:"repository,omitempty"` // Repository URL of the agent codebase
-	Version    string `json:"version" bson:"version,omitempty"`       // Version of the agent, injected on build. Reflects the release tag of the agent.
-	Deployment string `json:"deployment" bson:"deployment,omitempty"` // Type of deployment used e.g. "factory", "docker", "docker compose", "kubernetes"
+	// CloudPublicKey binds the device to the cloud credential that authenticates
+	// its heartbeats. Set once at provisioning; changed only by explicit key
+	// rotation. Never exposed over the API.
+	CloudPublicKey string `json:"-" bson:"cloudPublicKey,omitempty"`
 
-	// RBAC information
-	// Note: SiteId is used to identify the site where the device is located.
-	// GroupId is used to identify the group of devices.
-	// OrganisationId is used to identify the organisation that owns the device.
-	// FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.
-	OrganisationId string   `json:"organisationId" bson:"organisationId,omitempty"`
-	SiteIds        []string `json:"siteIds" bson:"siteIds,omitempty"`
-	GroupIds       []string `json:"groupIds" bson:"groupIds,omitempty"`
+	// Lifecycle
+	Active     bool  `json:"active" bson:"isActive"`
+	MutedUntil int64 `json:"mutedUntil,omitempty" bson:"mute,omitempty"` // Notifications muted until (milliseconds since epoch)
 
-	// ProjectId places the device in exactly one project within its organisation.
-	// A nil or zero legacy value resolves to that organisation's default project;
-	// it does not make the device organisation-wide.
-	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+	// Liveness (milliseconds since epoch)
+	ConnectionStart int64             `json:"connectionStart" bson:"connectionStart,omitempty"` // Last (re)connect of the agent, e.g. after a reboot
+	AgentLastSeen   int64             `json:"agentLastSeen" bson:"agentLastSeen,omitempty"`     // Last heartbeat from the agent
+	DeviceLastSeen  int64             `json:"deviceLastSeen" bson:"deviceLastSeen,omitempty"`   // Last time the agent could reach the device itself
+	Thresholds      *DeviceThresholds `json:"thresholds,omitempty" bson:"thresholds,omitempty"` // Optional override; nil uses project defaults
 
-	// @LEGACY FIELDS - to be removed in future versions
-	UserId string `json:"user_id" bson:"user_id,omitempty"`
+	// Latest media uploaded by the device, from any capability. Kept at the top
+	// level: device lists sort on LatestMediaTimestamp.
+	LatestMediaTimestamp int64           `json:"latestMediaTimestamp" bson:"latestMediaTimestamp,omitempty"` // milliseconds since epoch
+	LatestMedia          *DeviceMediaRef `json:"latestMedia,omitempty" bson:"latestMedia,omitempty"`
 
-	// Latest Media information
-	LatestMedia          Media `json:"latestMedia" bson:"latestMedia,omitempty"`                   // ID of the latest media captured by the device
-	LatestMediaTimestamp int64 `json:"latestMediaTimestamp" bson:"latestMediaTimestamp,omitempty"` // Timestamp of the latest media captured by the device (milliseconds since epoch)
+	Location *Location `json:"location,omitempty" bson:"location,omitempty"` // Fixed placement, not a real-time position
 
-	// Device status
-	// Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc."
-	// LastSeenTimestamp is used to identify the last time the device was seen online.
-	ConnectionStart       int64 `json:"connectionStart" bson:"connectionStart,omitempty"`             // timestamp in milliseconds when the device last connected e.g. after a reboot
-	DeviceLastSeen        int64 `json:"deviceLastSeen" bson:"deviceLastSeen,omitempty"`               // last time the device itself reported being online (timestamp in milliseconds)
-	AgentLastSeen         int64 `json:"agentLastSeen" bson:"agentLastSeen,omitempty"`                 // last time the agent reported being online (timestamp in milliseconds)
-	IdleThreshold         int64 `json:"idleThreshold" bson:"idleThreshold,omitempty"`                 // threshold in milliseconds to consider a device idle, based on deviceLastSeen
-	DisconnectedThreshold int64 `json:"disconnectedThreshold" bson:"disconnectedThreshold,omitempty"` // threshold in milliseconds to consider a device offline, based on agentLastSeen
-	HealthyThreshold      int64 `json:"healthyThreshold" bson:"healthyThreshold,omitempty"`           // threshold in milliseconds to consider a device healthy, based on agentLastSeen
-
-	// Location of the device, not real time postion. e.g. "Office 1st Floor", "Lobby", "Kilian's Car", etc.
-	Location *Location `json:"location" bson:"location,omitempty"`
-
-	// Metadata
+	Agent    *DeviceAgent    `json:"agent,omitempty" bson:"agent,omitempty"`
 	Metadata *DeviceMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
 
-	// Device Specific Metadata
-	CameraMetadata         *CameraMetadata         `json:"cameraMetadata,omitempty" bson:"cameraMetadata,omitempty"`
-	LightSensorMetadata    *LightSensorMetadata    `json:"lightSensorMetadata,omitempty" bson:"lightSensorMetadata,omitempty"`
-	HumiditySensorMetadata *HumiditySensorMetadata `json:"humiditySensorMetadata,omitempty" bson:"humiditySensorMetadata,omitempty"`
-	GPSMetadata            *GPSMetadata            `json:"gpsMetadata,omitempty" bson:"gpsMetadata,omitempty"`
-	// ... other device specific metadata structs
+	// Capabilities. Each is optional and any combination is valid, e.g. a camera
+	// with a built-in humidity sensor sets both Camera and HumiditySensor.
+	// Capability sub-documents hold capabilities and configuration only; live
+	// readings go to a time-series collection.
+	Camera         *CameraMetadata         `json:"camera,omitempty" bson:"camera,omitempty"`
+	LightSensor    *LightSensorMetadata    `json:"lightSensor,omitempty" bson:"lightSensor,omitempty"`
+	HumiditySensor *HumiditySensorMetadata `json:"humiditySensor,omitempty" bson:"humiditySensor,omitempty"`
+	GPS            *GPSMetadata            `json:"gps,omitempty" bson:"gps,omitempty"`
 
-	// FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.
-	// It is a map of feature names to permissions.
-	// For example, "camera" can have permissions like "read", "write", "delete", etc.
-	// This allows for fine-grained control over what features are accessible by users or groups.
-	// FeaturePermissions can be used to implement Role-Based Access Control (RBAC) for devices.
-	FeaturePermissions *DeviceFeaturePermissions `json:"featurePermissions" bson:"featurePermissions"`
-
-	// AtRuntimeMetadata contains metadata that is generated at runtime, which can include
-	// more verbose information about the device's current state, capabilities, or configuration.
-	// for example the linked sites details, etc.
-	AtRuntimeMetadata *DeviceAtRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"atRuntimeMetadata,omitempty"`
-
-	// Audit information
-	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
-
-	// Deprecated - to be removed
-	DeprecatedAnalytics *[]DeprecatedHeartbeat `json:"analytics" bson:"analytics,omitempty"`
-}
-
-type DevicePatch struct {
-	Name               *string                   `json:"name,omitempty" bson:"name,omitempty"`
-	Color              *string                   `json:"color,omitempty" bson:"color,omitempty"`
-	Brand              *string                   `json:"brand,omitempty" bson:"brand,omitempty"`
-	Model              *string                   `json:"model,omitempty" bson:"model,omitempty"`
-	Description        *string                   `json:"description,omitempty" bson:"description,omitempty"`
-	LastMaintenance    *time.Time                `json:"lastMaintenance,omitempty" bson:"lastMaintenance,omitempty"`
-	InstallationDate   *time.Time                `json:"installationDate,omitempty" bson:"installationDate,omitempty"`
-	OnFloorPlans       *[]string                 `json:"onFloorPlans,omitempty" bson:"onFloorPlans,omitempty"`
-	FieldOfView        *float64                  `json:"fieldOfView,omitempty" bson:"fieldOfView,omitempty"`
 	FeaturePermissions *DeviceFeaturePermissions `json:"featurePermissions,omitempty" bson:"featurePermissions,omitempty"`
+	Audit              *Audit                    `json:"audit,omitempty" bson:"audit,omitempty"`
+
+	// AtRuntimeMetadata is computed when the device is read and never stored.
+	AtRuntimeMetadata *DeviceAtRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"-"`
+
+	// @LEGACY - removed once all readers use the fields above.
+	UserId              string                 `json:"user_id,omitempty" bson:"user_id,omitempty"`
+	Enterprise          bool                   `json:"enterprise,omitempty" bson:"enterprise,omitempty"` // Licence concept; moves to the organisation
+	DeprecatedAnalytics *[]DeprecatedHeartbeat `json:"analytics,omitempty" bson:"analytics,omitempty"`
 }
 
-// We can store additional metadata for media files, such as tags and classifications.
+// HasCapability reports whether the capability sub-document is set.
+func (d Device) HasCapability(c DeviceCapability) bool {
+	for _, entry := range deviceCapabilities {
+		if entry.Capability == c {
+			return entry.Has(d)
+		}
+	}
+	return false
+}
+
+// Capabilities lists the capabilities the device has, in registry order.
+func (d Device) Capabilities() []DeviceCapability {
+	var capabilities []DeviceCapability
+	for _, entry := range deviceCapabilities {
+		if entry.Has(d) {
+			capabilities = append(capabilities, entry.Capability)
+		}
+	}
+	return capabilities
+}
+
+var (
+	ErrDeviceKeyMissing          = errors.New("device key is required")
+	ErrDeviceOrganisationMissing = errors.New("device organisationId is required")
+	ErrDeviceTypeInvalid         = errors.New("device type is invalid")
+)
+
+// Validate checks the invariants every stored device must satisfy.
+func (d Device) Validate() error {
+	var errs []error
+	if d.Key == "" {
+		errs = append(errs, ErrDeviceKeyMissing)
+	}
+	if d.OrganisationId == "" {
+		errs = append(errs, ErrDeviceOrganisationMissing)
+	}
+	if d.Type != "" && !d.Type.Valid() {
+		errs = append(errs, fmt.Errorf("%w: %q", ErrDeviceTypeInvalid, d.Type))
+	}
+	if d.Thresholds != nil {
+		errs = append(errs, d.Thresholds.Validate())
+	}
+	if d.LightSensor != nil {
+		errs = append(errs, validRange("lightSensor lux", d.LightSensor.MinLux, d.LightSensor.MaxLux))
+	}
+	if d.HumiditySensor != nil {
+		errs = append(errs, validRange("humiditySensor humidity", d.HumiditySensor.MinHumidity, d.HumiditySensor.MaxHumidity))
+	}
+	return errors.Join(errs...)
+}
+
+func validRange(name string, min, max *float64) error {
+	if min != nil && max != nil && *min > *max {
+		return fmt.Errorf("%s range: min %v exceeds max %v", name, *min, *max)
+	}
+	return nil
+}
+
+// DeviceThresholds overrides the project's liveness thresholds (milliseconds).
+//   - healthy:      now - AgentLastSeen  <= Healthy
+//   - idle:         now - DeviceLastSeen >  Idle (agent still reporting)
+//   - disconnected: now - AgentLastSeen  >  Disconnected
+type DeviceThresholds struct {
+	Healthy      int64 `json:"healthy,omitempty" bson:"healthy,omitempty"`
+	Idle         int64 `json:"idle,omitempty" bson:"idle,omitempty"`
+	Disconnected int64 `json:"disconnected,omitempty" bson:"disconnected,omitempty"`
+}
+
+func (t DeviceThresholds) Validate() error {
+	if t.Healthy < 0 || t.Idle < 0 || t.Disconnected < 0 {
+		return errors.New("device thresholds must not be negative")
+	}
+	if t.Healthy > 0 && t.Disconnected > 0 && t.Healthy > t.Disconnected {
+		return errors.New("device healthy threshold exceeds disconnected threshold")
+	}
+	return nil
+}
+
+// DeviceMediaRef is the subset of Media needed to render and sign the latest
+// media. Field names match Media, so documents that still embed a full Media
+// decode into it unchanged.
+type DeviceMediaRef struct {
+	Id                primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	Duration          int                `json:"duration,omitempty" bson:"duration,omitempty"`
+	StorageSolution   string             `json:"storageSolution,omitempty" bson:"storageSolution,omitempty"`
+	VideoFile         string             `json:"videoFile,omitempty" bson:"videoFile,omitempty"`
+	VideoProvider     string             `json:"videoProvider,omitempty" bson:"videoProvider,omitempty"`
+	ThumbnailFile     string             `json:"thumbnailFile,omitempty" bson:"thumbnailFile,omitempty"`
+	ThumbnailProvider string             `json:"thumbnailProvider,omitempty" bson:"thumbnailProvider,omitempty"`
+	SpriteFile        string             `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
+	SpriteProvider    string             `json:"spriteProvider,omitempty" bson:"spriteProvider,omitempty"`
+}
+
+// DeviceAgent is reported by the agent and written only by the heartbeat.
+type DeviceAgent struct {
+	Version     string `json:"version" bson:"version,omitempty"`         // Release tag of the agent
+	ReleaseHash string `json:"releaseHash" bson:"releaseHash,omitempty"` // Build hash of the agent
+	Repository  string `json:"repository" bson:"repository,omitempty"`
+	Deployment  string `json:"deployment" bson:"deployment,omitempty"` // e.g. "factory", "docker", "kubernetes"
+
+	Hostname     string   `json:"hostname" bson:"hostname,omitempty"`
+	Architecture string   `json:"architecture" bson:"architecture,omitempty"`
+	IPAddresses  []string `json:"ipAddresses" bson:"ipAddresses,omitempty"`
+	MacAddresses []string `json:"macAddresses" bson:"macAddresses,omitempty"`
+
+	BootTime      int64 `json:"bootTime" bson:"bootTime,omitempty"` // milliseconds since epoch
+	UptimeSeconds int64 `json:"uptimeSeconds" bson:"uptimeSeconds,omitempty"`
+	MemoryTotal   int64 `json:"memoryTotal" bson:"memoryTotal,omitempty"`     // bytes
+	MemoryFree    int64 `json:"memoryFree" bson:"memoryFree,omitempty"`       // bytes
+	MemoryUsed    int64 `json:"memoryUsed" bson:"memoryUsed,omitempty"`       // bytes
+	MemoryProcess int64 `json:"memoryProcess" bson:"memoryProcess,omitempty"` // bytes
+
+	HubEncryption bool `json:"hubEncryption" bson:"hubEncryption"`
+	E2EEncryption bool `json:"e2eEncryption" bson:"e2eEncryption"`
+}
+
+// DeviceMetadata is edited by users and written only through DevicePatch.
 type DeviceMetadata struct {
-	Hidden           bool     `json:"hidden" bson:"hidden,omitempty"`                     // Indicates if the device is hidden from UI
-	Color            string   `json:"color" bson:"color,omitempty"`                       // e.g. "#FF5733" (hex color code)
-	Brand            string   `json:"brand" bson:"brand,omitempty"`                       // e.g. "Nest", "Ring"
-	Model            string   `json:"model" bson:"model,omitempty"`                       // e.g. "Nest Cam", "Ring Doorbell"
-	Description      string   `json:"description" bson:"description,omitempty"`           // e.g. "Outdoor camera with night vision"
-	LastMaintenance  int64    `json:"lastMaintenance" bson:"lastMaintenance,omitempty"`   // Last maintenance date in milliseconds since epoch
-	InstallationDate int64    `json:"installationDate" bson:"installationDate,omitempty"` // Installation date in milliseconds since epoch
-	OnFloorPlans     []string `json:"onFloorPlans" bson:"onFloorPlans,omitempty"`         // Floor plans this device is associated with
-	IPAddress        string   `json:"ipAddress" bson:"ipAddress,omitempty"`               // e.g. "192.168.1.1"
-	MacAddress       string   `json:"macAddress" bson:"macAddress,omitempty"`             // e.g. "00:1A:2B:3C:4D:5E"
-	BootTime         string   `json:"bootTime" bson:"bootTime,omitempty"`
-	Architecture     string   `json:"architecture" bson:"architecture,omitempty"`
-	Hostname         string   `json:"hostname" bson:"hostname,omitempty"`
-	FreeMemory       string   `json:"freeMemory" bson:"freeMemory,omitempty"`
-	TotalMemory      string   `json:"totalMemory" bson:"totalMemory,omitempty"`
-	UsedMemory       string   `json:"usedMemory" bson:"usedMemory,omitempty"`
-	ProcessMemory    string   `json:"processMemory" bson:"processMemory,omitempty"`
-	Encrypted        bool     `json:"encrypted" bson:"encrypted,omitempty"`
-	EncryptedData    []byte   `json:"encryptedData" bson:"encryptedData,omitempty"`
-	HubEncryption    string   `json:"hubEncryption" bson:"hubEncryption,omitempty"`
-	E2EEncryption    string   `json:"e2eEncryption" bson:"e2eEncryption,omitempty"`
+	Hidden           bool     `json:"hidden" bson:"hidden"`
+	Color            string   `json:"color" bson:"color,omitempty"` // hex, e.g. "#FF5733"
+	Brand            string   `json:"brand" bson:"brand,omitempty"`
+	Model            string   `json:"model" bson:"model,omitempty"`
+	Description      string   `json:"description" bson:"description,omitempty"`
+	LastMaintenance  int64    `json:"lastMaintenance" bson:"lastMaintenance,omitempty"`   // milliseconds since epoch
+	InstallationDate int64    `json:"installationDate" bson:"installationDate,omitempty"` // milliseconds since epoch
+	OnFloorPlans     []string `json:"onFloorPlans" bson:"onFloorPlans,omitempty"`
 
 	// VLM holds the stable ("normal") scenes used as context for VLM analysis.
 	VLM *DeviceVLMMetadata `json:"vlm,omitempty" bson:"vlm,omitempty"`
 }
 
-// CameraMetadata contains metadata specific to camera devices.
-type CameraMetadata struct {
-	Resolution  string  `json:"resolution" bson:"resolution,omitempty"` // e.g. "1920x1080", "1280x720"
-	FieldOfView float64 `json:"fieldOfView" bson:"fieldOfView,omitempty"`
-	FrameRate   int64   `json:"frameRate" bson:"frameRate,omitempty"` // Frame rate in fps
-	Bitrate     int64   `json:"bitrate" bson:"bitrate,omitempty"`     // Bitrate in kbps
-	Codec       string  `json:"codec" bson:"codec,omitempty"`         // e.g. "H.264", "H.265"
+// --------------------------------------------------------------------
+// Capabilities
+//
+// One typed struct per capability kind. Each holds capabilities and
+// configuration only, never live readings. Use a pointer field on Device by
+// default; use a slice only for a kind that has several instances per device.
 
-	// Camera ONVIF and PTZ capabilities
-	HasOnvif       bool           `json:"hasOnvif" bson:"hasOnvif,omitempty"`             // Indicates if the camera supports ONVIF protocol
-	HasAudio       bool           `json:"hasAudio" bson:"hasAudio,omitempty"`             // Indicates if the camera supports audio
-	HasZoom        bool           `json:"hasZoom" bson:"hasZoom,omitempty"`               // Indicates if the camera supports zoom functionality
-	HasBackChannel bool           `json:"hasBackChannel" bson:"hasBackChannel,omitempty"` // Indicates if the camera supports backchannel audio
-	HasPanTilt     bool           `json:"hasPanTilt" bson:"hasPanTilt,omitempty"`         // Indicates if the camera supports pan and tilt functionality
-	HasPresets     bool           `json:"hasPresets" bson:"hasPresets,omitempty"`         // Indicates if the camera supports presets
-	HasIO          bool           `json:"hasIO" bson:"hasIO,omitempty"`                   // Indicates if the camera has input/output capabilities
-	Presets        []CameraPreset `json:"presets" bson:"presets,omitempty"`               // Presets for the camera, used for quick positioning
-	Tours          []CameraTour   `json:"tours" bson:"tours,omitempty"`                   // Tours for the camera, used for automated movements through presets
-	IOs            []IO           `json:"ios" bson:"ios,omitempty"`
+// CameraMetadata holds camera capabilities (heartbeat) and saved
+// configuration (users).
+type CameraMetadata struct {
+	// Stream, reported by the agent
+	Resolution  string  `json:"resolution" bson:"resolution,omitempty"` // e.g. "1920x1080"
+	FrameRate   int64   `json:"frameRate" bson:"frameRate,omitempty"`   // fps
+	Bitrate     int64   `json:"bitrate" bson:"bitrate,omitempty"`       // kbps
+	Codec       string  `json:"codec" bson:"codec,omitempty"`           // e.g. "H.264"
+	FieldOfView float64 `json:"fieldOfView" bson:"fieldOfView,omitempty"`
+
+	// State, reported by the agent
+	Connected           bool `json:"connected" bson:"connected"`
+	ContinuousRecording bool `json:"continuousRecording" bson:"continuousRecording"`
+
+	// Capabilities, reported by the agent
+	HasOnvif       bool `json:"hasOnvif" bson:"hasOnvif"`
+	HasAudio       bool `json:"hasAudio" bson:"hasAudio"`
+	HasZoom        bool `json:"hasZoom" bson:"hasZoom"`
+	HasPanTilt     bool `json:"hasPanTilt" bson:"hasPanTilt"`
+	HasBackChannel bool `json:"hasBackChannel" bson:"hasBackChannel"`
+
+	OnvifPresets []CameraPreset `json:"onvifPresets" bson:"onvifPresets,omitempty"` // Presets stored on the camera (agent)
+	IOs          []IO           `json:"ios" bson:"ios,omitempty"`                   // Digital inputs and relay outputs (agent)
+
+	// Saved configuration, edited by users
+	Presets []CameraPreset `json:"presets" bson:"presets,omitempty"`
+	Tours   []CameraTour   `json:"tours" bson:"tours,omitempty"`
 }
 
 type LightSensorMetadata struct {
-	// Sensitivity indicates the sensitivity level of the light sensor (e.g. 1-100)
-	Sensitivity int `json:"sensitivity" bson:"sensitivity,omitempty"`
-	// LuxRange specifies the measurable range in lux (e.g. "0-10000")
-	LuxRange string `json:"luxRange" bson:"luxRange,omitempty"`
-	// CurrentLux is the latest measured light level in lux
-	CurrentLux float64 `json:"currentLux" bson:"currentLux,omitempty"`
-	// Unit is the measurement unit, typically "lux"
-	Unit string `json:"unit" bson:"unit,omitempty"`
+	MinLux *float64 `json:"minLux,omitempty" bson:"minLux,omitempty"` // Measurable range
+	MaxLux *float64 `json:"maxLux,omitempty" bson:"maxLux,omitempty"`
 }
 
-// HumiditySensorMetadata contains metadata specific to humidity sensor devices.
 type HumiditySensorMetadata struct {
-	// Sensitivity indicates the sensitivity level of the humidity sensor (e.g. 1-100)
-	Sensitivity int `json:"sensitivity" bson:"sensitivity,omitempty"`
-	// HumidityRange specifies the measurable range in percentage (e.g. "0-100")
-	HumidityRange string `json:"humidityRange" bson:"humidityRange,omitempty"`
-	// CurrentHumidity is the latest measured humidity level in percentage
-	CurrentHumidity float64 `json:"currentHumidity" bson:"currentHumidity,omitempty"`
-	// Unit is the measurement unit, typically "%"
-	Unit string `json:"unit" bson:"unit,omitempty"`
+	MinHumidity *float64 `json:"minHumidity,omitempty" bson:"minHumidity,omitempty"` // Measurable range, percent
+	MaxHumidity *float64 `json:"maxHumidity,omitempty" bson:"maxHumidity,omitempty"`
 }
 
-// GPSMetadata contains metadata specific to GPS devices.
 type GPSMetadata struct {
-	// Latitude is the current latitude of the device.
-	Latitude float64 `json:"latitude" bson:"latitude,omitempty"`
-	// Longitude is the current longitude of the device.
-	Longitude float64 `json:"longitude" bson:"longitude,omitempty"`
-	// Altitude is the current altitude of the device in meters.
-	Altitude float64 `json:"altitude" bson:"altitude,omitempty"`
-	// Accuracy is the accuracy of the GPS reading in meters.
-	Accuracy float64 `json:"accuracy" bson:"accuracy,omitempty"`
-	// Timestamp is the time when the GPS data was recorded (milliseconds since epoch).
-	Timestamp int64 `json:"timestamp" bson:"timestamp,omitempty"`
-	// Speed is the current speed of the device in meters per second.
-	Speed float64 `json:"speed" bson:"speed,omitempty"`
-	// Heading is the direction of movement in degrees.
-	Heading float64 `json:"heading" bson:"heading,omitempty"`
+	Accuracy float64 `json:"accuracy" bson:"accuracy,omitempty"` // Rated accuracy in meters
+	UpdateHz float64 `json:"updateHz" bson:"updateHz,omitempty"` // Fix rate
+
+	// LastFix is a single overwritten snapshot so lists can show a position
+	// without querying the time series.
+	LastFix *GPSFix `json:"lastFix,omitempty" bson:"lastFix,omitempty"`
 }
 
-// DeviceAtRuntimeMetadata contains metadata that is generated at runtime, which can include
-// more verbose information about the device's current state, capabilities, or configuration.
+type GPSFix struct {
+	Latitude  float64 `json:"latitude" bson:"latitude"`
+	Longitude float64 `json:"longitude" bson:"longitude"`
+	Timestamp int64   `json:"timestamp" bson:"timestamp"` // milliseconds since epoch
+}
+
+// --------------------------------------------------------------------
+// Runtime and patch
+
 type DeviceAtRuntimeMetadata struct {
-	// Sites contains details about the sites that the device is linked to.
-	Sites []SiteOption `json:"sites,omitempty" bson:"sites,omitempty"`
-	// Groups contains details about the groups that the device is linked to.
-	Groups []GroupOption `json:"groups,omitempty" bson:"groups,omitempty"`
-
-	// Status is derived from the last seen timestamps and thresholds.
-	Status string `json:"status" bson:"status,omitempty"` // e.g. "connected", "idle", "disconnected", "healthy"
+	Sites        []SiteOption           `json:"sites,omitempty"`
+	Groups       []GroupOption          `json:"groups,omitempty"`
+	Capabilities []DeviceCapability     `json:"capabilities,omitempty"`
+	Status       DeviceConnectionStatus `json:"status"`
 }
+
+// DevicePatch is the request body for a device update. It targets the
+// user-owned paths only; use ToSet to build the $set document. Nil fields are
+// left untouched. Dates stay time.Time in the API and are stored as
+// milliseconds since epoch.
+type DevicePatch struct {
+	Name               *string                   `json:"name,omitempty"`
+	Color              *string                   `json:"color,omitempty"`
+	Brand              *string                   `json:"brand,omitempty"`
+	Model              *string                   `json:"model,omitempty"`
+	Description        *string                   `json:"description,omitempty"`
+	Hidden             *bool                     `json:"hidden,omitempty"`
+	LastMaintenance    *time.Time                `json:"lastMaintenance,omitempty"`
+	InstallationDate   *time.Time                `json:"installationDate,omitempty"`
+	OnFloorPlans       *[]string                 `json:"onFloorPlans,omitempty"`
+	FieldOfView        *float64                  `json:"fieldOfView,omitempty"`
+	FeaturePermissions *DeviceFeaturePermissions `json:"featurePermissions,omitempty"`
+}
+
+func (p DevicePatch) ToSet() map[string]interface{} {
+	set := map[string]interface{}{}
+	setIf(set, "name", p.Name)
+	setIf(set, "metadata.color", p.Color)
+	setIf(set, "metadata.brand", p.Brand)
+	setIf(set, "metadata.model", p.Model)
+	setIf(set, "metadata.description", p.Description)
+	setIf(set, "metadata.hidden", p.Hidden)
+	setIf(set, "metadata.lastMaintenance", unixMilli(p.LastMaintenance))
+	setIf(set, "metadata.installationDate", unixMilli(p.InstallationDate))
+	setIf(set, "metadata.onFloorPlans", p.OnFloorPlans)
+	setIf(set, "camera.fieldOfView", p.FieldOfView)
+	if p.FeaturePermissions != nil {
+		set["featurePermissions"] = p.FeaturePermissions
+	}
+	return set
+}
+
+func unixMilli(t *time.Time) *int64 {
+	if t == nil {
+		return nil
+	}
+	ms := t.UnixMilli()
+	return &ms
+}
+
+func setIf[T any](set map[string]interface{}, path string, v *T) {
+	if v != nil {
+		set[path] = *v
+	}
+}
+
+// --------------------------------------------------------------------
+// Shared and legacy types
 
 type DeviceKey struct {
 	Key  string `json:"key" bson:"key,omitempty"`

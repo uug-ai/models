@@ -6,20 +6,21 @@ package properties
 // CameraMetadata property field names (BSON)
 const (
 	CameraMetadataResolution = "resolution"
-	CameraMetadataFieldOfView = "fieldOfView"
 	CameraMetadataFrameRate = "frameRate"
 	CameraMetadataBitrate = "bitrate"
 	CameraMetadataCodec = "codec"
+	CameraMetadataFieldOfView = "fieldOfView"
+	CameraMetadataConnected = "connected"
+	CameraMetadataContinuousRecording = "continuousRecording"
 	CameraMetadataHasOnvif = "hasOnvif"
 	CameraMetadataHasAudio = "hasAudio"
 	CameraMetadataHasZoom = "hasZoom"
-	CameraMetadataHasBackChannel = "hasBackChannel"
 	CameraMetadataHasPanTilt = "hasPanTilt"
-	CameraMetadataHasPresets = "hasPresets"
-	CameraMetadataHasIO = "hasIO"
+	CameraMetadataHasBackChannel = "hasBackChannel"
+	CameraMetadataOnvifPresets = "onvifPresets"
+	CameraMetadataIOs = "ios"
 	CameraMetadataPresets = "presets"
 	CameraMetadataTours = "tours"
-	CameraMetadataIOs = "ios"
 )
 
 // CameraPreset property field names (BSON)
@@ -90,48 +91,74 @@ const (
 // Device property field names (BSON)
 const (
 	DeviceId = "_id"
+	DeviceSchemaVersion = "schemaVersion"
 	DeviceKey = "key"
 	DeviceName = "name"
 	DeviceType = "type"
-	DeviceRepository = "repository"
-	DeviceVersion = "version"
-	DeviceDeployment = "deployment"
 	DeviceOrganisationId = "organisationId"
+	DeviceProjectId = "projectId"
 	DeviceSiteIds = "siteIds"
 	DeviceGroupIds = "groupIds"
-	DeviceProjectId = "projectId"
-	DeviceUserId = "user_id"
-	DeviceLatestMedia = "latestMedia"
-	DeviceLatestMediaTimestamp = "latestMediaTimestamp"
+	DeviceCloudPublicKey = "cloudPublicKey"
+	DeviceActive = "isActive"
+	DeviceMutedUntil = "mute"
 	DeviceConnectionStart = "connectionStart"
-	DeviceDeviceLastSeen = "deviceLastSeen"
 	DeviceAgentLastSeen = "agentLastSeen"
-	DeviceIdleThreshold = "idleThreshold"
-	DeviceDisconnectedThreshold = "disconnectedThreshold"
-	DeviceHealthyThreshold = "healthyThreshold"
+	DeviceDeviceLastSeen = "deviceLastSeen"
+	DeviceThresholds = "thresholds"
+	DeviceLatestMediaTimestamp = "latestMediaTimestamp"
+	DeviceLatestMedia = "latestMedia"
 	DeviceLocation = "location"
+	DeviceAgent = "agent"
 	DeviceMetadata = "metadata"
-	DeviceCameraMetadata = "cameraMetadata"
-	DeviceLightSensorMetadata = "lightSensorMetadata"
-	DeviceHumiditySensorMetadata = "humiditySensorMetadata"
-	DeviceGPSMetadata = "gpsMetadata"
+	DeviceCamera = "camera"
+	DeviceLightSensor = "lightSensor"
+	DeviceHumiditySensor = "humiditySensor"
+	DeviceGPS = "gps"
 	DeviceFeaturePermissions = "featurePermissions"
-	DeviceAtRuntimeMetadata = "atRuntimeMetadata"
 	DeviceAudit = "audit"
+	DeviceUserId = "user_id"
+	DeviceEnterprise = "enterprise"
 	DeviceDeprecatedAnalytics = "analytics"
 )
 
-// DeviceAtRuntimeMetadata property field names (BSON)
+// DeviceAgent property field names (BSON)
 const (
-	DeviceAtRuntimeMetadataSites = "sites"
-	DeviceAtRuntimeMetadataGroups = "groups"
-	DeviceAtRuntimeMetadataStatus = "status"
+	DeviceAgentVersion = "version"
+	DeviceAgentReleaseHash = "releaseHash"
+	DeviceAgentRepository = "repository"
+	DeviceAgentDeployment = "deployment"
+	DeviceAgentHostname = "hostname"
+	DeviceAgentArchitecture = "architecture"
+	DeviceAgentIPAddresses = "ipAddresses"
+	DeviceAgentMacAddresses = "macAddresses"
+	DeviceAgentBootTime = "bootTime"
+	DeviceAgentUptimeSeconds = "uptimeSeconds"
+	DeviceAgentMemoryTotal = "memoryTotal"
+	DeviceAgentMemoryFree = "memoryFree"
+	DeviceAgentMemoryUsed = "memoryUsed"
+	DeviceAgentMemoryProcess = "memoryProcess"
+	DeviceAgentHubEncryption = "hubEncryption"
+	DeviceAgentE2EEncryption = "e2eEncryption"
 )
 
 // DeviceKey property field names (BSON)
 const (
 	DeviceKeyKey = "key"
 	DeviceKeyName = "name"
+)
+
+// DeviceMediaRef property field names (BSON)
+const (
+	DeviceMediaRefId = "_id"
+	DeviceMediaRefDuration = "duration"
+	DeviceMediaRefStorageSolution = "storageSolution"
+	DeviceMediaRefVideoFile = "videoFile"
+	DeviceMediaRefVideoProvider = "videoProvider"
+	DeviceMediaRefThumbnailFile = "thumbnailFile"
+	DeviceMediaRefThumbnailProvider = "thumbnailProvider"
+	DeviceMediaRefSpriteFile = "spriteFile"
+	DeviceMediaRefSpriteProvider = "spriteProvider"
 )
 
 // DeviceMetadata property field names (BSON)
@@ -144,19 +171,6 @@ const (
 	DeviceMetadataLastMaintenance = "lastMaintenance"
 	DeviceMetadataInstallationDate = "installationDate"
 	DeviceMetadataOnFloorPlans = "onFloorPlans"
-	DeviceMetadataIPAddress = "ipAddress"
-	DeviceMetadataMacAddress = "macAddress"
-	DeviceMetadataBootTime = "bootTime"
-	DeviceMetadataArchitecture = "architecture"
-	DeviceMetadataHostname = "hostname"
-	DeviceMetadataFreeMemory = "freeMemory"
-	DeviceMetadataTotalMemory = "totalMemory"
-	DeviceMetadataUsedMemory = "usedMemory"
-	DeviceMetadataProcessMemory = "processMemory"
-	DeviceMetadataEncrypted = "encrypted"
-	DeviceMetadataEncryptedData = "encryptedData"
-	DeviceMetadataHubEncryption = "hubEncryption"
-	DeviceMetadataE2EEncryption = "e2eEncryption"
 	DeviceMetadataVLM = "vlm"
 )
 
@@ -167,43 +181,35 @@ const (
 	DeviceOptionText = "text"
 )
 
-// DevicePatch property field names (BSON)
+// DeviceThresholds property field names (BSON)
 const (
-	DevicePatchName = "name"
-	DevicePatchColor = "color"
-	DevicePatchBrand = "brand"
-	DevicePatchModel = "model"
-	DevicePatchDescription = "description"
-	DevicePatchLastMaintenance = "lastMaintenance"
-	DevicePatchInstallationDate = "installationDate"
-	DevicePatchOnFloorPlans = "onFloorPlans"
-	DevicePatchFieldOfView = "fieldOfView"
-	DevicePatchFeaturePermissions = "featurePermissions"
+	DeviceThresholdsHealthy = "healthy"
+	DeviceThresholdsIdle = "idle"
+	DeviceThresholdsDisconnected = "disconnected"
+)
+
+// GPSFix property field names (BSON)
+const (
+	GPSFixLatitude = "latitude"
+	GPSFixLongitude = "longitude"
+	GPSFixTimestamp = "timestamp"
 )
 
 // GPSMetadata property field names (BSON)
 const (
-	GPSMetadataLatitude = "latitude"
-	GPSMetadataLongitude = "longitude"
-	GPSMetadataAltitude = "altitude"
 	GPSMetadataAccuracy = "accuracy"
-	GPSMetadataTimestamp = "timestamp"
-	GPSMetadataSpeed = "speed"
-	GPSMetadataHeading = "heading"
+	GPSMetadataUpdateHz = "updateHz"
+	GPSMetadataLastFix = "lastFix"
 )
 
 // HumiditySensorMetadata property field names (BSON)
 const (
-	HumiditySensorMetadataSensitivity = "sensitivity"
-	HumiditySensorMetadataHumidityRange = "humidityRange"
-	HumiditySensorMetadataCurrentHumidity = "currentHumidity"
-	HumiditySensorMetadataUnit = "unit"
+	HumiditySensorMetadataMinHumidity = "minHumidity"
+	HumiditySensorMetadataMaxHumidity = "maxHumidity"
 )
 
 // LightSensorMetadata property field names (BSON)
 const (
-	LightSensorMetadataSensitivity = "sensitivity"
-	LightSensorMetadataLuxRange = "luxRange"
-	LightSensorMetadataCurrentLux = "currentLux"
-	LightSensorMetadataUnit = "unit"
+	LightSensorMetadataMinLux = "minLux"
+	LightSensorMetadataMaxLux = "maxLux"
 )
