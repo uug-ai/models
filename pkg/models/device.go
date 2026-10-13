@@ -230,6 +230,10 @@ type DeviceMediaRef struct {
 	ThumbnailProvider string             `json:"thumbnailProvider,omitempty" bson:"thumbnailProvider,omitempty"`
 	SpriteFile        string             `json:"spriteFile,omitempty" bson:"spriteFile,omitempty"`
 	SpriteProvider    string             `json:"spriteProvider,omitempty" bson:"spriteProvider,omitempty"`
+
+	// AtRuntimeMetadata carries the signed URLs and display time filled when
+	// the device is read; never stored.
+	AtRuntimeMetadata *MediaAtRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"-"`
 }
 
 // DeviceAgent is reported by the agent and written only by the heartbeat.

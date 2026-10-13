@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/json"
 	"errors"
 	"reflect"
 	"strings"
@@ -110,6 +111,9 @@ func TestDeviceMediaRefDecodesLegacyEmbeddedMedia(t *testing.T) {
 			ThumbnailFile:  "org/cam-1/thumb.jpg",
 			SpriteFile:     "org/cam-1/sprite.jpg",
 			MarkerNames:    []string{"person"},
+			AtRuntimeMetadata: &MediaAtRuntimeMetadata{
+				VideoUrl: "https://stale.example/video.mp4",
+			},
 		},
 	}
 	raw, err := bson.Marshal(legacy)
@@ -199,5 +203,27 @@ func TestDeviceValidate(t *testing.T) {
 		if err := tt.device.Validate(); err == nil {
 			t.Errorf("%s: Validate() = nil, want an error", tt.name)
 		}
+	}
+}
+
+// Signed URLs are filled at read time and returned to clients, never stored.
+func TestDeviceMediaRefRuntimeMetadataIsNotStored(t *testing.T) {
+	device := Device{LatestMedia: &DeviceMediaRef{
+		VideoFile:         "org/cam-1/video.mp4",
+		AtRuntimeMetadata: &MediaAtRuntimeMetadata{VideoUrl: "https://signed.example/video.mp4"},
+	}}
+	raw, err := bson.Marshal(device)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := bson.Raw(raw).LookupErr("latestMedia", "atRuntimeMetadata"); err == nil {
+		t.Fatal("latestMedia.atRuntimeMetadata is written to BSON")
+	}
+	out, err := json.Marshal(device)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(out), `"atRuntimeMetadata":{"videoUrl":"https://signed.example/video.mp4"}`) {
+		t.Fatalf("JSON does not carry the signed URL: %s", out)
 	}
 }
