@@ -124,7 +124,7 @@ func TestDeviceMediaRefDecodesLegacyEmbeddedMedia(t *testing.T) {
 	if err := bson.Unmarshal(raw, &device); err != nil {
 		t.Fatal(err)
 	}
-	want := &DeviceMediaRef{
+	want := DeviceMediaRef{
 		Id:            mediaId,
 		Duration:      30,
 		VideoFile:     "org/cam-1/video.mp4",
@@ -214,7 +214,7 @@ func TestDeviceValidate(t *testing.T) {
 
 // Signed URLs are filled at read time and returned to clients, never stored.
 func TestDeviceMediaRefRuntimeMetadataIsNotStored(t *testing.T) {
-	device := Device{LatestMedia: &DeviceMediaRef{
+	device := Device{LatestMedia: DeviceMediaRef{
 		VideoFile:         "org/cam-1/video.mp4",
 		AtRuntimeMetadata: &MediaAtRuntimeMetadata{VideoUrl: "https://signed.example/video.mp4"},
 	}}
@@ -245,4 +245,20 @@ func TestDeviceLegacyJSONNames(t *testing.T) {
 			t.Errorf("JSON does not contain %s: %s", name, out)
 		}
 	}
+}
+
+// A device without media decodes to a zero LatestMedia that is safe to read.
+func TestDeviceWithoutLatestMediaIsSafeToRead(t *testing.T) {
+	raw, err := bson.Marshal(bson.M{"key": "cam-1"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	var device Device
+	if err := bson.Unmarshal(raw, &device); err != nil {
+		t.Fatal(err)
+	}
+	if device.LatestMedia.VideoFile != "" || !device.LatestMedia.Id.IsZero() {
+		t.Fatalf("LatestMedia = %+v, want zero value", device.LatestMedia)
+	}
+	device.LatestMedia.AtRuntimeMetadata = &MediaAtRuntimeMetadata{VideoUrl: "https://signed.example/video.mp4"}
 }

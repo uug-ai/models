@@ -109,9 +109,11 @@ type Device struct {
 	Thresholds      *DeviceThresholds `json:"thresholds,omitempty" bson:"thresholds,omitempty"` // Optional override; nil uses project defaults
 
 	// Latest media uploaded by the device, from any capability. Kept at the top
-	// level: device lists sort on LatestMediaTimestamp.
-	LatestMediaTimestamp int64           `json:"latestMediaTimestamp" bson:"latestMediaTimestamp,omitempty"` // seconds since epoch (Media.StartTimestamp)
-	LatestMedia          *DeviceMediaRef `json:"latestMedia,omitempty" bson:"latestMedia,omitempty"`
+	// level: device lists sort on LatestMediaTimestamp. LatestMedia is a value,
+	// not a pointer, so readers never need a nil check; an empty Id means the
+	// device has no media yet.
+	LatestMediaTimestamp int64          `json:"latestMediaTimestamp" bson:"latestMediaTimestamp,omitempty"` // seconds since epoch (Media.StartTimestamp)
+	LatestMedia          DeviceMediaRef `json:"latestMedia" bson:"latestMedia,omitempty"`
 
 	Location *Location `json:"location,omitempty" bson:"location,omitempty"` // Fixed placement, not a real-time position
 
