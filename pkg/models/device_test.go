@@ -1,7 +1,6 @@
 package models
 
 import (
-	"encoding/json"
 	"errors"
 	"reflect"
 	"strings"
@@ -92,24 +91,6 @@ func TestDeviceOptionalFieldsAreNotWrittenWhenNil(t *testing.T) {
 		if _, err := doc.LookupErr(key); err == nil {
 			t.Errorf("%s is written but should be omitted", key)
 		}
-	}
-}
-
-func TestDeviceCloudPublicKeyIsNotSerialisedToJSON(t *testing.T) {
-	device := Device{Key: "cam-1", CloudPublicKey: "secret"}
-	out, err := json.Marshal(device)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if strings.Contains(string(out), "secret") {
-		t.Fatalf("JSON contains the cloud public key: %s", out)
-	}
-	raw, err := bson.Marshal(device)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if got := bson.Raw(raw).Lookup("cloudPublicKey").StringValue(); got != "secret" {
-		t.Fatalf("cloudPublicKey in BSON = %q, want %q", got, "secret")
 	}
 }
 

@@ -72,11 +72,10 @@ const (
 // --------------------------------------------------------------------
 // Data model for device
 //
-// Device is the persisted document. API responses are built from it in
-// pkg/api and never serialise it directly.
+// Device is the persisted document.
 //
 // Ownership of sub-documents:
-//   - top level:    identity, tenancy, credential and lifecycle (hub-api)
+//   - top level:    identity, tenancy and lifecycle (hub-api)
 //   - Agent:        written only by the heartbeat
 //   - Metadata:     written only by user edits (DevicePatch)
 //   - capabilities: reported fields by the heartbeat, saved configuration by users
@@ -92,16 +91,12 @@ type Device struct {
 	Name          string             `json:"name" bson:"name,omitempty"` // e.g. "Front Door Camera"
 	Type          DeviceType         `json:"type" bson:"type,omitempty"`
 
-	// Tenancy
+	// Tenancy. Heartbeat credentials live on the project: the cloud key resolves
+	// to an organisation and project, which must match these fields.
 	OrganisationId string              `json:"organisationId" bson:"organisationId,omitempty"`
 	ProjectId      *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"` // nil or zero resolves to the organisation's default project
 	SiteIds        []string            `json:"siteIds" bson:"siteIds,omitempty"`
 	GroupIds       []string            `json:"groupIds" bson:"groupIds,omitempty"`
-
-	// CloudPublicKey binds the device to the cloud credential that authenticates
-	// its heartbeats. Set once at provisioning; changed only by explicit key
-	// rotation. Never exposed over the API.
-	CloudPublicKey string `json:"-" bson:"cloudPublicKey,omitempty"`
 
 	// Lifecycle
 	Active     bool  `json:"active" bson:"isActive"`

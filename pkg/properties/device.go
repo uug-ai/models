@@ -99,7 +99,6 @@ const (
 	DeviceProjectId = "projectId"
 	DeviceSiteIds = "siteIds"
 	DeviceGroupIds = "groupIds"
-	DeviceCloudPublicKey = "cloudPublicKey"
 	DeviceActive = "isActive"
 	DeviceMutedUntil = "mute"
 	DeviceConnectionStart = "connectionStart"
