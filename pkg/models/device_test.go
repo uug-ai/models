@@ -430,6 +430,7 @@ func TestDeviceHeartbeatAndPatchPathsAreDisjoint(t *testing.T) {
 		Name: &text, Color: &text, Brand: &text, Model: &text, Description: &text,
 		Hidden: &flag, LastMaintenance: &when, InstallationDate: &when,
 		OnFloorPlans: &floorPlans, FieldOfView: &number, FeaturePermissions: &DeviceFeaturePermissions{},
+		Location: &Location{Address: text},
 	}
 	userPaths := map[string]bool{
 		// Written by the preset endpoints rather than DevicePatch.
@@ -561,5 +562,44 @@ func TestDeviceConnectionStatus(t *testing.T) {
 		if got := tt.device.ConnectionStatus(now, tt.thresholds); got != tt.want {
 			t.Errorf("%s: ConnectionStatus() = %q, want %q", tt.name, got, tt.want)
 		}
+	}
+}
+
+func TestDevicePatchLocation(t *testing.T) {
+	location := &Location{Address: "Bijlokehof 1, Gent", Latitude: 51.05, Longitude: 3.72}
+	set := DevicePatch{Location: location}.ToSet()
+	if !reflect.DeepEqual(set, map[string]interface{}{"location": location}) {
+		t.Fatalf("ToSet() = %v", set)
+	}
+
+	// The API body uses the models field names.
+	var patch DevicePatch
+	if err := json.Unmarshal([]byte(`{"location":{"address":"Bijlokehof 1, Gent","latitude":51.05,"longitude":3.72}}`), &patch); err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(patch.Location, location) {
+		t.Fatalf("decoded location = %+v, want %+v", patch.Location, location)
+	}
+}
+
+// Older documents can hold a location in another shape (e.g. a Google Places
+// result); decoding must not fail on them.
+func TestDeviceDecodesForeignLocationShape(t *testing.T) {
+	raw, err := bson.Marshal(bson.M{
+		"key": "cam-1",
+		"location": bson.M{
+			"formatted_address": "Bijlokehof 1, Gent",
+			"geometry":          bson.M{"location": bson.M{"lat": 51.05, "lng": 3.72}},
+		},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	var device Device
+	if err := bson.Unmarshal(raw, &device); err != nil {
+		t.Fatalf("decode: %v", err)
+	}
+	if device.Location == nil || device.Location.Address != "" {
+		t.Fatalf("Location = %+v, want an empty location", device.Location)
 	}
 }

@@ -122,7 +122,9 @@ type Device struct {
 	LatestMediaTimestamp int64          `json:"latestMediaTimestamp" bson:"latestMediaTimestamp,omitempty"` // seconds since epoch (Media.StartTimestamp)
 	LatestMedia          DeviceMediaRef `json:"latestMedia" bson:"latestMedia,omitempty"`
 
-	Location *Location `json:"location,omitempty" bson:"location,omitempty"` // Fixed placement, not a real-time position
+	// Location is the fixed placement owners set (DevicePatch), e.g. an
+	// address picked on a map. It is not a real-time position.
+	Location *Location `json:"location,omitempty" bson:"location,omitempty"`
 
 	Agent    *DeviceAgent    `json:"agent,omitempty" bson:"agent,omitempty"`
 	Metadata *DeviceMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
@@ -424,6 +426,7 @@ type DevicePatch struct {
 	OnFloorPlans       *[]string                 `json:"onFloorPlans,omitempty"`
 	FieldOfView        *float64                  `json:"fieldOfView,omitempty"`
 	FeaturePermissions *DeviceFeaturePermissions `json:"featurePermissions,omitempty"`
+	Location           *Location                 `json:"location,omitempty"` // Replaces the whole location
 }
 
 func (p DevicePatch) ToSet() map[string]interface{} {
@@ -439,6 +442,9 @@ func (p DevicePatch) ToSet() map[string]interface{} {
 	setIf(set, "metadata.onFloorPlans", p.OnFloorPlans)
 	if p.FeaturePermissions != nil {
 		set["featurePermissions"] = p.FeaturePermissions
+	}
+	if p.Location != nil {
+		set["location"] = p.Location
 	}
 	return set
 }
