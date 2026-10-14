@@ -100,10 +100,9 @@ const (
 	DeviceSiteIds = "siteIds"
 	DeviceGroupIds = "groupIds"
 	DeviceMutedUntil = "mute"
-	DeviceConnectionStart = "connectionStart"
 	DeviceAgentLastSeen = "agentLastSeen"
 	DeviceDeviceLastSeen = "deviceLastSeen"
-	DeviceThresholds = "thresholds"
+	DeviceMonitor = "monitor"
 	DeviceLatestMediaTimestamp = "latestMediaTimestamp"
 	DeviceLatestMedia = "latestMedia"
 	DeviceLocation = "location"
@@ -117,12 +116,13 @@ const (
 	DeviceAudit = "audit"
 	DeviceUserId = "user_id"
 	DeviceIsActive = "isActive"
-	DeviceEnterprise = "enterprise"
 	DeviceDeprecatedAnalytics = "analytics"
 )
 
 // DeviceAgent property field names (BSON)
 const (
+	DeviceAgentCloudPublicKey = "cloudPublicKey"
+	DeviceAgentCameraName = "cameraName"
 	DeviceAgentVersion = "version"
 	DeviceAgentReleaseHash = "releaseHash"
 	DeviceAgentRepository = "repository"
@@ -131,8 +131,8 @@ const (
 	DeviceAgentArchitecture = "architecture"
 	DeviceAgentIPAddresses = "ipAddresses"
 	DeviceAgentMacAddresses = "macAddresses"
+	DeviceAgentStartedAt = "startedAt"
 	DeviceAgentBootTime = "bootTime"
-	DeviceAgentUptimeSeconds = "uptimeSeconds"
 	DeviceAgentMemoryTotal = "memoryTotal"
 	DeviceAgentMemoryFree = "memoryFree"
 	DeviceAgentMemoryUsed = "memoryUsed"
@@ -173,6 +173,12 @@ const (
 	DeviceMetadataVLM = "vlm"
 )
 
+// DeviceMonitor property field names (BSON)
+const (
+	DeviceMonitorStatus = "status"
+	DeviceMonitorChangedAt = "changedAt"
+)
+
 // DeviceOption property field names (BSON)
 const (
 	DeviceOptionId = "id"
@@ -182,7 +188,6 @@ const (
 
 // DeviceThresholds property field names (BSON)
 const (
-	DeviceThresholdsHealthy = "healthy"
 	DeviceThresholdsIdle = "idle"
 	DeviceThresholdsDisconnected = "disconnected"
 )

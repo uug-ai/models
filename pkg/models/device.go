@@ -8,8 +8,12 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// DeviceSchemaVersion is the current shape of the device document. Writers
-// stamp it; the backfill upgrades documents below it.
+// DeviceSchemaVersion is the current shape of the device document. Only a
+// writer that leaves the whole document in this shape stamps it: provisioning
+// (DeviceHeartbeat.ProvisionSet) and the backfill, which upgrades documents
+// below it. Partial writers such as the heartbeat's FullSet must not, or the
+// backfill would skip documents whose user-edited fields still sit on the
+// legacy paths.
 const DeviceSchemaVersion = 2
 
 // --------------------------------------------------------------------
@@ -59,15 +63,14 @@ var deviceCapabilities = []struct {
 	{DeviceCapabilityGPS, func(d Device) bool { return d.GPS != nil }},
 }
 
-// DeviceConnectionStatus is derived at read time from the last-seen
-// timestamps and thresholds; it is never stored.
+// DeviceConnectionStatus is derived at read time from AgentLastSeen,
+// DeviceLastSeen and the thresholds (see DeviceThresholds); it is never stored.
 type DeviceConnectionStatus string
 
 const (
-	DeviceConnectionConnected    DeviceConnectionStatus = "connected"
-	DeviceConnectionHealthy      DeviceConnectionStatus = "healthy"
-	DeviceConnectionIdle         DeviceConnectionStatus = "idle"
-	DeviceConnectionDisconnected DeviceConnectionStatus = "disconnected"
+	DeviceConnectionConnected    DeviceConnectionStatus = "connected"    // agent and device are both reporting
+	DeviceConnectionIdle         DeviceConnectionStatus = "idle"         // agent reports, but cannot reach the device
+	DeviceConnectionDisconnected DeviceConnectionStatus = "disconnected" // agent stopped reporting
 )
 
 // --------------------------------------------------------------------
@@ -77,9 +80,12 @@ const (
 //
 // Ownership of sub-documents:
 //   - top level:    identity, tenancy and lifecycle (hub-api)
-//   - Agent:        written only by the heartbeat
+//   - Agent:        written only by the heartbeat (DeviceHeartbeat)
 //   - Metadata:     written only by user edits (DevicePatch)
 //   - capabilities: reported fields by the heartbeat, saved configuration by users
+//
+// DeviceHeartbeat and DevicePatch build the $set documents for the two
+// writers; their paths never overlap.
 //
 // Writers $set explicit paths, never the whole struct, so a nil capability
 // never removes one registered elsewhere. Removing a capability is an explicit
@@ -89,7 +95,7 @@ type Device struct {
 	Id            primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	SchemaVersion int                `json:"schemaVersion" bson:"schemaVersion,omitempty"`
 	Key           string             `json:"key" bson:"key,omitempty"`   // Device key reported by the agent, unique within its project
-	Name          string             `json:"name" bson:"name,omitempty"` // e.g. "Front Door Camera"
+	Name          string             `json:"name" bson:"name,omitempty"` // Set by users or at provisioning; display falls back to Agent.CameraName
 	Type          DeviceType         `json:"type" bson:"type,omitempty"`
 
 	// Tenancy. Heartbeat credentials live on the project: the cloud key resolves
@@ -102,20 +108,23 @@ type Device struct {
 	// Lifecycle
 	MutedUntil int64 `json:"mute,omitempty" bson:"mute,omitempty"` // Notifications muted until (seconds since epoch)
 
-	// Liveness (milliseconds since epoch)
-	ConnectionStart int64             `json:"connectionStart" bson:"connectionStart,omitempty"` // Last (re)connect of the agent, e.g. after a reboot
-	AgentLastSeen   int64             `json:"agentLastSeen" bson:"agentLastSeen,omitempty"`     // Last heartbeat from the agent
-	DeviceLastSeen  int64             `json:"deviceLastSeen" bson:"deviceLastSeen,omitempty"`   // Last time the agent could reach the device itself
-	Thresholds      *DeviceThresholds `json:"thresholds,omitempty" bson:"thresholds,omitempty"` // Optional override; nil uses project defaults
+	// Liveness: the inputs the connection status is derived from, kept together.
+	// Timestamps are points in time on the hub's clock (milliseconds since
+	// epoch), written by every heartbeat; readers derive durations and status.
+	AgentLastSeen  int64          `json:"agentLastSeen" bson:"agentLastSeen,omitempty"`   // Last heartbeat from the agent
+	DeviceLastSeen int64          `json:"deviceLastSeen" bson:"deviceLastSeen,omitempty"` // Last heartbeat in which the agent could reach the device itself
+	Monitor        *DeviceMonitor `json:"monitor,omitempty" bson:"monitor,omitempty"`     // Last notified state, owned by hub-monitor-device
 
 	// Latest media uploaded by the device, from any capability. Kept at the top
 	// level: device lists sort on LatestMediaTimestamp. LatestMedia is a value,
-	// not a pointer, so readers never need a nil check; an empty Id means the
-	// device has no media yet.
+	// not a pointer, so readers never need a nil check; an empty VideoFile means
+	// the device has no media yet (the media pipeline does not store the Id).
 	LatestMediaTimestamp int64          `json:"latestMediaTimestamp" bson:"latestMediaTimestamp,omitempty"` // seconds since epoch (Media.StartTimestamp)
 	LatestMedia          DeviceMediaRef `json:"latestMedia" bson:"latestMedia,omitempty"`
 
-	Location *Location `json:"location,omitempty" bson:"location,omitempty"` // Fixed placement, not a real-time position
+	// Location is the fixed placement owners set (DevicePatch), e.g. an
+	// address picked on a map. It is not a real-time position.
+	Location *Location `json:"location,omitempty" bson:"location,omitempty"`
 
 	Agent    *DeviceAgent    `json:"agent,omitempty" bson:"agent,omitempty"`
 	Metadata *DeviceMetadata `json:"metadata,omitempty" bson:"metadata,omitempty"`
@@ -130,15 +139,14 @@ type Device struct {
 	GPS            *GPSMetadata            `json:"gps,omitempty" bson:"gps,omitempty"`
 
 	FeaturePermissions *DeviceFeaturePermissions `json:"featurePermissions,omitempty" bson:"featurePermissions,omitempty"`
-	Audit              *Audit                    `json:"audit,omitempty" bson:"audit,omitempty"`
+	Audit              *Audit                    `json:"audit,omitempty" bson:"audit,omitempty"` // Provisioning sets CreatedAt (first heartbeat)
 
 	// AtRuntimeMetadata is computed when the device is read and never stored.
 	AtRuntimeMetadata *DeviceAtRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"-"`
 
 	// @LEGACY - removed once all readers use the fields above.
 	UserId              string                 `json:"user_id,omitempty" bson:"user_id,omitempty"`
-	IsActive            bool                   `json:"isActive" bson:"isActive"`                         // No defined meaning; never set true for devices
-	Enterprise          bool                   `json:"enterprise,omitempty" bson:"enterprise,omitempty"` // Licence concept; moves to the organisation
+	IsActive            bool                   `json:"isActive" bson:"isActive"` // No defined meaning; never set true for devices
 	DeprecatedAnalytics *[]DeprecatedHeartbeat `json:"analytics,omitempty" bson:"analytics,omitempty"`
 }
 
@@ -181,9 +189,6 @@ func (d Device) Validate() error {
 	if d.Type != "" && !d.Type.Valid() {
 		errs = append(errs, fmt.Errorf("%w: %q", ErrDeviceTypeInvalid, d.Type))
 	}
-	if d.Thresholds != nil {
-		errs = append(errs, d.Thresholds.Validate())
-	}
 	if d.LightSensor != nil {
 		errs = append(errs, validRange("lightSensor lux", d.LightSensor.MinLux, d.LightSensor.MaxLux))
 	}
@@ -200,22 +205,51 @@ func validRange(name string, min, max *float64) error {
 	return nil
 }
 
-// DeviceThresholds overrides the project's liveness thresholds (milliseconds).
-//   - healthy:      now - AgentLastSeen  <= Healthy
-//   - idle:         now - DeviceLastSeen >  Idle (agent still reporting)
-//   - disconnected: now - AgentLastSeen  >  Disconnected
+// DeviceThresholds are the liveness thresholds (milliseconds), one per failure
+// mode. They are not configurable or stored yet; per-device or per-project
+// overrides can be added later without a migration. The status is derived in
+// this order:
+//   - disconnected: now - AgentLastSeen  > Disconnected (the agent is gone)
+//   - idle:         now - DeviceLastSeen > Idle (the agent reports, but cannot reach the device)
+//   - connected:    otherwise
 type DeviceThresholds struct {
-	Healthy      int64 `json:"healthy,omitempty" bson:"healthy,omitempty"`
 	Idle         int64 `json:"idle,omitempty" bson:"idle,omitempty"`
 	Disconnected int64 `json:"disconnected,omitempty" bson:"disconnected,omitempty"`
 }
 
-func (t DeviceThresholds) Validate() error {
-	if t.Healthy < 0 || t.Idle < 0 || t.Disconnected < 0 {
-		return errors.New("device thresholds must not be negative")
+// Default liveness thresholds (milliseconds), used for any threshold that is
+// zero. Disconnected matches the 180 s the hub-api videowall uses today.
+const (
+	DefaultDeviceIdleThreshold         int64 = 180_000
+	DefaultDeviceDisconnectedThreshold int64 = 180_000
+)
+
+// ConnectionStatus derives the device's status at now (milliseconds since
+// epoch), in the order documented on DeviceThresholds. Zero thresholds fall
+// back to the defaults. A device without a capability that reports its own
+// reachability (today: Camera) is never idle. Every reader derives the status
+// here, so services cannot drift apart.
+func (d Device) ConnectionStatus(now int64, thresholds DeviceThresholds) DeviceConnectionStatus {
+	idle := thresholds.Idle
+	if idle <= 0 {
+		idle = DefaultDeviceIdleThreshold
 	}
-	if t.Healthy > 0 && t.Disconnected > 0 && t.Healthy > t.Disconnected {
-		return errors.New("device healthy threshold exceeds disconnected threshold")
+	disconnected := thresholds.Disconnected
+	if disconnected <= 0 {
+		disconnected = DefaultDeviceDisconnectedThreshold
+	}
+	if d.AgentLastSeen <= 0 || now-d.AgentLastSeen > disconnected {
+		return DeviceConnectionDisconnected
+	}
+	if d.Camera != nil && (d.DeviceLastSeen <= 0 || now-d.DeviceLastSeen > idle) {
+		return DeviceConnectionIdle
+	}
+	return DeviceConnectionConnected
+}
+
+func (t DeviceThresholds) Validate() error {
+	if t.Idle < 0 || t.Disconnected < 0 {
+		return errors.New("device thresholds must not be negative")
 	}
 	return nil
 }
@@ -241,18 +275,36 @@ type DeviceMediaRef struct {
 
 // DeviceAgent is reported by the agent and written only by the heartbeat.
 type DeviceAgent struct {
+	// CloudPublicKey is the public key the agent presented in its last
+	// heartbeat. Agents within a project can be on different keys (e.g. a
+	// legacy user key after the project credentials were regenerated), so it
+	// is recorded per device for routing and key status. Authentication still
+	// resolves key -> project; private and symmetric keys never live on the
+	// device.
+	CloudPublicKey string `json:"cloudPublicKey" bson:"cloudPublicKey,omitempty"`
+	CameraName     string `json:"cameraName" bson:"cameraName,omitempty"` // Name configured on the agent
+
 	Version     string `json:"version" bson:"version,omitempty"`         // Release tag of the agent
 	ReleaseHash string `json:"releaseHash" bson:"releaseHash,omitempty"` // Build hash of the agent
 	Repository  string `json:"repository" bson:"repository,omitempty"`
-	Deployment  string `json:"deployment" bson:"deployment,omitempty"` // e.g. "factory", "docker", "kubernetes"
+	// Deployment is how the agent runs: "factory", "kubernetes", "docker",
+	// "kios" or "raspberrypi". It replaces the agent's legacy enterprise flag,
+	// which only meant running under Kerberos Factory or Kubernetes.
+	Deployment string `json:"deployment" bson:"deployment,omitempty"`
 
 	Hostname     string   `json:"hostname" bson:"hostname,omitempty"`
 	Architecture string   `json:"architecture" bson:"architecture,omitempty"`
 	IPAddresses  []string `json:"ipAddresses" bson:"ipAddresses,omitempty"`
 	MacAddresses []string `json:"macAddresses" bson:"macAddresses,omitempty"`
 
-	BootTime      int64 `json:"bootTime" bson:"bootTime,omitempty"` // milliseconds since epoch
-	UptimeSeconds int64 `json:"uptimeSeconds" bson:"uptimeSeconds,omitempty"`
+	// StartedAt (agent process start) and BootTime (host boot) are points in
+	// time on the hub's clock (milliseconds since epoch), displayed as agent and
+	// host uptime (now - StartedAt, now - BootTime). Durations are never
+	// stored: they are stale as soon as they are written. Agents report both as
+	// human-readable durations ("10 hours"), so the hub derives them on a
+	// detected restart or reboot; they are approximate until the next one.
+	StartedAt     int64 `json:"startedAt" bson:"startedAt,omitempty"`
+	BootTime      int64 `json:"bootTime" bson:"bootTime,omitempty"`
 	MemoryTotal   int64 `json:"memoryTotal" bson:"memoryTotal,omitempty"`     // bytes
 	MemoryFree    int64 `json:"memoryFree" bson:"memoryFree,omitempty"`       // bytes
 	MemoryUsed    int64 `json:"memoryUsed" bson:"memoryUsed,omitempty"`       // bytes
@@ -260,6 +312,14 @@ type DeviceAgent struct {
 
 	HubEncryption bool `json:"hubEncryption" bson:"hubEncryption"`
 	E2EEncryption bool `json:"e2eEncryption" bson:"e2eEncryption"`
+}
+
+// DeviceMonitor is owned by hub-monitor-device: the last state it notified
+// about, used to detect transitions. Readers use the derived
+// AtRuntimeMetadata.Status instead.
+type DeviceMonitor struct {
+	Status    string `json:"status" bson:"status,omitempty"`       // "active" or "inactive"
+	ChangedAt int64  `json:"changedAt" bson:"changedAt,omitempty"` // milliseconds since epoch
 }
 
 // DeviceMetadata is edited by users and written only through DevicePatch.
@@ -339,7 +399,7 @@ type GPSFix struct {
 }
 
 // --------------------------------------------------------------------
-// Runtime and patch
+// Runtime, patch and heartbeat
 
 type DeviceAtRuntimeMetadata struct {
 	Sites        []SiteOption           `json:"sites,omitempty"`
@@ -368,6 +428,7 @@ type DevicePatch struct {
 	OnFloorPlans       *[]string                 `json:"onFloorPlans,omitempty"`
 	FieldOfView        *float64                  `json:"fieldOfView,omitempty"`
 	FeaturePermissions *DeviceFeaturePermissions `json:"featurePermissions,omitempty"`
+	Location           *Location                 `json:"location,omitempty"` // Replaces the whole location
 }
 
 func (p DevicePatch) ToSet() map[string]interface{} {
@@ -383,6 +444,9 @@ func (p DevicePatch) ToSet() map[string]interface{} {
 	setIf(set, "metadata.onFloorPlans", p.OnFloorPlans)
 	if p.FeaturePermissions != nil {
 		set["featurePermissions"] = p.FeaturePermissions
+	}
+	if p.Location != nil {
+		set["location"] = p.Location
 	}
 	return set
 }
@@ -405,6 +469,111 @@ func unixMilli(t *time.Time) *int64 {
 func setIf[T any](set map[string]interface{}, path string, v *T) {
 	if v != nil {
 		set[path] = *v
+	}
+}
+
+// DeviceHeartbeat is the agent-reported state from one heartbeat, normalised
+// from the agent protocol by the receiving service. It is the heartbeat's
+// counterpart of DevicePatch: DeviceHeartbeat writes only the paths the
+// agent owns, DevicePatch only the paths users own, and the two never
+// overlap (TestDeviceHeartbeatAndPatchPathsAreDisjoint).
+//
+// All writes use explicit paths, never whole sub-documents, so user-owned
+// camera configuration and restart-derived times are never overwritten.
+// It is not stored itself.
+type DeviceHeartbeat struct {
+	// ReceivedAt is when the hub received the heartbeat, on the hub's clock
+	// (milliseconds since epoch). Agent clocks are not trusted.
+	ReceivedAt int64 `json:"receivedAt" bson:"-"`
+
+	// Type is the device's primary kind as known to the agent; empty keeps the
+	// stored type.
+	Type DeviceType `json:"type,omitempty" bson:"-"`
+
+	// Agent holds the agent-reported fields. StartedAt and BootTime are only
+	// set when the receiver detected a restart or reboot; 0 keeps the stored
+	// value.
+	Agent DeviceAgent `json:"agent" bson:"-"`
+
+	// Camera holds the agent-reported camera fields; the user-owned ones
+	// (FieldOfView, Presets, Tours) are ignored. Nil for devices without the
+	// camera capability.
+	Camera *CameraMetadata `json:"camera,omitempty" bson:"-"`
+}
+
+// RefreshSet builds the $set for the fields that change on every beat. It is
+// enough for a heartbeat whose stable content did not change.
+func (h DeviceHeartbeat) RefreshSet() map[string]interface{} {
+	set := map[string]interface{}{
+		"agentLastSeen":       h.ReceivedAt,
+		"agent.memoryFree":    h.Agent.MemoryFree,
+		"agent.memoryUsed":    h.Agent.MemoryUsed,
+		"agent.memoryProcess": h.Agent.MemoryProcess,
+	}
+	// The device itself is reachable when its camera stream is connected.
+	if h.Camera != nil && h.Camera.Connected {
+		set["deviceLastSeen"] = h.ReceivedAt
+	}
+	setIfPositive(set, "agent.startedAt", h.Agent.StartedAt)
+	setIfPositive(set, "agent.bootTime", h.Agent.BootTime)
+	return set
+}
+
+// FullSet builds the $set for every heartbeat-owned field: RefreshSet plus
+// the stable agent-reported fields.
+func (h DeviceHeartbeat) FullSet() map[string]interface{} {
+	set := h.RefreshSet()
+	if h.Type != "" {
+		set["type"] = h.Type
+	}
+
+	agent := h.Agent
+	set["agent.cloudPublicKey"] = agent.CloudPublicKey
+	set["agent.cameraName"] = agent.CameraName
+	set["agent.version"] = agent.Version
+	set["agent.releaseHash"] = agent.ReleaseHash
+	set["agent.repository"] = agent.Repository
+	set["agent.deployment"] = agent.Deployment
+	set["agent.hostname"] = agent.Hostname
+	set["agent.architecture"] = agent.Architecture
+	set["agent.ipAddresses"] = agent.IPAddresses
+	set["agent.macAddresses"] = agent.MacAddresses
+	set["agent.memoryTotal"] = agent.MemoryTotal
+	set["agent.hubEncryption"] = agent.HubEncryption
+	set["agent.e2eEncryption"] = agent.E2EEncryption
+
+	if camera := h.Camera; camera != nil {
+		set["camera.resolution"] = camera.Resolution
+		set["camera.frameRate"] = camera.FrameRate
+		set["camera.bitrate"] = camera.Bitrate
+		set["camera.codec"] = camera.Codec
+		set["camera.connected"] = camera.Connected
+		set["camera.continuousRecording"] = camera.ContinuousRecording
+		set["camera.hasOnvif"] = camera.HasOnvif
+		set["camera.hasAudio"] = camera.HasAudio
+		set["camera.hasZoom"] = camera.HasZoom
+		set["camera.hasPanTilt"] = camera.HasPanTilt
+		set["camera.hasBackChannel"] = camera.HasBackChannel
+		set["camera.onvifPresets"] = camera.OnvifPresets
+		set["camera.ios"] = camera.IOs
+	}
+	return set
+}
+
+// ProvisionSet builds the $setOnInsert for a device created by its first
+// heartbeat: FullSet plus the creation time and the schema version, since a
+// new device is complete in the current shape. Name is left empty so display
+// falls back to Agent.CameraName until a user renames the device.
+func (h DeviceHeartbeat) ProvisionSet() map[string]interface{} {
+	set := h.FullSet()
+	set["schemaVersion"] = DeviceSchemaVersion
+	set["audit.createdAt"] = time.UnixMilli(h.ReceivedAt).UTC()
+	return set
+}
+
+func setIfPositive(set map[string]interface{}, path string, value int64) {
+	if value > 0 {
+		set[path] = value
 	}
 }
 
