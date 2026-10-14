@@ -283,12 +283,14 @@ type DeviceAgent struct {
 	// device.
 	CloudPublicKey string `json:"cloudPublicKey" bson:"cloudPublicKey,omitempty"`
 	CameraName     string `json:"cameraName" bson:"cameraName,omitempty"` // Name configured on the agent
-	Enterprise     bool   `json:"enterprise" bson:"enterprise"`
 
 	Version     string `json:"version" bson:"version,omitempty"`         // Release tag of the agent
 	ReleaseHash string `json:"releaseHash" bson:"releaseHash,omitempty"` // Build hash of the agent
 	Repository  string `json:"repository" bson:"repository,omitempty"`
-	Deployment  string `json:"deployment" bson:"deployment,omitempty"` // e.g. "factory", "docker", "kubernetes"
+	// Deployment is how the agent runs: "factory", "kubernetes", "docker",
+	// "kios" or "raspberrypi". It replaces the agent's legacy enterprise flag,
+	// which only meant running under Kerberos Factory or Kubernetes.
+	Deployment string `json:"deployment" bson:"deployment,omitempty"`
 
 	Hostname     string   `json:"hostname" bson:"hostname,omitempty"`
 	Architecture string   `json:"architecture" bson:"architecture,omitempty"`
@@ -528,7 +530,6 @@ func (h DeviceHeartbeat) FullSet() map[string]interface{} {
 	agent := h.Agent
 	set["agent.cloudPublicKey"] = agent.CloudPublicKey
 	set["agent.cameraName"] = agent.CameraName
-	set["agent.enterprise"] = agent.Enterprise
 	set["agent.version"] = agent.Version
 	set["agent.releaseHash"] = agent.ReleaseHash
 	set["agent.repository"] = agent.Repository

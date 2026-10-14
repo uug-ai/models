@@ -61,13 +61,13 @@ func TestDeviceFalseBooleansAreWritten(t *testing.T) {
 	raw, err := bson.Marshal(Device{
 		Camera:   &CameraMetadata{HasPanTilt: false},
 		Metadata: &DeviceMetadata{Hidden: false},
-		Agent:    &DeviceAgent{HubEncryption: false, Enterprise: false},
+		Agent:    &DeviceAgent{HubEncryption: false},
 	})
 	if err != nil {
 		t.Fatal(err)
 	}
 	doc := bson.Raw(raw)
-	for _, path := range []string{"camera.hasPanTilt", "metadata.hidden", "agent.hubEncryption", "agent.enterprise", "isActive"} {
+	for _, path := range []string{"camera.hasPanTilt", "metadata.hidden", "agent.hubEncryption", "isActive"} {
 		value, err := doc.LookupErr(strings.Split(path, ".")...)
 		if err != nil {
 			t.Errorf("%s is not written: %v", path, err)
@@ -321,7 +321,7 @@ func TestDeviceDecodesStoredDocument(t *testing.T) {
 // receive it; it is never a private key.
 func TestDeviceAgentFields(t *testing.T) {
 	device := Device{
-		Agent:   &DeviceAgent{CloudPublicKey: "AKIA5V6EGLUWSI42UQFH", CameraName: "rtsp", Enterprise: true},
+		Agent:   &DeviceAgent{CloudPublicKey: "AKIA5V6EGLUWSI42UQFH", CameraName: "rtsp"},
 		Monitor: &DeviceMonitor{Status: "active", ChangedAt: 1791961313000},
 	}
 	raw, err := bson.Marshal(device)
@@ -354,7 +354,6 @@ func fullHeartbeat() DeviceHeartbeat {
 		Agent: DeviceAgent{
 			CloudPublicKey: "AKIA5V6EGLUWSI42UQFH",
 			CameraName:     "rtsp",
-			Enterprise:     true,
 			Version:        "v3.12.9",
 			ReleaseHash:    "abc",
 			Repository:     "kerberos-io/agent",

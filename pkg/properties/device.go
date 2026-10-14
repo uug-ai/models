@@ -123,7 +123,6 @@ const (
 const (
 	DeviceAgentCloudPublicKey = "cloudPublicKey"
 	DeviceAgentCameraName = "cameraName"
-	DeviceAgentEnterprise = "enterprise"
 	DeviceAgentVersion = "version"
 	DeviceAgentReleaseHash = "releaseHash"
 	DeviceAgentRepository = "repository"
