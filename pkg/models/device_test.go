@@ -494,8 +494,13 @@ func TestDeviceHeartbeatRefreshSetIsSubsetOfFullSet(t *testing.T) {
 			t.Errorf("FullSet[%s] = %v, RefreshSet has %v", path, full[path], value)
 		}
 	}
-	if full["schemaVersion"] != DeviceSchemaVersion || full["type"] != DeviceTypeCamera {
-		t.Fatalf("schemaVersion/type = %v / %v", full["schemaVersion"], full["type"])
+	if full["type"] != DeviceTypeCamera {
+		t.Fatalf("type = %v", full["type"])
+	}
+	// The heartbeat leaves user-edited fields on legacy paths until the
+	// backfill, so it must not claim the document is in the current shape.
+	if _, stamped := full["schemaVersion"]; stamped {
+		t.Fatal("FullSet stamps schemaVersion; the backfill would skip this device")
 	}
 }
 
@@ -518,6 +523,9 @@ func TestDeviceHeartbeatProvisionSet(t *testing.T) {
 	if _, ok := set["name"]; ok {
 		t.Fatal("ProvisionSet sets name; display falls back to agent.cameraName")
 	}
+	if set["schemaVersion"] != DeviceSchemaVersion {
+		t.Fatalf("schemaVersion = %v, want %d for a new device", set["schemaVersion"], DeviceSchemaVersion)
+	}
 }
 
 func TestDeviceThresholdsValidate(t *testing.T) {
@@ -527,6 +535,31 @@ func TestDeviceThresholdsValidate(t *testing.T) {
 	for _, thresholds := range []DeviceThresholds{{Idle: -1}, {Disconnected: -1}} {
 		if err := thresholds.Validate(); err == nil {
 			t.Errorf("Validate(%+v) = nil, want an error", thresholds)
+		}
+	}
+}
+
+func TestDeviceConnectionStatus(t *testing.T) {
+	const now = int64(1791961313000)
+	camera := &CameraMetadata{}
+	tests := []struct {
+		name       string
+		device     Device
+		thresholds DeviceThresholds
+		want       DeviceConnectionStatus
+	}{
+		{"never seen", Device{Camera: camera}, DeviceThresholds{}, DeviceConnectionDisconnected},
+		{"agent and camera fresh", Device{Camera: camera, AgentLastSeen: now - 10_000, DeviceLastSeen: now - 10_000}, DeviceThresholds{}, DeviceConnectionConnected},
+		{"agent gone", Device{Camera: camera, AgentLastSeen: now - 181_000, DeviceLastSeen: now - 181_000}, DeviceThresholds{}, DeviceConnectionDisconnected},
+		{"camera unreachable", Device{Camera: camera, AgentLastSeen: now - 10_000, DeviceLastSeen: now - 181_000}, DeviceThresholds{}, DeviceConnectionIdle},
+		{"camera never reachable", Device{Camera: camera, AgentLastSeen: now - 10_000}, DeviceThresholds{}, DeviceConnectionIdle},
+		{"at the threshold", Device{Camera: camera, AgentLastSeen: now - 180_000, DeviceLastSeen: now - 180_000}, DeviceThresholds{}, DeviceConnectionConnected},
+		{"no camera is never idle", Device{AgentLastSeen: now - 10_000}, DeviceThresholds{}, DeviceConnectionConnected},
+		{"custom thresholds", Device{Camera: camera, AgentLastSeen: now - 30_000, DeviceLastSeen: now - 30_000}, DeviceThresholds{Idle: 20_000, Disconnected: 60_000}, DeviceConnectionIdle},
+	}
+	for _, tt := range tests {
+		if got := tt.device.ConnectionStatus(now, tt.thresholds); got != tt.want {
+			t.Errorf("%s: ConnectionStatus() = %q, want %q", tt.name, got, tt.want)
 		}
 	}
 }

@@ -8,8 +8,12 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// DeviceSchemaVersion is the current shape of the device document. Writers
-// stamp it; the backfill upgrades documents below it.
+// DeviceSchemaVersion is the current shape of the device document. Only a
+// writer that leaves the whole document in this shape stamps it: provisioning
+// (DeviceHeartbeat.ProvisionSet) and the backfill, which upgrades documents
+// below it. Partial writers such as the heartbeat's FullSet must not, or the
+// backfill would skip documents whose user-edited fields still sit on the
+// legacy paths.
 const DeviceSchemaVersion = 2
 
 // --------------------------------------------------------------------
@@ -209,6 +213,36 @@ func validRange(name string, min, max *float64) error {
 type DeviceThresholds struct {
 	Idle         int64 `json:"idle,omitempty" bson:"idle,omitempty"`
 	Disconnected int64 `json:"disconnected,omitempty" bson:"disconnected,omitempty"`
+}
+
+// Default liveness thresholds (milliseconds), used for any threshold that is
+// zero. Disconnected matches the 180 s the hub-api videowall uses today.
+const (
+	DefaultDeviceIdleThreshold         int64 = 180_000
+	DefaultDeviceDisconnectedThreshold int64 = 180_000
+)
+
+// ConnectionStatus derives the device's status at now (milliseconds since
+// epoch), in the order documented on DeviceThresholds. Zero thresholds fall
+// back to the defaults. A device without a capability that reports its own
+// reachability (today: Camera) is never idle. Every reader derives the status
+// here, so services cannot drift apart.
+func (d Device) ConnectionStatus(now int64, thresholds DeviceThresholds) DeviceConnectionStatus {
+	idle := thresholds.Idle
+	if idle <= 0 {
+		idle = DefaultDeviceIdleThreshold
+	}
+	disconnected := thresholds.Disconnected
+	if disconnected <= 0 {
+		disconnected = DefaultDeviceDisconnectedThreshold
+	}
+	if d.AgentLastSeen <= 0 || now-d.AgentLastSeen > disconnected {
+		return DeviceConnectionDisconnected
+	}
+	if d.Camera != nil && (d.DeviceLastSeen <= 0 || now-d.DeviceLastSeen > idle) {
+		return DeviceConnectionIdle
+	}
+	return DeviceConnectionConnected
 }
 
 func (t DeviceThresholds) Validate() error {
@@ -481,7 +515,6 @@ func (h DeviceHeartbeat) RefreshSet() map[string]interface{} {
 // the stable agent-reported fields.
 func (h DeviceHeartbeat) FullSet() map[string]interface{} {
 	set := h.RefreshSet()
-	set["schemaVersion"] = DeviceSchemaVersion
 	if h.Type != "" {
 		set["type"] = h.Type
 	}
@@ -521,10 +554,12 @@ func (h DeviceHeartbeat) FullSet() map[string]interface{} {
 }
 
 // ProvisionSet builds the $setOnInsert for a device created by its first
-// heartbeat: FullSet plus the creation time. Name is left empty so display
+// heartbeat: FullSet plus the creation time and the schema version, since a
+// new device is complete in the current shape. Name is left empty so display
 // falls back to Agent.CameraName until a user renames the device.
 func (h DeviceHeartbeat) ProvisionSet() map[string]interface{} {
 	set := h.FullSet()
+	set["schemaVersion"] = DeviceSchemaVersion
 	set["audit.createdAt"] = time.UnixMilli(h.ReceivedAt).UTC()
 	return set
 }
