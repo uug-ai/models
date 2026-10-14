@@ -7,7 +7,8 @@ package properties
 const (
 	DeviceFeaturePermissionsPTZ = "ptz"
 	DeviceFeaturePermissionsLiveview = "liveview"
-	DeviceFeaturePermissionsRemoteConfig = "remoteConfig"
+	DeviceFeaturePermissionsRemoteConfig = "remote_config"
 	DeviceFeaturePermissionsIO = "io"
 	DeviceFeaturePermissionsFloorPlans = "floorPlans"
+	DeviceFeaturePermissionsDownloadRecordings = "download_recordings"
 )

@@ -61,13 +61,13 @@ func TestDeviceFalseBooleansAreWritten(t *testing.T) {
 	raw, err := bson.Marshal(Device{
 		Camera:   &CameraMetadata{HasPanTilt: false},
 		Metadata: &DeviceMetadata{Hidden: false},
-		Agent:    &DeviceAgent{HubEncryption: false},
+		Agent:    &DeviceAgent{HubEncryption: false, Enterprise: false},
 	})
 	if err != nil {
 		t.Fatal(err)
 	}
 	doc := bson.Raw(raw)
-	for _, path := range []string{"camera.hasPanTilt", "metadata.hidden", "agent.hubEncryption", "isActive"} {
+	for _, path := range []string{"camera.hasPanTilt", "metadata.hidden", "agent.hubEncryption", "agent.enterprise", "isActive"} {
 		value, err := doc.LookupErr(strings.Split(path, ".")...)
 		if err != nil {
 			t.Errorf("%s is not written: %v", path, err)
@@ -82,7 +82,7 @@ func TestDeviceFalseBooleansAreWritten(t *testing.T) {
 func TestDeviceOptionalFieldsAreNotWrittenWhenNil(t *testing.T) {
 	raw, err := bson.Marshal(Device{
 		Key:               "cam-1",
-		AtRuntimeMetadata: &DeviceAtRuntimeMetadata{Status: DeviceConnectionHealthy},
+		AtRuntimeMetadata: &DeviceAtRuntimeMetadata{Status: DeviceConnectionConnected},
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -201,7 +201,7 @@ func TestDeviceValidate(t *testing.T) {
 		device Device
 	}{
 		{"negative threshold", Device{Key: "k", OrganisationId: "o", Thresholds: &DeviceThresholds{Idle: -1}}},
-		{"healthy above disconnected", Device{Key: "k", OrganisationId: "o", Thresholds: &DeviceThresholds{Healthy: 10, Disconnected: 5}}},
+		{"negative disconnected threshold", Device{Key: "k", OrganisationId: "o", Thresholds: &DeviceThresholds{Disconnected: -1}}},
 		{"inverted lux range", Device{Key: "k", OrganisationId: "o", LightSensor: &LightSensorMetadata{MinLux: float(10), MaxLux: float(1)}}},
 		{"inverted humidity range", Device{Key: "k", OrganisationId: "o", HumiditySensor: &HumiditySensorMetadata{MinHumidity: float(90), MaxHumidity: float(10)}}},
 	}
@@ -261,4 +261,90 @@ func TestDeviceWithoutLatestMediaIsSafeToRead(t *testing.T) {
 		t.Fatalf("LatestMedia = %+v, want zero value", device.LatestMedia)
 	}
 	device.LatestMedia.AtRuntimeMetadata = &MediaAtRuntimeMetadata{VideoUrl: "https://signed.example/video.mp4"}
+}
+
+// A device document as stored today (abridged from production): legacy
+// permission names and a latestMedia written by the media pipeline without _id.
+func TestDeviceDecodesStoredDocument(t *testing.T) {
+	stored := bson.M{
+		"key":            "kRhhZAtFGeIHGQSxhQCzZfTkpEEROV",
+		"organisationId": "6754047347321302010cafee",
+		"featurePermissions": bson.M{
+			"ptz": int32(1), "liveview": int32(2), "remote_config": int32(3),
+			"io": int32(4), "floorPlans": int32(2), "download_recordings": int32(1),
+		},
+		"latestMedia": bson.M{
+			"startTimestamp":  int64(1791961138),
+			"duration":        int32(29715),
+			"deviceKey":       "kRhhZAtFGeIHGQSxhQCzZfTkpEEROV",
+			"storageSolution": "kstorage",
+			"videoFile":       "uugai/1791961138_3-639_rtsp_28-179-165-461_2096_29715.mp4",
+			"videoProvider":   "archive",
+			"sourceVaultId":   "vault-edge-bijlokehof",
+			"metadata":        bson.M{"fps": 25.0, "fileSize": int64(1570263)},
+		},
+		"latestMediaTimestamp": int64(1791961138),
+		"status":               "active",
+		"ownershipGeneration":  int64(1),
+	}
+	raw, err := bson.Marshal(stored)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var device Device
+	if err := bson.Unmarshal(raw, &device); err != nil {
+		t.Fatal(err)
+	}
+
+	want := &DeviceFeaturePermissions{PTZ: 1, Liveview: 2, RemoteConfig: 3, IO: 4, FloorPlans: 2, DownloadRecordings: 1}
+	if !reflect.DeepEqual(device.FeaturePermissions, want) {
+		t.Fatalf("FeaturePermissions = %+v, want %+v", device.FeaturePermissions, want)
+	}
+	if device.LatestMedia.VideoFile == "" || device.LatestMedia.VideoProvider != "archive" || device.LatestMedia.StorageSolution != "kstorage" {
+		t.Fatalf("LatestMedia = %+v", device.LatestMedia)
+	}
+	if !device.LatestMedia.Id.IsZero() {
+		t.Fatalf("LatestMedia.Id = %s, want zero: the pipeline does not store it", device.LatestMedia.Id.Hex())
+	}
+
+	// Permissions are written back under the stored names.
+	out, err := bson.Marshal(Device{FeaturePermissions: want})
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, key := range []string{"remote_config", "download_recordings"} {
+		if _, err := bson.Raw(out).LookupErr("featurePermissions", key); err != nil {
+			t.Errorf("featurePermissions.%s is not written: %v", key, err)
+		}
+	}
+}
+
+// The agent's cloud public key routes MQTT traffic per device, so clients
+// receive it; it is never a private key.
+func TestDeviceAgentFields(t *testing.T) {
+	device := Device{
+		Agent:   &DeviceAgent{CloudPublicKey: "AKIA5V6EGLUWSI42UQFH", CameraName: "rtsp", Enterprise: true},
+		Monitor: &DeviceMonitor{Status: "active", ChangedAt: 1791961313000},
+	}
+	raw, err := bson.Marshal(device)
+	if err != nil {
+		t.Fatal(err)
+	}
+	doc := bson.Raw(raw)
+	if got := doc.Lookup("agent", "cloudPublicKey").StringValue(); got != "AKIA5V6EGLUWSI42UQFH" {
+		t.Fatalf("agent.cloudPublicKey = %q", got)
+	}
+	if got := doc.Lookup("agent", "cameraName").StringValue(); got != "rtsp" {
+		t.Fatalf("agent.cameraName = %q", got)
+	}
+	if got := doc.Lookup("monitor", "status").StringValue(); got != "active" {
+		t.Fatalf("monitor.status = %q", got)
+	}
+	out, err := json.Marshal(device)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(out), `"cloudPublicKey":"AKIA5V6EGLUWSI42UQFH"`) {
+		t.Fatalf("JSON does not carry the agent cloud public key: %s", out)
+	}
 }

@@ -31,12 +31,15 @@ const (
 	FloorPlansAdmin PermissionLevel = 4
 )
 
+// DeviceFeaturePermissions uses the BSON names stored on devices
+// (remote_config, download_recordings); the JSON names are camelCase.
 type DeviceFeaturePermissions struct {
-	PTZ          PermissionLevel `json:"ptz" bson:"ptz"`
-	Liveview     PermissionLevel `json:"liveview" bson:"liveview"`
-	RemoteConfig PermissionLevel `json:"remoteConfig" bson:"remoteConfig"`
-	IO           PermissionLevel `json:"io" bson:"io"`
-	FloorPlans   PermissionLevel `json:"floorPlans" bson:"floorPlans"`
+	PTZ                PermissionLevel `json:"ptz" bson:"ptz"`
+	Liveview           PermissionLevel `json:"liveview" bson:"liveview"`
+	RemoteConfig       PermissionLevel `json:"remoteConfig" bson:"remote_config"`
+	IO                 PermissionLevel `json:"io" bson:"io"`
+	FloorPlans         PermissionLevel `json:"floorPlans" bson:"floorPlans"`
+	DownloadRecordings PermissionLevel `json:"downloadRecordings" bson:"download_recordings"`
 	// Talk..
 	// ...
 }
