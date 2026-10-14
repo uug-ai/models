@@ -200,8 +200,6 @@ func TestDeviceValidate(t *testing.T) {
 		name   string
 		device Device
 	}{
-		{"negative threshold", Device{Key: "k", OrganisationId: "o", Thresholds: &DeviceThresholds{Idle: -1}}},
-		{"negative disconnected threshold", Device{Key: "k", OrganisationId: "o", Thresholds: &DeviceThresholds{Disconnected: -1}}},
 		{"inverted lux range", Device{Key: "k", OrganisationId: "o", LightSensor: &LightSensorMetadata{MinLux: float(10), MaxLux: float(1)}}},
 		{"inverted humidity range", Device{Key: "k", OrganisationId: "o", HumiditySensor: &HumiditySensorMetadata{MinHumidity: float(90), MaxHumidity: float(10)}}},
 	}
@@ -351,9 +349,8 @@ func TestDeviceAgentFields(t *testing.T) {
 
 func fullHeartbeat() DeviceHeartbeat {
 	return DeviceHeartbeat{
-		ReceivedAt:      1791961313000,
-		DeviceReachable: true,
-		Type:            DeviceTypeCamera,
+		ReceivedAt: 1791961313000,
+		Type:       DeviceTypeCamera,
 		Agent: DeviceAgent{
 			CloudPublicKey: "AKIA5V6EGLUWSI42UQFH",
 			CameraName:     "rtsp",
@@ -471,11 +468,12 @@ func TestDeviceHeartbeatRefreshSet(t *testing.T) {
 		t.Fatalf("RefreshSet() = %v, want %v", got, want)
 	}
 
-	// An unreachable device keeps its DeviceLastSeen.
-	heartbeat.DeviceReachable = false
+	// A disconnected camera keeps its DeviceLastSeen.
+	heartbeat.Camera.Connected = false
 	if _, ok := heartbeat.RefreshSet()["deviceLastSeen"]; ok {
-		t.Fatal("RefreshSet advances deviceLastSeen for an unreachable device")
+		t.Fatal("RefreshSet advances deviceLastSeen for a disconnected camera")
 	}
+	heartbeat.Camera.Connected = true
 
 	// A detected restart writes the derived times.
 	heartbeat.Agent.StartedAt = 1791925313000
@@ -519,5 +517,16 @@ func TestDeviceHeartbeatProvisionSet(t *testing.T) {
 	}
 	if _, ok := set["name"]; ok {
 		t.Fatal("ProvisionSet sets name; display falls back to agent.cameraName")
+	}
+}
+
+func TestDeviceThresholdsValidate(t *testing.T) {
+	if err := (DeviceThresholds{Idle: 180_000, Disconnected: 180_000}).Validate(); err != nil {
+		t.Fatalf("valid thresholds: %v", err)
+	}
+	for _, thresholds := range []DeviceThresholds{{Idle: -1}, {Disconnected: -1}} {
+		if err := thresholds.Validate(); err == nil {
+			t.Errorf("Validate(%+v) = nil, want an error", thresholds)
+		}
 	}
 }

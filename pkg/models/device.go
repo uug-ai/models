@@ -107,10 +107,9 @@ type Device struct {
 	// Liveness: the inputs the connection status is derived from, kept together.
 	// Timestamps are points in time on the hub's clock (milliseconds since
 	// epoch), written by every heartbeat; readers derive durations and status.
-	AgentLastSeen  int64             `json:"agentLastSeen" bson:"agentLastSeen,omitempty"`     // Last heartbeat from the agent
-	DeviceLastSeen int64             `json:"deviceLastSeen" bson:"deviceLastSeen,omitempty"`   // Last heartbeat in which the agent could reach the device itself
-	Thresholds     *DeviceThresholds `json:"thresholds,omitempty" bson:"thresholds,omitempty"` // Optional override; nil uses project defaults
-	Monitor        *DeviceMonitor    `json:"monitor,omitempty" bson:"monitor,omitempty"`       // Last notified state, owned by hub-monitor-device
+	AgentLastSeen  int64          `json:"agentLastSeen" bson:"agentLastSeen,omitempty"`   // Last heartbeat from the agent
+	DeviceLastSeen int64          `json:"deviceLastSeen" bson:"deviceLastSeen,omitempty"` // Last heartbeat in which the agent could reach the device itself
+	Monitor        *DeviceMonitor `json:"monitor,omitempty" bson:"monitor,omitempty"`     // Last notified state, owned by hub-monitor-device
 
 	// Latest media uploaded by the device, from any capability. Kept at the top
 	// level: device lists sort on LatestMediaTimestamp. LatestMedia is a value,
@@ -184,9 +183,6 @@ func (d Device) Validate() error {
 	if d.Type != "" && !d.Type.Valid() {
 		errs = append(errs, fmt.Errorf("%w: %q", ErrDeviceTypeInvalid, d.Type))
 	}
-	if d.Thresholds != nil {
-		errs = append(errs, d.Thresholds.Validate())
-	}
 	if d.LightSensor != nil {
 		errs = append(errs, validRange("lightSensor lux", d.LightSensor.MinLux, d.LightSensor.MaxLux))
 	}
@@ -203,8 +199,10 @@ func validRange(name string, min, max *float64) error {
 	return nil
 }
 
-// DeviceThresholds overrides the project's liveness thresholds (milliseconds),
-// one per failure mode. The status is derived in this order:
+// DeviceThresholds are the liveness thresholds (milliseconds), one per failure
+// mode. They are not configurable or stored yet; per-device or per-project
+// overrides can be added later without a migration. The status is derived in
+// this order:
 //   - disconnected: now - AgentLastSeen  > Disconnected (the agent is gone)
 //   - idle:         now - DeviceLastSeen > Idle (the agent reports, but cannot reach the device)
 //   - connected:    otherwise
@@ -446,10 +444,6 @@ type DeviceHeartbeat struct {
 	// (milliseconds since epoch). Agent clocks are not trusted.
 	ReceivedAt int64 `json:"receivedAt" bson:"-"`
 
-	// DeviceReachable reports whether the agent could reach the device itself
-	// (e.g. the camera stream is connected); it advances DeviceLastSeen.
-	DeviceReachable bool `json:"deviceReachable" bson:"-"`
-
 	// Type is the device's primary kind as known to the agent; empty keeps the
 	// stored type.
 	Type DeviceType `json:"type,omitempty" bson:"-"`
@@ -474,7 +468,8 @@ func (h DeviceHeartbeat) RefreshSet() map[string]interface{} {
 		"agent.memoryUsed":    h.Agent.MemoryUsed,
 		"agent.memoryProcess": h.Agent.MemoryProcess,
 	}
-	if h.DeviceReachable {
+	// The device itself is reachable when its camera stream is connected.
+	if h.Camera != nil && h.Camera.Connected {
 		set["deviceLastSeen"] = h.ReceivedAt
 	}
 	setIfPositive(set, "agent.startedAt", h.Agent.StartedAt)

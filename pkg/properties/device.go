@@ -102,7 +102,6 @@ const (
 	DeviceMutedUntil = "mute"
 	DeviceAgentLastSeen = "agentLastSeen"
 	DeviceDeviceLastSeen = "deviceLastSeen"
-	DeviceThresholds = "thresholds"
 	DeviceMonitor = "monitor"
 	DeviceLatestMediaTimestamp = "latestMediaTimestamp"
 	DeviceLatestMedia = "latestMedia"
