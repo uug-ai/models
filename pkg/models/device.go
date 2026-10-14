@@ -76,9 +76,12 @@ const (
 //
 // Ownership of sub-documents:
 //   - top level:    identity, tenancy and lifecycle (hub-api)
-//   - Agent:        written only by the heartbeat
+//   - Agent:        written only by the heartbeat (DeviceHeartbeat)
 //   - Metadata:     written only by user edits (DevicePatch)
 //   - capabilities: reported fields by the heartbeat, saved configuration by users
+//
+// DeviceHeartbeat and DevicePatch build the $set documents for the two
+// writers; their paths never overlap.
 //
 // Writers $set explicit paths, never the whole struct, so a nil capability
 // never removes one registered elsewhere. Removing a capability is an explicit
