@@ -43,6 +43,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/accesstokenscope": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get AccessTokenScope (schema generation only)
+         * @description Internal endpoint used only to ensure AccessTokenScope schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.AccessTokenScope"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/account": {
         parameters: {
             query?: never;
@@ -5581,6 +5620,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/deletemediavlmstablestateerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteMediaVLMStableStateErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteMediaVLMStableStateErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteMediaVLMStableStateErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletemediavlmstablestaterequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteMediaVLMStableStateRequest (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteMediaVLMStableStateRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteMediaVLMStableStateRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletemediavlmstablestateresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteMediaVLMStableStateResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteMediaVLMStableStateResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteMediaVLMStableStateResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletemediavlmstablestatesuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteMediaVLMStableStateSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteMediaVLMStableStateSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteMediaVLMStableStateSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/deleteprojecterrorresponse": {
         parameters: {
             query?: never;
@@ -7219,6 +7414,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/deviceagent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceAgent (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceAgent schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceAgent"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/deviceatruntimemetadata": {
         parameters: {
             query?: never;
@@ -7375,6 +7609,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/deviceheartbeat": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceHeartbeat (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceHeartbeat schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceHeartbeat"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/devicekey": {
         parameters: {
             query?: never;
@@ -7414,6 +7687,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/devicemediaref": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceMediaRef (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceMediaRef schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceMediaRef"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/devicemetadata": {
         parameters: {
             query?: never;
@@ -7441,6 +7753,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.DeviceMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicemonitor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceMonitor (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceMonitor schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceMonitor"];
                     };
                 };
             };
@@ -7597,6 +7948,84 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Devices"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicethresholds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceThresholds (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceThresholds schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceThresholds"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicevlmmetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceVLMMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceVLMMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceVLMMetadata"];
                     };
                 };
             };
@@ -13615,6 +14044,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getmediavlmcontexterrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMediaVLMContextErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMediaVLMContextErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMediaVLMContextErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmediavlmcontextrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMediaVLMContextRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetMediaVLMContextRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMediaVLMContextRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmediavlmcontextresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMediaVLMContextResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMediaVLMContextResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMediaVLMContextResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getmediavlmcontextsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetMediaVLMContextSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetMediaVLMContextSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetMediaVLMContextSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getorganisationerrorresponse": {
         parameters: {
             query?: never;
@@ -17242,6 +17827,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getworkflowcatalogerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowCatalogErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowCatalogErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowCatalogErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowcatalogresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowCatalogResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowCatalogResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowCatalogResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowcatalogsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowCatalogSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowCatalogSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowCatalogSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getworkflowerrorresponse": {
         parameters: {
             query?: never;
@@ -17971,6 +18673,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["api.GetWorkflowSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/gpsfix": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GPSFix (schema generation only)
+         * @description Internal endpoint used only to ensure GPSFix schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.GPSFix"];
                     };
                 };
             };
@@ -22039,6 +22780,279 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/processingartifactmetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ProcessingArtifactMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure ProcessingArtifactMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ProcessingArtifactMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/processingcompletion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ProcessingCompletion (schema generation only)
+         * @description Internal endpoint used only to ensure ProcessingCompletion schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ProcessingCompletion"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/processingcompletiontarget": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ProcessingCompletionTarget (schema generation only)
+         * @description Internal endpoint used only to ensure ProcessingCompletionTarget schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ProcessingCompletionTarget"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/processingjob": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ProcessingJob (schema generation only)
+         * @description Internal endpoint used only to ensure ProcessingJob schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ProcessingJob"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/processingobject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ProcessingObject (schema generation only)
+         * @description Internal endpoint used only to ensure ProcessingObject schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ProcessingObject"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/processingregistration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ProcessingRegistration (schema generation only)
+         * @description Internal endpoint used only to ensure ProcessingRegistration schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ProcessingRegistration"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/processingresult": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ProcessingResult (schema generation only)
+         * @description Internal endpoint used only to ensure ProcessingResult schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ProcessingResult"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/profilesettings": {
         parameters: {
             query?: never;
@@ -22144,6 +23158,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.ProjectUpdate"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/promotemediavlmstablestateerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PromoteMediaVLMStableStateErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure PromoteMediaVLMStableStateErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.PromoteMediaVLMStableStateErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/promotemediavlmstablestaterequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PromoteMediaVLMStableStateRequest (schema generation only)
+         * @description Internal endpoint used only to ensure PromoteMediaVLMStableStateRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.PromoteMediaVLMStableStateRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/promotemediavlmstablestateresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PromoteMediaVLMStableStateResponse (schema generation only)
+         * @description Internal endpoint used only to ensure PromoteMediaVLMStableStateResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.PromoteMediaVLMStableStateResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/promotemediavlmstablestatesuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get PromoteMediaVLMStableStateSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure PromoteMediaVLMStableStateSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.PromoteMediaVLMStableStateSuccessResponse"];
                     };
                 };
             };
@@ -27538,6 +28708,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/updatemediavlmstablestateerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateMediaVLMStableStateErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateMediaVLMStableStateErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateMediaVLMStableStateErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatemediavlmstablestaterequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateMediaVLMStableStateRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateMediaVLMStableStateRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateMediaVLMStableStateRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatemediavlmstablestateresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateMediaVLMStableStateResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateMediaVLMStableStateResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateMediaVLMStableStateResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatemediavlmstablestatesuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateMediaVLMStableStateSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateMediaVLMStableStateSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateMediaVLMStableStateSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/updateorganisationerrorresponse": {
         parameters: {
             query?: never;
@@ -29605,6 +30931,201 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/vlmcontext": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get VLMContext (schema generation only)
+         * @description Internal endpoint used only to ensure VLMContext schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.VLMContext"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/vlmmediametadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get VLMMediaMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure VLMMediaMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.VLMMediaMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/vlmobservation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get VLMObservation (schema generation only)
+         * @description Internal endpoint used only to ensure VLMObservation schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.VLMObservation"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/vlmscene": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get VLMScene (schema generation only)
+         * @description Internal endpoint used only to ensure VLMScene schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.VLMScene"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/vlmstablestate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get VLMStableState (schema generation only)
+         * @description Internal endpoint used only to ensure VLMStableState schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.VLMStableState"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/warningresponse": {
         parameters: {
             query?: never;
@@ -29761,6 +31282,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/workflowanprdetection": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowAnprDetection (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowAnprDetection schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowAnprDetection"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowanprmarker": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowAnprMarker (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowAnprMarker schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowAnprMarker"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowanprmarkermetadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowAnprMarkerMetadata (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowAnprMarkerMetadata schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowAnprMarkerMetadata"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowanprresult": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowAnprResult (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowAnprResult schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowAnprResult"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowanprtrack": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowAnprTrack (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowAnprTrack schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowAnprTrack"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowanprtrackmeta": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowAnprTrackMeta (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowAnprTrackMeta schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowAnprTrackMeta"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/workflowcallback": {
         parameters: {
             query?: never;
@@ -29800,6 +31555,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/workflowclassifyinput": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowClassifyInput (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowClassifyInput schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowClassifyInput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowclassifyinputdetail": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowClassifyInputDetail (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowClassifyInputDetail schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowClassifyInputDetail"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/workflowcondition": {
         parameters: {
             query?: never;
@@ -29827,6 +31660,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.WorkflowCondition"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowconditionpath": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowConditionPath (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowConditionPath schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowConditionPath"];
                     };
                 };
             };
@@ -29995,45 +31867,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/workflowfilter": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get WorkflowFilter (schema generation only)
-         * @description Internal endpoint used only to ensure WorkflowFilter schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["api.WorkflowFilter"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/internal/workflowedgetrigger": {
         parameters: {
             query?: never;
@@ -30061,6 +31894,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.WorkflowEdgeTrigger"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowfilter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowFilter (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowFilter schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.WorkflowFilter"];
                     };
                 };
             };
@@ -30450,7 +32322,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["api.WorkflowRunOperationStatus"];
+                        "application/json": components["schemas"]["models.WorkflowRunOperationStatus"];
                     };
                 };
             };
@@ -30463,7 +32335,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/workflowrunstageexecutiondetails": {
+    "/internal/workflowrunoverview": {
         parameters: {
             query?: never;
             header?: never;
@@ -30471,8 +32343,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get WorkflowRunStageExecutionDetails (schema generation only)
-         * @description Internal endpoint used only to ensure WorkflowRunStageExecutionDetails schema is generated in OpenAPI spec
+         * Get WorkflowRunOverview (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowRunOverview schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -30489,7 +32361,46 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.WorkflowRunStageExecutionDetails"];
+                        "application/json": components["schemas"]["api.WorkflowRunOverview"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/workflowrunstage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowRunStage (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowRunStage schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.WorkflowRunStage"];
                     };
                 };
             };
@@ -30580,7 +32491,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/internal/workflowrunstage": {
+    "/internal/workflowrunstageexecutiondetails": {
         parameters: {
             query?: never;
             header?: never;
@@ -30588,8 +32499,8 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Get WorkflowRunStage (schema generation only)
-         * @description Internal endpoint used only to ensure WorkflowRunStage schema is generated in OpenAPI spec
+         * Get WorkflowRunStageExecutionDetails (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowRunStageExecutionDetails schema is generated in OpenAPI spec
          */
         get: {
             parameters: {
@@ -30606,46 +32517,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["models.WorkflowRunStage"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/internal/workflowrunstatus": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get WorkflowRunStatus (schema generation only)
-         * @description Internal endpoint used only to ensure WorkflowRunStatus schema is generated in OpenAPI spec
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["api.WorkflowRunStatus"];
+                        "application/json": components["schemas"]["models.WorkflowRunStageExecutionDetails"];
                     };
                 };
             };
@@ -31853,6 +33725,38 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.DeleteDetectionRunResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteMediaVLMStableStateErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteMediaVLMStableStateRequest": {
+            mediaId?: string;
+            stableStateId?: string;
+        };
+        "api.DeleteMediaVLMStableStateResponse": {
+            stableStateId?: string;
+        };
+        "api.DeleteMediaVLMStableStateSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.DeleteMediaVLMStableStateResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -33208,6 +35112,40 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.GetMediaVLMContextErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetMediaVLMContextRequest": {
+            mediaId?: string;
+        };
+        "api.GetMediaVLMContextResponse": {
+            /** @description Media is the VLM analysis of the recording; nil when the recording has not been analysed yet. */
+            media?: components["schemas"]["models.VLMMediaMetadata"];
+            /** @description StableStates are the stable scenes of the recording's device. */
+            stableStates?: components["schemas"]["models.VLMStableState"][];
+        };
+        "api.GetMediaVLMContextSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetMediaVLMContextResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetOrganisationErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -33775,6 +35713,7 @@ export interface components {
         "api.GetTimelineMarkersRequest": {
             disableGrouping?: boolean;
             filter?: components["schemas"]["api.MarkerFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
         };
         "api.GetTimelineMarkersResponse": {
             timelines?: components["schemas"]["models.MarkerTimeline"][];
@@ -33807,8 +35746,10 @@ export interface components {
         "api.GetTimelineMediaRequest": {
             disableGrouping?: boolean;
             filter?: components["schemas"]["api.MediaFilter"];
+            pagination?: components["schemas"]["api.CursorPagination"];
         };
         "api.GetTimelineMediaResponse": {
+            groupingWindowSeconds?: number;
             timelines?: components["schemas"]["models.MediaTimeline"][];
         };
         "api.GetTimelineMediaSuccessResponse": {
@@ -33901,6 +35842,34 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetVideowallsResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetWorkflowCatalogErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetWorkflowCatalogResponse": {
+            stages?: components["schemas"]["models.WorkflowStage"][];
+        };
+        "api.GetWorkflowCatalogSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetWorkflowCatalogResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -34181,6 +36150,10 @@ export interface components {
             excludedDevices?: string[];
             excludedMedia?: string[];
             groups?: string[];
+            /** @description HasAnalysis keeps only media with analysis results (markers, description,
+             *     detections, classification/counting summaries or VLM output) when true,
+             *     and only media without any when false. */
+            hasAnalysis?: boolean;
             markers?: string[];
             mediaIds?: string[];
             regions?: components["schemas"]["models.Region"][];
@@ -34330,6 +36303,41 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.PromoteMediaVLMStableStateErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.PromoteMediaVLMStableStateRequest": {
+            /** @description Name labels the stable state, e.g. "Daytime, gate closed". Defaults to the scene summary. */
+            name?: string;
+            /** @description Scene optionally narrows the recording's scene before it is saved. It may only
+             *     drop the summary, static elements, zones or lighting; it cannot add values. */
+            scene?: components["schemas"]["models.VLMScene"];
+        };
+        "api.PromoteMediaVLMStableStateResponse": {
+            stableState?: components["schemas"]["models.VLMStableState"];
+        };
+        "api.PromoteMediaVLMStableStateSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.PromoteMediaVLMStableStateResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.PublishFileErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -34469,10 +36477,8 @@ export interface components {
         "api.RunWorkflowRequest": {
             attachmentIds?: string[];
             mediaIds?: string[];
-            /**
-             * @description Surface is case (the default) or redaction. The workflow must expose a
-             *     manual trigger on this surface; all case/media access checks still apply.
-             */
+            /** @description Surface is case (the default) or redaction. The workflow must expose a
+             *     manual trigger on this surface; all case/media access checks still apply. */
             surface?: components["schemas"]["models.WorkflowTriggerSurface"];
             workflowId?: string;
         };
@@ -35057,6 +37063,41 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.UpdateMediaVLMStableStateErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateMediaVLMStableStateRequest": {
+            /** @description Name relabels the stable state; an empty name keeps the current one. */
+            name?: string;
+            /** @description Scene optionally narrows the stored scene. It may only drop the summary,
+             *     static elements, zones or lighting; it cannot add values. */
+            scene?: components["schemas"]["models.VLMScene"];
+        };
+        "api.UpdateMediaVLMStableStateResponse": {
+            stableState?: components["schemas"]["models.VLMStableState"];
+        };
+        "api.UpdateMediaVLMStableStateSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateMediaVLMStableStateResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.UpdateOrganisationErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -35305,8 +37346,6 @@ export interface components {
             to?: number;
             workflowIds?: string[];
         };
-        "api.WorkflowRunOperationStatus": components["schemas"]["models.WorkflowRunOperationStatus"];
-        "api.WorkflowRunStatus": components["schemas"]["models.WorkflowRun"];
         "api.WorkflowRunOverview": {
             caseMediaId?: string;
             deviceKey?: string;
@@ -35316,6 +37355,7 @@ export interface components {
             end?: number;
             hasResults?: boolean;
             key?: string;
+            matchedStartEdgeIds?: string[];
             mediaId?: string;
             operations?: components["schemas"]["models.WorkflowRunOperationStatus"][];
             origin?: components["schemas"]["models.WorkflowRunOrigin"];
@@ -35333,7 +37373,6 @@ export interface components {
             state?: components["schemas"]["models.WorkflowRunState"];
             workflowId?: string;
             workflowName?: string;
-            matchedStartEdgeIds?: string[];
         };
         "api.WorkflowRunStatusSummary": {
             completed?: number;
@@ -35363,7 +37402,7 @@ export interface components {
             userId?: string;
         };
         /** @enum {string} */
-        "models.AccessTokenScope": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "markers.read" | "markers.write" | "markers.all" | "days.read" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "application";
+        "models.AccessTokenScope": "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "markers.read" | "markers.write" | "markers.all" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "days.read" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application";
         "models.Account": {
             account?: components["schemas"]["models.AccountBody"];
         };
@@ -35681,33 +37720,30 @@ export interface components {
         /** @enum {string} */
         "models.BaseRole": "guest" | "editor" | "admin" | "owner" | "application";
         "models.CameraMetadata": {
-            /** @description Bitrate in kbps */
+            /** @description kbps */
             bitrate?: number;
-            /** @description e.g. "H.264", "H.265" */
+            /** @description e.g. "H.264" */
             codec?: string;
+            /** @description State, reported by the agent */
+            connected?: boolean;
+            continuousRecording?: boolean;
+            /** @description Saved configuration, edited by users */
             fieldOfView?: number;
-            /** @description Frame rate in fps */
+            /** @description fps */
             frameRate?: number;
-            /** @description Indicates if the camera supports audio */
             hasAudio?: boolean;
-            /** @description Indicates if the camera supports backchannel audio */
             hasBackChannel?: boolean;
-            /** @description Indicates if the camera has input/output capabilities */
-            hasIO?: boolean;
-            /** @description Camera ONVIF and PTZ capabilities */
+            /** @description Capabilities, reported by the agent */
             hasOnvif?: boolean;
-            /** @description Indicates if the camera supports pan and tilt functionality */
             hasPanTilt?: boolean;
-            /** @description Indicates if the camera supports presets */
-            hasPresets?: boolean;
-            /** @description Indicates if the camera supports zoom functionality */
             hasZoom?: boolean;
+            /** @description Digital inputs and relay outputs (agent) */
             ios?: components["schemas"]["models.IO"][];
-            /** @description Presets for the camera, used for quick positioning */
+            /** @description Presets stored on the camera (agent) */
+            onvifPresets?: components["schemas"]["models.CameraPreset"][];
             presets?: components["schemas"]["models.CameraPreset"][];
-            /** @description e.g. "1920x1080", "1280x720" */
+            /** @description Stream, reported by the agent */
             resolution?: string;
-            /** @description Tours for the camera, used for automated movements through presets */
             tours?: components["schemas"]["models.CameraTour"][];
         };
         "models.CameraPreset": {
@@ -36423,135 +38459,178 @@ export interface components {
             timeRange2Min?: number;
         };
         "models.Device": {
-            /** @description last time the agent reported being online (timestamp in milliseconds) */
+            agent?: components["schemas"]["models.DeviceAgent"];
+            /** @description Liveness: the inputs the connection status is derived from, kept together.
+             *     Timestamps are points in time on the hub's clock (milliseconds since
+             *     epoch), written by every heartbeat; readers derive durations and status. */
             agentLastSeen?: number;
-            /** @description Deprecated - to be removed */
             analytics?: components["schemas"]["models.DeprecatedHeartbeat"][];
-            /** @description AtRuntimeMetadata contains metadata that is generated at runtime, which can include
-             *     more verbose information about the device's current state, capabilities, or configuration.
-             *     for example the linked sites details, etc. */
+            /** @description AtRuntimeMetadata is computed when the device is read and never stored. */
             atRuntimeMetadata?: components["schemas"]["models.DeviceAtRuntimeMetadata"];
-            /** @description Audit information */
+            /** @description Provisioning sets CreatedAt (first heartbeat) */
             audit?: components["schemas"]["models.Audit"];
-            /** @description Device Specific Metadata */
-            cameraMetadata?: components["schemas"]["models.CameraMetadata"];
-            /** @description Device status
-             *     Note: Status is used to identify the status of the device, such as online, offline, maintenance, etc."
-             *     LastSeenTimestamp is used to identify the last time the device was seen online. */
-            connectionStart?: number;
-            /** @description Type of deployment used e.g. "factory", "docker", "docker compose", "kubernetes" */
-            deployment?: string;
-            /** @description last time the device itself reported being online (timestamp in milliseconds) */
+            /** @description Capabilities. Each is optional and any combination is valid, e.g. a camera
+             *     with a built-in humidity sensor sets both Camera and HumiditySensor.
+             *     Capability sub-documents hold capabilities and configuration only; live
+             *     readings go to a time-series collection. */
+            camera?: components["schemas"]["models.CameraMetadata"];
+            /** @description Last heartbeat in which the agent could reach the device itself */
             deviceLastSeen?: number;
-            /** @description threshold in milliseconds to consider a device offline, based on agentLastSeen */
-            disconnectedThreshold?: number;
-            /** @description FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc.
-             *     It is a map of feature names to permissions.
-             *     For example, "camera" can have permissions like "read", "write", "delete", etc.
-             *     This allows for fine-grained control over what features are accessible by users or groups.
-             *     FeaturePermissions can be used to implement Role-Based Access Control (RBAC) for devices. */
             featurePermissions?: components["schemas"]["models.DeviceFeaturePermissions"];
-            gpsMetadata?: components["schemas"]["models.GPSMetadata"];
+            gps?: components["schemas"]["models.GPSMetadata"];
             groupIds?: string[];
-            /** @description threshold in milliseconds to consider a device healthy, based on agentLastSeen */
-            healthyThreshold?: number;
-            humiditySensorMetadata?: components["schemas"]["models.HumiditySensorMetadata"];
+            humiditySensor?: components["schemas"]["models.HumiditySensorMetadata"];
             id?: string;
-            /** @description threshold in milliseconds to consider a device idle, based on deviceLastSeen */
-            idleThreshold?: number;
-            /** @description Device information
-             *     Note: DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
-             *     DeviceType is used to identify the type of device, such as camera, sensor, access control, etc. */
+            /** @description No defined meaning; never set true for devices */
+            isActive?: boolean;
+            /** @description Device key reported by the agent, unique within its project */
             key?: string;
-            /** @description Latest Media information */
-            latestMedia?: components["schemas"]["models.Media"];
-            /** @description Timestamp of the latest media captured by the device (milliseconds since epoch) */
+            latestMedia?: components["schemas"]["models.DeviceMediaRef"];
+            /** @description Latest media uploaded by the device, from any capability. Kept at the top
+             *     level: device lists sort on LatestMediaTimestamp. LatestMedia is a value,
+             *     not a pointer, so readers never need a nil check; an empty VideoFile means
+             *     the device has no media yet (the media pipeline does not store the Id). */
             latestMediaTimestamp?: number;
-            lightSensorMetadata?: components["schemas"]["models.LightSensorMetadata"];
-            /** @description Location of the device, not real time postion. e.g. "Office 1st Floor", "Lobby", "Kilian's Car", etc. */
+            lightSensor?: components["schemas"]["models.LightSensorMetadata"];
+            /** @description Location is the fixed placement owners set (DevicePatch), e.g. an
+             *     address picked on a map. It is not a real-time position. */
             location?: components["schemas"]["models.Location"];
-            /** @description Metadata */
             metadata?: components["schemas"]["models.DeviceMetadata"];
-            /** @description e.g. "Front Door Camera" */
+            /** @description Last notified state, owned by hub-monitor-device */
+            monitor?: components["schemas"]["models.DeviceMonitor"];
+            /** @description Lifecycle */
+            mute?: number;
+            /** @description Set by users or at provisioning; display falls back to Agent.CameraName */
             name?: string;
-            /** @description RBAC information
-             *     Note: SiteId is used to identify the site where the device is located.
-             *     GroupId is used to identify the group of devices.
-             *     OrganisationId is used to identify the organisation that owns the device.
-             *     FeaturePermissions is used to identify the permissions of the device, such as read, write, delete, etc. */
+            /** @description Tenancy. Heartbeat credentials live on the project: the cloud key resolves
+             *     to an organisation and project, which must match these fields. */
             organisationId?: string;
-            /** @description ProjectId places the device in exactly one project within its organisation.
-             *     A nil or zero legacy value resolves to that organisation's default project;
-             *     it does not make the device organisation-wide. */
+            /** @description nil or zero resolves to the organisation's default project */
             projectId?: string;
-            /** @description Versioning information
-             *     Note: Version is used to identify the version of the device software.
-             *     ReleaseHash is used to identify the release hash of the device software, it can be used to identify the specific build of the device software.
-             *     Deployment is used to identify the deployment type of the device, such as factory, docker, docker compose, kubernetes, etc. */
-            repository?: string;
+            schemaVersion?: number;
             siteIds?: string[];
-            /** @description Type of device e.g. "camera", "sensor", "access_control" */
-            type?: string;
-            /** @description @LEGACY FIELDS - to be removed in future versions */
+            type?: components["schemas"]["models.DeviceType"];
+            /** @description @LEGACY - removed once all readers use the fields above. */
             user_id?: string;
-            /** @description Version of the agent, injected on build. Reflects the release tag of the agent. */
+        };
+        "models.DeviceAgent": {
+            architecture?: string;
+            bootTime?: number;
+            /** @description Name configured on the agent */
+            cameraName?: string;
+            /** @description CloudPublicKey is the public key the agent presented in its last
+             *     heartbeat. Agents within a project can be on different keys (e.g. a
+             *     legacy user key after the project credentials were regenerated), so it
+             *     is recorded per device for routing and key status. Authentication still
+             *     resolves key -> project; private and symmetric keys never live on the
+             *     device. */
+            cloudPublicKey?: string;
+            /** @description Deployment is how the agent runs: "factory", "kubernetes", "docker",
+             *     "kios" or "raspberrypi". It replaces the agent's legacy enterprise flag,
+             *     which only meant running under Kerberos Factory or Kubernetes. */
+            deployment?: string;
+            e2eEncryption?: boolean;
+            hostname?: string;
+            hubEncryption?: boolean;
+            ipAddresses?: string[];
+            macAddresses?: string[];
+            /** @description bytes */
+            memoryFree?: number;
+            /** @description bytes */
+            memoryProcess?: number;
+            /** @description bytes */
+            memoryTotal?: number;
+            /** @description bytes */
+            memoryUsed?: number;
+            /** @description Build hash of the agent */
+            releaseHash?: string;
+            repository?: string;
+            /** @description StartedAt (agent process start) and BootTime (host boot) are points in
+             *     time on the hub's clock (milliseconds since epoch), displayed as agent and
+             *     host uptime (now - StartedAt, now - BootTime). Durations are never
+             *     stored: they are stale as soon as they are written. Agents report both as
+             *     human-readable durations ("10 hours"), so the hub derives them on a
+             *     detected restart or reboot; they are approximate until the next one. */
+            startedAt?: number;
+            /** @description Release tag of the agent */
             version?: string;
         };
         "models.DeviceAtRuntimeMetadata": {
-            /** @description Groups contains details about the groups that the device is linked to. */
+            capabilities?: components["schemas"]["models.DeviceCapability"][];
             groups?: components["schemas"]["models.GroupOption"][];
-            /** @description Sites contains details about the sites that the device is linked to. */
             sites?: components["schemas"]["models.SiteOption"][];
-            /** @description Status is derived from the last seen timestamps and thresholds. */
-            status?: string;
+            status?: components["schemas"]["models.DeviceConnectionStatus"];
         };
+        /** @enum {string} */
+        "models.DeviceCapability": "camera" | "lightSensor" | "humiditySensor" | "gps";
+        /** @enum {string} */
+        "models.DeviceConnectionStatus": "connected" | "idle" | "disconnected";
         "models.DeviceData": {
             activeDevices?: number;
             totalDevices?: number;
         };
         "models.DeviceFeaturePermissions": {
+            downloadRecordings?: components["schemas"]["models.PermissionLevel"];
             floorPlans?: components["schemas"]["models.PermissionLevel"];
             io?: components["schemas"]["models.PermissionLevel"];
             liveview?: components["schemas"]["models.PermissionLevel"];
             ptz?: components["schemas"]["models.PermissionLevel"];
             remoteConfig?: components["schemas"]["models.PermissionLevel"];
         };
+        "models.DeviceHeartbeat": {
+            /** @description Agent holds the agent-reported fields. StartedAt and BootTime are only
+             *     set when the receiver detected a restart or reboot; 0 keeps the stored
+             *     value. */
+            agent?: components["schemas"]["models.DeviceAgent"];
+            /** @description Camera holds the agent-reported camera fields; the user-owned ones
+             *     (FieldOfView, Presets, Tours) are ignored. Nil for devices without the
+             *     camera capability. */
+            camera?: components["schemas"]["models.CameraMetadata"];
+            /** @description ReceivedAt is when the hub received the heartbeat, on the hub's clock
+             *     (milliseconds since epoch). Agent clocks are not trusted. */
+            receivedAt?: number;
+            /** @description Type is the device's primary kind as known to the agent; empty keeps the
+             *     stored type. */
+            type?: components["schemas"]["models.DeviceType"];
+        };
         "models.DeviceKey": {
             key?: string;
             name?: string;
         };
+        "models.DeviceMediaRef": {
+            /** @description AtRuntimeMetadata carries the signed URLs and display time filled when
+             *     the device is read; never stored. */
+            atRuntimeMetadata?: components["schemas"]["models.MediaAtRuntimeMetadata"];
+            duration?: number;
+            id?: string;
+            spriteFile?: string;
+            spriteProvider?: string;
+            storageSolution?: string;
+            thumbnailFile?: string;
+            thumbnailProvider?: string;
+            videoFile?: string;
+            videoProvider?: string;
+        };
         "models.DeviceMetadata": {
-            architecture?: string;
-            bootTime?: string;
-            /** @description e.g. "Nest", "Ring" */
             brand?: string;
-            /** @description e.g. "#FF5733" (hex color code) */
+            /** @description hex, e.g. "#FF5733" */
             color?: string;
-            /** @description e.g. "Outdoor camera with night vision" */
             description?: string;
-            e2eEncryption?: string;
-            encrypted?: boolean;
-            encryptedData?: number[];
-            freeMemory?: string;
-            /** @description Indicates if the device is hidden from UI */
             hidden?: boolean;
-            hostname?: string;
-            hubEncryption?: string;
-            /** @description Installation date in milliseconds since epoch */
+            /** @description milliseconds since epoch */
             installationDate?: number;
-            /** @description e.g. "192.168.1.1" */
-            ipAddress?: string;
-            /** @description Last maintenance date in milliseconds since epoch */
+            /** @description milliseconds since epoch */
             lastMaintenance?: number;
-            /** @description e.g. "00:1A:2B:3C:4D:5E" */
-            macAddress?: string;
-            /** @description e.g. "Nest Cam", "Ring Doorbell" */
             model?: string;
-            /** @description Floor plans this device is associated with */
             onFloorPlans?: string[];
-            processMemory?: string;
-            totalMemory?: string;
-            usedMemory?: string;
+            /** @description VLM holds the stable ("normal") scenes used as context for VLM analysis. */
+            vlm?: components["schemas"]["models.DeviceVLMMetadata"];
+        };
+        "models.DeviceMonitor": {
+            /** @description milliseconds since epoch */
+            changedAt?: number;
+            /** @description "active" or "inactive" */
+            status?: string;
         };
         "models.DeviceOption": {
             id?: string;
@@ -36564,8 +38643,11 @@ export interface components {
             description?: string;
             featurePermissions?: components["schemas"]["models.DeviceFeaturePermissions"];
             fieldOfView?: number;
+            hidden?: boolean;
             installationDate?: string;
             lastMaintenance?: string;
+            /** @description Replaces the whole location */
+            location?: components["schemas"]["models.Location"];
             model?: string;
             name?: string;
             onFloorPlans?: string[];
@@ -36599,6 +38681,16 @@ export interface components {
             x?: number;
             /** @description Absolute Y coordinate */
             y?: number;
+        };
+        "models.DeviceThresholds": {
+            disconnected?: number;
+            idle?: number;
+        };
+        /** @enum {string} */
+        "models.DeviceType": "camera" | "sensor" | "access_control" | "gateway";
+        "models.DeviceVLMMetadata": {
+            schemaVersion?: number;
+            stableStates?: components["schemas"]["models.VLMStableState"][];
         };
         "models.Devices": {
             channelsAll?: boolean;
@@ -36741,21 +38833,20 @@ export interface components {
             range?: string;
             time?: string;
         };
-        "models.GPSMetadata": {
-            /** @description Accuracy is the accuracy of the GPS reading in meters. */
-            accuracy?: number;
-            /** @description Altitude is the current altitude of the device in meters. */
-            altitude?: number;
-            /** @description Heading is the direction of movement in degrees. */
-            heading?: number;
-            /** @description Latitude is the current latitude of the device. */
+        "models.GPSFix": {
             latitude?: number;
-            /** @description Longitude is the current longitude of the device. */
             longitude?: number;
-            /** @description Speed is the current speed of the device in meters per second. */
-            speed?: number;
-            /** @description Timestamp is the time when the GPS data was recorded (milliseconds since epoch). */
+            /** @description milliseconds since epoch */
             timestamp?: number;
+        };
+        "models.GPSMetadata": {
+            /** @description Rated accuracy in meters */
+            accuracy?: number;
+            /** @description LastFix is a single overwritten snapshot so lists can show a position
+             *     without querying the time series. */
+            lastFix?: components["schemas"]["models.GPSFix"];
+            /** @description Fix rate */
+            updateHz?: number;
         };
         "models.GetAlertsInput": {
             user?: components["schemas"]["models.User"];
@@ -36959,14 +39050,9 @@ export interface components {
             region?: string;
         };
         "models.HumiditySensorMetadata": {
-            /** @description CurrentHumidity is the latest measured humidity level in percentage */
-            currentHumidity?: number;
-            /** @description HumidityRange specifies the measurable range in percentage (e.g. "0-100") */
-            humidityRange?: string;
-            /** @description Sensitivity indicates the sensitivity level of the humidity sensor (e.g. 1-100) */
-            sensitivity?: number;
-            /** @description Unit is the measurement unit, typically "%" */
-            unit?: string;
+            maxHumidity?: number;
+            /** @description Measurable range, percent */
+            minHumidity?: number;
         };
         "models.IO": {
             /** @description Audit information */
@@ -37018,14 +39104,9 @@ export interface components {
             label?: components["schemas"]["models.Label"];
         };
         "models.LightSensorMetadata": {
-            /** @description CurrentLux is the latest measured light level in lux */
-            currentLux?: number;
-            /** @description LuxRange specifies the measurable range in lux (e.g. "0-10000") */
-            luxRange?: string;
-            /** @description Sensitivity indicates the sensitivity level of the light sensor (e.g. 1-100) */
-            sensitivity?: number;
-            /** @description Unit is the measurement unit, typically "lux" */
-            unit?: string;
+            maxLux?: number;
+            /** @description Measurable range */
+            minLux?: number;
         };
         "models.Livestream": {
             speech?: boolean;
@@ -37507,6 +39588,8 @@ export interface components {
             thumbnailHeight?: number;
             /** @description Thumbnail information */
             thumbnailWidth?: number;
+            /** @description VLM contains the structured vision-language model analysis (scene and observations). */
+            vlm?: components["schemas"]["models.VLMMediaMetadata"];
             /** @description in pixels */
             width?: number;
         };
@@ -37811,7 +39894,7 @@ export interface components {
             videowall?: components["schemas"]["models.Videowall"];
         };
         /** @enum {string} */
-        "models.Permission": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "markers.read" | "markers.write" | "markers.all" | "days.read" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "application";
+        "models.Permission": "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "markers.read" | "markers.write" | "markers.all" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "days.read" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application";
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.Permissions": {
@@ -37820,6 +39903,7 @@ export interface components {
         };
         "models.PipelineEvent": {
             analysisStage?: components["schemas"]["models.AnalysisStage"];
+            completion?: components["schemas"]["models.ProcessingCompletionTarget"];
             /** @description We should get rid of this and use the stage map */
             data?: {
                 [key: string]: unknown;
@@ -37845,6 +39929,8 @@ export interface components {
             throttlerStage?: components["schemas"]["models.ThrottlerStage"];
             /** @description We are using OpenTelemetry, so we can observe the pipeline more easily. */
             traceId?: string;
+            vaultJob?: components["schemas"]["models.ProcessingJob"];
+            vaultProcessing?: components["schemas"]["models.ProcessingRegistration"];
         };
         "models.PipelineMetadata": {
             duration?: string;
@@ -37913,6 +39999,62 @@ export interface components {
         "models.Point": {
             x?: number;
             y?: number;
+        };
+        "models.ProcessingArtifactMetadata": {
+            columns?: number;
+            count?: number;
+            height?: number;
+            interval?: number;
+            rows?: number;
+            tileHeight?: number;
+            tileWidth?: number;
+            width?: number;
+        };
+        "models.ProcessingCompletion": {
+            artifactId?: string;
+            error?: string;
+            metadata?: components["schemas"]["models.ProcessingArtifactMetadata"];
+            revision?: number;
+            status?: string;
+            version?: number;
+        };
+        "models.ProcessingCompletionTarget": {
+            artifactUrl?: string;
+            callbackIntegration?: string;
+            completionUrl?: string;
+            expiresAt?: number;
+            jobUrl?: string;
+            token?: string;
+        };
+        "models.ProcessingJob": {
+            artifact?: components["schemas"]["models.ProcessingObject"];
+            device?: string;
+            jobId?: string;
+            operation?: string;
+            revision?: number;
+            source?: components["schemas"]["models.ProcessingObject"];
+            sourceVaultId?: string;
+            traceId?: string;
+            version?: number;
+        };
+        "models.ProcessingObject": {
+            filename?: string;
+            mediaId?: string;
+            provider?: string;
+        };
+        "models.ProcessingRegistration": {
+            operations?: string[];
+            revision?: number;
+            version?: number;
+        };
+        "models.ProcessingResult": {
+            artifact?: components["schemas"]["models.ProcessingObject"];
+            fileSize?: number;
+            jobId?: string;
+            metadata?: components["schemas"]["models.ProcessingArtifactMetadata"];
+            revision?: number;
+            sourceMediaId?: string;
+            version?: number;
         };
         "models.ProfileSettings": {
             defaultFloorPlanLabelsHidden?: boolean;
@@ -38138,6 +40280,16 @@ export interface components {
             width?: number;
         };
         "models.StageCondition": {
+            /** @description Conditions belongs only to logical all/any groups, which have no path,
+             *     value or match. Children retain absolute paths; anyMatch stays relative. */
+            conditions?: components["schemas"]["models.WorkflowCondition"][];
+            /** @description Field is the contract field ID a scalar condition was authored with (for
+             *     example a Start or stage contract field), so editors can show the value
+             *     in that field's section and widget again. It is metadata only: evaluation
+             *     uses Path, Op and Value, and conditions without Field remain valid.
+             *     Logical groups and anyMatch conditions carry no Field; anyMatch
+             *     predicates carry their own. */
+            field?: string;
             match?: components["schemas"]["models.WorkflowPredicateSet"];
             /** @description see the ConditionOp consts */
             op?: components["schemas"]["models.ConditionOp"];
@@ -38145,7 +40297,6 @@ export interface components {
             path?: string;
             /** @description comparison operand (unused for ConditionOpExists) */
             value?: unknown;
-            conditions?: components["schemas"]["models.WorkflowCondition"][];
         };
         "models.StageDependency": {
             /** @description Condition is the predicate evaluated against the run root. Nil means the
@@ -38164,21 +40315,32 @@ export interface components {
              *     the run root itself (device/user/identity, or an input present from open),
              *     evaluated as soon as the run opens with nothing to wait for. */
             operation?: string;
+            /** @description StartEdgeId marks an automatic entry alternative. StartMatched is frozen
+             *     at activation, so later worker output cannot activate a rejected branch.
+             *     Entry alternatives combine with OR, independently of ordinary joins. */
             startEdgeId?: string;
             startMatched?: boolean;
         };
         "models.StageParam": {
-            /** @description Default is applied when a node supplies no value for this parameter. */
+            /** @description Default is the value used when a node supplies none. Authoring APIs store
+             *     it on the node with ApplyParamDefaults, so what an editor shows is what a
+             *     worker receives; workers keep their own deployment defaults for nodes
+             *     without a value. */
             default?: unknown;
+            description?: string;
             label?: string;
+            maximum?: number;
+            /** @description Minimum and Maximum bound a StageParamNumber value, inclusively. */
+            minimum?: number;
             name?: string;
-            /** @description Options enumerates the permitted values when Type is StageParamSelect. */
+            /** @description Options enumerates the permitted values when Type is StageParamSelect or
+             *     StageParamMultiSelect. */
             options?: string[];
             required?: boolean;
             type?: components["schemas"]["models.StageParamType"];
         };
         /** @enum {string} */
-        "models.StageParamType": "string" | "number" | "boolean" | "select";
+        "models.StageParamType": "string" | "number" | "boolean" | "select" | "multiselect" | "secret";
         "models.StagePort": {
             label?: string;
             name?: string;
@@ -38821,6 +40983,43 @@ export interface components {
             updated_at?: string;
             username?: string;
         };
+        "models.VLMContext": {
+            media?: components["schemas"]["models.VLMMediaMetadata"];
+            stableStates?: components["schemas"]["models.VLMStableState"][];
+        };
+        "models.VLMMediaMetadata": {
+            observations?: components["schemas"]["models.VLMObservation"][];
+            scene?: components["schemas"]["models.VLMScene"];
+            schemaVersion?: number;
+        };
+        "models.VLMObservation": {
+            /** @description Event is the action or change, e.g. "walking", "entering". */
+            event?: string;
+            /** @description Marker is the subject of the observation, e.g. "person", "car". */
+            marker?: string;
+            /** @description Tags are short attributes of the subject, e.g. "red", "sweater". */
+            tags?: string[];
+        };
+        "models.VLMScene": {
+            /** @description Lighting describes the lighting condition, e.g. "daylight", "infrared". */
+            lighting?: string;
+            /** @description StaticElements lists stable objects in view, e.g. "gate", "bench". */
+            staticElements?: string[];
+            /** @description Summary is a short description of the scene, e.g. "Parking lot with two parked cars". */
+            summary?: string;
+            /** @description Zones lists named areas in view, e.g. "entrance", "driveway". */
+            zones?: string[];
+        };
+        "models.VLMStableState": {
+            id?: string;
+            name?: string;
+            scene?: components["schemas"]["models.VLMScene"];
+            /** @description SourceMediaId and SourceMediaKey reference the recording the state was promoted from. */
+            sourceMediaId?: string;
+            sourceMediaKey?: string;
+            /** @description UpdatedAt is the promotion time (seconds since Unix epoch). */
+            updatedAt?: number;
+        };
         "models.VaultMedia": {
             account?: string;
             device?: string;
@@ -38964,11 +41163,10 @@ export interface components {
              *     read-only workflow. Every workflow persisted before this field existed
              *     decodes as user. */
             source?: components["schemas"]["models.WorkflowSource"];
-            /** @description Stages is the workflow's executable stage set: the runtime-authoritative
-             *     projection the engine dispatches against. When set it is used as-is (config
-             *     workflows author it directly in the helm registry form: operation, dispatch,
-             *     needs, needsMode); when empty it is derived from Nodes+Edges on demand (UI
-             *     workflows author the graph and CompileStages projects it). Read it through
+            /** @description Stages is the executable stage set for stage-only/config definitions.
+             *     An explicit Start graph always wins over this cached projection; otherwise
+             *     populated stages are used as-is, or derived from Nodes+Edges on demand.
+             *     Read it through
              *     CompileStages, never directly, so both authoring styles resolve uniformly.
              *
              *     Only the routing fields (Operation, Dispatch, Needs, NeedsMode) are
@@ -38991,12 +41189,139 @@ export interface components {
             userId?: string;
             username?: string;
         };
+        "models.WorkflowAnprDetection": {
+            analysisId?: string;
+            categories?: number[];
+            coordinateSpace?: string;
+            media?: number[];
+            mediaKey?: string;
+            name?: string;
+            schemaVersion?: string;
+            source?: number[];
+            task?: string;
+            /** @description one per vehicle that passed the movement gates */
+            tracks?: components["schemas"]["models.WorkflowAnprTrack"][];
+        };
+        "models.WorkflowAnprMarker": {
+            atRuntimeMetadata?: number[];
+            audit?: number[];
+            categories?: number[];
+            description?: string;
+            detections?: number[];
+            deviceId?: string;
+            /** @description seconds the vehicle was visible */
+            duration?: number;
+            endTimestamp?: number;
+            events?: number[];
+            groupId?: string;
+            id?: string;
+            mediaKeys?: string[];
+            metadata?: components["schemas"]["models.WorkflowAnprMarkerMetadata"];
+            /** @description the plate, or "anpr unread" */
+            name?: string;
+            organisationId?: string;
+            projectId?: number[];
+            siteId?: string;
+            startTimestamp?: number;
+            synchronize?: number[];
+            tags?: number[];
+        };
+        "models.WorkflowAnprMarkerMetadata": {
+            boundingBox?: number[];
+            comments?: number[];
+            /** @description OCR confidence: ~0-1 for fast, 0.5 for tesseract, unclamped for http */
+            confidence?: number;
+            /** @description fast, tesseract, tesseract+opencv or http */
+            engine?: string;
+            modelVersion?: string;
+            raw?: number[];
+            /** @description always anpr */
+            source?: string;
+        };
+        "models.WorkflowAnprResult": {
+            /** @description exactly one detection run per stage result */
+            detections?: components["schemas"]["models.WorkflowAnprDetection"][];
+            /** @description one per vehicle, same vehicles as the tracks */
+            markers?: components["schemas"]["models.WorkflowAnprMarker"][];
+            /** @description media description update, when a plate was read */
+            "media-patchs"?: number[][];
+        };
+        "models.WorkflowAnprTrack": {
+            boxes?: number[];
+            classId?: number[];
+            color?: string;
+            /** @description constant 0.9 */
+            confidence?: number;
+            deletedFrames?: number[];
+            id?: string;
+            /** @description the plate, or "unread" */
+            label?: string;
+            meta?: components["schemas"]["models.WorkflowAnprTrackMeta"];
+            shape?: string;
+        };
+        "models.WorkflowAnprTrackMeta": {
+            /** @description the classify label (ANPR_PLATE_CLASSES), not recognised by ANPR */
+            classifiedAs?: string;
+            /** @description uppercase A-Z0-9, 4-10 characters, no separators; "" when unread */
+            plate?: string;
+            /** @description always hub-anpr */
+            recognisedBy?: string;
+            /** @description always !unread */
+            recognisedOcr?: boolean;
+            /** @description no plate was read */
+            unread?: boolean;
+        };
         "models.WorkflowCallback": {
             method?: string;
             resultSchema?: string;
             url?: string;
         };
+        "models.WorkflowClassifyInput": {
+            /** @description one entry per tracked object */
+            details?: components["schemas"]["models.WorkflowClassifyInputDetail"][];
+            /** @description tracked objects that moved */
+            objectCount?: number;
+            /** @description classes of the objects that moved */
+            properties?: string[];
+        };
+        "models.WorkflowClassifyInputDetail": {
+            /** @description class name, e.g. car */
+            classified?: string;
+            /** @description primary colour names */
+            colorStr?: string[];
+            colorsBGR?: number[][][];
+            colorsHLS?: number[][][];
+            colorsStr?: string[][];
+            distance?: number;
+            /** @description first frame the object appeared in */
+            frame?: number;
+            frameHeight?: number;
+            frameWidth?: number;
+            frames?: number[];
+            id?: string;
+            isStatic?: boolean;
+            /** @description frames the object was seen in */
+            occurence?: number;
+            staticDistance?: number;
+            traject?: number[][];
+            trajectCentroids?: number[][];
+            valid?: boolean;
+            /** @description unused by the classifier */
+            w?: number;
+            x?: number;
+            y?: number;
+        };
         "models.WorkflowCondition": {
+            /** @description Conditions belongs only to logical all/any groups, which have no path,
+             *     value or match. Children retain absolute paths; anyMatch stays relative. */
+            conditions?: components["schemas"]["models.WorkflowCondition"][];
+            /** @description Field is the contract field ID a scalar condition was authored with (for
+             *     example a Start or stage contract field), so editors can show the value
+             *     in that field's section and widget again. It is metadata only: evaluation
+             *     uses Path, Op and Value, and conditions without Field remain valid.
+             *     Logical groups and anyMatch conditions carry no Field; anyMatch
+             *     predicates carry their own. */
+            field?: string;
             match?: components["schemas"]["models.WorkflowPredicateSet"];
             /** @description see the ConditionOp consts */
             op?: components["schemas"]["models.ConditionOp"];
@@ -39004,8 +41329,16 @@ export interface components {
             path?: string;
             /** @description comparison operand (unused for ConditionOpExists) */
             value?: unknown;
-            conditions?: components["schemas"]["models.WorkflowCondition"][];
         };
+        "models.WorkflowConditionPath": {
+            automaticOnly?: boolean;
+            modes?: components["schemas"]["models.WorkflowConditionRootMode"][];
+            open?: boolean;
+            path?: string;
+            type?: string;
+        };
+        /** @enum {string} */
+        "models.WorkflowConditionRootMode": "trigger" | "run";
         "models.WorkflowConditionSet": {
             conditionMode?: components["schemas"]["models.ConditionMode"];
             conditions?: components["schemas"]["models.WorkflowCondition"][];
@@ -39041,6 +41374,9 @@ export interface components {
             /** @description TargetPort optionally selects which of the target stage's declared Inputs
              *     (see WorkflowStage.Inputs) this edge feeds. Empty means the default port. */
             targetPort?: string;
+            /** @description Trigger is the complete source/classification/schedule scope of an outgoing Start edge.
+             *     Nil reads the legacy node scope; a present empty object means unrestricted.
+             *     Manual Start retains this configuration without activating it. */
             trigger?: components["schemas"]["models.WorkflowEdgeTrigger"];
         };
         "models.WorkflowEdgeTrigger": {
@@ -39074,38 +41410,28 @@ export interface components {
             signedUrl?: string;
         };
         "models.WorkflowNode": {
-            /**
-             * @description Data holds optional per-instance parameter values for this placement, keyed
+            /** @description Data holds optional per-instance parameter values for this placement, keyed
              *     by parameter name. They are validated against and defaulted from the
              *     referenced stage's declared Params (see WorkflowStage.Params), layered over
-             *     the stage's catalog defaults.
-             */
+             *     the stage's catalog defaults. */
             data?: {
                 [key: string]: unknown;
             };
-            /**
-             * @description Devices scopes legacy automatic roots. Start edges inherit it only when
-             *     their Trigger is nil. Empty means every eligible device; ignored on stages.
-             */
+            /** @description Devices scopes legacy automatic roots. Start edges inherit it only when
+             *     their Trigger is nil. Empty means every eligible device; ignored on stages. */
             devices?: components["schemas"]["models.DeviceKey"][];
-            /**
-             * @description Id is this instance's identity within the workflow. It is the stable
+            /** @description Id is this instance's identity within the workflow. It is the stable
              *     handle that edges connect to, and the per-instance runtime key when the
-             *     same stage is placed more than once.
-             */
+             *     same stage is placed more than once. */
             id?: string;
             label?: string;
-            /**
-             * @description StageRef is the referenced stage's Operation key (the catalog key shared
+            /** @description StageRef is the referenced stage's Operation key (the catalog key shared
              *     by platform- and user-defined stages), not its Mongo Id. Set on every
-             *     stage node and resolved at compile time; empty on a root node.
-             */
+             *     stage node and resolved at compile time; empty on a root node. */
             stageRef?: string;
-            /**
-             * @description Trigger is required on Start nodes for Type and manual Surfaces. Legacy
+            /** @description Trigger is required on Start nodes for Type and manual Surfaces. Legacy
              *     automatic settings remain readable; new scopes are authored on edges.
-             *     NormalizeTriggers derives runtime triggers without exposing inactive settings.
-             */
+             *     NormalizeTriggers derives runtime triggers without exposing inactive settings. */
             trigger?: components["schemas"]["models.WorkflowTrigger"];
             /** @description Type is what the node represents; empty means WorkflowNodeStage. */
             type?: components["schemas"]["models.WorkflowNodeType"];
@@ -39115,6 +41441,11 @@ export interface components {
         /** @enum {string} */
         "models.WorkflowNodeType": "stage" | "device" | "start";
         "models.WorkflowPredicate": {
+            /** @description Field is the contract field ID the condition was authored with (for
+             *     example a Start or stage contract field), so editors can show the value
+             *     in that field's section and widget again. It is metadata only: evaluation
+             *     uses Path, Op and Value, and conditions without Field remain valid. */
+            field?: string;
             op?: components["schemas"]["models.ConditionOp"];
             path?: string;
             value?: unknown;
@@ -39158,13 +41489,15 @@ export interface components {
              *     reloaded mid-flight still sees its start context. */
             inputs?: {
                 [key: string]: unknown;
-                matchedStartEdgeIds?: string[];
-        };
+            };
             /** @description Key is the media key the run is about. It is copied from the recording at
              *     hand-off time and can group all runs for that recording, but is not unique:
              *     run state is correlated by Id/RunId because several workflows and manual
              *     re-runs may execute over the same key. */
             key?: string;
+            /** @description MatchedStartEdgeIds is the safe activation provenance projection for run lists.
+             *     It contains no trigger definitions or predicate values. */
+            matchedStartEdgeIds?: string[];
             mediaId?: string;
             /** @description Operation marks the message's role on the workflows queue (wire-only):
              *       - "event": a fresh run hand-off from analysis. It opens the run and
@@ -39185,6 +41518,17 @@ export interface components {
              *     be filtered by how they started. Empty is treated as automatic for runs
              *     opened before origins existed. */
             origin?: components["schemas"]["models.WorkflowRunOrigin"];
+            /** @description Params carries the per-placement parameter values the workflow editor
+             *     stored for the dispatched stage (WorkflowNode.Data, declared by the
+             *     stage's WorkflowStage.Params). The engine resolves them from the workflow
+             *     definition on every engine→worker dispatch, so a worker such as the
+             *     forwarder can let a tenant override deployment defaults. Values may include
+             *     StageParamSecret credentials, so `bson:"-"` is load-bearing — like Storage,
+             *     they never persist in run state — and a worker must never echo them back
+             *     or copy them into anything it forwards. */
+            params?: {
+                [key: string]: unknown;
+            };
             /** @description Payload is the self-describing block envelope a delegated-ingest worker
              *     hands back for the platform to persist: one or more typed blocks (e.g. a
              *     "detection" block carrying a PostDetectionsRequest, optionally followed by
@@ -39271,10 +41615,8 @@ export interface components {
              *     the run. Empty for automatic runs. It generalises to any run-grouping handle
              *     (a case id today; a temporal device-series id is a forward-looking twin). */
             sourceRef?: string;
-            /**
-             * @description SourceType disambiguates case launches from media launch-group references.
-             *     Legacy readers infer case ownership from SourceRef and case input metadata.
-             */
+            /** @description SourceType disambiguates case launches from media launch-group references.
+             *     Legacy readers infer case ownership from SourceRef and case input metadata. */
             sourceType?: string;
             /** @description StageExecutions reads the legacy split timeline. NormalizeStages moves
              *     matched summaries into Stages, retaining unmatched history without
@@ -39303,12 +41645,11 @@ export interface components {
             /** @description TraceId continues the distributed trace across the workflow tail and lets
              *     authorized detail surfaces correlate the durable run with telemetry. */
             traceId?: string;
-            /**
-             * @description TriggerMatch records the first automatic trigger that selected this run.
+            /** @description TriggerMatch records the first selecting automatic trigger and all matching
+             *     Start edge IDs. It is immutable activation provenance, not routing state.
              *     It is immutable engine-owned provenance, not stage execution state. Nil
              *     means no captured match (legacy or a launch that bypassed automatic matching).
-             *     Readers must not reconstruct it from Origin or today's workflow definition.
-             */
+             *     Readers must not reconstruct it from Origin or today's workflow definition. */
             triggerMatch?: components["schemas"]["models.WorkflowRunTriggerMatch"];
             /** @description User is the curated, secret-free account context a run needs: the
              *     organisation that owns the recording (for logging/scoping) and the account
@@ -39395,8 +41736,10 @@ export interface components {
             /** @description Index is zero-based in the normalized trigger list at selection time.
              *     It is historical context, not a stable ID into an edited definition. */
             index?: number;
-            trigger?: components["schemas"]["models.WorkflowTrigger"];
+            /** @description MatchedEdgeIds captures all matching automatic Start edges in graph order.
+             *     Legacy trigger lists omit it; Index/Trigger still describe the first match. */
             matchedEdgeIds?: string[];
+            trigger?: components["schemas"]["models.WorkflowTrigger"];
         };
         /** @enum {string} */
         "models.WorkflowSource": "user" | "config";
@@ -39493,6 +41836,9 @@ export interface components {
             projectId?: string;
         };
         "models.WorkflowTrigger": {
+            /** @description Classifications requires at least one selected label in the initial
+             *     inputs.classify.details.*.classified values, independently of ConditionMode.
+             *     Empty means unrestricted; future worker results never satisfy this scope. */
             classifications?: string[];
             /** @description Conditions read the pre-run envelope, including already available,
              *     sanitized inputs, never future results. Scope and schedule remain mandatory
@@ -39509,7 +41855,13 @@ export interface components {
              *     device scoping and stage matching stay consistent. Author richer scoping
              *     (a device-name pattern, an organisation check, …) with Conditions. */
             devices?: components["schemas"]["models.DeviceKey"][];
+            /** @description EdgeId identifies the outgoing automatic Start edge that derived this
+             *     trigger. It is a projection, never an independently authored edge type. */
+            edgeId?: string;
             groupIds?: string[];
+            /** @description SharedConditions preserves legacy Start-level gating independently of the
+             *     edge's condition mode. Both groups must match; new editors author edges. */
+            sharedConditions?: components["schemas"]["models.WorkflowConditionSet"];
             /** @description SiteIds and GroupIds are stable membership IDs resolved by the caller, not
              *     names or authorization grants. Selectors are OR within each category and
              *     AND between populated categories. */
@@ -39528,8 +41880,6 @@ export interface components {
              *     the user's timezone captured when the schedule was authored. Time is not
              *     path-expressible, so it stays a dedicated field rather than a condition. */
             weeklySchedule?: components["schemas"]["models.WeeklySchedule"][];
-            edgeId?: string;
-            sharedConditions?: components["schemas"]["models.WorkflowConditionSet"];
         };
         /** @enum {string} */
         "models.WorkflowTriggerSurface": "case" | "media" | "redaction";
@@ -39639,14 +41989,20 @@ export namespace models {
     export type DetectionSource = components['schemas']['models.DetectionSource'];
     export type Detections = components['schemas']['models.Detections'];
     export type Device = components['schemas']['models.Device'];
+    export type DeviceAgent = components['schemas']['models.DeviceAgent'];
     export type DeviceAtRuntimeMetadata = components['schemas']['models.DeviceAtRuntimeMetadata'];
     export type DeviceData = components['schemas']['models.DeviceData'];
     export type DeviceFeaturePermissions = components['schemas']['models.DeviceFeaturePermissions'];
+    export type DeviceHeartbeat = components['schemas']['models.DeviceHeartbeat'];
     export type DeviceKey = components['schemas']['models.DeviceKey'];
+    export type DeviceMediaRef = components['schemas']['models.DeviceMediaRef'];
     export type DeviceMetadata = components['schemas']['models.DeviceMetadata'];
+    export type DeviceMonitor = components['schemas']['models.DeviceMonitor'];
     export type DeviceOption = components['schemas']['models.DeviceOption'];
     export type DevicePatch = components['schemas']['models.DevicePatch'];
     export type DevicePlacement = components['schemas']['models.DevicePlacement'];
+    export type DeviceThresholds = components['schemas']['models.DeviceThresholds'];
+    export type DeviceVLMMetadata = components['schemas']['models.DeviceVLMMetadata'];
     export type Devices = components['schemas']['models.Devices'];
     export type DirectionalTimeSeriesChart = components['schemas']['models.DirectionalTimeSeriesChart'];
     export type DominantColor = components['schemas']['models.DominantColor'];
@@ -39659,6 +42015,7 @@ export namespace models {
     export type FeaturePermissions = components['schemas']['models.FeaturePermissions'];
     export type FloorPlan = components['schemas']['models.FloorPlan'];
     export type FragmentedBytesRangeOnTime = components['schemas']['models.FragmentedBytesRangeOnTime'];
+    export type GPSFix = components['schemas']['models.GPSFix'];
     export type GPSMetadata = components['schemas']['models.GPSMetadata'];
     export type GetAlertsInput = components['schemas']['models.GetAlertsInput'];
     export type GetAlertsOutput = components['schemas']['models.GetAlertsOutput'];
@@ -39762,6 +42119,13 @@ export namespace models {
     export type PipelineSourceDevice = components['schemas']['models.PipelineSourceDevice'];
     export type Plan = components['schemas']['models.Plan'];
     export type Point = components['schemas']['models.Point'];
+    export type ProcessingArtifactMetadata = components['schemas']['models.ProcessingArtifactMetadata'];
+    export type ProcessingCompletion = components['schemas']['models.ProcessingCompletion'];
+    export type ProcessingCompletionTarget = components['schemas']['models.ProcessingCompletionTarget'];
+    export type ProcessingJob = components['schemas']['models.ProcessingJob'];
+    export type ProcessingObject = components['schemas']['models.ProcessingObject'];
+    export type ProcessingRegistration = components['schemas']['models.ProcessingRegistration'];
+    export type ProcessingResult = components['schemas']['models.ProcessingResult'];
     export type ProfileSettings = components['schemas']['models.ProfileSettings'];
     export type Project = components['schemas']['models.Project'];
     export type ProjectUpdate = components['schemas']['models.ProjectUpdate'];
@@ -39834,6 +42198,11 @@ export namespace models {
     export type UserSettings = components['schemas']['models.UserSettings'];
     export type UserShort = components['schemas']['models.UserShort'];
     export type UserUpdate = components['schemas']['models.UserUpdate'];
+    export type VLMContext = components['schemas']['models.VLMContext'];
+    export type VLMMediaMetadata = components['schemas']['models.VLMMediaMetadata'];
+    export type VLMObservation = components['schemas']['models.VLMObservation'];
+    export type VLMScene = components['schemas']['models.VLMScene'];
+    export type VLMStableState = components['schemas']['models.VLMStableState'];
     export type VaultMedia = components['schemas']['models.VaultMedia'];
     export type VaultMediaEvent = components['schemas']['models.VaultMediaEvent'];
     export type VaultMediaFragmentCollection = components['schemas']['models.VaultMediaFragmentCollection'];
@@ -39845,8 +42214,17 @@ export namespace models {
     export type Webhook = components['schemas']['models.Webhook'];
     export type WeeklySchedule = components['schemas']['models.WeeklySchedule'];
     export type Workflow = components['schemas']['models.Workflow'];
+    export type WorkflowAnprDetection = components['schemas']['models.WorkflowAnprDetection'];
+    export type WorkflowAnprMarker = components['schemas']['models.WorkflowAnprMarker'];
+    export type WorkflowAnprMarkerMetadata = components['schemas']['models.WorkflowAnprMarkerMetadata'];
+    export type WorkflowAnprResult = components['schemas']['models.WorkflowAnprResult'];
+    export type WorkflowAnprTrack = components['schemas']['models.WorkflowAnprTrack'];
+    export type WorkflowAnprTrackMeta = components['schemas']['models.WorkflowAnprTrackMeta'];
     export type WorkflowCallback = components['schemas']['models.WorkflowCallback'];
+    export type WorkflowClassifyInput = components['schemas']['models.WorkflowClassifyInput'];
+    export type WorkflowClassifyInputDetail = components['schemas']['models.WorkflowClassifyInputDetail'];
     export type WorkflowCondition = components['schemas']['models.WorkflowCondition'];
+    export type WorkflowConditionPath = components['schemas']['models.WorkflowConditionPath'];
     export type WorkflowConditionSet = components['schemas']['models.WorkflowConditionSet'];
     export type WorkflowDevice = components['schemas']['models.WorkflowDevice'];
     export type WorkflowDeviceReference = components['schemas']['models.WorkflowDeviceReference'];
@@ -39944,6 +42322,10 @@ export namespace api {
     export type DeleteDetectionRunErrorResponse = components['schemas']['api.DeleteDetectionRunErrorResponse'];
     export type DeleteDetectionRunResponse = components['schemas']['api.DeleteDetectionRunResponse'];
     export type DeleteDetectionRunSuccessResponse = components['schemas']['api.DeleteDetectionRunSuccessResponse'];
+    export type DeleteMediaVLMStableStateErrorResponse = components['schemas']['api.DeleteMediaVLMStableStateErrorResponse'];
+    export type DeleteMediaVLMStableStateRequest = components['schemas']['api.DeleteMediaVLMStableStateRequest'];
+    export type DeleteMediaVLMStableStateResponse = components['schemas']['api.DeleteMediaVLMStableStateResponse'];
+    export type DeleteMediaVLMStableStateSuccessResponse = components['schemas']['api.DeleteMediaVLMStableStateSuccessResponse'];
     export type DeleteProjectErrorResponse = components['schemas']['api.DeleteProjectErrorResponse'];
     export type DeleteProjectResponse = components['schemas']['api.DeleteProjectResponse'];
     export type DeleteProjectSuccessResponse = components['schemas']['api.DeleteProjectSuccessResponse'];
@@ -40090,6 +42472,10 @@ export namespace api {
     export type GetMediaRequest = components['schemas']['api.GetMediaRequest'];
     export type GetMediaResponse = components['schemas']['api.GetMediaResponse'];
     export type GetMediaSuccessResponse = components['schemas']['api.GetMediaSuccessResponse'];
+    export type GetMediaVLMContextErrorResponse = components['schemas']['api.GetMediaVLMContextErrorResponse'];
+    export type GetMediaVLMContextRequest = components['schemas']['api.GetMediaVLMContextRequest'];
+    export type GetMediaVLMContextResponse = components['schemas']['api.GetMediaVLMContextResponse'];
+    export type GetMediaVLMContextSuccessResponse = components['schemas']['api.GetMediaVLMContextSuccessResponse'];
     export type GetOrganisationErrorResponse = components['schemas']['api.GetOrganisationErrorResponse'];
     export type GetOrganisationResponse = components['schemas']['api.GetOrganisationResponse'];
     export type GetOrganisationSuccessResponse = components['schemas']['api.GetOrganisationSuccessResponse'];
@@ -40168,6 +42554,9 @@ export namespace api {
     export type GetVideowallsErrorResponse = components['schemas']['api.GetVideowallsErrorResponse'];
     export type GetVideowallsResponse = components['schemas']['api.GetVideowallsResponse'];
     export type GetVideowallsSuccessResponse = components['schemas']['api.GetVideowallsSuccessResponse'];
+    export type GetWorkflowCatalogErrorResponse = components['schemas']['api.GetWorkflowCatalogErrorResponse'];
+    export type GetWorkflowCatalogResponse = components['schemas']['api.GetWorkflowCatalogResponse'];
+    export type GetWorkflowCatalogSuccessResponse = components['schemas']['api.GetWorkflowCatalogSuccessResponse'];
     export type GetWorkflowErrorResponse = components['schemas']['api.GetWorkflowErrorResponse'];
     export type GetWorkflowResponse = components['schemas']['api.GetWorkflowResponse'];
     export type GetWorkflowRunsErrorResponse = components['schemas']['api.GetWorkflowRunsErrorResponse'];
@@ -40210,6 +42599,10 @@ export namespace api {
     export type PostDetectionsRequest = components['schemas']['api.PostDetectionsRequest'];
     export type PostDetectionsResponse = components['schemas']['api.PostDetectionsResponse'];
     export type PostDetectionsSuccessResponse = components['schemas']['api.PostDetectionsSuccessResponse'];
+    export type PromoteMediaVLMStableStateErrorResponse = components['schemas']['api.PromoteMediaVLMStableStateErrorResponse'];
+    export type PromoteMediaVLMStableStateRequest = components['schemas']['api.PromoteMediaVLMStableStateRequest'];
+    export type PromoteMediaVLMStableStateResponse = components['schemas']['api.PromoteMediaVLMStableStateResponse'];
+    export type PromoteMediaVLMStableStateSuccessResponse = components['schemas']['api.PromoteMediaVLMStableStateSuccessResponse'];
     export type PublishFileErrorResponse = components['schemas']['api.PublishFileErrorResponse'];
     export type PublishFileResponse = components['schemas']['api.PublishFileResponse'];
     export type PublishFileSuccessResponse = components['schemas']['api.PublishFileSuccessResponse'];
@@ -40289,6 +42682,10 @@ export namespace api {
     export type UpdateMediaRequest = components['schemas']['api.UpdateMediaRequest'];
     export type UpdateMediaResponse = components['schemas']['api.UpdateMediaResponse'];
     export type UpdateMediaSuccessResponse = components['schemas']['api.UpdateMediaSuccessResponse'];
+    export type UpdateMediaVLMStableStateErrorResponse = components['schemas']['api.UpdateMediaVLMStableStateErrorResponse'];
+    export type UpdateMediaVLMStableStateRequest = components['schemas']['api.UpdateMediaVLMStableStateRequest'];
+    export type UpdateMediaVLMStableStateResponse = components['schemas']['api.UpdateMediaVLMStableStateResponse'];
+    export type UpdateMediaVLMStableStateSuccessResponse = components['schemas']['api.UpdateMediaVLMStableStateSuccessResponse'];
     export type UpdateOrganisationErrorResponse = components['schemas']['api.UpdateOrganisationErrorResponse'];
     export type UpdateOrganisationRequest = components['schemas']['api.UpdateOrganisationRequest'];
     export type UpdateOrganisationResponse = components['schemas']['api.UpdateOrganisationResponse'];
@@ -40319,8 +42716,6 @@ export namespace api {
     export type WarningResponse = components['schemas']['api.WarningResponse'];
     export type WorkflowFilter = components['schemas']['api.WorkflowFilter'];
     export type WorkflowRunFilter = components['schemas']['api.WorkflowRunFilter'];
-    export type WorkflowRunOperationStatus = models.WorkflowRunOperationStatus;
-    export type WorkflowRunStatus = models.WorkflowRun;
     export type WorkflowRunOverview = components['schemas']['api.WorkflowRunOverview'];
     export type WorkflowRunStatusSummary = components['schemas']['api.WorkflowRunStatusSummary'];
 }

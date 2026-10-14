@@ -58,6 +58,10 @@ type PipelineEvent struct {
 	FileName  string          `json:"fileName,omitempty"`
 	Payload   PipelinePayload `json:"payload,omitempty"`
 
+	VaultProcessing *ProcessingRegistration     `json:"vaultProcessing,omitempty"`
+	VaultJob        *ProcessingJob              `json:"vaultJob,omitempty"`
+	Completion      *ProcessingCompletionTarget `json:"completion,omitempty"`
+
 	Data map[string]interface{} `json:"data,omitempty"` // We should get rid of this and use the stage map
 }
 
