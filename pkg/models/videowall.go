@@ -54,7 +54,15 @@ type VideowallLayout struct {
 	Columns int `json:"columns" bson:"columns"`
 	// Tiles lists each placed camera in display order with its span.
 	Tiles []VideowallLayoutTile `json:"tiles" bson:"tiles"`
+	// AspectRatio is the shape of a single grid cell as "W:H" (one of
+	// VideowallLayoutAspectRatios). Empty means 16:9, so layouts saved before
+	// this field existed keep rendering unchanged.
+	AspectRatio string `json:"aspectRatio,omitempty" bson:"aspectRatio,omitempty"`
 }
+
+// VideowallLayoutAspectRatios lists the accepted VideowallLayout.AspectRatio
+// values. The first entry is the default.
+var VideowallLayoutAspectRatios = []string{"16:9", "4:3", "1:1"}
 
 // VideowallLayoutTile is a single camera's position and size within a layout.
 type VideowallLayoutTile struct {
