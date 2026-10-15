@@ -109,13 +109,8 @@ type Device struct {
 	SiteIds        []string            `json:"siteIds" bson:"siteIds,omitempty"`
 	GroupIds       []string            `json:"groupIds" bson:"groupIds,omitempty"`
 
-	// Labels are free-form tags owners set on a device (DevicePatch), stored in
-	// NormalizeDeviceLabels form. Workflow triggers can select devices by label
-	// (WorkflowTrigger.Labels), which lets a deployment-global workflow run on
-	// specific devices across organisations. Only owners may edit them, so a
-	// deployment that defines label-triggered global workflows must trust its
-	// owners (self-hosted deployments, not multi-tenant SaaS).
-	Labels []string `json:"labels,omitempty" bson:"labels,omitempty"`
+	// Tags are short identifiers on a device, grouped by type (DeviceTags).
+	Tags *DeviceTags `json:"tags,omitempty" bson:"tags,omitempty"`
 
 	// Lifecycle
 	MutedUntil int64 `json:"mute,omitempty" bson:"mute,omitempty"` // Notifications muted until (seconds since epoch)
@@ -187,7 +182,7 @@ var (
 	ErrDeviceKeyMissing          = errors.New("device key is required")
 	ErrDeviceOrganisationMissing = errors.New("device organisationId is required")
 	ErrDeviceTypeInvalid         = errors.New("device type is invalid")
-	ErrDeviceLabelInvalid        = errors.New("device label is invalid")
+	ErrDeviceTagInvalid          = errors.New("device tag is invalid")
 )
 
 // Validate checks the invariants every stored device must satisfy.
@@ -202,10 +197,12 @@ func (d Device) Validate() error {
 	if d.Type != "" && !d.Type.Valid() {
 		errs = append(errs, fmt.Errorf("%w: %q", ErrDeviceTypeInvalid, d.Type))
 	}
-	if normalized, err := NormalizeDeviceLabels(d.Labels); err != nil {
-		errs = append(errs, err)
-	} else if !slices.Equal(normalized, d.Labels) && len(d.Labels) > 0 {
-		errs = append(errs, fmt.Errorf("%w: labels are not normalized", ErrDeviceLabelInvalid))
+	if d.Tags != nil {
+		if normalized, err := NormalizeDeviceTags(d.Tags.System); err != nil {
+			errs = append(errs, err)
+		} else if !slices.Equal(normalized, d.Tags.System) && len(d.Tags.System) > 0 {
+			errs = append(errs, fmt.Errorf("%w: system tags are not normalized", ErrDeviceTagInvalid))
+		}
 	}
 	if d.LightSensor != nil {
 		errs = append(errs, validRange("lightSensor lux", d.LightSensor.MinLux, d.LightSensor.MaxLux))
@@ -446,14 +443,14 @@ type DevicePatch struct {
 	OnFloorPlans       *[]string                 `json:"onFloorPlans,omitempty"`
 	FieldOfView        *float64                  `json:"fieldOfView,omitempty"`
 	FeaturePermissions *DeviceFeaturePermissions `json:"featurePermissions,omitempty"`
-	Location           *Location                 `json:"location,omitempty"` // Replaces the whole location
-	Labels             *[]string                 `json:"labels,omitempty"`   // Replaces all labels; normalized by ToSet, check with Validate
+	Location           *Location                 `json:"location,omitempty"`   // Replaces the whole location
+	SystemTags         *[]string                 `json:"systemTags,omitempty"` // Replaces all system tags; normalized by ToSet, check with Validate
 }
 
 // Validate checks the fields of a patch that can be invalid on their own.
 func (p DevicePatch) Validate() error {
-	if p.Labels != nil {
-		if _, err := NormalizeDeviceLabels(*p.Labels); err != nil {
+	if p.SystemTags != nil {
+		if _, err := NormalizeDeviceTags(*p.SystemTags); err != nil {
 			return err
 		}
 	}
@@ -477,11 +474,11 @@ func (p DevicePatch) ToSet() map[string]interface{} {
 	if p.Location != nil {
 		set["location"] = p.Location
 	}
-	if p.Labels != nil {
-		// Validate rejects labels that do not normalize; ToSet stores the
-		// normalized form so stored labels always match trigger labels.
-		labels, _ := NormalizeDeviceLabels(*p.Labels)
-		set["labels"] = labels
+	if p.SystemTags != nil {
+		// Validate rejects tags that do not normalize; ToSet stores the
+		// normalized form so stored tags always match trigger tags.
+		tags, _ := NormalizeDeviceTags(*p.SystemTags)
+		set["tags.system"] = tags
 	}
 	return set
 }
@@ -711,35 +708,48 @@ type DeprecatedONVIFEvents struct {
 	Timestamp int64  `json:"timestamp" bson:"timestamp,omitempty"`
 }
 
-// Device label limits.
+// DeviceTags holds a device's tags per type, each in NormalizeDeviceTags form.
+// Each type has its own writer and permissions and its own path (tags.<type>),
+// so writing one type never touches another.
+type DeviceTags struct {
+	// System tags come from the deployment's catalog (Helm) and are set by
+	// owners (DevicePatch.SystemTags). Workflow triggers select devices by
+	// system tag (WorkflowTrigger.SystemTags), which lets a deployment-global
+	// workflow run on specific devices across organisations; a deployment that
+	// defines such workflows must trust its owners (self-hosted, not
+	// multi-tenant SaaS).
+	System []string `json:"system,omitempty" bson:"system,omitempty"`
+}
+
+// Device tag limits, per tag type.
 const (
-	MaxDeviceLabels      = 32
-	MaxDeviceLabelLength = 64
+	MaxDeviceTags      = 32
+	MaxDeviceTagLength = 64
 )
 
-var deviceLabelPattern = regexp.MustCompile(`^[a-z0-9]([a-z0-9._:-]*[a-z0-9])?$`)
+var deviceTagPattern = regexp.MustCompile(`^[a-z0-9]([a-z0-9._:-]*[a-z0-9])?$`)
 
-// NormalizeDeviceLabels returns labels in their stored form: trimmed,
-// lowercased, de-duplicated and sorted. A label is 1-64 characters of a-z,
-// 0-9, ".", "_", ":" and "-", starting and ending with a letter or digit; a
-// device has at most 32. The empty list is valid (no labels). Triggers use
-// the same form, so a label always matches regardless of how it was typed.
-func NormalizeDeviceLabels(labels []string) ([]string, error) {
-	normalized := make([]string, 0, len(labels))
-	seen := make(map[string]bool, len(labels))
-	for _, label := range labels {
-		label = strings.ToLower(strings.TrimSpace(label))
-		if len(label) == 0 || len(label) > MaxDeviceLabelLength || !deviceLabelPattern.MatchString(label) {
-			return nil, fmt.Errorf("%w: %q must be 1-%d characters of a-z, 0-9, \".\", \"_\", \":\" or \"-\", starting and ending with a letter or digit", ErrDeviceLabelInvalid, label, MaxDeviceLabelLength)
+// NormalizeDeviceTags returns tags in their stored form: trimmed, lowercased,
+// de-duplicated and sorted. A tag is 1-64 characters of a-z, 0-9, ".", "_",
+// ":" and "-", starting and ending with a letter or digit, and a device has at
+// most 32 of each type. The empty list is valid (no tags). Triggers use the
+// same form, so a tag always matches regardless of how it was typed.
+func NormalizeDeviceTags(tags []string) ([]string, error) {
+	normalized := make([]string, 0, len(tags))
+	seen := make(map[string]bool, len(tags))
+	for _, tag := range tags {
+		tag = strings.ToLower(strings.TrimSpace(tag))
+		if len(tag) == 0 || len(tag) > MaxDeviceTagLength || !deviceTagPattern.MatchString(tag) {
+			return nil, fmt.Errorf("%w: %q must be 1-%d characters of a-z, 0-9, \".\", \"_\", \":\" or \"-\", starting and ending with a letter or digit", ErrDeviceTagInvalid, tag, MaxDeviceTagLength)
 		}
-		if seen[label] {
+		if seen[tag] {
 			continue
 		}
-		seen[label] = true
-		normalized = append(normalized, label)
+		seen[tag] = true
+		normalized = append(normalized, tag)
 	}
-	if len(normalized) > MaxDeviceLabels {
-		return nil, fmt.Errorf("%w: a device has at most %d labels", ErrDeviceLabelInvalid, MaxDeviceLabels)
+	if len(normalized) > MaxDeviceTags {
+		return nil, fmt.Errorf("%w: a device has at most %d tags of one type", ErrDeviceTagInvalid, MaxDeviceTags)
 	}
 	sort.Strings(normalized)
 	return normalized, nil

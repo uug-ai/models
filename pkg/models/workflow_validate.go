@@ -170,7 +170,7 @@ func (w *Workflow) ValidateStartNodes() error {
 		if trigger.Type == WorkflowTriggerAutomatic {
 			// Source/schedule validation belongs to each edge's effective scope.
 			trigger.Devices, trigger.SiteIds, trigger.GroupIds, trigger.WeeklySchedule = nil, nil, nil, nil
-			trigger.Labels = nil
+			trigger.SystemTags = nil
 			trigger.Classifications = nil
 			ids := map[string]bool{}
 			for _, edge := range w.Edges {
@@ -259,7 +259,7 @@ func (t WorkflowTrigger) Validate() error {
 			}
 		}
 	}
-	if err := validateTriggerLabels(t.Labels); err != nil {
+	if err := validateTriggerSystemTags(t.SystemTags); err != nil {
 		return err
 	}
 	for _, classification := range t.Classifications {
@@ -311,20 +311,20 @@ func (w *Workflow) ValidateTriggers() error {
 	return nil
 }
 
-// validateTriggerLabels requires trigger labels in the stored device label form
-// (NormalizeDeviceLabels), in any order: a label that would be normalized
+// validateTriggerSystemTags requires trigger system tags in the stored device
+// tag form (NormalizeDeviceTags), in any order: a tag that would be normalized
 // differently could never match a device.
-func validateTriggerLabels(labels []string) error {
-	normalized, err := NormalizeDeviceLabels(labels)
+func validateTriggerSystemTags(tags []string) error {
+	normalized, err := NormalizeDeviceTags(tags)
 	if err != nil {
-		return fmt.Errorf("trigger labels: %w", err)
+		return fmt.Errorf("trigger system tags: %w", err)
 	}
-	if len(normalized) != len(labels) {
-		return fmt.Errorf("trigger labels contain duplicates: %v", labels)
+	if len(normalized) != len(tags) {
+		return fmt.Errorf("trigger system tags contain duplicates: %v", tags)
 	}
-	for _, label := range labels {
-		if label != strings.ToLower(strings.TrimSpace(label)) {
-			return fmt.Errorf("trigger label %q must be lowercase without surrounding spaces", label)
+	for _, tag := range tags {
+		if tag != strings.ToLower(strings.TrimSpace(tag)) {
+			return fmt.Errorf("trigger system tag %q must be lowercase without surrounding spaces", tag)
 		}
 	}
 	return nil

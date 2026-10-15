@@ -116,7 +116,7 @@ func TestConditionValidatorFieldsDeriveFromSchema(t *testing.T) {
 		"deviceKey": conditionFieldLeaf, "deviceName": conditionFieldLeaf,
 		"provider": conditionFieldLeaf, "storageSolution": conditionFieldLeaf,
 		"siteIds": conditionFieldArray, "groupIds": conditionFieldArray,
-		"labels": conditionFieldArray,
+		"systemTags": conditionFieldArray,
 	}
 	wantOperations := map[string]map[string]conditionFieldKind{
 		"classify": {"properties": conditionFieldArray, "objectCount": conditionFieldLeaf, "details": conditionFieldArray},
