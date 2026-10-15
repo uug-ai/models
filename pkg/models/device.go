@@ -3,6 +3,10 @@ package models
 import (
 	"errors"
 	"fmt"
+	"regexp"
+	"slices"
+	"sort"
+	"strings"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -105,6 +109,14 @@ type Device struct {
 	SiteIds        []string            `json:"siteIds" bson:"siteIds,omitempty"`
 	GroupIds       []string            `json:"groupIds" bson:"groupIds,omitempty"`
 
+	// Labels are free-form tags owners set on a device (DevicePatch), stored in
+	// NormalizeDeviceLabels form. Workflow triggers can select devices by label
+	// (WorkflowTrigger.Labels), which lets a deployment-global workflow run on
+	// specific devices across organisations. Only owners may edit them, so a
+	// deployment that defines label-triggered global workflows must trust its
+	// owners (self-hosted deployments, not multi-tenant SaaS).
+	Labels []string `json:"labels,omitempty" bson:"labels,omitempty"`
+
 	// Lifecycle
 	MutedUntil int64 `json:"mute,omitempty" bson:"mute,omitempty"` // Notifications muted until (seconds since epoch)
 
@@ -175,6 +187,7 @@ var (
 	ErrDeviceKeyMissing          = errors.New("device key is required")
 	ErrDeviceOrganisationMissing = errors.New("device organisationId is required")
 	ErrDeviceTypeInvalid         = errors.New("device type is invalid")
+	ErrDeviceLabelInvalid        = errors.New("device label is invalid")
 )
 
 // Validate checks the invariants every stored device must satisfy.
@@ -188,6 +201,11 @@ func (d Device) Validate() error {
 	}
 	if d.Type != "" && !d.Type.Valid() {
 		errs = append(errs, fmt.Errorf("%w: %q", ErrDeviceTypeInvalid, d.Type))
+	}
+	if normalized, err := NormalizeDeviceLabels(d.Labels); err != nil {
+		errs = append(errs, err)
+	} else if !slices.Equal(normalized, d.Labels) && len(d.Labels) > 0 {
+		errs = append(errs, fmt.Errorf("%w: labels are not normalized", ErrDeviceLabelInvalid))
 	}
 	if d.LightSensor != nil {
 		errs = append(errs, validRange("lightSensor lux", d.LightSensor.MinLux, d.LightSensor.MaxLux))
@@ -429,6 +447,17 @@ type DevicePatch struct {
 	FieldOfView        *float64                  `json:"fieldOfView,omitempty"`
 	FeaturePermissions *DeviceFeaturePermissions `json:"featurePermissions,omitempty"`
 	Location           *Location                 `json:"location,omitempty"` // Replaces the whole location
+	Labels             *[]string                 `json:"labels,omitempty"`   // Replaces all labels; normalized by ToSet, check with Validate
+}
+
+// Validate checks the fields of a patch that can be invalid on their own.
+func (p DevicePatch) Validate() error {
+	if p.Labels != nil {
+		if _, err := NormalizeDeviceLabels(*p.Labels); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (p DevicePatch) ToSet() map[string]interface{} {
@@ -447,6 +476,12 @@ func (p DevicePatch) ToSet() map[string]interface{} {
 	}
 	if p.Location != nil {
 		set["location"] = p.Location
+	}
+	if p.Labels != nil {
+		// Validate rejects labels that do not normalize; ToSet stores the
+		// normalized form so stored labels always match trigger labels.
+		labels, _ := NormalizeDeviceLabels(*p.Labels)
+		set["labels"] = labels
 	}
 	return set
 }
@@ -674,4 +709,38 @@ type DeprecatedONVIFEvents struct {
 	Type      string `json:"type" bson:"type,omitempty"`
 	Value     string `json:"value" bson:"value,omitempty"`
 	Timestamp int64  `json:"timestamp" bson:"timestamp,omitempty"`
+}
+
+// Device label limits.
+const (
+	MaxDeviceLabels      = 32
+	MaxDeviceLabelLength = 64
+)
+
+var deviceLabelPattern = regexp.MustCompile(`^[a-z0-9]([a-z0-9._:-]*[a-z0-9])?$`)
+
+// NormalizeDeviceLabels returns labels in their stored form: trimmed,
+// lowercased, de-duplicated and sorted. A label is 1-64 characters of a-z,
+// 0-9, ".", "_", ":" and "-", starting and ending with a letter or digit; a
+// device has at most 32. The empty list is valid (no labels). Triggers use
+// the same form, so a label always matches regardless of how it was typed.
+func NormalizeDeviceLabels(labels []string) ([]string, error) {
+	normalized := make([]string, 0, len(labels))
+	seen := make(map[string]bool, len(labels))
+	for _, label := range labels {
+		label = strings.ToLower(strings.TrimSpace(label))
+		if len(label) == 0 || len(label) > MaxDeviceLabelLength || !deviceLabelPattern.MatchString(label) {
+			return nil, fmt.Errorf("%w: %q must be 1-%d characters of a-z, 0-9, \".\", \"_\", \":\" or \"-\", starting and ending with a letter or digit", ErrDeviceLabelInvalid, label, MaxDeviceLabelLength)
+		}
+		if seen[label] {
+			continue
+		}
+		seen[label] = true
+		normalized = append(normalized, label)
+	}
+	if len(normalized) > MaxDeviceLabels {
+		return nil, fmt.Errorf("%w: a device has at most %d labels", ErrDeviceLabelInvalid, MaxDeviceLabels)
+	}
+	sort.Strings(normalized)
+	return normalized, nil
 }

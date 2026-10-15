@@ -73,7 +73,7 @@ const (
 //   - results.<op>.<field>  — an upstream stage's accumulated output (e.g.
 //     results.anpr.markers).
 //   - device.<field>        — the recording source (deviceKey, deviceName,
-//     provider, storageSolution, siteIds, groupIds).
+//     provider, storageSolution, siteIds, groupIds, labels).
 //   - user.<field>          — the owning account (organisationId only).
 //   - operation, runId, key, traceId — the run's top-level identity scalars.
 //

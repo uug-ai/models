@@ -3,6 +3,7 @@ package models
 import (
 	"crypto/sha256"
 	"encoding/json"
+	"strings"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -136,6 +137,7 @@ type WorkflowEdgeTrigger struct {
 	Devices         []DeviceKey       `json:"devices,omitempty" bson:"devices,omitempty"`
 	SiteIds         []string          `json:"siteIds,omitempty" bson:"siteIds,omitempty"`
 	GroupIds        []string          `json:"groupIds,omitempty" bson:"groupIds,omitempty"`
+	Labels          []string          `json:"labels,omitempty" bson:"labels,omitempty"`
 	Classifications []string          `json:"classifications,omitempty" bson:"classifications,omitempty"`
 	WeeklySchedule  []*WeeklySchedule `json:"weeklySchedule,omitempty" bson:"weeklySchedule,omitempty"`
 }
@@ -146,6 +148,7 @@ func (e WorkflowEdge) startTriggerScope(node WorkflowNode) WorkflowTrigger {
 			Devices:         append([]DeviceKey(nil), e.Trigger.Devices...),
 			SiteIds:         append([]string(nil), e.Trigger.SiteIds...),
 			GroupIds:        append([]string(nil), e.Trigger.GroupIds...),
+			Labels:          append([]string(nil), e.Trigger.Labels...),
 			Classifications: append([]string(nil), e.Trigger.Classifications...),
 			WeeklySchedule:  append([]*WeeklySchedule(nil), e.Trigger.WeeklySchedule...),
 		}
@@ -154,6 +157,7 @@ func (e WorkflowEdge) startTriggerScope(node WorkflowNode) WorkflowTrigger {
 	if node.Trigger != nil {
 		scope.SiteIds = append([]string(nil), node.Trigger.SiteIds...)
 		scope.GroupIds = append([]string(nil), node.Trigger.GroupIds...)
+		scope.Labels = append([]string(nil), node.Trigger.Labels...)
 		scope.WeeklySchedule = append([]*WeeklySchedule(nil), node.Trigger.WeeklySchedule...)
 	}
 	return scope
@@ -248,6 +252,13 @@ type WorkflowTrigger struct {
 	// AND between populated categories.
 	SiteIds  []string `json:"siteIds,omitempty" bson:"siteIds,omitempty"`
 	GroupIds []string `json:"groupIds,omitempty" bson:"groupIds,omitempty"`
+	// Labels selects devices carrying at least one of the listed device labels
+	// (Device.Labels), in NormalizeDeviceLabels form. Unlike site and group ids,
+	// labels are not tenant-scoped, so a deployment-global workflow can select
+	// specific devices across organisations with them. Owners set labels, so
+	// label-triggered global workflows assume trusted owners (see
+	// Workflow.UsesDeviceLabels).
+	Labels []string `json:"labels,omitempty" bson:"labels,omitempty"`
 	// Classifications requires at least one selected label in the initial
 	// inputs.classify.details.*.classified values, independently of ConditionMode.
 	// Empty means unrestricted; future worker results never satisfy this scope.
@@ -329,6 +340,9 @@ func (t WorkflowTrigger) scopeConditions() []WorkflowCondition {
 	}
 	if len(t.GroupIds) > 0 {
 		out = append(out, WorkflowCondition{Path: "device.groupIds.*", Op: ConditionOpIn, Value: StringsToAny(t.GroupIds)})
+	}
+	if len(t.Labels) > 0 {
+		out = append(out, WorkflowCondition{Path: "device.labels.*", Op: ConditionOpIn, Value: StringsToAny(t.Labels)})
 	}
 	if len(t.Classifications) > 0 {
 		out = append(out, WorkflowCondition{
@@ -563,6 +577,51 @@ func (w *Workflow) EffectiveSource() WorkflowSource {
 		return WorkflowSourceUser
 	}
 	return w.Source
+}
+
+// UsesDeviceLabels reports whether any automatic trigger or Start edge of the
+// workflow selects devices by label. Engines use it to refuse label-triggered
+// deployment-global workflows where owners are not trusted (multi-tenant
+// SaaS), since owners set device labels.
+func (w *Workflow) UsesDeviceLabels() bool {
+	triggers := append([]WorkflowTrigger(nil), w.Triggers...)
+	if w.Trigger != nil {
+		triggers = append(triggers, *w.Trigger)
+	}
+	for _, trigger := range triggers {
+		if len(trigger.Labels) > 0 || conditionsReadLabels(trigger.Conditions) {
+			return true
+		}
+		if trigger.SharedConditions != nil && conditionsReadLabels(trigger.SharedConditions.Conditions) {
+			return true
+		}
+	}
+	for _, node := range w.Nodes {
+		if node.Trigger != nil && (len(node.Trigger.Labels) > 0 || conditionsReadLabels(node.Trigger.Conditions)) {
+			return true
+		}
+	}
+	for _, edge := range w.Edges {
+		if (edge.Trigger != nil && len(edge.Trigger.Labels) > 0) || conditionsReadLabels(edge.Conditions) {
+			return true
+		}
+		if edge.Condition != nil && conditionsReadLabels([]WorkflowCondition{*edge.Condition}) {
+			return true
+		}
+	}
+	return false
+}
+
+func conditionsReadLabels(conditions []WorkflowCondition) bool {
+	for _, condition := range conditions {
+		if condition.Path == "device.labels" || strings.HasPrefix(condition.Path, "device.labels.") {
+			return true
+		}
+		if conditionsReadLabels(condition.Conditions) {
+			return true
+		}
+	}
+	return false
 }
 
 // IsGlobal reports whether this workflow is available to every organisation. A

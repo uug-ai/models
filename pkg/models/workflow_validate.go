@@ -170,6 +170,7 @@ func (w *Workflow) ValidateStartNodes() error {
 		if trigger.Type == WorkflowTriggerAutomatic {
 			// Source/schedule validation belongs to each edge's effective scope.
 			trigger.Devices, trigger.SiteIds, trigger.GroupIds, trigger.WeeklySchedule = nil, nil, nil, nil
+			trigger.Labels = nil
 			trigger.Classifications = nil
 			ids := map[string]bool{}
 			for _, edge := range w.Edges {
@@ -258,6 +259,9 @@ func (t WorkflowTrigger) Validate() error {
 			}
 		}
 	}
+	if err := validateTriggerLabels(t.Labels); err != nil {
+		return err
+	}
 	for _, classification := range t.Classifications {
 		if strings.TrimSpace(classification) == "" {
 			return fmt.Errorf("trigger classifications contains an empty label")
@@ -302,6 +306,25 @@ func (w *Workflow) ValidateTriggers() error {
 	for i, trigger := range triggers {
 		if err := trigger.Validate(); err != nil {
 			return fmt.Errorf("trigger %d: %w", i, err)
+		}
+	}
+	return nil
+}
+
+// validateTriggerLabels requires trigger labels in the stored device label form
+// (NormalizeDeviceLabels), in any order: a label that would be normalized
+// differently could never match a device.
+func validateTriggerLabels(labels []string) error {
+	normalized, err := NormalizeDeviceLabels(labels)
+	if err != nil {
+		return fmt.Errorf("trigger labels: %w", err)
+	}
+	if len(normalized) != len(labels) {
+		return fmt.Errorf("trigger labels contain duplicates: %v", labels)
+	}
+	for _, label := range labels {
+		if label != strings.ToLower(strings.TrimSpace(label)) {
+			return fmt.Errorf("trigger label %q must be lowercase without surrounding spaces", label)
 		}
 	}
 	return nil

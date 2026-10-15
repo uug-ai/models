@@ -430,6 +430,7 @@ func TestDeviceHeartbeatAndPatchPathsAreDisjoint(t *testing.T) {
 		Hidden: &flag, LastMaintenance: &when, InstallationDate: &when,
 		OnFloorPlans: &floorPlans, FieldOfView: &number, FeaturePermissions: &DeviceFeaturePermissions{},
 		Location: &Location{Address: text},
+		Labels:   &floorPlans,
 	}
 	userPaths := map[string]bool{
 		// Written by the preset endpoints rather than DevicePatch.
