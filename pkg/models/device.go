@@ -681,6 +681,9 @@ type DeprecatedHeartbeat struct {
 	ONVIFEventsList  []DeprecatedONVIFEvents `json:"onvif_events_list" bson:"onvif_events_list,omitempty"`
 	CameraConnected  string                  `json:"cameraConnected" bson:"cameraConnected,omitempty"`
 	HasBackChannel   string                  `json:"hasBackChannel" bson:"hasBackChannel,omitempty"`
+	// ContinuousRecording is "true" or "false"; empty when the agent does not
+	// report it (older agents), unlike CameraMetadata.ContinuousRecording.
+	ContinuousRecording string `json:"continuousRecording,omitempty" bson:"continuousRecording,omitempty"`
 	//Board           string   `json:"board,omitempty"`
 	//Disk1Size       string   `json:"disk1size,omitempty" bson:"disk1size,omitempty"`
 	//Disk3Size       string   `json:"disk3size,omitempty" bson:"disk3size,omitempty"`
