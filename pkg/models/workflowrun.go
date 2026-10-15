@@ -601,6 +601,7 @@ type WorkflowDevice struct {
 	StorageSolution string   `json:"storageSolution,omitempty"` // media StorageSolution: where the media is stored
 	SiteIds         []string `json:"siteIds,omitempty"`         // site ids the device is linked to (Device.SiteIds); a gate value, matchable with contains/in/exists/matches
 	GroupIds        []string `json:"groupIds,omitempty"`        // effective group memberships resolved by the caller, never an authorization grant
+	Labels          []string `json:"labels,omitempty"`          // owner-set device labels (Device.Labels), loaded by the caller
 }
 
 // WorkflowStorage carries the storage credentials a dispatched stage worker
@@ -675,6 +676,7 @@ func WorkflowConditionRootSchema() []WorkflowConditionPath {
 		{Path: "device.storageSolution", Type: "string", Modes: bothConditionRootModes},
 		{Path: "device.siteIds.*", Type: "string", Modes: bothConditionRootModes},
 		{Path: "device.groupIds.*", Type: "string", Modes: bothConditionRootModes},
+		{Path: "device.labels.*", Type: "string", Modes: bothConditionRootModes},
 		{Path: "user.organisationId", Type: "string", Modes: bothConditionRootModes},
 		{Path: "key", Type: "string", Modes: bothConditionRootModes},
 		{Path: "operation", Type: "string", Modes: bothConditionRootModes},
@@ -786,6 +788,7 @@ func workflowConditionEnvelope(device WorkflowDevice, user WorkflowUser) map[str
 			// contains/in/matches array handling applies.
 			"siteIds":  StringsToAny(device.SiteIds),
 			"groupIds": StringsToAny(device.GroupIds),
+			"labels":   StringsToAny(device.Labels),
 		},
 		"user": map[string]any{
 			"organisationId": user.OrganisationId,

@@ -99,6 +99,7 @@ const (
 	DeviceProjectId = "projectId"
 	DeviceSiteIds = "siteIds"
 	DeviceGroupIds = "groupIds"
+	DeviceLabels = "labels"
 	DeviceMutedUntil = "mute"
 	DeviceAgentLastSeen = "agentLastSeen"
 	DeviceDeviceLastSeen = "deviceLastSeen"

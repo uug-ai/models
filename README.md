@@ -233,6 +233,7 @@ device                          envelope, from WorkflowRun.Device
   deviceKey, deviceName         string
   provider, storageSolution     string
   siteIds.*, groupIds.*         string (array elements)
+  labels.*                      string (array elements), owner-set device labels
 user
   organisationId                string (projectId and storage are never exposed)
 key, operation, traceId         string, run identity
@@ -603,12 +604,29 @@ and missing, non-array, or empty values do not match. Legacy wildcard predicates
 retain independent-candidate behavior; two `details.*` predicates can match two
 different detections.
 
-- **Triggers:** `type` defaults to `automatic`. `devices`, `siteIds`, and `groupIds`
-  select recording scope: OR within each category, AND across populated
-  categories. The scope, weekly active hours, and condition group must all hold.
-  Schedules filter recording events; they are not scheduled jobs. Site/group IDs
-  are stable strings, and callers must resolve effective memberships and enforce
-  tenant/project access separately.
+- **Triggers:** `type` defaults to `automatic`. `devices`, `siteIds`, `groupIds`
+  and `labels` select recording scope: OR within each category, AND across
+  populated categories. The scope, weekly active hours, and condition group must
+  all hold. Schedules filter recording events; they are not scheduled jobs.
+  Site/group IDs are stable strings, and callers must resolve effective
+  memberships and enforce tenant/project access separately.
+- **Device labels:** owners tag devices with `labels` (`DevicePatch.Labels`,
+  stored in `NormalizeDeviceLabels` form: lowercase, de-duplicated, sorted;
+  1–64 characters of `a-z0-9._:-`, at most 32 per device). A trigger's `labels`
+  (in the same form) selects devices carrying any of them. Labels are not
+  tenant-scoped, which lets a deployment-global (Helm) workflow run on specific
+  devices across organisations:
+
+  ```yaml
+  triggers:
+    - type: automatic
+      labels: ["anpr-pilot"]
+  ```
+
+  Because owners set labels, label-triggered global workflows assume trusted
+  owners (self-hosted deployments). `Workflow.UsesDeviceLabels` lets engines
+  refuse them where owners are not trusted (multi-tenant SaaS). The caller
+  loads `WorkflowDevice.Labels` from the device.
 - **Manual triggers:** `surfaces` advertises `case`, `media`, and/or `redaction`.
   Validation requires a supported surface; automatic-only fields remain ignored
   for compatibility with existing documents.
@@ -618,7 +636,7 @@ different detections.
   workflows. `NormalizeTriggers`/`SyncGraphTriggers` derive one automatic trigger
   per outgoing Start edge (or one manual trigger), overriding stale top-level
   triggers. Each outgoing edge owns an optional `trigger` object containing only
-  `devices`, `siteIds`, `groupIds`, `classifications`, and `weeklySchedule`; its `conditions` and
+  `devices`, `siteIds`, `groupIds`, `labels`, `classifications`, and `weeklySchedule`; its `conditions` and
   `conditionMode` remain on the edge, outside that object. A present `trigger`
   (including `{}`) completely replaces legacy node source/schedule scope; an
   absent/null trigger reads node `devices` and node-trigger site/group/schedule
