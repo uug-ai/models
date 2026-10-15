@@ -69,6 +69,7 @@ const (
 	DeprecatedHeartbeatONVIFEventsList = "onvif_events_list"
 	DeprecatedHeartbeatCameraConnected = "cameraConnected"
 	DeprecatedHeartbeatHasBackChannel = "hasBackChannel"
+	DeprecatedHeartbeatContinuousRecording = "continuousRecording"
 )
 
 // DeprecatedONVIFEvents property field names (BSON)
