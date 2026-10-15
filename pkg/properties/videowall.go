@@ -36,6 +36,7 @@ const (
 const (
 	VideowallLayoutColumns = "columns"
 	VideowallLayoutTiles = "tiles"
+	VideowallLayoutAspectRatio = "aspectRatio"
 )
 
 // VideowallLayoutTile property field names (BSON)
