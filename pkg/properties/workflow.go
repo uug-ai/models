@@ -42,7 +42,7 @@ const (
 	WorkflowEdgeTriggerDevices = "devices"
 	WorkflowEdgeTriggerSiteIds = "siteIds"
 	WorkflowEdgeTriggerGroupIds = "groupIds"
-	WorkflowEdgeTriggerLabels = "labels"
+	WorkflowEdgeTriggerSystemTags = "systemTags"
 	WorkflowEdgeTriggerClassifications = "classifications"
 	WorkflowEdgeTriggerWeeklySchedule = "weeklySchedule"
 )
@@ -68,7 +68,7 @@ const (
 	WorkflowTriggerDevices = "devices"
 	WorkflowTriggerSiteIds = "siteIds"
 	WorkflowTriggerGroupIds = "groupIds"
-	WorkflowTriggerLabels = "labels"
+	WorkflowTriggerSystemTags = "systemTags"
 	WorkflowTriggerClassifications = "classifications"
 	WorkflowTriggerConditionMode = "conditionMode"
 	WorkflowTriggerConditions = "conditions"

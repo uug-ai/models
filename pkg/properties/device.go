@@ -99,7 +99,7 @@ const (
 	DeviceProjectId = "projectId"
 	DeviceSiteIds = "siteIds"
 	DeviceGroupIds = "groupIds"
-	DeviceLabels = "labels"
+	DeviceTags = "tags"
 	DeviceMutedUntil = "mute"
 	DeviceAgentLastSeen = "agentLastSeen"
 	DeviceDeviceLastSeen = "deviceLastSeen"
@@ -185,6 +185,11 @@ const (
 	DeviceOptionId = "id"
 	DeviceOptionValue = "value"
 	DeviceOptionText = "text"
+)
+
+// DeviceTags property field names (BSON)
+const (
+	DeviceTagsSystem = "system"
 )
 
 // DeviceThresholds property field names (BSON)
