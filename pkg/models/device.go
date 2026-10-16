@@ -99,7 +99,7 @@ type Device struct {
 	Id            primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	SchemaVersion int                `json:"schemaVersion" bson:"schemaVersion,omitempty"`
 	Key           string             `json:"key" bson:"key,omitempty"`   // Device key reported by the agent, unique within its project
-	Name          string             `json:"name" bson:"name,omitempty"` // Display name: the agent's name (Agent.Name) at provisioning, then renamed by users (DevicePatch.Name); heartbeats never change it
+	Name          string             `json:"name" bson:"name,omitempty"` // Optional stored name (DevicePatch.Name); display falls back to Agent.Name, the name the agent reports
 	Type          DeviceType         `json:"type" bson:"type,omitempty"`
 
 	// Tenancy. Heartbeat credentials live on the project: the cloud key resolves
@@ -594,16 +594,13 @@ func (h DeviceHeartbeat) FullSet() map[string]interface{} {
 
 // ProvisionSet builds the $setOnInsert for a device created by its first
 // heartbeat: FullSet plus the creation time and the schema version, since a
-// new device is complete in the current shape, and the initial display name:
-// the agent's name. Users rename the device afterwards (DevicePatch.Name);
-// heartbeats never change name again, only agent.name.
+// new device is complete in the current shape. Name is left empty so display
+// follows Agent.Name, the name the agent reports (its friendly name from the
+// remote config, else its configured name), and renames on the agent show.
 func (h DeviceHeartbeat) ProvisionSet() map[string]interface{} {
 	set := h.FullSet()
 	set["schemaVersion"] = DeviceSchemaVersion
 	set["audit.createdAt"] = time.UnixMilli(h.ReceivedAt).UTC()
-	if name := strings.TrimSpace(h.Agent.Name); name != "" {
-		set["name"] = name
-	}
 	return set
 }
 
