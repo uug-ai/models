@@ -321,7 +321,7 @@ func TestDeviceDecodesStoredDocument(t *testing.T) {
 // receive it; it is never a private key.
 func TestDeviceAgentFields(t *testing.T) {
 	device := Device{
-		Agent:   &DeviceAgent{CloudPublicKey: "AKIA5V6EGLUWSI42UQFH", CameraName: "rtsp"},
+		Agent:   &DeviceAgent{CloudPublicKey: "AKIA5V6EGLUWSI42UQFH", Name: "rtsp"},
 		Monitor: &DeviceMonitor{Status: "active", ChangedAt: 1791961313000},
 	}
 	raw, err := bson.Marshal(device)
@@ -332,8 +332,8 @@ func TestDeviceAgentFields(t *testing.T) {
 	if got := doc.Lookup("agent", "cloudPublicKey").StringValue(); got != "AKIA5V6EGLUWSI42UQFH" {
 		t.Fatalf("agent.cloudPublicKey = %q", got)
 	}
-	if got := doc.Lookup("agent", "cameraName").StringValue(); got != "rtsp" {
-		t.Fatalf("agent.cameraName = %q", got)
+	if got := doc.Lookup("agent", "name").StringValue(); got != "rtsp" {
+		t.Fatalf("agent.name = %q", got)
 	}
 	if got := doc.Lookup("monitor", "status").StringValue(); got != "active" {
 		t.Fatalf("monitor.status = %q", got)
@@ -353,7 +353,7 @@ func fullHeartbeat() DeviceHeartbeat {
 		Type:       DeviceTypeCamera,
 		Agent: DeviceAgent{
 			CloudPublicKey: "AKIA5V6EGLUWSI42UQFH",
-			CameraName:     "rtsp",
+			Name:           "rtsp",
 			Version:        "v3.12.9",
 			ReleaseHash:    "abc",
 			Repository:     "kerberos-io/agent",
@@ -445,7 +445,14 @@ func TestDeviceHeartbeatAndPatchPathsAreDisjoint(t *testing.T) {
 	}
 
 	heartbeat := fullHeartbeat()
+	// ProvisionSet's name is the initial display name, written only when the
+	// device document is created ($setOnInsert); heartbeat updates never write
+	// it (TestDeviceHeartbeatProvisionSet), so user renames stick.
+	insertOnly := map[string]bool{"name": true}
 	for path := range heartbeat.ProvisionSet() {
+		if insertOnly[path] {
+			continue
+		}
 		for userPath := range userPaths {
 			if path == userPath || strings.HasPrefix(path, userPath+".") || strings.HasPrefix(userPath, path+".") {
 				t.Errorf("heartbeat path %s overlaps user path %s", path, userPath)
@@ -521,8 +528,20 @@ func TestDeviceHeartbeatProvisionSet(t *testing.T) {
 	if got, want := set["audit.createdAt"], time.UnixMilli(1791961313000).UTC(); got != want {
 		t.Fatalf("audit.createdAt = %v, want %v", got, want)
 	}
-	if _, ok := set["name"]; ok {
-		t.Fatal("ProvisionSet sets name; display falls back to agent.cameraName")
+	if set["name"] != set["agent.name"] || set["name"] == "" {
+		t.Fatalf("name = %v, want the agent's name %v", set["name"], set["agent.name"])
+	}
+	// No agent name: no initial display name either.
+	unnamed := fullHeartbeat()
+	unnamed.Agent.Name = "  "
+	if _, ok := unnamed.ProvisionSet()["name"]; ok {
+		t.Fatal("ProvisionSet set an empty name")
+	}
+	// Refresh and full writes never touch the display name, so renames stick.
+	for label, write := range map[string]map[string]interface{}{"FullSet": fullHeartbeat().FullSet(), "RefreshSet": fullHeartbeat().RefreshSet()} {
+		if _, ok := write["name"]; ok {
+			t.Fatalf("%s writes name; heartbeats must not overwrite renames", label)
+		}
 	}
 	if set["schemaVersion"] != DeviceSchemaVersion {
 		t.Fatalf("schemaVersion = %v, want %d for a new device", set["schemaVersion"], DeviceSchemaVersion)
