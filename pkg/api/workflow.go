@@ -216,11 +216,23 @@ type RunWorkflowErrorResponse struct {
 	ErrorResponse
 }
 
-// WorkflowRunStatus is retained as a source-compatible alias while callers
-// migrate to models.WorkflowRun. It is not a separate API model.
-//
-// Deprecated: use models.WorkflowRun.
-type WorkflowRunStatus = models.WorkflowRun
+// WorkflowRunStatus is the slim progress view of a launched run, polled by a
+// launch surface (e.g. a case) until its runs finish. It carries only the
+// lifecycle facts a progress indicator renders; the full run is served by the
+// detail endpoint (GET /workflows/runs/{runId}).
+type WorkflowRunStatus struct {
+	RunId      string                  `json:"runId"`
+	WorkflowId string                  `json:"workflowId,omitempty"`
+	State      models.WorkflowRunState `json:"state"`
+	// Start / End are Unix milliseconds; End is 0 while the run is still open.
+	Start int64 `json:"start,omitempty"`
+	End   int64 `json:"end,omitempty"`
+	// DispatchedOperations / ResolvedOperations name the run's stages in
+	// dispatch/resolution order, so a surface can render per-stage progress
+	// (e.g. "pose done, redaction running").
+	DispatchedOperations []string `json:"dispatchedOperations,omitempty"`
+	ResolvedOperations   []string `json:"resolvedOperations,omitempty"`
+}
 
 // Deprecated: use models.WorkflowRunOperationStatus.
 type WorkflowRunOperationStatus = models.WorkflowRunOperationStatus
@@ -248,12 +260,10 @@ type WorkflowRunStatusSummary struct {
 	NoResult  int `json:"noResult"`
 }
 
-// GetWorkflowRuns reports the status of the workflow runs launched from a
-// surface. Runs are grouped by the launch's SourceRef (e.g. a case id) and
-// scoped to the caller's organisation; an optional RunIds filter narrows to a
-// specific launch.
+// GetWorkflowRuns reports the workflow runs of a media launch. Runs are scoped
+// to the caller's organisation and narrowed by the launch's RunIds.
 //
-// @Router /tasks/{taskId}/workflow-runs [get]
+// @Router /media/workflow-runs [get]
 type GetWorkflowRunsResponse struct {
 	Runs    []models.WorkflowRun     `json:"runs"`
 	Summary WorkflowRunStatusSummary `json:"summary"`
@@ -263,6 +273,23 @@ type GetWorkflowRunsSuccessResponse struct {
 	Data GetWorkflowRunsResponse `json:"data"`
 }
 type GetWorkflowRunsErrorResponse struct {
+	ErrorResponse
+}
+
+// GetWorkflowRunStatus reports the progress of the workflow runs launched from
+// a case. Runs are scoped to the caller's organisation/project and grouped by
+// the launch's SourceRef; an optional RunIds filter narrows to one launch.
+//
+// @Router /tasks/{taskId}/workflow-runs [get]
+type GetWorkflowRunStatusResponse struct {
+	Runs    []WorkflowRunStatus      `json:"runs"`
+	Summary WorkflowRunStatusSummary `json:"summary"`
+}
+type GetWorkflowRunStatusSuccessResponse struct {
+	SuccessResponse
+	Data GetWorkflowRunStatusResponse `json:"data"`
+}
+type GetWorkflowRunStatusErrorResponse struct {
 	ErrorResponse
 }
 

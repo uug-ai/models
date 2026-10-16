@@ -3,7 +3,8 @@ package api
 import "github.com/uug-ai/models/pkg/models"
 
 // WorkflowRunOverview is an allowlisted operational overview, never a worker
-// envelope. Source fields are populated only after source authorization.
+// envelope. Source fields are populated only after source authorization. The
+// per-stage execution timeline is detail-only (GET /workflows/runs/{runId}).
 type WorkflowRunOverview struct {
 	RunId               string                              `json:"runId"`
 	WorkflowId          string                              `json:"workflowId,omitempty"`
@@ -18,7 +19,6 @@ type WorkflowRunOverview struct {
 	Resolved            int                                 `json:"resolved,omitempty"`
 	HasResults          bool                                `json:"hasResults,omitempty"`
 	Operations          []models.WorkflowRunOperationStatus `json:"operations,omitempty"`
-	StageExecutions     []models.WorkflowRunStageExecution  `json:"stageExecutions,omitempty"`
 	SourceAccess        string                              `json:"sourceAccess" enums:"available,restricted,unavailable"`
 	SourceType          string                              `json:"sourceType" enums:"media,case"`
 	SourceLabel         string                              `json:"sourceLabel,omitempty"`

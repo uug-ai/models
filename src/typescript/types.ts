@@ -18256,6 +18256,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/getworkflowrunstatuserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowRunStatusErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowRunStatusErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowRunStatusErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowrunstatusresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowRunStatusResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowRunStatusResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowRunStatusResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getworkflowrunstatussuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetWorkflowRunStatusSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetWorkflowRunStatusSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetWorkflowRunStatusSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/getworkflowserrorresponse": {
         parameters: {
             query?: never;
@@ -32569,6 +32686,45 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/workflowrunstatus": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get WorkflowRunStatus (schema generation only)
+         * @description Internal endpoint used only to ensure WorkflowRunStatus schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.WorkflowRunStatus"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/workflowrunstatussummary": {
         parameters: {
             query?: never;
@@ -35895,6 +36051,35 @@ export interface components {
         "api.GetWorkflowResponse": {
             workflow?: components["schemas"]["models.Workflow"];
         };
+        "api.GetWorkflowRunStatusErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetWorkflowRunStatusResponse": {
+            runs?: components["schemas"]["api.WorkflowRunStatus"][];
+            summary?: components["schemas"]["api.WorkflowRunStatusSummary"];
+        };
+        "api.GetWorkflowRunStatusSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetWorkflowRunStatusResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.GetWorkflowRunsErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -37368,11 +37553,25 @@ export interface components {
             sourceRef?: string;
             /** @enum {string} */
             sourceType?: "media" | "case";
-            stageExecutions?: components["schemas"]["models.WorkflowRunStageExecution"][];
             start?: number;
             state?: components["schemas"]["models.WorkflowRunState"];
             workflowId?: string;
             workflowName?: string;
+        };
+        "api.WorkflowRunStatus": {
+            /**
+             * @description DispatchedOperations / ResolvedOperations name the run's stages in
+             *     dispatch/resolution order, so a surface can render per-stage progress
+             *     (e.g. "pose done, redaction running").
+             */
+            dispatchedOperations?: string[];
+            end?: number;
+            resolvedOperations?: string[];
+            runId?: string;
+            /** @description Start / End are Unix milliseconds; End is 0 while the run is still open. */
+            start?: number;
+            state?: components["schemas"]["models.WorkflowRunState"];
+            workflowId?: string;
         };
         "api.WorkflowRunStatusSummary": {
             completed?: number;
@@ -42559,6 +42758,9 @@ export namespace api {
     export type GetWorkflowCatalogSuccessResponse = components['schemas']['api.GetWorkflowCatalogSuccessResponse'];
     export type GetWorkflowErrorResponse = components['schemas']['api.GetWorkflowErrorResponse'];
     export type GetWorkflowResponse = components['schemas']['api.GetWorkflowResponse'];
+    export type GetWorkflowRunStatusErrorResponse = components['schemas']['api.GetWorkflowRunStatusErrorResponse'];
+    export type GetWorkflowRunStatusResponse = components['schemas']['api.GetWorkflowRunStatusResponse'];
+    export type GetWorkflowRunStatusSuccessResponse = components['schemas']['api.GetWorkflowRunStatusSuccessResponse'];
     export type GetWorkflowRunsErrorResponse = components['schemas']['api.GetWorkflowRunsErrorResponse'];
     export type GetWorkflowRunsResponse = components['schemas']['api.GetWorkflowRunsResponse'];
     export type GetWorkflowRunsSuccessResponse = components['schemas']['api.GetWorkflowRunsSuccessResponse'];
@@ -42717,5 +42919,6 @@ export namespace api {
     export type WorkflowFilter = components['schemas']['api.WorkflowFilter'];
     export type WorkflowRunFilter = components['schemas']['api.WorkflowRunFilter'];
     export type WorkflowRunOverview = components['schemas']['api.WorkflowRunOverview'];
+    export type WorkflowRunStatus = components['schemas']['api.WorkflowRunStatus'];
     export type WorkflowRunStatusSummary = components['schemas']['api.WorkflowRunStatusSummary'];
 }
