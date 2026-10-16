@@ -500,7 +500,11 @@ Cross-workflow history uses `api.WorkflowRunOverview`, not the worker-envelope
 restricted sources. `sourceAccess` is `available`, `restricted`, or `unavailable`;
 `sourceType` is `media` or `case`. Source identifiers, labels, and recording
 metadata are optional and require source authorization. Inputs, results, routing
-configuration and dispatch errors are never part of this list contract.
+configuration and dispatch errors are never part of this list contract, and
+the per-stage `stageExecutions` timeline is detail-only
+(`GET /workflows/runs/{runId}`). Case launch polling
+(`GET /tasks/{taskId}/workflow-runs`) uses the slimmer `api.WorkflowRunStatus`
+(id, state, start/end, dispatched/resolved operations) plus the state summary.
 New manual writers persist `WorkflowRun.SourceType` to distinguish case IDs from
 media launch-group references; legacy case readers still resolve `SourceRef`.
 

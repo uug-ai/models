@@ -116,3 +116,40 @@ func TestWorkflowRunOverviewWithoutSource(t *testing.T) {
 		})
 	}
 }
+
+func TestWorkflowRunStatusJSONContract(t *testing.T) {
+	encoded, err := json.Marshal(GetWorkflowRunStatusResponse{
+		Runs: []WorkflowRunStatus{{
+			RunId: "run-1", WorkflowId: "workflow-1",
+			State: models.WorkflowRunStateRunning, Start: 1_700_000_000_000,
+			DispatchedOperations: []string{"pose", "redaction"},
+			ResolvedOperations:   []string{"pose"},
+		}},
+		Summary: WorkflowRunStatusSummary{Total: 1, Running: 1},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	var response struct {
+		Runs    []map[string]json.RawMessage `json:"runs"`
+		Summary map[string]json.RawMessage   `json:"summary"`
+	}
+	if err := json.Unmarshal(encoded, &response); err != nil {
+		t.Fatal(err)
+	}
+	if len(response.Runs) != 1 {
+		t.Fatalf("runs = %s, want one run", encoded)
+	}
+	run := response.Runs[0]
+	for _, field := range []string{"runId", "workflowId", "state", "start", "dispatchedOperations", "resolvedOperations"} {
+		if _, exists := run[field]; !exists {
+			t.Errorf("status omits %s: %s", field, encoded)
+		}
+	}
+	if _, exists := run["end"]; exists {
+		t.Errorf("open run exposes end: %s", encoded)
+	}
+	if _, exists := response.Summary["running"]; !exists {
+		t.Errorf("summary omits running: %s", encoded)
+	}
+}
