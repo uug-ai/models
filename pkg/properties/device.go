@@ -124,7 +124,7 @@ const (
 // DeviceAgent property field names (BSON)
 const (
 	DeviceAgentCloudPublicKey = "cloudPublicKey"
-	DeviceAgentCameraName = "cameraName"
+	DeviceAgentName = "name"
 	DeviceAgentVersion = "version"
 	DeviceAgentReleaseHash = "releaseHash"
 	DeviceAgentRepository = "repository"

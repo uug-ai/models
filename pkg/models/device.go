@@ -99,7 +99,7 @@ type Device struct {
 	Id            primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	SchemaVersion int                `json:"schemaVersion" bson:"schemaVersion,omitempty"`
 	Key           string             `json:"key" bson:"key,omitempty"`   // Device key reported by the agent, unique within its project
-	Name          string             `json:"name" bson:"name,omitempty"` // Set by users or at provisioning; display falls back to Agent.CameraName
+	Name          string             `json:"name" bson:"name,omitempty"` // Display name: the agent's name (Agent.Name) at provisioning, then renamed by users (DevicePatch.Name); heartbeats never change it
 	Type          DeviceType         `json:"type" bson:"type,omitempty"`
 
 	// Tenancy. Heartbeat credentials live on the project: the cloud key resolves
@@ -297,7 +297,7 @@ type DeviceAgent struct {
 	// resolves key -> project; private and symmetric keys never live on the
 	// device.
 	CloudPublicKey string `json:"cloudPublicKey" bson:"cloudPublicKey,omitempty"`
-	CameraName     string `json:"cameraName" bson:"cameraName,omitempty"` // Name configured on the agent
+	Name           string `json:"name" bson:"name,omitempty"` // Name configured on the agent (AGENT_NAME), as last reported
 
 	Version     string `json:"version" bson:"version,omitempty"`         // Release tag of the agent
 	ReleaseHash string `json:"releaseHash" bson:"releaseHash,omitempty"` // Build hash of the agent
@@ -561,7 +561,7 @@ func (h DeviceHeartbeat) FullSet() map[string]interface{} {
 
 	agent := h.Agent
 	set["agent.cloudPublicKey"] = agent.CloudPublicKey
-	set["agent.cameraName"] = agent.CameraName
+	set["agent.name"] = agent.Name
 	set["agent.version"] = agent.Version
 	set["agent.releaseHash"] = agent.ReleaseHash
 	set["agent.repository"] = agent.Repository
@@ -594,12 +594,16 @@ func (h DeviceHeartbeat) FullSet() map[string]interface{} {
 
 // ProvisionSet builds the $setOnInsert for a device created by its first
 // heartbeat: FullSet plus the creation time and the schema version, since a
-// new device is complete in the current shape. Name is left empty so display
-// falls back to Agent.CameraName until a user renames the device.
+// new device is complete in the current shape, and the initial display name:
+// the agent's name. Users rename the device afterwards (DevicePatch.Name);
+// heartbeats never change name again, only agent.name.
 func (h DeviceHeartbeat) ProvisionSet() map[string]interface{} {
 	set := h.FullSet()
 	set["schemaVersion"] = DeviceSchemaVersion
 	set["audit.createdAt"] = time.UnixMilli(h.ReceivedAt).UTC()
+	if name := strings.TrimSpace(h.Agent.Name); name != "" {
+		set["name"] = name
+	}
 	return set
 }
 
