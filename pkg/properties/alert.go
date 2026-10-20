@@ -51,6 +51,7 @@ const (
 	AlertPatchSMSTelto = "sms_telto"
 	AlertPatchPushoverApikey = "pushover_apikey"
 	AlertPatchPushoverSendto = "pushover_sendto"
+	AlertPatchChannelIds = "channelIds"
 )
 
 // CreateAlertInput property field names (BSON)
@@ -108,6 +109,7 @@ const (
 	CustomAlertDateRangeSchedule = "dateRangeSchedule"
 	CustomAlertOrganisationId = "organisationId"
 	CustomAlertProjectId = "projectId"
+	CustomAlertChannelIds = "channelIds"
 	CustomAlertTimeRange1Max = "timeRange1Max"
 	CustomAlertTimeRange1Min = "timeRange1Min"
 	CustomAlertTimeRange2Max = "timeRange2Max"

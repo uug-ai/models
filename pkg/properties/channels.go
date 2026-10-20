@@ -21,6 +21,8 @@ const (
 	ChannelEnabled = "enabled"
 	ChannelValid = "valid"
 	ChannelConfig = "config"
+	ChannelSource = "source"
+	ChannelLegacyKey = "legacyKey"
 	ChannelAudit = "audit"
 )
 

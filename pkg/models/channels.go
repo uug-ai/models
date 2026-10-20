@@ -100,8 +100,9 @@ type Channel struct {
 
 	// ProjectId is required: a channel belongs to exactly one project, and an
 	// alert may only deliver through channels in its own project. There are no
-	// organisation-wide channels; migrated legacy channels land in the
-	// organisation's default project (see DefaultProjectId).
+	// organisation-wide channels; channels migrated from users.channels land in
+	// the organisation's default project (see DefaultProjectId), and channels
+	// migrated from alert overrides land in that alert's project.
 	ProjectId primitive.ObjectID `json:"projectId" bson:"projectId"`
 
 	// Enabled is the owner's switch; Valid records whether the last test
@@ -112,7 +113,39 @@ type Channel struct {
 	// Config is write-only: see the type comment.
 	Config ChannelConfig `json:"-" bson:"config"`
 
+	// Source records where a migrated channel came from; empty for channels
+	// created through the channel API. LegacyKey identifies the legacy record
+	// within the organisation so the migration backfill and the legacy
+	// write-through upsert the same document: the ChannelType for
+	// ChannelSourceLegacy, "<alertId>/<ChannelType>" for
+	// ChannelSourceLegacyAlert. Unique per {organisationId, source, legacyKey}.
+	Source    ChannelSource `json:"source,omitempty" bson:"source,omitempty"`
+	LegacyKey string        `json:"-" bson:"legacyKey,omitempty"`
+
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
+}
+
+// ChannelSource identifies the legacy record a migrated Channel was built from.
+type ChannelSource string
+
+const (
+	// ChannelSourceLegacy is a provider from the master user's users.channels.
+	ChannelSourceLegacy ChannelSource = "legacy"
+	// ChannelSourceLegacyAlert is a provider a custom alert overrode with its
+	// own credentials, merged over the users.channels config.
+	ChannelSourceLegacyAlert ChannelSource = "legacy-alert"
+)
+
+// LegacyChannelKey returns the LegacyKey for a channel migrated from
+// users.channels.
+func LegacyChannelKey(channelType ChannelType) string {
+	return string(channelType)
+}
+
+// LegacyAlertChannelKey returns the LegacyKey for a channel migrated from a
+// custom alert's overrides.
+func LegacyAlertChannelKey(alertId primitive.ObjectID, channelType ChannelType) string {
+	return alertId.Hex() + "/" + string(channelType)
 }
 
 // Validate checks that the channel belongs to a project, has a supported type,

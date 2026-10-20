@@ -153,3 +153,40 @@ func TestChannelTypesReturnsCopy(t *testing.T) {
 		t.Fatal("IsValid accepted an unknown channel type")
 	}
 }
+
+func TestChannelLegacyKeyIsPersistedButNotSerialised(t *testing.T) {
+	alertId := primitive.NewObjectID()
+	if got, want := LegacyChannelKey(ChannelTypeSlack), "slack"; got != want {
+		t.Fatalf("LegacyChannelKey = %q, want %q", got, want)
+	}
+	if got, want := LegacyAlertChannelKey(alertId, ChannelTypeSms), alertId.Hex()+"/sms"; got != want {
+		t.Fatalf("LegacyAlertChannelKey = %q, want %q", got, want)
+	}
+
+	channel := Channel{
+		ProjectId: primitive.NewObjectID(),
+		Type:      ChannelTypeSms,
+		Source:    ChannelSourceLegacyAlert,
+		LegacyKey: LegacyAlertChannelKey(alertId, ChannelTypeSms),
+	}
+
+	encoded, err := json.Marshal(channel)
+	if err != nil {
+		t.Fatalf("marshal channel: %v", err)
+	}
+	if strings.Contains(string(encoded), "legacyKey") || !strings.Contains(string(encoded), `"source":"legacy-alert"`) {
+		t.Fatalf("channel JSON = %s, want source without legacyKey", encoded)
+	}
+
+	data, err := bson.Marshal(channel)
+	if err != nil {
+		t.Fatalf("marshal channel: %v", err)
+	}
+	var document bson.M
+	if err := bson.Unmarshal(data, &document); err != nil {
+		t.Fatalf("unmarshal channel: %v", err)
+	}
+	if document["source"] != string(ChannelSourceLegacyAlert) || document["legacyKey"] != channel.LegacyKey {
+		t.Fatalf("channel BSON source/legacyKey = %v/%v", document["source"], document["legacyKey"])
+	}
+}

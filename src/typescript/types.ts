@@ -39182,7 +39182,7 @@ export interface components {
             userId?: string;
         };
         /** @enum {string} */
-        "models.AccessTokenScope": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "days.read" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "channels.read" | "channels.create" | "channels.update" | "channels.delete" | "markers.read" | "markers.write" | "markers.all" | "application" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete";
+        "models.AccessTokenScope": "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "days.read" | "markers.read" | "markers.write" | "markers.all" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "channels.read" | "channels.create" | "channels.update" | "channels.delete" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application";
         "models.Account": {
             account?: components["schemas"]["models.AccountBody"];
         };
@@ -39231,6 +39231,7 @@ export interface components {
         };
         "models.AlertPatch": {
             alexa_token?: string;
+            channelIds?: string[];
             channelsAll?: boolean;
             channelsList?: string[];
             classificationAll?: boolean;
@@ -39807,9 +39808,17 @@ export interface components {
             organisationId?: string;
             /** @description ProjectId is required: a channel belongs to exactly one project, and an
              *     alert may only deliver through channels in its own project. There are no
-             *     organisation-wide channels; migrated legacy channels land in the
-             *     organisation's default project (see DefaultProjectId). */
+             *     organisation-wide channels; channels migrated from users.channels land in
+             *     the organisation's default project (see DefaultProjectId), and channels
+             *     migrated from alert overrides land in that alert's project. */
             projectId?: string;
+            /** @description Source records where a migrated channel came from; empty for channels
+             *     created through the channel API. LegacyKey identifies the legacy record
+             *     within the organisation so the migration backfill and the legacy
+             *     write-through upsert the same document: the ChannelType for
+             *     ChannelSourceLegacy, "<alertId>/<ChannelType>" for
+             *     ChannelSourceLegacyAlert. Unique per {organisationId, source, legacyKey}. */
+            source?: components["schemas"]["models.ChannelSource"];
             type?: components["schemas"]["models.ChannelType"];
             valid?: boolean;
         };
@@ -39854,6 +39863,8 @@ export interface components {
             from?: string;
             to?: string;
         };
+        /** @enum {string} */
+        "models.ChannelSource": "legacy" | "legacy-alert";
         "models.ChannelTelegramConfig": {
             channel?: string;
             token?: string;
@@ -40070,8 +40081,19 @@ export interface components {
             newPasswordRepeat?: string;
         };
         "models.CustomAlert": {
+            /** @description Deprecated: use ChannelIds. */
             alexa_token?: string;
+            /** @description ChannelIds selects defined Channels in the alert's project. When set (even
+             *     to an empty list) it is authoritative: ChannelsAll then means every enabled
+             *     channel in the project, and ChannelsList and the per-alert overrides
+             *     (EmailEmail through PushoverSendto) are ignored. Nil keeps the legacy
+             *     behaviour: ChannelsAll/ChannelsList name providers on users.channels, with
+             *     the overrides merged on top; the migration turns those overrides into
+             *     ChannelSourceLegacyAlert channels. Legacy alert writes unset ChannelIds so
+             *     the migration backfill re-resolves the alert. */
+            channelIds?: string[];
             channelsAll?: boolean;
+            /** @description Deprecated: use ChannelIds. */
             channelsList?: string[];
             classificationAll?: boolean;
             classificationList?: string[];
@@ -40083,10 +40105,12 @@ export interface components {
             description?: string;
             devicesAll?: boolean;
             devicesList?: components["schemas"]["models.DeviceKey"][];
+            /** @description Deprecated: use ChannelIds. */
             email_email?: string;
             enabled?: boolean;
             features?: components["schemas"]["models.AlertFeatures"];
             id?: string;
+            /** @description Deprecated: use ChannelIds. */
             ifttt_token?: string;
             inputList?: string[];
             inputsAND?: boolean;
@@ -40100,16 +40124,27 @@ export interface components {
             /** @description ProjectId optionally places the alert in a project within its organisation.
              *     A nil value keeps the alert organisation-wide. */
             projectId?: string;
+            /** @description Deprecated: use ChannelIds. */
             pushbullet_apikey?: string;
+            /** @description Deprecated: use ChannelIds. */
             pushover_apikey?: string;
+            /** @description Deprecated: use ChannelIds. */
             pushover_sendto?: string;
+            /** @description Deprecated: use ChannelIds. */
             slack_botname?: string;
+            /** @description Deprecated: use ChannelIds. */
             slack_hook?: string;
+            /** @description Deprecated: use ChannelIds. */
             sms_accountsid?: string;
+            /** @description Deprecated: use ChannelIds. */
             sms_authtoken?: string;
+            /** @description Deprecated: use ChannelIds. */
             sms_telfrom?: string;
+            /** @description Deprecated: use ChannelIds. */
             sms_telto?: string;
+            /** @description Deprecated: use ChannelIds. */
             telegram_channel?: string;
+            /** @description Deprecated: use ChannelIds. */
             telegram_token?: string;
             timeAdvanced?: boolean;
             /** @description Deprecated: legacy time range fields. Use WeeklySchedule/DateRangeSchedule instead. */
@@ -40119,6 +40154,7 @@ export interface components {
             timeRange2Min?: number;
             title?: string;
             user_id?: string;
+            /** @description Deprecated: use ChannelIds. */
             webhook_url?: string;
             weeklySchedule?: components["schemas"]["models.WeeklySchedule"][];
         };
@@ -41758,7 +41794,7 @@ export interface components {
             videowall?: components["schemas"]["models.Videowall"];
         };
         /** @enum {string} */
-        "models.Permission": "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "days.read" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "channels.read" | "channels.create" | "channels.update" | "channels.delete" | "markers.read" | "markers.write" | "markers.all" | "application" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete";
+        "models.Permission": "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "days.read" | "markers.read" | "markers.write" | "markers.all" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "channels.read" | "channels.create" | "channels.update" | "channels.delete" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application";
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.Permissions": {
