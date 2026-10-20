@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func TestAlertPrivacyCompatibility(t *testing.T) {
@@ -434,4 +435,54 @@ func expectedWeeklySchedules(segments []DayTimeRange, timezone string) []*Weekly
 		})
 	}
 	return schedules
+}
+
+// TestAlertChannelIdsDistinguishesLegacyFromEmptySelection pins the contract
+// the notification pipeline relies on: a missing channelIds means the legacy
+// provider-name path, while an empty list is an explicit (empty) selection.
+func TestAlertChannelIdsDistinguishesLegacyFromEmptySelection(t *testing.T) {
+	channelId := primitive.NewObjectID()
+	tests := []struct {
+		name       string
+		channelIds *[]primitive.ObjectID
+		wantLegacy bool
+		wantLength int
+	}{
+		{name: "legacy", channelIds: nil, wantLegacy: true},
+		{name: "empty selection", channelIds: &[]primitive.ObjectID{}},
+		{name: "selection", channelIds: &[]primitive.ObjectID{channelId}, wantLength: 1},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			alert := CustomAlert{ChannelIds: test.channelIds}
+
+			data, err := bson.Marshal(alert)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var bsonDecoded CustomAlert
+			if err := bson.Unmarshal(data, &bsonDecoded); err != nil {
+				t.Fatal(err)
+			}
+
+			encoded, err := json.Marshal(alert)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var jsonDecoded CustomAlert
+			if err := json.Unmarshal(encoded, &jsonDecoded); err != nil {
+				t.Fatal(err)
+			}
+
+			for codec, decoded := range map[string]CustomAlert{"bson": bsonDecoded, "json": jsonDecoded} {
+				if (decoded.ChannelIds == nil) != test.wantLegacy {
+					t.Fatalf("%s: ChannelIds nil = %v, want %v", codec, decoded.ChannelIds == nil, test.wantLegacy)
+				}
+				if decoded.ChannelIds != nil && len(*decoded.ChannelIds) != test.wantLength {
+					t.Fatalf("%s: len(ChannelIds) = %d, want %d", codec, len(*decoded.ChannelIds), test.wantLength)
+				}
+			}
+		})
+	}
 }

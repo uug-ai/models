@@ -16,7 +16,7 @@ type CustomAlert struct {
 	Title               string               `json:"title" bson:"title"`
 	Description         string               `json:"description" bson:"description"`
 	ChannelsAll         bool                 `json:"channelsAll" bson:"channelsAll"`
-	ChannelsList        []string             `json:"channelsList" bson:"channelsList"`
+	ChannelsList        []string             `json:"channelsList" bson:"channelsList"` // Deprecated: use ChannelIds.
 	DevicesAll          bool                 `json:"devicesAll" bson:"devicesAll"`
 	DevicesList         []DeviceKey          `json:"devicesList" bson:"devicesList"`
 	CountingDevicesAll  bool                 `json:"countingDevicesAll" bson:"countingDevicesAll"`
@@ -26,21 +26,21 @@ type CustomAlert struct {
 	TimeAdvanced        bool                 `json:"timeAdvanced" bson:"timeAdvanced"`
 	UserId              string               `json:"user_id" bson:"user_id"`
 	MasterUserId        string               `json:"master_user_id" bson:"master_user_id"`
-	EmailEmail          string               `json:"email_email" bson:"email_email"`
-	SlackHook           string               `json:"slack_hook" bson:"slack_hook"`
-	SlackBotname        string               `json:"slack_botname" bson:"slack_botname"`
-	PushbulletApikey    string               `json:"pushbullet_apikey" bson:"pushbullet_apikey"`
-	TelegramToken       string               `json:"telegram_token" bson:"telegram_token"`
-	TelegramChannel     string               `json:"telegram_channel" bson:"telegram_channel"`
-	AlexaToken          string               `json:"alexa_token" bson:"alexa_token"`
-	WebhookUrl          string               `json:"webhook_url" bson:"webhook_url"`
-	IftttToken          string               `json:"ifttt_token" bson:"ifttt_token"`
-	SMSAccountsid       string               `json:"sms_accountsid" bson:"sms_accountsid"`
-	SMSAuthtoken        string               `json:"sms_authtoken" bson:"sms_authtoken"`
-	SMSTelfrom          string               `json:"sms_telfrom" bson:"sms_telfrom"`
-	SMSTelto            string               `json:"sms_telto" bson:"sms_telto"`
-	PushoverApikey      string               `json:"pushover_apikey" bson:"pushover_apikey"`
-	PushoverSendto      string               `json:"pushover_sendto" bson:"pushover_sendto"`
+	EmailEmail          string               `json:"email_email" bson:"email_email"`             // Deprecated: use ChannelIds.
+	SlackHook           string               `json:"slack_hook" bson:"slack_hook"`               // Deprecated: use ChannelIds.
+	SlackBotname        string               `json:"slack_botname" bson:"slack_botname"`         // Deprecated: use ChannelIds.
+	PushbulletApikey    string               `json:"pushbullet_apikey" bson:"pushbullet_apikey"` // Deprecated: use ChannelIds.
+	TelegramToken       string               `json:"telegram_token" bson:"telegram_token"`       // Deprecated: use ChannelIds.
+	TelegramChannel     string               `json:"telegram_channel" bson:"telegram_channel"`   // Deprecated: use ChannelIds.
+	AlexaToken          string               `json:"alexa_token" bson:"alexa_token"`             // Deprecated: use ChannelIds.
+	WebhookUrl          string               `json:"webhook_url" bson:"webhook_url"`             // Deprecated: use ChannelIds.
+	IftttToken          string               `json:"ifttt_token" bson:"ifttt_token"`             // Deprecated: use ChannelIds.
+	SMSAccountsid       string               `json:"sms_accountsid" bson:"sms_accountsid"`       // Deprecated: use ChannelIds.
+	SMSAuthtoken        string               `json:"sms_authtoken" bson:"sms_authtoken"`         // Deprecated: use ChannelIds.
+	SMSTelfrom          string               `json:"sms_telfrom" bson:"sms_telfrom"`             // Deprecated: use ChannelIds.
+	SMSTelto            string               `json:"sms_telto" bson:"sms_telto"`                 // Deprecated: use ChannelIds.
+	PushoverApikey      string               `json:"pushover_apikey" bson:"pushover_apikey"`     // Deprecated: use ChannelIds.
+	PushoverSendto      string               `json:"pushover_sendto" bson:"pushover_sendto"`     // Deprecated: use ChannelIds.
 	MotionRegions       []Region             `json:"motionRegions" bson:"motionRegions"`
 	CountingLines       []Region             `json:"countingLines" bson:"countingLines"`
 	CountingRegions     []Region             `json:"countingRegions,omitempty" bson:"countingRegions,omitempty"`
@@ -55,6 +55,16 @@ type CustomAlert struct {
 	// ProjectId optionally places the alert in a project within its organisation.
 	// A nil value keeps the alert organisation-wide.
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
+
+	// ChannelIds selects defined Channels in the alert's project. When set (even
+	// to an empty list) it is authoritative: ChannelsAll then means every enabled
+	// channel in the project, and ChannelsList and the per-alert overrides
+	// (EmailEmail through PushoverSendto) are ignored. Nil keeps the legacy
+	// behaviour: ChannelsAll/ChannelsList name providers on users.channels, with
+	// the overrides merged on top; the migration turns those overrides into
+	// ChannelSourceLegacyAlert channels. Legacy alert writes unset ChannelIds so
+	// the migration backfill re-resolves the alert.
+	ChannelIds *[]primitive.ObjectID `json:"channelIds,omitempty" bson:"channelIds,omitempty"`
 
 	// Deprecated: legacy time range fields. Use WeeklySchedule/DateRangeSchedule instead.
 	TimeRange1Max int32 `json:"timeRange1Max" bson:"timeRange1Max"`
@@ -130,6 +140,8 @@ type AlertPatch struct {
 	SMSTelto            *string           `json:"sms_telto,omitempty" bson:"sms_telto,omitempty"`
 	PushoverApikey      *string           `json:"pushover_apikey,omitempty" bson:"pushover_apikey,omitempty"`
 	PushoverSendto      *string           `json:"pushover_sendto,omitempty" bson:"pushover_sendto,omitempty"`
+
+	ChannelIds *[]primitive.ObjectID `json:"channelIds,omitempty" bson:"channelIds,omitempty"`
 }
 
 type GetAlertsInput struct {

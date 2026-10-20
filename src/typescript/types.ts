@@ -2344,6 +2344,279 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/channel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Channel (schema generation only)
+         * @description Internal endpoint used only to ensure Channel schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.Channel"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channelalexaconfig": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelAlexaConfig (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelAlexaConfig schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelAlexaConfig"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channelconfig": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelConfig (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelConfig schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelConfig"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channelemailconfig": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelEmailConfig (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelEmailConfig schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelEmailConfig"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channeliftttconfig": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelIftttConfig (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelIftttConfig schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelIftttConfig"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channelpushbulletconfig": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelPushbulletConfig (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelPushbulletConfig schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelPushbulletConfig"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channelpushoverconfig": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelPushoverConfig (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelPushoverConfig schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelPushoverConfig"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/channels": {
         parameters: {
             query?: never;
@@ -2371,6 +2644,123 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Channels"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channelslackconfig": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelSlackConfig (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelSlackConfig schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelSlackConfig"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channelsmsconfig": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelSmsConfig (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelSmsConfig schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelSmsConfig"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channeltelegramconfig": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelTelegramConfig (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelTelegramConfig schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelTelegramConfig"];
                     };
                 };
             };
@@ -2527,6 +2917,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.ChannelUpdatePayload"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/channelwebhookconfig": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get ChannelWebhookConfig (schema generation only)
+         * @description Internal endpoint used only to ensure ChannelWebhookConfig schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.ChannelWebhookConfig"];
                     };
                 };
             };
@@ -3580,6 +4009,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.CreateCaseShareOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createchannelerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateChannelErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateChannelErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateChannelErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createchannelrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateChannelRequest (schema generation only)
+         * @description Internal endpoint used only to ensure CreateChannelRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateChannelRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createchannelresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateChannelResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateChannelResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateChannelResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/createchannelsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get CreateChannelSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure CreateChannelSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.CreateChannelSuccessResponse"];
                     };
                 };
             };
@@ -5491,6 +6076,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.DeleteCaseShareOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletechannelerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteChannelErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteChannelErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteChannelErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletechannelrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteChannelRequest (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteChannelRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteChannelRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletechannelresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteChannelResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteChannelResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteChannelResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/deletechannelsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeleteChannelSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure DeleteChannelSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.DeleteChannelSuccessResponse"];
                     };
                 };
             };
@@ -7948,6 +8689,45 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.Devices"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/devicetags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get DeviceTags (schema generation only)
+         * @description Internal endpoint used only to ensure DeviceTags schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["models.DeviceTags"];
                     };
                 };
             };
@@ -11302,6 +12082,318 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.GetCaseSharesForTaskOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getchannelerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetChannelErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetChannelErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetChannelErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getchannelrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetChannelRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetChannelRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetChannelRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getchannelresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetChannelResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetChannelResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetChannelResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getchannelserrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetChannelsErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetChannelsErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetChannelsErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getchannelsrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetChannelsRequest (schema generation only)
+         * @description Internal endpoint used only to ensure GetChannelsRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetChannelsRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getchannelsresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetChannelsResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetChannelsResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetChannelsResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getchannelssuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetChannelsSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetChannelsSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetChannelsSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/getchannelsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get GetChannelSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure GetChannelSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.GetChannelSuccessResponse"];
                     };
                 };
             };
@@ -26797,6 +27889,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/testchannelerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TestChannelErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure TestChannelErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.TestChannelErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/testchannelrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TestChannelRequest (schema generation only)
+         * @description Internal endpoint used only to ensure TestChannelRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.TestChannelRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/testchannelresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TestChannelResponse (schema generation only)
+         * @description Internal endpoint used only to ensure TestChannelResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.TestChannelResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/testchannelsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get TestChannelSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure TestChannelSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.TestChannelSuccessResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/throttlerstage": {
         parameters: {
             query?: never;
@@ -28345,6 +29593,162 @@ export interface paths {
                     };
                     content: {
                         "application/json": components["schemas"]["models.UpdateCaseShareOTPOutput"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatechannelerrorresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateChannelErrorResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateChannelErrorResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateChannelErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatechannelrequest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateChannelRequest (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateChannelRequest schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateChannelRequest"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatechannelresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateChannelResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateChannelResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateChannelResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/internal/updatechannelsuccessresponse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get UpdateChannelSuccessResponse (schema generation only)
+         * @description Internal endpoint used only to ensure UpdateChannelSuccessResponse schema is generated in OpenAPI spec
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["api.UpdateChannelSuccessResponse"];
                     };
                 };
             };
@@ -33556,6 +34960,38 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.CreateChannelErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CreateChannelRequest": {
+            channel?: components["schemas"]["models.Channel"];
+            config?: components["schemas"]["models.ChannelConfig"];
+        };
+        "api.CreateChannelResponse": {
+            channel?: components["schemas"]["models.Channel"];
+        };
+        "api.CreateChannelSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.CreateChannelResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.CreateCustomAlertErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -33852,6 +35288,33 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.DeleteCaseAttachmentResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteChannelErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.DeleteChannelRequest": Record<string, never>;
+        "api.DeleteChannelResponse": Record<string, never>;
+        "api.DeleteChannelSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.DeleteChannelResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -34718,6 +36181,64 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetCaseAttachmentResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetChannelErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetChannelRequest": Record<string, never>;
+        "api.GetChannelResponse": {
+            channel?: components["schemas"]["models.Channel"];
+        };
+        "api.GetChannelSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetChannelResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetChannelsErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetChannelsRequest": Record<string, never>;
+        "api.GetChannelsResponse": {
+            channels?: components["schemas"]["models.Channel"][];
+        };
+        "api.GetChannelsSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetChannelsResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -36936,6 +38457,35 @@ export interface components {
         };
         /** @enum {string} */
         "api.TaskStatus": "Task_binding_failed" | "Task_duplicate_name" | "Task_missing_info" | "Task_found" | "Task_not_found" | "Task_forbidden" | "Task_add_success" | "Task_add_failed" | "Task_update_success" | "Task_update_failed" | "Task_delete_success" | "Task_delete_failed" | "Task_media_add_success" | "Task_media_add_failed" | "Task_export_request_success" | "Task_export_request_failed" | "Task_export_already_active" | "Task_attachment_add_success" | "Task_attachment_add_failed" | "Task_attachment_update_success" | "Task_attachment_update_failed" | "Task_attachment_delete_success" | "Task_attachment_delete_failed" | "Task_attachment_not_found" | "Task_attachment_too_large" | "Task_attachment_type_rejected" | "open" | "approved" | "rejected";
+        "api.TestChannelErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.TestChannelRequest": Record<string, never>;
+        "api.TestChannelResponse": {
+            channel?: components["schemas"]["models.Channel"];
+        };
+        "api.TestChannelSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.TestChannelResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.TraceResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -37146,6 +38696,39 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.UpdateCaseMediaSelectedVersionResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateChannelErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.UpdateChannelRequest": {
+            channel?: components["schemas"]["models.Channel"];
+            /** @description Config replaces the stored config when set; nil keeps it unchanged. */
+            config?: components["schemas"]["models.ChannelConfig"];
+        };
+        "api.UpdateChannelResponse": {
+            channel?: components["schemas"]["models.Channel"];
+        };
+        "api.UpdateChannelSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.UpdateChannelResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -37559,11 +39142,9 @@ export interface components {
             workflowName?: string;
         };
         "api.WorkflowRunStatus": {
-            /**
-             * @description DispatchedOperations / ResolvedOperations name the run's stages in
+            /** @description DispatchedOperations / ResolvedOperations name the run's stages in
              *     dispatch/resolution order, so a surface can render per-stage progress
-             *     (e.g. "pose done, redaction running").
-             */
+             *     (e.g. "pose done, redaction running"). */
             dispatchedOperations?: string[];
             end?: number;
             resolvedOperations?: string[];
@@ -37601,7 +39182,7 @@ export interface components {
             userId?: string;
         };
         /** @enum {string} */
-        "models.AccessTokenScope": "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "markers.read" | "markers.write" | "markers.all" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "days.read" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application";
+        "models.AccessTokenScope": "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "days.read" | "markers.read" | "markers.write" | "markers.all" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "channels.read" | "channels.create" | "channels.update" | "channels.delete" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application";
         "models.Account": {
             account?: components["schemas"]["models.AccountBody"];
         };
@@ -37650,6 +39231,7 @@ export interface components {
         };
         "models.AlertPatch": {
             alexa_token?: string;
+            channelIds?: string[];
             channelsAll?: boolean;
             channelsList?: string[];
             classificationAll?: boolean;
@@ -38214,6 +39796,79 @@ export interface components {
             user_email?: string;
             user_id?: string;
         };
+        "models.Channel": {
+            audit?: components["schemas"]["models.Audit"];
+            description?: string;
+            /** @description Enabled is the owner's switch; Valid records whether the last test
+             *     delivery succeeded. Delivery requires both. */
+            enabled?: boolean;
+            id?: string;
+            name?: string;
+            /** @description RBAC information */
+            organisationId?: string;
+            /** @description ProjectId is required: a channel belongs to exactly one project, and an
+             *     alert may only deliver through channels in its own project. There are no
+             *     organisation-wide channels; channels migrated from users.channels land in
+             *     the organisation's default project (see DefaultProjectId), and channels
+             *     migrated from alert overrides land in that alert's project. */
+            projectId?: string;
+            /** @description Source records where a migrated channel came from; empty for channels
+             *     created through the channel API. LegacyKey identifies the legacy record
+             *     within the organisation so the migration backfill and the legacy
+             *     write-through upsert the same document: the ChannelType for
+             *     ChannelSourceLegacy, "<alertId>/<ChannelType>" for
+             *     ChannelSourceLegacyAlert. Unique per {organisationId, source, legacyKey}. */
+            source?: components["schemas"]["models.ChannelSource"];
+            type?: components["schemas"]["models.ChannelType"];
+            valid?: boolean;
+        };
+        "models.ChannelAlexaConfig": {
+            accessCode?: string;
+        };
+        "models.ChannelConfig": {
+            alexa?: components["schemas"]["models.ChannelAlexaConfig"];
+            email?: components["schemas"]["models.ChannelEmailConfig"];
+            ifttt?: components["schemas"]["models.ChannelIftttConfig"];
+            pushbullet?: components["schemas"]["models.ChannelPushbulletConfig"];
+            pushover?: components["schemas"]["models.ChannelPushoverConfig"];
+            slack?: components["schemas"]["models.ChannelSlackConfig"];
+            sms?: components["schemas"]["models.ChannelSmsConfig"];
+            telegram?: components["schemas"]["models.ChannelTelegramConfig"];
+            webhook?: components["schemas"]["models.ChannelWebhookConfig"];
+        };
+        "models.ChannelEmailConfig": {
+            address?: string;
+        };
+        "models.ChannelIftttConfig": {
+            token?: string;
+        };
+        "models.ChannelPushbulletConfig": {
+            apiKey?: string;
+        };
+        "models.ChannelPushoverConfig": {
+            apiKey?: string;
+            sendTo?: string;
+        };
+        "models.ChannelSlackConfig": {
+            apiKey?: string;
+            channel?: string;
+            /** @description Hook is an incoming-webhook URL. ApiKey and Channel are the bot-token
+             *     alternative. */
+            hook?: string;
+            username?: string;
+        };
+        "models.ChannelSmsConfig": {
+            accountSid?: string;
+            authToken?: string;
+            from?: string;
+            to?: string;
+        };
+        /** @enum {string} */
+        "models.ChannelSource": "legacy" | "legacy-alert";
+        "models.ChannelTelegramConfig": {
+            channel?: string;
+            token?: string;
+        };
         "models.ChannelTest": {
             data?: components["schemas"]["models.ChannelTestData"];
             events?: string[];
@@ -38222,12 +39877,17 @@ export interface components {
             channel?: string;
             userId?: string;
         };
+        /** @enum {string} */
+        "models.ChannelType": "email" | "slack" | "webhook" | "pushbullet" | "telegram" | "alexa" | "ifttt" | "pushover" | "sms";
         "models.ChannelUpdate": {
             channels?: components["schemas"]["models.ChannelUpdatePayload"];
         };
         "models.ChannelUpdatePayload": {
             channel?: string;
             payload?: unknown;
+        };
+        "models.ChannelWebhookConfig": {
+            url?: string;
         };
         "models.Channels": {
             alexa?: components["schemas"]["models.Alexa"];
@@ -38421,8 +40081,19 @@ export interface components {
             newPasswordRepeat?: string;
         };
         "models.CustomAlert": {
+            /** @description Deprecated: use ChannelIds. */
             alexa_token?: string;
+            /** @description ChannelIds selects defined Channels in the alert's project. When set (even
+             *     to an empty list) it is authoritative: ChannelsAll then means every enabled
+             *     channel in the project, and ChannelsList and the per-alert overrides
+             *     (EmailEmail through PushoverSendto) are ignored. Nil keeps the legacy
+             *     behaviour: ChannelsAll/ChannelsList name providers on users.channels, with
+             *     the overrides merged on top; the migration turns those overrides into
+             *     ChannelSourceLegacyAlert channels. Legacy alert writes unset ChannelIds so
+             *     the migration backfill re-resolves the alert. */
+            channelIds?: string[];
             channelsAll?: boolean;
+            /** @description Deprecated: use ChannelIds. */
             channelsList?: string[];
             classificationAll?: boolean;
             classificationList?: string[];
@@ -38434,10 +40105,12 @@ export interface components {
             description?: string;
             devicesAll?: boolean;
             devicesList?: components["schemas"]["models.DeviceKey"][];
+            /** @description Deprecated: use ChannelIds. */
             email_email?: string;
             enabled?: boolean;
             features?: components["schemas"]["models.AlertFeatures"];
             id?: string;
+            /** @description Deprecated: use ChannelIds. */
             ifttt_token?: string;
             inputList?: string[];
             inputsAND?: boolean;
@@ -38451,16 +40124,27 @@ export interface components {
             /** @description ProjectId optionally places the alert in a project within its organisation.
              *     A nil value keeps the alert organisation-wide. */
             projectId?: string;
+            /** @description Deprecated: use ChannelIds. */
             pushbullet_apikey?: string;
+            /** @description Deprecated: use ChannelIds. */
             pushover_apikey?: string;
+            /** @description Deprecated: use ChannelIds. */
             pushover_sendto?: string;
+            /** @description Deprecated: use ChannelIds. */
             slack_botname?: string;
+            /** @description Deprecated: use ChannelIds. */
             slack_hook?: string;
+            /** @description Deprecated: use ChannelIds. */
             sms_accountsid?: string;
+            /** @description Deprecated: use ChannelIds. */
             sms_authtoken?: string;
+            /** @description Deprecated: use ChannelIds. */
             sms_telfrom?: string;
+            /** @description Deprecated: use ChannelIds. */
             sms_telto?: string;
+            /** @description Deprecated: use ChannelIds. */
             telegram_channel?: string;
+            /** @description Deprecated: use ChannelIds. */
             telegram_token?: string;
             timeAdvanced?: boolean;
             /** @description Deprecated: legacy time range fields. Use WeeklySchedule/DateRangeSchedule instead. */
@@ -38470,6 +40154,7 @@ export interface components {
             timeRange2Min?: number;
             title?: string;
             user_id?: string;
+            /** @description Deprecated: use ChannelIds. */
             webhook_url?: string;
             weeklySchedule?: components["schemas"]["models.WeeklySchedule"][];
         };
@@ -38521,6 +40206,9 @@ export interface components {
             cameratype?: string;
             cloudpublicKey?: string;
             clouduser?: string;
+            /** @description ContinuousRecording is "true" or "false"; empty when the agent does not
+             *     report it (older agents), unlike CameraMetadata.ContinuousRecording. */
+            continuousRecording?: string;
             cpuid?: string;
             docker?: boolean;
             e2e_encryption?: string;
@@ -38699,7 +40387,7 @@ export interface components {
             monitor?: components["schemas"]["models.DeviceMonitor"];
             /** @description Lifecycle */
             mute?: number;
-            /** @description Set by users or at provisioning; display falls back to Agent.CameraName */
+            /** @description Optional stored name (DevicePatch.Name); display falls back to Agent.Name, the name the agent reports */
             name?: string;
             /** @description Tenancy. Heartbeat credentials live on the project: the cloud key resolves
              *     to an organisation and project, which must match these fields. */
@@ -38708,6 +40396,8 @@ export interface components {
             projectId?: string;
             schemaVersion?: number;
             siteIds?: string[];
+            /** @description Tags are short identifiers on a device, grouped by type (DeviceTags). */
+            tags?: components["schemas"]["models.DeviceTags"];
             type?: components["schemas"]["models.DeviceType"];
             /** @description @LEGACY - removed once all readers use the fields above. */
             user_id?: string;
@@ -38715,8 +40405,6 @@ export interface components {
         "models.DeviceAgent": {
             architecture?: string;
             bootTime?: number;
-            /** @description Name configured on the agent */
-            cameraName?: string;
             /** @description CloudPublicKey is the public key the agent presented in its last
              *     heartbeat. Agents within a project can be on different keys (e.g. a
              *     legacy user key after the project credentials were regenerated), so it
@@ -38741,6 +40429,8 @@ export interface components {
             memoryTotal?: number;
             /** @description bytes */
             memoryUsed?: number;
+            /** @description Name configured on the agent (AGENT_NAME), as last reported */
+            name?: string;
             /** @description Build hash of the agent */
             releaseHash?: string;
             repository?: string;
@@ -38850,6 +40540,8 @@ export interface components {
             model?: string;
             name?: string;
             onFloorPlans?: string[];
+            /** @description Replaces all system tags; normalized by ToSet, check with Validate */
+            systemTags?: string[];
         };
         "models.DevicePlacement": {
             /** @description Audit information */
@@ -38880,6 +40572,15 @@ export interface components {
             x?: number;
             /** @description Absolute Y coordinate */
             y?: number;
+        };
+        "models.DeviceTags": {
+            /** @description System tags come from the deployment's catalog (Helm) and are set by
+             *     owners (DevicePatch.SystemTags). Workflow triggers select devices by
+             *     system tag (WorkflowTrigger.SystemTags), which lets a deployment-global
+             *     workflow run on specific devices across organisations; a deployment that
+             *     defines such workflows must trust its owners (self-hosted, not
+             *     multi-tenant SaaS). */
+            system?: string[];
         };
         "models.DeviceThresholds": {
             disconnected?: number;
@@ -40093,7 +41794,7 @@ export interface components {
             videowall?: components["schemas"]["models.Videowall"];
         };
         /** @enum {string} */
-        "models.Permission": "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "markers.read" | "markers.write" | "markers.all" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "days.read" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application";
+        "models.Permission": "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "days.read" | "markers.read" | "markers.write" | "markers.all" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "channels.read" | "channels.create" | "channels.update" | "channels.delete" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application";
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
         "models.Permissions": {
@@ -41315,6 +43016,10 @@ export interface components {
             weeklySchedule?: components["schemas"]["models.WeeklySchedule"][];
         };
         "models.VideowallLayout": {
+            /** @description AspectRatio is the shape of a single grid cell as "W:H" (one of
+             *     VideowallLayoutAspectRatios). Empty means 16:9, so layouts saved before
+             *     this field existed keep rendering unchanged. */
+            aspectRatio?: string;
             /** @description Columns is the grid column count the layout was authored against (1-5). */
             columns?: number;
             /** @description Tiles lists each placed camera in display order with its span. */
@@ -41553,6 +43258,8 @@ export interface components {
             siteIds?: string[];
             /** @description media StorageSolution: where the media is stored */
             storageSolution?: string;
+            /** @description owner-set system tags (Device.Tags.System), loaded by the caller */
+            systemTags?: string[];
         };
         "models.WorkflowDeviceReference": {
             key?: string;
@@ -41583,6 +43290,7 @@ export interface components {
             devices?: components["schemas"]["models.DeviceKey"][];
             groupIds?: string[];
             siteIds?: string[];
+            systemTags?: string[];
             weeklySchedule?: components["schemas"]["models.WeeklySchedule"][];
         };
         "models.WorkflowInvocation": {
@@ -42068,6 +43776,13 @@ export interface components {
             /** @description Surfaces lists the UI surfaces a manual trigger can be launched from
              *     (manual). Ignored for automatic triggers. */
             surfaces?: components["schemas"]["models.WorkflowTriggerSurface"][];
+            /** @description SystemTags selects devices carrying at least one of the listed system
+             *     tags (Device.Tags.System), in NormalizeDeviceTags form. Unlike site and
+             *     group ids, tags are not tenant-scoped, so a deployment-global workflow can
+             *     select specific devices across organisations with them. Owners set system
+             *     tags, so such global workflows assume trusted owners (see
+             *     Workflow.UsesSystemTags). */
+            systemTags?: string[];
             /** @description Type is the activation mode. An empty Type is treated as
              *     WorkflowTriggerAutomatic for backwards compatibility with triggers authored
              *     before manual triggers existed. */
@@ -42136,10 +43851,21 @@ export namespace models {
     export type CaseAttachment = components['schemas']['models.CaseAttachment'];
     export type CaseMedia = components['schemas']['models.CaseMedia'];
     export type CaseShare = components['schemas']['models.CaseShare'];
+    export type Channel = components['schemas']['models.Channel'];
+    export type ChannelAlexaConfig = components['schemas']['models.ChannelAlexaConfig'];
+    export type ChannelConfig = components['schemas']['models.ChannelConfig'];
+    export type ChannelEmailConfig = components['schemas']['models.ChannelEmailConfig'];
+    export type ChannelIftttConfig = components['schemas']['models.ChannelIftttConfig'];
+    export type ChannelPushbulletConfig = components['schemas']['models.ChannelPushbulletConfig'];
+    export type ChannelPushoverConfig = components['schemas']['models.ChannelPushoverConfig'];
+    export type ChannelSlackConfig = components['schemas']['models.ChannelSlackConfig'];
+    export type ChannelSmsConfig = components['schemas']['models.ChannelSmsConfig'];
+    export type ChannelTelegramConfig = components['schemas']['models.ChannelTelegramConfig'];
     export type ChannelTest = components['schemas']['models.ChannelTest'];
     export type ChannelTestData = components['schemas']['models.ChannelTestData'];
     export type ChannelUpdate = components['schemas']['models.ChannelUpdate'];
     export type ChannelUpdatePayload = components['schemas']['models.ChannelUpdatePayload'];
+    export type ChannelWebhookConfig = components['schemas']['models.ChannelWebhookConfig'];
     export type Channels = components['schemas']['models.Channels'];
     export type Classification = components['schemas']['models.Classification'];
     export type ClassificationSummary = components['schemas']['models.ClassificationSummary'];
@@ -42200,6 +43926,7 @@ export namespace models {
     export type DeviceOption = components['schemas']['models.DeviceOption'];
     export type DevicePatch = components['schemas']['models.DevicePatch'];
     export type DevicePlacement = components['schemas']['models.DevicePlacement'];
+    export type DeviceTags = components['schemas']['models.DeviceTags'];
     export type DeviceThresholds = components['schemas']['models.DeviceThresholds'];
     export type DeviceVLMMetadata = components['schemas']['models.DeviceVLMMetadata'];
     export type Devices = components['schemas']['models.Devices'];
@@ -42487,6 +44214,10 @@ export namespace api {
     export type CreateAdminUserErrorResponse = components['schemas']['api.CreateAdminUserErrorResponse'];
     export type CreateAdminUserResponse = components['schemas']['api.CreateAdminUserResponse'];
     export type CreateAdminUserSuccessResponse = components['schemas']['api.CreateAdminUserSuccessResponse'];
+    export type CreateChannelErrorResponse = components['schemas']['api.CreateChannelErrorResponse'];
+    export type CreateChannelRequest = components['schemas']['api.CreateChannelRequest'];
+    export type CreateChannelResponse = components['schemas']['api.CreateChannelResponse'];
+    export type CreateChannelSuccessResponse = components['schemas']['api.CreateChannelSuccessResponse'];
     export type CreateCustomAlertErrorResponse = components['schemas']['api.CreateCustomAlertErrorResponse'];
     export type CreateCustomAlertRequest = components['schemas']['api.CreateCustomAlertRequest'];
     export type CreateCustomAlertResponse = components['schemas']['api.CreateCustomAlertResponse'];
@@ -42518,6 +44249,8 @@ export namespace api {
     export type DeleteCaseAttachmentErrorResponse = components['schemas']['api.DeleteCaseAttachmentErrorResponse'];
     export type DeleteCaseAttachmentResponse = components['schemas']['api.DeleteCaseAttachmentResponse'];
     export type DeleteCaseAttachmentSuccessResponse = components['schemas']['api.DeleteCaseAttachmentSuccessResponse'];
+    export type DeleteChannelErrorResponse = components['schemas']['api.DeleteChannelErrorResponse'];
+    export type DeleteChannelSuccessResponse = components['schemas']['api.DeleteChannelSuccessResponse'];
     export type DeleteDetectionRunErrorResponse = components['schemas']['api.DeleteDetectionRunErrorResponse'];
     export type DeleteDetectionRunResponse = components['schemas']['api.DeleteDetectionRunResponse'];
     export type DeleteDetectionRunSuccessResponse = components['schemas']['api.DeleteDetectionRunSuccessResponse'];
@@ -42609,6 +44342,12 @@ export namespace api {
     export type GetCaseAttachmentErrorResponse = components['schemas']['api.GetCaseAttachmentErrorResponse'];
     export type GetCaseAttachmentResponse = components['schemas']['api.GetCaseAttachmentResponse'];
     export type GetCaseAttachmentSuccessResponse = components['schemas']['api.GetCaseAttachmentSuccessResponse'];
+    export type GetChannelErrorResponse = components['schemas']['api.GetChannelErrorResponse'];
+    export type GetChannelResponse = components['schemas']['api.GetChannelResponse'];
+    export type GetChannelSuccessResponse = components['schemas']['api.GetChannelSuccessResponse'];
+    export type GetChannelsErrorResponse = components['schemas']['api.GetChannelsErrorResponse'];
+    export type GetChannelsResponse = components['schemas']['api.GetChannelsResponse'];
+    export type GetChannelsSuccessResponse = components['schemas']['api.GetChannelsSuccessResponse'];
     export type GetCustomAlertsErrorResponse = components['schemas']['api.GetCustomAlertsErrorResponse'];
     export type GetCustomAlertsResponse = components['schemas']['api.GetCustomAlertsResponse'];
     export type GetCustomAlertsSuccessResponse = components['schemas']['api.GetCustomAlertsSuccessResponse'];
@@ -42847,6 +44586,9 @@ export namespace api {
     export type TaskIdRequest = components['schemas']['api.TaskIdRequest'];
     export type TaskMediaItem = components['schemas']['api.TaskMediaItem'];
     export type TaskOverview = components['schemas']['api.TaskOverview'];
+    export type TestChannelErrorResponse = components['schemas']['api.TestChannelErrorResponse'];
+    export type TestChannelResponse = components['schemas']['api.TestChannelResponse'];
+    export type TestChannelSuccessResponse = components['schemas']['api.TestChannelSuccessResponse'];
     export type TraceResponse = components['schemas']['api.TraceResponse'];
     export type UpdateAccessTokenErrorResponse = components['schemas']['api.UpdateAccessTokenErrorResponse'];
     export type UpdateAccessTokenRequest = components['schemas']['api.UpdateAccessTokenRequest'];
@@ -42872,6 +44614,10 @@ export namespace api {
     export type UpdateCaseMediaSelectedVersionRequest = components['schemas']['api.UpdateCaseMediaSelectedVersionRequest'];
     export type UpdateCaseMediaSelectedVersionResponse = components['schemas']['api.UpdateCaseMediaSelectedVersionResponse'];
     export type UpdateCaseMediaSelectedVersionSuccessResponse = components['schemas']['api.UpdateCaseMediaSelectedVersionSuccessResponse'];
+    export type UpdateChannelErrorResponse = components['schemas']['api.UpdateChannelErrorResponse'];
+    export type UpdateChannelRequest = components['schemas']['api.UpdateChannelRequest'];
+    export type UpdateChannelResponse = components['schemas']['api.UpdateChannelResponse'];
+    export type UpdateChannelSuccessResponse = components['schemas']['api.UpdateChannelSuccessResponse'];
     export type UpdateCustomAlertErrorResponse = components['schemas']['api.UpdateCustomAlertErrorResponse'];
     export type UpdateCustomAlertRequest = components['schemas']['api.UpdateCustomAlertRequest'];
     export type UpdateCustomAlertResponse = components['schemas']['api.UpdateCustomAlertResponse'];

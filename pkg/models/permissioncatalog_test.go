@@ -117,6 +117,18 @@ func TestWorkflowRunPermissionsStableOrder(t *testing.T) {
 	}
 }
 
+func TestChannelPermissionsStableOrder(t *testing.T) {
+	want := []Permission{
+		PermissionChannelsRead,
+		PermissionChannelsCreate,
+		PermissionChannelsUpdate,
+		PermissionChannelsDelete,
+	}
+	if got := ChannelPermissions(); !slices.Equal(got, want) {
+		t.Fatalf("ChannelPermissions() = %v, want %v", got, want)
+	}
+}
+
 func TestPermissionCatalogAccessorsReturnCopies(t *testing.T) {
 	all := AllPermissions()
 	markers := MarkerPermissions()
@@ -125,6 +137,7 @@ func TestPermissionCatalogAccessorsReturnCopies(t *testing.T) {
 	cases := CasePermissions()
 	workflows := WorkflowPermissions()
 	workflowRuns := WorkflowRunPermissions()
+	channels := ChannelPermissions()
 
 	all[0] = "changed"
 	markers[0] = "changed"
@@ -133,6 +146,7 @@ func TestPermissionCatalogAccessorsReturnCopies(t *testing.T) {
 	cases[0] = "changed"
 	workflows[0] = "changed"
 	workflowRuns[0] = "changed"
+	channels[0] = "changed"
 
 	if AllPermissions()[0] != PermissionMarkersRead {
 		t.Fatal("AllPermissions returned mutable catalog storage")
@@ -154,6 +168,9 @@ func TestPermissionCatalogAccessorsReturnCopies(t *testing.T) {
 	}
 	if WorkflowRunPermissions()[0] != PermissionWorkflowRunsCreate {
 		t.Fatal("WorkflowRunPermissions returned mutable catalog storage")
+	}
+	if ChannelPermissions()[0] != PermissionChannelsRead {
+		t.Fatal("ChannelPermissions returned mutable catalog storage")
 	}
 }
 
