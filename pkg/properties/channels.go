@@ -10,6 +10,81 @@ const (
 	AlexaAccesscode = "accesscode"
 )
 
+// Channel property field names (BSON)
+const (
+	ChannelId = "_id"
+	ChannelName = "name"
+	ChannelDescription = "description"
+	ChannelType = "type"
+	ChannelOrganisationId = "organisationId"
+	ChannelProjectId = "projectId"
+	ChannelEnabled = "enabled"
+	ChannelValid = "valid"
+	ChannelConfig = "config"
+	ChannelAudit = "audit"
+)
+
+// ChannelAlexaConfig property field names (BSON)
+const (
+	ChannelAlexaConfigAccessCode = "accessCode"
+)
+
+// ChannelConfig property field names (BSON)
+const (
+	ChannelConfigEmail = "email"
+	ChannelConfigSlack = "slack"
+	ChannelConfigWebhook = "webhook"
+	ChannelConfigPushbullet = "pushbullet"
+	ChannelConfigTelegram = "telegram"
+	ChannelConfigAlexa = "alexa"
+	ChannelConfigIfttt = "ifttt"
+	ChannelConfigPushover = "pushover"
+	ChannelConfigSms = "sms"
+)
+
+// ChannelEmailConfig property field names (BSON)
+const (
+	ChannelEmailConfigAddress = "address"
+)
+
+// ChannelIftttConfig property field names (BSON)
+const (
+	ChannelIftttConfigToken = "token"
+)
+
+// ChannelPushbulletConfig property field names (BSON)
+const (
+	ChannelPushbulletConfigApiKey = "apiKey"
+)
+
+// ChannelPushoverConfig property field names (BSON)
+const (
+	ChannelPushoverConfigApiKey = "apiKey"
+	ChannelPushoverConfigSendTo = "sendTo"
+)
+
+// ChannelSlackConfig property field names (BSON)
+const (
+	ChannelSlackConfigHook = "hook"
+	ChannelSlackConfigApiKey = "apiKey"
+	ChannelSlackConfigChannel = "channel"
+	ChannelSlackConfigUsername = "username"
+)
+
+// ChannelSmsConfig property field names (BSON)
+const (
+	ChannelSmsConfigAccountSid = "accountSid"
+	ChannelSmsConfigAuthToken = "authToken"
+	ChannelSmsConfigFrom = "from"
+	ChannelSmsConfigTo = "to"
+)
+
+// ChannelTelegramConfig property field names (BSON)
+const (
+	ChannelTelegramConfigToken = "token"
+	ChannelTelegramConfigChannel = "channel"
+)
+
 // ChannelTest property field names (BSON)
 const (
 	ChannelTestEvents = "events"
@@ -31,6 +106,11 @@ const (
 const (
 	ChannelUpdatePayloadChannel = "channel"
 	ChannelUpdatePayloadPayload = "payload"
+)
+
+// ChannelWebhookConfig property field names (BSON)
+const (
+	ChannelWebhookConfigUrl = "url"
 )
 
 // Channels property field names (BSON)
