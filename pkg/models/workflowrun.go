@@ -297,6 +297,13 @@ type WorkflowRun struct {
 	// authorized detail surfaces correlate the durable run with telemetry.
 	TraceId string `json:"traceId,omitempty" bson:"traceid"`
 
+	// TraceParent and TraceState carry the W3C trace context of the span that
+	// sent this run over the queue, so the receiving service continues as its
+	// child and keeps the upstream sampling decision. They describe one hop and
+	// are never persisted; a sender sets them right before publishing.
+	TraceParent string `json:"traceparent,omitempty" bson:"-"`
+	TraceState  string `json:"tracestate,omitempty" bson:"-"`
+
 	// Start and End stamp the run's lifecycle in Unix milliseconds. Readers
 	// normalize legacy runs whose values were persisted in Unix seconds.
 	Start int64 `json:"start,omitempty" bson:"start"`

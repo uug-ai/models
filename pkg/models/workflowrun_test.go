@@ -306,3 +306,58 @@ func TestAutomaticRunObjectID(t *testing.T) {
 		}
 	})
 }
+
+// The hop's trace context travels as top-level traceparent/tracestate keys (the
+// wire shape the workflow services already exchange) and is never persisted.
+func TestWorkflowRun_TraceContextIsWireOnly(t *testing.T) {
+	run := WorkflowRun{
+		Id:          primitive.NewObjectID(),
+		TraceId:     "0123456789abcdef0123456789abcdef",
+		TraceParent: "00-0123456789abcdef0123456789abcdef-a1b2c3d4e5f60718-01",
+		TraceState:  "vendor=value",
+	}
+
+	b, err := json.Marshal(run)
+	if err != nil {
+		t.Fatalf("marshal: %v", err)
+	}
+	var wire map[string]any
+	if err := json.Unmarshal(b, &wire); err != nil {
+		t.Fatalf("unmarshal wire: %v", err)
+	}
+	if wire["traceparent"] != run.TraceParent || wire["tracestate"] != run.TraceState {
+		t.Fatalf("wire trace context = %v / %v, want top-level keys", wire["traceparent"], wire["tracestate"])
+	}
+	var decoded WorkflowRun
+	if err := json.Unmarshal(b, &decoded); err != nil {
+		t.Fatalf("decode: %v", err)
+	}
+	if decoded.TraceParent != run.TraceParent || decoded.TraceState != run.TraceState {
+		t.Fatalf("decoded trace context = %q / %q", decoded.TraceParent, decoded.TraceState)
+	}
+
+	untraced, err := json.Marshal(WorkflowRun{TraceId: run.TraceId})
+	if err != nil {
+		t.Fatalf("marshal: %v", err)
+	}
+	if strings.Contains(string(untraced), "traceparent") || strings.Contains(string(untraced), "tracestate") {
+		t.Fatalf("empty trace context leaked onto the wire: %s", untraced)
+	}
+
+	doc, err := bson.Marshal(run)
+	if err != nil {
+		t.Fatalf("bson marshal: %v", err)
+	}
+	var stored bson.M
+	if err := bson.Unmarshal(doc, &stored); err != nil {
+		t.Fatalf("bson unmarshal: %v", err)
+	}
+	for _, key := range []string{"traceparent", "tracestate", "TraceParent", "TraceState"} {
+		if _, ok := stored[key]; ok {
+			t.Fatalf("trace context %q was persisted: %v", key, stored)
+		}
+	}
+	if stored["traceid"] != run.TraceId {
+		t.Fatalf("traceid = %v, want it persisted", stored["traceid"])
+	}
+}
