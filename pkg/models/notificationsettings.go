@@ -38,11 +38,11 @@ type Devices struct {
 	DevicesList  []DeviceKey `json:"devicesList" bson:"devicesList,omitempty"`
 	Duration     int32       `json:"duration" bson:"duration,omitempty"`
 
-	// GroupBySitesAndGroups sends one notification per site or group when
-	// several of its cameras change status together, instead of one per
-	// camera. It applies to every selected channel. Notifications are held for
-	// one monitor scan to collect cameras that change a moment later.
-	GroupBySitesAndGroups bool `json:"groupBySitesAndGroups" bson:"groupBySitesAndGroups,omitempty"`
+	// GroupNotifications sends one notification, listing the cameras by site
+	// and group, when several cameras change status at the same time, instead
+	// of one per camera. It applies to every selected channel. Changes are held
+	// for one monitor scan to collect cameras that change a moment later.
+	GroupNotifications bool `json:"groupNotifications" bson:"groupNotifications,omitempty"`
 }
 
 type Highupload struct {
