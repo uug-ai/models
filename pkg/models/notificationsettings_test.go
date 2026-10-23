@@ -7,8 +7,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func TestDevicesGroupBySitesAndGroupsRoundTrip(t *testing.T) {
-	settings := NotificationSettings{Devices: Devices{Enabled: true, GroupBySitesAndGroups: true}}
+func TestDevicesGroupNotificationsRoundTrip(t *testing.T) {
+	settings := NotificationSettings{Devices: Devices{Enabled: true, GroupNotifications: true}}
 
 	data, err := bson.Marshal(settings)
 	if err != nil {
@@ -18,7 +18,7 @@ func TestDevicesGroupBySitesAndGroupsRoundTrip(t *testing.T) {
 	if err := bson.Unmarshal(data, &document); err != nil {
 		t.Fatal(err)
 	}
-	if document["devices"].(bson.M)["groupBySitesAndGroups"] != true {
+	if document["devices"].(bson.M)["groupNotifications"] != true {
 		t.Fatalf("bson devices = %v", document["devices"])
 	}
 
@@ -28,8 +28,8 @@ func TestDevicesGroupBySitesAndGroupsRoundTrip(t *testing.T) {
 	if err := bson.Unmarshal(legacy, &decoded); err != nil {
 		t.Fatal(err)
 	}
-	if decoded.Devices.GroupBySitesAndGroups {
-		t.Fatal("missing groupBySitesAndGroups must decode as false")
+	if decoded.Devices.GroupNotifications {
+		t.Fatal("missing groupNotifications must decode as false")
 	}
 
 	encoded, err := json.Marshal(settings)
@@ -37,7 +37,7 @@ func TestDevicesGroupBySitesAndGroupsRoundTrip(t *testing.T) {
 		t.Fatal(err)
 	}
 	var roundTrip NotificationSettings
-	if err := json.Unmarshal(encoded, &roundTrip); err != nil || !roundTrip.Devices.GroupBySitesAndGroups {
+	if err := json.Unmarshal(encoded, &roundTrip); err != nil || !roundTrip.Devices.GroupNotifications {
 		t.Fatalf("json round trip = %+v, %v", roundTrip.Devices, err)
 	}
 }
