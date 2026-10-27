@@ -49,6 +49,7 @@ type permissionGroup struct {
 }
 
 var permissionGroups = []permissionGroup{
+	// Project-level resources.
 	{scope: PermissionScopeProject, permissions: markerPermissions},
 	{scope: PermissionScopeProject, permissions: mediaPermissions},
 	{scope: PermissionScopeProject, permissions: casePermissions},
@@ -56,6 +57,28 @@ var permissionGroups = []permissionGroup{
 	{scope: PermissionScopeProject, permissions: workflowRunPermissions},
 	{scope: PermissionScopeProject, permissions: dayPermissions},
 	{scope: PermissionScopeProject, permissions: channelPermissions},
+	{scope: PermissionScopeProject, permissions: devicePermissions, implies: devicePermissionImplications},
+	{scope: PermissionScopeProject, permissions: sitePermissions},
+	{scope: PermissionScopeProject, permissions: groupPermissions},
+	{scope: PermissionScopeProject, permissions: floorPlanPermissions},
+	{scope: PermissionScopeProject, permissions: ioPermissions},
+	{scope: PermissionScopeProject, permissions: videowallPermissions},
+	{scope: PermissionScopeProject, permissions: alertPermissions},
+	{scope: PermissionScopeProject, permissions: notificationPermissions},
+	{scope: PermissionScopeProject, permissions: labelPermissions},
+	{scope: PermissionScopeProject, permissions: analyticsPermissions},
+	{scope: PermissionScopeProject, permissions: detectionPermissions},
+	{scope: PermissionScopeProject, permissions: projectPermissions},
+
+	// Organisation-level administration.
+	{scope: PermissionScopeOrganisation, permissions: organisationPermissions},
+	{scope: PermissionScopeOrganisation, permissions: memberPermissions},
+	{scope: PermissionScopeOrganisation, permissions: rolePermissions},
+	{scope: PermissionScopeOrganisation, permissions: projectAdministrationPermissions},
+	{scope: PermissionScopeOrganisation, permissions: billingPermissions},
+	{scope: PermissionScopeOrganisation, permissions: storagePermissions},
+	{scope: PermissionScopeOrganisation, permissions: auditPermissions},
+	{scope: PermissionScopeOrganisation, permissions: deviceAdministrationPermissions},
 }
 
 var permissionDefinitions = definePermissions(permissionGroups)

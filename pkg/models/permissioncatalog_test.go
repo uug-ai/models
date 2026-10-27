@@ -255,22 +255,109 @@ func TestPermissionDefinitionsMatchCatalogOrder(t *testing.T) {
 	}
 }
 
-func TestExistingPermissionsAreProjectScoped(t *testing.T) {
-	for _, permission := range appendPermissions(
-		MarkerPermissions(),
-		MediaPermissions(),
-		CasePermissions(),
-		WorkflowPermissions(),
-		WorkflowRunPermissions(),
-		DayPermissions(),
-		ChannelPermissions(),
+func TestDomainPermissionScopes(t *testing.T) {
+	project := PermissionScopeProject
+	organisation := PermissionScopeOrganisation
+	domains := []struct {
+		name     string
+		accessor func() []Permission
+		scope    PermissionScope
+	}{
+		{"markers", MarkerPermissions, project},
+		{"media", MediaPermissions, project},
+		{"cases", CasePermissions, project},
+		{"workflows", WorkflowPermissions, project},
+		{"workflow runs", WorkflowRunPermissions, project},
+		{"days", DayPermissions, project},
+		{"channels", ChannelPermissions, project},
+		{"devices", DevicePermissions, project},
+		{"sites", SitePermissions, project},
+		{"groups", GroupPermissions, project},
+		{"floor plans", FloorPlanPermissions, project},
+		{"io", IOPermissions, project},
+		{"videowalls", VideowallPermissions, project},
+		{"alerts", AlertPermissions, project},
+		{"notifications", NotificationPermissions, project},
+		{"labels", LabelPermissions, project},
+		{"analytics", AnalyticsPermissions, project},
+		{"detections", DetectionPermissions, project},
+		{"project", ProjectPermissions, project},
+		{"organisation", OrganisationPermissions, organisation},
+		{"members", MemberPermissions, organisation},
+		{"roles", RolePermissions, organisation},
+		{"project administration", ProjectAdministrationPermissions, organisation},
+		{"billing", BillingPermissions, organisation},
+		{"storage", StoragePermissions, organisation},
+		{"audit", AuditPermissions, organisation},
+		{"device administration", DeviceAdministrationPermissions, organisation},
+	}
+
+	registered := 0
+	for _, domain := range domains {
+		t.Run(domain.name, func(t *testing.T) {
+			permissions := domain.accessor()
+			if len(permissions) == 0 {
+				t.Fatal("domain has no permissions")
+			}
+			for _, permission := range permissions {
+				definition, ok := LookupPermission(permission)
+				if !ok {
+					t.Fatalf("LookupPermission(%q) not found", permission)
+				}
+				if definition.Scope != domain.scope {
+					t.Fatalf("LookupPermission(%q).Scope = %q, want %q", permission, definition.Scope, domain.scope)
+				}
+			}
+			want := permissions[0]
+			permissions[0] = "changed"
+			if domain.accessor()[0] != want {
+				t.Fatal("accessor returned mutable catalog storage")
+			}
+		})
+		registered += len(domain.accessor())
+	}
+	if registered != len(AllPermissions()) {
+		t.Fatalf("domains cover %d permissions, catalog has %d; register new domains in this test", registered, len(AllPermissions()))
+	}
+}
+
+func TestGradedDevicePermissionsExpand(t *testing.T) {
+	tests := []struct {
+		name       string
+		permission Permission
+		want       []Permission
+	}{
+		{"ptz zoom", PermissionPTZZoom, []Permission{PermissionPTZZoom}},
+		{"ptz pan/tilt", PermissionPTZPanTilt, []Permission{PermissionPTZZoom, PermissionPTZPanTilt}},
+		{"ptz control", PermissionPTZControl, []Permission{PermissionPTZZoom, PermissionPTZPanTilt, PermissionPTZControl}},
+		{"ptz presets", PermissionPTZPresets, []Permission{PermissionPTZZoom, PermissionPTZPanTilt, PermissionPTZControl, PermissionPTZPresets}},
+		{"live preview", PermissionLivePreview, []Permission{PermissionLivePreview}},
+		{"live stream", PermissionLiveStream, []Permission{PermissionLivePreview, PermissionLiveStream}},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			if got := ExpandPermissions([]Permission{test.permission}); !slices.Equal(got, test.want) {
+				t.Fatalf("ExpandPermissions(%q) = %v, want %v", test.permission, got, test.want)
+			}
+		})
+	}
+}
+
+func TestAccessTokenScopesExcludeUnenforcedPermissions(t *testing.T) {
+	scopes := AccessTokenScopes()
+	for _, permission := range slices.Concat(
+		DevicePermissions(),
+		SitePermissions(),
+		AlertPermissions(),
+		ProjectPermissions(),
+		[]Permission{PermissionMediaForward},
 	) {
-		definition, ok := LookupPermission(permission)
-		if !ok {
-			t.Fatalf("LookupPermission(%q) not found", permission)
+		if slices.Contains(scopes, permission) {
+			t.Fatalf("AccessTokenScopes() contains %q, which hub-api does not enforce on token routes yet", permission)
 		}
-		if definition.Scope != PermissionScopeProject {
-			t.Fatalf("LookupPermission(%q).Scope = %q, want %q", permission, definition.Scope, PermissionScopeProject)
+		if err := ValidateAccessTokenScopes([]AccessTokenScope{permission}); !errors.Is(err, ErrAccessTokenScopeNotGrantable) {
+			t.Fatalf("ValidateAccessTokenScopes(%q) error = %v, want ErrAccessTokenScopeNotGrantable", permission, err)
 		}
 	}
 }

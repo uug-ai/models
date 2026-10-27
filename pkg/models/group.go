@@ -2,6 +2,25 @@ package models
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
+const (
+	PermissionGroupsRead   Permission = "groups.read"
+	PermissionGroupsCreate Permission = "groups.create"
+	PermissionGroupsUpdate Permission = "groups.update"
+	PermissionGroupsDelete Permission = "groups.delete"
+)
+
+var groupPermissions = []Permission{
+	PermissionGroupsRead,
+	PermissionGroupsCreate,
+	PermissionGroupsUpdate,
+	PermissionGroupsDelete,
+}
+
+// GroupPermissions returns the canonical group permission catalog.
+func GroupPermissions() []Permission {
+	return append([]Permission(nil), groupPermissions...)
+}
+
 type Group struct {
 	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Name        string             `json:"name" bson:"name,omitempty"`

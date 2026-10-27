@@ -6,6 +6,42 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+const (
+	PermissionOrganisationRead              Permission = "organisation.read"
+	PermissionOrganisationUpdate            Permission = "organisation.update"
+	PermissionOrganisationTransferOwnership Permission = "organisation.transferOwnership"
+)
+
+var organisationPermissions = []Permission{
+	PermissionOrganisationRead,
+	PermissionOrganisationUpdate,
+	PermissionOrganisationTransferOwnership,
+}
+
+// OrganisationPermissions returns the canonical organisation permission catalog.
+func OrganisationPermissions() []Permission {
+	return append([]Permission(nil), organisationPermissions...)
+}
+
+const (
+	PermissionMembersRead   Permission = "members.read"
+	PermissionMembersInvite Permission = "members.invite"
+	PermissionMembersUpdate Permission = "members.update"
+	PermissionMembersRemove Permission = "members.remove"
+)
+
+var memberPermissions = []Permission{
+	PermissionMembersRead,
+	PermissionMembersInvite,
+	PermissionMembersUpdate,
+	PermissionMembersRemove,
+}
+
+// MemberPermissions returns the canonical organisation member permission catalog.
+func MemberPermissions() []Permission {
+	return append([]Permission(nil), memberPermissions...)
+}
+
 // Organisation represents an organization entity that users can belong to.
 type Organisation struct {
 	Id   primitive.ObjectID `json:"id" bson:"_id,omitempty"`

@@ -2,6 +2,19 @@ package models
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
+const (
+	PermissionAnalyticsRead Permission = "analytics.read"
+)
+
+var analyticsPermissions = []Permission{
+	PermissionAnalyticsRead,
+}
+
+// AnalyticsPermissions returns the canonical analytics permission catalog.
+func AnalyticsPermissions() []Permission {
+	return append([]Permission(nil), analyticsPermissions...)
+}
+
 // AnalyticsFilter defines the shared filter contract for analytics dashboard data.
 // It mirrors the analysis page selectors and keeps the request aligned with media filters.
 type AnalyticsFilter struct {

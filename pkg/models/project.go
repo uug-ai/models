@@ -2,6 +2,36 @@ package models
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
+const (
+	PermissionProjectUpdate            Permission = "project.update"
+	PermissionProjectManageCredentials Permission = "project.manageCredentials"
+)
+
+var projectPermissions = []Permission{
+	PermissionProjectUpdate,
+	PermissionProjectManageCredentials,
+}
+
+// ProjectPermissions returns the canonical project permission catalog.
+func ProjectPermissions() []Permission {
+	return append([]Permission(nil), projectPermissions...)
+}
+
+const (
+	PermissionProjectsCreate Permission = "projects.create"
+	PermissionProjectsDelete Permission = "projects.delete"
+)
+
+var projectAdministrationPermissions = []Permission{
+	PermissionProjectsCreate,
+	PermissionProjectsDelete,
+}
+
+// ProjectAdministrationPermissions returns the canonical organisation-level project permission catalog.
+func ProjectAdministrationPermissions() []Permission {
+	return append([]Permission(nil), projectAdministrationPermissions...)
+}
+
 // Project is an optional access boundary within an organisation. Resources
 // remain organisation-wide unless their ProjectId is set.
 type Project struct {

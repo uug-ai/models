@@ -6,6 +6,21 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+const (
+	PermissionBillingRead   Permission = "billing.read"
+	PermissionBillingManage Permission = "billing.manage"
+)
+
+var billingPermissions = []Permission{
+	PermissionBillingRead,
+	PermissionBillingManage,
+}
+
+// BillingPermissions returns the canonical billing permission catalog.
+func BillingPermissions() []Permission {
+	return append([]Permission(nil), billingPermissions...)
+}
+
 type Subscription struct {
 	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	OrganisationId primitive.ObjectID `json:"organisation_id,omitempty" bson:"organisation_id,omitempty"` // Organisation this subscription belongs to

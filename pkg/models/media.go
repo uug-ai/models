@@ -11,6 +11,9 @@ const (
 	PermissionMediaShare  Permission = "media.share"
 	PermissionMediaRedact Permission = "media.redact"
 	PermissionMediaDelete Permission = "media.delete"
+	// PermissionMediaForward starts, stops and lists forwarding of recordings to
+	// another storage destination.
+	PermissionMediaForward Permission = "media.forward"
 )
 
 var mediaPermissions = []Permission{
@@ -20,6 +23,7 @@ var mediaPermissions = []Permission{
 	PermissionMediaShare,
 	PermissionMediaRedact,
 	PermissionMediaDelete,
+	PermissionMediaForward,
 }
 
 // MediaPermissions returns the canonical media permission catalog.

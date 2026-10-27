@@ -7,6 +7,27 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+const (
+	PermissionAlertsRead          Permission = "alerts.read"
+	PermissionAlertsCreate        Permission = "alerts.create"
+	PermissionAlertsUpdate        Permission = "alerts.update"
+	PermissionAlertsDelete        Permission = "alerts.delete"
+	PermissionAlertsManagePrivacy Permission = "alerts.managePrivacy"
+)
+
+var alertPermissions = []Permission{
+	PermissionAlertsRead,
+	PermissionAlertsCreate,
+	PermissionAlertsUpdate,
+	PermissionAlertsDelete,
+	PermissionAlertsManagePrivacy,
+}
+
+// AlertPermissions returns the canonical alert permission catalog.
+func AlertPermissions() []Permission {
+	return append([]Permission(nil), alertPermissions...)
+}
+
 type CustomAlert struct {
 	// Private restricts configuration access to UserId, not notification delivery.
 	// Missing or false preserves the existing shared visibility.

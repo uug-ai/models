@@ -2,6 +2,25 @@ package models
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
+const (
+	PermissionSitesRead   Permission = "sites.read"
+	PermissionSitesCreate Permission = "sites.create"
+	PermissionSitesUpdate Permission = "sites.update"
+	PermissionSitesDelete Permission = "sites.delete"
+)
+
+var sitePermissions = []Permission{
+	PermissionSitesRead,
+	PermissionSitesCreate,
+	PermissionSitesUpdate,
+	PermissionSitesDelete,
+}
+
+// SitePermissions returns the canonical site permission catalog.
+func SitePermissions() []Permission {
+	return append([]Permission(nil), sitePermissions...)
+}
+
 type Site struct {
 	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Name        string             `json:"name" bson:"name,omitempty"`

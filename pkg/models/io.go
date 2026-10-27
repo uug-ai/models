@@ -2,6 +2,23 @@ package models
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
+const (
+	PermissionIORead   Permission = "io.read"
+	PermissionIOCreate Permission = "io.create"
+	PermissionIODelete Permission = "io.delete"
+)
+
+var ioPermissions = []Permission{
+	PermissionIORead,
+	PermissionIOCreate,
+	PermissionIODelete,
+}
+
+// IOPermissions returns the canonical IO permission catalog.
+func IOPermissions() []Permission {
+	return append([]Permission(nil), ioPermissions...)
+}
+
 type IO struct {
 	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`

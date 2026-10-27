@@ -13,19 +13,40 @@ type AccessTokenScope = Permission
 // not be granted to an access token.
 var ErrAccessTokenScopeNotGrantable = errors.New("permission cannot be granted to an access token")
 
-// accessTokenScopes is an explicit allow-list rather than the whole catalog.
-// Access tokens are bound to one project, so organisation permissions are never
-// grantable; a project permission joins this list only once hub-api enforces it
-// on the routes a token can call.
-var accessTokenScopes = appendPermissions(
-	markerPermissions,
-	mediaPermissions,
-	casePermissions,
-	workflowPermissions,
-	workflowRunPermissions,
-	dayPermissions,
-	channelPermissions,
-)
+// accessTokenScopes is an explicit allow-list rather than the whole catalog or
+// whole domain lists, so a permission added to the catalog is never grantable
+// by accident. Access tokens are bound to one project, so organisation
+// permissions are never grantable; a project permission joins this list only
+// once hub-api enforces it on the routes a token can call.
+var accessTokenScopes = []AccessTokenScope{
+	PermissionMarkersRead,
+	PermissionMarkersWrite,
+	PermissionMediaRead,
+	PermissionMediaUpdate,
+	PermissionMediaExport,
+	PermissionMediaShare,
+	PermissionMediaRedact,
+	PermissionMediaDelete,
+	PermissionCasesRead,
+	PermissionCasesCreate,
+	PermissionCasesUpdate,
+	PermissionCasesShare,
+	PermissionCasesExport,
+	PermissionCasesRunWorkflow,
+	PermissionCasesDelete,
+	PermissionWorkflowsRead,
+	PermissionWorkflowsCreate,
+	PermissionWorkflowsUpdate,
+	PermissionWorkflowsDelete,
+	PermissionWorkflowRunsCreate,
+	PermissionWorkflowRunsRead,
+	PermissionWorkflowRunsUpdate,
+	PermissionDaysRead,
+	PermissionChannelsRead,
+	PermissionChannelsCreate,
+	PermissionChannelsUpdate,
+	PermissionChannelsDelete,
+}
 
 var accessTokenScopeSet = func() map[AccessTokenScope]struct{} {
 	scopes := make(map[AccessTokenScope]struct{}, len(accessTokenScopes))
@@ -53,14 +74,6 @@ func ValidateAccessTokenScopes(scopes []AccessTokenScope) error {
 		}
 	}
 	return nil
-}
-
-func appendPermissions(catalogs ...[]Permission) []Permission {
-	var permissions []Permission
-	for _, catalog := range catalogs {
-		permissions = append(permissions, catalog...)
-	}
-	return permissions
 }
 
 type AccessToken struct {

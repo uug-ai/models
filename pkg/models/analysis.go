@@ -2,6 +2,23 @@ package models
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
+const (
+	PermissionDetectionsRead   Permission = "detections.read"
+	PermissionDetectionsCreate Permission = "detections.create"
+	PermissionDetectionsDelete Permission = "detections.delete"
+)
+
+var detectionPermissions = []Permission{
+	PermissionDetectionsRead,
+	PermissionDetectionsCreate,
+	PermissionDetectionsDelete,
+}
+
+// DetectionPermissions returns the canonical detection permission catalog.
+func DetectionPermissions() []Permission {
+	return append([]Permission(nil), detectionPermissions...)
+}
+
 type AnalysisWrapper struct {
 	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
