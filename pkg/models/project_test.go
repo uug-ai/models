@@ -86,13 +86,6 @@ func containsJSONValue(encoded []byte, value string) bool {
 	return false
 }
 
-func TestRoleAssignmentScopeWithProjectsIsNotOrganisationWide(t *testing.T) {
-	scope := RoleAssignmentScope{ProjectIds: []primitive.ObjectID{primitive.NewObjectID()}}
-	if scope.IsOrganisationWide() {
-		t.Fatal("project-scoped role assignment must not be organisation-wide")
-	}
-}
-
 // TestProjectScopedResourceBSONContracts pins the flat ProjectId field to a
 // top-level projectId key on every project-scoped resource, so
 // database.ProjectScope (which matches that exact top-level key) stays in

@@ -37,6 +37,14 @@ const (
 	ContactRole = "role"
 )
 
+// InvitationAssignment property field names (BSON)
+const (
+	InvitationAssignmentRoleId = "roleId"
+	InvitationAssignmentScope = "scope"
+	InvitationAssignmentTimeWindow = "timeWindow"
+	InvitationAssignmentExpiresAt = "expiresAt"
+)
+
 // Organisation property field names (BSON)
 const (
 	OrganisationId = "_id"
@@ -58,9 +66,8 @@ const (
 	OrganisationInvitationId = "_id"
 	OrganisationInvitationOrganisationId = "organisationId"
 	OrganisationInvitationEmail = "email"
-	OrganisationInvitationRoleIds = "roleIds"
-	OrganisationInvitationScope = "scope"
-	OrganisationInvitationToken = "token"
+	OrganisationInvitationAssignments = "assignments"
+	OrganisationInvitationTokenHash = "tokenHash"
 	OrganisationInvitationInvitedBy = "invitedBy"
 	OrganisationInvitationStatus = "status"
 	OrganisationInvitationExpiresAt = "expiresAt"
@@ -80,7 +87,6 @@ const (
 const (
 	OrganisationSettingsForceMFA = "forceMFA"
 	OrganisationSettingsAllowedDomains = "allowedDomains"
-	OrganisationSettingsDefaultRoleId = "defaultRoleId"
 	OrganisationSettingsMaxMembers = "maxMembers"
 	OrganisationSettingsAllowInvitations = "allowInvitations"
 	OrganisationSettingsTimezone = "timezone"
