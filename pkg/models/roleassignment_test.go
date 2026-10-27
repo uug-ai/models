@@ -306,13 +306,70 @@ func TestHashInvitationToken(t *testing.T) {
 	}
 }
 
-func TestOrganisationIsOwner(t *testing.T) {
+func TestOrganisationIsPrimaryOwner(t *testing.T) {
 	owner := primitive.NewObjectID()
 	organisation := Organisation{OwnerId: owner}
-	if !organisation.IsOwner(owner) || organisation.IsOwner(primitive.NewObjectID()) {
-		t.Fatal("IsOwner must match only the owner")
+	if !organisation.IsPrimaryOwner(owner) || organisation.IsPrimaryOwner(primitive.NewObjectID()) {
+		t.Fatal("IsPrimaryOwner must match only the primary owner")
 	}
-	if (Organisation{}).IsOwner(primitive.NilObjectID) {
-		t.Fatal("an organisation without owner has no owner")
+	if (Organisation{}).IsPrimaryOwner(primitive.NilObjectID) {
+		t.Fatal("an organisation without owner has no primary owner")
+	}
+}
+
+func TestOwnerRole(t *testing.T) {
+	owner := Role{Name: "Owner", Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation}
+	if err := owner.Validate(); err != nil {
+		t.Fatalf("Validate() error = %v", err)
+	}
+	if !owner.IsOwner() || !owner.RequiresAllProjects() {
+		t.Fatal("Owner must be recognised and require all projects")
+	}
+
+	for name, role := range map[string]Role{
+		"stored permissions": {Name: "Owner", Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation, Permissions: []Permission{PermissionMembersRead}},
+		"project level":      {Name: "Owner", Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeProject},
+		"legacy kind":        {Name: "Owner", Kind: RoleKindLegacy, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation},
+	} {
+		t.Run(name, func(t *testing.T) {
+			if err := role.Validate(); !errors.Is(err, ErrRoleInvalid) {
+				t.Fatalf("Validate() error = %v, want ErrRoleInvalid", err)
+			}
+		})
+	}
+}
+
+func TestOwnerAssignmentValidate(t *testing.T) {
+	organisation := primitive.NewObjectID()
+	owner := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation}
+	assign := func(mutate func(*RoleAssignment)) RoleAssignment {
+		assignment := RoleAssignment{
+			OrganisationId: organisation,
+			Principal:      Principal{Type: PrincipalTypeUser, Id: primitive.NewObjectID()},
+			RoleId:         owner.Id,
+			Scope:          RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionAll},
+			Source:         AssignmentSourceMigration,
+			IsActive:       true,
+		}
+		mutate(&assignment)
+		return assignment
+	}
+
+	if err := assign(func(*RoleAssignment) {}).Validate(owner); err != nil {
+		t.Fatalf("Validate() error = %v", err)
+	}
+	tests := map[string]func(*RoleAssignment){
+		"selected projects": func(a *RoleAssignment) {
+			a.Scope = RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionSelected, ProjectIds: []primitive.ObjectID{primitive.NewObjectID()}}
+		},
+		"time window": func(a *RoleAssignment) { a.TimeWindow = &officeHours },
+		"expiry":      func(a *RoleAssignment) { a.ExpiresAt = time.Now().Add(time.Hour) },
+	}
+	for name, mutate := range tests {
+		t.Run(name, func(t *testing.T) {
+			if err := assign(mutate).Validate(owner); !errors.Is(err, ErrRoleAssignmentInvalid) {
+				t.Fatalf("Validate() error = %v, want ErrRoleAssignmentInvalid", err)
+			}
+		})
 	}
 }

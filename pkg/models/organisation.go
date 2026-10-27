@@ -54,11 +54,10 @@ type Organisation struct {
 	Slug        string `json:"slug" bson:"slug,omitempty"`
 	Description string `json:"description" bson:"description,omitempty"`
 	Domain      string `json:"domain" bson:"domain,omitempty"`
-	// OwnerId is the organisation's single owner and the only source of
-	// ownership. The owner is not a role assignment: they hold every
-	// permission in every project. The owner must be an active member, cannot
-	// be suspended or removed, and changes only through an ownership transfer
-	// by the current owner.
+	// OwnerId is the primary owner: the accountable contact for billing and
+	// the contract. Ownership itself is the Owner role (RoleKeyOwner), which
+	// several members can hold; the primary owner must always hold it.
+	// Changing the primary owner moves this field to another current owner.
 	OwnerId  primitive.ObjectID   `json:"ownerId" bson:"ownerId,omitempty"`
 	Settings OrganisationSettings `json:"settings" bson:"settings"`
 	IsActive bool                 `json:"isActive" bson:"isActive"`
@@ -73,8 +72,9 @@ type Organisation struct {
 	Audit Audit `json:"audit" bson:"audit"`
 }
 
-// IsOwner reports whether the user is the organisation's owner.
-func (o Organisation) IsOwner(userId primitive.ObjectID) bool {
+// IsPrimaryOwner reports whether the user is the organisation's primary owner.
+// Other members may also hold the Owner role.
+func (o Organisation) IsPrimaryOwner(userId primitive.ObjectID) bool {
 	return !o.OwnerId.IsZero() && o.OwnerId == userId
 }
 

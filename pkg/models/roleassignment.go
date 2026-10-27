@@ -95,7 +95,11 @@ func (a RoleAssignment) isEffectivelyActiveAt(at time.Time) bool {
 // Validate checks the assignment against the role it grants: the principal is
 // set, the role belongs to the same organisation, the scope is valid and at
 // the role's level, and a role holding tenant-wide permissions covers all
-// projects.
+// projects. An Owner assignment goes to a user and has no time window or
+// expiry, so an organisation cannot silently lose its owners.
+//
+// Rules that span several records (at least one owner per organisation, the
+// primary owner holding Owner) are enforced by the writing service.
 func (a RoleAssignment) Validate(role Role) error {
 	if a.OrganisationId.IsZero() {
 		return fmt.Errorf("%w: missing organisation", ErrRoleAssignmentInvalid)
@@ -119,6 +123,9 @@ func (a RoleAssignment) Validate(role Role) error {
 	}
 	if err := a.Scope.ValidateFor(role); err != nil {
 		return err
+	}
+	if role.IsOwner() && (a.Principal.Type != PrincipalTypeUser || a.TimeWindow != nil || !a.ExpiresAt.IsZero()) {
+		return fmt.Errorf("%w: owner must be a user without time window or expiry", ErrRoleAssignmentInvalid)
 	}
 	if a.TimeWindow != nil {
 		if err := a.TimeWindow.Validate(); err != nil {

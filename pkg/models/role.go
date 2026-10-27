@@ -90,6 +90,10 @@ const (
 type RoleKey string
 
 const (
+	// RoleKeyOwner is the Owner role: every permission in every current and
+	// future project. It stores no permission list. An organisation has at
+	// least one owner, and Organisation.OwnerId names the primary one.
+	RoleKeyOwner               RoleKey = "owner"
 	RoleKeyOrganisationManager RoleKey = "organisation-manager"
 	RoleKeyBillingAdmin        RoleKey = "billing-admin"
 	RoleKeyProjectAdmin        RoleKey = "project-admin"
@@ -118,8 +122,8 @@ var ErrRoleInvalid = errors.New("invalid role")
 //
 // A role is assignable at one level only. An organisation role holds
 // organisation permissions and grants nothing inside projects; a project role
-// holds project permissions and is assigned per project. The organisation
-// owner is not a role (see Organisation.OwnerId).
+// holds project permissions and is assigned per project. The Owner role
+// (RoleKeyOwner) is the one exception and spans every project.
 type Role struct {
 	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"` // Organisation this role belongs to
@@ -145,9 +149,15 @@ func (r Role) ValidatePermissions() error {
 	return ValidatePermissions(r.Permissions)
 }
 
+// IsOwner reports whether this is the organisation's Owner role.
+func (r Role) IsOwner() bool {
+	return r.Kind == RoleKindSystem && r.Key == RoleKeyOwner
+}
+
 // Validate checks the role's own invariants: a known kind with a key exactly
 // when the platform defines it, a known level, and only catalog permissions
-// of that level.
+// of that level. The Owner role is an organisation role with no stored
+// permissions.
 func (r Role) Validate() error {
 	if r.Name == "" {
 		return fmt.Errorf("%w: empty name", ErrRoleInvalid)
@@ -167,6 +177,12 @@ func (r Role) Validate() error {
 	if r.AssignableAt != PermissionScopeOrganisation && r.AssignableAt != PermissionScopeProject {
 		return fmt.Errorf("%w: unknown level %q", ErrRoleInvalid, r.AssignableAt)
 	}
+	if r.Key == RoleKeyOwner {
+		if r.Kind != RoleKindSystem || r.AssignableAt != PermissionScopeOrganisation || len(r.Permissions) > 0 {
+			return fmt.Errorf("%w: owner must be a system organisation role without stored permissions", ErrRoleInvalid)
+		}
+		return nil
+	}
 	if err := r.ValidatePermissions(); err != nil {
 		return err
 	}
@@ -179,9 +195,12 @@ func (r Role) Validate() error {
 	return nil
 }
 
-// RequiresAllProjects reports whether the role holds a tenant-wide permission,
-// in which case it can only be assigned to cover all projects.
+// RequiresAllProjects reports whether the role is Owner or holds a tenant-wide
+// permission, in which case it can only be assigned to cover all projects.
 func (r Role) RequiresAllProjects() bool {
+	if r.IsOwner() {
+		return true
+	}
 	for _, permission := range r.Permissions {
 		if definition, ok := LookupPermission(permission); ok && definition.TenantWide {
 			return true
