@@ -3,15 +3,17 @@ package models
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 const (
-	PermissionIORead   Permission = "io.read"
-	PermissionIOCreate Permission = "io.create"
-	PermissionIODelete Permission = "io.delete"
+	PermissionIORead    Permission = "io.read"
+	PermissionIOCreate  Permission = "io.create"
+	PermissionIODelete  Permission = "io.delete"
+	PermissionIOTrigger Permission = "io.trigger"
 )
 
 var ioPermissions = []Permission{
 	PermissionIORead,
 	PermissionIOCreate,
 	PermissionIODelete,
+	PermissionIOTrigger,
 }
 
 // IOPermissions returns the canonical IO permission catalog.

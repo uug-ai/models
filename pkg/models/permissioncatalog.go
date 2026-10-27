@@ -32,6 +32,10 @@ type PermissionDefinition struct {
 	// graded capability implies its lower grades. Implied permissions always
 	// share the same scope.
 	Implies []Permission `json:"implies,omitempty"`
+	// TenantWide marks an organisation permission that affects the whole
+	// organisation (billing, the role catalog, removing members). A role holding
+	// one can only be assigned to cover all projects; see RoleAssignmentScope.
+	TenantWide bool `json:"tenantWide,omitempty"`
 }
 
 var (
@@ -46,6 +50,7 @@ type permissionGroup struct {
 	scope       PermissionScope
 	permissions []Permission
 	implies     map[Permission][]Permission
+	tenantWide  []Permission
 }
 
 var permissionGroups = []permissionGroup{
@@ -70,15 +75,17 @@ var permissionGroups = []permissionGroup{
 	{scope: PermissionScopeProject, permissions: detectionPermissions},
 	{scope: PermissionScopeProject, permissions: projectPermissions},
 
-	// Organisation-level administration.
-	{scope: PermissionScopeOrganisation, permissions: organisationPermissions},
-	{scope: PermissionScopeOrganisation, permissions: memberPermissions},
-	{scope: PermissionScopeOrganisation, permissions: rolePermissions},
-	{scope: PermissionScopeOrganisation, permissions: projectAdministrationPermissions},
-	{scope: PermissionScopeOrganisation, permissions: billingPermissions},
-	{scope: PermissionScopeOrganisation, permissions: storagePermissions},
-	{scope: PermissionScopeOrganisation, permissions: auditPermissions},
-	{scope: PermissionScopeOrganisation, permissions: deviceAdministrationPermissions},
+	// Organisation-level administration. Reading the organisation, members and
+	// roles, inviting, and managing projects can be limited to selected
+	// projects; everything else is tenant-wide.
+	{scope: PermissionScopeOrganisation, permissions: organisationPermissions, tenantWide: []Permission{PermissionOrganisationUpdate}},
+	{scope: PermissionScopeOrganisation, permissions: memberPermissions, tenantWide: []Permission{PermissionMembersUpdate, PermissionMembersRemove}},
+	{scope: PermissionScopeOrganisation, permissions: rolePermissions, tenantWide: []Permission{PermissionRolesCreate, PermissionRolesUpdate, PermissionRolesDelete}},
+	{scope: PermissionScopeOrganisation, permissions: projectAdministrationPermissions, tenantWide: []Permission{PermissionProjectsCreate}},
+	{scope: PermissionScopeOrganisation, permissions: billingPermissions, tenantWide: billingPermissions},
+	{scope: PermissionScopeOrganisation, permissions: storagePermissions, tenantWide: storagePermissions},
+	{scope: PermissionScopeOrganisation, permissions: auditPermissions, tenantWide: auditPermissions},
+	{scope: PermissionScopeOrganisation, permissions: deviceAdministrationPermissions, tenantWide: deviceAdministrationPermissions},
 }
 
 var permissionDefinitions = definePermissions(permissionGroups)
@@ -182,6 +189,7 @@ func definePermissions(groups []permissionGroup) []PermissionDefinition {
 				Permission: permission,
 				Scope:      group.scope,
 				Implies:    append([]Permission(nil), group.implies[permission]...),
+				TenantWide: slices.Contains(group.tenantWide, permission),
 			})
 		}
 	}
@@ -198,7 +206,8 @@ func indexPermissions(definitions []PermissionDefinition) map[Permission]int {
 
 // validatePermissionGroups checks the catalog invariants: identifiers are
 // non-empty and unique, scopes are known, implications only reference the
-// group's own permissions, stay within one scope, and contain no cycles.
+// group's own permissions, stay within one scope, and contain no cycles, and
+// only the group's own organisation permissions are tenant-wide.
 func validatePermissionGroups(groups []permissionGroup) error {
 	definitions := definePermissions(groups)
 	index := make(map[Permission]int, len(definitions))
@@ -219,6 +228,14 @@ func validatePermissionGroups(groups []permissionGroup) error {
 		for permission := range group.implies {
 			if !slices.Contains(group.permissions, permission) {
 				return fmt.Errorf("%w: implication source %q is not a permission of its group", ErrPermissionInvalid, permission)
+			}
+		}
+		for _, permission := range group.tenantWide {
+			if !slices.Contains(group.permissions, permission) {
+				return fmt.Errorf("%w: tenant-wide %q is not a permission of its group", ErrPermissionInvalid, permission)
+			}
+			if group.scope != PermissionScopeOrganisation {
+				return fmt.Errorf("%w: tenant-wide %q is not an organisation permission", ErrPermissionInvalid, permission)
 			}
 		}
 	}

@@ -17,12 +17,16 @@ const (
 	PermissionDevicesUpdate Permission = "devices.update"
 	PermissionDevicesDelete Permission = "devices.delete"
 	PermissionDevicesConfig Permission = "devices.config"
-	PermissionLivePreview   Permission = "live.preview"
-	PermissionLiveStream    Permission = "live.stream"
-	PermissionPTZZoom       Permission = "ptz.zoom"
-	PermissionPTZPanTilt    Permission = "ptz.panTilt"
-	PermissionPTZControl    Permission = "ptz.control"
-	PermissionPTZPresets    Permission = "ptz.presets"
+	// PermissionDevicesManagePermissions sets a device's own restrictions (live
+	// view, PTZ, remote config): limits that apply to everyone on that device
+	// on top of their roles.
+	PermissionDevicesManagePermissions Permission = "devices.managePermissions"
+	PermissionLivePreview              Permission = "live.preview"
+	PermissionLiveStream               Permission = "live.stream"
+	PermissionPTZZoom                  Permission = "ptz.zoom"
+	PermissionPTZPanTilt               Permission = "ptz.panTilt"
+	PermissionPTZControl               Permission = "ptz.control"
+	PermissionPTZPresets               Permission = "ptz.presets"
 )
 
 var devicePermissions = []Permission{
@@ -30,6 +34,7 @@ var devicePermissions = []Permission{
 	PermissionDevicesUpdate,
 	PermissionDevicesDelete,
 	PermissionDevicesConfig,
+	PermissionDevicesManagePermissions,
 	PermissionLivePreview,
 	PermissionLiveStream,
 	PermissionPTZZoom,
@@ -40,11 +45,11 @@ var devicePermissions = []Permission{
 
 // devicePermissionImplications encodes the graded legacy feature scales
 // (PermissionLevel PTZ 2-5, live view 2-3) as permissions that imply their
-// lower grades, so a migrated level maps to exactly one permission.
+// lower grades, so a migrated level maps to exactly one permission. PTZ level 3
+// is pan/tilt without zoom, so pan/tilt and zoom are siblings under control.
 var devicePermissionImplications = map[Permission][]Permission{
 	PermissionLiveStream: {PermissionLivePreview},
-	PermissionPTZPanTilt: {PermissionPTZZoom},
-	PermissionPTZControl: {PermissionPTZPanTilt},
+	PermissionPTZControl: {PermissionPTZPanTilt, PermissionPTZZoom},
 	PermissionPTZPresets: {PermissionPTZControl},
 }
 

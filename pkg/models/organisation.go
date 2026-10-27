@@ -6,16 +6,16 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// Transferring ownership is not a permission: only the owner can do it (see
+// Organisation.OwnerId).
 const (
-	PermissionOrganisationRead              Permission = "organisation.read"
-	PermissionOrganisationUpdate            Permission = "organisation.update"
-	PermissionOrganisationTransferOwnership Permission = "organisation.transferOwnership"
+	PermissionOrganisationRead   Permission = "organisation.read"
+	PermissionOrganisationUpdate Permission = "organisation.update"
 )
 
 var organisationPermissions = []Permission{
 	PermissionOrganisationRead,
 	PermissionOrganisationUpdate,
-	PermissionOrganisationTransferOwnership,
 }
 
 // OrganisationPermissions returns the canonical organisation permission catalog.

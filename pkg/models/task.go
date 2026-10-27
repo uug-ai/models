@@ -14,6 +14,10 @@ const (
 	PermissionCasesExport      Permission = "cases.export"
 	PermissionCasesRunWorkflow Permission = "cases.runWorkflow"
 	PermissionCasesDelete      Permission = "cases.delete"
+	// PermissionCasesManageMembership adds and removes case participants.
+	PermissionCasesManageMembership Permission = "cases.manageMembership"
+	// PermissionCasesModerateComments edits and removes other participants' comments.
+	PermissionCasesModerateComments Permission = "cases.moderateComments"
 )
 
 var casePermissions = []Permission{
@@ -24,6 +28,8 @@ var casePermissions = []Permission{
 	PermissionCasesExport,
 	PermissionCasesRunWorkflow,
 	PermissionCasesDelete,
+	PermissionCasesManageMembership,
+	PermissionCasesModerateComments,
 }
 
 // CasePermissions returns the canonical case permission catalog.

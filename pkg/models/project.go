@@ -5,11 +5,15 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 const (
 	PermissionProjectUpdate            Permission = "project.update"
 	PermissionProjectManageCredentials Permission = "project.manageCredentials"
+	// PermissionProjectManageAccess grants project roles within the project,
+	// bounded by the grantor's own permissions and resources there.
+	PermissionProjectManageAccess Permission = "project.manageAccess"
 )
 
 var projectPermissions = []Permission{
 	PermissionProjectUpdate,
 	PermissionProjectManageCredentials,
+	PermissionProjectManageAccess,
 }
 
 // ProjectPermissions returns the canonical project permission catalog.
@@ -20,11 +24,15 @@ func ProjectPermissions() []Permission {
 const (
 	PermissionProjectsCreate Permission = "projects.create"
 	PermissionProjectsDelete Permission = "projects.delete"
+	// PermissionProjectsManageAccess grants project roles in the projects an
+	// organisation assignment covers, without access to their resources.
+	PermissionProjectsManageAccess Permission = "projects.manageAccess"
 )
 
 var projectAdministrationPermissions = []Permission{
 	PermissionProjectsCreate,
 	PermissionProjectsDelete,
+	PermissionProjectsManageAccess,
 }
 
 // ProjectAdministrationPermissions returns the canonical organisation-level project permission catalog.

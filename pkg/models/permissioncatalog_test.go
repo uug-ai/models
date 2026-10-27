@@ -71,6 +71,8 @@ func TestCasePermissionsStableOrder(t *testing.T) {
 		PermissionCasesExport,
 		PermissionCasesRunWorkflow,
 		PermissionCasesDelete,
+		PermissionCasesManageMembership,
+		PermissionCasesModerateComments,
 	}
 	if got := CasePermissions(); !slices.Equal(got, want) {
 		t.Fatalf("CasePermissions() = %v, want %v", got, want)
@@ -328,7 +330,7 @@ func TestGradedDevicePermissionsExpand(t *testing.T) {
 		want       []Permission
 	}{
 		{"ptz zoom", PermissionPTZZoom, []Permission{PermissionPTZZoom}},
-		{"ptz pan/tilt", PermissionPTZPanTilt, []Permission{PermissionPTZZoom, PermissionPTZPanTilt}},
+		{"ptz pan/tilt", PermissionPTZPanTilt, []Permission{PermissionPTZPanTilt}},
 		{"ptz control", PermissionPTZControl, []Permission{PermissionPTZZoom, PermissionPTZPanTilt, PermissionPTZControl}},
 		{"ptz presets", PermissionPTZPresets, []Permission{PermissionPTZZoom, PermissionPTZPanTilt, PermissionPTZControl, PermissionPTZPresets}},
 		{"live preview", PermissionLivePreview, []Permission{PermissionLivePreview}},
@@ -445,6 +447,23 @@ func TestValidatePermissionGroups(t *testing.T) {
 			}}},
 			wantErr: ErrPermissionInvalid,
 		},
+		{
+			name:   "tenant-wide organisation permission",
+			groups: []permissionGroup{{scope: organisation, permissions: []Permission{a, b}, tenantWide: []Permission{b}}},
+		},
+		{
+			name:    "tenant-wide project permission",
+			groups:  []permissionGroup{{scope: project, permissions: []Permission{a}, tenantWide: []Permission{a}}},
+			wantErr: ErrPermissionInvalid,
+		},
+		{
+			name: "tenant-wide permission of another group",
+			groups: []permissionGroup{
+				{scope: organisation, permissions: []Permission{a}, tenantWide: []Permission{b}},
+				{scope: organisation, permissions: []Permission{b}},
+			},
+			wantErr: ErrPermissionInvalid,
+		},
 	}
 
 	for _, test := range tests {
@@ -516,6 +535,23 @@ func TestPrivilegedPermissionsAreNotGrantableAccessTokenScopes(t *testing.T) {
 	for _, permission := range []Permission{PermissionApplication, PermissionMarkersAll} {
 		if slices.Contains(scopes, permission) {
 			t.Fatalf("AccessTokenScopes() contains privileged permission %q", permission)
+		}
+	}
+}
+
+func TestTenantWidePermissions(t *testing.T) {
+	selectable := []Permission{
+		PermissionOrganisationRead,
+		PermissionMembersRead,
+		PermissionMembersInvite,
+		PermissionRolesRead,
+		PermissionProjectsDelete,
+		PermissionProjectsManageAccess,
+	}
+	for _, definition := range PermissionDefinitions() {
+		want := definition.Scope == PermissionScopeOrganisation && !slices.Contains(selectable, definition.Permission)
+		if definition.TenantWide != want {
+			t.Errorf("%q TenantWide = %v, want %v", definition.Permission, definition.TenantWide, want)
 		}
 	}
 }

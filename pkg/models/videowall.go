@@ -11,6 +11,7 @@ const (
 	PermissionVideowallsCreate Permission = "videowalls.create"
 	PermissionVideowallsUpdate Permission = "videowalls.update"
 	PermissionVideowallsDelete Permission = "videowalls.delete"
+	PermissionVideowallsAssign Permission = "videowalls.assign"
 )
 
 var videowallPermissions = []Permission{
@@ -18,6 +19,7 @@ var videowallPermissions = []Permission{
 	PermissionVideowallsCreate,
 	PermissionVideowallsUpdate,
 	PermissionVideowallsDelete,
+	PermissionVideowallsAssign,
 }
 
 // VideowallPermissions returns the canonical videowall permission catalog.
