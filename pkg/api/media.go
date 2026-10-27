@@ -96,7 +96,11 @@ type MediaFilter struct {
 	// HasAnalysis keeps only media with analysis results (markers, description,
 	// detections, classification/counting summaries or VLM output) when true,
 	// and only media without any when false.
-	HasAnalysis *bool   `json:"hasAnalysis,omitempty" bson:"hasAnalysis,omitempty"`
+	HasAnalysis *bool `json:"hasAnalysis,omitempty" bson:"hasAnalysis,omitempty"`
+	// Forwardable keeps only metadata-only recordings that carry their source
+	// Vault and source recording IDs, so they can be forwarded on demand, when
+	// true, and only media that cannot be forwarded when false.
+	Forwardable *bool   `json:"forwardable,omitempty" bson:"forwardable,omitempty"`
 	SortBy      *string `json:"sortBy,omitempty" bson:"sortBy,omitempty"`
 }
 
