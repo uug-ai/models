@@ -1,6 +1,8 @@
 package models
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -49,12 +51,17 @@ type Organisation struct {
 	// Slug is a stable, URL-friendly handle for the organisation (e.g. "acme-corp").
 	// It is unique and decoupled from the display Name so it can be used in URLs
 	// and references without breaking when the name changes.
-	Slug        string               `json:"slug" bson:"slug,omitempty"`
-	Description string               `json:"description" bson:"description,omitempty"`
-	Domain      string               `json:"domain" bson:"domain,omitempty"`
-	OwnerId     primitive.ObjectID   `json:"ownerId" bson:"ownerId,omitempty"` // The user who owns this organisation
-	Settings    OrganisationSettings `json:"settings" bson:"settings"`
-	IsActive    bool                 `json:"isActive" bson:"isActive"`
+	Slug        string `json:"slug" bson:"slug,omitempty"`
+	Description string `json:"description" bson:"description,omitempty"`
+	Domain      string `json:"domain" bson:"domain,omitempty"`
+	// OwnerId is the organisation's single owner and the only source of
+	// ownership. The owner is not a role assignment: they hold every
+	// permission in every project. The owner must be an active member, cannot
+	// be suspended or removed, and changes only through an ownership transfer
+	// by the current owner.
+	OwnerId  primitive.ObjectID   `json:"ownerId" bson:"ownerId,omitempty"`
+	Settings OrganisationSettings `json:"settings" bson:"settings"`
+	IsActive bool                 `json:"isActive" bson:"isActive"`
 
 	// Company Details
 	Company CompanyDetails `json:"company" bson:"company"`
@@ -64,6 +71,11 @@ type Organisation struct {
 	BillingAddress Address      `json:"billingAddress" bson:"billingAddress"`
 
 	Audit Audit `json:"audit" bson:"audit"`
+}
+
+// IsOwner reports whether the user is the organisation's owner.
+func (o Organisation) IsOwner(userId primitive.ObjectID) bool {
+	return !o.OwnerId.IsZero() && o.OwnerId == userId
 }
 
 // CompanyDetails contains the legal and business information for an organisation.
@@ -102,11 +114,10 @@ type Contact struct {
 
 // OrganisationSettings contains configurable settings for an organisation.
 type OrganisationSettings struct {
-	ForceMFA         bool               `json:"forceMFA" bson:"forceMFA,omitempty"`
-	AllowedDomains   []string           `json:"allowedDomains" bson:"allowedDomains,omitempty"` // Email domains allowed for membership
-	DefaultRoleId    primitive.ObjectID `json:"defaultRoleId" bson:"defaultRoleId,omitempty"`   // Default role for new members
-	MaxMembers       int                `json:"maxMembers" bson:"maxMembers,omitempty"`
-	AllowInvitations bool               `json:"allowInvitations" bson:"allowInvitations,omitempty"`
+	ForceMFA         bool     `json:"forceMFA" bson:"forceMFA,omitempty"`
+	AllowedDomains   []string `json:"allowedDomains" bson:"allowedDomains,omitempty"` // Email domains allowed for membership
+	MaxMembers       int      `json:"maxMembers" bson:"maxMembers,omitempty"`
+	AllowInvitations bool     `json:"allowInvitations" bson:"allowInvitations,omitempty"`
 
 	// Regional defaults applied across the organisation for display, scheduling
 	// and billing.
@@ -132,8 +143,11 @@ const (
 
 // OrganisationUser represents a user's membership in an organisation.
 // This is the join table between users and organisations, allowing users
-// to belong to multiple organisations. Role assignments are managed separately
-// through the RoleAssignment model.
+// to belong to multiple organisations. Membership grants nothing by itself:
+// access comes from RoleAssignment, and a membership that is not effectively
+// active disables all of the member's assignments. There is no separate
+// project membership; a member is in a project when they hold an assignment
+// there.
 type OrganisationUser struct {
 	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	UserId         primitive.ObjectID `json:"userId" bson:"userId,omitempty"`
@@ -173,21 +187,38 @@ const (
 
 // OrganisationInvitation represents a pending invitation to join an organisation.
 type OrganisationInvitation struct {
-	Id             primitive.ObjectID   `json:"id" bson:"_id,omitempty"`
-	OrganisationId primitive.ObjectID   `json:"organisationId" bson:"organisationId,omitempty"`
-	Email          string               `json:"email" bson:"email,omitempty"`
-	RoleIds        []primitive.ObjectID `json:"roleIds" bson:"roleIds,omitempty"` // Roles to assign upon acceptance
-	// Scope is the granular scope applied to every role in RoleIds when the
-	// invitation is accepted, i.e. it seeds the Scope of each resulting
-	// RoleAssignment. Following the RoleAssignmentScope convention, a zero value
-	// grants the roles organisation-wide; populate a dimension to restrict the
-	// resulting assignments to specific resources (see RoleAssignmentScope).
-	Scope     RoleAssignmentScope `json:"scope" bson:"scope"`
-	Token     string              `json:"token" bson:"token,omitempty"`
-	InvitedBy primitive.ObjectID  `json:"invitedBy" bson:"invitedBy,omitempty"`
-	Status    InvitationStatus    `json:"status" bson:"status,omitempty"`
-	ExpiresAt time.Time           `json:"expiresAt" bson:"expiresAt,omitempty"`
-	Audit     Audit               `json:"audit" bson:"audit"`
+	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"`
+	Email          string             `json:"email" bson:"email,omitempty"`
+	// Assignments are created together with the membership when the
+	// invitation is accepted, each as a RoleAssignment for the invitee with
+	// source invitation. They are checked against the inviter's own access
+	// when the invitation is created. An invitation without assignments only
+	// creates the membership.
+	Assignments []InvitationAssignment `json:"assignments" bson:"assignments,omitempty"`
+	// Token is returned once when the invitation is created and never stored;
+	// TokenHash (see HashInvitationToken) is what lookups match on.
+	Token     string             `json:"token,omitempty" bson:"-"`
+	TokenHash string             `json:"-" bson:"tokenHash,omitempty"`
+	InvitedBy primitive.ObjectID `json:"invitedBy" bson:"invitedBy,omitempty"`
+	Status    InvitationStatus   `json:"status" bson:"status,omitempty"`
+	ExpiresAt time.Time          `json:"expiresAt" bson:"expiresAt,omitempty"`
+	Audit     Audit              `json:"audit" bson:"audit"`
+}
+
+// InvitationAssignment is a RoleAssignment to create when an invitation is
+// accepted.
+type InvitationAssignment struct {
+	RoleId     primitive.ObjectID  `json:"roleId" bson:"roleId,omitempty"`
+	Scope      RoleAssignmentScope `json:"scope" bson:"scope"`
+	TimeWindow *TimeWindow         `json:"timeWindow,omitempty" bson:"timeWindow,omitempty"`
+	ExpiresAt  time.Time           `json:"expiresAt" bson:"expiresAt,omitempty"`
+}
+
+// HashInvitationToken returns the stored form of an invitation token.
+func HashInvitationToken(token string) string {
+	sum := sha256.Sum256([]byte(token))
+	return hex.EncodeToString(sum[:])
 }
 
 // OrganisationUserDetails is a helper struct that includes full organisation and role details

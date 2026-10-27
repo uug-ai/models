@@ -3,24 +3,49 @@
 
 package properties
 
+// Principal property field names (BSON)
+const (
+	PrincipalType = "type"
+	PrincipalId = "id"
+)
+
 // RoleAssignment property field names (BSON)
 const (
 	RoleAssignmentId = "_id"
-	RoleAssignmentUserId = "userId"
-	RoleAssignmentRoleId = "roleId"
 	RoleAssignmentOrganisationId = "organisationId"
+	RoleAssignmentPrincipal = "principal"
+	RoleAssignmentRoleId = "roleId"
+	RoleAssignmentScope = "scope"
+	RoleAssignmentTimeWindow = "timeWindow"
+	RoleAssignmentSource = "source"
 	RoleAssignmentExpiresAt = "expiresAt"
 	RoleAssignmentIsActive = "isActive"
-	RoleAssignmentScope = "scope"
 	RoleAssignmentAudit = "audit"
 )
 
 // RoleAssignmentScope property field names (BSON)
 const (
+	RoleAssignmentScopeLevel = "level"
+	RoleAssignmentScopeProjects = "projects"
 	RoleAssignmentScopeProjectIds = "projectIds"
+	RoleAssignmentScopeProjectId = "projectId"
+	RoleAssignmentScopeResources = "resources"
 	RoleAssignmentScopeSiteIds = "siteIds"
 	RoleAssignmentScopeGroupIds = "groupIds"
 	RoleAssignmentScopeDeviceIds = "deviceIds"
+)
+
+// TimeWindow property field names (BSON)
+const (
+	TimeWindowTimezone = "timezone"
+	TimeWindowRanges = "ranges"
+)
+
+// TimeWindowRange property field names (BSON)
+const (
+	TimeWindowRangeDays = "days"
+	TimeWindowRangeStartMinute = "startMinute"
+	TimeWindowRangeEndMinute = "endMinute"
 )
 
 // UserRoleAssignments property field names (BSON)
