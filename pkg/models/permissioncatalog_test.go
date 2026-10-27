@@ -174,10 +174,253 @@ func TestPermissionCatalogAccessorsReturnCopies(t *testing.T) {
 	}
 }
 
-func TestAccessTokenScopesContainCanonicalPermissions(t *testing.T) {
-	want := AllPermissions()
-	if got := AccessTokenScopes(); !slices.Equal(got, want) {
-		t.Fatalf("AccessTokenScopes() = %v, want %v", got, want)
+func TestAccessTokenScopesAreProjectCatalogPermissions(t *testing.T) {
+	scopes := AccessTokenScopes()
+	if len(scopes) == 0 {
+		t.Fatal("AccessTokenScopes() is empty")
+	}
+	for _, scope := range scopes {
+		definition, ok := LookupPermission(scope)
+		if !ok {
+			t.Fatalf("AccessTokenScopes() contains non-catalog permission %q", scope)
+		}
+		if definition.Scope != PermissionScopeProject {
+			t.Fatalf("AccessTokenScopes() contains %s permission %q", definition.Scope, scope)
+		}
+	}
+	if err := ValidateAccessTokenScopes(scopes); err != nil {
+		t.Fatalf("ValidateAccessTokenScopes(AccessTokenScopes()) error = %v", err)
+	}
+}
+
+func TestAccessTokenScopesReturnCopy(t *testing.T) {
+	scopes := AccessTokenScopes()
+	want := scopes[0]
+	scopes[0] = "changed"
+	if AccessTokenScopes()[0] != want {
+		t.Fatal("AccessTokenScopes returned mutable storage")
+	}
+}
+
+func TestValidateAccessTokenScopes(t *testing.T) {
+	tests := []struct {
+		name    string
+		scopes  []AccessTokenScope
+		wantErr error
+	}{
+		{name: "empty"},
+		{name: "valid", scopes: []AccessTokenScope{PermissionMediaRead, PermissionMarkersWrite}},
+		{name: "unknown", scopes: []AccessTokenScope{"media.unknown"}, wantErr: ErrPermissionUnknown},
+		{name: "application", scopes: []AccessTokenScope{PermissionApplication}, wantErr: ErrPermissionUnknown},
+		{name: "duplicate", scopes: []AccessTokenScope{PermissionMediaRead, PermissionMediaRead}, wantErr: ErrPermissionDuplicate},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			err := ValidateAccessTokenScopes(test.scopes)
+			if !errors.Is(err, test.wantErr) {
+				t.Fatalf("ValidateAccessTokenScopes() error = %v, want %v", err, test.wantErr)
+			}
+		})
+	}
+}
+
+func TestValidateAccessTokenScopesRejectsCatalogPermissionOutsideAllowList(t *testing.T) {
+	original := accessTokenScopeSet
+	t.Cleanup(func() { accessTokenScopeSet = original })
+	accessTokenScopeSet = map[AccessTokenScope]struct{}{PermissionMediaRead: {}}
+
+	err := ValidateAccessTokenScopes([]AccessTokenScope{PermissionMediaRead, PermissionMediaDelete})
+	if !errors.Is(err, ErrAccessTokenScopeNotGrantable) {
+		t.Fatalf("ValidateAccessTokenScopes() error = %v, want ErrAccessTokenScopeNotGrantable", err)
+	}
+}
+
+func TestPermissionCatalogDefinitionsAreValid(t *testing.T) {
+	if err := validatePermissionGroups(permissionGroups); err != nil {
+		t.Fatalf("validatePermissionGroups(permissionGroups) error = %v", err)
+	}
+}
+
+func TestPermissionDefinitionsMatchCatalogOrder(t *testing.T) {
+	definitions := PermissionDefinitions()
+	all := AllPermissions()
+	if len(definitions) != len(all) {
+		t.Fatalf("len(PermissionDefinitions()) = %d, want %d", len(definitions), len(all))
+	}
+	for index, definition := range definitions {
+		if definition.Permission != all[index] {
+			t.Fatalf("PermissionDefinitions()[%d] = %q, want %q", index, definition.Permission, all[index])
+		}
+	}
+}
+
+func TestExistingPermissionsAreProjectScoped(t *testing.T) {
+	for _, permission := range appendPermissions(
+		MarkerPermissions(),
+		MediaPermissions(),
+		CasePermissions(),
+		WorkflowPermissions(),
+		WorkflowRunPermissions(),
+		DayPermissions(),
+		ChannelPermissions(),
+	) {
+		definition, ok := LookupPermission(permission)
+		if !ok {
+			t.Fatalf("LookupPermission(%q) not found", permission)
+		}
+		if definition.Scope != PermissionScopeProject {
+			t.Fatalf("LookupPermission(%q).Scope = %q, want %q", permission, definition.Scope, PermissionScopeProject)
+		}
+	}
+}
+
+func TestLookupPermission(t *testing.T) {
+	if _, ok := LookupPermission("media.unknown"); ok {
+		t.Fatal("LookupPermission(unknown) found a definition")
+	}
+	if _, ok := LookupPermission(PermissionApplication); ok {
+		t.Fatal("LookupPermission(application) found a definition")
+	}
+}
+
+func TestValidatePermissionGroups(t *testing.T) {
+	const (
+		a Permission = "test.a"
+		b Permission = "test.b"
+		c Permission = "test.c"
+	)
+	project := PermissionScopeProject
+	organisation := PermissionScopeOrganisation
+
+	tests := []struct {
+		name    string
+		groups  []permissionGroup
+		wantErr error
+	}{
+		{
+			name: "chain",
+			groups: []permissionGroup{{scope: project, permissions: []Permission{a, b, c}, implies: map[Permission][]Permission{
+				a: {b},
+				b: {c},
+			}}},
+		},
+		{
+			name:    "empty permission",
+			groups:  []permissionGroup{{scope: project, permissions: []Permission{""}}},
+			wantErr: ErrPermissionInvalid,
+		},
+		{
+			name:    "unknown scope",
+			groups:  []permissionGroup{{scope: "tenant", permissions: []Permission{a}}},
+			wantErr: ErrPermissionInvalid,
+		},
+		{
+			name: "duplicate across groups",
+			groups: []permissionGroup{
+				{scope: project, permissions: []Permission{a}},
+				{scope: organisation, permissions: []Permission{a}},
+			},
+			wantErr: ErrPermissionDuplicate,
+		},
+		{
+			name:    "implies unknown",
+			groups:  []permissionGroup{{scope: project, permissions: []Permission{a}, implies: map[Permission][]Permission{a: {b}}}},
+			wantErr: ErrPermissionInvalid,
+		},
+		{
+			name: "implies across scopes",
+			groups: []permissionGroup{
+				{scope: organisation, permissions: []Permission{a}, implies: map[Permission][]Permission{a: {b}}},
+				{scope: project, permissions: []Permission{b}},
+			},
+			wantErr: ErrPermissionInvalid,
+		},
+		{
+			name: "implication source in another group",
+			groups: []permissionGroup{
+				{scope: project, permissions: []Permission{a}, implies: map[Permission][]Permission{b: {a}}},
+				{scope: project, permissions: []Permission{b}},
+			},
+			wantErr: ErrPermissionInvalid,
+		},
+		{
+			name:    "self implication",
+			groups:  []permissionGroup{{scope: project, permissions: []Permission{a}, implies: map[Permission][]Permission{a: {a}}}},
+			wantErr: ErrPermissionInvalid,
+		},
+		{
+			name: "cycle",
+			groups: []permissionGroup{{scope: project, permissions: []Permission{a, b, c}, implies: map[Permission][]Permission{
+				a: {b},
+				b: {c},
+				c: {a},
+			}}},
+			wantErr: ErrPermissionInvalid,
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			err := validatePermissionGroups(test.groups)
+			if !errors.Is(err, test.wantErr) {
+				t.Fatalf("validatePermissionGroups() error = %v, want %v", err, test.wantErr)
+			}
+		})
+	}
+}
+
+func TestExpandPermissions(t *testing.T) {
+	const (
+		presets Permission = "test.presets"
+		control Permission = "test.control"
+		zoom    Permission = "test.zoom"
+		other   Permission = "test.other"
+	)
+	definitions := definePermissions([]permissionGroup{{
+		scope:       PermissionScopeProject,
+		permissions: []Permission{zoom, control, presets, other},
+		implies: map[Permission][]Permission{
+			presets: {control},
+			control: {zoom},
+		},
+	}})
+	index := indexPermissions(definitions)
+
+	tests := []struct {
+		name        string
+		permissions []Permission
+		want        []Permission
+	}{
+		{name: "empty"},
+		{name: "transitive in catalog order", permissions: []Permission{presets}, want: []Permission{zoom, control, presets}},
+		{name: "duplicates collapse", permissions: []Permission{control, zoom, control}, want: []Permission{zoom, control}},
+		{name: "unknown dropped", permissions: []Permission{"test.unknown", other}, want: []Permission{other}},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			if got := expandPermissions(definitions, index, test.permissions); !slices.Equal(got, test.want) {
+				t.Fatalf("expandPermissions() = %v, want %v", got, test.want)
+			}
+		})
+	}
+}
+
+func TestExpandPermissionsUsesCatalog(t *testing.T) {
+	got := ExpandPermissions([]Permission{PermissionMediaDelete, PermissionApplication, PermissionMarkersRead})
+	want := []Permission{PermissionMarkersRead, PermissionMediaDelete}
+	if !slices.Equal(got, want) {
+		t.Fatalf("ExpandPermissions() = %v, want %v", got, want)
+	}
+}
+
+func TestPermissionDefinitionsReturnCopies(t *testing.T) {
+	definitions := PermissionDefinitions()
+	definitions[0].Permission = "changed"
+	definitions[0].Implies = append(definitions[0].Implies, "changed")
+	if got := PermissionDefinitions()[0]; got.Permission != PermissionMarkersRead || len(got.Implies) != 0 {
+		t.Fatalf("PermissionDefinitions returned mutable catalog storage: %+v", got)
 	}
 }
 

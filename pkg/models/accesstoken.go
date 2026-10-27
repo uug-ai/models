@@ -1,13 +1,66 @@
 package models
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"errors"
+	"fmt"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type AccessTokenScope = Permission
+
+// ErrAccessTokenScopeNotGrantable is returned for a catalog permission that may
+// not be granted to an access token.
+var ErrAccessTokenScopeNotGrantable = errors.New("permission cannot be granted to an access token")
+
+// accessTokenScopes is an explicit allow-list rather than the whole catalog.
+// Access tokens are bound to one project, so organisation permissions are never
+// grantable; a project permission joins this list only once hub-api enforces it
+// on the routes a token can call.
+var accessTokenScopes = appendPermissions(
+	markerPermissions,
+	mediaPermissions,
+	casePermissions,
+	workflowPermissions,
+	workflowRunPermissions,
+	dayPermissions,
+	channelPermissions,
+)
+
+var accessTokenScopeSet = func() map[AccessTokenScope]struct{} {
+	scopes := make(map[AccessTokenScope]struct{}, len(accessTokenScopes))
+	for _, scope := range accessTokenScopes {
+		scopes[scope] = struct{}{}
+	}
+	return scopes
+}()
 
 // AccessTokenScopes returns every canonical scope that may be granted to an
 // access token.
 func AccessTokenScopes() []AccessTokenScope {
-	return AllPermissions()
+	return append([]AccessTokenScope(nil), accessTokenScopes...)
+}
+
+// ValidateAccessTokenScopes verifies that every scope is canonical, appears at
+// most once, and may be granted to an access token.
+func ValidateAccessTokenScopes(scopes []AccessTokenScope) error {
+	if err := ValidatePermissions(scopes); err != nil {
+		return err
+	}
+	for _, scope := range scopes {
+		if _, ok := accessTokenScopeSet[scope]; !ok {
+			return fmt.Errorf("%w %q", ErrAccessTokenScopeNotGrantable, scope)
+		}
+	}
+	return nil
+}
+
+func appendPermissions(catalogs ...[]Permission) []Permission {
+	var permissions []Permission
+	for _, catalog := range catalogs {
+		permissions = append(permissions, catalog...)
+	}
+	return permissions
 }
 
 type AccessToken struct {
