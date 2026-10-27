@@ -6,6 +6,27 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+const (
+	PermissionVideowallsRead   Permission = "videowalls.read"
+	PermissionVideowallsCreate Permission = "videowalls.create"
+	PermissionVideowallsUpdate Permission = "videowalls.update"
+	PermissionVideowallsDelete Permission = "videowalls.delete"
+	PermissionVideowallsAssign Permission = "videowalls.assign"
+)
+
+var videowallPermissions = []Permission{
+	PermissionVideowallsRead,
+	PermissionVideowallsCreate,
+	PermissionVideowallsUpdate,
+	PermissionVideowallsDelete,
+	PermissionVideowallsAssign,
+}
+
+// VideowallPermissions returns the canonical videowall permission catalog.
+func VideowallPermissions() []Permission {
+	return append([]Permission(nil), videowallPermissions...)
+}
+
 type Videowall struct {
 	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`

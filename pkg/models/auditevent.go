@@ -6,6 +6,19 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+const (
+	PermissionAuditRead Permission = "audit.read"
+)
+
+var auditPermissions = []Permission{
+	PermissionAuditRead,
+}
+
+// AuditPermissions returns the canonical audit permission catalog.
+func AuditPermissions() []Permission {
+	return append([]Permission(nil), auditPermissions...)
+}
+
 // AuditEventSchemaVersion is the current persisted audit event contract.
 const AuditEventSchemaVersion = 1
 

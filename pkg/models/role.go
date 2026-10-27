@@ -4,6 +4,25 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+const (
+	PermissionRolesRead   Permission = "roles.read"
+	PermissionRolesCreate Permission = "roles.create"
+	PermissionRolesUpdate Permission = "roles.update"
+	PermissionRolesDelete Permission = "roles.delete"
+)
+
+var rolePermissions = []Permission{
+	PermissionRolesRead,
+	PermissionRolesCreate,
+	PermissionRolesUpdate,
+	PermissionRolesDelete,
+}
+
+// RolePermissions returns the canonical role permission catalog.
+func RolePermissions() []Permission {
+	return append([]Permission(nil), rolePermissions...)
+}
+
 // AccessLevel defines the level of access for a feature or resource
 type AccessLevel int
 

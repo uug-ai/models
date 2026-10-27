@@ -2,6 +2,25 @@ package models
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
+const (
+	PermissionLabelsRead   Permission = "labels.read"
+	PermissionLabelsCreate Permission = "labels.create"
+	PermissionLabelsUpdate Permission = "labels.update"
+	PermissionLabelsDelete Permission = "labels.delete"
+)
+
+var labelPermissions = []Permission{
+	PermissionLabelsRead,
+	PermissionLabelsCreate,
+	PermissionLabelsUpdate,
+	PermissionLabelsDelete,
+}
+
+// LabelPermissions returns the canonical label permission catalog.
+func LabelPermissions() []Permission {
+	return append([]Permission(nil), labelPermissions...)
+}
+
 type LabelWrapper struct {
 	Label Label `json:"label" bson:"label"`
 }

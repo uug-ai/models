@@ -2,6 +2,25 @@ package models
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
+const (
+	PermissionFloorPlansRead   Permission = "floorPlans.read"
+	PermissionFloorPlansCreate Permission = "floorPlans.create"
+	PermissionFloorPlansUpdate Permission = "floorPlans.update"
+	PermissionFloorPlansDelete Permission = "floorPlans.delete"
+)
+
+var floorPlanPermissions = []Permission{
+	PermissionFloorPlansRead,
+	PermissionFloorPlansCreate,
+	PermissionFloorPlansUpdate,
+	PermissionFloorPlansDelete,
+}
+
+// FloorPlanPermissions returns the canonical floor plan permission catalog.
+func FloorPlanPermissions() []Permission {
+	return append([]Permission(nil), floorPlanPermissions...)
+}
+
 type FloorPlan struct {
 	Id               primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Name             string             `json:"name" bson:"name,omitempty"`                         // Name of the floor plan
