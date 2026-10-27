@@ -1,6 +1,9 @@
 package models
 
 import (
+	"errors"
+	"fmt"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -23,7 +26,8 @@ func RolePermissions() []Permission {
 	return append([]Permission(nil), rolePermissions...)
 }
 
-// AccessLevel defines the level of access for a feature or resource
+// AccessLevel defines the level of access for a feature or resource in the
+// legacy profile permissions. Roles use catalog permissions instead.
 type AccessLevel int
 
 const (
@@ -33,62 +37,8 @@ const (
 	AccessLevelAdmin AccessLevel = 3 // Full administrative access
 )
 
-// BaseRole enumerates the built-in role tiers a custom Role derives from.
-// These tiers are hard-coded on the platform (they are never stored as Role
-// documents). A custom Role binds to one via ParentRole; the tier is a live
-// binding (not a one-time creation default) that governs two things:
-//   - the effective tier/level used for coarse tier-gating at runtime (the
-//     consuming service resolves ParentRole to a numeric level: guest=1,
-//     editor=2, admin=3, owner=4), and
-//   - the ceiling of pages the custom Role may grant (the editor only offers
-//     pages allowed for the selected base tier).
-//
-// Pages/FeaturePermissions are the fine-grained overrides layered on top,
-// within that ceiling.
-type BaseRole string
-
-const (
-	BaseRoleGuest       BaseRole = "guest"
-	BaseRoleEditor      BaseRole = "editor"
-	BaseRoleAdmin       BaseRole = "admin"
-	BaseRoleOwner       BaseRole = "owner"
-	BaseRoleApplication BaseRole = "application" // Service/API account tier
-)
-
-type Role struct {
-	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
-	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"` // Organisation this role belongs to
-	Name           string             `json:"roleName" bson:"roleName,omitempty"`
-	Description    string             `json:"description" bson:"description,omitempty"`
-	// ParentRole is the built-in BaseRole tier this custom role extends. It is a
-	// live tier identifier (NOT an ObjectID reference to another Role document):
-	// it sets the effective tier/RoleLevel for coarse gating and bounds which
-	// pages the role may grant. See BaseRole.
-	ParentRole BaseRole `json:"role" bson:"role,omitempty"`
-	// Permissions is the canonical set of domain.action grants carried by this
-	// role. FeaturePermissions remains available during legacy migration.
-	Permissions []Permission `json:"permissions,omitempty" bson:"permissions,omitempty"`
-	// Pages and FeaturePermissions are two orthogonal authorization axes:
-	//   - Pages controls which UI/nav pages are visible (coarse allow-list).
-	//   - FeaturePermissions controls the CRUD AccessLevel per feature.
-	// Some names appear in both (e.g. sites/groups/roles/settings); that overlap
-	// is intentional - visibility and capability are decided independently, and
-	// the consuming service resolves them together (page hidden => not shown;
-	// feature level => what may be done once on the page).
-	Pages              []string           `json:"pages" bson:"pages"`
-	TimeWindow         TimeWindow         `json:"timeWindow" bson:"timeWindow"`
-	IsActive           bool               `json:"isActive" bson:"isActive"`
-	FeaturePermissions FeaturePermissions `json:"featurePermissions" bson:"featurePermissions"`
-	TimeWindowActive   bool               `json:"timeWindowActive" bson:"timeWindowActive"`
-	Audit              Audit              `json:"audit" bson:"audit"`
-}
-
-// ValidatePermissions verifies that the role contains only unique permissions
-// from the canonical catalog.
-func (r Role) ValidatePermissions() error {
-	return ValidatePermissions(r.Permissions)
-}
-
+// FeaturePermissions is the legacy per-feature access level set, still served
+// in the legacy profile permissions. Roles use catalog permissions instead.
 type FeaturePermissions struct {
 	PTZ                AccessLevel `json:"ptz" bson:"ptz"`                               // 0=none, 1=read, 2=write, 3=admin
 	Liveview           AccessLevel `json:"liveview" bson:"liveview"`                     // 0=none, 1=read, 2=write, 3=admin
@@ -109,33 +59,152 @@ type FeaturePermissions struct {
 	DownloadRecordings AccessLevel `json:"downloadRecordings" bson:"downloadRecordings"` // 0=none, 1=read, 2=write, 3=admin
 }
 
-type TimeWindow struct {
-	TimeRange1MinMonday    float64 `json:"timeRange1MinMonday" bson:"timeRange1MinMonday"`
-	TimeRange1MaxMonday    float64 `json:"timeRange1MaxMonday" bson:"timeRange1MaxMonday"`
-	TimeRange2MinMonday    float64 `json:"timeRange2MinMonday" bson:"timeRange2MinMonday"`
-	TimeRange2MaxMonday    float64 `json:"timeRange2MaxMonday" bson:"timeRange2MaxMonday"`
-	TimeRange1MinTuesday   float64 `json:"timeRange1MinTuesday" bson:"timeRange1MinTuesday"`
-	TimeRange1MaxTuesday   float64 `json:"timeRange1MaxTuesday" bson:"timeRange1MaxTuesday"`
-	TimeRange2MinTuesday   float64 `json:"timeRange2MinTuesday" bson:"timeRange2MinTuesday"`
-	TimeRange2MaxTuesday   float64 `json:"timeRange2MaxTuesday" bson:"timeRange2MaxTuesday"`
-	TimeRange1MinWednesday float64 `json:"timeRange1MinWednesday" bson:"timeRange1MinWednesday"`
-	TimeRange1MaxWednesday float64 `json:"timeRange1MaxWednesday" bson:"timeRange1MaxWednesday"`
-	TimeRange2MinWednesday float64 `json:"timeRange2MinWednesday" bson:"timeRange2MinWednesday"`
-	TimeRange2MaxWednesday float64 `json:"timeRange2MaxWednesday" bson:"timeRange2MaxWednesday"`
-	TimeRange1MinThursday  float64 `json:"timeRange1MinThursday" bson:"timeRange1MinThursday"`
-	TimeRange1MaxThursday  float64 `json:"timeRange1MaxThursday" bson:"timeRange1MaxThursday"`
-	TimeRange2MinThursday  float64 `json:"timeRange2MinThursday" bson:"timeRange2MinThursday"`
-	TimeRange2MaxThursday  float64 `json:"timeRange2MaxThursday" bson:"timeRange2MaxThursday"`
-	TimeRange1MinFriday    float64 `json:"timeRange1MinFriday" bson:"timeRange1MinFriday"`
-	TimeRange1MaxFriday    float64 `json:"timeRange1MaxFriday" bson:"timeRange1MaxFriday"`
-	TimeRange2MinFriday    float64 `json:"timeRange2MinFriday" bson:"timeRange2MinFriday"`
-	TimeRange2MaxFriday    float64 `json:"timeRange2MaxFriday" bson:"timeRange2MaxFriday"`
-	TimeRange1MinSaturday  float64 `json:"timeRange1MinSaturday" bson:"timeRange1MinSaturday"`
-	TimeRange1MaxSaturday  float64 `json:"timeRange1MaxSaturday" bson:"timeRange1MaxSaturday"`
-	TimeRange2MinSaturday  float64 `json:"timeRange2MinSaturday" bson:"timeRange2MinSaturday"`
-	TimeRange2MaxSaturday  float64 `json:"timeRange2MaxSaturday" bson:"timeRange2MaxSaturday"`
-	TimeRange1MinSunday    float64 `json:"timeRange1MinSunday" bson:"timeRange1MinSunday"`
-	TimeRange1MaxSunday    float64 `json:"timeRange1MaxSunday" bson:"timeRange1MaxSunday"`
-	TimeRange2MinSunday    float64 `json:"timeRange2MinSunday" bson:"timeRange2MinSunday"`
-	TimeRange2MaxSunday    float64 `json:"timeRange2MaxSunday" bson:"timeRange2MaxSunday"`
+// BaseRole enumerates the legacy built-in role tiers. In the RBAC model a tier
+// is provenance only (see RoleOrigin): it grants nothing and gates nothing.
+type BaseRole string
+
+const (
+	BaseRoleGuest  BaseRole = "guest"
+	BaseRoleEditor BaseRole = "editor"
+	BaseRoleAdmin  BaseRole = "admin"
+	BaseRoleOwner  BaseRole = "owner"
+)
+
+// RoleKind distinguishes who defines a role.
+type RoleKind string
+
+const (
+	// RoleKindSystem roles are defined by the platform and read-only.
+	RoleKindSystem RoleKind = "system"
+	// RoleKindLegacy roles are defined by the platform and reproduce a legacy
+	// built-in tier exactly, so migrated users keep their access. They are
+	// read-only and can be retired once nothing is assigned to them.
+	RoleKindLegacy RoleKind = "legacy"
+	// RoleKindCustom roles are defined by the organisation, including legacy
+	// custom roles copied by the migration.
+	RoleKindCustom RoleKind = "custom"
+)
+
+// RoleKey identifies a system or legacy role. It is the same in every
+// organisation, while each organisation stores its own copy of the role.
+type RoleKey string
+
+const (
+	// RoleKeyOwner is the Owner role: every permission in every current and
+	// future project. It stores no permission list. An organisation has at
+	// least one owner, and Organisation.OwnerId names the primary one.
+	RoleKeyOwner               RoleKey = "owner"
+	RoleKeyOrganisationManager RoleKey = "organisation-manager"
+	RoleKeyBillingAdmin        RoleKey = "billing-admin"
+	RoleKeyProjectAdmin        RoleKey = "project-admin"
+	RoleKeyEditor              RoleKey = "editor"
+	RoleKeyViewer              RoleKey = "viewer"
+
+	RoleKeyLegacyGuest  RoleKey = "legacy-guest"
+	RoleKeyLegacyEditor RoleKey = "legacy-editor"
+	// RoleKeyLegacyAdmin is the project part of the legacy admin tier and
+	// RoleKeyLegacyAdminOrganisation its organisation part.
+	RoleKeyLegacyAdmin             RoleKey = "legacy-admin"
+	RoleKeyLegacyAdminOrganisation RoleKey = "legacy-admin-organisation"
+)
+
+// RoleOrigin records what a migrated role was created from. It is provenance
+// only and grants nothing.
+type RoleOrigin struct {
+	BaseRole     BaseRole           `json:"baseRole,omitempty" bson:"baseRole,omitempty"`         // Legacy tier the role reproduces or extended
+	LegacyRoleId primitive.ObjectID `json:"legacyRoleId,omitempty" bson:"legacyRoleId,omitempty"` // Legacy custom role it was copied from
+}
+
+var ErrRoleInvalid = errors.New("invalid role")
+
+// Role is a named set of catalog permissions owned by an organisation. A role
+// never carries resources or time windows: those belong to the assignment.
+//
+// A role is assignable at one level only. An organisation role holds
+// organisation permissions and grants nothing inside projects; a project role
+// holds project permissions and is assigned per project. The Owner role
+// (RoleKeyOwner) is the one exception and spans every project.
+type Role struct {
+	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"` // Organisation this role belongs to
+	Name           string             `json:"name" bson:"name,omitempty"`
+	Description    string             `json:"description" bson:"description,omitempty"`
+
+	Kind         RoleKind        `json:"kind" bson:"kind,omitempty"`
+	Key          RoleKey         `json:"key,omitempty" bson:"key,omitempty"` // System and legacy roles only; unique per organisation
+	AssignableAt PermissionScope `json:"assignableAt" bson:"assignableAt,omitempty"`
+	// Permissions is the canonical set of grants carried by this role, all of
+	// the AssignableAt level. Implied permissions (see ExpandPermissions) are
+	// not stored.
+	Permissions []Permission `json:"permissions" bson:"permissions,omitempty"`
+	Origin      *RoleOrigin  `json:"origin,omitempty" bson:"origin,omitempty"`
+	IsActive    bool         `json:"isActive" bson:"isActive"`
+
+	Audit Audit `json:"audit" bson:"audit"`
+}
+
+// ValidatePermissions verifies that the role contains only unique permissions
+// from the canonical catalog.
+func (r Role) ValidatePermissions() error {
+	return ValidatePermissions(r.Permissions)
+}
+
+// IsOwner reports whether this is the organisation's Owner role.
+func (r Role) IsOwner() bool {
+	return r.Kind == RoleKindSystem && r.Key == RoleKeyOwner
+}
+
+// Validate checks the role's own invariants: a known kind with a key exactly
+// when the platform defines it, a known level, and only catalog permissions
+// of that level. The Owner role is an organisation role with no stored
+// permissions.
+func (r Role) Validate() error {
+	if r.Name == "" {
+		return fmt.Errorf("%w: empty name", ErrRoleInvalid)
+	}
+	switch r.Kind {
+	case RoleKindSystem, RoleKindLegacy:
+		if r.Key == "" {
+			return fmt.Errorf("%w: %s role without key", ErrRoleInvalid, r.Kind)
+		}
+	case RoleKindCustom:
+		if r.Key != "" {
+			return fmt.Errorf("%w: custom role with key %q", ErrRoleInvalid, r.Key)
+		}
+	default:
+		return fmt.Errorf("%w: unknown kind %q", ErrRoleInvalid, r.Kind)
+	}
+	if r.AssignableAt != PermissionScopeOrganisation && r.AssignableAt != PermissionScopeProject {
+		return fmt.Errorf("%w: unknown level %q", ErrRoleInvalid, r.AssignableAt)
+	}
+	if r.Key == RoleKeyOwner {
+		if r.Kind != RoleKindSystem || r.AssignableAt != PermissionScopeOrganisation || len(r.Permissions) > 0 {
+			return fmt.Errorf("%w: owner must be a system organisation role without stored permissions", ErrRoleInvalid)
+		}
+		return nil
+	}
+	if err := r.ValidatePermissions(); err != nil {
+		return err
+	}
+	for _, permission := range r.Permissions {
+		definition, _ := LookupPermission(permission)
+		if definition.Scope != r.AssignableAt {
+			return fmt.Errorf("%w: %s permission %q on %s role", ErrRoleInvalid, definition.Scope, permission, r.AssignableAt)
+		}
+	}
+	return nil
+}
+
+// RequiresAllProjects reports whether the role is Owner or holds a tenant-wide
+// permission, in which case it can only be assigned to cover all projects.
+func (r Role) RequiresAllProjects() bool {
+	if r.IsOwner() {
+		return true
+	}
+	for _, permission := range r.Permissions {
+		if definition, ok := LookupPermission(permission); ok && definition.TenantWide {
+			return true
+		}
+	}
+	return false
 }
