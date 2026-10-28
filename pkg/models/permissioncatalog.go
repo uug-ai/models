@@ -11,26 +11,27 @@ type Permission string
 
 const PermissionApplication Permission = "application"
 
-// PermissionScope is the level at which a permission takes effect.
-type PermissionScope string
+// Level says where a permission or role takes effect: the organisation
+// itself, or inside projects.
+type Level string
 
 const (
-	// PermissionScopeOrganisation permissions govern the tenant itself (members,
+	// LevelOrganisation permissions govern the tenant itself (members,
 	// roles, billing, settings). They are only effective through an
 	// organisation-level role assignment.
-	PermissionScopeOrganisation PermissionScope = "organisation"
-	// PermissionScopeProject permissions govern operational resources. They are
+	LevelOrganisation Level = "organisation"
+	// LevelProject permissions govern operational resources. They are
 	// effective within the projects and resources a role assignment covers.
-	PermissionScopeProject PermissionScope = "project"
+	LevelProject Level = "project"
 )
 
 // PermissionDefinition describes one permission in the canonical catalog.
 type PermissionDefinition struct {
-	Permission Permission      `json:"permission"`
-	Scope      PermissionScope `json:"scope"`
+	Permission Permission `json:"permission"`
+	Level      Level      `json:"level"`
 	// Implies lists the permissions that holding this one also grants, e.g. a
 	// graded capability implies its lower grades. Implied permissions always
-	// share the same scope.
+	// share the same level.
 	Implies []Permission `json:"implies,omitempty"`
 	// TenantWide marks an organisation permission that affects the whole
 	// organisation (billing, the role catalog, removing members). A role holding
@@ -45,9 +46,9 @@ var (
 )
 
 // permissionGroup registers one domain's permissions in the catalog. Every
-// permission of a domain shares the group's scope.
+// permission of a domain shares the group's level.
 type permissionGroup struct {
-	scope       PermissionScope
+	level       Level
 	permissions []Permission
 	implies     map[Permission][]Permission
 	tenantWide  []Permission
@@ -55,37 +56,37 @@ type permissionGroup struct {
 
 var permissionGroups = []permissionGroup{
 	// Project-level resources.
-	{scope: PermissionScopeProject, permissions: markerPermissions},
-	{scope: PermissionScopeProject, permissions: mediaPermissions},
-	{scope: PermissionScopeProject, permissions: casePermissions},
-	{scope: PermissionScopeProject, permissions: workflowPermissions},
-	{scope: PermissionScopeProject, permissions: workflowRunPermissions},
-	{scope: PermissionScopeProject, permissions: dayPermissions},
-	{scope: PermissionScopeProject, permissions: channelPermissions},
-	{scope: PermissionScopeProject, permissions: devicePermissions, implies: devicePermissionImplications},
-	{scope: PermissionScopeProject, permissions: sitePermissions},
-	{scope: PermissionScopeProject, permissions: groupPermissions},
-	{scope: PermissionScopeProject, permissions: floorPlanPermissions},
-	{scope: PermissionScopeProject, permissions: ioPermissions},
-	{scope: PermissionScopeProject, permissions: videowallPermissions},
-	{scope: PermissionScopeProject, permissions: alertPermissions},
-	{scope: PermissionScopeProject, permissions: notificationPermissions},
-	{scope: PermissionScopeProject, permissions: labelPermissions},
-	{scope: PermissionScopeProject, permissions: analyticsPermissions},
-	{scope: PermissionScopeProject, permissions: detectionPermissions},
-	{scope: PermissionScopeProject, permissions: projectPermissions},
+	{level: LevelProject, permissions: markerPermissions},
+	{level: LevelProject, permissions: mediaPermissions},
+	{level: LevelProject, permissions: casePermissions},
+	{level: LevelProject, permissions: workflowPermissions},
+	{level: LevelProject, permissions: workflowRunPermissions},
+	{level: LevelProject, permissions: dayPermissions},
+	{level: LevelProject, permissions: channelPermissions},
+	{level: LevelProject, permissions: devicePermissions, implies: devicePermissionImplications},
+	{level: LevelProject, permissions: sitePermissions},
+	{level: LevelProject, permissions: groupPermissions},
+	{level: LevelProject, permissions: floorPlanPermissions},
+	{level: LevelProject, permissions: ioPermissions},
+	{level: LevelProject, permissions: videowallPermissions},
+	{level: LevelProject, permissions: alertPermissions},
+	{level: LevelProject, permissions: notificationPermissions},
+	{level: LevelProject, permissions: labelPermissions},
+	{level: LevelProject, permissions: analyticsPermissions},
+	{level: LevelProject, permissions: detectionPermissions},
+	{level: LevelProject, permissions: projectPermissions},
 
 	// Organisation-level administration. Reading the organisation, members and
 	// roles, inviting, and managing projects can be limited to selected
 	// projects; everything else is tenant-wide.
-	{scope: PermissionScopeOrganisation, permissions: organisationPermissions, tenantWide: []Permission{PermissionOrganisationUpdate}},
-	{scope: PermissionScopeOrganisation, permissions: memberPermissions, tenantWide: []Permission{PermissionMembersUpdate, PermissionMembersRemove}},
-	{scope: PermissionScopeOrganisation, permissions: rolePermissions, tenantWide: []Permission{PermissionRolesCreate, PermissionRolesUpdate, PermissionRolesDelete}},
-	{scope: PermissionScopeOrganisation, permissions: projectAdministrationPermissions, tenantWide: []Permission{PermissionProjectsCreate}},
-	{scope: PermissionScopeOrganisation, permissions: billingPermissions, tenantWide: billingPermissions},
-	{scope: PermissionScopeOrganisation, permissions: storagePermissions, tenantWide: storagePermissions},
-	{scope: PermissionScopeOrganisation, permissions: auditPermissions, tenantWide: auditPermissions},
-	{scope: PermissionScopeOrganisation, permissions: deviceAdministrationPermissions, tenantWide: deviceAdministrationPermissions},
+	{level: LevelOrganisation, permissions: organisationPermissions, tenantWide: []Permission{PermissionOrganisationUpdate}},
+	{level: LevelOrganisation, permissions: memberPermissions, tenantWide: []Permission{PermissionMembersUpdate, PermissionMembersRemove}},
+	{level: LevelOrganisation, permissions: rolePermissions, tenantWide: []Permission{PermissionRolesCreate, PermissionRolesUpdate, PermissionRolesDelete}},
+	{level: LevelOrganisation, permissions: projectAdministrationPermissions, tenantWide: []Permission{PermissionProjectsCreate}},
+	{level: LevelOrganisation, permissions: billingPermissions, tenantWide: billingPermissions},
+	{level: LevelOrganisation, permissions: storagePermissions, tenantWide: storagePermissions},
+	{level: LevelOrganisation, permissions: auditPermissions, tenantWide: auditPermissions},
+	{level: LevelOrganisation, permissions: deviceAdministrationPermissions, tenantWide: deviceAdministrationPermissions},
 }
 
 var permissionDefinitions = definePermissions(permissionGroups)
@@ -187,7 +188,7 @@ func definePermissions(groups []permissionGroup) []PermissionDefinition {
 		for _, permission := range group.permissions {
 			definitions = append(definitions, PermissionDefinition{
 				Permission: permission,
-				Scope:      group.scope,
+				Level:      group.level,
 				Implies:    append([]Permission(nil), group.implies[permission]...),
 				TenantWide: slices.Contains(group.tenantWide, permission),
 			})
@@ -205,8 +206,8 @@ func indexPermissions(definitions []PermissionDefinition) map[Permission]int {
 }
 
 // validatePermissionGroups checks the catalog invariants: identifiers are
-// non-empty and unique, scopes are known, implications only reference the
-// group's own permissions, stay within one scope, and contain no cycles, and
+// non-empty and unique, levels are known, implications only reference the
+// group's own permissions, stay within one level, and contain no cycles, and
 // only the group's own organisation permissions are tenant-wide.
 func validatePermissionGroups(groups []permissionGroup) error {
 	definitions := definePermissions(groups)
@@ -215,8 +216,8 @@ func validatePermissionGroups(groups []permissionGroup) error {
 		if definition.Permission == "" {
 			return fmt.Errorf("%w: empty permission", ErrPermissionInvalid)
 		}
-		if definition.Scope != PermissionScopeOrganisation && definition.Scope != PermissionScopeProject {
-			return fmt.Errorf("%w: %q has unknown scope %q", ErrPermissionInvalid, definition.Permission, definition.Scope)
+		if definition.Level != LevelOrganisation && definition.Level != LevelProject {
+			return fmt.Errorf("%w: %q has unknown level %q", ErrPermissionInvalid, definition.Permission, definition.Level)
 		}
 		if _, exists := index[definition.Permission]; exists {
 			return fmt.Errorf("%w %q", ErrPermissionDuplicate, definition.Permission)
@@ -234,7 +235,7 @@ func validatePermissionGroups(groups []permissionGroup) error {
 			if !slices.Contains(group.permissions, permission) {
 				return fmt.Errorf("%w: tenant-wide %q is not a permission of its group", ErrPermissionInvalid, permission)
 			}
-			if group.scope != PermissionScopeOrganisation {
+			if group.level != LevelOrganisation {
 				return fmt.Errorf("%w: tenant-wide %q is not an organisation permission", ErrPermissionInvalid, permission)
 			}
 		}
@@ -246,8 +247,8 @@ func validatePermissionGroups(groups []permissionGroup) error {
 			if !ok {
 				return fmt.Errorf("%w: %q implies unknown %q", ErrPermissionInvalid, definition.Permission, implied)
 			}
-			if definitions[position].Scope != definition.Scope {
-				return fmt.Errorf("%w: %q implies %q across scopes", ErrPermissionInvalid, definition.Permission, implied)
+			if definitions[position].Level != definition.Level {
+				return fmt.Errorf("%w: %q implies %q across levels", ErrPermissionInvalid, definition.Permission, implied)
 			}
 		}
 	}

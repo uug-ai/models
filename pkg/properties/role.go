@@ -33,6 +33,7 @@ const (
 	RoleKind = "kind"
 	RoleKey = "key"
 	RoleAssignableAt = "assignableAt"
+	RoleGrants = "grants"
 	RolePermissions = "permissions"
 	RoleOrigin = "origin"
 	RoleIsActive = "isActive"
