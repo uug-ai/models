@@ -162,7 +162,7 @@ const (
 // current devices, so devices added later are covered. Selected with no ids
 // is valid: the principal is in the project but has no resources yet.
 type RoleAssignmentScope struct {
-	Level PermissionScope `json:"level" bson:"level"`
+	Level Level `json:"level" bson:"level"`
 
 	// Level=organisation only.
 	Projects   Selection            `json:"projects,omitempty" bson:"projects,omitempty"`
@@ -180,7 +180,7 @@ type RoleAssignmentScope struct {
 // of the other level.
 func (s RoleAssignmentScope) Validate() error {
 	switch s.Level {
-	case PermissionScopeOrganisation:
+	case LevelOrganisation:
 		if !s.ProjectId.IsZero() || s.Resources != "" || s.hasResourceIds() {
 			return fmt.Errorf("%w: organisation scope with project resources", ErrRoleAssignmentInvalid)
 		}
@@ -197,7 +197,7 @@ func (s RoleAssignmentScope) Validate() error {
 			return fmt.Errorf("%w: unknown project selection %q", ErrRoleAssignmentInvalid, s.Projects)
 		}
 		return validateScopeIds("project", s.ProjectIds)
-	case PermissionScopeProject:
+	case LevelProject:
 		if s.Projects != "" || len(s.ProjectIds) > 0 {
 			return fmt.Errorf("%w: project scope with project selection", ErrRoleAssignmentInvalid)
 		}

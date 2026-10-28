@@ -13,10 +13,10 @@ import (
 )
 
 const (
-	PermissionDevicesRead   Permission = "devices.read"
-	PermissionDevicesUpdate Permission = "devices.update"
-	PermissionDevicesDelete Permission = "devices.delete"
-	PermissionDevicesConfig Permission = "devices.config"
+	PermissionDevicesRead      Permission = "devices.read"
+	PermissionDevicesUpdate    Permission = "devices.update"
+	PermissionDevicesDelete    Permission = "devices.delete"
+	PermissionDevicesConfigure Permission = "devices.configure"
 	// PermissionDevicesManagePermissions sets a device's own restrictions (live
 	// view, PTZ, remote config): limits that apply to everyone on that device
 	// on top of their roles.
@@ -33,7 +33,7 @@ var devicePermissions = []Permission{
 	PermissionDevicesRead,
 	PermissionDevicesUpdate,
 	PermissionDevicesDelete,
-	PermissionDevicesConfig,
+	PermissionDevicesConfigure,
 	PermissionDevicesManagePermissions,
 	PermissionLivePreview,
 	PermissionLiveStream,
@@ -54,7 +54,7 @@ var devicePermissionImplications = map[Permission][]Permission{
 }
 
 // DevicePermissions returns the canonical device permission catalog.
-// PermissionDevicesConfig covers remote agent configuration; live view and PTZ
+// PermissionDevicesConfigure covers remote agent configuration; live view and PTZ
 // are graded capabilities, see devicePermissionImplications.
 func DevicePermissions() []Permission {
 	return append([]Permission(nil), devicePermissions...)

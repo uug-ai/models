@@ -130,9 +130,9 @@ type Role struct {
 	Name           string             `json:"name" bson:"name,omitempty"`
 	Description    string             `json:"description" bson:"description,omitempty"`
 
-	Kind         RoleKind        `json:"kind" bson:"kind,omitempty"`
-	Key          RoleKey         `json:"key,omitempty" bson:"key,omitempty"` // System and legacy roles only; unique per organisation
-	AssignableAt PermissionScope `json:"assignableAt" bson:"assignableAt,omitempty"`
+	Kind         RoleKind `json:"kind" bson:"kind,omitempty"`
+	Key          RoleKey  `json:"key,omitempty" bson:"key,omitempty"` // System and legacy roles only; unique per organisation
+	AssignableAt Level    `json:"assignableAt" bson:"assignableAt,omitempty"`
 	// Grants says whether the role grants every permission (all; the Owner
 	// role only, with no Permissions) or exactly the listed Permissions
 	// (selected; an empty list grants nothing). It is required: the zero value
@@ -185,7 +185,7 @@ func (r Role) Validate() error {
 	default:
 		return fmt.Errorf("%w: unknown kind %q", ErrRoleInvalid, r.Kind)
 	}
-	if r.AssignableAt != PermissionScopeOrganisation && r.AssignableAt != PermissionScopeProject {
+	if r.AssignableAt != LevelOrganisation && r.AssignableAt != LevelProject {
 		return fmt.Errorf("%w: unknown level %q", ErrRoleInvalid, r.AssignableAt)
 	}
 	switch r.Grants {
@@ -204,7 +204,7 @@ func (r Role) Validate() error {
 		return fmt.Errorf("%w: unknown grants %q", ErrRoleInvalid, r.Grants)
 	}
 	if r.Key == RoleKeyOwner {
-		if r.Kind != RoleKindSystem || r.AssignableAt != PermissionScopeOrganisation {
+		if r.Kind != RoleKindSystem || r.AssignableAt != LevelOrganisation {
 			return fmt.Errorf("%w: owner must be a system organisation role", ErrRoleInvalid)
 		}
 		return nil
@@ -214,8 +214,8 @@ func (r Role) Validate() error {
 	}
 	for _, permission := range r.Permissions {
 		definition, _ := LookupPermission(permission)
-		if definition.Scope != r.AssignableAt {
-			return fmt.Errorf("%w: %s permission %q on %s role", ErrRoleInvalid, definition.Scope, permission, r.AssignableAt)
+		if definition.Level != r.AssignableAt {
+			return fmt.Errorf("%w: %s permission %q on %s role", ErrRoleInvalid, definition.Level, permission, r.AssignableAt)
 		}
 	}
 	return nil

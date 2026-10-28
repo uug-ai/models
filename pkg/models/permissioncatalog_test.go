@@ -186,8 +186,8 @@ func TestAccessTokenScopesAreProjectCatalogPermissions(t *testing.T) {
 		if !ok {
 			t.Fatalf("AccessTokenScopes() contains non-catalog permission %q", scope)
 		}
-		if definition.Scope != PermissionScopeProject {
-			t.Fatalf("AccessTokenScopes() contains %s permission %q", definition.Scope, scope)
+		if definition.Level != LevelProject {
+			t.Fatalf("AccessTokenScopes() contains %s permission %q", definition.Level, scope)
 		}
 	}
 	if err := ValidateAccessTokenScopes(scopes); err != nil {
@@ -257,13 +257,13 @@ func TestPermissionDefinitionsMatchCatalogOrder(t *testing.T) {
 	}
 }
 
-func TestDomainPermissionScopes(t *testing.T) {
-	project := PermissionScopeProject
-	organisation := PermissionScopeOrganisation
+func TestDomainPermissionLevels(t *testing.T) {
+	project := LevelProject
+	organisation := LevelOrganisation
 	domains := []struct {
 		name     string
 		accessor func() []Permission
-		scope    PermissionScope
+		level    Level
 	}{
 		{"markers", MarkerPermissions, project},
 		{"media", MediaPermissions, project},
@@ -306,8 +306,8 @@ func TestDomainPermissionScopes(t *testing.T) {
 				if !ok {
 					t.Fatalf("LookupPermission(%q) not found", permission)
 				}
-				if definition.Scope != domain.scope {
-					t.Fatalf("LookupPermission(%q).Scope = %q, want %q", permission, definition.Scope, domain.scope)
+				if definition.Level != domain.level {
+					t.Fatalf("LookupPermission(%q).Level = %q, want %q", permission, definition.Level, domain.level)
 				}
 			}
 			want := permissions[0]
@@ -379,8 +379,8 @@ func TestValidatePermissionGroups(t *testing.T) {
 		b Permission = "test.b"
 		c Permission = "test.c"
 	)
-	project := PermissionScopeProject
-	organisation := PermissionScopeOrganisation
+	project := LevelProject
+	organisation := LevelOrganisation
 
 	tests := []struct {
 		name    string
@@ -389,58 +389,58 @@ func TestValidatePermissionGroups(t *testing.T) {
 	}{
 		{
 			name: "chain",
-			groups: []permissionGroup{{scope: project, permissions: []Permission{a, b, c}, implies: map[Permission][]Permission{
+			groups: []permissionGroup{{level: project, permissions: []Permission{a, b, c}, implies: map[Permission][]Permission{
 				a: {b},
 				b: {c},
 			}}},
 		},
 		{
 			name:    "empty permission",
-			groups:  []permissionGroup{{scope: project, permissions: []Permission{""}}},
+			groups:  []permissionGroup{{level: project, permissions: []Permission{""}}},
 			wantErr: ErrPermissionInvalid,
 		},
 		{
-			name:    "unknown scope",
-			groups:  []permissionGroup{{scope: "tenant", permissions: []Permission{a}}},
+			name:    "unknown level",
+			groups:  []permissionGroup{{level: "tenant", permissions: []Permission{a}}},
 			wantErr: ErrPermissionInvalid,
 		},
 		{
 			name: "duplicate across groups",
 			groups: []permissionGroup{
-				{scope: project, permissions: []Permission{a}},
-				{scope: organisation, permissions: []Permission{a}},
+				{level: project, permissions: []Permission{a}},
+				{level: organisation, permissions: []Permission{a}},
 			},
 			wantErr: ErrPermissionDuplicate,
 		},
 		{
 			name:    "implies unknown",
-			groups:  []permissionGroup{{scope: project, permissions: []Permission{a}, implies: map[Permission][]Permission{a: {b}}}},
+			groups:  []permissionGroup{{level: project, permissions: []Permission{a}, implies: map[Permission][]Permission{a: {b}}}},
 			wantErr: ErrPermissionInvalid,
 		},
 		{
-			name: "implies across scopes",
+			name: "implies across levels",
 			groups: []permissionGroup{
-				{scope: organisation, permissions: []Permission{a}, implies: map[Permission][]Permission{a: {b}}},
-				{scope: project, permissions: []Permission{b}},
+				{level: organisation, permissions: []Permission{a}, implies: map[Permission][]Permission{a: {b}}},
+				{level: project, permissions: []Permission{b}},
 			},
 			wantErr: ErrPermissionInvalid,
 		},
 		{
 			name: "implication source in another group",
 			groups: []permissionGroup{
-				{scope: project, permissions: []Permission{a}, implies: map[Permission][]Permission{b: {a}}},
-				{scope: project, permissions: []Permission{b}},
+				{level: project, permissions: []Permission{a}, implies: map[Permission][]Permission{b: {a}}},
+				{level: project, permissions: []Permission{b}},
 			},
 			wantErr: ErrPermissionInvalid,
 		},
 		{
 			name:    "self implication",
-			groups:  []permissionGroup{{scope: project, permissions: []Permission{a}, implies: map[Permission][]Permission{a: {a}}}},
+			groups:  []permissionGroup{{level: project, permissions: []Permission{a}, implies: map[Permission][]Permission{a: {a}}}},
 			wantErr: ErrPermissionInvalid,
 		},
 		{
 			name: "cycle",
-			groups: []permissionGroup{{scope: project, permissions: []Permission{a, b, c}, implies: map[Permission][]Permission{
+			groups: []permissionGroup{{level: project, permissions: []Permission{a, b, c}, implies: map[Permission][]Permission{
 				a: {b},
 				b: {c},
 				c: {a},
@@ -449,18 +449,18 @@ func TestValidatePermissionGroups(t *testing.T) {
 		},
 		{
 			name:   "tenant-wide organisation permission",
-			groups: []permissionGroup{{scope: organisation, permissions: []Permission{a, b}, tenantWide: []Permission{b}}},
+			groups: []permissionGroup{{level: organisation, permissions: []Permission{a, b}, tenantWide: []Permission{b}}},
 		},
 		{
 			name:    "tenant-wide project permission",
-			groups:  []permissionGroup{{scope: project, permissions: []Permission{a}, tenantWide: []Permission{a}}},
+			groups:  []permissionGroup{{level: project, permissions: []Permission{a}, tenantWide: []Permission{a}}},
 			wantErr: ErrPermissionInvalid,
 		},
 		{
 			name: "tenant-wide permission of another group",
 			groups: []permissionGroup{
-				{scope: organisation, permissions: []Permission{a}, tenantWide: []Permission{b}},
-				{scope: organisation, permissions: []Permission{b}},
+				{level: organisation, permissions: []Permission{a}, tenantWide: []Permission{b}},
+				{level: organisation, permissions: []Permission{b}},
 			},
 			wantErr: ErrPermissionInvalid,
 		},
@@ -484,7 +484,7 @@ func TestExpandPermissions(t *testing.T) {
 		other   Permission = "test.other"
 	)
 	definitions := definePermissions([]permissionGroup{{
-		scope:       PermissionScopeProject,
+		level:       LevelProject,
 		permissions: []Permission{zoom, control, presets, other},
 		implies: map[Permission][]Permission{
 			presets: {control},
@@ -549,7 +549,7 @@ func TestTenantWidePermissions(t *testing.T) {
 		PermissionProjectsManageAccess,
 	}
 	for _, definition := range PermissionDefinitions() {
-		want := definition.Scope == PermissionScopeOrganisation && !slices.Contains(selectable, definition.Permission)
+		want := definition.Level == LevelOrganisation && !slices.Contains(selectable, definition.Permission)
 		if definition.TenantWide != want {
 			t.Errorf("%q TenantWide = %v, want %v", definition.Permission, definition.TenantWide, want)
 		}

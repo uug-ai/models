@@ -3,10 +3,10 @@ package models
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 const (
-	PermissionFloorPlansRead   Permission = "floorPlans.read"
-	PermissionFloorPlansCreate Permission = "floorPlans.create"
-	PermissionFloorPlansUpdate Permission = "floorPlans.update"
-	PermissionFloorPlansDelete Permission = "floorPlans.delete"
+	PermissionFloorPlansRead   Permission = "floor-plans.read"
+	PermissionFloorPlansCreate Permission = "floor-plans.create"
+	PermissionFloorPlansUpdate Permission = "floor-plans.update"
+	PermissionFloorPlansDelete Permission = "floor-plans.delete"
 )
 
 var floorPlanPermissions = []Permission{
