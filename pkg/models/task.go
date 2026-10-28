@@ -60,7 +60,7 @@ type Task struct {
 	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
 
 	// ProjectId optionally places the case/task in a project within its organisation.
-	// A nil value keeps it organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	CreationDate      int64  `json:"creation_date" bson:"creation_date,omitempty"`

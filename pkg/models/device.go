@@ -61,7 +61,7 @@ func DevicePermissions() []Permission {
 }
 
 // PermissionDevicesManageSystemTags governs platform-defined device system tags
-// and is only effective organisation-wide.
+// and is a tenant-wide organisation permission.
 const (
 	PermissionDevicesManageSystemTags Permission = "devices.manageSystemTags"
 )

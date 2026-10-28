@@ -35,7 +35,7 @@ type Label struct {
 	Types          []string           `json:"type" bson:"type,omitempty"`
 
 	// ProjectId optionally places the label in a project within its organisation.
-	// A nil value keeps the label organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	UserId    string `json:"user_id" bson:"user_id,omitempty"`

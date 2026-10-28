@@ -93,19 +93,23 @@ const (
 	// RoleKeyOwner is the Owner role: every permission in every current and
 	// future project (Grants=all). An organisation has at least one owner,
 	// and Organisation.OwnerId names the primary one.
-	RoleKeyOwner               RoleKey = "owner"
+	RoleKeyOwner RoleKey = "owner"
+	// Reserved for the system roles still being designed; BuiltInRoles does
+	// not define them yet.
 	RoleKeyOrganisationManager RoleKey = "organisation-manager"
 	RoleKeyBillingAdmin        RoleKey = "billing-admin"
 	RoleKeyProjectAdmin        RoleKey = "project-admin"
 	RoleKeyEditor              RoleKey = "editor"
 	RoleKeyViewer              RoleKey = "viewer"
 
-	RoleKeyLegacyGuest  RoleKey = "legacy-guest"
-	RoleKeyLegacyEditor RoleKey = "legacy-editor"
-	// RoleKeyLegacyAdmin is the project part of the legacy admin tier and
-	// RoleKeyLegacyAdminOrganisation its organisation part.
-	RoleKeyLegacyAdmin             RoleKey = "legacy-admin"
-	RoleKeyLegacyAdminOrganisation RoleKey = "legacy-admin-organisation"
+	// Legacy tiers are split by level: the project roles carry the tier's
+	// project permissions, and the organisation roles its organisation
+	// permissions. Guests and editors share one organisation role.
+	RoleKeyLegacyGuest              RoleKey = "legacy-guest"
+	RoleKeyLegacyEditor             RoleKey = "legacy-editor"
+	RoleKeyLegacyAdmin              RoleKey = "legacy-admin"
+	RoleKeyLegacyMemberOrganisation RoleKey = "legacy-member-organisation"
+	RoleKeyLegacyAdminOrganisation  RoleKey = "legacy-admin-organisation"
 )
 
 // RoleOrigin records what a migrated role was created from. It is provenance

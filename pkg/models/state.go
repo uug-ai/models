@@ -29,7 +29,7 @@ type State struct {
 	SiteId         string              `json:"siteId,omitempty" bson:"siteId,omitempty" example:"686a906345c1df594pcsr3r45"`                                           // SiteId is used to identify the site for which the state is relevant
 	GroupId        string              `json:"groupId,omitempty" bson:"groupId,omitempty" example:"686a906345c1df594pmt41w4"`                                          // GroupId is used to identify the group for which the state is relevant
 	OrganisationId string              `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"`                                                // OrganisationId is used to identify the organisation that owns the state.
-	ProjectId      *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`                                                                         // ProjectId optionally places the state in a project within its organisation; nil keeps it organisation-wide.
+	ProjectId      *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`                                                                         // ProjectId optionally places the state in a project within its organisation; nil places it in the default project.
 	Devices        []string            `json:"devices,omitempty" bson:"devices,omitempty" example:"[\"686a906345c1df594939f9j25f4\",\"686a906345c1df594939f9j25f5\"]"` // List of device IDs associated with the state
 
 	// Timing information (all timestamps are in seconds)

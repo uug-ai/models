@@ -7,7 +7,7 @@ type Sequence struct {
 	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
 
 	// ProjectId optionally places the sequence in a project within its organisation.
-	// A nil value keeps the sequence organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	Start    int64                  `json:"start,omitempty"`

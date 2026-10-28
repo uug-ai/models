@@ -493,7 +493,7 @@ type Workflow struct {
 	// contract while readers may retain a legacy `organisation_id` fallback.
 	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
 	// ProjectId optionally places the workflow in a project within its organisation.
-	// A nil value keeps the workflow organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 	CreatedAt int64               `json:"createdAt" bson:"createdAt,omitempty"`
 	UpdatedAt int64               `json:"updatedAt" bson:"updatedAt,omitempty"`

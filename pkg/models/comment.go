@@ -12,7 +12,7 @@ type Comment struct {
 	OrganisationId string `json:"organisationId" bson:"organisationId,omitempty"`
 
 	// ProjectId optionally places the comment in a project within its organisation.
-	// A nil value keeps the comment organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	// Comment information

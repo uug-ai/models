@@ -74,7 +74,7 @@ type CustomAlert struct {
 	OrganisationId      string               `json:"organisationId" bson:"organisationId"`
 
 	// ProjectId optionally places the alert in a project within its organisation.
-	// A nil value keeps the alert organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	// ChannelIds selects defined Channels in the alert's project. When set (even

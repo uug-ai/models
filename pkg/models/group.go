@@ -34,7 +34,7 @@ type Group struct {
 	Sites          []string `json:"sites" bson:"sites"`   // Nested sites
 
 	// ProjectId optionally places the group in a project within its organisation.
-	// A nil value keeps the group organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	// Media file information (by default "vault", however might change
