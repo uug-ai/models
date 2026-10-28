@@ -91,8 +91,8 @@ type RoleKey string
 
 const (
 	// RoleKeyOwner is the Owner role: every permission in every current and
-	// future project. It stores no permission list. An organisation has at
-	// least one owner, and Organisation.OwnerId names the primary one.
+	// future project (Grants=all). An organisation has at least one owner,
+	// and Organisation.OwnerId names the primary one.
 	RoleKeyOwner               RoleKey = "owner"
 	RoleKeyOrganisationManager RoleKey = "organisation-manager"
 	RoleKeyBillingAdmin        RoleKey = "billing-admin"
@@ -133,10 +133,15 @@ type Role struct {
 	Kind         RoleKind        `json:"kind" bson:"kind,omitempty"`
 	Key          RoleKey         `json:"key,omitempty" bson:"key,omitempty"` // System and legacy roles only; unique per organisation
 	AssignableAt PermissionScope `json:"assignableAt" bson:"assignableAt,omitempty"`
-	// Permissions is the canonical set of grants carried by this role, all of
-	// the AssignableAt level. Implied permissions (see ExpandPermissions) are
-	// not stored.
-	Permissions []Permission `json:"permissions" bson:"permissions,omitempty"`
+	// Grants says whether the role grants every permission (all; the Owner
+	// role only, with no Permissions) or exactly the listed Permissions
+	// (selected; an empty list grants nothing). It is required: the zero value
+	// is invalid, so an empty list never means "everything".
+	Grants ScopeSelection `json:"grants" bson:"grants,omitempty"`
+	// Permissions is the canonical set of grants carried by a Grants=selected
+	// role, all of the AssignableAt level. Implied permissions (see
+	// ExpandPermissions) are not stored.
+	Permissions []Permission `json:"permissions,omitempty" bson:"permissions,omitempty"`
 	Origin      *RoleOrigin  `json:"origin,omitempty" bson:"origin,omitempty"`
 	IsActive    bool         `json:"isActive" bson:"isActive"`
 
@@ -154,10 +159,16 @@ func (r Role) IsOwner() bool {
 	return r.Kind == RoleKindSystem && r.Key == RoleKeyOwner
 }
 
+// GrantsAll reports whether the role grants every permission, including ones
+// added to the catalog later.
+func (r Role) GrantsAll() bool {
+	return r.Grants == ScopeSelectionAll
+}
+
 // Validate checks the role's own invariants: a known kind with a key exactly
-// when the platform defines it, a known level, and only catalog permissions
-// of that level. The Owner role is an organisation role with no stored
-// permissions.
+// when the platform defines it, a known level, an explicit grants selection,
+// and only catalog permissions of that level. Only the Owner role, a system
+// organisation role, grants all.
 func (r Role) Validate() error {
 	if r.Name == "" {
 		return fmt.Errorf("%w: empty name", ErrRoleInvalid)
@@ -177,9 +188,24 @@ func (r Role) Validate() error {
 	if r.AssignableAt != PermissionScopeOrganisation && r.AssignableAt != PermissionScopeProject {
 		return fmt.Errorf("%w: unknown level %q", ErrRoleInvalid, r.AssignableAt)
 	}
+	switch r.Grants {
+	case ScopeSelectionAll:
+		if r.Key != RoleKeyOwner {
+			return fmt.Errorf("%w: only the owner role grants all permissions", ErrRoleInvalid)
+		}
+		if len(r.Permissions) > 0 {
+			return fmt.Errorf("%w: role granting all permissions lists permissions", ErrRoleInvalid)
+		}
+	case ScopeSelectionSelected:
+		if r.Key == RoleKeyOwner {
+			return fmt.Errorf("%w: owner role must grant all permissions", ErrRoleInvalid)
+		}
+	default:
+		return fmt.Errorf("%w: unknown grants %q", ErrRoleInvalid, r.Grants)
+	}
 	if r.Key == RoleKeyOwner {
-		if r.Kind != RoleKindSystem || r.AssignableAt != PermissionScopeOrganisation || len(r.Permissions) > 0 {
-			return fmt.Errorf("%w: owner must be a system organisation role without stored permissions", ErrRoleInvalid)
+		if r.Kind != RoleKindSystem || r.AssignableAt != PermissionScopeOrganisation {
+			return fmt.Errorf("%w: owner must be a system organisation role", ErrRoleInvalid)
 		}
 		return nil
 	}
@@ -198,7 +224,7 @@ func (r Role) Validate() error {
 // RequiresAllProjects reports whether the role is Owner or holds a tenant-wide
 // permission, in which case it can only be assigned to cover all projects.
 func (r Role) RequiresAllProjects() bool {
-	if r.IsOwner() {
+	if r.IsOwner() || r.GrantsAll() {
 		return true
 	}
 	for _, permission := range r.Permissions {

@@ -17,6 +17,7 @@ func TestRoleValidate(t *testing.T) {
 			Name:         "Operator",
 			Kind:         RoleKindCustom,
 			AssignableAt: PermissionScopeProject,
+			Grants:       ScopeSelectionSelected,
 			Permissions:  []Permission{PermissionDevicesRead, PermissionPTZControl},
 		}
 		mutate(&role)
@@ -36,7 +37,14 @@ func TestRoleValidate(t *testing.T) {
 		{"legacy role", valid(func(r *Role) {
 			r.Kind, r.Key, r.Origin = RoleKindLegacy, RoleKeyLegacyGuest, &RoleOrigin{BaseRole: BaseRoleGuest}
 		}), nil},
+		{"selected without permissions", valid(func(r *Role) { r.Permissions = nil }), nil},
 		{"empty name", valid(func(r *Role) { r.Name = "" }), ErrRoleInvalid},
+		{"no grants selection", valid(func(r *Role) { r.Grants = "" }), ErrRoleInvalid},
+		{"unknown grants selection", valid(func(r *Role) { r.Grants = "some" }), ErrRoleInvalid},
+		{"custom role granting all", valid(func(r *Role) { r.Grants, r.Permissions = ScopeSelectionAll, nil }), ErrRoleInvalid},
+		{"system role other than owner granting all", valid(func(r *Role) {
+			r.Kind, r.Key, r.AssignableAt, r.Grants, r.Permissions = RoleKindSystem, RoleKeyOrganisationManager, PermissionScopeOrganisation, ScopeSelectionAll, nil
+		}), ErrRoleInvalid},
 		{"unknown kind", valid(func(r *Role) { r.Kind = "builtin" }), ErrRoleInvalid},
 		{"system role without key", valid(func(r *Role) { r.Kind = RoleKindSystem }), ErrRoleInvalid},
 		{"custom role with key", valid(func(r *Role) { r.Key = RoleKeyEditor }), ErrRoleInvalid},
@@ -111,9 +119,9 @@ func TestRoleAssignmentScopeValidate(t *testing.T) {
 func TestRoleAssignmentValidate(t *testing.T) {
 	organisation := primitive.NewObjectID()
 	project := primitive.NewObjectID()
-	editor := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, AssignableAt: PermissionScopeProject, Permissions: []Permission{PermissionMediaRead}}
-	manager := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, AssignableAt: PermissionScopeOrganisation, Permissions: []Permission{PermissionMembersRead, PermissionRolesUpdate}}
-	delegate := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, AssignableAt: PermissionScopeOrganisation, Permissions: []Permission{PermissionMembersInvite, PermissionProjectsManageAccess}}
+	editor := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, AssignableAt: PermissionScopeProject, Grants: ScopeSelectionSelected, Permissions: []Permission{PermissionMediaRead}}
+	manager := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, AssignableAt: PermissionScopeOrganisation, Grants: ScopeSelectionSelected, Permissions: []Permission{PermissionMembersRead, PermissionRolesUpdate}}
+	delegate := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, AssignableAt: PermissionScopeOrganisation, Grants: ScopeSelectionSelected, Permissions: []Permission{PermissionMembersInvite, PermissionProjectsManageAccess}}
 
 	assign := func(role Role, scope RoleAssignmentScope, mutate func(*RoleAssignment)) RoleAssignment {
 		assignment := RoleAssignment{
@@ -318,18 +326,25 @@ func TestOrganisationIsPrimaryOwner(t *testing.T) {
 }
 
 func TestOwnerRole(t *testing.T) {
-	owner := Role{Name: "Owner", Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation}
+	owner := Role{Name: "Owner", Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation, Grants: ScopeSelectionAll}
 	if err := owner.Validate(); err != nil {
 		t.Fatalf("Validate() error = %v", err)
 	}
-	if !owner.IsOwner() || !owner.RequiresAllProjects() {
-		t.Fatal("Owner must be recognised and require all projects")
+	if !owner.IsOwner() || !owner.GrantsAll() || !owner.RequiresAllProjects() {
+		t.Fatal("Owner must be recognised, grant all and require all projects")
 	}
 
+	variant := func(mutate func(*Role)) Role {
+		role := owner
+		mutate(&role)
+		return role
+	}
 	for name, role := range map[string]Role{
-		"stored permissions": {Name: "Owner", Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation, Permissions: []Permission{PermissionMembersRead}},
-		"project level":      {Name: "Owner", Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeProject},
-		"legacy kind":        {Name: "Owner", Kind: RoleKindLegacy, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation},
+		"no grants selection": variant(func(r *Role) { r.Grants = "" }),
+		"selected grants":     variant(func(r *Role) { r.Grants = ScopeSelectionSelected }),
+		"listed permissions":  variant(func(r *Role) { r.Permissions = []Permission{PermissionMembersRead} }),
+		"project level":       variant(func(r *Role) { r.AssignableAt = PermissionScopeProject }),
+		"legacy kind":         variant(func(r *Role) { r.Kind = RoleKindLegacy }),
 	} {
 		t.Run(name, func(t *testing.T) {
 			if err := role.Validate(); !errors.Is(err, ErrRoleInvalid) {
@@ -341,7 +356,7 @@ func TestOwnerRole(t *testing.T) {
 
 func TestOwnerAssignmentValidate(t *testing.T) {
 	organisation := primitive.NewObjectID()
-	owner := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation}
+	owner := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation, Grants: ScopeSelectionAll}
 	assign := func(mutate func(*RoleAssignment)) RoleAssignment {
 		assignment := RoleAssignment{
 			OrganisationId: organisation,
