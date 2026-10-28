@@ -17,7 +17,7 @@ func TestRoleValidate(t *testing.T) {
 			Name:         "Operator",
 			Kind:         RoleKindCustom,
 			AssignableAt: PermissionScopeProject,
-			Grants:       ScopeSelectionSelected,
+			Grants:       SelectionSelected,
 			Permissions:  []Permission{PermissionDevicesRead, PermissionPTZControl},
 		}
 		mutate(&role)
@@ -41,9 +41,9 @@ func TestRoleValidate(t *testing.T) {
 		{"empty name", valid(func(r *Role) { r.Name = "" }), ErrRoleInvalid},
 		{"no grants selection", valid(func(r *Role) { r.Grants = "" }), ErrRoleInvalid},
 		{"unknown grants selection", valid(func(r *Role) { r.Grants = "some" }), ErrRoleInvalid},
-		{"custom role granting all", valid(func(r *Role) { r.Grants, r.Permissions = ScopeSelectionAll, nil }), ErrRoleInvalid},
+		{"custom role granting all", valid(func(r *Role) { r.Grants, r.Permissions = SelectionAll, nil }), ErrRoleInvalid},
 		{"system role other than owner granting all", valid(func(r *Role) {
-			r.Kind, r.Key, r.AssignableAt, r.Grants, r.Permissions = RoleKindSystem, RoleKeyOrganisationManager, PermissionScopeOrganisation, ScopeSelectionAll, nil
+			r.Kind, r.Key, r.AssignableAt, r.Grants, r.Permissions = RoleKindSystem, RoleKeyOrganisationManager, PermissionScopeOrganisation, SelectionAll, nil
 		}), ErrRoleInvalid},
 		{"unknown kind", valid(func(r *Role) { r.Kind = "builtin" }), ErrRoleInvalid},
 		{"system role without key", valid(func(r *Role) { r.Kind = RoleKindSystem }), ErrRoleInvalid},
@@ -87,23 +87,23 @@ func TestRoleAssignmentScopeValidate(t *testing.T) {
 		wantErr error
 	}{
 		{"zero value", RoleAssignmentScope{}, ErrRoleAssignmentInvalid},
-		{"organisation, all projects", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionAll}, nil},
-		{"organisation, selected projects", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionSelected, ProjectIds: []primitive.ObjectID{project}}, nil},
+		{"organisation, all projects", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: SelectionAll}, nil},
+		{"organisation, selected projects", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: SelectionSelected, ProjectIds: []primitive.ObjectID{project}}, nil},
 		{"organisation, no project selection", RoleAssignmentScope{Level: PermissionScopeOrganisation}, ErrRoleAssignmentInvalid},
-		{"organisation, selected without projects", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionSelected}, ErrRoleAssignmentInvalid},
-		{"organisation, all with projects", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionAll, ProjectIds: []primitive.ObjectID{project}}, ErrRoleAssignmentInvalid},
-		{"organisation, duplicate project", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionSelected, ProjectIds: []primitive.ObjectID{project, project}}, ErrRoleAssignmentInvalid},
-		{"organisation with resources", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionAll, SiteIds: []primitive.ObjectID{site}}, ErrRoleAssignmentInvalid},
-		{"organisation with project id", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionAll, ProjectId: project}, ErrRoleAssignmentInvalid},
-		{"project, all resources", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: ScopeSelectionAll}, nil},
-		{"project, selected resources", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: ScopeSelectionSelected, SiteIds: []primitive.ObjectID{site}}, nil},
-		{"project, pending", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: ScopeSelectionSelected}, nil},
-		{"project without project id", RoleAssignmentScope{Level: PermissionScopeProject, Resources: ScopeSelectionAll}, ErrRoleAssignmentInvalid},
+		{"organisation, selected without projects", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: SelectionSelected}, ErrRoleAssignmentInvalid},
+		{"organisation, all with projects", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: SelectionAll, ProjectIds: []primitive.ObjectID{project}}, ErrRoleAssignmentInvalid},
+		{"organisation, duplicate project", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: SelectionSelected, ProjectIds: []primitive.ObjectID{project, project}}, ErrRoleAssignmentInvalid},
+		{"organisation with resources", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: SelectionAll, SiteIds: []primitive.ObjectID{site}}, ErrRoleAssignmentInvalid},
+		{"organisation with project id", RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: SelectionAll, ProjectId: project}, ErrRoleAssignmentInvalid},
+		{"project, all resources", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: SelectionAll}, nil},
+		{"project, selected resources", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: SelectionSelected, SiteIds: []primitive.ObjectID{site}}, nil},
+		{"project, pending", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: SelectionSelected}, nil},
+		{"project without project id", RoleAssignmentScope{Level: PermissionScopeProject, Resources: SelectionAll}, ErrRoleAssignmentInvalid},
 		{"project without resource selection", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project}, ErrRoleAssignmentInvalid},
-		{"project, all with resources", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: ScopeSelectionAll, DeviceIds: []primitive.ObjectID{site}}, ErrRoleAssignmentInvalid},
-		{"project, duplicate site", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: ScopeSelectionSelected, SiteIds: []primitive.ObjectID{site, site}}, ErrRoleAssignmentInvalid},
-		{"project, empty group id", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: ScopeSelectionSelected, GroupIds: []primitive.ObjectID{{}}}, ErrRoleAssignmentInvalid},
-		{"project with project selection", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: ScopeSelectionAll, Projects: ScopeSelectionAll}, ErrRoleAssignmentInvalid},
+		{"project, all with resources", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: SelectionAll, DeviceIds: []primitive.ObjectID{site}}, ErrRoleAssignmentInvalid},
+		{"project, duplicate site", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: SelectionSelected, SiteIds: []primitive.ObjectID{site, site}}, ErrRoleAssignmentInvalid},
+		{"project, empty group id", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: SelectionSelected, GroupIds: []primitive.ObjectID{{}}}, ErrRoleAssignmentInvalid},
+		{"project with project selection", RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: SelectionAll, Projects: SelectionAll}, ErrRoleAssignmentInvalid},
 		{"unknown level", RoleAssignmentScope{Level: "site"}, ErrRoleAssignmentInvalid},
 	}
 
@@ -119,9 +119,9 @@ func TestRoleAssignmentScopeValidate(t *testing.T) {
 func TestRoleAssignmentValidate(t *testing.T) {
 	organisation := primitive.NewObjectID()
 	project := primitive.NewObjectID()
-	editor := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, AssignableAt: PermissionScopeProject, Grants: ScopeSelectionSelected, Permissions: []Permission{PermissionMediaRead}}
-	manager := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, AssignableAt: PermissionScopeOrganisation, Grants: ScopeSelectionSelected, Permissions: []Permission{PermissionMembersRead, PermissionRolesUpdate}}
-	delegate := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, AssignableAt: PermissionScopeOrganisation, Grants: ScopeSelectionSelected, Permissions: []Permission{PermissionMembersInvite, PermissionProjectsManageAccess}}
+	editor := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, AssignableAt: PermissionScopeProject, Grants: SelectionSelected, Permissions: []Permission{PermissionMediaRead}}
+	manager := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, AssignableAt: PermissionScopeOrganisation, Grants: SelectionSelected, Permissions: []Permission{PermissionMembersRead, PermissionRolesUpdate}}
+	delegate := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, AssignableAt: PermissionScopeOrganisation, Grants: SelectionSelected, Permissions: []Permission{PermissionMembersInvite, PermissionProjectsManageAccess}}
 
 	assign := func(role Role, scope RoleAssignmentScope, mutate func(*RoleAssignment)) RoleAssignment {
 		assignment := RoleAssignment{
@@ -135,9 +135,9 @@ func TestRoleAssignmentValidate(t *testing.T) {
 		mutate(&assignment)
 		return assignment
 	}
-	projectScope := RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: ScopeSelectionAll}
-	allProjects := RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionAll}
-	selectedProjects := RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionSelected, ProjectIds: []primitive.ObjectID{project}}
+	projectScope := RoleAssignmentScope{Level: PermissionScopeProject, ProjectId: project, Resources: SelectionAll}
+	allProjects := RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: SelectionAll}
+	selectedProjects := RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: SelectionSelected, ProjectIds: []primitive.ObjectID{project}}
 	none := func(*RoleAssignment) {}
 
 	tests := []struct {
@@ -326,7 +326,7 @@ func TestOrganisationIsPrimaryOwner(t *testing.T) {
 }
 
 func TestOwnerRole(t *testing.T) {
-	owner := Role{Name: "Owner", Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation, Grants: ScopeSelectionAll}
+	owner := Role{Name: "Owner", Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation, Grants: SelectionAll}
 	if err := owner.Validate(); err != nil {
 		t.Fatalf("Validate() error = %v", err)
 	}
@@ -341,7 +341,7 @@ func TestOwnerRole(t *testing.T) {
 	}
 	for name, role := range map[string]Role{
 		"no grants selection": variant(func(r *Role) { r.Grants = "" }),
-		"selected grants":     variant(func(r *Role) { r.Grants = ScopeSelectionSelected }),
+		"selected grants":     variant(func(r *Role) { r.Grants = SelectionSelected }),
 		"listed permissions":  variant(func(r *Role) { r.Permissions = []Permission{PermissionMembersRead} }),
 		"project level":       variant(func(r *Role) { r.AssignableAt = PermissionScopeProject }),
 		"legacy kind":         variant(func(r *Role) { r.Kind = RoleKindLegacy }),
@@ -356,13 +356,13 @@ func TestOwnerRole(t *testing.T) {
 
 func TestOwnerAssignmentValidate(t *testing.T) {
 	organisation := primitive.NewObjectID()
-	owner := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation, Grants: ScopeSelectionAll}
+	owner := Role{Id: primitive.NewObjectID(), OrganisationId: organisation, Kind: RoleKindSystem, Key: RoleKeyOwner, AssignableAt: PermissionScopeOrganisation, Grants: SelectionAll}
 	assign := func(mutate func(*RoleAssignment)) RoleAssignment {
 		assignment := RoleAssignment{
 			OrganisationId: organisation,
 			Principal:      Principal{Type: PrincipalTypeUser, Id: primitive.NewObjectID()},
 			RoleId:         owner.Id,
-			Scope:          RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionAll},
+			Scope:          RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: SelectionAll},
 			Source:         AssignmentSourceMigration,
 			IsActive:       true,
 		}
@@ -375,7 +375,7 @@ func TestOwnerAssignmentValidate(t *testing.T) {
 	}
 	tests := map[string]func(*RoleAssignment){
 		"selected projects": func(a *RoleAssignment) {
-			a.Scope = RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: ScopeSelectionSelected, ProjectIds: []primitive.ObjectID{primitive.NewObjectID()}}
+			a.Scope = RoleAssignmentScope{Level: PermissionScopeOrganisation, Projects: SelectionSelected, ProjectIds: []primitive.ObjectID{primitive.NewObjectID()}}
 		},
 		"time window": func(a *RoleAssignment) { a.TimeWindow = &officeHours },
 		"expiry":      func(a *RoleAssignment) { a.ExpiresAt = time.Now().Add(time.Hour) },

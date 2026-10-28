@@ -135,13 +135,15 @@ func (a RoleAssignment) Validate(role Role) error {
 	return nil
 }
 
-// ScopeSelection says whether a scope covers everything at its level or only
-// the listed ids.
-type ScopeSelection string
+// Selection says whether something covers everything or only an explicitly
+// listed subset: the projects or resources of a RoleAssignmentScope, or the
+// permissions a Role grants. It is always set explicitly; the zero value is
+// invalid wherever it is used.
+type Selection string
 
 const (
-	ScopeSelectionAll      ScopeSelection = "all"
-	ScopeSelectionSelected ScopeSelection = "selected"
+	SelectionAll      Selection = "all"
+	SelectionSelected Selection = "selected"
 )
 
 // RoleAssignmentScope states explicitly what an assignment covers; nothing is
@@ -163,12 +165,12 @@ type RoleAssignmentScope struct {
 	Level PermissionScope `json:"level" bson:"level"`
 
 	// Level=organisation only.
-	Projects   ScopeSelection       `json:"projects,omitempty" bson:"projects,omitempty"`
+	Projects   Selection            `json:"projects,omitempty" bson:"projects,omitempty"`
 	ProjectIds []primitive.ObjectID `json:"projectIds,omitempty" bson:"projectIds,omitempty"` // Projects=selected only; at least one
 
 	// Level=project only.
 	ProjectId primitive.ObjectID   `json:"projectId,omitempty" bson:"projectId,omitempty"`
-	Resources ScopeSelection       `json:"resources,omitempty" bson:"resources,omitempty"`
+	Resources Selection            `json:"resources,omitempty" bson:"resources,omitempty"`
 	SiteIds   []primitive.ObjectID `json:"siteIds,omitempty" bson:"siteIds,omitempty"`     // Resources=selected only
 	GroupIds  []primitive.ObjectID `json:"groupIds,omitempty" bson:"groupIds,omitempty"`   // Resources=selected only
 	DeviceIds []primitive.ObjectID `json:"deviceIds,omitempty" bson:"deviceIds,omitempty"` // Resources=selected only
@@ -183,11 +185,11 @@ func (s RoleAssignmentScope) Validate() error {
 			return fmt.Errorf("%w: organisation scope with project resources", ErrRoleAssignmentInvalid)
 		}
 		switch s.Projects {
-		case ScopeSelectionAll:
+		case SelectionAll:
 			if len(s.ProjectIds) > 0 {
 				return fmt.Errorf("%w: all projects with project ids", ErrRoleAssignmentInvalid)
 			}
-		case ScopeSelectionSelected:
+		case SelectionSelected:
 			if len(s.ProjectIds) == 0 {
 				return fmt.Errorf("%w: selected projects without project ids", ErrRoleAssignmentInvalid)
 			}
@@ -203,11 +205,11 @@ func (s RoleAssignmentScope) Validate() error {
 			return fmt.Errorf("%w: project scope without project", ErrRoleAssignmentInvalid)
 		}
 		switch s.Resources {
-		case ScopeSelectionAll:
+		case SelectionAll:
 			if s.hasResourceIds() {
 				return fmt.Errorf("%w: all resources with resource ids", ErrRoleAssignmentInvalid)
 			}
-		case ScopeSelectionSelected:
+		case SelectionSelected:
 		default:
 			return fmt.Errorf("%w: unknown resource selection %q", ErrRoleAssignmentInvalid, s.Resources)
 		}
@@ -232,7 +234,7 @@ func (s RoleAssignmentScope) ValidateFor(role Role) error {
 	if s.Level != role.AssignableAt {
 		return fmt.Errorf("%w: %s scope for %s role", ErrRoleAssignmentInvalid, s.Level, role.AssignableAt)
 	}
-	if role.RequiresAllProjects() && s.Projects != ScopeSelectionAll {
+	if role.RequiresAllProjects() && s.Projects != SelectionAll {
 		return fmt.Errorf("%w: role with tenant-wide permissions must cover all projects", ErrRoleAssignmentInvalid)
 	}
 	return nil

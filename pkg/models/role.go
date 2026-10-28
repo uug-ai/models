@@ -137,7 +137,7 @@ type Role struct {
 	// role only, with no Permissions) or exactly the listed Permissions
 	// (selected; an empty list grants nothing). It is required: the zero value
 	// is invalid, so an empty list never means "everything".
-	Grants ScopeSelection `json:"grants" bson:"grants,omitempty"`
+	Grants Selection `json:"grants" bson:"grants,omitempty"`
 	// Permissions is the canonical set of grants carried by a Grants=selected
 	// role, all of the AssignableAt level. Implied permissions (see
 	// ExpandPermissions) are not stored.
@@ -162,7 +162,7 @@ func (r Role) IsOwner() bool {
 // GrantsAll reports whether the role grants every permission, including ones
 // added to the catalog later.
 func (r Role) GrantsAll() bool {
-	return r.Grants == ScopeSelectionAll
+	return r.Grants == SelectionAll
 }
 
 // Validate checks the role's own invariants: a known kind with a key exactly
@@ -189,14 +189,14 @@ func (r Role) Validate() error {
 		return fmt.Errorf("%w: unknown level %q", ErrRoleInvalid, r.AssignableAt)
 	}
 	switch r.Grants {
-	case ScopeSelectionAll:
+	case SelectionAll:
 		if r.Key != RoleKeyOwner {
 			return fmt.Errorf("%w: only the owner role grants all permissions", ErrRoleInvalid)
 		}
 		if len(r.Permissions) > 0 {
 			return fmt.Errorf("%w: role granting all permissions lists permissions", ErrRoleInvalid)
 		}
-	case ScopeSelectionSelected:
+	case SelectionSelected:
 		if r.Key == RoleKeyOwner {
 			return fmt.Errorf("%w: owner role must grant all permissions", ErrRoleInvalid)
 		}
