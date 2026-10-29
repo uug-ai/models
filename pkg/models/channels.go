@@ -227,12 +227,11 @@ type ChannelEmailConfig struct {
 }
 
 type ChannelSlackConfig struct {
-	// Hook is an incoming-webhook URL. ApiKey and Channel are the bot-token
-	// alternative.
-	Hook     string `json:"hook,omitempty" bson:"hook,omitempty"`
-	ApiKey   string `json:"apiKey,omitempty" bson:"apiKey,omitempty"`
-	Channel  string `json:"channel,omitempty" bson:"channel,omitempty"`
-	Username string `json:"username,omitempty" bson:"username,omitempty"`
+	DeliveryMode string `json:"deliveryMode,omitempty" bson:"deliveryMode,omitempty" enums:"webhook,bot"`
+	Hook         string `json:"hook,omitempty" bson:"hook,omitempty"`
+	ApiKey       string `json:"apiKey,omitempty" bson:"apiKey,omitempty"`
+	Channel      string `json:"channel,omitempty" bson:"channel,omitempty"`
+	Username     string `json:"username,omitempty" bson:"username,omitempty"`
 }
 
 type ChannelWebhookConfig struct {
@@ -315,12 +314,34 @@ type Email struct {
 }
 
 type Slack struct {
-	Enabled  bool   `json:"enabled" bson:"enabled,omitempty"`
-	Valid    bool   `json:"valid" bson:"valid,omitempty"`
-	Apikey   string `json:"apikey" bson:"apikey,omitempty"`
-	Channel  string `json:"channel" bson:"channel,omitempty"`
-	Hook     string `json:"hook" bson:"hook,omitempty"`
-	Username string `json:"username" bson:"username,omitempty"`
+	Enabled      bool   `json:"enabled" bson:"enabled,omitempty"`
+	Valid        bool   `json:"valid" bson:"valid,omitempty"`
+	DeliveryMode string `json:"deliveryMode,omitempty" bson:"deliveryMode,omitempty" enums:"webhook,bot"`
+	Apikey       string `json:"apikey" bson:"apikey,omitempty"`
+	Channel      string `json:"channel" bson:"channel,omitempty"`
+	Hook         string `json:"hook" bson:"hook,omitempty"`
+	Username     string `json:"username" bson:"username,omitempty"`
+}
+
+const (
+	SlackDeliveryModeWebhook = "webhook"
+	SlackDeliveryModeBot     = "bot"
+)
+
+// ResolveDeliveryMode preserves bot precedence for configurations saved before
+// deliveryMode existed. Explicit modes never fall back to another destination.
+func (s Slack) ResolveDeliveryMode() (string, error) {
+	switch s.DeliveryMode {
+	case SlackDeliveryModeWebhook, SlackDeliveryModeBot:
+		return s.DeliveryMode, nil
+	case "":
+		if s.Apikey != "" || s.Channel != "" {
+			return SlackDeliveryModeBot, nil
+		}
+		return SlackDeliveryModeWebhook, nil
+	default:
+		return "", errors.New("invalid Slack delivery mode")
+	}
 }
 
 type Telegram struct {

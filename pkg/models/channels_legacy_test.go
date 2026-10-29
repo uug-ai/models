@@ -166,7 +166,7 @@ func TestLegacyAlertChannelMergesLikeComputeChannels(t *testing.T) {
 	if !ok {
 		t.Fatal("slack hook override not detected")
 	}
-	if got := *slack.Config.Slack; got != (ChannelSlackConfig{Hook: "alert-hook", ApiKey: "user-key", Channel: "#user", Username: "alert-bot"}) {
+	if got := *slack.Config.Slack; got != (ChannelSlackConfig{DeliveryMode: SlackDeliveryModeWebhook, Hook: "alert-hook", ApiKey: "user-key", Channel: "#user", Username: "alert-bot"}) {
 		t.Fatalf("slack config = %+v", got)
 	}
 	if !slack.Enabled || !slack.Valid {

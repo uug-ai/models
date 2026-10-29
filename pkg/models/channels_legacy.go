@@ -50,7 +50,7 @@ func LegacyChannel(organisationId primitive.ObjectID, legacy Channels, channelTy
 	case ChannelTypeSlack:
 		c := legacy.Slack
 		channel.Enabled, channel.Valid = c.Enabled, c.Valid
-		channel.Config.Slack = &ChannelSlackConfig{Hook: c.Hook, ApiKey: c.Apikey, Channel: c.Channel, Username: c.Username}
+		channel.Config.Slack = &ChannelSlackConfig{DeliveryMode: c.DeliveryMode, Hook: c.Hook, ApiKey: c.Apikey, Channel: c.Channel, Username: c.Username}
 		return channel, anySet(c.Hook, c.Apikey, c.Channel, c.Username)
 	case ChannelTypeWebhook:
 		c := legacy.Webhook
@@ -128,6 +128,9 @@ func LegacyAlertChannel(organisationId primitive.ObjectID, alert CustomAlert, le
 		}
 	case ChannelTypeSlack:
 		if alert.SlackHook != "" {
+			if alert.SlackHook != legacy.Slack.Hook {
+				config.Slack.DeliveryMode = SlackDeliveryModeWebhook
+			}
 			config.Slack.Hook = alert.SlackHook
 			config.Slack.Username = alert.SlackBotname
 			channel.Valid, overridden = true, true

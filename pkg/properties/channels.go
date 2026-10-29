@@ -67,6 +67,7 @@ const (
 
 // ChannelSlackConfig property field names (BSON)
 const (
+	ChannelSlackConfigDeliveryMode = "deliveryMode"
 	ChannelSlackConfigHook = "hook"
 	ChannelSlackConfigApiKey = "apiKey"
 	ChannelSlackConfigChannel = "channel"
@@ -169,6 +170,7 @@ const (
 const (
 	SlackEnabled = "enabled"
 	SlackValid = "valid"
+	SlackDeliveryMode = "deliveryMode"
 	SlackApikey = "apikey"
 	SlackChannel = "channel"
 	SlackHook = "hook"
