@@ -23,7 +23,7 @@ type CaseMedia struct {
 	OrganisationId string             `json:"organisationId" bson:"organisation_id"`
 
 	// ProjectId optionally places the case media in a project within its organisation.
-	// A nil value keeps it organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	// Role describes whether this entry represents a source attached to
