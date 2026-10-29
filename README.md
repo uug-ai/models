@@ -40,6 +40,11 @@ The `channels` collection stores Slack settings in
 - Bot delivery: `apiKey` is the Slack bot token and `channel` is the Slack
   channel ID.
 - Webhook delivery: `hook` is the incoming webhook URL; `username` is optional.
+- `deliveryMode` selects `bot` or `webhook` without deleting the other
+  configuration. Both credential sets can be stored together. If the field is
+  absent, existing bot credentials retain precedence over the webhook; no
+  migration is required. `Slack.ResolveDeliveryMode` applies this selection rule
+  to legacy user settings and rejects unknown modes.
 
 The collection model uses camel-case `apiKey`, not the legacy user settings'
 lowercase `apikey`. These fields are also present in the generated TypeScript
@@ -60,7 +65,8 @@ write-only `config` object:
   "config": {
     "slack": {
       "apiKey": "xoxb-your-bot-token",
-      "channel": "C0123456789"
+      "channel": "C0123456789",
+      "deliveryMode": "bot"
     }
   }
 }

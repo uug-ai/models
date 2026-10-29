@@ -39852,8 +39852,8 @@ export interface components {
         "models.ChannelSlackConfig": {
             apiKey?: string;
             channel?: string;
-            /** @description Hook is an incoming-webhook URL. ApiKey and Channel are the bot-token
-             *     alternative. */
+            /** @enum {string} */
+            deliveryMode?: "webhook" | "bot";
             hook?: string;
             username?: string;
         };
@@ -42159,6 +42159,8 @@ export interface components {
         "models.Slack": {
             apikey?: string;
             channel?: string;
+            /** @enum {string} */
+            deliveryMode?: "webhook" | "bot";
             enabled?: boolean;
             hook?: string;
             username?: string;

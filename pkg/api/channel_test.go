@@ -31,6 +31,18 @@ func TestCreateSlackChannelRequestPersistsConfig(t *testing.T) {
 			wantConfig:   &models.ChannelSlackConfig{Hook: "https://hooks.slack.com/services/test", Username: "Hub"},
 			wantDocument: bson.M{"hook": "https://hooks.slack.com/services/test", "username": "Hub"},
 		},
+		{
+			name:         "webhook with saved bot",
+			configJSON:   `{"deliveryMode":"webhook","apiKey":"test-bot-token","channel":"C123456789","hook":"https://hooks.slack.com/services/test","username":"Hub"}`,
+			wantConfig:   &models.ChannelSlackConfig{DeliveryMode: "webhook", ApiKey: "test-bot-token", Channel: "C123456789", Hook: "https://hooks.slack.com/services/test", Username: "Hub"},
+			wantDocument: bson.M{"deliveryMode": "webhook", "apiKey": "test-bot-token", "channel": "C123456789", "hook": "https://hooks.slack.com/services/test", "username": "Hub"},
+		},
+		{
+			name:         "bot with saved webhook",
+			configJSON:   `{"deliveryMode":"bot","apiKey":"test-bot-token","channel":"C123456789","hook":"https://hooks.slack.com/services/test","username":"Hub"}`,
+			wantConfig:   &models.ChannelSlackConfig{DeliveryMode: "bot", ApiKey: "test-bot-token", Channel: "C123456789", Hook: "https://hooks.slack.com/services/test", Username: "Hub"},
+			wantDocument: bson.M{"deliveryMode": "bot", "apiKey": "test-bot-token", "channel": "C123456789", "hook": "https://hooks.slack.com/services/test", "username": "Hub"},
+		},
 	}
 
 	for _, test := range tests {
