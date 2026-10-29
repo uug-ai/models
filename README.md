@@ -31,6 +31,47 @@ organisation/project ownership and does not change alert execution, notification
 recipients, generated events, or auditing. Only the creator can change privacy;
 `AlertPatch.private` supports explicit false to restore shared visibility.
 
+### Project-scoped Slack channels
+
+The `channels` collection stores Slack settings in
+`Channel.Config.Slack` (`ChannelSlackConfig`), independently of the legacy
+`users.channels` settings:
+
+- Bot delivery: `apiKey` is the Slack bot token and `channel` is the Slack
+  channel ID.
+- Webhook delivery: `hook` is the incoming webhook URL; `username` is optional.
+
+The collection model uses camel-case `apiKey`, not the legacy user settings'
+lowercase `apikey`. These fields are also present in the generated TypeScript
+`ChannelSlackConfig` type.
+
+The `api.CreateChannelRequest` payload carries credentials in a separate,
+write-only `config` object:
+
+```json
+{
+  "channel": {
+    "name": "Slack notifications",
+    "type": "slack",
+    "organisationId": "507f1f77bcf86cd799439011",
+    "projectId": "507f1f77bcf86cd799439012",
+    "enabled": true
+  },
+  "config": {
+    "slack": {
+      "apiKey": "xoxb-your-bot-token",
+      "channel": "C0123456789"
+    }
+  }
+}
+```
+
+Writers assign the request's `Config` to `Channel.Config` before BSON
+serialization and insertion. BSON persists these settings under `config.slack`;
+JSON responses intentionally omit `Channel.Config` so credentials are not
+returned. For webhook delivery, replace the `slack` object with
+`{"hook": "https://hooks.slack.com/services/your-webhook", "username": "Hub"}`.
+
 ## Installation
 
 ### Go
