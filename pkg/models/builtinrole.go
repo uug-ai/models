@@ -10,8 +10,9 @@ import "slices"
 // legacy guest, editor and admin tiers so migrated users keep their access.
 // The legacy sets follow the RBAC permission matrix: what each tier can do in
 // the product today. Where the API allows a tier more than the product does,
-// the set follows the product and a comment names the matrix decision (D1-D10)
-// that confirms it.
+// the set follows the product and a comment names the matrix decision that
+// confirms it. Actions the product has no screen for (deleting recordings,
+// creating IO, detections, moderating comments) are not granted either.
 //
 // Relationship rules are not role permissions; the resolver applies them next
 // to roles. A creator may update and delete what they created when they hold
@@ -23,14 +24,14 @@ import "slices"
 // Not granted although the API allows it: device edit, delete and device
 // permission limits, and PTZ presets (D1); site, group, floor plan and label
 // writes and IO delete (D2); workflow writes and run results (D4); alerts and
-// channels (D5). The guest tier has no PTZ (level 1) and no remote config.
+// channels (D5); deleting recordings, creating IO and detections, which have
+// no screen. The guest tier has no PTZ (level 1) and no remote config.
 // Videowalls and private cases are visible through their assigned-user and
 // participant rules only.
 var legacyGuestPermissions = []Permission{
 	PermissionDevicesRead,
 	PermissionLiveStream,
 	PermissionIORead,
-	PermissionIOCreate,
 	PermissionIOTrigger,
 	PermissionSitesRead,
 	PermissionGroupsRead,
@@ -40,7 +41,6 @@ var legacyGuestPermissions = []Permission{
 	PermissionMediaExport,
 	PermissionMediaShare,
 	PermissionMediaRedact,
-	PermissionMediaDelete,
 	PermissionMediaForward,
 	PermissionDaysRead,
 	PermissionMarkersRead,
@@ -58,14 +58,12 @@ var legacyGuestPermissions = []Permission{
 	PermissionNotificationsUpdate,
 	PermissionLabelsRead,
 	PermissionAnalyticsRead,
-	PermissionDetectionsRead,
-	PermissionDetectionsCreate,
-	PermissionDetectionsDelete,
 }
 
 // legacyEditorPermissions is the project part of the legacy editor tier: the
-// guest set plus remote config, every PTZ grade, floor plan editing and
-// creating videowalls (and changing their own, by the creator rule).
+// guest set plus remote config (but not the recording mode), every PTZ grade,
+// floor plan editing and creating videowalls (and changing their own, by the
+// creator rule).
 //
 // Not granted although the API allows it: as for guests, except PTZ and floor
 // plans (D1, D2, D4, D5). Editors may not assign users to videowalls.
@@ -80,13 +78,13 @@ var legacyEditorPermissions = concatPermissions(legacyGuestPermissions, []Permis
 
 // legacyAdminPermissions is the project part of the legacy admin tier: the
 // editor set plus device edits, sites, groups, IO, videowalls, case
-// moderation, alerts, labels and project administration.
+// membership, alerts, labels and project administration.
 //
 // Admins delete their own sites, update their own groups, delete their own
 // groups (D3) and delete their own alerts by the creator rule. Not granted
 // although the API allows it: device delete and device permission limits,
 // which only owners have (D1); workflow writes and run results (D4); channels
-// (D5).
+// (D5). Device recording mode and logs are owner only, as in the product.
 var legacyAdminPermissions = concatPermissions(legacyEditorPermissions, []Permission{
 	PermissionDevicesUpdate,
 	PermissionSitesCreate,
@@ -99,7 +97,6 @@ var legacyAdminPermissions = concatPermissions(legacyEditorPermissions, []Permis
 	PermissionVideowallsAssign,
 	PermissionCasesDelete,
 	PermissionCasesManageMembership,
-	PermissionCasesModerateComments,
 	PermissionAlertsRead,
 	PermissionAlertsCreate,
 	PermissionAlertsUpdate,

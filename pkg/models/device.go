@@ -21,12 +21,17 @@ const (
 	// view, PTZ, remote config): limits that apply to everyone on that device
 	// on top of their roles.
 	PermissionDevicesManagePermissions Permission = "devices.managePermissions"
-	PermissionLivePreview              Permission = "live.preview"
-	PermissionLiveStream               Permission = "live.stream"
-	PermissionPTZZoom                  Permission = "ptz.zoom"
-	PermissionPTZPanTilt               Permission = "ptz.panTilt"
-	PermissionPTZControl               Permission = "ptz.control"
-	PermissionPTZPresets               Permission = "ptz.presets"
+	// PermissionDevicesManageRecording changes a device's recording mode, which
+	// devices.configure does not cover.
+	PermissionDevicesManageRecording Permission = "devices.manageRecording"
+	// PermissionDevicesReadLogs reads a device's agent logs.
+	PermissionDevicesReadLogs Permission = "devices.readLogs"
+	PermissionLivePreview     Permission = "live.preview"
+	PermissionLiveStream      Permission = "live.stream"
+	PermissionPTZZoom         Permission = "ptz.zoom"
+	PermissionPTZPanTilt      Permission = "ptz.panTilt"
+	PermissionPTZControl      Permission = "ptz.control"
+	PermissionPTZPresets      Permission = "ptz.presets"
 )
 
 var devicePermissions = []Permission{
@@ -35,6 +40,8 @@ var devicePermissions = []Permission{
 	PermissionDevicesDelete,
 	PermissionDevicesConfigure,
 	PermissionDevicesManagePermissions,
+	PermissionDevicesManageRecording,
+	PermissionDevicesReadLogs,
 	PermissionLivePreview,
 	PermissionLiveStream,
 	PermissionPTZZoom,
