@@ -10,7 +10,7 @@ type CaseShare struct {
 	OrganisationId string             `json:"organisation_id" bson:"organisation_id"`
 
 	// ProjectId optionally places the case share in a project within its organisation.
-	// A nil value keeps it organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	Email       string   `json:"email" bson:"email"`

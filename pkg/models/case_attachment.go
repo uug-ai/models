@@ -26,7 +26,7 @@ type CaseAttachment struct {
 	OrganisationId string             `json:"organisationId" bson:"organisation_id"`
 
 	// ProjectId optionally places the attachment in a project within its organisation.
-	// A nil value keeps it organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	// Type is a coarse classification of the attachment used by the UI

@@ -26,7 +26,7 @@ type IO struct {
 	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
 
 	// ProjectId optionally places the IO in a project within its organisation.
-	// A nil value keeps the IO organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	Hash              string `json:"hash" bson:"hash,omitempty"`

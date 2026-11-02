@@ -8,7 +8,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Transferring ownership is not a permission: only the owner can do it (see
+// Granting or revoking the Owner role and changing the primary owner are not
+// permissions: only owners can do them (see RoleKeyOwner and
 // Organisation.OwnerId).
 const (
 	PermissionOrganisationRead   Permission = "organisation.read"

@@ -24,7 +24,7 @@ type AnalysisWrapper struct {
 	OrganisationId string             `json:"organisationId" bson:"organisationId,omitempty"`
 
 	// ProjectId optionally places the analysis in a project within its organisation.
-	// A nil value keeps the analysis organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	Key                string   `json:"key,omitempty"`

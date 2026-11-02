@@ -32,7 +32,7 @@ type Site struct {
 	Groups         []string `json:"groups" bson:"groups"`
 
 	// ProjectId optionally places the site in a project within its organisation.
-	// A nil value keeps the site organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	// Media file information (by default "vault", however might change

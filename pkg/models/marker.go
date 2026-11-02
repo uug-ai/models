@@ -31,7 +31,7 @@ type Marker struct {
 	OrganisationId string `json:"organisationId" bson:"organisationId" example:"686a906345c1df594pad69f0"`        // OrganisationId is used to identify the organisation that owns the marker, retrieved from the user's access token
 
 	// ProjectId optionally places the marker in a project within its organisation.
-	// A nil value keeps the marker organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 
 	// MediaKeys optionally pins this marker to specific recordings by their stable

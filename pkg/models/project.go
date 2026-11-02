@@ -40,8 +40,10 @@ func ProjectAdministrationPermissions() []Permission {
 	return append([]Permission(nil), projectAdministrationPermissions...)
 }
 
-// Project is an optional access boundary within an organisation. Resources
-// remain organisation-wide unless their ProjectId is set.
+// Project is an access boundary within an organisation: project roles are
+// assigned per project (see RoleAssignmentScope). Every resource belongs to one
+// project; a resource without a ProjectId belongs to the organisation's default
+// project (see ResolveProjectId).
 type Project struct {
 	Id               primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	OrganisationId   primitive.ObjectID `json:"organisationId" bson:"organisationId"`
@@ -60,10 +62,10 @@ type Project struct {
 }
 
 // DefaultProjectSlug and DefaultProjectName identify the single default project
-// minted per organisation. The default project is the sentinel-free
-// "organisation-wide" selection: it is a real document (never a stored
-// NilObjectID) so a user's active project can always point at something
-// concrete.
+// minted per organisation. The default project is a real document (never a
+// stored NilObjectID) so a user's active project can always point at something
+// concrete. For access it is an ordinary project: a role assigned in it covers
+// its own resources only, never the organisation.
 //
 // The slug reads as an ordinary first project rather than as a sentinel,
 // deliberately: a slug that looks like a system value invites code that

@@ -7,7 +7,7 @@ type Message struct {
 	Id             string `json:"id,omitempty" bson:"id,omitempty"`
 	OrganisationId string `json:"organisationId,omitempty" bson:"organisationId,omitempty"`
 	// ProjectId optionally places the message in a project within its organisation.
-	// A nil value keeps the message organisation-wide.
+	// A nil value places it in the organisation's default project (see ResolveProjectId).
 	ProjectId         *primitive.ObjectID `json:"projectId,omitempty" bson:"projectId,omitempty"`
 	AlertId           string              `json:"alert_id,omitempty" bson:"alert_id,omitempty"`
 	AlertName         string              `json:"alert_name,omitempty" bson:"alert_name,omitempty"`

@@ -71,8 +71,8 @@ func (a RoleAssignment) IsExpired() bool {
 // IsEffectivelyActive reports whether the assignment is currently in force:
 // administratively active, not past its expiry, and inside its time window.
 // A time window that cannot be evaluated keeps the assignment out of force.
-// This is the single source of truth consumers should use for access
-// decisions.
+// It covers the assignment only: access also requires an effectively active
+// membership (OrganisationUser.IsEffectivelyActive) and an active role.
 func (a RoleAssignment) IsEffectivelyActive() bool {
 	return a.isEffectivelyActiveAt(time.Now())
 }
