@@ -166,14 +166,22 @@ type OrganisationUser struct {
 
 // IsExpired reports whether the membership has a set expiry that is in the past.
 func (u OrganisationUser) IsExpired() bool {
-	return !u.ExpiresAt.IsZero() && u.ExpiresAt.Before(time.Now())
+	return u.isExpiredAt(time.Now())
 }
 
 // IsEffectivelyActive reports whether the membership is currently in force:
 // its status is active and it has not expired. This is the single source of
 // truth consumers should use.
 func (u OrganisationUser) IsEffectivelyActive() bool {
-	return u.Status == MembershipStatusActive && !u.IsExpired()
+	return u.isEffectivelyActiveAt(time.Now())
+}
+
+func (u OrganisationUser) isExpiredAt(at time.Time) bool {
+	return !u.ExpiresAt.IsZero() && u.ExpiresAt.Before(at)
+}
+
+func (u OrganisationUser) isEffectivelyActiveAt(at time.Time) bool {
+	return u.Status == MembershipStatusActive && !u.isExpiredAt(at)
 }
 
 // InvitationStatus enumerates the lifecycle states of an organisation invitation.
