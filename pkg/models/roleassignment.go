@@ -158,9 +158,11 @@ const (
 //
 // Level=project (project roles): one ProjectId, and Resources=all for every
 // resource in it, or Resources=selected for the union of the devices in
-// SiteIds, in GroupIds and in DeviceIds. Sites and groups resolve to their
-// current devices, so devices added later are covered. Selected with no ids
-// is valid: the principal is in the project but has no resources yet.
+// SiteIds, in GroupIds and in DeviceKeys. Sites and groups resolve to their
+// current devices, so devices added later are covered. Devices are selected
+// by key, as everywhere else on the platform. Selected with nothing listed
+// is valid: no devices yet, while the role still applies to the project's
+// resources that have no device.
 type RoleAssignmentScope struct {
 	Level Level `json:"level" bson:"level"`
 
@@ -169,11 +171,11 @@ type RoleAssignmentScope struct {
 	ProjectIds []primitive.ObjectID `json:"projectIds,omitempty" bson:"projectIds,omitempty"` // Projects=selected only; at least one
 
 	// Level=project only.
-	ProjectId primitive.ObjectID   `json:"projectId,omitempty" bson:"projectId,omitempty"`
-	Resources Selection            `json:"resources,omitempty" bson:"resources,omitempty"`
-	SiteIds   []primitive.ObjectID `json:"siteIds,omitempty" bson:"siteIds,omitempty"`     // Resources=selected only
-	GroupIds  []primitive.ObjectID `json:"groupIds,omitempty" bson:"groupIds,omitempty"`   // Resources=selected only
-	DeviceIds []primitive.ObjectID `json:"deviceIds,omitempty" bson:"deviceIds,omitempty"` // Resources=selected only
+	ProjectId  primitive.ObjectID   `json:"projectId,omitempty" bson:"projectId,omitempty"`
+	Resources  Selection            `json:"resources,omitempty" bson:"resources,omitempty"`
+	SiteIds    []primitive.ObjectID `json:"siteIds,omitempty" bson:"siteIds,omitempty"`       // Resources=selected only
+	GroupIds   []primitive.ObjectID `json:"groupIds,omitempty" bson:"groupIds,omitempty"`     // Resources=selected only
+	DeviceKeys []string             `json:"deviceKeys,omitempty" bson:"deviceKeys,omitempty"` // Resources=selected only
 }
 
 // Validate checks that the scope is complete for its level and sets no field
@@ -219,7 +221,7 @@ func (s RoleAssignmentScope) Validate() error {
 		if err := validateScopeIds("group", s.GroupIds); err != nil {
 			return err
 		}
-		return validateScopeIds("device", s.DeviceIds)
+		return validateScopeKeys("device", s.DeviceKeys)
 	default:
 		return fmt.Errorf("%w: unknown level %q", ErrRoleAssignmentInvalid, s.Level)
 	}
@@ -241,7 +243,7 @@ func (s RoleAssignmentScope) ValidateFor(role Role) error {
 }
 
 func (s RoleAssignmentScope) hasResourceIds() bool {
-	return len(s.SiteIds) > 0 || len(s.GroupIds) > 0 || len(s.DeviceIds) > 0
+	return len(s.SiteIds) > 0 || len(s.GroupIds) > 0 || len(s.DeviceKeys) > 0
 }
 
 func validateScopeIds(kind string, ids []primitive.ObjectID) error {
@@ -251,6 +253,18 @@ func validateScopeIds(kind string, ids []primitive.ObjectID) error {
 		}
 		if slices.Contains(ids[:index], id) {
 			return fmt.Errorf("%w: duplicate %s id %s", ErrRoleAssignmentInvalid, kind, id.Hex())
+		}
+	}
+	return nil
+}
+
+func validateScopeKeys(kind string, keys []string) error {
+	for index, key := range keys {
+		if key == "" {
+			return fmt.Errorf("%w: empty %s key", ErrRoleAssignmentInvalid, kind)
+		}
+		if slices.Contains(keys[:index], key) {
+			return fmt.Errorf("%w: duplicate %s key %s", ErrRoleAssignmentInvalid, kind, key)
 		}
 	}
 	return nil

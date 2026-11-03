@@ -29,7 +29,7 @@ type accessGrant struct {
 // DeviceRef is a device together with everything that selects it in an
 // assignment scope.
 type DeviceRef struct {
-	Id primitive.ObjectID
+	Key string
 	// SiteIds are the sites containing the device, directly or through a
 	// camera group inside the site.
 	SiteIds []primitive.ObjectID
@@ -40,12 +40,12 @@ type DeviceRef struct {
 
 // DeviceSelection is the union of devices a permission is held on in one
 // project: every device when All is set, otherwise the devices in SiteIds,
-// in GroupIds and in DeviceIds.
+// in GroupIds and the devices with a key in DeviceKeys.
 type DeviceSelection struct {
-	All       bool
-	SiteIds   []primitive.ObjectID
-	GroupIds  []primitive.ObjectID
-	DeviceIds []primitive.ObjectID
+	All        bool
+	SiteIds    []primitive.ObjectID
+	GroupIds   []primitive.ObjectID
+	DeviceKeys []string
 }
 
 // NewAccess resolves a member's access at the given instant. Nothing is
@@ -140,7 +140,7 @@ func (a Access) Devices(permission Permission, projectId primitive.ObjectID) Dev
 		}
 		selection.SiteIds = appendMissing(selection.SiteIds, grant.scope.SiteIds)
 		selection.GroupIds = appendMissing(selection.GroupIds, grant.scope.GroupIds)
-		selection.DeviceIds = appendMissing(selection.DeviceIds, grant.scope.DeviceIds)
+		selection.DeviceKeys = appendMissing(selection.DeviceKeys, grant.scope.DeviceKeys)
 	}
 	return selection
 }
@@ -196,16 +196,17 @@ func (s RoleAssignmentScope) coversDevice(device DeviceRef) bool {
 	if s.Resources == SelectionAll {
 		return true
 	}
-	return slices.Contains(s.DeviceIds, device.Id) ||
+	return (device.Key != "" && slices.Contains(s.DeviceKeys, device.Key)) ||
 		slices.ContainsFunc(s.SiteIds, func(id primitive.ObjectID) bool { return slices.Contains(device.SiteIds, id) }) ||
 		slices.ContainsFunc(s.GroupIds, func(id primitive.ObjectID) bool { return slices.Contains(device.GroupIds, id) })
 }
 
-func appendMissing(ids, more []primitive.ObjectID) []primitive.ObjectID {
-	for _, id := range more {
-		if !slices.Contains(ids, id) {
-			ids = append(ids, id)
+func appendMissing[T comparable](values, more []T) []T {
+	var zero T
+	for _, value := range more {
+		if value != zero && !slices.Contains(values, value) {
+			values = append(values, value)
 		}
 	}
-	return ids
+	return values
 }
