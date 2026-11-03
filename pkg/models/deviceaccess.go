@@ -3,19 +3,33 @@ package models
 import (
 	"context"
 	"slices"
-	"strings"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// ItemAccess is what the caller may do on one item, returned with the item
-// (RBAC spec 4.13). Permissions are catalog names.
+// ItemAccess is what the caller may do, on the profile for the selected
+// project and on each item for that item (RBAC spec 4.13). Permissions are
+// catalog names.
 type ItemAccess struct {
 	Permissions []Permission `json:"permissions"`
 }
 
-// deviceDomains are the domains whose project permissions act on one device.
-var deviceDomains = []string{"devices", "live", "ptz", "io"}
+// DeviceCoverage is the devices a permission covers in a project: all of
+// them, or those with a key in Keys.
+type DeviceCoverage struct {
+	All  bool
+	Keys []string
+}
+
+// Includes reports whether the coverage includes a device.
+func (c DeviceCoverage) Includes(deviceKey string) bool {
+	return c.All || slices.Contains(c.Keys, deviceKey)
+}
+
+// Empty reports whether the coverage includes no device.
+func (c DeviceCoverage) Empty() bool {
+	return !c.All && len(c.Keys) == 0
+}
 
 // DeviceAccess answers what a member may do on each device of one project:
 // the device permissions of every grant whose selection covers the device,
@@ -88,6 +102,32 @@ func (d DeviceAccess) Allows(permission Permission, deviceKey string, ceilings *
 	return slices.Contains(d.Permissions(deviceKey, ceilings), permission)
 }
 
+// Covered returns the devices a permission covers, from the grants already
+// compiled: all of them for an owner or a grant on all resources, otherwise
+// the devices of the grants holding it. Device ceilings are not applied; use
+// Allows for one device.
+func (d DeviceAccess) Covered(permission Permission) DeviceCoverage {
+	if d.owner {
+		return DeviceCoverage{All: true}
+	}
+	var keys []string
+	for _, grant := range d.grants {
+		if !slices.Contains(grant.permissions, permission) {
+			continue
+		}
+		if grant.all {
+			return DeviceCoverage{All: true}
+		}
+		for key := range grant.keys {
+			if !slices.Contains(keys, key) {
+				keys = append(keys, key)
+			}
+		}
+	}
+	slices.Sort(keys)
+	return DeviceCoverage{Keys: keys}
+}
+
 // ApplyDeviceCeilings removes the graded permissions a device's ceilings rule
 // out, for every member, owners included, as the frontend always applied
 // them. A ceiling of 0 (unset) limits nothing and 1 removes the feature;
@@ -133,6 +173,16 @@ var (
 	ioGrades           = [][]Permission{{}, {PermissionIOTrigger}}
 )
 
+// DeviceCeilingPermissions returns the permissions a device's ceilings can
+// remove (ApplyDeviceCeilings), in catalog order.
+func DeviceCeilingPermissions() []Permission {
+	var graded []Permission
+	for _, grades := range [][][]Permission{ptzGrades, liveGrades, remoteConfigGrades, ioGrades} {
+		graded = append(graded, grades[len(grades)-1]...)
+	}
+	return ExpandPermissions(graded)
+}
+
 // ceilingRemoves returns the feature's permissions a ceiling level rules out.
 func ceilingRemoves(level PermissionLevel, grades [][]Permission) []Permission {
 	if level <= 0 {
@@ -149,13 +199,12 @@ func ceilingRemoves(level PermissionLevel, grades [][]Permission) []Permission {
 	return removes
 }
 
-// deviceScoped keeps the project permissions that act on one device.
+// deviceScoped keeps the permissions that act on one device: the catalog's
+// device and IO permissions.
 func deviceScoped(permissions []Permission) []Permission {
 	var kept []Permission
 	for _, permission := range permissions {
-		definition, ok := LookupPermission(permission)
-		domain, _, _ := strings.Cut(string(permission), ".")
-		if ok && definition.Level == LevelProject && slices.Contains(deviceDomains, domain) {
+		if slices.Contains(devicePermissions, permission) || slices.Contains(ioPermissions, permission) {
 			kept = append(kept, permission)
 		}
 	}

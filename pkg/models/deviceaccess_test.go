@@ -190,3 +190,69 @@ func TestCompileDeviceAccessFailsOnReadError(t *testing.T) {
 		t.Errorf("err = %v, want %v", err, want)
 	}
 }
+
+func TestDeviceAccessCovered(t *testing.T) {
+	organisationId, userId := primitive.NewObjectID(), primitive.NewObjectID()
+	project := DefaultProjectId(organisationId)
+	siteA, siteB := primitive.NewObjectID(), primitive.NewObjectID()
+	source := &fakeDeviceSource{sites: map[string]Site{
+		siteA.Hex(): {Devices: []string{"cam-a", "cam-shared"}},
+		siteB.Hex(): {Devices: []string{"cam-b", "cam-shared"}},
+	}}
+	editor := &Role{Name: "Site editor", AssignableAt: LevelProject, Permissions: []Permission{PermissionDevicesRead, PermissionDevicesUpdate, PermissionLiveStream}}
+	viewer := &Role{Name: "Site viewer", AssignableAt: LevelProject, Permissions: []Permission{PermissionDevicesRead, PermissionLivePreview}}
+	access := accessWith(t, organisationId, userId, map[*Role]RoleAssignmentScope{
+		editor: {Level: LevelProject, ProjectId: project, Resources: SelectionSelected, SiteIds: []primitive.ObjectID{siteA}},
+		viewer: {Level: LevelProject, ProjectId: project, Resources: SelectionSelected, SiteIds: []primitive.ObjectID{siteB}},
+	})
+	devices, err := access.CompileDeviceAccess(context.Background(), source, project)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, check := range []struct {
+		permission Permission
+		want       []string
+	}{
+		{PermissionDevicesRead, []string{"cam-a", "cam-b", "cam-shared"}},
+		{PermissionDevicesUpdate, []string{"cam-a", "cam-shared"}},
+		{PermissionLivePreview, []string{"cam-a", "cam-b", "cam-shared"}}, // Implied by the editor's live.stream
+		{PermissionDevicesDelete, nil},
+	} {
+		got := devices.Covered(check.permission)
+		if got.All || !slices.Equal(got.Keys, check.want) {
+			t.Errorf("%s: got %+v, want keys %v", check.permission, got, check.want)
+		}
+	}
+	if !devices.Covered(PermissionDevicesUpdate).Includes("cam-a") || devices.Covered(PermissionDevicesUpdate).Includes("cam-b") ||
+		!devices.Covered(PermissionDevicesDelete).Empty() {
+		t.Error("coverage helpers disagree with the keys")
+	}
+
+	everywhere := &Role{Name: "Reader", AssignableAt: LevelProject, Permissions: []Permission{PermissionDevicesRead}}
+	access = accessWith(t, organisationId, userId, map[*Role]RoleAssignmentScope{
+		everywhere: {Level: LevelProject, ProjectId: project, Resources: SelectionAll},
+	})
+	devices, _ = access.CompileDeviceAccess(context.Background(), source, project)
+	if got := devices.Covered(PermissionDevicesRead); !got.All || !got.Includes("anything") || devices.Covered(PermissionDevicesUpdate).All {
+		t.Errorf("a grant on all resources: %+v", got)
+	}
+}
+
+func TestDeviceCeilingPermissions(t *testing.T) {
+	want := []Permission{PermissionDevicesConfigure, PermissionDevicesManageRecording, PermissionLivePreview, PermissionLiveStream,
+		PermissionPTZZoom, PermissionPTZPanTilt, PermissionPTZControl, PermissionPTZPresets, PermissionIOTrigger}
+	got := DeviceCeilingPermissions()
+	slices.Sort(got)
+	slices.Sort(want)
+	if !slices.Equal(got, want) {
+		t.Errorf("got %v, want %v", got, want)
+	}
+	// Every permission a ceiling can remove, and only those.
+	everything := deviceScoped(AllPermissions())
+	limited := ApplyDeviceCeilings(everything, &DeviceFeaturePermissions{PTZ: 1, Liveview: 1, RemoteConfig: 1, IO: 1})
+	for _, permission := range everything {
+		if removed := !slices.Contains(limited, permission); removed != slices.Contains(want, permission) {
+			t.Errorf("%s: removed by the strictest ceilings %v", permission, removed)
+		}
+	}
+}
