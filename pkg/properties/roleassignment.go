@@ -32,7 +32,7 @@ const (
 	RoleAssignmentScopeResources = "resources"
 	RoleAssignmentScopeSiteIds = "siteIds"
 	RoleAssignmentScopeGroupIds = "groupIds"
-	RoleAssignmentScopeDeviceIds = "deviceIds"
+	RoleAssignmentScopeDeviceKeys = "deviceKeys"
 )
 
 // TimeWindow property field names (BSON)

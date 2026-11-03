@@ -19,23 +19,24 @@ func legacyAccessFor(t *testing.T, in LegacyUserAccess) (LegacyAccess, Access) {
 
 func TestAccessLegacyGuest(t *testing.T) {
 	ids := legacyIds(6)
-	organisationId, userId, siteId, groupId, deviceId, otherProject := ids[0], ids[1], ids[2], ids[3], ids[4], ids[5]
+	organisationId, userId, siteId, groupId, otherProject := ids[0], ids[1], ids[2], ids[3], ids[5]
+	deviceKey := "camera-1"
 	project := DefaultProjectId(organisationId)
 	_, access := legacyAccessFor(t, LegacyUserAccess{OrganisationId: organisationId, UserId: userId, Role: "guest",
-		SiteIds: []primitive.ObjectID{siteId}, GroupIds: []primitive.ObjectID{groupId}, DeviceIds: []primitive.ObjectID{deviceId}})
+		SiteIds: []primitive.ObjectID{siteId}, GroupIds: []primitive.ObjectID{groupId}, DeviceKeys: []string{deviceKey, "", deviceKey}})
 
-	other := primitive.NewObjectID()
+	other := "camera-2"
 	checks := []struct {
 		name string
 		got  bool
 		want bool
 	}{
-		{"device in a selected site", access.Device(PermissionDevicesRead, project, DeviceRef{Id: other, SiteIds: []primitive.ObjectID{siteId}}), true},
-		{"device in a selected group", access.Device(PermissionLivePreview, project, DeviceRef{Id: other, GroupIds: []primitive.ObjectID{groupId}}), true},
-		{"selected device", access.Device(PermissionLiveStream, project, DeviceRef{Id: deviceId}), true},
-		{"unselected device", access.Device(PermissionDevicesRead, project, DeviceRef{Id: other}), false},
-		{"permission the role lacks", access.Device(PermissionDevicesUpdate, project, DeviceRef{Id: deviceId}), false},
-		{"another project", access.Device(PermissionDevicesRead, otherProject, DeviceRef{Id: deviceId}), false},
+		{"device in a selected site", access.Device(PermissionDevicesRead, project, DeviceRef{Key: other, SiteIds: []primitive.ObjectID{siteId}}), true},
+		{"device in a selected group", access.Device(PermissionLivePreview, project, DeviceRef{Key: other, GroupIds: []primitive.ObjectID{groupId}}), true},
+		{"selected device", access.Device(PermissionLiveStream, project, DeviceRef{Key: deviceKey}), true},
+		{"unselected device", access.Device(PermissionDevicesRead, project, DeviceRef{Key: other}), false},
+		{"permission the role lacks", access.Device(PermissionDevicesUpdate, project, DeviceRef{Key: deviceKey}), false},
+		{"another project", access.Device(PermissionDevicesRead, otherProject, DeviceRef{Key: deviceKey}), false},
 		{"project resource", access.Project(PermissionCasesRead, project), true},
 		{"project resource the role lacks", access.Project(PermissionCasesDelete, project), false},
 		{"organisation permission", access.Organisation(PermissionMembersRead, primitive.NilObjectID), true},
@@ -51,7 +52,7 @@ func TestAccessLegacyGuest(t *testing.T) {
 	}
 
 	selection := access.Devices(PermissionDevicesRead, project)
-	if selection.All || !slices.Equal(selection.SiteIds, []primitive.ObjectID{siteId}) || !slices.Equal(selection.DeviceIds, []primitive.ObjectID{deviceId}) {
+	if selection.All || !slices.Equal(selection.SiteIds, []primitive.ObjectID{siteId}) || !slices.Equal(selection.DeviceKeys, []string{deviceKey}) {
 		t.Errorf("selection %+v", selection)
 	}
 	permissions := access.Permissions(project)
@@ -70,10 +71,10 @@ func TestAccessEmptySelectionKeepsProjectResources(t *testing.T) {
 	if !access.Project(PermissionCasesCreate, project) {
 		t.Error("an editor without devices still works with cases, as today")
 	}
-	if access.Device(PermissionDevicesRead, project, DeviceRef{Id: primitive.NewObjectID()}) {
+	if access.Device(PermissionDevicesRead, project, DeviceRef{Key: "camera-1"}) {
 		t.Error("no devices selected")
 	}
-	if selection := access.Devices(PermissionDevicesRead, project); selection.All || len(selection.DeviceIds)+len(selection.SiteIds)+len(selection.GroupIds) > 0 {
+	if selection := access.Devices(PermissionDevicesRead, project); selection.All || len(selection.DeviceKeys)+len(selection.SiteIds)+len(selection.GroupIds) > 0 {
 		t.Errorf("selection %+v", selection)
 	}
 }
@@ -82,7 +83,7 @@ func TestAccessOwner(t *testing.T) {
 	ids := legacyIds(2)
 	_, access := legacyAccessFor(t, LegacyUserAccess{OrganisationId: ids[0], UserId: ids[1], Role: "owner"})
 	project := primitive.NewObjectID()
-	if !access.IsOwner() || !access.Device(PermissionDevicesDelete, project, DeviceRef{Id: primitive.NewObjectID()}) ||
+	if !access.IsOwner() || !access.Device(PermissionDevicesDelete, project, DeviceRef{Key: "camera-1"}) ||
 		!access.Organisation(PermissionBillingManage, primitive.NilObjectID) || !access.Devices(PermissionDevicesRead, project).All {
 		t.Error("owner holds everything everywhere")
 	}
@@ -116,13 +117,13 @@ func TestAccessDenies(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			mapped, err := MapLegacyAccess(LegacyUserAccess{OrganisationId: ids[0], UserId: ids[1], Role: "guest", DeviceIds: ids[1:]})
+			mapped, err := MapLegacyAccess(LegacyUserAccess{OrganisationId: ids[0], UserId: ids[1], Role: "guest", DeviceKeys: []string{"camera-1"}})
 			if err != nil {
 				t.Fatal(err)
 			}
 			test.mutate(&mapped)
 			access := NewAccess(mapped.Membership, mapped.Roles, mapped.Assignments, time.Now())
-			if access.Project(PermissionCasesRead, project) || access.Device(PermissionDevicesRead, project, DeviceRef{Id: ids[1]}) {
+			if access.Project(PermissionCasesRead, project) || access.Device(PermissionDevicesRead, project, DeviceRef{Key: "camera-1"}) {
 				t.Error("granted")
 			}
 		})

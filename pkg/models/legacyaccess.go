@@ -80,9 +80,9 @@ type LegacyTimeWindow struct {
 }
 
 // LegacyUserAccess is one user's legacy access in one organisation. The
-// caller resolves the user's legacy references: site and group ids to
-// ObjectIDs and camera keys to device ids, failing on any it cannot resolve
-// rather than dropping it. Repeated ids are merged.
+// caller parses the user's site and group ids to ObjectIDs; camera keys are
+// kept as they are, since assignments select devices by key. Repeated and
+// empty values are dropped.
 type LegacyUserAccess struct {
 	OrganisationId primitive.ObjectID
 	UserId         primitive.ObjectID
@@ -92,7 +92,7 @@ type LegacyUserAccess struct {
 	CustomRole *LegacyRole
 	SiteIds    []primitive.ObjectID
 	GroupIds   []primitive.ObjectID
-	DeviceIds  []primitive.ObjectID
+	DeviceKeys []string // The user's cameras, as stored
 	// Timezone is the organisation owner's IANA timezone, which custom role
 	// time windows are evaluated in. Only needed when a window is active.
 	Timezone string
@@ -199,12 +199,12 @@ func (a *LegacyAccess) add(in LegacyUserAccess, role Role, scope RoleAssignmentS
 
 func (in LegacyUserAccess) projectScope() RoleAssignmentScope {
 	return RoleAssignmentScope{
-		Level:     LevelProject,
-		ProjectId: DefaultProjectId(in.OrganisationId),
-		Resources: SelectionSelected,
-		SiteIds:   appendMissing(nil, in.SiteIds),
-		GroupIds:  appendMissing(nil, in.GroupIds),
-		DeviceIds: appendMissing(nil, in.DeviceIds),
+		Level:      LevelProject,
+		ProjectId:  DefaultProjectId(in.OrganisationId),
+		Resources:  SelectionSelected,
+		SiteIds:    appendMissing(nil, in.SiteIds),
+		GroupIds:   appendMissing(nil, in.GroupIds),
+		DeviceKeys: appendMissing(nil, in.DeviceKeys),
 	}
 }
 

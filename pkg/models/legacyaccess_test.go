@@ -28,7 +28,7 @@ func roleKeys(access LegacyAccess) []RoleKey {
 
 func TestMapLegacyAccessTiers(t *testing.T) {
 	ids := legacyIds(4)
-	organisationId, userId, siteId, deviceId := ids[0], ids[1], ids[2], ids[3]
+	organisationId, userId, siteId := ids[0], ids[1], ids[2]
 	tests := []struct {
 		role     string
 		wantKeys []RoleKey
@@ -41,7 +41,7 @@ func TestMapLegacyAccessTiers(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.role, func(t *testing.T) {
 			in := LegacyUserAccess{OrganisationId: organisationId, UserId: userId, Role: test.role,
-				SiteIds: []primitive.ObjectID{siteId, siteId}, DeviceIds: []primitive.ObjectID{deviceId}}
+				SiteIds: []primitive.ObjectID{siteId, siteId}, DeviceKeys: []string{"camera-1", "camera-1", ""}}
 			access, err := MapLegacyAccess(in)
 			if err != nil {
 				t.Fatal(err)
@@ -60,7 +60,7 @@ func TestMapLegacyAccessTiers(t *testing.T) {
 				if role.AssignableAt == LevelProject {
 					scope := assignment.Scope
 					if scope.ProjectId != DefaultProjectId(organisationId) || scope.Resources != SelectionSelected ||
-						!slices.Equal(scope.SiteIds, []primitive.ObjectID{siteId}) || !slices.Equal(scope.DeviceIds, []primitive.ObjectID{deviceId}) {
+						!slices.Equal(scope.SiteIds, []primitive.ObjectID{siteId}) || !slices.Equal(scope.DeviceKeys, []string{"camera-1"}) {
 						t.Errorf("%s: project scope %+v", role.Key, scope)
 					}
 				} else if assignment.Scope.Projects != SelectionAll {
