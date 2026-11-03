@@ -220,6 +220,9 @@ type Device struct {
 
 	// AtRuntimeMetadata is computed when the device is read and never stored.
 	AtRuntimeMetadata *DeviceAtRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"-"`
+	// Access is what the caller may do on this device, computed when the
+	// device is returned and never stored (DeviceAccess).
+	Access *ItemAccess `json:"access,omitempty" bson:"-"`
 
 	// @LEGACY - removed once all readers use the fields above.
 	UserId              string                 `json:"user_id,omitempty" bson:"user_id,omitempty"`
