@@ -123,7 +123,6 @@ func TestResolveLegacyAccessFailuresGrantNothing(t *testing.T) {
 		{"store error", &fakeLegacyAccessStore{err: errors.New("down")}, "Operator"},
 		{"missing custom role", &fakeLegacyAccessStore{}, "Operator"},
 		{"application user", &fakeLegacyAccessStore{}, "application"},
-		{"no role", &fakeLegacyAccessStore{}, ""},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -139,10 +138,27 @@ func TestResolveLegacyAccessFailuresGrantNothing(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestResolveLegacyAccessNoRoleKeepsMembership(t *testing.T) {
+	home, userId := primitive.NewObjectID(), primitive.NewObjectID()
 	store := &fakeLegacyAccessStore{}
-	_, _ = ResolveLegacyAccess(context.Background(), store, LegacySubject{UserId: userId, HomeOrganisationId: home, OrganisationId: home}, time.Now())
+	subject := LegacySubject{UserId: userId, HomeOrganisationId: home, OrganisationId: home, Cameras: []string{"cam-1"}}
+	resolution, err := ResolveLegacyAccess(context.Background(), store, subject, time.Now())
+	if err != nil {
+		t.Fatal(err)
+	}
 	if store.reads != 0 {
 		t.Error("an empty role must not be looked up")
+	}
+	if got := resolution.Access.Permissions(DefaultProjectId(home)); len(got) > 0 {
+		t.Errorf("granted %v", got)
+	}
+	if selection := resolution.Access.Devices(PermissionDevicesRead, DefaultProjectId(home)); selection.All || len(selection.DeviceKeys) > 0 {
+		t.Errorf("devices %+v", selection)
+	}
+	if !slices.Equal(resolution.Reasons, []LegacyReason{LegacyReasonNoRole}) {
+		t.Errorf("reasons %v, want noRole", resolution.Reasons)
 	}
 }
 

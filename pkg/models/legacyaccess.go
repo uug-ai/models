@@ -110,6 +110,7 @@ type LegacyAccess struct {
 // the other tiers and custom roles get their legacy project role in the
 // organisation's default project, on the user's sites, groups and cameras
 // (none means no resources), plus their organisation part on all projects.
+// A user without a role keeps the membership only: no roles, no projects.
 //
 // A custom role keeps granting while it is marked inactive, as it does
 // today. Its active time window moves to its assignments in Timezone; a
@@ -127,6 +128,8 @@ func MapLegacyAccess(in LegacyUserAccess) (LegacyAccess, error) {
 
 	tier := BaseRole(in.Role)
 	switch tier {
+	case "":
+		return access, nil
 	case "application":
 		return LegacyAccess{}, fmt.Errorf("%w: the application user is not migrated", ErrLegacyAccessInvalid)
 	case BaseRoleOwner:
