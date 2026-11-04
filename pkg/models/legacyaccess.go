@@ -96,6 +96,9 @@ type LegacyUserAccess struct {
 	// Timezone is the organisation owner's IANA timezone, which custom role
 	// time windows are evaluated in. Only needed when a window is active.
 	Timezone string
+	// IgnoreTimeWindow maps a custom role as if it had no time window: its
+	// assignments carry none and stay active.
+	IgnoreTimeWindow bool
 }
 
 // LegacyAccess is what a user's legacy access maps to: an active membership,
@@ -114,7 +117,8 @@ type LegacyAccess struct {
 //
 // A custom role keeps granting while it is marked inactive, as it does
 // today. Its active time window moves to its assignments in Timezone; a
-// window that is never open makes the assignments inactive.
+// window that is never open makes the assignments inactive. IgnoreTimeWindow
+// leaves the window out.
 func MapLegacyAccess(in LegacyUserAccess) (LegacyAccess, error) {
 	if in.OrganisationId.IsZero() || in.UserId.IsZero() {
 		return LegacyAccess{}, fmt.Errorf("%w: missing organisation or user", ErrLegacyAccessInvalid)
@@ -156,9 +160,12 @@ func MapLegacyAccess(in LegacyUserAccess) (LegacyAccess, error) {
 	if !ok {
 		return LegacyAccess{}, fmt.Errorf("%w: custom role %q has parent %q", ErrLegacyAccessInvalid, role.Name, role.ParentRole)
 	}
-	window, open, err := role.timeWindow(in.Timezone)
-	if err != nil {
-		return LegacyAccess{}, err
+	var window *TimeWindow
+	open := true
+	if !in.IgnoreTimeWindow {
+		if window, open, err = role.timeWindow(in.Timezone); err != nil {
+			return LegacyAccess{}, err
+		}
 	}
 	origin := &RoleOrigin{BaseRole: parent, LegacyRoleId: role.Id}
 	projectRole := Role{

@@ -96,6 +96,46 @@ func TestResolveLegacyAccessCustomRoleReasons(t *testing.T) {
 	}
 }
 
+func TestResolveLegacyAccessIgnoringTimeWindows(t *testing.T) {
+	home, userId := primitive.NewObjectID(), primitive.NewObjectID()
+	// An active window without a range is never open.
+	closed := LegacyRole{Id: primitive.NewObjectID(), Name: "Night", ParentRole: "guest", Pages: []string{"tasks", "recordings"}, TimeWindowActive: 1}
+	store := &fakeLegacyAccessStore{roles: map[string][]LegacyRole{"Night": {closed}}}
+	subject := LegacySubject{UserId: userId, HomeOrganisationId: home, OrganisationId: home, Role: "Night", Cameras: []string{"cam-1"}}
+	project := DefaultProjectId(home)
+
+	resolution, err := ResolveLegacyAccess(context.Background(), store, subject, time.Now())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if resolution.Access.Project(PermissionCasesRead, project) {
+		t.Error("a closed window granted")
+	}
+
+	subject.IgnoreTimeWindows = true
+	resolution, err = ResolveLegacyAccess(context.Background(), store, subject, time.Now())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !resolution.Access.Project(PermissionCasesRead, project) ||
+		!resolution.Access.Device(PermissionDevicesRead, project, DeviceRef{Key: "cam-1"}) {
+		t.Error("ignoring the window still denied")
+	}
+	if len(resolution.Reasons) > 0 {
+		t.Errorf("reasons %v; an ignored window is no difference", resolution.Reasons)
+	}
+
+	mapped, err := MapLegacyAccess(LegacyUserAccess{OrganisationId: home, UserId: userId, Role: "Night", CustomRole: &closed, IgnoreTimeWindow: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, assignment := range mapped.Assignments {
+		if assignment.TimeWindow != nil || !assignment.IsActive {
+			t.Errorf("assignment %+v keeps the window", assignment)
+		}
+	}
+}
+
 func TestResolveLegacyAccessOtherOrganisations(t *testing.T) {
 	home, owned, foreign, userId := primitive.NewObjectID(), primitive.NewObjectID(), primitive.NewObjectID(), primitive.NewObjectID()
 	store := &fakeLegacyAccessStore{owners: map[primitive.ObjectID]primitive.ObjectID{owned: userId, foreign: primitive.NewObjectID()}}
