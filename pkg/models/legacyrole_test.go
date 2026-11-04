@@ -37,7 +37,9 @@ func TestLegacyGuestAndEditorShareOrganisationPart(t *testing.T) {
 }
 
 func TestLegacyRolePermissions(t *testing.T) {
-	always := []Permission{PermissionMarkersWrite}
+	// devices.read follows no page: the device lists and device alerts never
+	// read the page list.
+	always := []Permission{PermissionMarkersWrite, PermissionDevicesRead}
 	tests := []struct {
 		name             string
 		tier             BaseRole
@@ -56,7 +58,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			name:             "owner-only pages grant other tiers nothing",
 			tier:             BaseRoleAdmin,
 			pages:            []string{"channels", "plans-integrations", "subscription", "io"},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionProjectUpdate, PermissionProjectManageCredentials},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionProjectUpdate, PermissionProjectManageCredentials},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
 		},
 		{
@@ -64,6 +66,20 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageLiveView},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionPagesLiveView},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
+		},
+		{
+			name:             "a role without device pages still reads its devices",
+			tier:             BaseRoleGuest,
+			pages:            []string{legacyPageTasks},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLabelsRead, PermissionPagesCases},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
+		},
+		{
+			name:             "group rows show live video",
+			tier:             BaseRoleGuest,
+			pages:            []string{legacyPageGroups},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionGroupsRead, PermissionIOTrigger, PermissionPagesGroups},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
@@ -78,7 +94,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			name:             "admin without accounts and roles keeps no member or role administration",
 			tier:             BaseRoleAdmin,
 			pages:            []string{legacyPageTasks},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionCasesDelete, PermissionCasesManageMembership, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionLabelsRead, PermissionProjectUpdate, PermissionProjectManageCredentials, PermissionPagesCases},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionCasesDelete, PermissionCasesManageMembership, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLabelsRead, PermissionProjectUpdate, PermissionProjectManageCredentials, PermissionPagesCases},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
 		},
 	}

@@ -12,7 +12,9 @@ import "slices"
 // A page grants a permission when the product reaches that permission from
 // the page. A permission reachable from several pages is listed with each of
 // them, and a role keeps it when any of them is in its page list. A missing
-// page also removes its permissions from the API (matrix decision D10).
+// page also removes its permissions from the API (matrix decision D10), except
+// devices.read: the device lists and device alerts never looked at the page
+// list, so every role reads its devices whatever pages it is served.
 
 // Legacy page keys, as stored in a role's page list. The owner-only pages
 // (channels, io, subscription, plans-integrations) grant these tiers nothing.
@@ -93,12 +95,11 @@ var legacyTierFeatures = map[BaseRole]FeaturePermissions{
 	BaseRoleAdmin:  {},
 }
 
-// Pages that share a reach: the recording pages, the pages that show live
-// video (with its PTZ and IO overlay), and the pages that list devices.
+// Pages that share a reach: the recording pages, and the pages that show live
+// video (with its PTZ and IO overlay; group rows show a live preview).
 var (
-	legacyMediaPages  = []string{legacyPageLatestEvents, legacyPageRecordings, legacyPageDayOverview}
-	legacyLivePages   = []string{legacyPageLiveView, legacyPageVideowall, legacyPageCameras, legacyPageSites, legacyPageFloorPlans, legacyPageLatestEvents, legacyPageRecordings, legacyPageDayOverview}
-	legacyDevicePages = []string{legacyPageDashboard, legacyPageLatestEvents, legacyPageLiveView, legacyPageVideowall, legacyPageRecordings, legacyPageDayOverview, legacyPageIOs, legacyPageCameras, legacyPageSites, legacyPageFloorPlans, legacyPageGroups}
+	legacyMediaPages = []string{legacyPageLatestEvents, legacyPageRecordings, legacyPageDayOverview}
+	legacyLivePages  = []string{legacyPageLiveView, legacyPageVideowall, legacyPageCameras, legacyPageSites, legacyPageFloorPlans, legacyPageGroups, legacyPageLatestEvents, legacyPageRecordings, legacyPageDayOverview}
 )
 
 // legacyPageGrant gives its permissions to a role listing any of its pages.
@@ -125,8 +126,7 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 	// comments, which have no screen (D13). Videowalls and private cases are
 	// visible through their assigned-user and participant rules only.
 	BaseRoleGuest: {
-		{[]string{legacyAlways}, []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionMarkersWrite}},
-		{legacyDevicePages, []Permission{PermissionDevicesRead}},
+		{[]string{legacyAlways}, []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionMarkersWrite, PermissionDevicesRead}},
 		{[]string{legacyPageIOs, legacyPageCameras}, []Permission{PermissionIORead}},
 		{onPages(legacyLivePages, []string{legacyPageIOs}), []Permission{PermissionIOTrigger}},
 		{[]string{legacyPageSites, legacyPageFloorPlans, legacyPageDashboard}, []Permission{PermissionSitesRead}},
@@ -147,8 +147,7 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 	// their own, by the creator rule); otherwise as guests. They may not assign
 	// users to videowalls.
 	BaseRoleEditor: {
-		{[]string{legacyAlways}, []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionMarkersWrite}},
-		{legacyDevicePages, []Permission{PermissionDevicesRead}},
+		{[]string{legacyAlways}, []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionMarkersWrite, PermissionDevicesRead}},
 		{[]string{legacyPageIOs, legacyPageCameras}, []Permission{PermissionIORead}},
 		{onPages(legacyLivePages, []string{legacyPageIOs}), []Permission{PermissionIOTrigger}},
 		{[]string{legacyPageSites, legacyPageFloorPlans, legacyPageDashboard}, []Permission{PermissionSitesRead}},
@@ -176,14 +175,13 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 		// Workspace settings have no page key: every admin reaches them.
 		{[]string{legacyAlways}, []Permission{
 			PermissionPagesOrganisation,
-			PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionMarkersWrite,
+			PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionMarkersWrite, PermissionDevicesRead,
 			PermissionProjectsCreate, PermissionProjectsDelete, PermissionProjectUpdate, PermissionProjectManageCredentials,
 		}},
 		{[]string{legacyPageAccounts}, []Permission{
 			PermissionMembersInvite, PermissionMembersUpdate, PermissionMembersRemove, PermissionProjectsManageAccess, PermissionProjectManageAccess,
 		}},
 		{[]string{legacyPageRoles}, []Permission{PermissionRolesRead, PermissionRolesCreate, PermissionRolesUpdate}},
-		{legacyDevicePages, []Permission{PermissionDevicesRead}},
 		{[]string{legacyPageCameras}, []Permission{PermissionDevicesUpdate}},
 		{[]string{legacyPageIOs, legacyPageCameras}, []Permission{PermissionIORead}},
 		{[]string{legacyPageIOs}, []Permission{PermissionIODelete}},
