@@ -37,6 +37,30 @@ const (
 	legacyPageSettings     = "settings"
 )
 
+// legacyPagePermissions is the page permission each legacy page key shows. A
+// role holds it when the key is in its page list and its tier is served that
+// page.
+var legacyPagePermissions = map[string]Permission{
+	legacyPageDashboard:    PermissionPagesDashboard,
+	legacyPageLatestEvents: PermissionPagesLatestEvents,
+	legacyPageLiveView:     PermissionPagesLiveView,
+	legacyPageVideowall:    PermissionPagesVideowall,
+	legacyPageRecordings:   PermissionPagesRecordings,
+	legacyPageDayOverview:  PermissionPagesDayOverview,
+	legacyPageAnalytics:    PermissionPagesAnalytics,
+	legacyPageWatchlist:    PermissionPagesWatchlist,
+	legacyPageTasks:        PermissionPagesCases,
+	legacyPageAlerts:       PermissionPagesAlerts,
+	legacyPageIOs:          PermissionPagesIO,
+	legacyPageCameras:      PermissionPagesDevices,
+	legacyPageSites:        PermissionPagesSites,
+	legacyPageFloorPlans:   PermissionPagesFloorPlans,
+	legacyPageGroups:       PermissionPagesGroups,
+	legacyPageAccounts:     PermissionPagesMembers,
+	legacyPageRoles:        PermissionPagesRoles,
+	legacyPageSettings:     PermissionPagesSettings,
+}
+
 // legacyAlways stands for "no page": its permissions are held whatever the
 // page list says.
 const legacyAlways = ""
@@ -151,6 +175,7 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 	BaseRoleAdmin: {
 		// Workspace settings have no page key: every admin reaches them.
 		{[]string{legacyAlways}, []Permission{
+			PermissionPagesOrganisation,
 			PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionMarkersWrite,
 			PermissionProjectsCreate, PermissionProjectsDelete, PermissionProjectUpdate, PermissionProjectManageCredentials,
 		}},
@@ -219,6 +244,11 @@ func LegacyRolePermissions(tier BaseRole, pages []string, features FeaturePermis
 	}
 
 	var held []Permission
+	for _, page := range legacyTierPages[tier] {
+		if slices.Contains(pages, page) {
+			held = append(held, legacyPagePermissions[page])
+		}
+	}
 	for _, grant := range grants {
 		if listed(grant.pages) {
 			held = append(held, grant.permissions...)

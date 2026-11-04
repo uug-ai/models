@@ -75,6 +75,7 @@ var permissionGroups = []permissionGroup{
 	{level: LevelProject, permissions: analyticsPermissions},
 	{level: LevelProject, permissions: detectionPermissions},
 	{level: LevelProject, permissions: projectPermissions},
+	{level: LevelProject, permissions: pagePermissions},
 
 	// Organisation-level administration. Reading the organisation, members and
 	// roles, inviting, and managing projects can be limited to selected
@@ -87,6 +88,7 @@ var permissionGroups = []permissionGroup{
 	{level: LevelOrganisation, permissions: storagePermissions, tenantWide: storagePermissions},
 	{level: LevelOrganisation, permissions: auditPermissions, tenantWide: auditPermissions},
 	{level: LevelOrganisation, permissions: deviceAdministrationPermissions, tenantWide: deviceAdministrationPermissions},
+	{level: LevelOrganisation, permissions: organisationPagePermissions, tenantWide: []Permission{PermissionPagesSubscription, PermissionPagesAudit}},
 }
 
 var permissionDefinitions = definePermissions(permissionGroups)
