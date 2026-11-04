@@ -284,6 +284,7 @@ func TestDomainPermissionLevels(t *testing.T) {
 		{"analytics", AnalyticsPermissions, project},
 		{"detections", DetectionPermissions, project},
 		{"project", ProjectPermissions, project},
+		{"pages", PagePermissions, project},
 		{"organisation", OrganisationPermissions, organisation},
 		{"members", MemberPermissions, organisation},
 		{"roles", RolePermissions, organisation},
@@ -292,6 +293,7 @@ func TestDomainPermissionLevels(t *testing.T) {
 		{"storage", StoragePermissions, organisation},
 		{"audit", AuditPermissions, organisation},
 		{"device administration", DeviceAdministrationPermissions, organisation},
+		{"organisation pages", OrganisationPagePermissions, organisation},
 	}
 
 	registered := 0
@@ -547,6 +549,9 @@ func TestTenantWidePermissions(t *testing.T) {
 		PermissionRolesRead,
 		PermissionProjectsDelete,
 		PermissionProjectsManageAccess,
+		PermissionPagesOrganisation,
+		PermissionPagesMembers,
+		PermissionPagesRoles,
 	}
 	for _, definition := range PermissionDefinitions() {
 		want := definition.Level == LevelOrganisation && !slices.Contains(selectable, definition.Permission)
