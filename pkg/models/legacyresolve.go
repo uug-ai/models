@@ -29,6 +29,9 @@ type LegacySubject struct {
 	// OwnerTimezone is the home organisation owner's timezone, which custom
 	// role time windows are evaluated in. Empty means LegacyDefaultTimezone.
 	OwnerTimezone string
+	// IgnoreTimeWindows resolves custom roles as if they had no time window,
+	// for checks legacy makes without one, such as device status alerts.
+	IgnoreTimeWindows bool
 }
 
 // NewLegacySubject builds the subject from a user as stored, with Master set
@@ -112,6 +115,8 @@ func ResolveLegacyAccess(ctx context.Context, store LegacyAccessStore, subject L
 		OrganisationId: subject.OrganisationId,
 		UserId:         subject.UserId,
 		Timezone:       subject.OwnerTimezone,
+		// Set before the role is known so every branch maps the same way.
+		IgnoreTimeWindow: subject.IgnoreTimeWindows,
 	}
 	if in.Timezone == "" {
 		in.Timezone = LegacyDefaultTimezone
@@ -144,7 +149,7 @@ func ResolveLegacyAccess(ctx context.Context, store LegacyAccessStore, subject L
 		}
 		if len(roles) > 0 {
 			in.CustomRole = &roles[0]
-			if roles[0].TimeWindowActive == 1 {
+			if roles[0].TimeWindowActive == 1 && !subject.IgnoreTimeWindows {
 				reasons = append(reasons, LegacyReasonTimeWindow)
 			}
 		}
