@@ -87,6 +87,9 @@ const (
 	// than the home one. Legacy applies the home role there; resolution grants
 	// Owner when the subject owns it and nothing otherwise.
 	LegacyReasonOtherOrganisation LegacyReason = "otherOrganisation"
+	// LegacyReasonNoRole: the subject has no stored role. Resolution keeps the
+	// membership without any project; legacy may still apply its allow-lists.
+	LegacyReasonNoRole LegacyReason = "noRole"
 	// LegacyReasonUnresolved: the legacy access could not be resolved, so it
 	// grants nothing.
 	LegacyReasonUnresolved LegacyReason = "unresolved"
@@ -128,6 +131,9 @@ func ResolveLegacyAccess(ctx context.Context, store LegacyAccessStore, subject L
 
 	var reasons []LegacyReason
 	in.Role = subject.Role
+	if subject.Role == "" {
+		reasons = append(reasons, LegacyReasonNoRole)
+	}
 	if subject.Role != "" && !isLegacyTier(subject.Role) {
 		roles, err := store.LegacyRoles(ctx, subject.HomeOrganisationId, subject.Role)
 		if err != nil {
