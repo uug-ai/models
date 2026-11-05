@@ -11,13 +11,15 @@ import (
 
 var ErrRoleAssignmentInvalid = errors.New("invalid role assignment")
 
-// PrincipalType enumerates who an assignment can grant to. Teams, managed in
-// Hub or synced from an identity provider, become another type later without
-// changing assignments.
+// PrincipalType enumerates who an assignment can grant to.
 type PrincipalType string
 
 const (
+	// PrincipalTypeUser grants to one member (Principal.Id is the user id).
 	PrincipalTypeUser PrincipalType = "user"
+	// PrincipalTypeTeam grants to every member of a team (Principal.Id is the
+	// Team id). The Owner role never goes to a team.
+	PrincipalTypeTeam PrincipalType = "team"
 )
 
 // Principal identifies who a RoleAssignment grants to.
@@ -63,6 +65,24 @@ type RoleAssignment struct {
 	Audit     Audit     `json:"audit" bson:"audit"`
 }
 
+// AffectsUser reports whether the assignment grants to the user, directly or
+// through a team in teams (the user's team memberships). Writers use it to
+// refuse that anyone creates, changes or removes an assignment that affects
+// themselves (spec 4.5); only an owner stepping down from Owner is allowed.
+func (a RoleAssignment) AffectsUser(userId primitive.ObjectID, teams []TeamMember) bool {
+	switch a.Principal.Type {
+	case PrincipalTypeUser:
+		return !userId.IsZero() && a.Principal.Id == userId
+	case PrincipalTypeTeam:
+		for _, member := range teams {
+			if member.UserId == userId && member.TeamId == a.Principal.Id && member.OrganisationId == a.OrganisationId {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 // IsExpired reports whether the assignment has a set expiry that is in the past.
 func (a RoleAssignment) IsExpired() bool {
 	return a.isExpiredAt(time.Now())
@@ -104,7 +124,9 @@ func (a RoleAssignment) Validate(role Role) error {
 	if a.OrganisationId.IsZero() {
 		return fmt.Errorf("%w: missing organisation", ErrRoleAssignmentInvalid)
 	}
-	if a.Principal.Type != PrincipalTypeUser {
+	switch a.Principal.Type {
+	case PrincipalTypeUser, PrincipalTypeTeam:
+	default:
 		return fmt.Errorf("%w: unknown principal type %q", ErrRoleAssignmentInvalid, a.Principal.Type)
 	}
 	if a.Principal.Id.IsZero() {

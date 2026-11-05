@@ -77,12 +77,13 @@ var permissionGroups = []permissionGroup{
 	{level: LevelProject, permissions: projectPermissions},
 	{level: LevelProject, permissions: pagePermissions},
 
-	// Organisation-level administration. Reading the organisation, members and
-	// roles, inviting, and managing projects can be limited to selected
-	// projects; everything else is tenant-wide.
+	// Organisation-level administration. Reading the organisation, members,
+	// roles and teams, inviting, and managing projects can be limited to
+	// selected projects; everything else is tenant-wide.
 	{level: LevelOrganisation, permissions: organisationPermissions, tenantWide: []Permission{PermissionOrganisationUpdate}},
 	{level: LevelOrganisation, permissions: memberPermissions, tenantWide: []Permission{PermissionMembersUpdate, PermissionMembersRemove}},
 	{level: LevelOrganisation, permissions: rolePermissions, tenantWide: []Permission{PermissionRolesCreate, PermissionRolesUpdate, PermissionRolesDelete}},
+	{level: LevelOrganisation, permissions: teamPermissions, tenantWide: []Permission{PermissionTeamsCreate, PermissionTeamsUpdate, PermissionTeamsDelete}},
 	{level: LevelOrganisation, permissions: projectAdministrationPermissions, tenantWide: []Permission{PermissionProjectsCreate}},
 	{level: LevelOrganisation, permissions: billingPermissions, tenantWide: billingPermissions},
 	{level: LevelOrganisation, permissions: storagePermissions, tenantWide: storagePermissions},

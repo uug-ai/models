@@ -205,6 +205,12 @@ type OrganisationInvitation struct {
 	// when the invitation is created. An invitation without assignments only
 	// creates the membership.
 	Assignments []InvitationAssignment `json:"assignments" bson:"assignments,omitempty"`
+	// TeamIds are the teams the invitee joins when accepting. Only teams
+	// whose members are managed in Hub (source manual) can be listed: an
+	// identity provider team gets its members from the provider. Joining a
+	// team grants its assignments, so the inviter must be able to grant
+	// every assignment of each team, as when adding a member directly.
+	TeamIds []primitive.ObjectID `json:"teamIds,omitempty" bson:"teamIds,omitempty"`
 	// Token is returned once when the invitation is created and never stored;
 	// TokenHash (see HashInvitationToken) is what lookups match on.
 	Token     string             `json:"token,omitempty" bson:"-"`

@@ -67,6 +67,7 @@ const (
 	OrganisationInvitationOrganisationId = "organisationId"
 	OrganisationInvitationEmail = "email"
 	OrganisationInvitationAssignments = "assignments"
+	OrganisationInvitationTeamIds = "teamIds"
 	OrganisationInvitationTokenHash = "tokenHash"
 	OrganisationInvitationInvitedBy = "invitedBy"
 	OrganisationInvitationStatus = "status"

@@ -8,10 +8,11 @@ import (
 )
 
 // Access answers what one member may do in one organisation at one instant.
-// It is built once per request from the member's membership, roles and
-// assignments, whether those are stored or mapped from legacy access (see
-// MapLegacyAccess), and holds no I/O: the caller resolves which sites and
-// groups a device belongs to.
+// It is built once per request from the member's membership, team
+// memberships, roles and assignments (their own and their teams'), whether
+// those are stored or mapped from legacy access (see MapLegacyAccess), and
+// holds no I/O: the caller resolves which sites and groups a device belongs
+// to.
 //
 // Access only covers role permissions. Relationship rules (creators, case
 // participants, assigned users) and per-device feature ceilings are applied
@@ -49,19 +50,22 @@ type DeviceSelection struct {
 }
 
 // NewAccess resolves a member's access at the given instant. Nothing is
-// granted unless the membership is effectively active. An assignment counts
-// only when it is for this member, effectively active (see
-// RoleAssignment.IsEffectivelyActive) and valid for an active role of the
-// same organisation among roles; anything else is skipped, so incomplete
-// data denies.
-func NewAccess(membership OrganisationUser, roles []Role, assignments []RoleAssignment, at time.Time) Access {
+// granted unless the membership is effectively active, team-derived access
+// included. An assignment counts only when it is for this member, directly
+// or through one of the member's teams (teams: the member's TeamMember
+// documents), effectively active (see RoleAssignment.IsEffectivelyActive)
+// and valid for an active role of the same organisation among roles;
+// anything else is skipped, so incomplete data denies. Grants from several
+// assignments add up.
+func NewAccess(membership OrganisationUser, teams []TeamMember, roles []Role, assignments []RoleAssignment, at time.Time) Access {
 	var access Access
 	if !membership.isEffectivelyActiveAt(at) || membership.OrganisationId.IsZero() {
 		return access
 	}
+	teamIds := teamIdsOf(membership, teams)
 	for _, assignment := range assignments {
 		if assignment.OrganisationId != membership.OrganisationId ||
-			assignment.Principal != (Principal{Type: PrincipalTypeUser, Id: membership.UserId}) ||
+			!grantsTo(assignment.Principal, membership.UserId, teamIds) ||
 			!assignment.isEffectivelyActiveAt(at) {
 			continue
 		}
@@ -83,6 +87,17 @@ func NewAccess(membership OrganisationUser, roles []Role, assignments []RoleAssi
 		})
 	}
 	return access
+}
+
+// grantsTo reports whether a principal is the user or one of their teams.
+func grantsTo(principal Principal, userId primitive.ObjectID, teamIds []primitive.ObjectID) bool {
+	switch principal.Type {
+	case PrincipalTypeUser:
+		return principal.Id == userId
+	case PrincipalTypeTeam:
+		return slices.Contains(teamIds, principal.Id)
+	}
+	return false
 }
 
 // IsOwner reports whether the member holds the Owner role.

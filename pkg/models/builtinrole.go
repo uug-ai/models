@@ -1,6 +1,9 @@
 package models
 
-import "slices"
+import (
+	"slices"
+	"sync"
+)
 
 // Built-in roles are defined by the platform. Every organisation stores its own
 // read-only copy, upserted by (organisationId, key) and referenced by its stored
@@ -19,8 +22,46 @@ import "slices"
 
 // BuiltInRoles returns the platform-defined roles in stable order, with their
 // permissions in catalog order. The roles carry no Id, OrganisationId or
-// Audit; the writer sets them on each organisation's copy.
+// Audit; the writer sets them on each organisation's copy. Each call returns
+// its own copies, which callers may change.
 func BuiltInRoles() []Role {
+	defined := builtInRoles()
+	roles := make([]Role, len(defined))
+	for i, role := range defined {
+		roles[i] = role.clone()
+	}
+	return roles
+}
+
+// BuiltInRole returns the definition of one built-in role, as a copy the
+// caller may change.
+func BuiltInRole(key RoleKey) (Role, bool) {
+	for _, role := range builtInRoles() {
+		if role.Key == key {
+			return role.clone(), true
+		}
+	}
+	return Role{}, false
+}
+
+// builtInRoles are the definitions, built once per process: the legacy page
+// tables are fixed, and generating the permission sets is costly, while
+// access resolution looks built-in roles up on every request. Never hand
+// these out without clone.
+var builtInRoles = sync.OnceValue(defineBuiltInRoles)
+
+// clone copies a role's slice and pointer fields, so changing the copy never
+// changes the definition it came from.
+func (r Role) clone() Role {
+	r.Permissions = slices.Clone(r.Permissions)
+	if r.Origin != nil {
+		origin := *r.Origin
+		r.Origin = &origin
+	}
+	return r
+}
+
+func defineBuiltInRoles() []Role {
 	guest, member := legacyTierPermissions(BaseRoleGuest)
 	editor, _ := legacyTierPermissions(BaseRoleEditor)
 	admin, adminOrganisation := legacyTierPermissions(BaseRoleAdmin)
@@ -45,16 +86,6 @@ func BuiltInRoles() []Role {
 		legacyRole(RoleKeyLegacyAdminOrganisation, BaseRoleAdmin, LevelOrganisation, "Admin (legacy), organisation",
 			"The legacy admin tier's organisation administration.", adminOrganisation),
 	}
-}
-
-// BuiltInRole returns the definition of one built-in role.
-func BuiltInRole(key RoleKey) (Role, bool) {
-	for _, role := range BuiltInRoles() {
-		if role.Key == key {
-			return role, true
-		}
-	}
-	return Role{}, false
 }
 
 func legacyRole(key RoleKey, baseRole BaseRole, level Level, name, description string, permissions []Permission) Role {

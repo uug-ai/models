@@ -14,7 +14,7 @@ func legacyAccessFor(t *testing.T, in LegacyUserAccess) (LegacyAccess, Access) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	return mapped, NewAccess(mapped.Membership, mapped.Roles, mapped.Assignments, time.Now())
+	return mapped, NewAccess(mapped.Membership, nil, mapped.Roles, mapped.Assignments, time.Now())
 }
 
 func TestAccessLegacyGuest(t *testing.T) {
@@ -122,7 +122,7 @@ func TestAccessDenies(t *testing.T) {
 				t.Fatal(err)
 			}
 			test.mutate(&mapped)
-			access := NewAccess(mapped.Membership, mapped.Roles, mapped.Assignments, time.Now())
+			access := NewAccess(mapped.Membership, nil, mapped.Roles, mapped.Assignments, time.Now())
 			if access.Project(PermissionCasesRead, project) || access.Device(PermissionDevicesRead, project, DeviceRef{Key: "camera-1"}) {
 				t.Error("granted")
 			}
@@ -139,7 +139,7 @@ func TestAccessOrganisationProjectSelection(t *testing.T) {
 		RoleId: role.Id, Scope: RoleAssignmentScope{Level: LevelOrganisation, Projects: SelectionSelected, ProjectIds: []primitive.ObjectID{covered}},
 		Source: AssignmentSourceManual, IsActive: true}
 	membership := OrganisationUser{UserId: userId, OrganisationId: organisationId, Status: MembershipStatusActive}
-	access := NewAccess(membership, []Role{role}, []RoleAssignment{assignment}, time.Now())
+	access := NewAccess(membership, nil, []Role{role}, []RoleAssignment{assignment}, time.Now())
 	if !access.Organisation(PermissionProjectsManageAccess, covered) {
 		t.Error("covered project denied")
 	}

@@ -63,7 +63,7 @@ func accessWith(t *testing.T, organisationId, userId primitive.ObjectID, grants 
 		})
 	}
 	membership := OrganisationUser{UserId: userId, OrganisationId: organisationId, Status: MembershipStatusActive}
-	return NewAccess(membership, roles, assignments, time.Now())
+	return NewAccess(membership, nil, roles, assignments, time.Now())
 }
 
 func TestDeviceAccessSplitsPermissionsPerSite(t *testing.T) {
@@ -146,7 +146,7 @@ func TestDeviceAccessOwnerAndLegacyGuest(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	owner, err := NewAccess(mapped.Membership, mapped.Roles, mapped.Assignments, time.Now()).CompileDeviceAccess(context.Background(), source, project)
+	owner, err := NewAccess(mapped.Membership, nil, mapped.Roles, mapped.Assignments, time.Now()).CompileDeviceAccess(context.Background(), source, project)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -162,7 +162,7 @@ func TestDeviceAccessOwnerAndLegacyGuest(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	guest, err := NewAccess(mapped.Membership, mapped.Roles, mapped.Assignments, time.Now()).CompileDeviceAccess(context.Background(), source, project)
+	guest, err := NewAccess(mapped.Membership, nil, mapped.Roles, mapped.Assignments, time.Now()).CompileDeviceAccess(context.Background(), source, project)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -185,7 +185,7 @@ func TestCompileDeviceAccessFailsOnReadError(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := errors.New("down")
-	_, err = NewAccess(mapped.Membership, mapped.Roles, mapped.Assignments, time.Now()).CompileDeviceAccess(context.Background(), &fakeDeviceSource{err: want}, project)
+	_, err = NewAccess(mapped.Membership, nil, mapped.Roles, mapped.Assignments, time.Now()).CompileDeviceAccess(context.Background(), &fakeDeviceSource{err: want}, project)
 	if !errors.Is(err, want) {
 		t.Errorf("err = %v, want %v", err, want)
 	}
