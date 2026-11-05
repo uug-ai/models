@@ -9,8 +9,10 @@ import (
 // read-only copy, upserted by (organisationId, key) and referenced by its stored
 // id, so the definitions here are the only source for what a copy contains.
 //
-// For now they are the Owner role and the legacy roles, which reproduce the
-// legacy guest, editor and admin tiers so migrated users keep their access.
+// They are the Owner role, the system roles new access is granted with
+// (systemrole.go: Organisation manager, Billing admin, Project admin, Editor,
+// Viewer), and the legacy roles, which reproduce the legacy guest, editor and
+// admin tiers so migrated users keep their access.
 // The legacy permission sets are generated from the legacy page tables (see
 // LegacyRolePermissions) for each tier's own pages and feature levels, so the
 // built-in tiers and custom roles on them come from one definition.
@@ -65,7 +67,7 @@ func defineBuiltInRoles() []Role {
 	guest, member := legacyTierPermissions(BaseRoleGuest)
 	editor, _ := legacyTierPermissions(BaseRoleEditor)
 	admin, adminOrganisation := legacyTierPermissions(BaseRoleAdmin)
-	return []Role{
+	roles := []Role{
 		{
 			Name:         "Owner",
 			Description:  "Every permission in every current and future project.",
@@ -86,6 +88,7 @@ func defineBuiltInRoles() []Role {
 		legacyRole(RoleKeyLegacyAdminOrganisation, BaseRoleAdmin, LevelOrganisation, "Admin (legacy), organisation",
 			"The legacy admin tier's organisation administration.", adminOrganisation),
 	}
+	return append(roles[:1], append(systemRoles(), roles[1:]...)...)
 }
 
 func legacyRole(key RoleKey, baseRole BaseRole, level Level, name, description string, permissions []Permission) Role {

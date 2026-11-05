@@ -69,8 +69,8 @@ func TestBuiltInRoleReturnsCopies(t *testing.T) {
 	if again.Permissions[0] == PermissionDevicesDelete {
 		t.Error("BuiltInRole shares its permission slice")
 	}
-	if _, ok := BuiltInRole(RoleKeyViewer); ok {
-		t.Error("viewer is not defined yet")
+	if _, ok := BuiltInRole(RoleKey("auditor")); ok {
+		t.Error("an undefined key resolved")
 	}
 }
 
