@@ -3,6 +3,8 @@ package models
 import (
 	"slices"
 	"testing"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func TestBuiltInRolesValidate(t *testing.T) {
@@ -69,5 +71,57 @@ func TestBuiltInRoleReturnsCopies(t *testing.T) {
 	}
 	if _, ok := BuiltInRole(RoleKeyViewer); ok {
 		t.Error("viewer is not defined yet")
+	}
+}
+
+func TestBuiltInRolesReturnsCopies(t *testing.T) {
+	roles := BuiltInRoles()
+	for i := range roles {
+		if len(roles[i].Permissions) > 0 {
+			roles[i].Permissions[0] = PermissionDevicesDelete
+		}
+		if roles[i].Origin != nil {
+			roles[i].Origin.BaseRole = BaseRoleOwner
+		}
+		roles[i].Id = primitive.NewObjectID()
+	}
+	for i, role := range BuiltInRoles() {
+		if len(role.Permissions) > 0 && role.Permissions[0] == PermissionDevicesDelete {
+			t.Errorf("%s: BuiltInRoles shares its permission slice", role.Key)
+		}
+		if role.Origin != nil && role.Origin.BaseRole == BaseRoleOwner {
+			t.Errorf("%s: BuiltInRoles shares its origin", role.Key)
+		}
+		if !role.Id.IsZero() || role.Key != roles[i].Key {
+			t.Errorf("%s: BuiltInRoles returned a changed role", role.Key)
+		}
+	}
+}
+
+func BenchmarkBuiltInRole(b *testing.B) {
+	b.ReportAllocs()
+	for b.Loop() {
+		BuiltInRole(RoleKeyLegacyAdminOrganisation)
+	}
+}
+
+func BenchmarkMapLegacyAccessCustomRole(b *testing.B) {
+	in := LegacyUserAccess{
+		OrganisationId: primitive.NewObjectID(),
+		UserId:         primitive.NewObjectID(),
+		Role:           "Operator",
+		Timezone:       LegacyDefaultTimezone,
+		CustomRole: &LegacyRole{
+			Id:         primitive.NewObjectID(),
+			Name:       "Operator",
+			ParentRole: string(BaseRoleEditor),
+			Pages:      []string{legacyPageLiveView, legacyPageRecordings, legacyPageTasks},
+		},
+	}
+	b.ReportAllocs()
+	for b.Loop() {
+		if _, err := MapLegacyAccess(in); err != nil {
+			b.Fatal(err)
+		}
 	}
 }
