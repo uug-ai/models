@@ -159,7 +159,7 @@ func TestRoleAssignmentValidate(t *testing.T) {
 		{"other role", editor, assign(manager, projectScope, none), ErrRoleAssignmentInvalid},
 		{"role of another organisation", editor, assign(editor, projectScope, func(a *RoleAssignment) { a.OrganisationId = primitive.NewObjectID() }), ErrRoleAssignmentInvalid},
 		{"missing principal", editor, assign(editor, projectScope, func(a *RoleAssignment) { a.Principal.Id = primitive.NilObjectID }), ErrRoleAssignmentInvalid},
-		{"unknown principal type", editor, assign(editor, projectScope, func(a *RoleAssignment) { a.Principal.Type = "team" }), ErrRoleAssignmentInvalid},
+		{"unknown principal type", editor, assign(editor, projectScope, func(a *RoleAssignment) { a.Principal.Type = "group" }), ErrRoleAssignmentInvalid},
 		{"unknown source", editor, assign(editor, projectScope, func(a *RoleAssignment) { a.Source = "" }), ErrRoleAssignmentInvalid},
 		{"invalid time window", editor, assign(editor, projectScope, func(a *RoleAssignment) { a.TimeWindow = &TimeWindow{Timezone: "Mars/Olympus"} }), ErrRoleAssignmentInvalid},
 	}

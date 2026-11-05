@@ -165,7 +165,7 @@ func resolveLegacyUserAccess(in LegacyUserAccess, at time.Time, reasons []Legacy
 	if err != nil {
 		return unresolvedLegacyAccess(reasons), err
 	}
-	return LegacyResolution{Access: NewAccess(mapped.Membership, mapped.Roles, mapped.Assignments, at), Reasons: reasons}, nil
+	return LegacyResolution{Access: NewAccess(mapped.Membership, nil, mapped.Roles, mapped.Assignments, at), Reasons: reasons}, nil
 }
 
 func unresolvedLegacyAccess(reasons []LegacyReason) LegacyResolution {
