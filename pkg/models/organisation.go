@@ -62,6 +62,9 @@ type Organisation struct {
 	OwnerId  primitive.ObjectID   `json:"ownerId" bson:"ownerId,omitempty"`
 	Settings OrganisationSettings `json:"settings" bson:"settings"`
 	IsActive bool                 `json:"isActive" bson:"isActive"`
+	// AuthorizationMode says which data decides access in this organisation:
+	// legacy (unset), shadow or rbac. Read it with EffectiveAuthorizationMode.
+	AuthorizationMode AuthorizationMode `json:"authorizationMode,omitempty" bson:"authorizationMode,omitempty"`
 
 	// Company Details
 	Company CompanyDetails `json:"company" bson:"company"`
