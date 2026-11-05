@@ -83,7 +83,7 @@ func ownerAccess(t *testing.T, f grantFixture) Access {
 	membership := OrganisationUser{UserId: f.userId, OrganisationId: f.organisationId, Status: MembershipStatusActive}
 	assignment := RoleAssignment{Id: primitive.NewObjectID(), OrganisationId: f.organisationId, Principal: Principal{Type: PrincipalTypeUser, Id: f.userId},
 		RoleId: owner.Id, Scope: allProjects(), Source: AssignmentSourceManual, IsActive: true}
-	return NewAccess(membership, []Role{owner}, []RoleAssignment{assignment}, time.Now())
+	return NewAccess(membership, nil, []Role{owner}, []RoleAssignment{assignment}, time.Now())
 }
 
 func TestCanGrantOwner(t *testing.T) {
