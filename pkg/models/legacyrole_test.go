@@ -69,10 +69,10 @@ func TestLegacyRolePermissions(t *testing.T) {
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
-			name:             "a role without device pages still reads its devices",
+			name:             "a role without device pages still reads its devices, and cases open live video",
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageTasks},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLabelsRead, PermissionPagesCases},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLabelsRead, PermissionPagesCases},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
@@ -80,6 +80,21 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageGroups},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionGroupsRead, PermissionIOTrigger, PermissionPagesGroups},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
+		},
+		{
+			name:             "the watchlist opens recordings beside live video",
+			tier:             BaseRoleGuest,
+			pages:            []string{legacyPageWatchlist},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaRead, PermissionMediaExport, PermissionMediaShare, PermissionCasesCreate, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionNotificationsRead, PermissionNotificationsUpdate, PermissionPagesWatchlist},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
+		},
+		{
+			name:             "analytics opens recordings beside live video",
+			tier:             BaseRoleGuest,
+			pages:            []string{legacyPageAnalytics},
+			features:         FeaturePermissions{Liveview: 2, PTZ: 1},
+			wantProject:      []Permission{PermissionMarkersRead, PermissionMarkersWrite, PermissionDevicesRead, PermissionLivePreview, PermissionIOTrigger, PermissionAnalyticsRead, PermissionPagesAnalytics},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
@@ -94,7 +109,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			name:             "admin without accounts and roles keeps no member or role administration",
 			tier:             BaseRoleAdmin,
 			pages:            []string{legacyPageTasks},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionCasesDelete, PermissionCasesManageMembership, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLabelsRead, PermissionProjectUpdate, PermissionProjectManageCredentials, PermissionPagesCases},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionCasesDelete, PermissionCasesManageMembership, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLabelsRead, PermissionProjectUpdate, PermissionProjectManageCredentials, PermissionPagesCases},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
 		},
 	}

@@ -96,10 +96,14 @@ var legacyTierFeatures = map[BaseRole]FeaturePermissions{
 }
 
 // Pages that share a reach: the recording pages, and the pages that show live
-// video (with its PTZ and IO overlay; group rows show a live preview).
+// video (with its PTZ and IO overlay; group rows show a live preview). The
+// recording detail page (/media/:id) has no page key of its own and shows the
+// device's live stream beside the recording; the watchlist, cases and
+// analytics open it, so they reach live video too.
 var (
-	legacyMediaPages = []string{legacyPageLatestEvents, legacyPageRecordings, legacyPageDayOverview}
-	legacyLivePages  = []string{legacyPageLiveView, legacyPageVideowall, legacyPageCameras, legacyPageSites, legacyPageFloorPlans, legacyPageGroups, legacyPageLatestEvents, legacyPageRecordings, legacyPageDayOverview}
+	legacyMediaPages       = []string{legacyPageLatestEvents, legacyPageRecordings, legacyPageDayOverview}
+	legacyMediaDetailPages = onPages(legacyMediaPages, []string{legacyPageWatchlist, legacyPageTasks, legacyPageAnalytics})
+	legacyLivePages        = onPages([]string{legacyPageLiveView, legacyPageVideowall, legacyPageCameras, legacyPageSites, legacyPageFloorPlans, legacyPageGroups}, legacyMediaDetailPages)
 )
 
 // legacyPageGrant gives its permissions to a role listing any of its pages.
