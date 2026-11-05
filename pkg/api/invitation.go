@@ -37,9 +37,14 @@ const (
 	// InvitationEmailMismatch: the signed-in account's email is not the
 	// invited address.
 	InvitationEmailMismatch InvitationResponseStatus = "invitation_email_mismatch"
-	// InvitationExceedsAccess: an assignment goes beyond the inviter's own
-	// access (spec 4.5).
+	// InvitationExceedsAccess: the inviter may not grant an assignment or add
+	// the invitee to a team: the permission for it is missing, or the selected
+	// resources go beyond their own scope in the project (spec 4.5).
 	InvitationExceedsAccess InvitationResponseStatus = "invitation_exceeds_access"
+	// InvitationOwnerOnly: an assignment's role, or a role assigned to a
+	// listed team, holds an owner-only permission, so only an owner invites
+	// with it (spec 4.5).
+	InvitationOwnerOnly InvitationResponseStatus = "invitation_owner_only"
 	// InvitationRoleNotFound: an assignment names a role that is not one of
 	// the organisation's active roles.
 	InvitationRoleNotFound InvitationResponseStatus = "invitation_role_not_found"
@@ -83,6 +88,7 @@ func (s InvitationResponseStatus) Translate(lang string) string {
 			InvitationClosed:                "This invitation is no longer valid",
 			InvitationEmailMismatch:         "This invitation was sent to another email address",
 			InvitationExceedsAccess:         "You cannot grant access you do not have",
+			InvitationOwnerOnly:             "Only an owner can invite with this access",
 			InvitationRoleNotFound:          "Role not found",
 			InvitationTeamNotFound:          "Team not found",
 			InvitationTeamManagedByProvider: "This team's members are managed by your identity provider",

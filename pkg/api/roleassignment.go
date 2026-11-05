@@ -40,9 +40,13 @@ const (
 	// that affects themselves, directly or through a team; an owner may only
 	// step down from Owner (spec 4.5, 4.10).
 	RoleAssignmentSelf RoleAssignmentStatus = "role_assignment_self"
-	// RoleAssignmentExceedsAccess: the role's permissions or the selected
-	// resources go beyond the caller's own access (spec 4.5).
+	// RoleAssignmentExceedsAccess: the selected resources go beyond the
+	// caller's own scope in the project; only a caller with nothing but
+	// project.manageAccess there is bounded this way (spec 4.5).
 	RoleAssignmentExceedsAccess RoleAssignmentStatus = "role_assignment_exceeds_access"
+	// RoleAssignmentOwnerOnly: the role is Owner or holds an owner-only
+	// permission, so only an owner grants, changes or removes it (spec 4.5).
+	RoleAssignmentOwnerOnly RoleAssignmentStatus = "role_assignment_owner_only"
 	// RoleAssignmentLastOwner: the change would leave the organisation without
 	// an effectively active owner.
 	RoleAssignmentLastOwner RoleAssignmentStatus = "role_assignment_last_owner"
@@ -80,7 +84,8 @@ func (s RoleAssignmentStatus) Translate(lang string) string {
 			RoleAssignmentPrincipalNotFound: "User or team not found in this organisation",
 			RoleAssignmentResourceNotFound:  "A selected project, site or group was not found",
 			RoleAssignmentSelf:              "You cannot change your own access",
-			RoleAssignmentExceedsAccess:     "You cannot grant access you do not have",
+			RoleAssignmentExceedsAccess:     "You cannot grant resources outside your own access",
+			RoleAssignmentOwnerOnly:         "Only an owner can grant this role",
 			RoleAssignmentLastOwner:         "An organisation needs at least one owner",
 			RoleAssignmentLegacyMode:        "Access for this organisation is still managed through legacy roles",
 		},
@@ -105,9 +110,11 @@ func (s RoleAssignmentStatus) Translate(lang string) string {
 // explicit scope, in the caller's current organisation; no request names it.
 // Project assignments need project.manageAccess in that project or
 // projects.manageAccess covering it; organisation assignments need
-// members.update; reading needs the same or members.read. Every write is
-// bounded by the caller's own access and never affects the caller (spec 4.5).
-// Only an owner grants Owner.
+// members.update; reading needs the same or members.read. The caller need not
+// hold the role's permissions, but only an owner grants Owner or a role
+// holding an owner-only permission, a caller with only project.manageAccess
+// selects resources inside their own scope, and no write affects the caller
+// (models.Access.CanChange, spec 4.5).
 
 // RoleAssignmentFilter narrows an assignment listing. Set fields combine.
 type RoleAssignmentFilter struct {

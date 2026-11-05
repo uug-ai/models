@@ -15,7 +15,7 @@ var teamStatuses = []TeamStatus{
 	TeamNameExists, TeamGroupLinked, TeamsDisabled,
 	TeamMembersGetSuccess, TeamMembersGetFailed, TeamMembersAddSuccess, TeamMembersAddFailed,
 	TeamMemberRemoveSuccess, TeamMemberRemoveFailed, TeamMemberNotFound,
-	TeamMemberNotInOrganisation, TeamMembersManagedByProvider, TeamMemberSelf, TeamMemberExceedsAccess,
+	TeamMemberNotInOrganisation, TeamMembersManagedByProvider, TeamMemberSelf, TeamMemberOwnerOnly,
 }
 
 func TestTeamStatusTranslate(t *testing.T) {
