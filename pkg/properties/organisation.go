@@ -55,6 +55,7 @@ const (
 	OrganisationOwnerId = "ownerId"
 	OrganisationSettings = "settings"
 	OrganisationIsActive = "isActive"
+	OrganisationAuthorizationMode = "authorizationMode"
 	OrganisationCompany = "company"
 	OrganisationSubscription = "subscription"
 	OrganisationBillingAddress = "billingAddress"
