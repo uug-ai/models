@@ -13,7 +13,8 @@ var invitationStatuses = []InvitationResponseStatus{
 	InvitationGetAllSuccess, InvitationGetAllFailed, InvitationCreateSuccess, InvitationCreateFailed,
 	InvitationResendSuccess, InvitationResendFailed, InvitationRevokeSuccess, InvitationRevokeFailed,
 	InvitationAcceptSuccess, InvitationAcceptFailed, InvitationPending, InvitationAlreadyMember,
-	InvitationClosed, InvitationEmailMismatch, InvitationExceedsAccess, InvitationRoleNotFound, InvitationLegacyMode,
+	InvitationClosed, InvitationEmailMismatch, InvitationExceedsAccess, InvitationRoleNotFound,
+	InvitationTeamNotFound, InvitationTeamManagedByProvider, InvitationLegacyMode,
 }
 
 func TestInvitationResponseStatusTranslate(t *testing.T) {
@@ -41,12 +42,12 @@ func TestInvitationResponseStatusTranslate(t *testing.T) {
 func TestCreateInvitationRequestDecodes(t *testing.T) {
 	body := `{"email": "kim@example.com", "assignments": [
 		{"roleId": "6720f0a1b2c3d4e5f6a7b8ca", "scope": {"level": "project", "projectId": "6720f0a1b2c3d4e5f6a7b8cb", "resources": "selected"}}
-	]}`
+	], "teamIds": ["6720f0a1b2c3d4e5f6a7b8cc"]}`
 	var request CreateInvitationRequest
 	if err := json.Unmarshal([]byte(body), &request); err != nil {
 		t.Fatal(err)
 	}
-	if request.Email != "kim@example.com" || len(request.Assignments) != 1 || request.Assignments[0].Scope.Level != models.LevelProject || request.ExpiresAt != nil {
+	if request.Email != "kim@example.com" || len(request.Assignments) != 1 || request.Assignments[0].Scope.Level != models.LevelProject || request.ExpiresAt != nil || len(request.TeamIds) != 1 {
 		t.Errorf("decoded %+v", request)
 	}
 }

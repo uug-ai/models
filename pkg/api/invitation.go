@@ -43,6 +43,11 @@ const (
 	// InvitationRoleNotFound: an assignment names a role that is not one of
 	// the organisation's active roles.
 	InvitationRoleNotFound InvitationResponseStatus = "invitation_role_not_found"
+	// InvitationTeamNotFound: a listed team is not one of the organisation's.
+	InvitationTeamNotFound InvitationResponseStatus = "invitation_team_not_found"
+	// InvitationTeamManagedByProvider: a listed team gets its members from an
+	// identity provider, so an invitation cannot add to it.
+	InvitationTeamManagedByProvider InvitationResponseStatus = "invitation_team_managed_by_provider"
 	// InvitationLegacyMode: the organisation has not been cut over to RBAC;
 	// accounts are still created through the legacy account flow.
 	InvitationLegacyMode InvitationResponseStatus = "invitation_legacy_mode"
@@ -59,27 +64,29 @@ func (s InvitationResponseStatus) String() string {
 func (s InvitationResponseStatus) Translate(lang string) string {
 	translations := map[string]map[InvitationResponseStatus]string{
 		"en": {
-			InvitationBindingFailed:    "Invitation binding failed",
-			InvitationValidationFailed: "Invitation validation failed",
-			InvitationFound:            "Invitation found",
-			InvitationNotFound:         "Invitation not found",
-			InvitationGetAllSuccess:    "Invitations retrieved successfully",
-			InvitationGetAllFailed:     "Failed to retrieve invitations",
-			InvitationCreateSuccess:    "Invitation sent successfully",
-			InvitationCreateFailed:     "Failed to send invitation",
-			InvitationResendSuccess:    "Invitation sent again",
-			InvitationResendFailed:     "Failed to send the invitation again",
-			InvitationRevokeSuccess:    "Invitation revoked successfully",
-			InvitationRevokeFailed:     "Failed to revoke invitation",
-			InvitationAcceptSuccess:    "Invitation accepted",
-			InvitationAcceptFailed:     "Failed to accept invitation",
-			InvitationPending:          "This address already has an open invitation",
-			InvitationAlreadyMember:    "This address already belongs to a member of the organisation",
-			InvitationClosed:           "This invitation is no longer valid",
-			InvitationEmailMismatch:    "This invitation was sent to another email address",
-			InvitationExceedsAccess:    "You cannot grant access you do not have",
-			InvitationRoleNotFound:     "Role not found",
-			InvitationLegacyMode:       "Members of this organisation are still added through the legacy account flow",
+			InvitationBindingFailed:         "Invitation binding failed",
+			InvitationValidationFailed:      "Invitation validation failed",
+			InvitationFound:                 "Invitation found",
+			InvitationNotFound:              "Invitation not found",
+			InvitationGetAllSuccess:         "Invitations retrieved successfully",
+			InvitationGetAllFailed:          "Failed to retrieve invitations",
+			InvitationCreateSuccess:         "Invitation sent successfully",
+			InvitationCreateFailed:          "Failed to send invitation",
+			InvitationResendSuccess:         "Invitation sent again",
+			InvitationResendFailed:          "Failed to send the invitation again",
+			InvitationRevokeSuccess:         "Invitation revoked successfully",
+			InvitationRevokeFailed:          "Failed to revoke invitation",
+			InvitationAcceptSuccess:         "Invitation accepted",
+			InvitationAcceptFailed:          "Failed to accept invitation",
+			InvitationPending:               "This address already has an open invitation",
+			InvitationAlreadyMember:         "This address already belongs to a member of the organisation",
+			InvitationClosed:                "This invitation is no longer valid",
+			InvitationEmailMismatch:         "This invitation was sent to another email address",
+			InvitationExceedsAccess:         "You cannot grant access you do not have",
+			InvitationRoleNotFound:          "Role not found",
+			InvitationTeamNotFound:          "Team not found",
+			InvitationTeamManagedByProvider: "This team's members are managed by your identity provider",
+			InvitationLegacyMode:            "Members of this organisation are still added through the legacy account flow",
 		},
 	}
 
@@ -99,9 +106,11 @@ func (s InvitationResponseStatus) Translate(lang string) string {
 // ---------- Request / Response DTOs (invitation domain) ----------
 //
 // Invitations belong to the caller's current organisation. Inviting needs
-// members.invite; each assignment is bounded by the inviter's own access
-// (Access.CanGrant), as granting it directly would be. Accepting creates the
-// membership and every assignment (source invitation) together.
+// members.invite; each assignment, and every assignment of each team the
+// invitee joins, is bounded by the inviter's own access (Access.CanGrant), as
+// granting it or adding the member directly would be. Accepting creates the
+// membership, every assignment (source invitation) and the team memberships
+// together.
 //
 // The raw token is returned once, by CreateInvitation and ResendInvitation,
 // in Invitation.Token, for the email link; only its hash is stored.
@@ -120,12 +129,19 @@ type InvitationInviter struct {
 	Email    string `json:"email"`
 }
 
-// InvitationDetails is an invitation with its inviter and the roles of its
-// assignments.
+// InvitationTeam names a team the invitee joins.
+type InvitationTeam struct {
+	Id   string `json:"id"`
+	Name string `json:"name"`
+}
+
+// InvitationDetails is an invitation with its inviter, the roles of its
+// assignments and the teams the invitee joins.
 type InvitationDetails struct {
 	Invitation models.OrganisationInvitation `json:"invitation"`
 	InvitedBy  InvitationInviter             `json:"invitedBy"`
 	Roles      []models.Role                 `json:"roles"`
+	Teams      []InvitationTeam              `json:"teams,omitempty"`
 }
 
 // GetInvitations lists the organisation's invitations.
@@ -147,14 +163,15 @@ type GetInvitationsErrorResponse struct {
 }
 
 // CreateInvitation invites an address with the organisation and project
-// assignments to grant on acceptance; with none, accepting only creates the
-// membership. The server normalises the email, sets the inviter, status,
+// assignments to grant and the teams to join on acceptance (teams managed in
+// Hub only); with neither, accepting only creates the membership. The server normalises the email, sets the inviter, status,
 // expiry (ExpiresAt, or the deployment default when unset) and audit, and
 // sends the email.
 // @Router /invitations [post]
 type CreateInvitationRequest struct {
 	Email       string                        `json:"email"`
 	Assignments []models.InvitationAssignment `json:"assignments,omitempty"`
+	TeamIds     []string                      `json:"teamIds,omitempty"`
 	ExpiresAt   *time.Time                    `json:"expiresAt,omitempty"`
 }
 type CreateInvitationResponse struct {
@@ -220,8 +237,9 @@ type GetInvitationByTokenErrorResponse struct {
 }
 
 // AcceptInvitation redeems an open invitation for the signed-in user, whose
-// email must be the invited address: it creates the membership and every
-// assignment together and closes the invitation.
+// email must be the invited address: it creates the membership, every
+// assignment and the team memberships together and closes the invitation. A
+// team deleted since the invitation was sent is skipped.
 // @Router /invitations/accept [post]
 type AcceptInvitationRequest struct {
 	Token string `json:"token"`
@@ -229,6 +247,7 @@ type AcceptInvitationRequest struct {
 type AcceptInvitationResponse struct {
 	Membership      models.OrganisationUser `json:"membership"`
 	RoleAssignments []models.RoleAssignment `json:"roleAssignments"`
+	TeamIds         []string                `json:"teamIds,omitempty"` // Teams joined
 }
 type AcceptInvitationSuccessResponse struct {
 	SuccessResponse

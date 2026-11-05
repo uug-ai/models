@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/mail"
+	"slices"
 	"strings"
 	"time"
 
@@ -20,9 +21,11 @@ func NormalizeInvitationEmail(email string) string {
 }
 
 // Validate checks that the invitation belongs to an organisation, names one
-// normalised email address, has a known status, and that every assignment has
-// a role and a complete scope. Whether the inviter may grant each assignment
-// is Access.CanGrant, checked when the invitation is created.
+// normalised email address, has a known status, that every assignment has a
+// role and a complete scope, and that each team is listed once. Whether the
+// inviter may grant each assignment, and each team's assignments, is
+// Access.CanGrant, checked when the invitation is created; that every team
+// exists in the organisation and is managed in Hub is the writer's check.
 func (i OrganisationInvitation) Validate() error {
 	if i.OrganisationId.IsZero() {
 		return fmt.Errorf("%w: missing organisation", ErrInvitationInvalid)
@@ -54,6 +57,14 @@ func (i OrganisationInvitation) Validate() error {
 			if earlier.RoleId == assignment.RoleId && earlier.Scope.Level == assignment.Scope.Level && earlier.Scope.ProjectId == assignment.Scope.ProjectId {
 				return fmt.Errorf("%w: assignment %d repeats a role in the same project", ErrInvitationInvalid, index)
 			}
+		}
+	}
+	for index, teamId := range i.TeamIds {
+		if teamId.IsZero() {
+			return fmt.Errorf("%w: empty team id", ErrInvitationInvalid)
+		}
+		if slices.Contains(i.TeamIds[:index], teamId) {
+			return fmt.Errorf("%w: team %s listed twice", ErrInvitationInvalid, teamId.Hex())
 		}
 	}
 	return nil

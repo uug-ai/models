@@ -36,6 +36,11 @@ func TestOrganisationInvitationValidate(t *testing.T) {
 	if err := (OrganisationInvitation{OrganisationId: primitive.NewObjectID(), Email: "kim@example.com", Status: InvitationStatusPending}).Validate(); err != nil {
 		t.Fatalf("membership-only invitation: %v", err)
 	}
+	withTeams := invitationFixture()
+	withTeams.TeamIds = []primitive.ObjectID{primitive.NewObjectID(), primitive.NewObjectID()}
+	if err := withTeams.Validate(); err != nil {
+		t.Fatalf("invitation with teams: %v", err)
+	}
 	for name, mutate := range map[string]func(*OrganisationInvitation){
 		"missing organisation":       func(i *OrganisationInvitation) { i.OrganisationId = primitive.NilObjectID },
 		"missing email":              func(i *OrganisationInvitation) { i.Email = "" },
@@ -46,6 +51,11 @@ func TestOrganisationInvitationValidate(t *testing.T) {
 		"assignment without role":    func(i *OrganisationInvitation) { i.Assignments[0].RoleId = primitive.NilObjectID },
 		"assignment with bad scope":  func(i *OrganisationInvitation) { i.Assignments[1].Scope.ProjectId = primitive.NilObjectID },
 		"assignment with bad window": func(i *OrganisationInvitation) { i.Assignments[1].TimeWindow.Timezone = "Mars/Olympus" },
+		"empty team id":              func(i *OrganisationInvitation) { i.TeamIds = []primitive.ObjectID{primitive.NilObjectID} },
+		"team listed twice": func(i *OrganisationInvitation) {
+			team := primitive.NewObjectID()
+			i.TeamIds = []primitive.ObjectID{team, team}
+		},
 		"role repeated in a project": func(i *OrganisationInvitation) {
 			repeat := i.Assignments[1]
 			repeat.Scope.SiteIds = []primitive.ObjectID{primitive.NewObjectID()}
