@@ -23,9 +23,10 @@ func NormalizeInvitationEmail(email string) string {
 // Validate checks that the invitation belongs to an organisation, names one
 // normalised email address, has a known status, that every assignment has a
 // role and a complete scope, and that each team is listed once. Whether the
-// inviter may grant each assignment, and each team's assignments, is
-// Access.CanGrant, checked when the invitation is created; that every team
-// exists in the organisation and is managed in Hub is the writer's check.
+// inviter may grant each assignment (Access.CanGrant) and add the invitee to
+// each team (Access.CanChangeTeamMembers) is checked when the invitation is
+// created; that every team exists in the organisation and is managed in Hub
+// is the writer's check.
 func (i OrganisationInvitation) Validate() error {
 	if i.OrganisationId.IsZero() {
 		return fmt.Errorf("%w: missing organisation", ErrInvitationInvalid)

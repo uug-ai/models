@@ -106,9 +106,9 @@ func (s InvitationResponseStatus) Translate(lang string) string {
 // ---------- Request / Response DTOs (invitation domain) ----------
 //
 // Invitations belong to the caller's current organisation. Inviting needs
-// members.invite; each assignment, and every assignment of each team the
-// invitee joins, is bounded by the inviter's own access (Access.CanGrant), as
-// granting it or adding the member directly would be. Accepting creates the
+// members.invite; each assignment needs what granting it directly needs
+// (Access.CanGrant), and each team the invitee joins what adding the member
+// directly needs (Access.CanChangeTeamMembers). Accepting creates the
 // membership, every assignment (source invitation) and the team memberships
 // together.
 //

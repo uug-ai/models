@@ -120,7 +120,6 @@ func TestCanGrantOrganisationRole(t *testing.T) {
 	f := newGrantFixture()
 	manager := f.access(t, map[*Role]RoleAssignmentScope{
 		{Name: "Members", AssignableAt: LevelOrganisation, Permissions: []Permission{PermissionMembersRead, PermissionMembersUpdate}}: allProjects(),
-		{Name: "Delegate", AssignableAt: LevelOrganisation, Permissions: []Permission{PermissionProjectsManageAccess}}:                selectedProjects(f.projectOne),
 	})
 	tests := []struct {
 		name       string
@@ -129,16 +128,12 @@ func TestCanGrantOrganisationRole(t *testing.T) {
 		scope      RoleAssignmentScope
 		reason     GrantDenial
 		permission Permission
-		project    primitive.ObjectID
 	}{
-		{name: "held on all projects", access: manager, role: f.organisationRole(PermissionMembersRead), scope: allProjects()},
-		{name: "held on the selected project", access: manager, role: f.organisationRole(PermissionProjectsManageAccess), scope: selectedProjects(f.projectOne)},
-		{name: "not held on another selected project", access: manager, role: f.organisationRole(PermissionProjectsManageAccess),
-			scope: selectedProjects(f.projectOne, f.projectTwo), reason: GrantDenialPermissionNotHeld, permission: PermissionProjectsManageAccess, project: f.projectTwo},
-		{name: "not held on all projects", access: manager, role: f.organisationRole(PermissionProjectsManageAccess),
-			scope: allProjects(), reason: GrantDenialPermissionNotHeld, permission: PermissionProjectsManageAccess},
-		{name: "not held anywhere", access: manager, role: f.organisationRole(PermissionMembersRead, PermissionRolesRead),
-			scope: allProjects(), reason: GrantDenialPermissionNotHeld, permission: PermissionRolesRead},
+		{name: "held", access: manager, role: f.organisationRole(PermissionMembersRead), scope: allProjects()},
+		{name: "not held, on all projects", access: manager, role: f.organisationRole(PermissionRolesUpdate, PermissionTeamsUpdate), scope: allProjects()},
+		{name: "not held, on selected projects", access: manager, role: f.organisationRole(PermissionProjectsManageAccess), scope: selectedProjects(f.projectOne, f.projectTwo)},
+		{name: "owner-only", access: manager, role: f.organisationRole(PermissionMembersRead, PermissionStorageRead),
+			scope: allProjects(), reason: GrantDenialOwnerOnly, permission: PermissionStorageRead},
 		{name: "without members.update", access: f.access(t, map[*Role]RoleAssignmentScope{
 			{Name: "Reader", AssignableAt: LevelOrganisation, Permissions: []Permission{PermissionMembersRead, PermissionProjectsManageAccess}}: allProjects(),
 		}), role: f.organisationRole(PermissionMembersRead), scope: allProjects(), reason: GrantDenialNoAccessPermission},
@@ -152,8 +147,8 @@ func TestCanGrantOrganisationRole(t *testing.T) {
 				}
 				return
 			}
-			if decision.Allowed || decision.Reason != test.reason || decision.Permission != test.permission || decision.Project != test.project {
-				t.Errorf("decision %+v, want %s %s %s", decision, test.reason, test.permission, test.project.Hex())
+			if decision.Allowed || decision.Reason != test.reason || decision.Permission != test.permission {
+				t.Errorf("decision %+v, want %s %s", decision, test.reason, test.permission)
 			}
 		})
 	}
@@ -174,9 +169,12 @@ func TestCanGrantProjectRoleWithProjectsManageAccess(t *testing.T) {
 	if decision := mustGrant(t, delegate, f.source, viewer, f.selected(f.projectOne, []primitive.ObjectID{f.siteB}, nil)); !decision.Allowed {
 		t.Errorf("projects.manageAccess grants sites outside its own: %+v", decision)
 	}
+	if decision := mustGrant(t, delegate, f.source, f.projectRole(PermissionDevicesRead, PermissionDevicesUpdate, PermissionDevicesConfigure), f.allResources(f.projectOne)); !decision.Allowed {
+		t.Errorf("permissions the delegate does not hold: %+v", decision)
+	}
 	if decision := mustGrant(t, delegate, f.source, f.projectRole(PermissionDevicesRead, PermissionDevicesDelete), f.allResources(f.projectOne)); decision.Allowed ||
-		decision.Reason != GrantDenialPermissionNotHeld || decision.Permission != PermissionDevicesDelete {
-		t.Errorf("permission not held: %+v", decision)
+		decision.Reason != GrantDenialOwnerOnly || decision.Permission != PermissionDevicesDelete {
+		t.Errorf("owner-only permission: %+v", decision)
 	}
 	if decision := mustGrant(t, delegate, f.source, viewer, f.allResources(f.projectTwo)); decision.Allowed || decision.Reason != GrantDenialNoAccessPermission {
 		t.Errorf("project not covered: %+v", decision)
@@ -218,9 +216,12 @@ func TestCanGrantProjectRoleWithProjectManageAccess(t *testing.T) {
 		})
 	}
 
-	if decision := mustGrant(t, siteAdmin, f.source, f.projectRole(PermissionDevicesRead, PermissionDevicesUpdate), f.selected(f.projectOne, sites(f.siteA), nil)); decision.Allowed ||
-		decision.Reason != GrantDenialPermissionNotHeld || decision.Permission != PermissionDevicesUpdate {
-		t.Errorf("permission not held: %+v", decision)
+	if decision := mustGrant(t, siteAdmin, f.source, f.projectRole(PermissionDevicesRead, PermissionDevicesUpdate), f.selected(f.projectOne, sites(f.siteA), nil)); !decision.Allowed {
+		t.Errorf("a permission the grantor does not hold, on its own site: %+v", decision)
+	}
+	if decision := mustGrant(t, siteAdmin, f.source, f.projectRole(PermissionDevicesRead, PermissionDevicesReadLogs), f.selected(f.projectOne, sites(f.siteA), nil)); decision.Allowed ||
+		decision.Reason != GrantDenialOwnerOnly || decision.Permission != PermissionDevicesReadLogs {
+		t.Errorf("owner-only permission: %+v", decision)
 	}
 
 	projectAdmin := f.access(t, map[*Role]RoleAssignmentScope{
@@ -288,5 +289,180 @@ func TestCanChange(t *testing.T) {
 	}
 	if _, err := siteAdmin.CanChange(context.Background(), f.source, viewer, nil, nil); !errors.Is(err, ErrRoleAssignmentInvalid) {
 		t.Errorf("no scopes: %v", err)
+	}
+}
+
+func builtIn(t *testing.T, f grantFixture, key RoleKey) Role {
+	t.Helper()
+	role, ok := BuiltInRole(key)
+	if !ok {
+		t.Fatalf("no built-in role %q", key)
+	}
+	role.Id, role.OrganisationId = primitive.NewObjectID(), f.organisationId
+	return role
+}
+
+func TestOrganisationManagerGrants(t *testing.T) {
+	f := newGrantFixture()
+	manager := builtIn(t, f, RoleKeyOrganisationManager)
+	access := f.access(t, map[*Role]RoleAssignmentScope{
+		{Name: manager.Name, AssignableAt: manager.AssignableAt, Permissions: manager.Permissions}: allProjects(),
+	})
+	for _, test := range []struct {
+		key        RoleKey
+		scope      RoleAssignmentScope
+		permission Permission // owner-only permission that denies it, if any
+	}{
+		{key: RoleKeyViewer, scope: f.allResources(f.projectOne)},
+		{key: RoleKeyEditor, scope: f.selected(f.projectTwo, []primitive.ObjectID{f.siteB}, nil)},
+		{key: RoleKeyOrganisationManager, scope: allProjects()},
+		{key: RoleKeyProjectAdmin, scope: f.allResources(f.projectOne), permission: PermissionWorkflowsCreate},
+		{key: RoleKeyBillingAdmin, scope: allProjects(), permission: PermissionBillingRead},
+	} {
+		t.Run(string(test.key), func(t *testing.T) {
+			decision := mustGrant(t, access, f.source, builtIn(t, f, test.key), test.scope)
+			if test.permission == "" && !decision.Allowed {
+				t.Errorf("denied: %+v", decision)
+			}
+			if test.permission != "" && (decision.Allowed || decision.Reason != GrantDenialOwnerOnly || decision.Permission != test.permission) {
+				t.Errorf("decision %+v, want owner-only %s", decision, test.permission)
+			}
+		})
+	}
+}
+
+// Delegated administrators hand out at most what the legacy admin tier holds,
+// so migrated admins can grant exactly what they could before.
+func TestLegacyRolesHoldNoOwnerOnlyPermission(t *testing.T) {
+	for _, key := range []RoleKey{RoleKeyLegacyGuest, RoleKeyLegacyEditor, RoleKeyLegacyAdmin, RoleKeyLegacyMemberOrganisation, RoleKeyLegacyAdminOrganisation,
+		RoleKeyOrganisationManager, RoleKeyEditor, RoleKeyViewer} {
+		role, _ := BuiltInRole(key)
+		if permission, ok := role.OwnerOnlyPermission(); ok {
+			t.Errorf("%s holds owner-only %q", key, permission)
+		}
+	}
+	for _, key := range []RoleKey{RoleKeyOwner, RoleKeyProjectAdmin, RoleKeyBillingAdmin} {
+		role, _ := BuiltInRole(key)
+		if _, ok := role.OwnerOnlyPermission(); !ok {
+			t.Errorf("%s holds no owner-only permission", key)
+		}
+	}
+}
+
+func TestCanManageRole(t *testing.T) {
+	f := newGrantFixture()
+	roleAdmin := f.access(t, map[*Role]RoleAssignmentScope{
+		{Name: "Role admin", AssignableAt: LevelOrganisation, Permissions: []Permission{PermissionRolesCreate, PermissionRolesUpdate, PermissionRolesDelete}}: allProjects(),
+	})
+	updateOnly := f.access(t, map[*Role]RoleAssignmentScope{
+		{Name: "Role editor", AssignableAt: LevelOrganisation, Permissions: []Permission{PermissionRolesUpdate}}: allProjects(),
+	})
+	teamId, otherUser := primitive.NewObjectID(), primitive.NewObjectID()
+	myTeams := []TeamMember{{OrganisationId: f.organisationId, TeamId: teamId, UserId: f.userId}}
+	operator := f.projectRole(PermissionDevicesRead)
+	wider := operator
+	wider.Permissions = []Permission{PermissionDevicesRead, PermissionDevicesConfigure}
+	logs := operator
+	logs.Permissions = []Permission{PermissionDevicesRead, PermissionDevicesReadLogs}
+	assigned := func(principal Principal) []RoleAssignment {
+		return []RoleAssignment{{OrganisationId: f.organisationId, Principal: principal, RoleId: operator.Id, Scope: f.allResources(f.projectOne), IsActive: true}}
+	}
+	toOther := assigned(Principal{Type: PrincipalTypeUser, Id: otherUser})
+
+	tests := []struct {
+		name          string
+		access        Access
+		current, next *Role
+		assignments   []RoleAssignment
+		reason        GrantDenial
+	}{
+		{name: "create a role with permissions not held", access: roleAdmin, next: &wider},
+		{name: "widen a role assigned to others", access: roleAdmin, current: &operator, next: &wider, assignments: toOther},
+		{name: "delete a role assigned to others", access: roleAdmin, current: &operator, assignments: toOther},
+		{name: "create without roles.create", access: updateOnly, next: &wider, reason: GrantDenialNoAccessPermission},
+		{name: "delete without roles.delete", access: updateOnly, current: &operator, reason: GrantDenialNoAccessPermission},
+		{name: "add an owner-only permission", access: roleAdmin, current: &operator, next: &logs, reason: GrantDenialOwnerOnly},
+		{name: "remove an owner-only permission", access: roleAdmin, current: &logs, next: &operator, reason: GrantDenialOwnerOnly},
+		{name: "create with an owner-only permission", access: roleAdmin, next: &logs, reason: GrantDenialOwnerOnly},
+		{name: "a role the actor holds", access: roleAdmin, current: &operator, next: &wider,
+			assignments: assigned(Principal{Type: PrincipalTypeUser, Id: f.userId}), reason: GrantDenialSelf},
+		{name: "a role the actor holds through a team", access: roleAdmin, current: &operator,
+			assignments: assigned(Principal{Type: PrincipalTypeTeam, Id: teamId}), reason: GrantDenialSelf},
+		{name: "owner", access: ownerAccess(t, f), current: &operator, next: &logs, assignments: assigned(Principal{Type: PrincipalTypeUser, Id: f.userId})},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			decision, err := test.access.CanManageRole(f.userId, myTeams, test.current, test.next, test.assignments)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if test.reason == "" && !decision.Allowed {
+				t.Errorf("denied: %+v", decision)
+			}
+			if test.reason != "" && (decision.Allowed || decision.Reason != test.reason) {
+				t.Errorf("decision %+v, want %s", decision, test.reason)
+			}
+		})
+	}
+
+	viewer := builtIn(t, f, RoleKeyViewer)
+	invalid := operator
+	invalid.Name = ""
+	for name, roles := range map[string][2]*Role{
+		"system role":  {&viewer, &wider},
+		"invalid next": {nil, &invalid},
+		"no roles":     {nil, nil},
+	} {
+		if _, err := ownerAccess(t, f).CanManageRole(f.userId, nil, roles[0], roles[1], nil); !errors.Is(err, ErrRoleInvalid) {
+			t.Errorf("%s: %v", name, err)
+		}
+	}
+}
+
+func TestCanChangeTeamMembers(t *testing.T) {
+	f := newGrantFixture()
+	teamAdmin := f.access(t, map[*Role]RoleAssignmentScope{
+		{Name: "Team admin", AssignableAt: LevelOrganisation, Permissions: []Permission{PermissionTeamsUpdate}}: allProjects(),
+	})
+	reader := f.access(t, map[*Role]RoleAssignmentScope{
+		{Name: "Team reader", AssignableAt: LevelOrganisation, Permissions: []Permission{PermissionTeamsRead}}: allProjects(),
+	})
+	team := Team{Id: primitive.NewObjectID(), OrganisationId: f.organisationId, Name: "Night shift", Source: TeamSourceManual}
+	other := primitive.NewObjectID()
+	projectAdmin := builtIn(t, f, RoleKeyProjectAdmin)
+	editor := builtIn(t, f, RoleKeyEditor)
+
+	tests := []struct {
+		name    string
+		access  Access
+		roles   []Role
+		members []primitive.ObjectID
+		reason  GrantDenial
+	}{
+		{name: "team with access the actor does not hold", access: teamAdmin, roles: []Role{editor}, members: []primitive.ObjectID{other}},
+		{name: "without teams.update", access: reader, roles: []Role{editor}, members: []primitive.ObjectID{other}, reason: GrantDenialNoAccessPermission},
+		{name: "team assigned an owner-only role", access: teamAdmin, roles: []Role{editor, projectAdmin}, members: []primitive.ObjectID{other}, reason: GrantDenialOwnerOnly},
+		{name: "the actor themselves", access: teamAdmin, roles: []Role{editor}, members: []primitive.ObjectID{other, f.userId}, reason: GrantDenialSelf},
+		{name: "owner", access: ownerAccess(t, f), roles: []Role{projectAdmin}, members: []primitive.ObjectID{f.userId}},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			decision, err := test.access.CanChangeTeamMembers(f.userId, team, test.roles, test.members)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if test.reason == "" && !decision.Allowed {
+				t.Errorf("denied: %+v", decision)
+			}
+			if test.reason != "" && (decision.Allowed || decision.Reason != test.reason) {
+				t.Errorf("decision %+v, want %s", decision, test.reason)
+			}
+		})
+	}
+
+	synced := team
+	synced.Source, synced.IdentityProvider = TeamSourceIdentityProvider, &TeamIdentityProvider{Provider: "entra", ExternalGroupId: "g-1"}
+	if _, err := ownerAccess(t, f).CanChangeTeamMembers(f.userId, synced, nil, []primitive.ObjectID{other}); !errors.Is(err, ErrTeamInvalid) {
+		t.Errorf("identity provider team: %v", err)
 	}
 }
