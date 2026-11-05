@@ -67,7 +67,9 @@ type TeamIdentityProvider struct {
 // active.
 //
 // Members are stored as TeamMember documents, one per member, not on the team.
-// An organisation holds at most one team per identity provider group.
+// Within an organisation, team names are unique ignoring case, and there is at
+// most one team per identity provider group. Source and IdentityProvider are
+// fixed at creation (TeamPatch never changes them).
 type Team struct {
 	Id               primitive.ObjectID    `json:"id" bson:"_id,omitempty"`
 	OrganisationId   primitive.ObjectID    `json:"organisationId" bson:"organisationId,omitempty"`
@@ -116,6 +118,31 @@ func (t Team) Validate() error {
 // provider's sync.
 func (t Team) ManagesMembersInHub() bool {
 	return t.Source == TeamSourceManual
+}
+
+// TeamPatch is a partial update of a team: only the fields that are set
+// change. A team's source and identity provider group never change; linking
+// another group means creating another team.
+type TeamPatch struct {
+	Name        *string `json:"name,omitempty"`
+	Description *string `json:"description,omitempty"`
+}
+
+// IsEmpty reports whether the patch changes nothing.
+func (p TeamPatch) IsEmpty() bool {
+	return p.Name == nil && p.Description == nil
+}
+
+// Apply returns the team with the patch applied. The result still needs
+// Validate.
+func (p TeamPatch) Apply(team Team) Team {
+	if p.Name != nil {
+		team.Name = *p.Name
+	}
+	if p.Description != nil {
+		team.Description = *p.Description
+	}
+	return team
 }
 
 // TeamMember puts one organisation member in one team. It carries no access

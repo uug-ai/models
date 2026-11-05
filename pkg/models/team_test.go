@@ -260,3 +260,22 @@ func TestRoleAssignmentAffectsUser(t *testing.T) {
 		})
 	}
 }
+
+func TestTeamPatch(t *testing.T) {
+	team := Team{Id: primitive.NewObjectID(), OrganisationId: primitive.NewObjectID(), Name: "Control room", Description: "Night shift",
+		Source: TeamSourceIdentityProvider, IdentityProvider: &TeamIdentityProvider{Provider: "okta", ExternalGroupId: "00g1"}}
+	if !(TeamPatch{}).IsEmpty() || (TeamPatch{Description: new(string)}).IsEmpty() {
+		t.Fatal("IsEmpty")
+	}
+	if got := (TeamPatch{}).Apply(team); got.Name != team.Name || got.Description != team.Description {
+		t.Errorf("empty patch changed the team: %+v", got)
+	}
+	name, description := "Control room Ghent", ""
+	got := TeamPatch{Name: &name, Description: &description}.Apply(team)
+	if got.Name != name || got.Description != "" {
+		t.Errorf("patched %+v", got)
+	}
+	if got.Id != team.Id || got.OrganisationId != team.OrganisationId || got.Source != team.Source || got.IdentityProvider != team.IdentityProvider {
+		t.Error("patch changed a fixed field")
+	}
+}
