@@ -59,7 +59,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleAdmin,
 			pages:            []string{"channels", "plans-integrations", "subscription", "io"},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionProjectUpdate, PermissionProjectManageCredentials},
-			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionAuditRead, PermissionPagesOrganisation, PermissionPagesAudit},
 		},
 		{
 			name:             "live view follows the feature levels, not the tier",
@@ -124,7 +124,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleAdmin,
 			pages:            []string{legacyPageTasks},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionCasesDelete, PermissionCasesManageMembership, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLabelsRead, PermissionProjectUpdate, PermissionProjectManageCredentials, PermissionPagesCases},
-			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionAuditRead, PermissionPagesOrganisation, PermissionPagesAudit},
 		},
 	}
 	for _, test := range tests {

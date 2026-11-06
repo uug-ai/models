@@ -92,7 +92,7 @@ var legacyTierPages = map[BaseRole][]string{
 
 // legacyTierOptionalPages are pages a custom role on the tier may list
 // although the built-in tier is not served them: the audit log is opt-in
-// below the admin tier.
+// below the admin tier, and always on for it.
 var legacyTierOptionalPages = map[BaseRole][]string{
 	BaseRoleGuest:  {legacyPageAudit},
 	BaseRoleEditor: {legacyPageAudit},
@@ -189,9 +189,11 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 	// (D7). Device recording mode and logs, billing, storage and device system
 	// tags stay with owners.
 	BaseRoleAdmin: {
-		// Workspace settings have no page key: every admin reaches them.
+		// Workspace settings have no page key, and the audit log is always on
+		// for this tier (custom admin roles never listed it): every admin
+		// reaches them.
 		{[]string{legacyAlways}, []Permission{
-			PermissionPagesOrganisation,
+			PermissionPagesOrganisation, PermissionPagesAudit, PermissionAuditRead,
 			PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionMarkersWrite, PermissionDevicesRead,
 			PermissionProjectsCreate, PermissionProjectsDelete, PermissionProjectUpdate, PermissionProjectManageCredentials,
 		}},
@@ -223,7 +225,6 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 		}},
 		{[]string{legacyPageAlerts}, []Permission{PermissionAlertsRead, PermissionAlertsCreate, PermissionAlertsUpdate, PermissionAlertsManagePrivacy}},
 		{[]string{legacyPageSettings}, []Permission{PermissionLabelsCreate, PermissionLabelsUpdate, PermissionLabelsDelete}},
-		{[]string{legacyPageAudit}, []Permission{PermissionAuditRead}},
 	},
 }
 
