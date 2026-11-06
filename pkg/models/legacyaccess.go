@@ -33,10 +33,6 @@ type LegacyRole struct {
 	IsActive           int                 `json:"isActive" bson:"isActive"`
 	FeaturePermissions LegacyFeatureLevels `json:"featurePermissions" bson:"featurePermissions"`
 	TimeWindowActive   int                 `json:"timeWindowActive" bson:"timeWindowActive"`
-	// DisabledPages lists the tier's default pages (legacyTierDefaultPages)
-	// the role was switched off from. A default page not listed here is held
-	// whether or not Pages lists it; see LegacyCustomRolePages.
-	DisabledPages []string `json:"disabledPages" bson:"disabledPages,omitempty"`
 }
 
 // LegacyFeatureLevels are a legacy custom role's feature levels: 0 unset
@@ -160,7 +156,7 @@ func MapLegacyAccess(in LegacyUserAccess) (LegacyAccess, error) {
 	if err != nil {
 		return LegacyAccess{}, err
 	}
-	projectPermissions, organisationPermissions, ok := LegacyRolePermissions(parent, LegacyCustomRolePages(parent, role.Pages, role.DisabledPages), features)
+	projectPermissions, organisationPermissions, ok := LegacyRolePermissions(parent, role.Pages, features)
 	if !ok {
 		return LegacyAccess{}, fmt.Errorf("%w: custom role %q has parent %q", ErrLegacyAccessInvalid, role.Name, role.ParentRole)
 	}

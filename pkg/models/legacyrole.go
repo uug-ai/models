@@ -98,29 +98,6 @@ var legacyTierOptionalPages = map[BaseRole][]string{
 	BaseRoleEditor: {legacyPageAudit},
 }
 
-// legacyTierDefaultPages are pages every custom role on the tier holds unless
-// it was switched off from them (LegacyRole.DisabledPages). They arrived after
-// the tier's custom roles were created, so a stored page list without them
-// does not mean they were left out: the audit log is on by default for the
-// admin tier.
-var legacyTierDefaultPages = map[BaseRole][]string{
-	BaseRoleAdmin: {legacyPageAudit},
-}
-
-// LegacyCustomRolePages returns the page list a custom role on the tier is
-// served: its stored pages, plus the tier's default pages it was not switched
-// off from. The user middleware and the access mapping both read a custom
-// role's pages through it.
-func LegacyCustomRolePages(tier BaseRole, pages, disabled []string) []string {
-	served := slices.Clone(pages)
-	for _, page := range legacyTierDefaultPages[tier] {
-		if !slices.Contains(served, page) && !slices.Contains(disabled, page) {
-			served = append(served, page)
-		}
-	}
-	return served
-}
-
 // legacyTierFeatures is the feature levels each built-in tier is served today:
 // guests have no PTZ and no remote config, everything else is unset.
 var legacyTierFeatures = map[BaseRole]FeaturePermissions{

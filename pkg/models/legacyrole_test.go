@@ -146,6 +146,17 @@ func TestLegacyRolePermissions(t *testing.T) {
 	}
 }
 
+func TestLegacyAdminCustomRoleOptsIntoAudit(t *testing.T) {
+	_, without, _ := LegacyRolePermissions(BaseRoleAdmin, []string{legacyPageSettings}, FeaturePermissions{})
+	if slices.Contains(without, PermissionAuditRead) || slices.Contains(without, PermissionPagesAudit) {
+		t.Errorf("admin custom role without the audit page holds audit: %v", without)
+	}
+	_, with, _ := LegacyRolePermissions(BaseRoleAdmin, []string{legacyPageSettings, legacyPageAudit}, FeaturePermissions{})
+	if !slices.Contains(with, PermissionAuditRead) || !slices.Contains(with, PermissionPagesAudit) {
+		t.Errorf("admin custom role listing the audit page lacks audit: %v", with)
+	}
+}
+
 func TestLegacyPageTables(t *testing.T) {
 	for tier, grants := range legacyTierPageGrants {
 		for _, grant := range grants {
@@ -185,28 +196,5 @@ func TestLegacyPagesShowOnlyThemselves(t *testing.T) {
 	// A page the tier is never served shows nothing.
 	if project, _, _ := LegacyRolePermissions(BaseRoleGuest, []string{legacyPageAlerts, legacyPageSettings}, FeaturePermissions{}); slices.Contains(project, PermissionPagesAlerts) || slices.Contains(project, PermissionPagesSettings) {
 		t.Errorf("guest shown admin pages: %v", project)
-	}
-}
-
-func TestLegacyCustomRolePages(t *testing.T) {
-	tests := []struct {
-		name     string
-		tier     BaseRole
-		pages    []string
-		disabled []string
-		want     []string
-	}{
-		{"admin role from before the audit page holds it", BaseRoleAdmin, []string{legacyPageSettings}, nil, []string{legacyPageSettings, legacyPageAudit}},
-		{"admin role switched off from the audit page", BaseRoleAdmin, []string{legacyPageSettings}, []string{legacyPageAudit}, []string{legacyPageSettings}},
-		{"admin role listing the audit page keeps it once", BaseRoleAdmin, []string{legacyPageAudit}, nil, []string{legacyPageAudit}},
-		{"guest role gets no default page", BaseRoleGuest, []string{legacyPageDashboard}, nil, []string{legacyPageDashboard}},
-		{"guest role opts in by listing it", BaseRoleGuest, []string{legacyPageAudit}, nil, []string{legacyPageAudit}},
-	}
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
-			if got := LegacyCustomRolePages(test.tier, test.pages, test.disabled); !slices.Equal(got, test.want) {
-				t.Errorf("got %v, want %v", got, test.want)
-			}
-		})
 	}
 }
