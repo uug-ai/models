@@ -28,6 +28,8 @@ const (
 	DevicesDevicesList = "devicesList"
 	DevicesDuration = "duration"
 	DevicesGroupNotifications = "groupNotifications"
+	DevicesRecordingCheck = "recordingCheck"
+	DevicesRecordingCheckHours = "recordingCheckHours"
 )
 
 // Highupload property field names (BSON)
