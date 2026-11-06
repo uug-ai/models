@@ -13,7 +13,7 @@ var verifiedLegacyRoles = map[RoleKey][]Permission{
 	"legacy-editor":              {"markers.read", "markers.write", "media.read", "media.update", "media.export", "media.share", "media.redact", "media.forward", "cases.read", "cases.create", "cases.update", "cases.share", "cases.export", "cases.runWorkflow", "workflows.read", "workflow-runs.create", "workflow-runs.read", "days.read", "devices.read", "devices.configure", "live.stream", "ptz.presets", "sites.read", "groups.read", "floor-plans.read", "floor-plans.create", "floor-plans.update", "floor-plans.delete", "io.read", "io.trigger", "videowalls.create", "notifications.read", "notifications.update", "labels.read", "analytics.read", "pages.dashboard", "pages.latestEvents", "pages.liveView", "pages.videowall", "pages.recordings", "pages.dayOverview", "pages.analytics", "pages.watchlist", "pages.cases", "pages.io", "pages.devices", "pages.sites", "pages.floorPlans", "pages.groups"},
 	"legacy-admin":               {"markers.read", "markers.write", "media.read", "media.update", "media.export", "media.share", "media.redact", "media.forward", "cases.read", "cases.create", "cases.update", "cases.share", "cases.export", "cases.runWorkflow", "cases.delete", "cases.manageMembership", "workflows.read", "workflow-runs.create", "workflow-runs.read", "days.read", "devices.read", "devices.update", "devices.configure", "live.stream", "ptz.presets", "sites.read", "sites.create", "sites.update", "groups.read", "groups.create", "floor-plans.read", "floor-plans.create", "floor-plans.update", "floor-plans.delete", "io.read", "io.delete", "io.trigger", "videowalls.read", "videowalls.create", "videowalls.update", "videowalls.delete", "videowalls.assign", "alerts.read", "alerts.create", "alerts.update", "alerts.managePrivacy", "notifications.read", "notifications.update", "labels.read", "labels.create", "labels.update", "labels.delete", "analytics.read", "project.update", "project.manageCredentials", "project.manageAccess", "pages.dashboard", "pages.latestEvents", "pages.liveView", "pages.videowall", "pages.recordings", "pages.dayOverview", "pages.analytics", "pages.watchlist", "pages.cases", "pages.alerts", "pages.io", "pages.devices", "pages.sites", "pages.floorPlans", "pages.groups", "pages.settings"},
 	"legacy-member-organisation": {"organisation.read", "members.read"},
-	"legacy-admin-organisation":  {"organisation.read", "organisation.update", "members.read", "members.invite", "members.update", "members.remove", "roles.read", "roles.create", "roles.update", "projects.create", "projects.delete", "projects.manageAccess", "pages.organisation", "pages.members", "pages.roles"},
+	"legacy-admin-organisation":  {"organisation.read", "organisation.update", "members.read", "members.invite", "members.update", "members.remove", "roles.read", "roles.create", "roles.update", "projects.create", "projects.delete", "projects.manageAccess", "audit.read", "pages.organisation", "pages.members", "pages.roles", "pages.audit"},
 }
 
 func TestBuiltInLegacyRolesMatchVerifiedSets(t *testing.T) {
@@ -59,7 +59,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleAdmin,
 			pages:            []string{"channels", "plans-integrations", "subscription", "io"},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionProjectUpdate, PermissionProjectManageCredentials},
-			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionAuditRead, PermissionPagesOrganisation, PermissionPagesAudit},
 		},
 		{
 			name:             "live view follows the feature levels, not the tier",
@@ -110,7 +110,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleAdmin,
 			pages:            []string{legacyPageTasks},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionCasesDelete, PermissionCasesManageMembership, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLabelsRead, PermissionProjectUpdate, PermissionProjectManageCredentials, PermissionPagesCases},
-			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionAuditRead, PermissionPagesOrganisation, PermissionPagesAudit},
 		},
 	}
 	for _, test := range tests {

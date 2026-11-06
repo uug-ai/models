@@ -173,12 +173,13 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 	// groups (D3) and delete their own alerts by the creator rule. Not granted
 	// although the API allows it: device delete and device permission limits
 	// (D1), workflow writes and run results (D4), channels (D5), deleting roles
-	// (D7). Device recording mode and logs, billing, storage, audit and device
-	// system tags stay with owners.
+	// (D7). Device recording mode and logs, billing, storage and device system
+	// tags stay with owners.
 	BaseRoleAdmin: {
-		// Workspace settings have no page key: every admin reaches them.
+		// Workspace settings and the audit log have no page key: every admin
+		// reaches them.
 		{[]string{legacyAlways}, []Permission{
-			PermissionPagesOrganisation,
+			PermissionPagesOrganisation, PermissionPagesAudit, PermissionAuditRead,
 			PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionMarkersWrite, PermissionDevicesRead,
 			PermissionProjectsCreate, PermissionProjectsDelete, PermissionProjectUpdate, PermissionProjectManageCredentials,
 		}},

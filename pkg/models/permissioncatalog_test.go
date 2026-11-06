@@ -581,7 +581,7 @@ func TestOwnerOnlyPermissions(t *testing.T) {
 	ownerOnly := []Permission{
 		PermissionWorkflowsCreate, PermissionWorkflowsUpdate, PermissionWorkflowsDelete, PermissionWorkflowRunsUpdate,
 		PermissionDevicesDelete, PermissionDevicesManagePermissions, PermissionDevicesManageRecording, PermissionDevicesReadLogs,
-		PermissionPagesChannels, PermissionPagesSubscription, PermissionPagesAudit, PermissionAuditRead,
+		PermissionPagesChannels, PermissionPagesSubscription,
 	}
 	ownerOnly = append(ownerOnly, ChannelPermissions()...)
 	ownerOnly = append(ownerOnly, billingPermissions...)
