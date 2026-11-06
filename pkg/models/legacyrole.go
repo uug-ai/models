@@ -92,10 +92,33 @@ var legacyTierPages = map[BaseRole][]string{
 
 // legacyTierOptionalPages are pages a custom role on the tier may list
 // although the built-in tier is not served them: the audit log is opt-in
-// below the admin tier, and always on for it.
+// below the admin tier.
 var legacyTierOptionalPages = map[BaseRole][]string{
 	BaseRoleGuest:  {legacyPageAudit},
 	BaseRoleEditor: {legacyPageAudit},
+}
+
+// legacyTierDefaultPages are pages every custom role on the tier holds unless
+// it was switched off from them (LegacyRole.DisabledPages). They arrived after
+// the tier's custom roles were created, so a stored page list without them
+// does not mean they were left out: the audit log is on by default for the
+// admin tier.
+var legacyTierDefaultPages = map[BaseRole][]string{
+	BaseRoleAdmin: {legacyPageAudit},
+}
+
+// LegacyCustomRolePages returns the page list a custom role on the tier is
+// served: its stored pages, plus the tier's default pages it was not switched
+// off from. The user middleware and the access mapping both read a custom
+// role's pages through it.
+func LegacyCustomRolePages(tier BaseRole, pages, disabled []string) []string {
+	served := slices.Clone(pages)
+	for _, page := range legacyTierDefaultPages[tier] {
+		if !slices.Contains(served, page) && !slices.Contains(disabled, page) {
+			served = append(served, page)
+		}
+	}
+	return served
 }
 
 // legacyTierFeatures is the feature levels each built-in tier is served today:
@@ -189,11 +212,9 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 	// (D7). Device recording mode and logs, billing, storage and device system
 	// tags stay with owners.
 	BaseRoleAdmin: {
-		// Workspace settings have no page key, and the audit log is always on
-		// for this tier (custom admin roles never listed it): every admin
-		// reaches them.
+		// Workspace settings have no page key: every admin reaches them.
 		{[]string{legacyAlways}, []Permission{
-			PermissionPagesOrganisation, PermissionPagesAudit, PermissionAuditRead,
+			PermissionPagesOrganisation,
 			PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionMarkersWrite, PermissionDevicesRead,
 			PermissionProjectsCreate, PermissionProjectsDelete, PermissionProjectUpdate, PermissionProjectManageCredentials,
 		}},
@@ -225,6 +246,7 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 		}},
 		{[]string{legacyPageAlerts}, []Permission{PermissionAlertsRead, PermissionAlertsCreate, PermissionAlertsUpdate, PermissionAlertsManagePrivacy}},
 		{[]string{legacyPageSettings}, []Permission{PermissionLabelsCreate, PermissionLabelsUpdate, PermissionLabelsDelete}},
+		{[]string{legacyPageAudit}, []Permission{PermissionAuditRead}},
 	},
 }
 

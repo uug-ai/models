@@ -207,3 +207,27 @@ func TestLegacyTimeWindowNeverWidens(t *testing.T) {
 		})
 	}
 }
+
+func TestMapLegacyAccessAdminCustomRoleAuditDefault(t *testing.T) {
+	ids := legacyIds(3)
+	for _, test := range []struct {
+		name     string
+		disabled []string
+		want     bool
+	}{
+		{"on by default", nil, true},
+		{"switched off", []string{legacyPageAudit}, false},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			custom := LegacyRole{Id: ids[2], Name: "Site manager", ParentRole: "admin", Pages: []string{legacyPageSites}, DisabledPages: test.disabled}
+			access, err := MapLegacyAccess(LegacyUserAccess{OrganisationId: ids[0], UserId: ids[1], Role: custom.Name, CustomRole: &custom})
+			if err != nil {
+				t.Fatal(err)
+			}
+			organisation := access.Roles[1].Permissions
+			if got := slices.Contains(organisation, PermissionAuditRead) && slices.Contains(organisation, PermissionPagesAudit); got != test.want {
+				t.Errorf("audit held = %v, want %v (%v)", got, test.want, organisation)
+			}
+		})
+	}
+}

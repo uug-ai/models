@@ -59,7 +59,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleAdmin,
 			pages:            []string{"channels", "plans-integrations", "subscription", "io"},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionProjectUpdate, PermissionProjectManageCredentials},
-			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionAuditRead, PermissionPagesOrganisation, PermissionPagesAudit},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
 		},
 		{
 			name:             "live view follows the feature levels, not the tier",
@@ -124,7 +124,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleAdmin,
 			pages:            []string{legacyPageTasks},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionCasesDelete, PermissionCasesManageMembership, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLabelsRead, PermissionProjectUpdate, PermissionProjectManageCredentials, PermissionPagesCases},
-			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionAuditRead, PermissionPagesOrganisation, PermissionPagesAudit},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
 		},
 	}
 	for _, test := range tests {
@@ -185,5 +185,28 @@ func TestLegacyPagesShowOnlyThemselves(t *testing.T) {
 	// A page the tier is never served shows nothing.
 	if project, _, _ := LegacyRolePermissions(BaseRoleGuest, []string{legacyPageAlerts, legacyPageSettings}, FeaturePermissions{}); slices.Contains(project, PermissionPagesAlerts) || slices.Contains(project, PermissionPagesSettings) {
 		t.Errorf("guest shown admin pages: %v", project)
+	}
+}
+
+func TestLegacyCustomRolePages(t *testing.T) {
+	tests := []struct {
+		name     string
+		tier     BaseRole
+		pages    []string
+		disabled []string
+		want     []string
+	}{
+		{"admin role from before the audit page holds it", BaseRoleAdmin, []string{legacyPageSettings}, nil, []string{legacyPageSettings, legacyPageAudit}},
+		{"admin role switched off from the audit page", BaseRoleAdmin, []string{legacyPageSettings}, []string{legacyPageAudit}, []string{legacyPageSettings}},
+		{"admin role listing the audit page keeps it once", BaseRoleAdmin, []string{legacyPageAudit}, nil, []string{legacyPageAudit}},
+		{"guest role gets no default page", BaseRoleGuest, []string{legacyPageDashboard}, nil, []string{legacyPageDashboard}},
+		{"guest role opts in by listing it", BaseRoleGuest, []string{legacyPageAudit}, nil, []string{legacyPageAudit}},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			if got := LegacyCustomRolePages(test.tier, test.pages, test.disabled); !slices.Equal(got, test.want) {
+				t.Errorf("got %v, want %v", got, test.want)
+			}
+		})
 	}
 }
