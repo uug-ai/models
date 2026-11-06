@@ -8,61 +8,101 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// GrantDenial says why a grant goes beyond the grantor's access.
+// Administering access is gated by permissions, not by holding what is
+// handed out (spec 4.5): whoever holds members.update, projects.manageAccess,
+// project.manageAccess, roles.* or teams.update administers that area, through
+// a system or a custom role. Three rules bound them:
+//
+//   - Owner-only permissions (PermissionDefinition.OwnerOnly) and the Owner
+//     role are handled by owners only, so a delegated administrator hands out
+//     at most what the legacy admin tier holds.
+//   - A holder of only project.manageAccess selects resources inside their own
+//     scope in that project.
+//   - Nobody changes their own access: an assignment, a role or a team
+//     membership that applies to them (owners excepted, they hold everything).
+
+// GrantDenial says why an access change is refused.
 type GrantDenial string
 
 const (
-	// GrantDenialOwnerOnly: only an owner grants or revokes Owner.
+	// GrantDenialOwnerOnly: only an owner grants, changes or revokes the Owner
+	// role or a role holding an owner-only permission, and only an owner
+	// changes the members of a team that is assigned such a role.
+	// GrantDecision.Permission names the owner-only permission (empty for the
+	// Owner role).
 	GrantDenialOwnerOnly GrantDenial = "ownerOnly"
-	// GrantDenialNoAccessPermission: the grantor may not manage access there
-	// at all: members.update for organisation roles, project.manageAccess or
-	// projects.manageAccess for project roles.
+	// GrantDenialNoAccessPermission: the actor lacks the permission for the
+	// change: members.update for organisation roles, projects.manageAccess
+	// covering the project or project.manageAccess in it for project roles,
+	// roles.create, roles.update or roles.delete for roles, teams.update for
+	// team members.
 	GrantDenialNoAccessPermission GrantDenial = "noAccessPermission"
-	// GrantDenialPermissionNotHeld: the role holds a permission the grantor
-	// does not hold where it would apply (GrantDecision.Permission).
-	GrantDenialPermissionNotHeld GrantDenial = "permissionNotHeld"
 	// GrantDenialResourcesNotCovered: the selected resources reach devices
-	// outside the grantor's own access scope in the project.
+	// outside the grantor's own scope in the project.
 	GrantDenialResourcesNotCovered GrantDenial = "resourcesNotCovered"
+	// GrantDenialSelf: the change applies to the actor's own access, a role
+	// they hold (directly or through a team) or their own team membership.
+	GrantDenialSelf GrantDenial = "self"
 )
 
-// GrantDecision is the outcome of a grant check. When it is not allowed,
-// Reason says why and, for GrantDenialPermissionNotHeld, Permission names the
-// first permission (in the role's order) and Project the project it is not
-// held in (zero for "all projects").
+// GrantDecision is the outcome of an access-change check. When it is not
+// allowed, Reason says why and, for GrantDenialOwnerOnly, Permission names the
+// first owner-only permission of the role in catalog order.
 type GrantDecision struct {
 	Allowed    bool
 	Reason     GrantDenial
 	Permission Permission
-	Project    primitive.ObjectID
 }
 
 func allowGrant() GrantDecision { return GrantDecision{Allowed: true} }
 
 func denyGrant(reason GrantDenial) GrantDecision { return GrantDecision{Reason: reason} }
 
+// OwnerOnlyPermission returns the role's first owner-only permission in
+// catalog order, implied permissions included. The Owner role, which grants
+// all, reports true with no permission.
+func (r Role) OwnerOnlyPermission() (Permission, bool) {
+	if r.GrantsAll() {
+		return "", true
+	}
+	for _, permission := range ExpandPermissions(r.Permissions) {
+		if definition, _ := LookupPermission(permission); definition.OwnerOnly {
+			return permission, true
+		}
+	}
+	return "", false
+}
+
+// ownerOnlyDenial returns the denial for a non-owner handling role, when the
+// role is the Owner role or holds an owner-only permission.
+func ownerOnlyDenial(role Role) (GrantDecision, bool) {
+	if role.IsOwner() {
+		return denyGrant(GrantDenialOwnerOnly), true
+	}
+	if permission, ok := role.OwnerOnlyPermission(); ok {
+		return GrantDecision{Reason: GrantDenialOwnerOnly, Permission: permission}, true
+	}
+	return GrantDecision{}, false
+}
+
 // CanGrant reports whether the member may grant role on scope to someone
-// else (spec 4.5). Permissions and resources are bounded separately:
+// else (spec 4.5):
 //
-//   - Owner is granted only by owners; owners may grant anything.
-//   - An organisation role needs members.update, and the grantor must hold
-//     every permission of the role on every project the scope covers (all
-//     projects, or each selected one): its project selection stays inside
-//     the grantor's own.
-//   - A project role needs projects.manageAccess covering the project or
-//     project.manageAccess in it, and the grantor must hold every permission
-//     of the role in that project, on any of its resources.
-//   - With projects.manageAccess any resources of the project may be
-//     selected. With only project.manageAccess the selection must stay
-//     inside the devices that assignment covers: all resources only when it
-//     covers all, otherwise the selected sites, groups and devices, expanded
-//     now (ExpandDeviceKeys), must be a subset of the grantor's own, expanded
-//     the same way. A selection without devices ("no devices yet") is always
-//     inside.
+//   - Owners may grant anything; only owners grant the Owner role or a role
+//     holding an owner-only permission.
+//   - An organisation role needs members.update, on any project selection.
+//   - A project role needs projects.manageAccess covering the project, which
+//     selects any of its resources, or project.manageAccess in it, which
+//     selects resources inside the devices that assignment covers: all
+//     resources only when it covers all, otherwise the selected sites, groups
+//     and devices, expanded now (ExpandDeviceKeys), must be a subset of the
+//     grantor's own, expanded the same way. A selection without devices ("no
+//     devices yet") is always inside.
 //
-// Removing or narrowing an assignment is bounded the same way (CanChange).
-// Whether the grant touches the grantor's own access (directly or through a
-// team) is a separate rule the writer checks on the assignment's principal.
+// The grantor need not hold the role's permissions. Removing or narrowing an
+// assignment is bounded the same way (CanChange). Whether the assignment
+// applies to the grantor (RoleAssignment.AffectsUser) is checked by the writer
+// on the assignment's principal.
 //
 // The error is ErrRoleAssignmentInvalid for a role or scope that is invalid
 // or do not fit together, or the expansion's read error; the caller must deny
@@ -74,19 +114,19 @@ func (a Access) CanGrant(ctx context.Context, source DeviceSource, role Role, sc
 	if err := scope.ValidateFor(role); err != nil {
 		return GrantDecision{}, err
 	}
-	if role.IsOwner() {
-		if a.owner {
-			return allowGrant(), nil
-		}
-		return denyGrant(GrantDenialOwnerOnly), nil
-	}
 	if a.owner {
 		return allowGrant(), nil
 	}
-	if scope.Level == LevelOrganisation {
-		return a.canGrantOrganisationRole(role, scope), nil
+	if denial, ok := ownerOnlyDenial(role); ok {
+		return denial, nil
 	}
-	return a.canGrantProjectRole(ctx, source, role, scope)
+	if scope.Level == LevelOrganisation {
+		if !a.Organisation(PermissionMembersUpdate, primitive.NilObjectID) {
+			return denyGrant(GrantDenialNoAccessPermission), nil
+		}
+		return allowGrant(), nil
+	}
+	return a.canGrantProjectResources(ctx, source, scope)
 }
 
 // CanChange is CanGrant for a change to an assignment: current is the scope
@@ -109,38 +149,13 @@ func (a Access) CanChange(ctx context.Context, source DeviceSource, role Role, c
 	return allowGrant(), nil
 }
 
-func (a Access) canGrantOrganisationRole(role Role, scope RoleAssignmentScope) GrantDecision {
-	if !a.Organisation(PermissionMembersUpdate, primitive.NilObjectID) {
-		return denyGrant(GrantDenialNoAccessPermission)
-	}
-	projects := []primitive.ObjectID{primitive.NilObjectID}
-	if scope.Projects == SelectionSelected {
-		projects = scope.ProjectIds
-	}
-	for _, permission := range role.Permissions {
-		for _, project := range projects {
-			if !a.Organisation(permission, project) {
-				return GrantDecision{Reason: GrantDenialPermissionNotHeld, Permission: permission, Project: project}
-			}
-		}
-	}
-	return allowGrant()
-}
-
-func (a Access) canGrantProjectRole(ctx context.Context, source DeviceSource, role Role, scope RoleAssignmentScope) (GrantDecision, error) {
+func (a Access) canGrantProjectResources(ctx context.Context, source DeviceSource, scope RoleAssignmentScope) (GrantDecision, error) {
 	project := scope.ProjectId
-	anyResources := a.Organisation(PermissionProjectsManageAccess, project)
-	if !anyResources && !a.Project(PermissionProjectManageAccess, project) {
-		return denyGrant(GrantDenialNoAccessPermission), nil
-	}
-	held := a.Permissions(project)
-	for _, permission := range role.Permissions {
-		if !slices.Contains(held, permission) {
-			return GrantDecision{Reason: GrantDenialPermissionNotHeld, Permission: permission, Project: project}, nil
-		}
-	}
-	if anyResources {
+	if a.Organisation(PermissionProjectsManageAccess, project) {
 		return allowGrant(), nil
+	}
+	if !a.Project(PermissionProjectManageAccess, project) {
+		return denyGrant(GrantDenialNoAccessPermission), nil
 	}
 	own := a.Devices(PermissionProjectManageAccess, project)
 	if own.All {
@@ -167,6 +182,100 @@ func (a Access) canGrantProjectRole(ctx context.Context, source DeviceSource, ro
 		if _, found := slices.BinarySearch(covered, key); !found {
 			return denyGrant(GrantDenialResourcesNotCovered), nil
 		}
+	}
+	return allowGrant(), nil
+}
+
+// CanManageRole reports whether the member (userId, with their TeamMember
+// documents teams) may create, change or delete a custom role: current is the
+// role as stored (nil when creating), next what it becomes (nil when
+// deleting), and assignments the organisation's assignments of current. A
+// change applies at once to everyone the role is assigned to.
+//
+//   - Creating needs roles.create, changing roles.update, deleting
+//     roles.delete; the author need not hold the role's permissions.
+//   - Only owners handle a role holding an owner-only permission, before or
+//     after the change.
+//   - Nobody but an owner changes or deletes a role they hold, directly or
+//     through a team, in force or not.
+//
+// The error is ErrRoleInvalid for a system or legacy role, which are
+// read-only, for next failing Role.Validate, or for neither role given; the
+// caller must deny on any error.
+func (a Access) CanManageRole(userId primitive.ObjectID, teams []TeamMember, current, next *Role, assignments []RoleAssignment) (GrantDecision, error) {
+	if current == nil && next == nil {
+		return GrantDecision{}, fmt.Errorf("%w: a change needs a current or a next role", ErrRoleInvalid)
+	}
+	for _, role := range []*Role{current, next} {
+		if role != nil && role.Kind != RoleKindCustom {
+			return GrantDecision{}, fmt.Errorf("%w: %s role %q is read-only", ErrRoleInvalid, role.Kind, role.Key)
+		}
+	}
+	if next != nil {
+		if err := next.Validate(); err != nil {
+			return GrantDecision{}, err
+		}
+	}
+	if a.owner {
+		return allowGrant(), nil
+	}
+	permission := PermissionRolesUpdate
+	switch {
+	case current == nil:
+		permission = PermissionRolesCreate
+	case next == nil:
+		permission = PermissionRolesDelete
+	}
+	if !a.Organisation(permission, primitive.NilObjectID) {
+		return denyGrant(GrantDenialNoAccessPermission), nil
+	}
+	for _, role := range []*Role{current, next} {
+		if role == nil {
+			continue
+		}
+		if denial, ok := ownerOnlyDenial(*role); ok {
+			return denial, nil
+		}
+	}
+	if current != nil {
+		for _, assignment := range assignments {
+			if assignment.RoleId == current.Id && assignment.AffectsUser(userId, teams) {
+				return denyGrant(GrantDenialSelf), nil
+			}
+		}
+	}
+	return allowGrant(), nil
+}
+
+// CanChangeTeamMembers reports whether the member (userId) may add or remove
+// members (user ids) of team. Adding a member grants them every assignment of
+// the team at once, so teamRoles are the roles of the team's assignments.
+//
+//   - It needs teams.update; the actor need not hold the team's access.
+//   - Only owners change the members of a team assigned a role holding an
+//     owner-only permission.
+//   - Nobody but an owner adds or removes themselves.
+//
+// The error is ErrTeamInvalid for a team synced from an identity provider,
+// whose members change only through the provider's sync; the caller must
+// deny on any error. Inviting someone into a team is the same change.
+func (a Access) CanChangeTeamMembers(userId primitive.ObjectID, team Team, teamRoles []Role, members []primitive.ObjectID) (GrantDecision, error) {
+	if !team.ManagesMembersInHub() {
+		return GrantDecision{}, fmt.Errorf("%w: members of team %q change through its identity provider", ErrTeamInvalid, team.Name)
+	}
+	if a.owner {
+		return allowGrant(), nil
+	}
+	if !a.Organisation(PermissionTeamsUpdate, primitive.NilObjectID) {
+		return denyGrant(GrantDenialNoAccessPermission), nil
+	}
+	for _, role := range teamRoles {
+		if denial, ok := ownerOnlyDenial(role); ok {
+			return denial, nil
+		}
+	}
+	if !userId.IsZero() && slices.Contains(members, userId) {
+		return denyGrant(GrantDenialSelf), nil
 	}
 	return allowGrant(), nil
 }

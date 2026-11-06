@@ -13,8 +13,9 @@ const (
 	PermissionTeamsRead   Permission = "teams.read"
 	PermissionTeamsCreate Permission = "teams.create"
 	// PermissionTeamsUpdate covers a team's name and description and its
-	// members. Adding a member grants them every assignment of the team, so
-	// writers bound it like a grant (spec 4.5).
+	// members. Adding a member grants them every assignment of the team at
+	// once; Access.CanChangeTeamMembers keeps owner-only access with owners
+	// and stops anyone changing their own membership (spec 4.5).
 	PermissionTeamsUpdate Permission = "teams.update"
 	PermissionTeamsDelete Permission = "teams.delete"
 )

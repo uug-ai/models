@@ -13,7 +13,7 @@ var invitationStatuses = []InvitationResponseStatus{
 	InvitationGetAllSuccess, InvitationGetAllFailed, InvitationCreateSuccess, InvitationCreateFailed,
 	InvitationResendSuccess, InvitationResendFailed, InvitationRevokeSuccess, InvitationRevokeFailed,
 	InvitationAcceptSuccess, InvitationAcceptFailed, InvitationPending, InvitationAlreadyMember,
-	InvitationClosed, InvitationEmailMismatch, InvitationExceedsAccess, InvitationRoleNotFound,
+	InvitationClosed, InvitationEmailMismatch, InvitationExceedsAccess, InvitationOwnerOnly, InvitationRoleNotFound,
 	InvitationTeamNotFound, InvitationTeamManagedByProvider, InvitationLegacyMode,
 }
 

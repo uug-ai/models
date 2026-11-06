@@ -460,6 +460,20 @@ func TestValidatePermissionGroups(t *testing.T) {
 			wantErr: ErrPermissionInvalid,
 		},
 		{
+			name:    "owner-only permission of another group",
+			groups:  []permissionGroup{{level: project, permissions: []Permission{a}, ownerOnly: []Permission{b}}, {level: project, permissions: []Permission{b}}},
+			wantErr: ErrPermissionInvalid,
+		},
+		{
+			name:   "owner-only implies owner-only",
+			groups: []permissionGroup{{level: project, permissions: []Permission{a, b}, implies: map[Permission][]Permission{a: {b}}, ownerOnly: []Permission{a, b}}},
+		},
+		{
+			name:    "implies an owner-only permission",
+			groups:  []permissionGroup{{level: project, permissions: []Permission{a, b}, implies: map[Permission][]Permission{a: {b}}, ownerOnly: []Permission{b}}},
+			wantErr: ErrPermissionInvalid,
+		},
+		{
 			name: "tenant-wide permission of another group",
 			groups: []permissionGroup{
 				{level: organisation, permissions: []Permission{a}, tenantWide: []Permission{b}},
@@ -559,6 +573,23 @@ func TestTenantWidePermissions(t *testing.T) {
 		want := definition.Level == LevelOrganisation && !slices.Contains(selectable, definition.Permission)
 		if definition.TenantWide != want {
 			t.Errorf("%q TenantWide = %v, want %v", definition.Permission, definition.TenantWide, want)
+		}
+	}
+}
+
+func TestOwnerOnlyPermissions(t *testing.T) {
+	ownerOnly := []Permission{
+		PermissionWorkflowsCreate, PermissionWorkflowsUpdate, PermissionWorkflowsDelete, PermissionWorkflowRunsUpdate,
+		PermissionDevicesDelete, PermissionDevicesManagePermissions, PermissionDevicesManageRecording, PermissionDevicesReadLogs,
+		PermissionPagesChannels, PermissionPagesSubscription, PermissionPagesAudit, PermissionAuditRead,
+	}
+	ownerOnly = append(ownerOnly, ChannelPermissions()...)
+	ownerOnly = append(ownerOnly, billingPermissions...)
+	ownerOnly = append(ownerOnly, storagePermissions...)
+	ownerOnly = append(ownerOnly, deviceAdministrationPermissions...)
+	for _, definition := range PermissionDefinitions() {
+		if want := slices.Contains(ownerOnly, definition.Permission); definition.OwnerOnly != want {
+			t.Errorf("%q OwnerOnly = %v, want %v", definition.Permission, definition.OwnerOnly, want)
 		}
 	}
 }

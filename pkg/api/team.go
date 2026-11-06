@@ -42,9 +42,9 @@ const (
 	// TeamMemberSelf: callers never change their own access, so they cannot
 	// add or remove themselves (spec 4.5).
 	TeamMemberSelf TeamStatus = "team_member_self"
-	// TeamMemberExceedsAccess: adding the user would grant them a team
-	// assignment beyond the caller's own access (spec 4.5).
-	TeamMemberExceedsAccess TeamStatus = "team_member_exceeds_access"
+	// TeamMemberOwnerOnly: the team is assigned a role holding an owner-only
+	// permission, so only an owner changes its members (spec 4.5).
+	TeamMemberOwnerOnly TeamStatus = "team_member_owner_only"
 )
 
 // String returns the string representation of the team status.
@@ -83,7 +83,7 @@ func (s TeamStatus) Translate(lang string) string {
 			TeamMemberNotInOrganisation:  "The user is not an active member of this organisation",
 			TeamMembersManagedByProvider: "This team's members are managed by your identity provider",
 			TeamMemberSelf:               "You cannot change your own team membership",
-			TeamMemberExceedsAccess:      "This team has access you do not have, so you cannot add members to it",
+			TeamMemberOwnerOnly:          "Only an owner can change the members of this team",
 		},
 	}
 
@@ -245,10 +245,11 @@ type GetTeamMembersErrorResponse struct {
 }
 
 // AddTeamMembers adds organisation members to a manual team, all or none:
-// every user must be an effectively active member of the organisation, not
-// the caller, and the caller must hold every role assignment of the team
-// (adding a member grants them). Users already in the team are left as they
-// are and reported as unchanged.
+// every user must be an effectively active member of the organisation and not
+// the caller. Adding a member grants them every assignment of the team, so a
+// team assigned a role holding an owner-only permission is changed by owners
+// only (models.Access.CanChangeTeamMembers). Users already in the team are
+// left as they are and reported as unchanged.
 // @Router /teams/{id}/members [post]
 type AddTeamMembersRequest struct {
 	UserIds []string `json:"userIds"`

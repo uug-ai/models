@@ -13,7 +13,7 @@ var roleAssignmentStatuses = []RoleAssignmentStatus{
 	RoleAssignmentGetAllSuccess, RoleAssignmentGetAllFailed, RoleAssignmentCreateSuccess, RoleAssignmentCreateFailed,
 	RoleAssignmentUpdateSuccess, RoleAssignmentUpdateFailed, RoleAssignmentDeleteSuccess, RoleAssignmentDeleteFailed,
 	RoleAssignmentExists, RoleAssignmentRoleNotFound, RoleAssignmentPrincipalNotFound, RoleAssignmentResourceNotFound,
-	RoleAssignmentSelf, RoleAssignmentExceedsAccess, RoleAssignmentLastOwner, RoleAssignmentLegacyMode,
+	RoleAssignmentSelf, RoleAssignmentExceedsAccess, RoleAssignmentOwnerOnly, RoleAssignmentLastOwner, RoleAssignmentLegacyMode,
 }
 
 func TestRoleAssignmentStatusTranslate(t *testing.T) {

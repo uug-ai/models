@@ -5,7 +5,10 @@ package models
 // legacy roles, and system roles are what new access is granted with. Each
 // project role nests in the next: Viewer ⊂ Editor ⊂ Project admin. The
 // organisation roles grant no project permissions, so they never widen what a
-// holder can see.
+// holder can see. Project admin and Billing admin hold owner-only permissions
+// (PermissionDefinition.OwnerOnly), so only owners grant them; an
+// Organisation manager grants Viewer, Editor and custom roles without
+// owner-only permissions in every project.
 
 // viewerPermissions: see everything in the assignment's scope, change nothing.
 // No PTZ (moving a camera affects everyone watching it) and no export or share
