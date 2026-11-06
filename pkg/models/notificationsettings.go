@@ -43,6 +43,15 @@ type Devices struct {
 	// of one per camera. It applies to every selected channel. Changes are held
 	// for one monitor scan to collect cameras that change a moment later.
 	GroupNotifications bool `json:"groupNotifications" bson:"groupNotifications,omitempty"`
+
+	// RecordingCheck alerts when a selected camera that records continuously
+	// is online but has not uploaded a recording for RecordingCheckHours, and
+	// again once it records. Cameras that only record on motion are not
+	// checked. It uses the channels, cameras and grouping above.
+	RecordingCheck bool `json:"recordingCheck" bson:"recordingCheck,omitempty"`
+	// RecordingCheckHours is how long a camera may go without a recording
+	// before the alert, from 1 to 72 hours. 0 means unset (2 hours).
+	RecordingCheckHours int32 `json:"recordingCheckHours" bson:"recordingCheckHours,omitempty"`
 }
 
 type Highupload struct {

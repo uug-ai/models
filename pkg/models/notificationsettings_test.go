@@ -41,3 +41,39 @@ func TestDevicesGroupNotificationsRoundTrip(t *testing.T) {
 		t.Fatalf("json round trip = %+v, %v", roundTrip.Devices, err)
 	}
 }
+
+func TestDevicesRecordingCheckRoundTrip(t *testing.T) {
+	settings := NotificationSettings{Devices: Devices{Enabled: true, RecordingCheck: true, RecordingCheckHours: 6}}
+
+	data, err := bson.Marshal(settings)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var document bson.M
+	if err := bson.Unmarshal(data, &document); err != nil {
+		t.Fatal(err)
+	}
+	devices := document["devices"].(bson.M)
+	if devices["recordingCheck"] != true || devices["recordingCheckHours"] != int32(6) {
+		t.Fatalf("bson devices = %v", devices)
+	}
+
+	// Documents without the fields decode to off and unset.
+	legacy, _ := bson.Marshal(bson.M{"devices": bson.M{"enabled": true}})
+	var decoded NotificationSettings
+	if err := bson.Unmarshal(legacy, &decoded); err != nil {
+		t.Fatal(err)
+	}
+	if decoded.Devices.RecordingCheck || decoded.Devices.RecordingCheckHours != 0 {
+		t.Fatalf("missing recording check fields decoded as %+v", decoded.Devices)
+	}
+
+	encoded, err := json.Marshal(settings)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var roundTrip NotificationSettings
+	if err := json.Unmarshal(encoded, &roundTrip); err != nil || !roundTrip.Devices.RecordingCheck || roundTrip.Devices.RecordingCheckHours != 6 {
+		t.Fatalf("json round trip = %+v, %v", roundTrip.Devices, err)
+	}
+}
