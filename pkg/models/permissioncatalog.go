@@ -40,9 +40,9 @@ type PermissionDefinition struct {
 	// OwnerOnly marks a permission only owners grant: a role holding one is
 	// created, changed, deleted and assigned by owners only, and so are the
 	// members of a team it is assigned to. These are the permissions the
-	// legacy admin tier never had (billing, storage, audit, device system
-	// tags, deleting devices, their permission ceilings, recording mode and
-	// logs, workflow authoring, channels), so delegated administrators hand
+	// legacy admin tier never had (billing, storage, device system tags,
+	// deleting devices, their permission ceilings, recording mode and logs,
+	// workflow authoring, channels), so delegated administrators hand
 	// out at most what an admin holds. See Access.CanGrant.
 	OwnerOnly bool `json:"ownerOnly,omitempty"`
 }
@@ -97,10 +97,10 @@ var permissionGroups = []permissionGroup{
 	{level: LevelOrganisation, permissions: projectAdministrationPermissions, tenantWide: []Permission{PermissionProjectsCreate}},
 	{level: LevelOrganisation, permissions: billingPermissions, tenantWide: billingPermissions, ownerOnly: billingPermissions},
 	{level: LevelOrganisation, permissions: storagePermissions, tenantWide: storagePermissions, ownerOnly: storagePermissions},
-	{level: LevelOrganisation, permissions: auditPermissions, tenantWide: auditPermissions, ownerOnly: auditPermissions},
+	{level: LevelOrganisation, permissions: auditPermissions, tenantWide: auditPermissions},
 	{level: LevelOrganisation, permissions: deviceAdministrationPermissions, tenantWide: deviceAdministrationPermissions, ownerOnly: deviceAdministrationPermissions},
 	{level: LevelOrganisation, permissions: organisationPagePermissions, tenantWide: []Permission{PermissionPagesSubscription, PermissionPagesAudit},
-		ownerOnly: []Permission{PermissionPagesSubscription, PermissionPagesAudit}},
+		ownerOnly: []Permission{PermissionPagesSubscription}},
 }
 
 var permissionDefinitions = definePermissions(permissionGroups)
