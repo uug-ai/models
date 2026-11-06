@@ -59,7 +59,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleAdmin,
 			pages:            []string{"channels", "plans-integrations", "subscription", "io"},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionProjectUpdate, PermissionProjectManageCredentials},
-			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionAuditRead, PermissionPagesOrganisation, PermissionPagesAudit},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
 		},
 		{
 			name:             "live view follows the feature levels, not the tier",
@@ -106,11 +106,25 @@ func TestLegacyRolePermissions(t *testing.T) {
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
+			name:             "guest custom role opts into the audit log",
+			tier:             BaseRoleGuest,
+			pages:            []string{legacyPageAudit},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionAuditRead, PermissionPagesAudit},
+		},
+		{
+			name:             "editor custom role opts into the audit log",
+			tier:             BaseRoleEditor,
+			pages:            []string{legacyPageAudit},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionAuditRead, PermissionPagesAudit},
+		},
+		{
 			name:             "admin without accounts and roles keeps no member or role administration",
 			tier:             BaseRoleAdmin,
 			pages:            []string{legacyPageTasks},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionCasesDelete, PermissionCasesManageMembership, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLabelsRead, PermissionProjectUpdate, PermissionProjectManageCredentials, PermissionPagesCases},
-			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionAuditRead, PermissionPagesOrganisation, PermissionPagesAudit},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
 		},
 	}
 	for _, test := range tests {

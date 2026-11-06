@@ -37,6 +37,7 @@ const (
 	legacyPageAccounts     = "accounts"
 	legacyPageRoles        = "roles"
 	legacyPageSettings     = "settings"
+	legacyPageAudit        = "audit"
 )
 
 // legacyPagePermissions is the page permission each legacy page key shows. A
@@ -61,6 +62,7 @@ var legacyPagePermissions = map[string]Permission{
 	legacyPageAccounts:     PermissionPagesMembers,
 	legacyPageRoles:        PermissionPagesRoles,
 	legacyPageSettings:     PermissionPagesSettings,
+	legacyPageAudit:        PermissionPagesAudit,
 }
 
 // legacyAlways stands for "no page": its permissions are held whatever the
@@ -84,7 +86,16 @@ var legacyTierPages = map[BaseRole][]string{
 		legacyPageAnalytics, legacyPageWatchlist, legacyPageTasks,
 		legacyPageAlerts,
 		legacyPageIOs, legacyPageCameras, legacyPageSites, legacyPageFloorPlans, legacyPageGroups, legacyPageAccounts, legacyPageRoles, legacyPageSettings,
+		legacyPageAudit,
 	},
+}
+
+// legacyTierOptionalPages are pages a custom role on the tier may list
+// although the built-in tier is not served them: the audit log is opt-in
+// below the admin tier.
+var legacyTierOptionalPages = map[BaseRole][]string{
+	BaseRoleGuest:  {legacyPageAudit},
+	BaseRoleEditor: {legacyPageAudit},
 }
 
 // legacyTierFeatures is the feature levels each built-in tier is served today:
@@ -146,6 +157,7 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 			PermissionCasesRead, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow,
 			PermissionMediaRedact, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionLabelsRead,
 		}},
+		{[]string{legacyPageAudit}, []Permission{PermissionAuditRead}},
 	},
 	// Editors add floor plan editing and creating videowalls (and changing
 	// their own, by the creator rule); otherwise as guests. They may not assign
@@ -168,6 +180,7 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 			PermissionCasesRead, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow,
 			PermissionMediaRedact, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionLabelsRead,
 		}},
+		{[]string{legacyPageAudit}, []Permission{PermissionAuditRead}},
 	},
 	// Admins delete their own sites, update their own groups, delete their own
 	// groups (D3) and delete their own alerts by the creator rule. Not granted
@@ -176,10 +189,9 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 	// (D7). Device recording mode and logs, billing, storage and device system
 	// tags stay with owners.
 	BaseRoleAdmin: {
-		// Workspace settings and the audit log have no page key: every admin
-		// reaches them.
+		// Workspace settings have no page key: every admin reaches them.
 		{[]string{legacyAlways}, []Permission{
-			PermissionPagesOrganisation, PermissionPagesAudit, PermissionAuditRead,
+			PermissionPagesOrganisation,
 			PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionMarkersWrite, PermissionDevicesRead,
 			PermissionProjectsCreate, PermissionProjectsDelete, PermissionProjectUpdate, PermissionProjectManageCredentials,
 		}},
@@ -211,6 +223,7 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 		}},
 		{[]string{legacyPageAlerts}, []Permission{PermissionAlertsRead, PermissionAlertsCreate, PermissionAlertsUpdate, PermissionAlertsManagePrivacy}},
 		{[]string{legacyPageSettings}, []Permission{PermissionLabelsCreate, PermissionLabelsUpdate, PermissionLabelsDelete}},
+		{[]string{legacyPageAudit}, []Permission{PermissionAuditRead}},
 	},
 }
 
@@ -230,8 +243,8 @@ var (
 // no legacy roles (owner maps to the Owner role).
 //
 // Feature levels follow the product: 0 (unset) allows the highest grade, 1
-// denies, and higher values select a grade. Pages a tier is never served grant
-// nothing.
+// denies, and higher values select a grade. Pages a tier is never served, nor
+// offered as optional (legacyTierOptionalPages), grant nothing.
 func LegacyRolePermissions(tier BaseRole, pages []string, features FeaturePermissions) (project, organisation []Permission, ok bool) {
 	grants, ok := legacyTierPageGrants[tier]
 	if !ok {
@@ -247,7 +260,7 @@ func LegacyRolePermissions(tier BaseRole, pages []string, features FeaturePermis
 	}
 
 	var held []Permission
-	for _, page := range legacyTierPages[tier] {
+	for _, page := range slices.Concat(legacyTierPages[tier], legacyTierOptionalPages[tier]) {
 		if slices.Contains(pages, page) {
 			held = append(held, legacyPagePermissions[page])
 		}
