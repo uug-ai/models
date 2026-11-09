@@ -22,6 +22,24 @@ A comprehensive Go package providing type-safe data models for media management,
 - **Auto-Discovery**: Automatic model detection and TypeScript generation
 - **Production Ready**: Battle-tested models used in production systems
 
+### Domain page permissions
+
+Page grants use `<domain>.page`, independently of action permissions:
+`devices.page` opens Devices but does not grant `devices.read` or
+`devices.update`. `media.page`, `days.page`, and `latest-events.page` remain
+separate grants, as do `live.page` and `videowalls.page`.
+
+The canonical catalog, generated built-in roles and resolved access use the
+new names. Existing `pages.*` grants remain accepted by `ParsePermission`,
+`LookupPermission`, role validation, permission expansion and access checks;
+`CanonicalPagePermission` performs the exact one-to-one name mapping.
+Runtime normalization requires no database migration. Permission levels,
+owner-only restrictions and tenant-wide constraints are unchanged.
+
+Page grants are not access-token scopes and never imply resource permissions.
+Hub API dual-emits old and new page names at the profile boundary for older
+frontends; callers using `Access.Permissions` directly receive canonical names.
+
 ### Alert configuration visibility
 
 `CustomAlert.private` defaults to false (including historical documents without

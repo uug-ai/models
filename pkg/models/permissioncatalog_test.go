@@ -565,9 +565,9 @@ func TestTenantWidePermissions(t *testing.T) {
 		PermissionTeamsRead,
 		PermissionProjectsDelete,
 		PermissionProjectsManageAccess,
-		PermissionPagesOrganisation,
-		PermissionPagesMembers,
-		PermissionPagesRoles,
+		PermissionOrganisationPage,
+		PermissionMembersPage,
+		PermissionRolesPage,
 	}
 	for _, definition := range PermissionDefinitions() {
 		want := definition.Level == LevelOrganisation && !slices.Contains(selectable, definition.Permission)
@@ -581,7 +581,7 @@ func TestOwnerOnlyPermissions(t *testing.T) {
 	ownerOnly := []Permission{
 		PermissionWorkflowsCreate, PermissionWorkflowsUpdate, PermissionWorkflowsDelete, PermissionWorkflowRunsUpdate,
 		PermissionDevicesDelete, PermissionDevicesManagePermissions, PermissionDevicesManageRecording, PermissionDevicesReadLogs,
-		PermissionPagesChannels, PermissionPagesSubscription,
+		PermissionChannelsPage, PermissionSubscriptionPage,
 	}
 	ownerOnly = append(ownerOnly, ChannelPermissions()...)
 	ownerOnly = append(ownerOnly, billingPermissions...)

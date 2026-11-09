@@ -44,25 +44,25 @@ const (
 // role holds it when the key is in its page list and its tier is served that
 // page.
 var legacyPagePermissions = map[string]Permission{
-	legacyPageDashboard:    PermissionPagesDashboard,
-	legacyPageLatestEvents: PermissionPagesLatestEvents,
-	legacyPageLiveView:     PermissionPagesLiveView,
-	legacyPageVideowall:    PermissionPagesVideowall,
-	legacyPageRecordings:   PermissionPagesRecordings,
-	legacyPageDayOverview:  PermissionPagesDayOverview,
-	legacyPageAnalytics:    PermissionPagesAnalytics,
-	legacyPageWatchlist:    PermissionPagesWatchlist,
-	legacyPageTasks:        PermissionPagesCases,
-	legacyPageAlerts:       PermissionPagesAlerts,
-	legacyPageIOs:          PermissionPagesIO,
-	legacyPageCameras:      PermissionPagesDevices,
-	legacyPageSites:        PermissionPagesSites,
-	legacyPageFloorPlans:   PermissionPagesFloorPlans,
-	legacyPageGroups:       PermissionPagesGroups,
-	legacyPageAccounts:     PermissionPagesMembers,
-	legacyPageRoles:        PermissionPagesRoles,
-	legacyPageSettings:     PermissionPagesSettings,
-	legacyPageAudit:        PermissionPagesAudit,
+	legacyPageDashboard:    PermissionDashboardPage,
+	legacyPageLatestEvents: PermissionLatestEventsPage,
+	legacyPageLiveView:     PermissionLivePage,
+	legacyPageVideowall:    PermissionVideowallsPage,
+	legacyPageRecordings:   PermissionMediaPage,
+	legacyPageDayOverview:  PermissionDaysPage,
+	legacyPageAnalytics:    PermissionAnalyticsPage,
+	legacyPageWatchlist:    PermissionWatchlistPage,
+	legacyPageTasks:        PermissionCasesPage,
+	legacyPageAlerts:       PermissionAlertsPage,
+	legacyPageIOs:          PermissionIOPage,
+	legacyPageCameras:      PermissionDevicesPage,
+	legacyPageSites:        PermissionSitesPage,
+	legacyPageFloorPlans:   PermissionFloorPlansPage,
+	legacyPageGroups:       PermissionGroupsPage,
+	legacyPageAccounts:     PermissionMembersPage,
+	legacyPageRoles:        PermissionRolesPage,
+	legacyPageSettings:     PermissionSettingsPage,
+	legacyPageAudit:        PermissionAuditPage,
 }
 
 // legacyAlways stands for "no page": its permissions are held whatever the
@@ -191,7 +191,7 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 	BaseRoleAdmin: {
 		// Workspace settings have no page key: every admin reaches them.
 		{[]string{legacyAlways}, []Permission{
-			PermissionPagesOrganisation,
+			PermissionOrganisationPage,
 			PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionMarkersWrite, PermissionDevicesRead,
 			PermissionProjectsCreate, PermissionProjectsDelete, PermissionProjectUpdate, PermissionProjectManageCredentials,
 		}},
@@ -325,6 +325,10 @@ func legacyPTZGrade(level int) []Permission {
 // canonicalPermissions returns the distinct catalog permissions in catalog
 // order, without any that another one in the set implies.
 func canonicalPermissions(permissions []Permission) []Permission {
+	permissions = slices.Clone(permissions)
+	for index, permission := range permissions {
+		permissions[index] = CanonicalPagePermission(permission)
+	}
 	var distinct []Permission
 	for _, permission := range catalogOrder(permissions) {
 		if _, ok := LookupPermission(permission); ok && !slices.Contains(distinct, permission) {

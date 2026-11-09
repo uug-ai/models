@@ -93,7 +93,7 @@ func TestMapLegacyAccessCustomRole(t *testing.T) {
 	if project.Kind != RoleKindCustom || project.Name != "Operator" || !project.IsActive || project.Origin.LegacyRoleId != legacyRoleId || project.Origin.BaseRole != BaseRoleGuest {
 		t.Errorf("project role %+v", project)
 	}
-	if want := []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZZoom, PermissionIOTrigger, PermissionPagesLiveView}; !slices.Equal(project.Permissions, want) {
+	if want := []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZZoom, PermissionIOTrigger, PermissionLivePage}; !slices.Equal(project.Permissions, want) {
 		t.Errorf("project permissions %v, want %v", project.Permissions, want)
 	}
 	if member.Key != RoleKeyLegacyMemberOrganisation {

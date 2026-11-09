@@ -18,9 +18,9 @@ var viewerPermissions = []Permission{
 	PermissionMediaRead, PermissionDaysRead, PermissionMarkersRead, PermissionWorkflowRunsRead,
 	PermissionSitesRead, PermissionGroupsRead, PermissionFloorPlansRead, PermissionVideowallsRead, PermissionIORead, PermissionLabelsRead,
 	PermissionNotificationsRead, PermissionAnalyticsRead, PermissionCasesRead,
-	PermissionPagesDashboard, PermissionPagesLatestEvents, PermissionPagesLiveView, PermissionPagesVideowall,
-	PermissionPagesRecordings, PermissionPagesDayOverview, PermissionPagesAnalytics, PermissionPagesWatchlist,
-	PermissionPagesCases, PermissionPagesIO, PermissionPagesDevices, PermissionPagesSites, PermissionPagesFloorPlans, PermissionPagesGroups,
+	PermissionDashboardPage, PermissionLatestEventsPage, PermissionLivePage, PermissionVideowallsPage,
+	PermissionMediaPage, PermissionDaysPage, PermissionAnalyticsPage, PermissionWatchlistPage,
+	PermissionCasesPage, PermissionIOPage, PermissionDevicesPage, PermissionSitesPage, PermissionFloorPlansPage, PermissionGroupsPage,
 }
 
 // editorPermissions adds day-to-day operation to Viewer: camera control,
@@ -40,7 +40,7 @@ var editorPermissions = append(append([]Permission{}, viewerPermissions...),
 	PermissionLabelsCreate, PermissionLabelsUpdate,
 	PermissionAlertsRead, PermissionAlertsCreate, PermissionAlertsUpdate,
 	PermissionDetectionsRead,
-	PermissionPagesAlerts, PermissionPagesWorkflows, PermissionPagesSettings,
+	PermissionAlertsPage, PermissionWorkflowsPage, PermissionSettingsPage,
 )
 
 // organisationManagerPermissions administer members, roles, teams and the
@@ -53,13 +53,13 @@ var organisationManagerPermissions = []Permission{
 	PermissionRolesRead, PermissionRolesCreate, PermissionRolesUpdate, PermissionRolesDelete,
 	PermissionTeamsRead, PermissionTeamsCreate, PermissionTeamsUpdate, PermissionTeamsDelete,
 	PermissionProjectsManageAccess,
-	PermissionPagesOrganisation, PermissionPagesMembers, PermissionPagesRoles,
+	PermissionOrganisationPage, PermissionMembersPage, PermissionRolesPage,
 }
 
 // billingAdminPermissions manage the subscription and nothing else.
 var billingAdminPermissions = []Permission{
 	PermissionOrganisationRead, PermissionBillingRead, PermissionBillingManage,
-	PermissionPagesOrganisation, PermissionPagesSubscription,
+	PermissionOrganisationPage, PermissionSubscriptionPage,
 }
 
 // allProjectPermissions returns every project permission of the catalog: Project
