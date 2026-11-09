@@ -85,7 +85,7 @@ var permissionGroups = []permissionGroup{
 	{level: LevelProject, permissions: analyticsPermissions},
 	{level: LevelProject, permissions: detectionPermissions},
 	{level: LevelProject, permissions: projectPermissions},
-	{level: LevelProject, permissions: pagePermissions, ownerOnly: []Permission{PermissionPagesChannels}},
+	{level: LevelProject, permissions: pagePermissions, ownerOnly: []Permission{PermissionChannelsPage}},
 
 	// Organisation-level administration. Reading the organisation, members,
 	// roles and teams, inviting, and managing projects can be limited to
@@ -99,8 +99,8 @@ var permissionGroups = []permissionGroup{
 	{level: LevelOrganisation, permissions: storagePermissions, tenantWide: storagePermissions, ownerOnly: storagePermissions},
 	{level: LevelOrganisation, permissions: auditPermissions, tenantWide: auditPermissions},
 	{level: LevelOrganisation, permissions: deviceAdministrationPermissions, tenantWide: deviceAdministrationPermissions, ownerOnly: deviceAdministrationPermissions},
-	{level: LevelOrganisation, permissions: organisationPagePermissions, tenantWide: []Permission{PermissionPagesSubscription, PermissionPagesAudit},
-		ownerOnly: []Permission{PermissionPagesSubscription}},
+	{level: LevelOrganisation, permissions: organisationPagePermissions, tenantWide: []Permission{PermissionSubscriptionPage, PermissionAuditPage},
+		ownerOnly: []Permission{PermissionSubscriptionPage}},
 }
 
 var permissionDefinitions = definePermissions(permissionGroups)
@@ -132,6 +132,7 @@ func PermissionDefinitions() []PermissionDefinition {
 
 // LookupPermission returns the catalog definition of a permission.
 func LookupPermission(permission Permission) (PermissionDefinition, bool) {
+	permission = CanonicalPagePermission(permission)
 	index, ok := permissionIndex[permission]
 	if !ok {
 		return PermissionDefinition{}, false
@@ -143,7 +144,7 @@ func LookupPermission(permission Permission) (PermissionDefinition, bool) {
 
 // ParsePermission validates and returns a canonical permission identifier.
 func ParsePermission(value string) (Permission, error) {
-	permission := Permission(value)
+	permission := CanonicalPagePermission(Permission(value))
 	if _, ok := permissionIndex[permission]; !ok {
 		return "", fmt.Errorf("%w %q", ErrPermissionUnknown, value)
 	}
@@ -170,7 +171,11 @@ func ValidatePermissions(permissions []Permission) error {
 // they imply, in catalog order. Unknown permissions are dropped: they grant
 // nothing.
 func ExpandPermissions(permissions []Permission) []Permission {
-	return expandPermissions(permissionDefinitions, permissionIndex, permissions)
+	canonical := make([]Permission, len(permissions))
+	for index, permission := range permissions {
+		canonical[index] = CanonicalPagePermission(permission)
+	}
+	return expandPermissions(permissionDefinitions, permissionIndex, canonical)
 }
 
 func expandPermissions(definitions []PermissionDefinition, index map[Permission]int, permissions []Permission) []Permission {

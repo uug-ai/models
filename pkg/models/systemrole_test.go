@@ -43,7 +43,7 @@ func TestProjectAdminHoldsEveryProjectPermission(t *testing.T) {
 func TestViewerChangesNothing(t *testing.T) {
 	for _, permission := range ExpandPermissions(systemRoleFor(t, RoleKeyViewer).Permissions) {
 		action := string(permission)[strings.LastIndex(string(permission), ".")+1:]
-		readOnly := action == "read" || action == "preview" || action == "stream" || strings.HasPrefix(string(permission), "pages.")
+		readOnly := action == "read" || action == "preview" || action == "stream" || action == "page"
 		if !readOnly {
 			t.Errorf("viewer holds %s", permission)
 		}
@@ -109,11 +109,11 @@ func TestSystemOrganisationRolesGrantNoProjectAccess(t *testing.T) {
 // those: a page without anything to show on it is a dead end.
 func TestSystemRolesListTheirPages(t *testing.T) {
 	pageNeeds := map[Permission]Permission{
-		PermissionPagesLiveView: PermissionLivePreview, PermissionPagesRecordings: PermissionMediaRead,
-		PermissionPagesCases: PermissionCasesRead, PermissionPagesDevices: PermissionDevicesRead,
-		PermissionPagesSites: PermissionSitesRead, PermissionPagesAlerts: PermissionAlertsRead,
-		PermissionPagesWorkflows: PermissionWorkflowsRead, PermissionPagesChannels: PermissionChannelsRead,
-		PermissionPagesSettings: PermissionLabelsCreate,
+		PermissionLivePage: PermissionLivePreview, PermissionMediaPage: PermissionMediaRead,
+		PermissionCasesPage: PermissionCasesRead, PermissionDevicesPage: PermissionDevicesRead,
+		PermissionSitesPage: PermissionSitesRead, PermissionAlertsPage: PermissionAlertsRead,
+		PermissionWorkflowsPage: PermissionWorkflowsRead, PermissionChannelsPage: PermissionChannelsRead,
+		PermissionSettingsPage: PermissionLabelsCreate,
 	}
 	for _, key := range []RoleKey{RoleKeyViewer, RoleKeyEditor, RoleKeyProjectAdmin} {
 		held := ExpandPermissions(systemRoleFor(t, key).Permissions)

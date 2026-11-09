@@ -9,11 +9,11 @@ import (
 // gates (hub-frontend 26446132, hub-api cd9eaedf). The page tables must keep
 // reproducing them for the built-in tiers.
 var verifiedLegacyRoles = map[RoleKey][]Permission{
-	"legacy-guest":               {"markers.read", "markers.write", "media.read", "media.update", "media.export", "media.share", "media.redact", "media.forward", "cases.read", "cases.create", "cases.update", "cases.share", "cases.export", "cases.runWorkflow", "workflows.read", "workflow-runs.create", "workflow-runs.read", "days.read", "devices.read", "live.stream", "sites.read", "groups.read", "floor-plans.read", "io.read", "io.trigger", "notifications.read", "notifications.update", "labels.read", "analytics.read", "pages.dashboard", "pages.latestEvents", "pages.liveView", "pages.videowall", "pages.recordings", "pages.dayOverview", "pages.analytics", "pages.watchlist", "pages.cases", "pages.io", "pages.devices", "pages.sites", "pages.floorPlans", "pages.groups"},
-	"legacy-editor":              {"markers.read", "markers.write", "media.read", "media.update", "media.export", "media.share", "media.redact", "media.forward", "cases.read", "cases.create", "cases.update", "cases.share", "cases.export", "cases.runWorkflow", "workflows.read", "workflow-runs.create", "workflow-runs.read", "days.read", "devices.read", "devices.configure", "live.stream", "ptz.presets", "sites.read", "groups.read", "floor-plans.read", "floor-plans.create", "floor-plans.update", "floor-plans.delete", "io.read", "io.trigger", "videowalls.create", "notifications.read", "notifications.update", "labels.read", "analytics.read", "pages.dashboard", "pages.latestEvents", "pages.liveView", "pages.videowall", "pages.recordings", "pages.dayOverview", "pages.analytics", "pages.watchlist", "pages.cases", "pages.io", "pages.devices", "pages.sites", "pages.floorPlans", "pages.groups"},
-	"legacy-admin":               {"markers.read", "markers.write", "media.read", "media.update", "media.export", "media.share", "media.redact", "media.forward", "cases.read", "cases.create", "cases.update", "cases.share", "cases.export", "cases.runWorkflow", "cases.delete", "cases.manageMembership", "workflows.read", "workflow-runs.create", "workflow-runs.read", "days.read", "devices.read", "devices.update", "devices.configure", "live.stream", "ptz.presets", "sites.read", "sites.create", "sites.update", "groups.read", "groups.create", "floor-plans.read", "floor-plans.create", "floor-plans.update", "floor-plans.delete", "io.read", "io.delete", "io.trigger", "videowalls.read", "videowalls.create", "videowalls.update", "videowalls.delete", "videowalls.assign", "alerts.read", "alerts.create", "alerts.update", "alerts.managePrivacy", "notifications.read", "notifications.update", "labels.read", "labels.create", "labels.update", "labels.delete", "analytics.read", "project.update", "project.manageCredentials", "project.manageAccess", "pages.dashboard", "pages.latestEvents", "pages.liveView", "pages.videowall", "pages.recordings", "pages.dayOverview", "pages.analytics", "pages.watchlist", "pages.cases", "pages.alerts", "pages.io", "pages.devices", "pages.sites", "pages.floorPlans", "pages.groups", "pages.settings"},
+	"legacy-guest":               {"markers.read", "markers.write", "media.read", "media.update", "media.export", "media.share", "media.redact", "media.forward", "cases.read", "cases.create", "cases.update", "cases.share", "cases.export", "cases.runWorkflow", "workflows.read", "workflow-runs.create", "workflow-runs.read", "days.read", "devices.read", "live.stream", "sites.read", "groups.read", "floor-plans.read", "io.read", "io.trigger", "notifications.read", "notifications.update", "labels.read", "analytics.read", "dashboard.page", "latest-events.page", "live.page", "videowalls.page", "media.page", "days.page", "analytics.page", "watchlist.page", "cases.page", "io.page", "devices.page", "sites.page", "floor-plans.page", "groups.page"},
+	"legacy-editor":              {"markers.read", "markers.write", "media.read", "media.update", "media.export", "media.share", "media.redact", "media.forward", "cases.read", "cases.create", "cases.update", "cases.share", "cases.export", "cases.runWorkflow", "workflows.read", "workflow-runs.create", "workflow-runs.read", "days.read", "devices.read", "devices.configure", "live.stream", "ptz.presets", "sites.read", "groups.read", "floor-plans.read", "floor-plans.create", "floor-plans.update", "floor-plans.delete", "io.read", "io.trigger", "videowalls.create", "notifications.read", "notifications.update", "labels.read", "analytics.read", "dashboard.page", "latest-events.page", "live.page", "videowalls.page", "media.page", "days.page", "analytics.page", "watchlist.page", "cases.page", "io.page", "devices.page", "sites.page", "floor-plans.page", "groups.page"},
+	"legacy-admin":               {"markers.read", "markers.write", "media.read", "media.update", "media.export", "media.share", "media.redact", "media.forward", "cases.read", "cases.create", "cases.update", "cases.share", "cases.export", "cases.runWorkflow", "cases.delete", "cases.manageMembership", "workflows.read", "workflow-runs.create", "workflow-runs.read", "days.read", "devices.read", "devices.update", "devices.configure", "live.stream", "ptz.presets", "sites.read", "sites.create", "sites.update", "groups.read", "groups.create", "floor-plans.read", "floor-plans.create", "floor-plans.update", "floor-plans.delete", "io.read", "io.delete", "io.trigger", "videowalls.read", "videowalls.create", "videowalls.update", "videowalls.delete", "videowalls.assign", "alerts.read", "alerts.create", "alerts.update", "alerts.managePrivacy", "notifications.read", "notifications.update", "labels.read", "labels.create", "labels.update", "labels.delete", "analytics.read", "project.update", "project.manageCredentials", "project.manageAccess", "dashboard.page", "latest-events.page", "live.page", "videowalls.page", "media.page", "days.page", "analytics.page", "watchlist.page", "cases.page", "alerts.page", "io.page", "devices.page", "sites.page", "floor-plans.page", "groups.page", "settings.page"},
 	"legacy-member-organisation": {"organisation.read", "members.read"},
-	"legacy-admin-organisation":  {"organisation.read", "organisation.update", "members.read", "members.invite", "members.update", "members.remove", "roles.read", "roles.create", "roles.update", "projects.create", "projects.delete", "projects.manageAccess", "audit.read", "pages.organisation", "pages.members", "pages.roles", "pages.audit"},
+	"legacy-admin-organisation":  {"organisation.read", "organisation.update", "members.read", "members.invite", "members.update", "members.remove", "roles.read", "roles.create", "roles.update", "projects.create", "projects.delete", "projects.manageAccess", "audit.read", "organisation.page", "members.page", "roles.page", "audit.page"},
 }
 
 func TestBuiltInLegacyRolesMatchVerifiedSets(t *testing.T) {
@@ -59,34 +59,34 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleAdmin,
 			pages:            []string{"channels", "plans-integrations", "subscription", "io"},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionProjectUpdate, PermissionProjectManageCredentials},
-			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionOrganisationPage},
 		},
 		{
 			name:             "live view follows the feature levels, not the tier",
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageLiveView},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionPagesLiveView},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLivePage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
 			name:             "a role without device pages still reads its devices, and cases open live video",
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageTasks},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLabelsRead, PermissionPagesCases},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLabelsRead, PermissionCasesPage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
 			name:             "group rows show live video",
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageGroups},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionGroupsRead, PermissionIOTrigger, PermissionPagesGroups},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionGroupsRead, PermissionIOTrigger, PermissionGroupsPage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
 			name:             "the watchlist opens recordings beside live video",
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageWatchlist},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaRead, PermissionMediaExport, PermissionMediaShare, PermissionCasesCreate, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionNotificationsRead, PermissionNotificationsUpdate, PermissionPagesWatchlist},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaRead, PermissionMediaExport, PermissionMediaShare, PermissionCasesCreate, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionNotificationsRead, PermissionNotificationsUpdate, PermissionWatchlistPage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
@@ -94,7 +94,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageAnalytics},
 			features:         FeaturePermissions{Liveview: 2, PTZ: 1},
-			wantProject:      []Permission{PermissionMarkersRead, PermissionMarkersWrite, PermissionDevicesRead, PermissionLivePreview, PermissionIOTrigger, PermissionAnalyticsRead, PermissionPagesAnalytics},
+			wantProject:      []Permission{PermissionMarkersRead, PermissionMarkersWrite, PermissionDevicesRead, PermissionLivePreview, PermissionIOTrigger, PermissionAnalyticsRead, PermissionAnalyticsPage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
@@ -102,7 +102,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleEditor,
 			pages:            []string{legacyPageCameras, legacyPageRecordings},
 			features:         FeaturePermissions{Liveview: 2, PTZ: 3, RemoteConfig: 1, DownloadRecordings: 1},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaRead, PermissionMediaUpdate, PermissionMediaShare, PermissionMediaForward, PermissionCasesCreate, PermissionDaysRead, PermissionDevicesRead, PermissionLivePreview, PermissionPTZPanTilt, PermissionIORead, PermissionIOTrigger, PermissionPagesRecordings, PermissionPagesDevices},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaRead, PermissionMediaUpdate, PermissionMediaShare, PermissionMediaForward, PermissionCasesCreate, PermissionDaysRead, PermissionDevicesRead, PermissionLivePreview, PermissionPTZPanTilt, PermissionIORead, PermissionIOTrigger, PermissionMediaPage, PermissionDevicesPage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
@@ -110,21 +110,21 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageAudit},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead},
-			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionAuditRead, PermissionPagesAudit},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionAuditRead, PermissionAuditPage},
 		},
 		{
 			name:             "editor custom role opts into the audit log",
 			tier:             BaseRoleEditor,
 			pages:            []string{legacyPageAudit},
 			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead},
-			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionAuditRead, PermissionPagesAudit},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionAuditRead, PermissionAuditPage},
 		},
 		{
 			name:             "admin without accounts and roles keeps no member or role administration",
 			tier:             BaseRoleAdmin,
 			pages:            []string{legacyPageTasks},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionCasesDelete, PermissionCasesManageMembership, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLabelsRead, PermissionProjectUpdate, PermissionProjectManageCredentials, PermissionPagesCases},
-			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionPagesOrganisation},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionCasesDelete, PermissionCasesManageMembership, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLabelsRead, PermissionProjectUpdate, PermissionProjectManageCredentials, PermissionCasesPage},
+			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionOrganisationPage},
 		},
 	}
 	for _, test := range tests {
@@ -148,11 +148,11 @@ func TestLegacyRolePermissions(t *testing.T) {
 
 func TestLegacyAdminCustomRoleOptsIntoAudit(t *testing.T) {
 	_, without, _ := LegacyRolePermissions(BaseRoleAdmin, []string{legacyPageSettings}, FeaturePermissions{})
-	if slices.Contains(without, PermissionAuditRead) || slices.Contains(without, PermissionPagesAudit) {
+	if slices.Contains(without, PermissionAuditRead) || slices.Contains(without, PermissionAuditPage) {
 		t.Errorf("admin custom role without the audit page holds audit: %v", without)
 	}
 	_, with, _ := LegacyRolePermissions(BaseRoleAdmin, []string{legacyPageSettings, legacyPageAudit}, FeaturePermissions{})
-	if !slices.Contains(with, PermissionAuditRead) || !slices.Contains(with, PermissionPagesAudit) {
+	if !slices.Contains(with, PermissionAuditRead) || !slices.Contains(with, PermissionAuditPage) {
 		t.Errorf("admin custom role listing the audit page lacks audit: %v", with)
 	}
 }
@@ -183,18 +183,18 @@ func TestLegacyPagesShowOnlyThemselves(t *testing.T) {
 	// A role on the dashboard and recordings reads devices for them, but is
 	// not shown the devices page.
 	project, _, _ := LegacyRolePermissions(BaseRoleAdmin, []string{legacyPageDashboard, legacyPageRecordings}, FeaturePermissions{})
-	for _, want := range []Permission{PermissionPagesDashboard, PermissionPagesRecordings, PermissionDevicesRead} {
+	for _, want := range []Permission{PermissionDashboardPage, PermissionMediaPage, PermissionDevicesRead} {
 		if !slices.Contains(project, want) {
 			t.Errorf("missing %s in %v", want, project)
 		}
 	}
-	for _, page := range []Permission{PermissionPagesDevices, PermissionPagesLiveView, PermissionPagesSettings} {
+	for _, page := range []Permission{PermissionDevicesPage, PermissionLivePage, PermissionSettingsPage} {
 		if slices.Contains(project, page) {
 			t.Errorf("%s shown without its page", page)
 		}
 	}
 	// A page the tier is never served shows nothing.
-	if project, _, _ := LegacyRolePermissions(BaseRoleGuest, []string{legacyPageAlerts, legacyPageSettings}, FeaturePermissions{}); slices.Contains(project, PermissionPagesAlerts) || slices.Contains(project, PermissionPagesSettings) {
+	if project, _, _ := LegacyRolePermissions(BaseRoleGuest, []string{legacyPageAlerts, legacyPageSettings}, FeaturePermissions{}); slices.Contains(project, PermissionAlertsPage) || slices.Contains(project, PermissionSettingsPage) {
 		t.Errorf("guest shown admin pages: %v", project)
 	}
 }

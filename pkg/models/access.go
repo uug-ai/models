@@ -110,6 +110,7 @@ func (a Access) IsOwner() bool {
 // only an assignment covering all projects grants; otherwise about the
 // organisation permission within that project.
 func (a Access) Organisation(permission Permission, projectId primitive.ObjectID) bool {
+	permission = CanonicalPagePermission(permission)
 	if definition, ok := LookupPermission(permission); !ok || definition.Level != LevelOrganisation {
 		return false
 	}
@@ -197,6 +198,7 @@ func (a Access) projectGrant(permission Permission, projectId primitive.ObjectID
 }
 
 func (g accessGrant) inProject(permission Permission, projectId primitive.ObjectID) bool {
+	permission = CanonicalPagePermission(permission)
 	return g.scope.Level == LevelProject && g.scope.ProjectId == projectId && slices.Contains(g.permissions, permission)
 }
 
