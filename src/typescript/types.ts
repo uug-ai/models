@@ -42651,6 +42651,21 @@ export interface components {
             markers?: components["schemas"]["models.MarkerGroup"][];
             media?: components["schemas"]["models.MediaGroup"][];
         };
+        "models.TokenClaims": {
+            /** @description Bound access/service token claims. */
+            accessTokenId?: string;
+            organisationId?: string;
+            projectId?: string;
+            /** @description Scopes are authoritative only when TokenType.HasFixedScopes(). */
+            scopes?: components["schemas"]["models.Permission"][];
+            /** @description Subject is the authenticated user (or service identity) id. */
+            sub?: string;
+            /** @description TokenType is absent on tokens minted before token types existed. */
+            tokenType?: components["schemas"]["models.TokenType"];
+            userId?: string;
+        };
+        /** @enum {string} */
+        "models.TokenType": "session" | "access" | "service";
         "models.TrackBox": {
             classId?: number;
             /** @description Confidence, ClassId and Label preserve the producer's per-box model
@@ -44104,6 +44119,8 @@ export namespace models {
     export type TimeSeriesDataPoint = components['schemas']['models.TimeSeriesDataPoint'];
     export type TimeWindow = components['schemas']['models.TimeWindow'];
     export type Timeline = components['schemas']['models.Timeline'];
+    export type TokenClaims = components['schemas']['models.TokenClaims'];
+    export type TokenType = components['schemas']['models.TokenType'];
     export type TrackBox = components['schemas']['models.TrackBox'];
     export type UpdateAlertInput = components['schemas']['models.UpdateAlertInput'];
     export type UpdateAlertOutput = components['schemas']['models.UpdateAlertOutput'];
