@@ -39,7 +39,7 @@ func TestLegacyGuestAndEditorShareOrganisationPart(t *testing.T) {
 func TestLegacyRolePermissions(t *testing.T) {
 	// devices.read follows no page: the device lists and device alerts never
 	// read the page list.
-	always := []Permission{PermissionMarkersWrite, PermissionDevicesRead}
+	always := []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionSitesRead, PermissionGroupsRead}
 	tests := []struct {
 		name             string
 		tier             BaseRole
@@ -58,35 +58,35 @@ func TestLegacyRolePermissions(t *testing.T) {
 			name:             "owner-only pages grant other tiers nothing",
 			tier:             BaseRoleAdmin,
 			pages:            []string{"channels", "plans-integrations", "subscription", "io"},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionProjectUpdate, PermissionProjectManageCredentials},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionSitesRead, PermissionGroupsRead, PermissionProjectUpdate, PermissionProjectManageCredentials},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionOrganisationPage},
 		},
 		{
 			name:             "live view follows the feature levels, not the tier",
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageLiveView},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLivePage},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionSitesRead, PermissionGroupsRead, PermissionIOTrigger, PermissionLivePage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
 			name:             "a role without device pages still reads its devices, and cases open live video",
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageTasks},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLabelsRead, PermissionCasesPage},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionSitesRead, PermissionGroupsRead, PermissionIOTrigger, PermissionLabelsRead, PermissionCasesPage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
 			name:             "group rows show live video",
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageGroups},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionGroupsRead, PermissionIOTrigger, PermissionGroupsPage},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionSitesRead, PermissionGroupsRead, PermissionIOTrigger, PermissionGroupsPage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
 			name:             "the watchlist opens recordings beside live video",
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageWatchlist},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaRead, PermissionMediaExport, PermissionMediaShare, PermissionCasesCreate, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionNotificationsRead, PermissionNotificationsUpdate, PermissionWatchlistPage},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaRead, PermissionMediaExport, PermissionMediaShare, PermissionCasesCreate, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionSitesRead, PermissionGroupsRead, PermissionIOTrigger, PermissionNotificationsRead, PermissionNotificationsUpdate, PermissionWatchlistPage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
@@ -94,7 +94,7 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageAnalytics},
 			features:         FeaturePermissions{Liveview: 2, PTZ: 1},
-			wantProject:      []Permission{PermissionMarkersRead, PermissionMarkersWrite, PermissionDevicesRead, PermissionLivePreview, PermissionIOTrigger, PermissionAnalyticsRead, PermissionAnalyticsPage},
+			wantProject:      []Permission{PermissionMarkersRead, PermissionMarkersWrite, PermissionDevicesRead, PermissionLivePreview, PermissionSitesRead, PermissionGroupsRead, PermissionIOTrigger, PermissionAnalyticsRead, PermissionAnalyticsPage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
@@ -102,28 +102,28 @@ func TestLegacyRolePermissions(t *testing.T) {
 			tier:             BaseRoleEditor,
 			pages:            []string{legacyPageCameras, legacyPageRecordings},
 			features:         FeaturePermissions{Liveview: 2, PTZ: 3, RemoteConfig: 1, DownloadRecordings: 1},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaRead, PermissionMediaUpdate, PermissionMediaShare, PermissionMediaForward, PermissionCasesCreate, PermissionDaysRead, PermissionDevicesRead, PermissionLivePreview, PermissionPTZPanTilt, PermissionIORead, PermissionIOTrigger, PermissionMediaPage, PermissionDevicesPage},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaRead, PermissionMediaUpdate, PermissionMediaShare, PermissionMediaForward, PermissionCasesCreate, PermissionDaysRead, PermissionDevicesRead, PermissionLivePreview, PermissionPTZPanTilt, PermissionSitesRead, PermissionGroupsRead, PermissionIORead, PermissionIOTrigger, PermissionMediaPage, PermissionDevicesPage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead},
 		},
 		{
 			name:             "guest custom role opts into the audit log",
 			tier:             BaseRoleGuest,
 			pages:            []string{legacyPageAudit},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionSitesRead, PermissionGroupsRead},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionAuditRead, PermissionAuditPage},
 		},
 		{
 			name:             "editor custom role opts into the audit log",
 			tier:             BaseRoleEditor,
 			pages:            []string{legacyPageAudit},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionDevicesRead, PermissionSitesRead, PermissionGroupsRead},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionAuditRead, PermissionAuditPage},
 		},
 		{
 			name:             "admin without accounts and roles keeps no member or role administration",
 			tier:             BaseRoleAdmin,
 			pages:            []string{legacyPageTasks},
-			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionCasesDelete, PermissionCasesManageMembership, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionIOTrigger, PermissionLabelsRead, PermissionProjectUpdate, PermissionProjectManageCredentials, PermissionCasesPage},
+			wantProject:      []Permission{PermissionMarkersWrite, PermissionMediaExport, PermissionMediaRedact, PermissionCasesRead, PermissionCasesCreate, PermissionCasesUpdate, PermissionCasesShare, PermissionCasesExport, PermissionCasesRunWorkflow, PermissionCasesDelete, PermissionCasesManageMembership, PermissionWorkflowsRead, PermissionWorkflowRunsCreate, PermissionWorkflowRunsRead, PermissionDevicesRead, PermissionLiveStream, PermissionPTZPresets, PermissionSitesRead, PermissionGroupsRead, PermissionIOTrigger, PermissionLabelsRead, PermissionProjectUpdate, PermissionProjectManageCredentials, PermissionCasesPage},
 			wantOrganisation: []Permission{PermissionOrganisationRead, PermissionOrganisationUpdate, PermissionMembersRead, PermissionProjectsCreate, PermissionProjectsDelete, PermissionOrganisationPage},
 		},
 	}
