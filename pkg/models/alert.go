@@ -92,6 +92,9 @@ type CustomAlert struct {
 	TimeRange1Min int32 `json:"timeRange1Min" bson:"timeRange1Min"`
 	TimeRange2Max int32 `json:"timeRange2Max" bson:"timeRange2Max"`
 	TimeRange2Min int32 `json:"timeRange2Min" bson:"timeRange2Min"`
+	// Access is what the caller may do on this alert, computed when it is
+	// returned and never stored (RBAC spec 4.13).
+	Access *ItemAccess `json:"access,omitempty" bson:"-"`
 }
 
 type AlertFeatures struct {

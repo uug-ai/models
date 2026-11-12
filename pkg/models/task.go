@@ -195,6 +195,9 @@ type Task struct {
 	// Related collections
 	Comments []Comment `json:"comments" bson:"comments,omitempty"`
 	Labels   []string  `json:"labels" bson:"labels,omitempty"`
+	// Access is what the caller may do on this case, computed when it is
+	// returned and never stored (RBAC spec 4.13).
+	Access *ItemAccess `json:"access,omitempty" bson:"-"`
 }
 
 // ExportFile is the legacy media descriptor embedded on Task.ExportFiles.

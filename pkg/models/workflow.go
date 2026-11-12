@@ -500,6 +500,9 @@ type Workflow struct {
 	// Audit carries bounded actor/timestamp metadata for database-backed user
 	// workflows. It is omitted from Helm-defined global workflows unless set.
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
+	// Access is what the caller may do on this workflow, computed when it is
+	// returned and never stored (RBAC spec 4.13).
+	Access *ItemAccess `json:"access,omitempty" bson:"-"`
 }
 
 // UnmarshalJSON accepts the pre-canonical snake_case ownership and timestamp
