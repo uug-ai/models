@@ -3,11 +3,15 @@ package models
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type CaseShare struct {
-	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
-	TaskId         string             `json:"task_id" bson:"task_id"`
-	UserId         string             `json:"user_id" bson:"user_id"`
-	UserEmail      string             `json:"user_email" bson:"user_email"`
-	OrganisationId string             `json:"organisation_id" bson:"organisation_id"`
+	Id        primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	TaskId    string             `json:"task_id" bson:"task_id"`
+	UserId    string             `json:"user_id" bson:"user_id"`
+	UserEmail string             `json:"user_email" bson:"user_email"`
+	// CreatedBy is the id of the user who created the share. UserId holds the
+	// account owner (the share's storage scope), not the creator; shares
+	// created before this field only carry the creator's UserEmail.
+	CreatedBy      string `json:"created_by,omitempty" bson:"created_by,omitempty"`
+	OrganisationId string `json:"organisation_id" bson:"organisation_id"`
 
 	// ProjectId optionally places the case share in a project within its organisation.
 	// A nil value places it in the organisation's default project (see ResolveProjectId).
