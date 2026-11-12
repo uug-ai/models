@@ -68,6 +68,9 @@ type Videowall struct {
 	// AllowLayoutEdits lets any signed-in viewer (not just the owner) persist
 	// changes to Layout. When false only the owner may save.
 	AllowLayoutEdits bool `json:"allow_layout_edits" bson:"allow_layout_edits"`
+	// Access is what the caller may do on this videowall, computed when it is
+	// returned and never stored (RBAC spec 4.13).
+	Access *ItemAccess `json:"access,omitempty" bson:"-"`
 }
 
 // VideowallLayout is the persisted, shareable tile arrangement of a videowall.
