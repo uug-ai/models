@@ -41,6 +41,11 @@ func GetOrganisationId(user User) string {
 
 // GetOrganisationObjectId returns the user's explicitly selected organisation,
 // falling back to the legacy master-account identity for unmigrated users.
+//
+// An account without a home organisation (User.NoHomeOrganisation) that has
+// selected none has no organisation: the result is the zero id, never the
+// account's own id, which would name a tenant that does not exist. Callers
+// refuse organisation-scoped work for it (User.RequiresOrganisation).
 func GetOrganisationObjectId(user User) primitive.ObjectID {
 	if !user.OrganisationId.IsZero() {
 		return user.OrganisationId
@@ -51,7 +56,25 @@ func GetOrganisationObjectId(user User) primitive.ObjectID {
 		}
 		return user.Master.Id
 	}
+	if user.NoHomeOrganisation {
+		return primitive.NilObjectID
+	}
 	return user.Id
+}
+
+// HasHomeOrganisation reports whether the account has a home organisation:
+// the one whose id is the account's own id (its master's, for a sub-account).
+// Every account has one unless it is marked NoHomeOrganisation.
+func (user User) HasHomeOrganisation() bool {
+	return user.MasterAccount != "" || !user.NoHomeOrganisation
+}
+
+// RequiresOrganisation reports whether the account has no organisation to
+// work in: it has no home organisation and has selected none. Whether a
+// selected organisation still has the account as a member is for the caller
+// to check.
+func (user User) RequiresOrganisation() bool {
+	return !user.HasHomeOrganisation() && user.OrganisationId.IsZero()
 }
 
 // GetProjectObjectId returns the user's currently selected project, or the zero
@@ -64,9 +87,15 @@ func GetProjectObjectId(user User) primitive.ObjectID {
 }
 
 type User struct {
-	Id                    primitive.ObjectID     `json:"id" bson:"_id,omitempty"`
-	OrganisationId        primitive.ObjectID     `json:"organisationId" bson:"organisationId,omitempty"`
-	ProjectId             primitive.ObjectID     `json:"projectId" bson:"projectId,omitempty"`
+	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"`
+	ProjectId      primitive.ObjectID `json:"projectId" bson:"projectId,omitempty"`
+	// NoHomeOrganisation marks an account that has no home organisation: it
+	// registered without creating one yet, or it only ever joined other
+	// organisations through invitations. Unset for every account that has a
+	// home organisation, stored or not, which is every account from before
+	// onboarding existed. Creating the home organisation clears it.
+	NoHomeOrganisation    bool                   `json:"noHomeOrganisation,omitempty" bson:"noHomeOrganisation,omitempty"`
 	Username              string                 `json:"username" bson:"username,omitempty"`
 	Password              string                 `json:"password" bson:"password,omitempty"`
 	ForgotPassword        string                 `json:"forgotPassword" bson:"forgotPassword,omitempty"`

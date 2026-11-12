@@ -15,6 +15,8 @@ var invitationStatuses = []InvitationResponseStatus{
 	InvitationAcceptSuccess, InvitationAcceptFailed, InvitationPending, InvitationAlreadyMember,
 	InvitationClosed, InvitationEmailMismatch, InvitationExceedsAccess, InvitationOwnerOnly, InvitationRoleNotFound,
 	InvitationTeamNotFound, InvitationTeamManagedByProvider, InvitationLegacyMode,
+	InvitationSignUpSuccess, InvitationSignUpFailed, InvitationSignUpDisabled, InvitationAccountExists,
+	InvitationUsernameExists, InvitationLinkRequired,
 }
 
 func TestInvitationResponseStatusTranslate(t *testing.T) {

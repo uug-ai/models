@@ -41,6 +41,11 @@ func NewLegacySubject(user User) LegacySubject {
 	if masterId, err := primitive.ObjectIDFromHex(user.MasterAccount); err == nil && !masterId.IsZero() {
 		home = masterId
 	}
+	if !user.HasHomeOrganisation() {
+		// No home organisation: the subject has only the organisation it
+		// selected, and none when it selected none.
+		home = primitive.NilObjectID
+	}
 	organisationId := user.OrganisationId
 	if organisationId.IsZero() {
 		organisationId = home
