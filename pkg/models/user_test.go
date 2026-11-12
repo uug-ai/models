@@ -103,3 +103,40 @@ func TestStableOwnerObjectIdRejectsMalformedMaster(t *testing.T) {
 		t.Fatalf("stable owner = %s, want own ID %s", got.Hex(), userId.Hex())
 	}
 }
+
+func TestGetOrganisationObjectIdWithoutHomeOrganisation(t *testing.T) {
+	user := User{Id: primitive.NewObjectID(), NoHomeOrganisation: true}
+	if got := GetOrganisationObjectId(user); !got.IsZero() {
+		t.Fatalf("no home organisation and none selected = %s, want the zero id", got.Hex())
+	}
+	if !user.RequiresOrganisation() || user.HasHomeOrganisation() {
+		t.Fatal("an account without a home organisation that selected none requires one")
+	}
+	if subject := NewLegacySubject(user); !subject.OrganisationId.IsZero() || !subject.HomeOrganisationId.IsZero() {
+		t.Fatalf("subject = %+v, want no organisation", subject)
+	}
+
+	selected := primitive.NewObjectID()
+	user.OrganisationId = selected
+	if got := GetOrganisationObjectId(user); got != selected {
+		t.Fatalf("selected organisation = %s, want %s", got.Hex(), selected.Hex())
+	}
+	if user.RequiresOrganisation() {
+		t.Fatal("an account that selected an organisation does not require one")
+	}
+	if subject := NewLegacySubject(user); subject.OrganisationId != selected || !subject.HomeOrganisationId.IsZero() {
+		t.Fatalf("subject = %+v, want the selected organisation and no home", subject)
+	}
+}
+
+func TestAccountsHaveAHomeOrganisationByDefault(t *testing.T) {
+	owner := User{Id: primitive.NewObjectID()}
+	if !owner.HasHomeOrganisation() || owner.RequiresOrganisation() || GetOrganisationObjectId(owner) != owner.Id {
+		t.Fatal("an account from before onboarding keeps its own id as home organisation")
+	}
+	// A sub-account's home is its master's, whatever the marker says.
+	sub := User{Id: primitive.NewObjectID(), MasterAccount: owner.Id.Hex(), Master: &owner, NoHomeOrganisation: true}
+	if !sub.HasHomeOrganisation() || GetOrganisationObjectId(sub) != owner.Id {
+		t.Fatal("a sub-account works in its master's organisation")
+	}
+}

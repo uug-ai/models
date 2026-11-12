@@ -55,7 +55,20 @@ const (
 	InvitationTeamManagedByProvider InvitationResponseStatus = "invitation_team_managed_by_provider"
 	// InvitationLegacyMode: the organisation has not been cut over to RBAC;
 	// accounts are still created through the legacy account flow.
-	InvitationLegacyMode InvitationResponseStatus = "invitation_legacy_mode"
+	InvitationLegacyMode    InvitationResponseStatus = "invitation_legacy_mode"
+	InvitationSignUpSuccess InvitationResponseStatus = "invitation_sign_up_success"
+	InvitationSignUpFailed  InvitationResponseStatus = "invitation_sign_up_failed"
+	// InvitationSignUpDisabled: this deployment does not create accounts from
+	// an invitation; the invitee needs an account first.
+	InvitationSignUpDisabled InvitationResponseStatus = "invitation_sign_up_disabled"
+	// InvitationAccountExists: the invited address already has an account;
+	// sign in and accept instead.
+	InvitationAccountExists InvitationResponseStatus = "invitation_account_exists"
+	// InvitationUsernameExists: the chosen username is taken.
+	InvitationUsernameExists InvitationResponseStatus = "invitation_username_exists"
+	// InvitationLinkRequired: the account's address is set by someone else
+	// (a sub-account), so it proves nothing; accept with the emailed link.
+	InvitationLinkRequired InvitationResponseStatus = "invitation_link_required"
 )
 
 // String returns the string representation of the invitation status.
@@ -83,6 +96,12 @@ func (s InvitationResponseStatus) Translate(lang string) string {
 			InvitationRevokeFailed:          "Failed to revoke invitation",
 			InvitationAcceptSuccess:         "Invitation accepted",
 			InvitationAcceptFailed:          "Failed to accept invitation",
+			InvitationSignUpSuccess:         "Account created and invitation accepted",
+			InvitationSignUpFailed:          "Failed to create the account",
+			InvitationSignUpDisabled:        "Create an account first, then accept the invitation",
+			InvitationAccountExists:         "This address already has an account; sign in to accept the invitation",
+			InvitationUsernameExists:        "This username is already taken",
+			InvitationLinkRequired:          "Open the link in the invitation email to accept it",
 			InvitationPending:               "This address already has an open invitation",
 			InvitationAlreadyMember:         "This address already belongs to a member of the organisation",
 			InvitationClosed:                "This invitation is no longer valid",
@@ -260,5 +279,52 @@ type AcceptInvitationSuccessResponse struct {
 	Data AcceptInvitationResponse `json:"data"`
 }
 type AcceptInvitationErrorResponse struct {
+	ErrorResponse
+}
+
+// GetPendingInvitations lists the open invitations to the signed-in
+// account's own email address, in any organisation.
+// @Router /invitations/pending [get]
+type GetPendingInvitationsRequest struct{}
+type GetPendingInvitationsResponse struct {
+	Invitations []PendingInvitation `json:"invitations"`
+}
+type GetPendingInvitationsSuccessResponse struct {
+	SuccessResponse
+	Data GetPendingInvitationsResponse `json:"data"`
+}
+type GetPendingInvitationsErrorResponse struct {
+	ErrorResponse
+}
+
+// AcceptPendingInvitation accepts one of the account's pending invitations
+// without its link: the account's address is the invited one. It answers
+// like AcceptInvitation.
+// @Router /invitations/{id}/accept [post]
+type AcceptPendingInvitationRequest struct{}
+
+// SignUpWithInvitation creates an account for the invited address and
+// accepts the invitation in one step. The link proves the address, so the
+// account is active at once. It joins only the inviting organisation: no
+// organisation of its own is created.
+// @Router /invitations/sign-up [post]
+type SignUpWithInvitationRequest struct {
+	Token     string `json:"token"`
+	Username  string `json:"username"`
+	Password  string `json:"password"`
+	FirstName string `json:"firstName,omitempty"`
+	LastName  string `json:"lastName,omitempty"`
+}
+type SignUpWithInvitationResponse struct {
+	Username         string `json:"username"`
+	Email            string `json:"email"`
+	OrganisationId   string `json:"organisationId"`
+	OrganisationName string `json:"organisationName"`
+}
+type SignUpWithInvitationSuccessResponse struct {
+	SuccessResponse
+	Data SignUpWithInvitationResponse `json:"data"`
+}
+type SignUpWithInvitationErrorResponse struct {
 	ErrorResponse
 }
