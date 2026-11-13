@@ -142,9 +142,12 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 	// (D4); alerts and channels (D5); reading roles (D7); billing and storage
 	// (D8); deleting recordings, creating IO, detections and moderating
 	// comments, which have no screen (D13). Videowalls and private cases are
-	// visible through their assigned-user and participant rules only.
+	// visible through their assigned-user and participant rules only. The
+	// member list (members.read) stays with admins and owners: guests and
+	// editors pick people from the member directory, which cases and
+	// videowalls grant.
 	BaseRoleGuest: {
-		{[]string{legacyAlways}, []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionMarkersWrite, PermissionDevicesRead, PermissionSitesRead, PermissionGroupsRead}},
+		{[]string{legacyAlways}, []Permission{PermissionOrganisationRead, PermissionMarkersWrite, PermissionDevicesRead, PermissionSitesRead, PermissionGroupsRead}},
 		{[]string{legacyPageIOs, legacyPageCameras}, []Permission{PermissionIORead}},
 		{onPages(legacyLivePages, []string{legacyPageIOs}), []Permission{PermissionIOTrigger}},
 		{[]string{legacyPageFloorPlans}, []Permission{PermissionFloorPlansRead}},
@@ -164,7 +167,7 @@ var legacyTierPageGrants = map[BaseRole][]legacyPageGrant{
 	// their own, by the creator rule); otherwise as guests. They may not assign
 	// users to videowalls.
 	BaseRoleEditor: {
-		{[]string{legacyAlways}, []Permission{PermissionOrganisationRead, PermissionMembersRead, PermissionMarkersWrite, PermissionDevicesRead, PermissionSitesRead, PermissionGroupsRead}},
+		{[]string{legacyAlways}, []Permission{PermissionOrganisationRead, PermissionMarkersWrite, PermissionDevicesRead, PermissionSitesRead, PermissionGroupsRead}},
 		{[]string{legacyPageIOs, legacyPageCameras}, []Permission{PermissionIORead}},
 		{onPages(legacyLivePages, []string{legacyPageIOs}), []Permission{PermissionIOTrigger}},
 		{[]string{legacyPageFloorPlans}, []Permission{PermissionFloorPlansRead, PermissionFloorPlansCreate, PermissionFloorPlansUpdate, PermissionFloorPlansDelete}},
