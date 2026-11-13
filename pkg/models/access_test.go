@@ -39,10 +39,11 @@ func TestAccessLegacyGuest(t *testing.T) {
 		{"another project", access.Device(PermissionDevicesRead, otherProject, DeviceRef{Key: deviceKey}), false},
 		{"project resource", access.Project(PermissionCasesRead, project), true},
 		{"project resource the role lacks", access.Project(PermissionCasesDelete, project), false},
-		{"organisation permission", access.Organisation(PermissionMembersRead, primitive.NilObjectID), true},
+		{"organisation permission", access.Organisation(PermissionOrganisationRead, primitive.NilObjectID), true},
+		{"member list, admins and owners only", access.Organisation(PermissionMembersRead, primitive.NilObjectID), false},
 		{"organisation permission the role lacks", access.Organisation(PermissionMembersInvite, primitive.NilObjectID), false},
 		{"project permission asked as organisation", access.Organisation(PermissionCasesRead, project), false},
-		{"organisation permission asked as project", access.Project(PermissionMembersRead, project), false},
+		{"organisation permission asked as project", access.Project(PermissionOrganisationRead, project), false},
 		{"not an owner", access.IsOwner(), false},
 	}
 	for _, check := range checks {
@@ -56,7 +57,7 @@ func TestAccessLegacyGuest(t *testing.T) {
 		t.Errorf("selection %+v", selection)
 	}
 	permissions := access.Permissions(project)
-	if !slices.Contains(permissions, PermissionLivePreview) || !slices.Contains(permissions, PermissionMembersRead) || slices.Contains(permissions, PermissionDevicesUpdate) {
+	if !slices.Contains(permissions, PermissionLivePreview) || !slices.Contains(permissions, PermissionOrganisationRead) || slices.Contains(permissions, PermissionMembersRead) || slices.Contains(permissions, PermissionDevicesUpdate) {
 		t.Errorf("permissions %v", permissions)
 	}
 	if !slices.Equal(permissions, catalogOrder(permissions)) {
@@ -109,7 +110,7 @@ func TestAccessDenies(t *testing.T) {
 		{"disabled assignment", func(a *LegacyAccess) { a.Assignments[0].IsActive = false }},
 		{"invalid scope", func(a *LegacyAccess) { a.Assignments[0].Scope.Resources = "" }},
 		{"closed time window", func(a *LegacyAccess) {
-			a.Assignments[0].TimeWindow = &TimeWindow{Timezone: "UTC", Ranges: []TimeWindowRange{{Days: []Weekday{weekdays[time.Now().UTC().Add(48 * time.Hour).Weekday()]}, StartMinute: 0, EndMinute: 1440}}}
+			a.Assignments[0].TimeWindow = &TimeWindow{Timezone: "UTC", Ranges: []TimeWindowRange{{Days: []Weekday{weekdays[time.Now().UTC().Add(48*time.Hour).Weekday()]}, StartMinute: 0, EndMinute: 1440}}}
 		}},
 		{"unknown time zone", func(a *LegacyAccess) {
 			a.Assignments[0].TimeWindow = &TimeWindow{Timezone: "Nowhere/Nothing", Ranges: []TimeWindowRange{{Days: weekdayNames, StartMinute: 0, EndMinute: 1440}}}
