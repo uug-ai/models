@@ -34,8 +34,8 @@ func TestMemberStatusTranslate(t *testing.T) {
 	}
 }
 
-func TestMemberUserCarriesNoCredentials(t *testing.T) {
-	body, err := json.Marshal(MemberSummary{User: MemberUser{Id: "u1", Username: "kim", Email: "kim@example.com", FirstName: "Kim", LastName: "Lee"}})
+func TestUserIdentityCarriesNoCredentials(t *testing.T) {
+	body, err := json.Marshal(MemberSummary{User: UserIdentity{Id: "u1", Username: "kim", Email: "kim@example.com", FirstName: "Kim", LastName: "Lee", Nickname: "kimmy"}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -47,7 +47,7 @@ func TestMemberUserCarriesNoCredentials(t *testing.T) {
 	}
 	for field := range decoded.User {
 		switch field {
-		case "id", "username", "email", "firstName", "lastName":
+		case "id", "username", "email", "firstName", "lastName", "nickname":
 		default:
 			t.Errorf("member identity exposes %q", field)
 		}

@@ -41,7 +41,7 @@ func TestTeamStatusTranslate(t *testing.T) {
 }
 
 func TestTeamMemberUserCarriesNoCredentials(t *testing.T) {
-	body, err := json.Marshal(TeamMemberDetails{User: TeamMemberUser{Id: "u1", Username: "kim", Email: "kim@example.com"}})
+	body, err := json.Marshal(TeamMemberDetails{User: UserIdentity{Id: "u1", Username: "kim", Email: "kim@example.com"}})
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -124,19 +124,15 @@ type TeamSummary struct {
 	MemberCount int64       `json:"memberCount"`
 }
 
-// TeamMemberUser is the identity of a team member: enough to show and find
-// them, never credentials or profile settings.
-type TeamMemberUser struct {
-	Id       string `json:"id"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Nickname string `json:"nickname,omitempty"`
-}
+// TeamMemberUser is the identity of a team member.
+//
+// Deprecated: use UserIdentity, which it is an alias of.
+type TeamMemberUser = UserIdentity
 
 // TeamMemberDetails is one member of a team with their identity.
 type TeamMemberDetails struct {
 	Member models.TeamMember `json:"member"`
-	User   TeamMemberUser    `json:"user"`
+	User   UserIdentity      `json:"user"`
 }
 
 // GetTeams lists the organisation's teams.

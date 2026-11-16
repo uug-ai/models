@@ -84,16 +84,6 @@ func (s MemberStatus) Translate(lang string) string {
 // may do is read through the role assignment endpoints (principal user,
 // includeTeams), and invitations through the invitation endpoints.
 
-// MemberUser is a member's identity: enough to show and find them, never
-// credentials, tokens or profile settings.
-type MemberUser struct {
-	Id        string `json:"id"`
-	Username  string `json:"username"`
-	Email     string `json:"email"`
-	FirstName string `json:"firstName,omitempty"`
-	LastName  string `json:"lastName,omitempty"`
-}
-
 // MemberFilter narrows a member listing. Set fields combine.
 type MemberFilter struct {
 	// Search matches members whose username, email, first or last name
@@ -106,7 +96,7 @@ type MemberFilter struct {
 
 // MemberSummary is one member with their membership and teams.
 type MemberSummary struct {
-	User       MemberUser              `json:"user"`
+	User       UserIdentity            `json:"user"`
 	Membership models.OrganisationUser `json:"membership"`
 	TeamIds    []string                `json:"teamIds"`
 	// Owner is set when the member effectively holds the Owner role, and
