@@ -47,7 +47,7 @@ func TestUserIdentityCarriesNoCredentials(t *testing.T) {
 	}
 	for field := range decoded.User {
 		switch field {
-		case "id", "username", "email", "firstName", "lastName", "nickname":
+		case "id", "username", "email", "firstname", "lastname", "nickname":
 		default:
 			t.Errorf("member identity exposes %q", field)
 		}
