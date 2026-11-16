@@ -11,7 +11,12 @@ import (
 // project and on each item for that item (RBAC spec 4.13). Permissions are
 // catalog names.
 type ItemAccess struct {
-	Permissions []Permission `json:"permissions"`
+	// Mode is the selected organisation's authorization mode, on the profile
+	// only. In rbac mode the permissions are all the caller holds: the
+	// account's legacy role and pages describe its home organisation, not
+	// this one, so a client never falls back to them.
+	Mode        AuthorizationMode `json:"mode,omitempty"`
+	Permissions []Permission      `json:"permissions"`
 }
 
 // DeviceCoverage is the devices a permission covers in a project: all of
