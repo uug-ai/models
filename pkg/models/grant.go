@@ -35,13 +35,14 @@ const (
 	// change: members.update for organisation roles, projects.manageAccess
 	// covering the project or project.manageAccess in it for project roles,
 	// roles.create, roles.update or roles.delete for roles, teams.update for
-	// team members.
+	// team members, members.remove for removing a member.
 	GrantDenialNoAccessPermission GrantDenial = "noAccessPermission"
 	// GrantDenialResourcesNotCovered: the selected resources reach devices
 	// outside the grantor's own scope in the project.
 	GrantDenialResourcesNotCovered GrantDenial = "resourcesNotCovered"
 	// GrantDenialSelf: the change applies to the actor's own access, a role
-	// they hold (directly or through a team) or their own team membership.
+	// they hold (directly or through a team), their own team membership or
+	// their own membership of the organisation.
 	GrantDenialSelf GrantDenial = "self"
 )
 
@@ -278,4 +279,34 @@ func (a Access) CanChangeTeamMembers(userId primitive.ObjectID, team Team, teamR
 		return denyGrant(GrantDenialSelf), nil
 	}
 	return allowGrant(), nil
+}
+
+// CanRemoveMember reports whether the member userId may remove memberId from
+// the organisation. memberRoles are the roles of every assignment that applies
+// to that member, directly or through a team, in force or not: removal
+// revokes all of it.
+//
+//   - Nobody removes themselves, owners included: leaving is another action.
+//   - It needs members.remove; owners hold it.
+//   - Only owners remove a member who holds the Owner role or a role with an
+//     owner-only permission.
+//
+// Whether the member is the last effectively active owner or the primary
+// owner (Organisation.OwnerId) is checked by the writer on the stored data.
+func (a Access) CanRemoveMember(userId, memberId primitive.ObjectID, memberRoles []Role) GrantDecision {
+	if userId == memberId {
+		return denyGrant(GrantDenialSelf)
+	}
+	if a.owner {
+		return allowGrant()
+	}
+	if !a.Organisation(PermissionMembersRemove, primitive.NilObjectID) {
+		return denyGrant(GrantDenialNoAccessPermission)
+	}
+	for _, role := range memberRoles {
+		if denial, ok := ownerOnlyDenial(role); ok {
+			return denial
+		}
+	}
+	return allowGrant()
 }

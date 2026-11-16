@@ -3,6 +3,8 @@ package models
 import (
 	"slices"
 	"sync"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // Built-in roles are defined by the platform. Every organisation stores its own
@@ -44,6 +46,41 @@ func BuiltInRole(key RoleKey) (Role, bool) {
 		}
 	}
 	return Role{}, false
+}
+
+// OrganisationBuiltInRoles returns the copies of every built-in role that an
+// organisation stores: each with its id from BuiltInRoleId and the
+// organisation set, without Audit. Writers upsert them by (organisationId,
+// key) when the organisation enters rbac mode, so assignments and invitations
+// can name any built-in role by its stored id.
+func OrganisationBuiltInRoles(organisationId primitive.ObjectID) []Role {
+	roles := BuiltInRoles()
+	for index := range roles {
+		roles[index].Id = BuiltInRoleId(organisationId, roles[index].Key)
+		roles[index].OrganisationId = organisationId
+	}
+	return roles
+}
+
+// WithCurrentDefinition returns a stored system or legacy role with the
+// platform's current definition: name, description, level, grants,
+// permissions and origin come from BuiltInRole, while the id, organisation,
+// IsActive and Audit stay as stored. A copy stored before a models release
+// therefore never grants an older permission set. Custom roles, and built-in
+// keys this release does not know, are returned unchanged.
+func (r Role) WithCurrentDefinition() Role {
+	if r.Kind != RoleKindSystem && r.Kind != RoleKindLegacy {
+		return r
+	}
+	current, ok := BuiltInRole(r.Key)
+	if !ok || current.Kind != r.Kind {
+		return r
+	}
+	current.Id = r.Id
+	current.OrganisationId = r.OrganisationId
+	current.IsActive = r.IsActive
+	current.Audit = r.Audit
+	return current
 }
 
 // builtInRoles are the definitions, built once per process: the legacy page

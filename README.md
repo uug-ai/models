@@ -40,6 +40,20 @@ Page grants are not access-token scopes and never imply resource permissions.
 Hub API dual-emits old and new page names at the profile boundary for older
 frontends; callers using `Access.Permissions` directly receive canonical names.
 
+### Built-in role copies
+
+Every organisation in `rbac` mode stores a copy of each built-in role (Owner,
+the system roles and the legacy roles) in `organisation_roles`, so assignments
+and invitations name them by id. `OrganisationBuiltInRoles` returns those
+copies with ids from `BuiltInRoleId`; writers upsert them by
+`(organisationId, key)` when an organisation enters `rbac` mode.
+
+A copy keeps its id, organisation, `isActive` and audit. What it grants comes
+from the current definition: `ResolveAccess` applies
+`Role.WithCurrentDefinition` to every role it reads, and readers that return
+roles should do the same, so a copy stored before a release never grants an
+older permission set.
+
 ### Alert configuration visibility
 
 `CustomAlert.private` defaults to false (including historical documents without
