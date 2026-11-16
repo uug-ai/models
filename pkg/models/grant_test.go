@@ -466,3 +466,45 @@ func TestCanChangeTeamMembers(t *testing.T) {
 		t.Errorf("identity provider team: %v", err)
 	}
 }
+
+func TestCanRemoveMember(t *testing.T) {
+	f := newGrantFixture()
+	memberAdmin := f.access(t, map[*Role]RoleAssignmentScope{
+		{Name: "Member admin", AssignableAt: LevelOrganisation, Permissions: []Permission{PermissionMembersRead, PermissionMembersRemove}}: allProjects(),
+	})
+	reader := f.access(t, map[*Role]RoleAssignmentScope{
+		{Name: "Member reader", AssignableAt: LevelOrganisation, Permissions: []Permission{PermissionMembersRead}}: allProjects(),
+	})
+	other := primitive.NewObjectID()
+	editor := builtIn(t, f, RoleKeyEditor)
+	projectAdmin := builtIn(t, f, RoleKeyProjectAdmin)
+	owner := builtIn(t, f, RoleKeyOwner)
+
+	tests := []struct {
+		name   string
+		access Access
+		member primitive.ObjectID
+		roles  []Role
+		reason GrantDenial
+	}{
+		{name: "member with access the actor does not hold", access: memberAdmin, member: other, roles: []Role{editor}},
+		{name: "member without assignments", access: memberAdmin, member: other},
+		{name: "without members.remove", access: reader, member: other, roles: []Role{editor}, reason: GrantDenialNoAccessPermission},
+		{name: "member holding an owner-only role", access: memberAdmin, member: other, roles: []Role{editor, projectAdmin}, reason: GrantDenialOwnerOnly},
+		{name: "an owner", access: memberAdmin, member: other, roles: []Role{owner}, reason: GrantDenialOwnerOnly},
+		{name: "the actor themselves", access: memberAdmin, member: f.userId, roles: []Role{editor}, reason: GrantDenialSelf},
+		{name: "owner removes an owner", access: ownerAccess(t, f), member: other, roles: []Role{owner}},
+		{name: "owner removes themselves", access: ownerAccess(t, f), member: f.userId, roles: []Role{owner}, reason: GrantDenialSelf},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			decision := test.access.CanRemoveMember(f.userId, test.member, test.roles)
+			if test.reason == "" && !decision.Allowed {
+				t.Errorf("denied: %+v", decision)
+			}
+			if test.reason != "" && (decision.Allowed || decision.Reason != test.reason) {
+				t.Errorf("decision %+v, want %s", decision, test.reason)
+			}
+		})
+	}
+}

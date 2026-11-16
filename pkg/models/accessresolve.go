@@ -115,6 +115,11 @@ func ResolveAccess(ctx context.Context, store AccessStore, organisationId, userI
 	if err != nil {
 		return Access{}, err
 	}
+	// Built-in copies grant what the platform defines now, not what was
+	// stored with them.
+	for index := range roles {
+		roles[index] = roles[index].WithCurrentDefinition()
+	}
 	return NewAccess(membership, teams, roles, assignments, at), nil
 }
 

@@ -125,3 +125,59 @@ func BenchmarkMapLegacyAccessCustomRole(b *testing.B) {
 		}
 	}
 }
+
+func TestOrganisationBuiltInRoles(t *testing.T) {
+	organisationId := primitive.NewObjectID()
+	roles := OrganisationBuiltInRoles(organisationId)
+	if len(roles) != len(BuiltInRoles()) {
+		t.Fatalf("%d copies, want one per built-in role (%d)", len(roles), len(BuiltInRoles()))
+	}
+	for _, role := range roles {
+		if role.Id != BuiltInRoleId(organisationId, role.Key) || role.OrganisationId != organisationId {
+			t.Errorf("%s: id %s organisation %s", role.Key, role.Id.Hex(), role.OrganisationId.Hex())
+		}
+		if err := role.Validate(); err != nil {
+			t.Errorf("%s: %v", role.Key, err)
+		}
+	}
+	// Copies are the caller's own.
+	roles[1].Permissions[0] = "changed"
+	if again := OrganisationBuiltInRoles(organisationId); again[1].Permissions[0] == "changed" {
+		t.Error("changing a copy changed the definition")
+	}
+}
+
+func TestWithCurrentDefinition(t *testing.T) {
+	organisationId := primitive.NewObjectID()
+	current, _ := BuiltInRole(RoleKeyViewer)
+	stale := current
+	stale.Id = BuiltInRoleId(organisationId, RoleKeyViewer)
+	stale.OrganisationId = organisationId
+	stale.Name = "Viewer (old)"
+	stale.Permissions = []Permission{PermissionDevicesRead}
+	stale.IsActive = false
+	stale.Audit = Audit{CreatedBy: "migration"}
+
+	got := stale.WithCurrentDefinition()
+	if got.Name != current.Name || !slices.Equal(got.Permissions, current.Permissions) {
+		t.Errorf("definition not current: %q %v", got.Name, got.Permissions)
+	}
+	if got.Id != stale.Id || got.OrganisationId != organisationId || got.IsActive || got.Audit.CreatedBy != "migration" {
+		t.Errorf("stored fields not kept: %+v", got)
+	}
+
+	custom := NewCustomRole(organisationId, "Viewer", "", LevelProject, []Permission{PermissionDevicesRead})
+	if got := custom.WithCurrentDefinition(); got.Name != "Viewer" || !slices.Equal(got.Permissions, custom.Permissions) {
+		t.Errorf("custom role changed: %+v", got)
+	}
+	unknown := stale
+	unknown.Key = "retired-system-role"
+	if got := unknown.WithCurrentDefinition(); got.Name != stale.Name {
+		t.Errorf("unknown key changed: %+v", got)
+	}
+	wrongKind := stale
+	wrongKind.Kind = RoleKindLegacy
+	if got := wrongKind.WithCurrentDefinition(); got.Name != stale.Name {
+		t.Errorf("legacy role with a system key took the system definition: %+v", got)
+	}
+}

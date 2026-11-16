@@ -244,3 +244,32 @@ func TestCompareAccess(t *testing.T) {
 		t.Errorf("both sites vs one: %+v", differences)
 	}
 }
+
+// A built-in copy stored before a release grants the current definition.
+func TestResolveAccessUsesCurrentBuiltInDefinitions(t *testing.T) {
+	organisationId, userId, project := primitive.NewObjectID(), primitive.NewObjectID(), primitive.NewObjectID()
+	stale := OrganisationBuiltInRoles(organisationId)
+	var viewer Role
+	for _, role := range stale {
+		if role.Key == RoleKeyViewer {
+			viewer = role
+		}
+	}
+	current := slices.Clone(viewer.Permissions)
+	viewer.Permissions = []Permission{PermissionDevicesRead}
+	store := &memoryAccessStore{
+		memberships: []OrganisationUser{{OrganisationId: organisationId, UserId: userId, Status: MembershipStatusActive}},
+		assignments: []RoleAssignment{{OrganisationId: organisationId, Principal: Principal{Type: PrincipalTypeUser, Id: userId}, RoleId: viewer.Id,
+			Scope: RoleAssignmentScope{Level: LevelProject, ProjectId: project, Resources: SelectionAll}, Source: AssignmentSourceManual, IsActive: true}},
+		roles: []Role{viewer},
+	}
+	access, err := ResolveAccess(context.Background(), store, organisationId, userId, time.Now())
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, permission := range current {
+		if !access.Project(permission, project) {
+			t.Errorf("current Viewer permission %s not granted", permission)
+		}
+	}
+}
