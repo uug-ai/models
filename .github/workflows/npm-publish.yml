@@ -1,0 +1,88 @@
+name: Publish npm package
+
+# Publishes @uug-ai/models for an existing release tag using npm trusted
+# publishing (GitHub OIDC): no npm token, no 2FA prompt, provenance included.
+# npmjs.com trusts exactly this workflow file, so it must always be the
+# top-level run: release-create.yml starts it with `gh workflow run`, and it
+# can be run by hand (Actions -> Publish npm package) to (re)publish a tag.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to publish, e.g. v1.7.112
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write # trusted publishing + provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing needs npm >= 11.5.1; Node 22 ships npm 10.
+      - name: Update npm
+        run: npm install -g npm@11
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+
+      - name: Install swag
+        run: go install github.com/swaggo/swag/cmd/swag@latest
+
+      - name: Install generator dependencies
+        run: npm ci
+
+      - name: Install TypeScript dependencies
+        working-directory: ./src/typescript
+        run: npm ci
+
+      - name: Generate openapi
+        run: npm run generate:openapi
+
+      - name: Generate types
+        run: npm run generate:types
+
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Set version from release tag
+        working-directory: ./src/typescript
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: npm version "${RELEASE_TAG#v}" --no-git-tag-version --allow-same-version
+
+      # npm rejects a provenance statement when package.json names no
+      # repository or a different one than the repository that built it.
+      - name: Set repository for provenance
+        working-directory: ./src/typescript
+        run: |
+          npm pkg set repository.type=git \
+            repository.url="git+https://github.com/${GITHUB_REPOSITORY}.git" \
+            repository.directory=src/typescript
+
+      - name: Publish (skipped if this version is already on npm)
+        working-directory: ./src/typescript
+        run: |
+          set -euo pipefail
+          name=$(node -p "require('./package.json').name")
+          version=$(node -p "require('./package.json').version")
+          if npm view "$name@$version" version --registry=https://registry.npmjs.org/ >/dev/null 2>&1; then
+            echo "$name@$version is already published"
+            exit 0
+          fi
+          npm publish --access public --registry=https://registry.npmjs.org/
