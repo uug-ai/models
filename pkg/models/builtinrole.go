@@ -1,7 +1,9 @@
 package models
 
 import (
+	"context"
 	"slices"
+	"strings"
 	"sync"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -62,6 +64,77 @@ func OrganisationBuiltInRoles(organisationId primitive.ObjectID) []Role {
 	return roles
 }
 
+// BuiltInRoleById returns the release's built-in role that has this id in the
+// organisation, with the id and organisation set. A built-in role's id is
+// BuiltInRoleId(organisation, key): a stable reference to a definition that
+// lives in the release, so nothing has to be stored or read to resolve it.
+// Built-in roles are always active.
+func BuiltInRoleById(organisationId, id primitive.ObjectID) (Role, bool) {
+	if organisationId.IsZero() || id.IsZero() {
+		return Role{}, false
+	}
+	for _, role := range builtInRoles() {
+		if BuiltInRoleId(organisationId, role.Key) == id {
+			found := role.clone()
+			found.Id, found.OrganisationId = id, organisationId
+			return found, true
+		}
+	}
+	return Role{}, false
+}
+
+// IsBuiltInRoleName reports whether a name is that of a built-in role in
+// this release, ignoring case and surrounding space: a custom role may not
+// take it. A unique role name index need not cover built-in roles.
+func IsBuiltInRoleName(name string) bool {
+	name = strings.TrimSpace(name)
+	for _, role := range builtInRoles() {
+		if strings.EqualFold(role.Name, name) {
+			return true
+		}
+	}
+	return false
+}
+
+// StoredRoles reads the stored roles with the given ids in an organisation.
+type StoredRoles func(ctx context.Context, organisationId primitive.ObjectID, roleIds []primitive.ObjectID) ([]Role, error)
+
+// ResolveRoles returns the roles with the given ids in an organisation. The
+// ids of built-in roles are resolved from the release (BuiltInRoleById)
+// without reading anything, whether or not the organisation stores a copy
+// of them. The other ids are read with stored: the organisation's custom
+// roles. stored is not called when every id is a built-in role's.
+//
+// Every reader of an organisation's roles resolves them this way, so that
+// built-in roles need no stored document (RBAC spec 4.14).
+func ResolveRoles(ctx context.Context, organisationId primitive.ObjectID, roleIds []primitive.ObjectID, stored StoredRoles) ([]Role, error) {
+	roles := make([]Role, 0, len(roleIds))
+	var rest []primitive.ObjectID
+	for _, id := range roleIds {
+		if role, ok := BuiltInRoleById(organisationId, id); ok {
+			roles = append(roles, role)
+		} else {
+			rest = append(rest, id)
+		}
+	}
+	if len(rest) == 0 || stored == nil {
+		return roles, nil
+	}
+	found, err := stored(ctx, organisationId, rest)
+	if err != nil {
+		return nil, err
+	}
+	for _, role := range found {
+		// A system or legacy document under another id follows the release
+		// as well; custom roles are returned as stored.
+		roles = append(roles, role.WithCurrentDefinition())
+	}
+	return roles, nil
+}
+
+// Deprecated: built-in roles are not stored (ResolveRoles, RBAC spec 4.14);
+// nothing writes this form. Kept until its last caller is gone.
+//
 // OrganisationBuiltInRoleCopies returns the copies of every built-in role in
 // the form that leaves the definition out (Role.StoredCopy): what an
 // organisation stores once every reader of its roles applies
@@ -74,6 +147,9 @@ func OrganisationBuiltInRoleCopies(organisationId primitive.ObjectID) []Role {
 	return roles
 }
 
+// Deprecated: built-in roles are not stored (ResolveRoles, RBAC spec 4.14);
+// nothing writes this form. Kept until its last caller is gone.
+//
 // StoredCopy returns a system or legacy role without its definition: only
 // the id, organisation, kind, key, name, IsActive and Audit. The description,
 // level, grants, permissions and origin are the platform's and come from
