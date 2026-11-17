@@ -215,11 +215,14 @@ type TaskOverview struct {
 	ThumbnailUrl      string             `json:"thumbnail_url,omitempty" bson:"thumbnail_url,omitempty"`
 	SequenceId        string             `json:"sequence_id,omitempty" bson:"sequence_id,omitempty"`
 	CompressedUrl     string             `json:"compressed_url,omitempty" bson:"compressed_url,omitempty"`
-	ExportStatus      string             `json:"export_status,omitempty" bson:"export_status,omitempty"`
-	ExportFilesCount  int                `json:"export_files_count,omitempty" bson:"export_files_count,omitempty"`
-	DownloadedFiles   []string           `json:"downloaded_files,omitempty" bson:"downloaded_files,omitempty"`
-	MediaCount        int                `json:"mediaCount,omitempty" bson:"mediaCount,omitempty"`
-	ExpiresAt         *int64             `json:"expires_at,omitempty" bson:"expires_at,omitempty"`
+	// CompressedParts lists every zip of the latest export with a signed URL.
+	// CompressedUrl stays the first part's URL.
+	CompressedParts  []models.CompressedPart `json:"compressedParts,omitempty" bson:"compressedParts,omitempty"`
+	ExportStatus     string                  `json:"export_status,omitempty" bson:"export_status,omitempty"`
+	ExportFilesCount int                     `json:"export_files_count,omitempty" bson:"export_files_count,omitempty"`
+	DownloadedFiles  []string                `json:"downloaded_files,omitempty" bson:"downloaded_files,omitempty"`
+	MediaCount       int                     `json:"mediaCount,omitempty" bson:"mediaCount,omitempty"`
+	ExpiresAt        *int64                  `json:"expires_at,omitempty" bson:"expires_at,omitempty"`
 }
 
 type GetTasksOverviewResponse struct {

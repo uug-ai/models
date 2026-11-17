@@ -34702,6 +34702,10 @@ export interface components {
             comments?: components["schemas"]["models.Comment"][];
             compressed_url?: string;
             compressedFile?: string;
+            /** @description CompressedParts lists every zip of the latest export, in order. A large
+             *     export is split into several zips; a small one has a single entry.
+             *     CompressedFile / CompressedProvider keep pointing at the first part. */
+            compressedParts?: components["schemas"]["models.CompressedPart"][];
             compressedProvider?: string;
             creation_date?: number;
             creation_datetime?: string;
@@ -38432,6 +38436,9 @@ export interface components {
             camera_names?: string[];
             cameras?: string[];
             compressed_url?: string;
+            /** @description CompressedParts lists every zip of the latest export with a signed URL.
+             *     CompressedUrl stays the first part's URL. */
+            compressedParts?: components["schemas"]["models.CompressedPart"][];
             creation_date?: number;
             creation_datetime?: string;
             downloaded_files?: string[];
@@ -39988,6 +39995,18 @@ export interface components {
         "models.ConditionMode": "all" | "any";
         /** @enum {string} */
         "models.ConditionOp": "eq" | "ne" | "contains" | "in" | "exists" | "matches" | "gt" | "gte" | "lt" | "lte" | "anyMatch" | "all" | "any";
+        "models.CompressedPart": {
+            /** @description storage key of the zip */
+            file?: string;
+            /** @description recordings and attachments in this part */
+            files?: number;
+            /** @description storage provider holding it */
+            provider?: string;
+            /** @description zip size in bytes */
+            size?: number;
+            /** @description signed download URL, set on read and never stored */
+            url?: string;
+        };
         "models.Contact": {
             email?: string;
             name?: string;
@@ -42389,6 +42408,10 @@ export interface components {
             comments?: components["schemas"]["models.Comment"][];
             compressed_url?: string;
             compressedFile?: string;
+            /** @description CompressedParts lists every zip of the latest export, in order. A large
+             *     export is split into several zips; a small one has a single entry.
+             *     CompressedFile / CompressedProvider keep pointing at the first part. */
+            compressedParts?: components["schemas"]["models.CompressedPart"][];
             compressedProvider?: string;
             creation_date?: number;
             creation_datetime?: string;
@@ -43892,6 +43915,7 @@ export namespace models {
     export type Comment = components['schemas']['models.Comment'];
     export type CommentWrapper = components['schemas']['models.CommentWrapper'];
     export type CompanyDetails = components['schemas']['models.CompanyDetails'];
+    export type CompressedPart = components['schemas']['models.CompressedPart'];
     export type Contact = components['schemas']['models.Contact'];
     export type Counting = components['schemas']['models.Counting'];
     export type CountingDetail = components['schemas']['models.CountingDetail'];

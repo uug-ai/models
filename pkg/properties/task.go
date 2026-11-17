@@ -3,6 +3,14 @@
 
 package properties
 
+// CompressedPart property field names (BSON)
+const (
+	CompressedPartFile = "file"
+	CompressedPartProvider = "provider"
+	CompressedPartSize = "size"
+	CompressedPartFiles = "files"
+)
+
 // ExportFile property field names (BSON)
 const (
 	ExportFileTimestamp = "timestamp"
@@ -88,6 +96,7 @@ const (
 	TaskCompressedUrl = "compressed_url"
 	TaskCompressedFile = "compressedFile"
 	TaskCompressedProvider = "compressedProvider"
+	TaskCompressedParts = "compressedParts"
 	TaskExportStatus = "export_status"
 	TaskExportProgress = "export_progress"
 	TaskExportFiles = "export_files"
