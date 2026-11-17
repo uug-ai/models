@@ -16,6 +16,7 @@ on:
 permissions:
   contents: write
   packages: write
+  id-token: write # trusted publishing + provenance
 
 jobs:
   # Determine the next version and create the GitHub release with generated notes.
