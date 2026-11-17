@@ -37,6 +37,8 @@ jobs:
       contents: write
       packages: write
       actions: write
+      id-token: write # trusted publishing + provenance
+
     uses: ./.github/workflows/release-create.yml
     with:
       tag: ${{ needs.bump-release.outputs.tag }}
