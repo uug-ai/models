@@ -62,12 +62,63 @@ func OrganisationBuiltInRoles(organisationId primitive.ObjectID) []Role {
 	return roles
 }
 
+// OrganisationBuiltInRoleCopies returns the copies of every built-in role in
+// the form that leaves the definition out (Role.StoredCopy): what an
+// organisation stores once every reader of its roles applies
+// Role.WithCurrentDefinition.
+func OrganisationBuiltInRoleCopies(organisationId primitive.ObjectID) []Role {
+	roles := OrganisationBuiltInRoles(organisationId)
+	for index := range roles {
+		roles[index] = roles[index].StoredCopy()
+	}
+	return roles
+}
+
+// StoredCopy returns a system or legacy role without its definition: only
+// the id, organisation, kind, key, name, IsActive and Audit. The description,
+// level, grants, permissions and origin are the platform's and come from
+// WithCurrentDefinition when the role is read, so a stored copy cannot
+// disagree with the release that reads it. The name stays: it is what the
+// unique role name index of an organisation is built on, and it tells a
+// reader of the database which role the document is.
+//
+// A reader that does not apply WithCurrentDefinition sees a role that grants
+// nothing. Store copies in this form only once every service reading the
+// organisation's roles applies it. Custom roles, and built-in keys this
+// release does not know, are returned unchanged.
+func (r Role) StoredCopy() Role {
+	if r.Kind != RoleKindSystem && r.Kind != RoleKindLegacy {
+		return r
+	}
+	if current, ok := BuiltInRole(r.Key); !ok || current.Kind != r.Kind {
+		return r
+	}
+	return Role{
+		Id:             r.Id,
+		OrganisationId: r.OrganisationId,
+		Name:           r.Name,
+		Kind:           r.Kind,
+		Key:            r.Key,
+		IsActive:       r.IsActive,
+		Audit:          r.Audit,
+	}
+}
+
+// IsStoredCopy reports whether a system or legacy role is in the form
+// StoredCopy returns: it names its key and leaves the definition out.
+func (r Role) IsStoredCopy() bool {
+	return (r.Kind == RoleKindSystem || r.Kind == RoleKindLegacy) && r.Key != "" &&
+		r.AssignableAt == "" && r.Grants == "" && len(r.Permissions) == 0 && r.Origin == nil && r.Description == ""
+}
+
 // WithCurrentDefinition returns a stored system or legacy role with the
 // platform's current definition: name, description, level, grants,
 // permissions and origin come from BuiltInRole, while the id, organisation,
 // IsActive and Audit stay as stored. A copy stored before a models release
-// therefore never grants an older permission set. Custom roles, and built-in
-// keys this release does not know, are returned unchanged.
+// therefore never grants an older permission set, and a copy stored without
+// its definition (StoredCopy) gets it here. Custom roles, and built-in keys
+// this release does not know, are returned unchanged: such a copy without a
+// definition grants nothing.
 func (r Role) WithCurrentDefinition() Role {
 	if r.Kind != RoleKindSystem && r.Kind != RoleKindLegacy {
 		return r

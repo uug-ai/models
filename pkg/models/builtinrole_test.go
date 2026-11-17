@@ -1,9 +1,11 @@
 package models
 
 import (
+	"reflect"
 	"slices"
 	"testing"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -179,5 +181,69 @@ func TestWithCurrentDefinition(t *testing.T) {
 	wrongKind.Kind = RoleKindLegacy
 	if got := wrongKind.WithCurrentDefinition(); got.Name != stale.Name {
 		t.Errorf("legacy role with a system key took the system definition: %+v", got)
+	}
+}
+
+func TestStoredCopyLeavesTheDefinitionOut(t *testing.T) {
+	organisationId := primitive.NewObjectID()
+	full := OrganisationBuiltInRoles(organisationId)
+	copies := OrganisationBuiltInRoleCopies(organisationId)
+	if len(copies) != len(full) {
+		t.Fatalf("%d copies for %d built-in roles", len(copies), len(full))
+	}
+	for i, role := range full {
+		role.IsActive = true
+		role.Audit = Audit{CreatedBy: "owner"}
+		stored := role.StoredCopy()
+		if stored.Id != role.Id || stored.OrganisationId != organisationId || stored.Kind != role.Kind || stored.Key != role.Key ||
+			stored.Name != role.Name || !stored.IsActive || stored.Audit.CreatedBy != "owner" {
+			t.Errorf("%s: identity not kept: %+v", role.Key, stored)
+		}
+		if !stored.IsStoredCopy() || role.IsStoredCopy() {
+			t.Errorf("%s: IsStoredCopy stored=%v full=%v", role.Key, stored.IsStoredCopy(), role.IsStoredCopy())
+		}
+		// Read back, it is the role the full copy is.
+		if got, want := stored.WithCurrentDefinition(), role.WithCurrentDefinition(); !reflect.DeepEqual(got, want) {
+			t.Errorf("%s: stored copy resolves to %+v, want %+v", role.Key, got, want)
+		}
+		if copies[i].Id != role.Id || !copies[i].IsStoredCopy() {
+			t.Errorf("%s: OrganisationBuiltInRoleCopies gave %+v", role.Key, copies[i])
+		}
+		// The document holds no definition.
+		raw, err := bson.Marshal(stored)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var document bson.M
+		if err := bson.Unmarshal(raw, &document); err != nil {
+			t.Fatal(err)
+		}
+		for _, field := range []string{"permissions", "grants", "assignableAt", "description", "origin"} {
+			if _, present := document[field]; present {
+				t.Errorf("%s: stored copy has %s", role.Key, field)
+			}
+		}
+		for _, field := range []string{"_id", "organisationId", "kind", "key", "name", "isActive"} {
+			if _, present := document[field]; !present {
+				t.Errorf("%s: stored copy lacks %s", role.Key, field)
+			}
+		}
+	}
+
+	// A custom role is the organisation's own: nothing is left out.
+	custom := NewCustomRole(organisationId, "Night operator", "Watches live view", LevelProject, []Permission{PermissionDevicesRead})
+	if got := custom.StoredCopy(); !reflect.DeepEqual(got, custom) || got.IsStoredCopy() {
+		t.Errorf("custom role changed: %+v", got)
+	}
+	// A key this release does not know keeps what it stores, and a copy of it
+	// without a definition grants nothing.
+	unknown := full[0]
+	unknown.Key = "retired-system-role"
+	if got := unknown.StoredCopy(); !reflect.DeepEqual(got, unknown) {
+		t.Errorf("unknown key trimmed: %+v", got)
+	}
+	orphan := Role{Id: primitive.NewObjectID(), OrganisationId: organisationId, Kind: RoleKindSystem, Key: "retired-system-role", Name: "Retired", IsActive: true}
+	if got := orphan.WithCurrentDefinition(); len(got.Permissions) != 0 || got.GrantsAll() {
+		t.Errorf("unknown stored copy grants something: %+v", got)
 	}
 }
