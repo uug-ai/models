@@ -186,6 +186,38 @@ type User struct {
 
 	// Encryption
 	Encryption Encryption `json:"encryption" bson:"encryption,omitempty"`
+
+	// Deactivation is the lock on an owner account and, through it, on its
+	// sub-accounts: set while the account is deactivated or waiting for
+	// deletion, absent otherwise.
+	Deactivation *UserDeactivation `json:"deactivation,omitempty" bson:"deactivation,omitempty"`
+}
+
+// Reasons of a UserDeactivation.
+const (
+	UserDeactivationReasonDeactivated = "deactivated"
+	UserDeactivationReasonDeletion    = "deletion"
+)
+
+// UserDeactivation locks an owner account: the owner, its sub-accounts and
+// their tokens are refused, and its recordings are no longer taken in. With
+// reason "deletion" the account is erased once DeleteAfter has passed;
+// PurgeStartedAt marks that the erasure began, after which the lock can no
+// longer be lifted.
+type UserDeactivation struct {
+	At             time.Time  `json:"at" bson:"at"`
+	Reason         string     `json:"reason" bson:"reason"`
+	DeleteAfter    *time.Time `json:"deleteAfter,omitempty" bson:"deleteAfter,omitempty"`
+	PurgeStartedAt *time.Time `json:"purgeStartedAt,omitempty" bson:"purgeStartedAt,omitempty"`
+}
+
+// IsDeactivated reports whether the account is locked: by its own
+// Deactivation, or by its master's when Master is loaded.
+func (user User) IsDeactivated() bool {
+	if user.Deactivation != nil {
+		return true
+	}
+	return user.Master != nil && user.Master.Deactivation != nil
 }
 
 func (user *User) WithTimezone() {

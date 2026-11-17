@@ -42792,6 +42792,10 @@ export interface components {
             /** @description We can override the subscription settings if needed. */
             custom_usage_limit?: number;
             dates?: string[];
+            /** @description Deactivation is the lock on an owner account and, through it, on its
+             *     sub-accounts: set while the account is deactivated or waiting for
+             *     deletion, absent otherwise. */
+            deactivation?: components["schemas"]["models.UserDeactivation"];
             devices?: components["schemas"]["models.Device"][];
             domain?: string;
             email?: string;
@@ -42848,6 +42852,12 @@ export interface components {
             /** @description Master account to which this account was added. */
             user_id?: string;
             username?: string;
+        };
+        "models.UserDeactivation": {
+            at?: string;
+            deleteAfter?: string;
+            purgeStartedAt?: string;
+            reason?: string;
         };
         "models.UserNotificationMailbox": {
             data?: components["schemas"]["models.Message"][];
@@ -44160,6 +44170,7 @@ export namespace models {
     export type UpdateWorkflowStageInput = components['schemas']['models.UpdateWorkflowStageInput'];
     export type UpdateWorkflowStageOutput = components['schemas']['models.UpdateWorkflowStageOutput'];
     export type User = components['schemas']['models.User'];
+    export type UserDeactivation = components['schemas']['models.UserDeactivation'];
     export type UserNotificationMailbox = components['schemas']['models.UserNotificationMailbox'];
     export type UserProfile = components['schemas']['models.UserProfile'];
     export type UserProfileSettings = components['schemas']['models.UserProfileSettings'];

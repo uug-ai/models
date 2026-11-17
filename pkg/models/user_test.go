@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"testing"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -138,5 +139,41 @@ func TestAccountsHaveAHomeOrganisationByDefault(t *testing.T) {
 	sub := User{Id: primitive.NewObjectID(), MasterAccount: owner.Id.Hex(), Master: &owner, NoHomeOrganisation: true}
 	if !sub.HasHomeOrganisation() || GetOrganisationObjectId(sub) != owner.Id {
 		t.Fatal("a sub-account works in its master's organisation")
+	}
+}
+
+func TestUserDeactivation(t *testing.T) {
+	at := time.Date(2026, 11, 17, 12, 0, 0, 0, time.UTC)
+	deleteAfter := at.AddDate(0, 0, 14)
+	owner := User{Id: primitive.NewObjectID()}
+	sub := User{Id: primitive.NewObjectID(), MasterAccount: owner.Id.Hex(), Master: &owner}
+	if owner.IsDeactivated() || sub.IsDeactivated() {
+		t.Fatal("an account without a lock reads as deactivated")
+	}
+
+	// An account without a lock stores no deactivation field.
+	encoded, err := bson.Marshal(owner)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := bson.Raw(encoded).LookupErr("deactivation"); err == nil {
+		t.Fatal("an unlocked account stores a deactivation field")
+	}
+
+	owner.Deactivation = &UserDeactivation{At: at, Reason: UserDeactivationReasonDeletion, DeleteAfter: &deleteAfter}
+	if !owner.IsDeactivated() || !sub.IsDeactivated() {
+		t.Fatal("a locked owner and its sub-account must read as deactivated")
+	}
+	encoded, err = bson.Marshal(owner)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var decoded User
+	if err := bson.Unmarshal(encoded, &decoded); err != nil {
+		t.Fatal(err)
+	}
+	lock := decoded.Deactivation
+	if lock == nil || lock.Reason != "deletion" || !lock.At.Equal(at) || lock.DeleteAfter == nil || !lock.DeleteAfter.Equal(deleteAfter) || lock.PurgeStartedAt != nil {
+		t.Fatalf("decoded lock = %#v", lock)
 	}
 }

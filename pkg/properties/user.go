@@ -88,6 +88,7 @@ const (
 	UserId = "_id"
 	UserOrganisationId = "organisationId"
 	UserProjectId = "projectId"
+	UserNoHomeOrganisation = "noHomeOrganisation"
 	UserUsername = "username"
 	UserPassword = "password"
 	UserForgotPassword = "forgotPassword"
@@ -162,6 +163,15 @@ const (
 	UserOAuthClientName = "oauth_client_name"
 	UserOAuthClientCreationDate = "oauth_client_creation_date"
 	UserEncryption = "encryption"
+	UserDeactivation = "deactivation"
+)
+
+// UserDeactivation property field names (BSON)
+const (
+	UserDeactivationAt = "at"
+	UserDeactivationReason = "reason"
+	UserDeactivationDeleteAfter = "deleteAfter"
+	UserDeactivationPurgeStartedAt = "purgeStartedAt"
 )
 
 // UserProfile property field names (BSON)
