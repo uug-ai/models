@@ -314,3 +314,51 @@ func TestResolveAccessFromStoredCopies(t *testing.T) {
 		}
 	}
 }
+
+// An organisation that stores no built-in role documents at all resolves to
+// the access one with stored copies gives, without reading any role.
+func TestResolveAccessWithoutStoredBuiltInRoles(t *testing.T) {
+	organisationId, owner, member, project := primitive.NewObjectID(), primitive.NewObjectID(), primitive.NewObjectID(), primitive.NewObjectID()
+	assignments := []RoleAssignment{
+		{OrganisationId: organisationId, Principal: Principal{Type: PrincipalTypeUser, Id: owner}, RoleId: BuiltInRoleId(organisationId, RoleKeyOwner),
+			Scope: RoleAssignmentScope{Level: LevelOrganisation, Projects: SelectionAll}, Source: AssignmentSourceManual, IsActive: true},
+		{OrganisationId: organisationId, Principal: Principal{Type: PrincipalTypeUser, Id: member}, RoleId: BuiltInRoleId(organisationId, RoleKeyEditor),
+			Scope: RoleAssignmentScope{Level: LevelProject, ProjectId: project, Resources: SelectionAll}, Source: AssignmentSourceManual, IsActive: true},
+	}
+	memberships := []OrganisationUser{
+		{OrganisationId: organisationId, UserId: owner, Status: MembershipStatusActive},
+		{OrganisationId: organisationId, UserId: member, Status: MembershipStatusActive},
+	}
+	withCopies := &memoryAccessStore{memberships: memberships, assignments: assignments, roles: OrganisationBuiltInRoles(organisationId)}
+	without := &countingRolesStore{memoryAccessStore: memoryAccessStore{memberships: memberships, assignments: assignments}}
+	for name, userId := range map[string]primitive.ObjectID{"owner": owner, "member": member} {
+		want, err := ResolveAccess(context.Background(), withCopies, organisationId, userId, time.Now())
+		if err != nil {
+			t.Fatal(err)
+		}
+		got, err := ResolveAccess(context.Background(), without, organisationId, userId, time.Now())
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got.IsOwner() != want.IsOwner() || !slices.Equal(got.Permissions(project), want.Permissions(project)) ||
+			!slices.Equal(got.Permissions(primitive.NilObjectID), want.Permissions(primitive.NilObjectID)) {
+			t.Errorf("%s: resolves differently without stored copies", name)
+		}
+		if len(want.Permissions(project)) == 0 {
+			t.Errorf("%s: holds nothing in the project", name)
+		}
+	}
+	if without.roleReads != 0 {
+		t.Errorf("roles read %d times, want none: every assignment names a built-in role", without.roleReads)
+	}
+}
+
+type countingRolesStore struct {
+	memoryAccessStore
+	roleReads int
+}
+
+func (s *countingRolesStore) Roles(ctx context.Context, organisationId primitive.ObjectID, roleIds []primitive.ObjectID) ([]Role, error) {
+	s.roleReads++
+	return s.memoryAccessStore.Roles(ctx, organisationId, roleIds)
+}

@@ -1,6 +1,8 @@
 package models
 
 import (
+	"context"
+	"errors"
 	"reflect"
 	"slices"
 	"strings"
@@ -197,7 +199,7 @@ func TestStoredCopyLeavesTheDefinitionOut(t *testing.T) {
 		role.Audit = Audit{CreatedBy: "owner"}
 		stored := role.StoredCopy()
 		if stored.Id != role.Id || stored.OrganisationId != organisationId || stored.Kind != role.Kind || stored.Key != role.Key ||
-			stored.Name != "" || !stored.IsActive || stored.Audit.CreatedBy != "owner" {
+			stored.Name != role.Name || !stored.IsActive || stored.Audit.CreatedBy != "owner" {
 			t.Errorf("%s: identity not kept: %+v", role.Key, stored)
 		}
 		if !stored.IsStoredCopy() || role.IsStoredCopy() {
@@ -219,12 +221,12 @@ func TestStoredCopyLeavesTheDefinitionOut(t *testing.T) {
 		if err := bson.Unmarshal(raw, &document); err != nil {
 			t.Fatal(err)
 		}
-		for _, field := range []string{"name", "permissions", "grants", "assignableAt", "description", "origin"} {
+		for _, field := range []string{"permissions", "grants", "assignableAt", "description", "origin"} {
 			if _, present := document[field]; present {
 				t.Errorf("%s: stored copy has %s", role.Key, field)
 			}
 		}
-		for _, field := range []string{"_id", "organisationId", "kind", "key", "isActive"} {
+		for _, field := range []string{"_id", "organisationId", "kind", "key", "name", "isActive"} {
 			if _, present := document[field]; !present {
 				t.Errorf("%s: stored copy lacks %s", role.Key, field)
 			}
@@ -249,6 +251,30 @@ func TestStoredCopyLeavesTheDefinitionOut(t *testing.T) {
 	}
 }
 
+func TestBuiltInRoleById(t *testing.T) {
+	organisationId, other := primitive.NewObjectID(), primitive.NewObjectID()
+	for _, definition := range BuiltInRoles() {
+		id := BuiltInRoleId(organisationId, definition.Key)
+		role, ok := BuiltInRoleById(organisationId, id)
+		if !ok || role.Key != definition.Key || role.Id != id || role.OrganisationId != organisationId || !role.IsActive ||
+			role.Name != definition.Name || !slices.Equal(role.Permissions, definition.Permissions) || role.Grants != definition.Grants {
+			t.Errorf("%s: resolved %+v", definition.Key, role)
+		}
+		// The id belongs to one organisation.
+		if _, ok := BuiltInRoleById(other, id); ok {
+			t.Errorf("%s: the id of one organisation resolves in another", definition.Key)
+		}
+	}
+	for name, id := range map[string]primitive.ObjectID{"custom": primitive.NewObjectID(), "zero": primitive.NilObjectID} {
+		if _, ok := BuiltInRoleById(organisationId, id); ok {
+			t.Errorf("%s id resolves to a built-in role", name)
+		}
+	}
+	if _, ok := BuiltInRoleById(primitive.NilObjectID, BuiltInRoleId(primitive.NilObjectID, RoleKeyOwner)); ok {
+		t.Error("resolved without an organisation")
+	}
+}
+
 func TestIsBuiltInRoleName(t *testing.T) {
 	for _, role := range BuiltInRoles() {
 		for _, name := range []string{role.Name, strings.ToUpper(role.Name), "  " + strings.ToLower(role.Name) + " "} {
@@ -261,5 +287,38 @@ func TestIsBuiltInRoleName(t *testing.T) {
 		if IsBuiltInRoleName(name) {
 			t.Errorf("%q is taken for a built-in name", name)
 		}
+	}
+}
+
+func TestResolveRoles(t *testing.T) {
+	organisationId := primitive.NewObjectID()
+	viewer, editor := BuiltInRoleId(organisationId, RoleKeyViewer), BuiltInRoleId(organisationId, RoleKeyEditor)
+	custom := NewCustomRole(organisationId, "Night operator", "", LevelProject, []Permission{PermissionDevicesRead})
+	custom.Id = primitive.NewObjectID()
+	var asked [][]primitive.ObjectID
+	stored := func(_ context.Context, _ primitive.ObjectID, ids []primitive.ObjectID) ([]Role, error) {
+		asked = append(asked, ids)
+		return []Role{custom}, nil
+	}
+
+	// Only built-in ids: nothing is read.
+	roles, err := ResolveRoles(context.Background(), organisationId, []primitive.ObjectID{viewer, editor}, stored)
+	if err != nil || len(roles) != 2 || roles[0].Key != RoleKeyViewer || roles[1].Key != RoleKeyEditor || len(asked) != 0 {
+		t.Fatalf("built-in only: %+v %v, read %v", roles, err, asked)
+	}
+	// Mixed: only the custom id is read.
+	roles, err = ResolveRoles(context.Background(), organisationId, []primitive.ObjectID{viewer, custom.Id}, stored)
+	if err != nil || len(roles) != 2 || roles[1].Name != "Night operator" || len(asked) != 1 || !slices.Equal(asked[0], []primitive.ObjectID{custom.Id}) {
+		t.Fatalf("mixed: %+v %v, read %v", roles, err, asked)
+	}
+	// A read error is the caller's.
+	failing := func(context.Context, primitive.ObjectID, []primitive.ObjectID) ([]Role, error) {
+		return nil, errors.New("database unavailable")
+	}
+	if _, err := ResolveRoles(context.Background(), organisationId, []primitive.ObjectID{custom.Id}, failing); err == nil {
+		t.Error("read error swallowed")
+	}
+	if roles, err := ResolveRoles(context.Background(), organisationId, nil, stored); err != nil || len(roles) != 0 {
+		t.Errorf("no ids: %+v %v", roles, err)
 	}
 }

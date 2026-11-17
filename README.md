@@ -40,28 +40,27 @@ Page grants are not access-token scopes and never imply resource permissions.
 Hub API dual-emits old and new page names at the profile boundary for older
 frontends; callers using `Access.Permissions` directly receive canonical names.
 
-### Built-in role copies
+### Built-in roles
 
-Every organisation in `rbac` mode stores a copy of each built-in role (Owner,
-the system roles and the legacy roles) in `organisation_roles`, so assignments
-and invitations name them by id. `OrganisationBuiltInRoles` returns those
-copies with ids from `BuiltInRoleId`; writers upsert them by
-`(organisationId, key)` when an organisation enters `rbac` mode.
+Owner, the system roles and the legacy roles are defined here, in the
+release. In an organisation a built-in role's id is
+`BuiltInRoleId(organisationId, key)`: a stable reference that never changes
+while the key does not. Assignments and invitations name roles by id.
 
-A copy keeps its id, organisation, `isActive` and audit. What it grants comes
-from the current definition: `ResolveAccess` applies
-`Role.WithCurrentDefinition` to every role it reads, and readers that return
-roles should do the same, so a copy stored before a release never grants an
-older permission set.
+Built-in roles need no stored document. `BuiltInRoleById` resolves an id to
+the release's definition, and `ResolveRoles` returns the roles for a list of
+ids: built-in ones from the release, the rest (an organisation's custom
+roles) through the reader passed in. `ResolveAccess` resolves roles this
+way, and every other reader of an organisation's roles should too. A custom
+role may not take a built-in role's name (`IsBuiltInRoleName`).
 
-The permission list in a stored copy is therefore a snapshot nothing reads.
-`Role.StoredCopy` (and `OrganisationBuiltInRoleCopies`) is the copy without
-it: id, organisation, kind, key, `isActive` and audit only, so the database
-cannot disagree with the release. It stores no name either: the key says
-which role it is, a unique role name index covers custom roles only, and
-`IsBuiltInRoleName` tells a writer of custom roles which names are taken. A reader that does not apply
-`WithCurrentDefinition` sees such a copy grant nothing: store copies in this
-form only once every service that reads an organisation's roles applies it.
+Organisations that entered `rbac` mode before this still store a copy of
+each built-in role in `organisation_roles` (`OrganisationBuiltInRoles`).
+Those copies are ignored by `ResolveRoles`; services on an older release
+read them, so they stay until none is deployed (RBAC spec 4.14).
+`Role.WithCurrentDefinition` gives a stored copy the release's definition.
+`Role.StoredCopy` and `OrganisationBuiltInRoleCopies` are deprecated and
+unused.
 
 ### Alert configuration visibility
 

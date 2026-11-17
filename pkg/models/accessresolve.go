@@ -111,14 +111,11 @@ func ResolveAccess(ctx context.Context, store AccessStore, organisationId, userI
 			roleIds = append(roleIds, assignment.RoleId)
 		}
 	}
-	roles, err := store.Roles(ctx, organisationId, roleIds)
+	// Built-in roles come from the release by their id, stored copy or not;
+	// only the organisation's custom roles are read.
+	roles, err := ResolveRoles(ctx, organisationId, roleIds, store.Roles)
 	if err != nil {
 		return Access{}, err
-	}
-	// Built-in copies grant what the platform defines now, not what was
-	// stored with them.
-	for index := range roles {
-		roles[index] = roles[index].WithCurrentDefinition()
 	}
 	return NewAccess(membership, teams, roles, assignments, at), nil
 }
