@@ -2,6 +2,7 @@ package models
 
 import (
 	"slices"
+	"strings"
 	"sync"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -75,12 +76,15 @@ func OrganisationBuiltInRoleCopies(organisationId primitive.ObjectID) []Role {
 }
 
 // StoredCopy returns a system or legacy role without its definition: only
-// the id, organisation, kind, key, name, IsActive and Audit. The description,
-// level, grants, permissions and origin are the platform's and come from
-// WithCurrentDefinition when the role is read, so a stored copy cannot
-// disagree with the release that reads it. The name stays: it is what the
-// unique role name index of an organisation is built on, and it tells a
-// reader of the database which role the document is.
+// the id, organisation, kind, key, IsActive and Audit. The name,
+// description, level, grants, permissions and origin are the platform's and
+// come from WithCurrentDefinition when the role is read, so a stored copy
+// cannot disagree with the release that reads it. The key says which role the
+// document is, and the id is derived from it (BuiltInRoleId).
+//
+// A copy stores no name, so a unique role name index covers custom roles
+// only, and a writer of custom roles checks the built-in names itself
+// (IsBuiltInRoleName).
 //
 // A reader that does not apply WithCurrentDefinition sees a role that grants
 // nothing. Store copies in this form only once every service reading the
@@ -96,7 +100,6 @@ func (r Role) StoredCopy() Role {
 	return Role{
 		Id:             r.Id,
 		OrganisationId: r.OrganisationId,
-		Name:           r.Name,
 		Kind:           r.Kind,
 		Key:            r.Key,
 		IsActive:       r.IsActive,
@@ -107,8 +110,21 @@ func (r Role) StoredCopy() Role {
 // IsStoredCopy reports whether a system or legacy role is in the form
 // StoredCopy returns: it names its key and leaves the definition out.
 func (r Role) IsStoredCopy() bool {
-	return (r.Kind == RoleKindSystem || r.Kind == RoleKindLegacy) && r.Key != "" &&
+	return (r.Kind == RoleKindSystem || r.Kind == RoleKindLegacy) && r.Key != "" && r.Name == "" &&
 		r.AssignableAt == "" && r.Grants == "" && len(r.Permissions) == 0 && r.Origin == nil && r.Description == ""
+}
+
+// IsBuiltInRoleName reports whether a name is that of a built-in role in
+// this release, ignoring case and surrounding space: a custom role may not
+// take it. Stored copies carry no name, so this is where those names are.
+func IsBuiltInRoleName(name string) bool {
+	name = strings.TrimSpace(name)
+	for _, role := range builtInRoles() {
+		if strings.EqualFold(role.Name, name) {
+			return true
+		}
+	}
+	return false
 }
 
 // WithCurrentDefinition returns a stored system or legacy role with the

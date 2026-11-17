@@ -56,8 +56,10 @@ older permission set.
 
 The permission list in a stored copy is therefore a snapshot nothing reads.
 `Role.StoredCopy` (and `OrganisationBuiltInRoleCopies`) is the copy without
-it: id, organisation, kind, key, name, `isActive` and audit only, so the
-database cannot disagree with the release. A reader that does not apply
+it: id, organisation, kind, key, `isActive` and audit only, so the database
+cannot disagree with the release. It stores no name either: the key says
+which role it is, a unique role name index covers custom roles only, and
+`IsBuiltInRoleName` tells a writer of custom roles which names are taken. A reader that does not apply
 `WithCurrentDefinition` sees such a copy grant nothing: store copies in this
 form only once every service that reads an organisation's roles applies it.
 

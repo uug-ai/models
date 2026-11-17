@@ -3,6 +3,7 @@ package models
 import (
 	"reflect"
 	"slices"
+	"strings"
 	"testing"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -196,7 +197,7 @@ func TestStoredCopyLeavesTheDefinitionOut(t *testing.T) {
 		role.Audit = Audit{CreatedBy: "owner"}
 		stored := role.StoredCopy()
 		if stored.Id != role.Id || stored.OrganisationId != organisationId || stored.Kind != role.Kind || stored.Key != role.Key ||
-			stored.Name != role.Name || !stored.IsActive || stored.Audit.CreatedBy != "owner" {
+			stored.Name != "" || !stored.IsActive || stored.Audit.CreatedBy != "owner" {
 			t.Errorf("%s: identity not kept: %+v", role.Key, stored)
 		}
 		if !stored.IsStoredCopy() || role.IsStoredCopy() {
@@ -218,12 +219,12 @@ func TestStoredCopyLeavesTheDefinitionOut(t *testing.T) {
 		if err := bson.Unmarshal(raw, &document); err != nil {
 			t.Fatal(err)
 		}
-		for _, field := range []string{"permissions", "grants", "assignableAt", "description", "origin"} {
+		for _, field := range []string{"name", "permissions", "grants", "assignableAt", "description", "origin"} {
 			if _, present := document[field]; present {
 				t.Errorf("%s: stored copy has %s", role.Key, field)
 			}
 		}
-		for _, field := range []string{"_id", "organisationId", "kind", "key", "name", "isActive"} {
+		for _, field := range []string{"_id", "organisationId", "kind", "key", "isActive"} {
 			if _, present := document[field]; !present {
 				t.Errorf("%s: stored copy lacks %s", role.Key, field)
 			}
@@ -245,5 +246,20 @@ func TestStoredCopyLeavesTheDefinitionOut(t *testing.T) {
 	orphan := Role{Id: primitive.NewObjectID(), OrganisationId: organisationId, Kind: RoleKindSystem, Key: "retired-system-role", Name: "Retired", IsActive: true}
 	if got := orphan.WithCurrentDefinition(); len(got.Permissions) != 0 || got.GrantsAll() {
 		t.Errorf("unknown stored copy grants something: %+v", got)
+	}
+}
+
+func TestIsBuiltInRoleName(t *testing.T) {
+	for _, role := range BuiltInRoles() {
+		for _, name := range []string{role.Name, strings.ToUpper(role.Name), "  " + strings.ToLower(role.Name) + " "} {
+			if !IsBuiltInRoleName(name) {
+				t.Errorf("%q is not recognised as the name of %s", name, role.Key)
+			}
+		}
+	}
+	for _, name := range []string{"", "Night operator", "Viewer 2", "Owners"} {
+		if IsBuiltInRoleName(name) {
+			t.Errorf("%q is taken for a built-in name", name)
+		}
 	}
 }
