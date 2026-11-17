@@ -113,6 +113,13 @@ type Task struct {
 	CompressedFile     string `json:"compressedFile" bson:"compressedFile"`
 	CompressedProvider string `json:"compressedProvider" bson:"compressedProvider"`
 
+	// CompressedParts lists every zip of the latest export, in order. A large
+	// export is split into several zips; a small one has a single entry.
+	// CompressedFile / CompressedProvider keep pointing at the first part, so
+	// readers that only know the single-zip fields still get a valid download.
+	// Empty on exports made before parts existed: fall back to CompressedFile.
+	CompressedParts []CompressedPart `json:"compressedParts,omitempty" bson:"compressedParts,omitempty"`
+
 	// An export task, is containing multiple video in a compressed file format (.zip)
 	ExportStatus     string       `json:"export_status" bson:"export_status,omitempty"`     // "", "idle", "start", "progress", "success", "error"
 	ExportProgress   int          `json:"export_progress" bson:"export_progress,omitempty"` // "0% -> 100%"
@@ -198,6 +205,15 @@ type Task struct {
 	// Access is what the caller may do on this case, computed when it is
 	// returned and never stored (RBAC spec 4.13).
 	Access *ItemAccess `json:"access,omitempty" bson:"-"`
+}
+
+// CompressedPart is one zip of a case export.
+type CompressedPart struct {
+	File     string `json:"file" bson:"file"`         // storage key of the zip
+	Provider string `json:"provider" bson:"provider"` // storage provider holding it
+	Size     int64  `json:"size" bson:"size"`         // zip size in bytes
+	Files    int    `json:"files" bson:"files"`       // recordings and attachments in this part
+	Url      string `json:"url,omitempty" bson:"-"`   // signed download URL, set on read and never stored
 }
 
 // ExportFile is the legacy media descriptor embedded on Task.ExportFiles.
