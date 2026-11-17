@@ -29,58 +29,19 @@ jobs:
       create_gitops_pr: false
     secrets: inherit
 
+  # npm trusted publishing only accepts runs started by npm-publish.yml
+  # itself, so start it as its own run instead of publishing from this one.
   publish-npm:
     runs-on: ubuntu-24.04
     needs: [release]
+    permissions:
+      actions: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.tag || github.event.release.tag_name }}
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          registry-url: ${{ env.NODE_REGISTRY_URL }}
-          
-      - name: Set up Go
-        uses: actions/setup-go@v6
-        with:
-          go-version-file: go.mod
-
-      - name: Install swag
-        run: go install github.com/swaggo/swag/cmd/swag@latest
-
-      - name: Install generator dependencies
-        run: npm ci
-
-      - name: Install TypeScript dependencies
-        working-directory: ./src/typescript
-        run: npm ci
-
-      - name: Generate openapi
-        run: npm run generate:openapi
-
-      - name: Generate types
-        run: npm run generate:types
-
-      - name: Build TypeScript
-        run: npm run build
-        
-      - name: Update package version
-        working-directory: ./src/typescript
+      - name: Start "Publish npm package"
         env:
-          RELEASE_TAG: ${{ inputs.tag || github.event.release.tag_name }}
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag || github.event.release.tag_name }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
-          RELEASE_VERSION=${RELEASE_TAG#v}
-          echo "Setting version from release tag: $RELEASE_VERSION"
-          npm version "$RELEASE_VERSION" --no-git-tag-version
-          
-      - name: Authenticate with NPM
-        working-directory: ./src/typescript
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_ACCESS_TOKEN }}" > .npmrc
-
-      - name: Publish to NPM
-        working-directory: ./src/typescript
-        run: npm publish
+          gh workflow run npm-publish.yml --repo "$GITHUB_REPOSITORY" --ref "$DEFAULT_BRANCH" -f tag="$TAG"
+          echo "Started npm publish for $TAG: https://github.com/$GITHUB_REPOSITORY/actions/workflows/npm-publish.yml" >> "$GITHUB_STEP_SUMMARY"

@@ -30,6 +30,12 @@ jobs:
   # `release: created` event, so we invoke the reusable workflow directly.
   release:
     needs: bump-release
+    # A called workflow cannot hold more than its caller grants: actions:write
+    # lets release-create.yml start the npm publish workflow.
+    permissions:
+      contents: write
+      packages: write
+      actions: write
     uses: ./.github/workflows/release-create.yml
     with:
       tag: ${{ needs.bump-release.outputs.tag }}
