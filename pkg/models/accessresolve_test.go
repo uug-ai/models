@@ -273,3 +273,44 @@ func TestResolveAccessUsesCurrentBuiltInDefinitions(t *testing.T) {
 		}
 	}
 }
+
+// Stored copies without their definition resolve to the access full copies
+// give: for the owner and for a member holding a project role.
+func TestResolveAccessFromStoredCopies(t *testing.T) {
+	organisationId, owner, member, project := primitive.NewObjectID(), primitive.NewObjectID(), primitive.NewObjectID(), primitive.NewObjectID()
+	assignments := []RoleAssignment{
+		{OrganisationId: organisationId, Principal: Principal{Type: PrincipalTypeUser, Id: owner}, RoleId: BuiltInRoleId(organisationId, RoleKeyOwner),
+			Scope: RoleAssignmentScope{Level: LevelOrganisation, Projects: SelectionAll}, Source: AssignmentSourceManual, IsActive: true},
+		{OrganisationId: organisationId, Principal: Principal{Type: PrincipalTypeUser, Id: member}, RoleId: BuiltInRoleId(organisationId, RoleKeyEditor),
+			Scope: RoleAssignmentScope{Level: LevelProject, ProjectId: project, Resources: SelectionAll}, Source: AssignmentSourceManual, IsActive: true},
+	}
+	memberships := []OrganisationUser{
+		{OrganisationId: organisationId, UserId: owner, Status: MembershipStatusActive},
+		{OrganisationId: organisationId, UserId: member, Status: MembershipStatusActive},
+	}
+	active := func(roles []Role) []Role {
+		for i := range roles {
+			roles[i].IsActive = true
+		}
+		return roles
+	}
+	full := &memoryAccessStore{memberships: memberships, assignments: assignments, roles: active(OrganisationBuiltInRoles(organisationId))}
+	stored := &memoryAccessStore{memberships: memberships, assignments: assignments, roles: active(OrganisationBuiltInRoleCopies(organisationId))}
+	for name, userId := range map[string]primitive.ObjectID{"owner": owner, "member": member} {
+		want, err := ResolveAccess(context.Background(), full, organisationId, userId, time.Now())
+		if err != nil {
+			t.Fatal(err)
+		}
+		got, err := ResolveAccess(context.Background(), stored, organisationId, userId, time.Now())
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got.IsOwner() != want.IsOwner() || !slices.Equal(got.Permissions(project), want.Permissions(project)) ||
+			!slices.Equal(got.Permissions(primitive.NilObjectID), want.Permissions(primitive.NilObjectID)) {
+			t.Errorf("%s: stored copies resolve differently", name)
+		}
+		if len(want.Permissions(project)) == 0 {
+			t.Errorf("%s: holds nothing in the project", name)
+		}
+	}
+}

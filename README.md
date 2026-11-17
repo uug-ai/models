@@ -54,6 +54,13 @@ from the current definition: `ResolveAccess` applies
 roles should do the same, so a copy stored before a release never grants an
 older permission set.
 
+The permission list in a stored copy is therefore a snapshot nothing reads.
+`Role.StoredCopy` (and `OrganisationBuiltInRoleCopies`) is the copy without
+it: id, organisation, kind, key, name, `isActive` and audit only, so the
+database cannot disagree with the release. A reader that does not apply
+`WithCurrentDefinition` sees such a copy grant nothing: store copies in this
+form only once every service that reads an organisation's roles applies it.
+
 ### Alert configuration visibility
 
 `CustomAlert.private` defaults to false (including historical documents without
