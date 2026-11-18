@@ -160,7 +160,7 @@ func TestUserDeactivation(t *testing.T) {
 		t.Fatal("an unlocked account stores a deactivation field")
 	}
 
-	owner.Deactivation = &UserDeactivation{At: at, Reason: UserDeactivationReasonDeletion, DeleteAfter: &deleteAfter}
+	owner.Deactivation = &Deactivation{At: at, Reason: DeactivationReasonDeletion, DeleteAfter: &deleteAfter}
 	if !owner.IsDeactivated() || !sub.IsDeactivated() {
 		t.Fatal("a locked owner and its sub-account must read as deactivated")
 	}

@@ -40190,6 +40190,12 @@ export interface components {
             /** @description seconds since midnight, 0..86400 */
             start?: number;
         };
+        "models.Deactivation": {
+            at?: string;
+            deleteAfter?: string;
+            purgeStartedAt?: string;
+            reason?: string;
+        };
         "models.DeleteCaseShareInput": {
             share_id?: string;
             user_id?: string;
@@ -41698,6 +41704,10 @@ export interface components {
             billingAddress?: components["schemas"]["models.Address"];
             /** @description Company Details */
             company?: components["schemas"]["models.CompanyDetails"];
+            /** @description Deactivation is the lock on the organisation: set while it is waiting
+             *     for deletion, absent otherwise. It closes the organisation to every
+             *     member; their accounts and other organisations are not affected. */
+            deactivation?: components["schemas"]["models.Deactivation"];
             description?: string;
             domain?: string;
             id?: string;
@@ -42795,7 +42805,7 @@ export interface components {
             /** @description Deactivation is the lock on an owner account and, through it, on its
              *     sub-accounts: set while the account is deactivated or waiting for
              *     deletion, absent otherwise. */
-            deactivation?: components["schemas"]["models.UserDeactivation"];
+            deactivation?: components["schemas"]["models.Deactivation"];
             devices?: components["schemas"]["models.Device"][];
             domain?: string;
             email?: string;
@@ -42852,12 +42862,6 @@ export interface components {
             /** @description Master account to which this account was added. */
             user_id?: string;
             username?: string;
-        };
-        "models.UserDeactivation": {
-            at?: string;
-            deleteAfter?: string;
-            purgeStartedAt?: string;
-            reason?: string;
         };
         "models.UserNotificationMailbox": {
             data?: components["schemas"]["models.Message"][];
@@ -43949,6 +43953,7 @@ export namespace models {
     export type CustomAlert = components['schemas']['models.CustomAlert'];
     export type DateRangeSchedule = components['schemas']['models.DateRangeSchedule'];
     export type DayTimeRange = components['schemas']['models.DayTimeRange'];
+    export type Deactivation = components['schemas']['models.Deactivation'];
     export type DeleteCaseShareInput = components['schemas']['models.DeleteCaseShareInput'];
     export type DeleteProjectInput = components['schemas']['models.DeleteProjectInput'];
     export type DeleteProjectOutput = components['schemas']['models.DeleteProjectOutput'];
@@ -44170,7 +44175,6 @@ export namespace models {
     export type UpdateWorkflowStageInput = components['schemas']['models.UpdateWorkflowStageInput'];
     export type UpdateWorkflowStageOutput = components['schemas']['models.UpdateWorkflowStageOutput'];
     export type User = components['schemas']['models.User'];
-    export type UserDeactivation = components['schemas']['models.UserDeactivation'];
     export type UserNotificationMailbox = components['schemas']['models.UserNotificationMailbox'];
     export type UserProfile = components['schemas']['models.UserProfile'];
     export type UserProfileSettings = components['schemas']['models.UserProfileSettings'];

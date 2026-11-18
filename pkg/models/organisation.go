@@ -65,6 +65,10 @@ type Organisation struct {
 	// AuthorizationMode says which data decides access in this organisation:
 	// legacy (unset), shadow or rbac. Read it with EffectiveAuthorizationMode.
 	AuthorizationMode AuthorizationMode `json:"authorizationMode,omitempty" bson:"authorizationMode,omitempty"`
+	// Deactivation is the lock on the organisation: set while it is waiting
+	// for deletion, absent otherwise. It closes the organisation to every
+	// member; their accounts and other organisations are not affected.
+	Deactivation *Deactivation `json:"deactivation,omitempty" bson:"deactivation,omitempty"`
 
 	// Company Details
 	Company CompanyDetails `json:"company" bson:"company"`

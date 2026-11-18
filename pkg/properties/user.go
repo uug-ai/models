@@ -166,14 +166,6 @@ const (
 	UserDeactivation = "deactivation"
 )
 
-// UserDeactivation property field names (BSON)
-const (
-	UserDeactivationAt = "at"
-	UserDeactivationReason = "reason"
-	UserDeactivationDeleteAfter = "deleteAfter"
-	UserDeactivationPurgeStartedAt = "purgeStartedAt"
-)
-
 // UserProfile property field names (BSON)
 const (
 	UserProfileUser = "user"
