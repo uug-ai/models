@@ -56,6 +56,7 @@ const (
 	OrganisationSettings = "settings"
 	OrganisationIsActive = "isActive"
 	OrganisationAuthorizationMode = "authorizationMode"
+	OrganisationDeactivation = "deactivation"
 	OrganisationCompany = "company"
 	OrganisationSubscription = "subscription"
 	OrganisationBillingAddress = "billingAddress"

@@ -186,6 +186,20 @@ type User struct {
 
 	// Encryption
 	Encryption Encryption `json:"encryption" bson:"encryption,omitempty"`
+
+	// Deactivation is the lock on an owner account and, through it, on its
+	// sub-accounts: set while the account is deactivated or waiting for
+	// deletion, absent otherwise.
+	Deactivation *Deactivation `json:"deactivation,omitempty" bson:"deactivation,omitempty"`
+}
+
+// IsDeactivated reports whether the account is locked: by its own
+// Deactivation, or by its master's when Master is loaded.
+func (user User) IsDeactivated() bool {
+	if user.Deactivation != nil {
+		return true
+	}
+	return user.Master != nil && user.Master.Deactivation != nil
 }
 
 func (user *User) WithTimezone() {

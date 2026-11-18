@@ -40190,6 +40190,12 @@ export interface components {
             /** @description seconds since midnight, 0..86400 */
             start?: number;
         };
+        "models.Deactivation": {
+            at?: string;
+            deleteAfter?: string;
+            purgeStartedAt?: string;
+            reason?: string;
+        };
         "models.DeleteCaseShareInput": {
             share_id?: string;
             user_id?: string;
@@ -41698,6 +41704,10 @@ export interface components {
             billingAddress?: components["schemas"]["models.Address"];
             /** @description Company Details */
             company?: components["schemas"]["models.CompanyDetails"];
+            /** @description Deactivation is the lock on the organisation: set while it is waiting
+             *     for deletion, absent otherwise. It closes the organisation to every
+             *     member; their accounts and other organisations are not affected. */
+            deactivation?: components["schemas"]["models.Deactivation"];
             description?: string;
             domain?: string;
             id?: string;
@@ -42792,6 +42802,10 @@ export interface components {
             /** @description We can override the subscription settings if needed. */
             custom_usage_limit?: number;
             dates?: string[];
+            /** @description Deactivation is the lock on an owner account and, through it, on its
+             *     sub-accounts: set while the account is deactivated or waiting for
+             *     deletion, absent otherwise. */
+            deactivation?: components["schemas"]["models.Deactivation"];
             devices?: components["schemas"]["models.Device"][];
             domain?: string;
             email?: string;
@@ -43939,6 +43953,7 @@ export namespace models {
     export type CustomAlert = components['schemas']['models.CustomAlert'];
     export type DateRangeSchedule = components['schemas']['models.DateRangeSchedule'];
     export type DayTimeRange = components['schemas']['models.DayTimeRange'];
+    export type Deactivation = components['schemas']['models.Deactivation'];
     export type DeleteCaseShareInput = components['schemas']['models.DeleteCaseShareInput'];
     export type DeleteProjectInput = components['schemas']['models.DeleteProjectInput'];
     export type DeleteProjectOutput = components['schemas']['models.DeleteProjectOutput'];
