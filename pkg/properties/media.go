@@ -47,6 +47,8 @@ const (
 	MediaEndTimestamp = "endTimestamp"
 	MediaDuration = "duration"
 	MediaStar = "star"
+	MediaRetentionDays = "retentionDays"
+	MediaDeleteAfter = "deleteAfter"
 	MediaDeviceId = "deviceId"
 	MediaDeviceKey = "deviceKey"
 	MediaGroupId = "groupId"

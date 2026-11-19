@@ -3,6 +3,7 @@ package models
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -69,15 +70,88 @@ type Organisation struct {
 	// for deletion, absent otherwise. It closes the organisation to every
 	// member; their accounts and other organisations are not affected.
 	Deactivation *Deactivation `json:"deactivation,omitempty" bson:"deactivation,omitempty"`
+	// SubscriptionMode says whether the organisation uses legacy
+	// subscriptions (unset) or plans and organisation subscriptions. Read it
+	// with EffectiveSubscriptionMode.
+	SubscriptionMode SubscriptionMode `json:"subscriptionMode,omitempty" bson:"subscriptionMode,omitempty"`
 
 	// Company Details
 	Company CompanyDetails `json:"company" bson:"company"`
 
 	// Billing & Subscription
+	//
+	// Deprecated: the subscription is read from the subscriptions collection
+	// (OrganisationEntitlement, GetActiveSubscriptionForOrganisation); this
+	// embedded copy is removed once no legacy reader is left.
 	Subscription   Subscription `json:"subscription" bson:"subscription"`
 	BillingAddress Address      `json:"billingAddress" bson:"billingAddress"`
+	// Billing is the organisation's Stripe customer and card summary. It is
+	// a projection kept in sync with Stripe; it never holds secrets or full
+	// card data.
+	Billing *OrganisationBilling `json:"billing,omitempty" bson:"billing,omitempty"`
 
 	Audit Audit `json:"audit" bson:"audit"`
+}
+
+// OrganisationBilling is the organisation's billing profile (Stripe billing
+// migration spec). Index: unique partial {billing.stripeCustomerId: 1}.
+type OrganisationBilling struct {
+	// StripeCustomerId is the Stripe customer id (cus_...).
+	StripeCustomerId string `json:"stripeCustomerId,omitempty" bson:"stripeCustomerId,omitempty"`
+	// DefaultPaymentMethodId is the Stripe payment method id (pm_...), if
+	// retained locally.
+	DefaultPaymentMethodId string `json:"defaultPaymentMethodId,omitempty" bson:"defaultPaymentMethodId,omitempty"`
+	// CardBrand and CardLastFour are a display-only card summary.
+	CardBrand    string `json:"cardBrand,omitempty" bson:"cardBrand,omitempty"`
+	CardLastFour string `json:"cardLastFour,omitempty" bson:"cardLastFour,omitempty"`
+	// UpdatedAt is the latest local projection update.
+	UpdatedAt time.Time `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+}
+
+// SubscriptionMode says, per organisation, which subscription model applies.
+// Every check of plans, organisation subscriptions and project keys runs only
+// for organisations in plans mode; legacy organisations keep the user
+// subscription, user keys and legacy plans.
+type SubscriptionMode string
+
+const (
+	// SubscriptionModeLegacy: the legacy user subscription and plans apply.
+	// A missing mode is legacy.
+	SubscriptionModeLegacy SubscriptionMode = "legacy"
+	// SubscriptionModePlans: the organisation's subscription, its plan
+	// version and the entitlement apply. New organisations are created in
+	// this mode once plans are enabled; existing ones move with the
+	// migration.
+	SubscriptionModePlans SubscriptionMode = "plans"
+)
+
+// IsValid reports whether the mode is one of the defined modes. The empty
+// mode is valid and means legacy.
+func (m SubscriptionMode) IsValid() bool {
+	switch m {
+	case "", SubscriptionModeLegacy, SubscriptionModePlans:
+		return true
+	}
+	return false
+}
+
+// EffectiveSubscriptionMode is the organisation's mode as services apply it:
+// a missing or unknown mode is legacy, which is how every organisation
+// behaved before modes existed. ValidateSubscriptionMode rejects unknown
+// values so writers never store one.
+func (o Organisation) EffectiveSubscriptionMode() SubscriptionMode {
+	if o.SubscriptionMode == SubscriptionModePlans {
+		return SubscriptionModePlans
+	}
+	return SubscriptionModeLegacy
+}
+
+// ValidateSubscriptionMode checks that the stored mode is a defined one.
+func (o Organisation) ValidateSubscriptionMode() error {
+	if !o.SubscriptionMode.IsValid() {
+		return fmt.Errorf("unknown subscription mode %q", o.SubscriptionMode)
+	}
+	return nil
 }
 
 // IsPrimaryOwner reports whether the user is the organisation's primary owner.

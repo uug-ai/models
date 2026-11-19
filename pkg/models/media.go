@@ -46,6 +46,17 @@ type Media struct {
 	Duration       int   `json:"duration,omitempty" bson:"duration,omitempty"`
 	Star           bool  `json:"star,omitempty" bson:"star,omitempty"`
 
+	// RetentionDays is the organisation's effective retention (plan plus
+	// overrides) when the media was ingested. DeleteAfter is
+	// StartTimestamp plus RetentionDays, in the same unit as StartTimestamp
+	// (seconds since epoch; see MediaDeleteAfter). A recording is deleted
+	// only when both DeleteAfter and StartTimestamp plus the organisation's
+	// current retention are past, so a plan change never deletes more than
+	// either plan promised. Media without RetentionDays (ingested before)
+	// follow the current retention only. Index: {projectId, deleteAfter}.
+	RetentionDays int   `json:"retentionDays,omitempty" bson:"retentionDays,omitempty"`
+	DeleteAfter   int64 `json:"deleteAfter,omitempty" bson:"deleteAfter,omitempty"`
+
 	// RBAC information
 	// DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
 	// OrganisationId is used to identify the organisation that owns the device.
@@ -103,6 +114,12 @@ type Media struct {
 
 	// Audit information
 	Audit *Audit `json:"audit,omitempty" bson:"audit,omitempty"`
+}
+
+// MediaDeleteAfter returns the DeleteAfter of a media item that starts at
+// startTimestamp (seconds since epoch) and is kept retentionDays days.
+func MediaDeleteAfter(startTimestamp int64, retentionDays int) int64 {
+	return startTimestamp + int64(retentionDays)*24*60*60
 }
 
 // MarkerSummary captures a single marker occurrence denormalised onto a media

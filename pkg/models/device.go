@@ -218,6 +218,13 @@ type Device struct {
 	FeaturePermissions *DeviceFeaturePermissions `json:"featurePermissions,omitempty" bson:"featurePermissions,omitempty"`
 	Audit              *Audit                    `json:"audit,omitempty" bson:"audit,omitempty"` // Provisioning sets CreatedAt (first heartbeat)
 
+	// Activation says whether the device is active under the organisation's
+	// subscription. Missing means active (DeviceActivation.IsActive); read
+	// it with Device.IsActivated. Only active devices count towards the
+	// devices limit and may upload or stream. Index:
+	// {organisationId, activation.state}.
+	Activation *DeviceActivation `json:"activation,omitempty" bson:"activation,omitempty"`
+
 	// AtRuntimeMetadata is computed when the device is read and never stored.
 	AtRuntimeMetadata *DeviceAtRuntimeMetadata `json:"atRuntimeMetadata,omitempty" bson:"-"`
 	// Access is what the caller may do on this device, computed when the
@@ -228,6 +235,54 @@ type Device struct {
 	UserId              string                 `json:"user_id,omitempty" bson:"user_id,omitempty"`
 	IsActive            bool                   `json:"isActive" bson:"isActive"` // No defined meaning; never set true for devices
 	DeprecatedAnalytics *[]DeprecatedHeartbeat `json:"analytics,omitempty" bson:"analytics,omitempty"`
+}
+
+// DeviceActivationState is whether a device is active under the
+// organisation's subscription.
+type DeviceActivationState string
+
+const (
+	DeviceActivationStateActive   DeviceActivationState = "active"
+	DeviceActivationStateInactive DeviceActivationState = "inactive"
+)
+
+// DeviceActivationReason says why a device is inactive.
+type DeviceActivationReason string
+
+const (
+	// DeviceActivationReasonNoSubscription: the organisation has no active
+	// subscription.
+	DeviceActivationReasonNoSubscription DeviceActivationReason = "no_subscription"
+	// DeviceActivationReasonOverLimit: the device was not selected within
+	// the plan's devices limit (after a downgrade, when subscribing or when
+	// registered at the limit).
+	DeviceActivationReasonOverLimit DeviceActivationReason = "over_limit"
+)
+
+// DeviceActivation is a device's activation. An inactive device is shown in
+// the project, sites and groups and its heartbeats update its status, but
+// its recording uploads and live view are refused and it does not count
+// towards the devices limit.
+type DeviceActivation struct {
+	State DeviceActivationState `json:"state" bson:"state"`
+	// Reason is set when State is inactive.
+	Reason DeviceActivationReason `json:"reason,omitempty" bson:"reason,omitempty"`
+	// At is when the state was last set, in milliseconds since epoch on the
+	// hub's clock, like the device's liveness timestamps.
+	At int64 `json:"at,omitempty" bson:"at,omitempty"`
+}
+
+// IsActive reports whether the activation is active. A missing activation
+// (nil) and an empty state are active; any state other than active is not.
+func (a *DeviceActivation) IsActive() bool {
+	return a == nil || a.State == "" || a.State == DeviceActivationStateActive
+}
+
+// IsActivated reports whether the device is active under the organisation's
+// subscription (see DeviceActivation.IsActive). It is not the legacy
+// IsActive field, which has no defined meaning.
+func (d Device) IsActivated() bool {
+	return d.Activation.IsActive()
 }
 
 // HasCapability reports whether the capability sub-document is set.
