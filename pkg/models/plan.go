@@ -1,6 +1,11 @@
 package models
 
-// Plan represents a subscription plan with its limits and features
+// Plan represents a subscription plan with its limits and features.
+//
+// Deprecated: plans are versioned definitions read from the Hub chart's plan
+// file; use PlanDefinition, LoadPlans and PlanCatalog. Plan, Plans and
+// DefaultPlans stay for legacy organisations until the legacy paths are
+// removed.
 type Plan struct {
 	// Level indicates the tier of the plan (1-5, higher is better)
 	Level int `json:"level,omitempty" bson:"level,omitempty"`
@@ -16,10 +21,14 @@ type Plan struct {
 	DayLimit int `json:"dayLimit,omitempty" bson:"dayLimit,omitempty"`
 }
 
-// Plans is a map of plan names to their configurations
+// Plans is a map of plan names to their configurations.
+//
+// Deprecated: use PlanCatalog.
 type Plans map[string]Plan
 
-// DefaultPlans returns the default plan configurations
+// DefaultPlans returns the default plan configurations.
+//
+// Deprecated: plans come from the Hub chart's plan file; use LoadPlans.
 var DefaultPlans = Plans{
 	"basic": {
 		Level:         1,

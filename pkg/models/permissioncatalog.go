@@ -45,6 +45,12 @@ type PermissionDefinition struct {
 	// workflow authoring, channels), so delegated administrators hand
 	// out at most what an admin holds. See Access.CanGrant.
 	OwnerOnly bool `json:"ownerOnly,omitempty"`
+	// PlanGated marks a permission that is only effective when the
+	// organisation's plan allows it; ungated permissions are allowed on every
+	// plan. It is set from planGatedDomains and planGatedPermissions, never
+	// per group, so a new permission in a gated domain is gated too. A plan
+	// caps, it never grants: see Entitlement.
+	PlanGated bool `json:"planGated,omitempty"`
 }
 
 var (
@@ -211,6 +217,7 @@ func definePermissions(groups []permissionGroup) []PermissionDefinition {
 				Implies:    append([]Permission(nil), group.implies[permission]...),
 				TenantWide: slices.Contains(group.tenantWide, permission),
 				OwnerOnly:  slices.Contains(group.ownerOnly, permission),
+				PlanGated:  isPlanGated(permission, planGatedDomains, planGatedPermissions),
 			})
 		}
 	}
@@ -230,9 +237,13 @@ func indexPermissions(definitions []PermissionDefinition) map[Permission]int {
 // group's own permissions, stay within one level, and contain no cycles, and
 // only the group's own organisation permissions are tenant-wide, only the
 // group's own permissions are owner-only, and nothing that is not owner-only
-// implies one that is (holding the lower grade would hand it out).
+// implies one that is (holding the lower grade would hand it out), and plan
+// gating is valid (validatePlanGating).
 func validatePermissionGroups(groups []permissionGroup) error {
 	definitions := definePermissions(groups)
+	if err := validatePlanGating(definitions); err != nil {
+		return err
+	}
 	index := make(map[Permission]int, len(definitions))
 	for position, definition := range definitions {
 		if definition.Permission == "" {

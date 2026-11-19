@@ -45,20 +45,40 @@ func ProjectAdministrationPermissions() []Permission {
 // project; a resource without a ProjectId belongs to the organisation's default
 // project (see ResolveProjectId).
 type Project struct {
-	Id               primitive.ObjectID `json:"id" bson:"_id,omitempty"`
-	OrganisationId   primitive.ObjectID `json:"organisationId" bson:"organisationId"`
-	Name             string             `json:"name" bson:"name"`
-	Slug             string             `json:"slug" bson:"slug"`
-	Description      string             `json:"description,omitempty" bson:"description,omitempty"`
-	IsActive         bool               `json:"isActive" bson:"isActive"`
-	PublicKey        string             `json:"-" bson:"publicKey,omitempty"`
-	PrivateKey       string             `json:"-" bson:"privateKey,omitempty"`
-	LegacyPublicKey  string             `json:"-" bson:"legacyPublicKey,omitempty"`
-	LegacyPrivateKey string             `json:"-" bson:"legacyPrivateKey,omitempty"`
-	EncryptionKey    string             `json:"-" bson:"encryptionKey,omitempty"`
-	HasPincode       bool               `json:"hasPincode" bson:"hasPincode"`
-	Days             []string           `json:"dates,omitempty" bson:"dates,omitempty"`
-	Audit            Audit              `json:"audit" bson:"audit"`
+	Id             primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId"`
+	Name           string             `json:"name" bson:"name"`
+	Slug           string             `json:"slug" bson:"slug"`
+	Description    string             `json:"description,omitempty" bson:"description,omitempty"`
+	IsActive       bool               `json:"isActive" bson:"isActive"`
+	// Deprecated: use EncryptionPublicKey.
+	PublicKey string `json:"-" bson:"publicKey,omitempty"`
+	// Deprecated: use EncryptionPrivateKey.
+	PrivateKey string `json:"-" bson:"privateKey,omitempty"`
+	// Deprecated: use HubPublicKey.
+	LegacyPublicKey string `json:"-" bson:"legacyPublicKey,omitempty"`
+	// Deprecated: use HubPrivateKey.
+	LegacyPrivateKey string   `json:"-" bson:"legacyPrivateKey,omitempty"`
+	EncryptionKey    string   `json:"-" bson:"encryptionKey,omitempty"`
+	HasPincode       bool     `json:"hasPincode" bson:"hasPincode"`
+	Days             []string `json:"dates,omitempty" bson:"dates,omitempty"`
+	Audit            Audit    `json:"audit" bson:"audit"`
+
+	// HubPublicKey and HubPrivateKey are the project's agent keypair: the
+	// key agents of this project authenticate with (renamed from
+	// LegacyPublicKey / LegacyPrivateKey). Index: unique partial on
+	// hubPublicKey.
+	HubPublicKey  string `json:"-" bson:"hubPublicKey,omitempty"`
+	HubPrivateKey string `json:"-" bson:"hubPrivateKey,omitempty"`
+	// EncryptionPublicKey and EncryptionPrivateKey are the project's RSA
+	// pair (renamed from PublicKey / PrivateKey).
+	EncryptionPublicKey  string `json:"-" bson:"encryptionPublicKey,omitempty"`
+	EncryptionPrivateKey string `json:"-" bson:"encryptionPrivateKey,omitempty"`
+	// Storage and ArchiveStorage are the project's vault connection, moved
+	// from the user. Recordings of the project are written to and read from
+	// this storage. Never returned in ordinary responses.
+	Storage        *Storage `json:"-" bson:"storage,omitempty"`
+	ArchiveStorage *Storage `json:"-" bson:"archiveStorage,omitempty"`
 }
 
 // DefaultProjectSlug and DefaultProjectName identify the single default project

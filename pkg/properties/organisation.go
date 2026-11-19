@@ -57,10 +57,21 @@ const (
 	OrganisationIsActive = "isActive"
 	OrganisationAuthorizationMode = "authorizationMode"
 	OrganisationDeactivation = "deactivation"
+	OrganisationSubscriptionMode = "subscriptionMode"
 	OrganisationCompany = "company"
 	OrganisationSubscription = "subscription"
 	OrganisationBillingAddress = "billingAddress"
+	OrganisationBilling = "billing"
 	OrganisationAudit = "audit"
+)
+
+// OrganisationBilling property field names (BSON)
+const (
+	OrganisationBillingStripeCustomerId = "stripeCustomerId"
+	OrganisationBillingDefaultPaymentMethodId = "defaultPaymentMethodId"
+	OrganisationBillingCardBrand = "cardBrand"
+	OrganisationBillingCardLastFour = "cardLastFour"
+	OrganisationBillingUpdatedAt = "updatedAt"
 )
 
 // OrganisationInvitation property field names (BSON)

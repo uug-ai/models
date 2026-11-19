@@ -3,6 +3,12 @@
 
 package properties
 
+// PermissionOverrides property field names (BSON)
+const (
+	PermissionOverridesAdd = "add"
+	PermissionOverridesRemove = "remove"
+)
+
 // Subscription property field names (BSON)
 const (
 	SubscriptionId = "_id"
@@ -16,4 +22,18 @@ const (
 	SubscriptionEndsAt = "ends_at"
 	SubscriptionUpdatedAt = "updated_at"
 	SubscriptionCreatedAt = "created_at"
+	SubscriptionPlanKey = "plan_key"
+	SubscriptionPlanVersion = "plan_version"
+	SubscriptionType = "type"
+	SubscriptionBilling = "billing"
+	SubscriptionOverrides = "overrides"
+	SubscriptionReachedLimit = "reached_limit"
+	SubscriptionReachedLimitAt = "reached_limit_at"
+	SubscriptionReachedLimitPeriod = "reached_limit_period"
+)
+
+// SubscriptionOverrides property field names (BSON)
+const (
+	SubscriptionOverridesLimits = "limits"
+	SubscriptionOverridesPermissions = "permissions"
 )

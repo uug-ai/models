@@ -116,9 +116,17 @@ const (
 	DeviceGPS = "gps"
 	DeviceFeaturePermissions = "featurePermissions"
 	DeviceAudit = "audit"
+	DeviceActivation = "activation"
 	DeviceUserId = "user_id"
 	DeviceIsActive = "isActive"
 	DeviceDeprecatedAnalytics = "analytics"
+)
+
+// DeviceActivation property field names (BSON)
+const (
+	DeviceActivationState = "state"
+	DeviceActivationReason = "reason"
+	DeviceActivationAt = "at"
 )
 
 // DeviceAgent property field names (BSON)

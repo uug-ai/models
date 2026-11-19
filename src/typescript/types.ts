@@ -40371,6 +40371,12 @@ export interface components {
             timeRange2Min?: number;
         };
         "models.Device": {
+            /** @description Activation says whether the device is active under the organisation's
+             *     subscription. Missing means active (DeviceActivation.IsActive); read
+             *     it with Device.IsActivated. Only active devices count towards the
+             *     devices limit and may upload or stream. Index:
+             *     {organisationId, activation.state}. */
+            activation?: components["schemas"]["models.DeviceActivation"];
             agent?: components["schemas"]["models.DeviceAgent"];
             /** @description Liveness: the inputs the connection status is derived from, kept together.
              *     Timestamps are points in time on the hub's clock (milliseconds since
@@ -40427,6 +40433,18 @@ export interface components {
             /** @description @LEGACY - removed once all readers use the fields above. */
             user_id?: string;
         };
+        "models.DeviceActivation": {
+            /** @description At is when the state was last set, in milliseconds since epoch on the
+             *     hub's clock, like the device's liveness timestamps. */
+            at?: number;
+            /** @description Reason is set when State is inactive. */
+            reason?: components["schemas"]["models.DeviceActivationReason"];
+            state?: components["schemas"]["models.DeviceActivationState"];
+        };
+        /** @enum {string} */
+        "models.DeviceActivationReason": "no_subscription" | "over_limit";
+        /** @enum {string} */
+        "models.DeviceActivationState": "active" | "inactive";
         "models.DeviceAgent": {
             architecture?: string;
             bootTime?: number;
@@ -40650,6 +40668,33 @@ export interface components {
             public_key?: string;
             symmetric_key?: string;
         };
+        "models.Entitlement": {
+            /** @description Limits are the plan's limits with the subscription's overrides
+             *     applied. After a lapse they are the last subscription's (retention
+             *     keeps running with them until the data is deleted); check State
+             *     before allowing uploads or devices. Without any subscription: no
+             *     active devices, no uploads, no credits, no retention; projects and
+             *     members unlimited. */
+            limits?: components["schemas"]["models.Limits"];
+            organisationId?: string;
+            /** @description Permissions are the ungated permissions plus the gated ones the plan
+             *     allows after overrides, in catalog order. Inactive and unknown
+             *     entitlements hold the ungated permissions only. */
+            permissions?: components["schemas"]["models.Permission"][];
+            planKey?: string;
+            planVersion?: number;
+            state?: components["schemas"]["models.EntitlementState"];
+            /** @description SubscriptionEndedAt is when the last subscription ended, set when the
+             *     organisation is inactive after a lapse. Cleanup deletes the
+             *     organisation's data 30 days after it. */
+            subscriptionEndedAt?: string;
+            /** @description SubscriptionId, PlanKey and PlanVersion identify the subscription and
+             *     plan version the entitlement came from: the active subscription, or
+             *     the last one after a lapse. Unset when there is none. */
+            subscriptionId?: string;
+        };
+        /** @enum {string} */
+        "models.EntitlementState": "active" | "inactive" | "unknown";
         "models.EventStage": {
             /** @description Add fields relevant to event stage */
             eventData?: string;
@@ -41033,6 +41078,28 @@ export interface components {
             /** @description Measurable range */
             minLux?: number;
         };
+        "models.Limit": number | "unlimited";
+        "models.Limits": {
+            /** @description Devices is the number of active devices. */
+            devices?: components["schemas"]["models.Limit"];
+            /** @description Members is the number of organisation members. Replaces
+             *     organisation.settings.maxMembers. */
+            members?: components["schemas"]["models.Limit"];
+            /** @description Projects is the number of projects. */
+            projects?: components["schemas"]["models.Limit"];
+            /** @description RetentionDays is how long recordings are kept. Replaces dayLimit and
+             *     custom_day_limit. */
+            retentionDays?: components["schemas"]["models.Limit"];
+            /** @description UploadGBPerDay caps recording uploads per calendar day in the
+             *     organisation's timezone. Replaces usage. */
+            uploadGBPerDay?: components["schemas"]["models.Limit"];
+            /** @description UploadGBPerMonth caps recording uploads per calendar month in the
+             *     organisation's timezone. Replaces usage. */
+            uploadGBPerMonth?: components["schemas"]["models.Limit"];
+            /** @description WorkflowCredits are the custom workflow runs per month (1 credit per
+             *     completed run). */
+            workflowCredits?: components["schemas"]["models.Limit"];
+        };
         "models.Livestream": {
             speech?: boolean;
         };
@@ -41399,6 +41466,7 @@ export interface components {
             categoryNames?: string[];
             classificationSummary?: components["schemas"]["models.ClassificationSummary"][];
             countingSummary?: components["schemas"]["models.CountingSummary"][];
+            deleteAfter?: number;
             /** @description RBAC information
              *     DeviceId is a unique identifier for the device, it can be used to identify the device in the system.
              *     OrganisationId is used to identify the organisation that owns the device. */
@@ -41428,6 +41496,15 @@ export interface components {
             /** @description ProjectId optionally places the media in a project within its organisation.
              *     A nil value keeps the media organisation-wide. */
             projectId?: string;
+            /** @description RetentionDays is the organisation's effective retention (plan plus
+             *     overrides) when the media was ingested. DeleteAfter is
+             *     StartTimestamp plus RetentionDays, in the same unit as StartTimestamp
+             *     (seconds since epoch; see MediaDeleteAfter). A recording is deleted
+             *     only when both DeleteAfter and StartTimestamp plus the organisation's
+             *     current retention are past, so a plan change never deletes more than
+             *     either plan promised. Media without RetentionDays (ingested before)
+             *     follow the current retention only. Index: {projectId, deleteAfter}. */
+            retentionDays?: number;
             siteId?: string;
             sourceMediaId?: string;
             sourceVaultId?: string;
@@ -41701,6 +41778,10 @@ export interface components {
         };
         "models.Organisation": {
             audit?: components["schemas"]["models.Audit"];
+            /** @description Billing is the organisation's Stripe customer and card summary. It is
+             *     a projection kept in sync with Stripe; it never holds secrets or full
+             *     card data. */
+            billing?: components["schemas"]["models.OrganisationBilling"];
             billingAddress?: components["schemas"]["models.Address"];
             /** @description Company Details */
             company?: components["schemas"]["models.CompanyDetails"];
@@ -41720,8 +41801,28 @@ export interface components {
              *     It is unique and decoupled from the display Name so it can be used in URLs
              *     and references without breaking when the name changes. */
             slug?: string;
-            /** @description Billing & Subscription */
+            /** @description Billing & Subscription
+             *
+             *     Deprecated: the subscription is read from the subscriptions collection
+             *     (OrganisationEntitlement, GetActiveSubscriptionForOrganisation); this
+             *     embedded copy is removed once no legacy reader is left. */
             subscription?: components["schemas"]["models.Subscription"];
+            /** @description SubscriptionMode says whether the organisation uses legacy
+             *     subscriptions (unset) or plans and organisation subscriptions. Read it
+             *     with EffectiveSubscriptionMode. */
+            subscriptionMode?: components["schemas"]["models.SubscriptionMode"];
+        };
+        "models.OrganisationBilling": {
+            /** @description CardBrand and CardLastFour are a display-only card summary. */
+            cardBrand?: string;
+            cardLastFour?: string;
+            /** @description DefaultPaymentMethodId is the Stripe payment method id (pm_...), if
+             *     retained locally. */
+            defaultPaymentMethodId?: string;
+            /** @description StripeCustomerId is the Stripe customer id (cus_...). */
+            stripeCustomerId?: string;
+            /** @description UpdatedAt is the latest local projection update. */
+            updatedAt?: string;
         };
         "models.OrganisationChannels": {
             audit?: components["schemas"]["models.Audit"];
@@ -41823,9 +41924,13 @@ export interface components {
             videowall?: components["schemas"]["models.Videowall"];
         };
         /** @enum {string} */
-        "models.Permission": "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "days.read" | "markers.read" | "markers.write" | "markers.all" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "channels.read" | "channels.create" | "channels.update" | "channels.delete" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "application" | "dashboard.page" | "latest-events.page" | "live.page" | "videowalls.page" | "media.page" | "days.page" | "analytics.page" | "watchlist.page" | "cases.page" | "alerts.page" | "channels.page" | "workflows.page" | "io.page" | "devices.page" | "sites.page" | "floor-plans.page" | "groups.page" | "settings.page" | "organisation.page" | "members.page" | "roles.page" | "subscription.page" | "audit.page" | "pages.dashboard" | "pages.latestEvents" | "pages.liveView" | "pages.videowall" | "pages.recordings" | "pages.dayOverview" | "pages.analytics" | "pages.watchlist" | "pages.cases" | "pages.alerts" | "pages.channels" | "pages.workflows" | "pages.io" | "pages.devices" | "pages.sites" | "pages.floorPlans" | "pages.groups" | "pages.settings" | "pages.organisation" | "pages.members" | "pages.roles" | "pages.subscription" | "pages.audit";
+        "models.Permission": "workflows.read" | "workflows.create" | "workflows.update" | "workflows.delete" | "cases.read" | "cases.create" | "cases.update" | "cases.share" | "cases.export" | "cases.runWorkflow" | "cases.delete" | "days.read" | "markers.read" | "markers.write" | "markers.all" | "workflow-runs.create" | "workflow-runs.read" | "workflow-runs.update" | "channels.read" | "channels.create" | "channels.update" | "channels.delete" | "media.read" | "media.update" | "media.export" | "media.share" | "media.redact" | "media.delete" | "media.playHD" | "application" | "dashboard.page" | "latest-events.page" | "live.page" | "videowalls.page" | "media.page" | "days.page" | "analytics.page" | "watchlist.page" | "cases.page" | "alerts.page" | "channels.page" | "workflows.page" | "io.page" | "devices.page" | "sites.page" | "floor-plans.page" | "groups.page" | "settings.page" | "organisation.page" | "members.page" | "roles.page" | "subscription.page" | "audit.page" | "pages.dashboard" | "pages.latestEvents" | "pages.liveView" | "pages.videowall" | "pages.recordings" | "pages.dayOverview" | "pages.analytics" | "pages.watchlist" | "pages.cases" | "pages.alerts" | "pages.channels" | "pages.workflows" | "pages.io" | "pages.devices" | "pages.sites" | "pages.floorPlans" | "pages.groups" | "pages.settings" | "pages.organisation" | "pages.members" | "pages.roles" | "pages.subscription" | "pages.audit";
         /** @enum {integer} */
         "models.PermissionLevel": 1 | 2 | 3 | 4 | 2 | 3 | 4 | 5 | 2 | 3 | 2 | 2 | 3 | 2 | 3 | 4;
+        "models.PermissionOverrides": {
+            add?: string[];
+            remove?: string[];
+        };
         "models.Permissions": {
             featurePermissions?: components["schemas"]["models.FeaturePermissions"];
             pages?: string[];
@@ -41924,6 +42029,37 @@ export interface components {
             usage?: number;
             /** @description VideoLimit is the maximum number of videos allowed */
             videoLimit?: number;
+        };
+        "models.PlanDefinition": {
+            /** @description Archived plans take no new subscriptions; existing ones keep working. */
+            archived?: boolean;
+            /** @description Key is the stable identifier subscriptions reference, e.g. "trial",
+             *     "community", "enterprise", or an archived legacy key. */
+            key?: string;
+            /** @description Level is kept only for clients that still compare levels during the
+             *     transition. It is optional and not authoritative. */
+            level?: number;
+            /** @description Limits are the plan's limits; every limit is required. */
+            limits?: components["schemas"]["models.Limits"];
+            /** @description Name is the display name. */
+            name?: string;
+            /** @description Permissions are the gated permission patterns the plan allows: a
+             *     "domain.*" pattern or a single "domain.action" (see
+             *     MatchPlanPermissionPattern). Ungated permissions are allowed on every
+             *     plan and are not listed. */
+            permissions?: string[];
+            /** @description Public plans are offered in self-service checkout. */
+            public?: boolean;
+            /** @description StripeLookupKeys are the Stripe price lookup keys that map to this plan
+             *     (e.g. "community_monthly"). The same keys exist in Stripe test and live
+             *     mode, so the plan file is identical on staging and production. Empty
+             *     for plans that are never billed through Stripe. */
+            stripeLookupKeys?: string[];
+            /** @description Version increments on any change to permissions or limits. */
+            version?: number;
+        };
+        "models.PlanFile": {
+            plans?: components["schemas"]["models.PlanDefinition"][];
         };
         "models.Point": {
             x?: number;
@@ -42366,21 +42502,60 @@ export interface components {
             uri?: string;
         };
         "models.Subscription": {
+            /** @description Billing is how the subscription is paid: stripe or invoice. */
+            billing?: components["schemas"]["models.SubscriptionBilling"];
             created_at?: string;
             ends_at?: string;
             id?: string;
             /** @description Organisation this subscription belongs to */
             organisation_id?: string;
+            /** @description Overrides are per-customer limits and permission changes on top of
+             *     the plan version. */
+            overrides?: components["schemas"]["models.SubscriptionOverrides"];
+            /** @description PlanKey and PlanVersion pin the plan version this subscription is an
+             *     instance of (PlanCatalog.Get). PlanKey replaces StripePlan. */
+            plan_key?: string;
+            plan_version?: number;
+            /** @description Deprecated: unused; the device limit comes from the plan
+             *     (Limits.Devices) and its overrides. */
             quantity?: number;
+            /** @description ReachedLimit is set while the organisation is over an upload limit
+             *     (uploadGBPerDay or uploadGBPerMonth); only recording uploads are
+             *     refused. It replaces users.reachedLimit. */
+            reached_limit?: boolean;
+            /** @description ReachedLimitAt is when ReachedLimit was set. */
+            reached_limit_at?: string;
+            /** @description ReachedLimitPeriod is the period ReachedLimit was set for: a day
+             *     ("2026-11-16") or a month ("2026-11") in the organisation's timezone
+             *     (UsageDayPeriod, UsageMonthPeriod). The first upload in a later period
+             *     clears the flag. */
+            reached_limit_period?: string;
             /** @description active, cancelled, past_due, trialing, etc. */
             status?: string;
             stripe_id?: string;
+            /** @description Deprecated: use PlanKey; read both through EffectivePlanKey while
+             *     StripePlan is kept as an alias during the transition. */
             stripe_plan?: string;
             trial_ends_at?: string;
+            /** @description Type is trial, community or enterprise. */
+            type?: components["schemas"]["models.SubscriptionType"];
             updated_at?: string;
             /** @description Legacy: user who created/owns the subscription */
             user_id?: string;
         };
+        /** @enum {string} */
+        "models.SubscriptionBilling": "stripe" | "invoice";
+        /** @enum {string} */
+        "models.SubscriptionMode": "legacy" | "plans";
+        "models.SubscriptionOverrides": {
+            /** @description Limits replace the plan's limits; a nil limit means the plan's value. */
+            limits?: components["schemas"]["models.Limits"];
+            /** @description Permissions adds or removes gated permission patterns, with the same
+             *     patterns as plans. */
+            permissions?: components["schemas"]["models.PermissionOverrides"];
+        };
+        /** @enum {string} */
+        "models.SubscriptionType": "trial" | "community" | "enterprise";
         "models.Synchronize": {
             /** @description History of synchronization events */
             events?: components["schemas"]["models.SynchronizeEvent"][];
@@ -42769,6 +42944,22 @@ export interface components {
         "models.UpdateWorkflowStageOutput": {
             stage?: components["schemas"]["models.WorkflowStage"];
         };
+        "models.UsageCounter": {
+            id?: string;
+            kind?: components["schemas"]["models.UsageKind"];
+            organisationId?: string;
+            /** @description Period is a day ("2026-11-16", UsageDayPeriod) or a month ("2026-11",
+             *     UsageMonthPeriod) in the organisation's timezone. */
+            period?: string;
+            /** @description ProjectId is nil for the organisation total. */
+            projectId?: string;
+            /** @description Reserved are credits reserved by running workflows. */
+            reserved?: number;
+            updatedAt?: string;
+            value?: number;
+        };
+        /** @enum {string} */
+        "models.UsageKind": "uploadBytes" | "workflowCredits";
         "models.User": {
             activity?: components["schemas"]["models.Activity"][];
             address?: string;
@@ -43970,6 +44161,7 @@ export namespace models {
     export type DetectionSource = components['schemas']['models.DetectionSource'];
     export type Detections = components['schemas']['models.Detections'];
     export type Device = components['schemas']['models.Device'];
+    export type DeviceActivation = components['schemas']['models.DeviceActivation'];
     export type DeviceAgent = components['schemas']['models.DeviceAgent'];
     export type DeviceAtRuntimeMetadata = components['schemas']['models.DeviceAtRuntimeMetadata'];
     export type DeviceData = components['schemas']['models.DeviceData'];
@@ -43990,6 +44182,7 @@ export namespace models {
     export type DominantColor = components['schemas']['models.DominantColor'];
     export type Email = components['schemas']['models.Email'];
     export type Encryption = components['schemas']['models.Encryption'];
+    export type Entitlement = components['schemas']['models.Entitlement'];
     export type EventStage = components['schemas']['models.EventStage'];
     export type ExportFile = components['schemas']['models.ExportFile'];
     export type FaceRedaction = components['schemas']['models.FaceRedaction'];
@@ -44046,6 +44239,8 @@ export namespace models {
     export type Label = components['schemas']['models.Label'];
     export type LabelWrapper = components['schemas']['models.LabelWrapper'];
     export type LightSensorMetadata = components['schemas']['models.LightSensorMetadata'];
+    export type Limit = components['schemas']['models.Limit'];
+    export type Limits = components['schemas']['models.Limits'];
     export type Livestream = components['schemas']['models.Livestream'];
     export type Location = components['schemas']['models.Location'];
     export type Marker = components['schemas']['models.Marker'];
@@ -44084,6 +44279,7 @@ export namespace models {
     export type NotificationUpdate = components['schemas']['models.NotificationUpdate'];
     export type NotificationUpdatePayload = components['schemas']['models.NotificationUpdatePayload'];
     export type Organisation = components['schemas']['models.Organisation'];
+    export type OrganisationBilling = components['schemas']['models.OrganisationBilling'];
     export type OrganisationChannels = components['schemas']['models.OrganisationChannels'];
     export type OrganisationInvitation = components['schemas']['models.OrganisationInvitation'];
     export type OrganisationMember = components['schemas']['models.OrganisationMember'];
@@ -44093,6 +44289,7 @@ export namespace models {
     export type OrganisationUserDetails = components['schemas']['models.OrganisationUserDetails'];
     export type PatchVideowallInput = components['schemas']['models.PatchVideowallInput'];
     export type PatchVideowallOutput = components['schemas']['models.PatchVideowallOutput'];
+    export type PermissionOverrides = components['schemas']['models.PermissionOverrides'];
     export type Permissions = components['schemas']['models.Permissions'];
     export type PipelineEvent = components['schemas']['models.PipelineEvent'];
     export type PipelineMetadata = components['schemas']['models.PipelineMetadata'];
@@ -44100,6 +44297,8 @@ export namespace models {
     export type PipelinePayload = components['schemas']['models.PipelinePayload'];
     export type PipelineSourceDevice = components['schemas']['models.PipelineSourceDevice'];
     export type Plan = components['schemas']['models.Plan'];
+    export type PlanDefinition = components['schemas']['models.PlanDefinition'];
+    export type PlanFile = components['schemas']['models.PlanFile'];
     export type Point = components['schemas']['models.Point'];
     export type ProcessingArtifactMetadata = components['schemas']['models.ProcessingArtifactMetadata'];
     export type ProcessingCompletion = components['schemas']['models.ProcessingCompletion'];
@@ -44142,6 +44341,7 @@ export namespace models {
     export type State = components['schemas']['models.State'];
     export type Storage = components['schemas']['models.Storage'];
     export type Subscription = components['schemas']['models.Subscription'];
+    export type SubscriptionOverrides = components['schemas']['models.SubscriptionOverrides'];
     export type Synchronize = components['schemas']['models.Synchronize'];
     export type SynchronizeEvent = components['schemas']['models.SynchronizeEvent'];
     export type Task = components['schemas']['models.Task'];
@@ -44174,6 +44374,7 @@ export namespace models {
     export type UpdateWorkflowOutput = components['schemas']['models.UpdateWorkflowOutput'];
     export type UpdateWorkflowStageInput = components['schemas']['models.UpdateWorkflowStageInput'];
     export type UpdateWorkflowStageOutput = components['schemas']['models.UpdateWorkflowStageOutput'];
+    export type UsageCounter = components['schemas']['models.UsageCounter'];
     export type User = components['schemas']['models.User'];
     export type UserNotificationMailbox = components['schemas']['models.UserNotificationMailbox'];
     export type UserProfile = components['schemas']['models.UserProfile'];

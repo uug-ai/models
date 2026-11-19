@@ -19,4 +19,10 @@ const (
 	ProjectHasPincode = "hasPincode"
 	ProjectDays = "dates"
 	ProjectAudit = "audit"
+	ProjectHubPublicKey = "hubPublicKey"
+	ProjectHubPrivateKey = "hubPrivateKey"
+	ProjectEncryptionPublicKey = "encryptionPublicKey"
+	ProjectEncryptionPrivateKey = "encryptionPrivateKey"
+	ProjectStorage = "storage"
+	ProjectArchiveStorage = "archiveStorage"
 )
