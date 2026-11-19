@@ -100,8 +100,12 @@ type MediaFilter struct {
 	// Forwardable keeps only metadata-only recordings that carry their source
 	// Vault and source recording IDs, so they can be forwarded on demand, when
 	// true, and only media that cannot be forwarded when false.
-	Forwardable *bool   `json:"forwardable,omitempty" bson:"forwardable,omitempty"`
-	SortBy      *string `json:"sortBy,omitempty" bson:"sortBy,omitempty"`
+	Forwardable *bool `json:"forwardable,omitempty" bson:"forwardable,omitempty"`
+	// Search keeps only media whose analysis text contains every word of the
+	// search, ignoring case: the description, marker, event and tag names,
+	// media tags, detections, and the VLM scene summary and observations.
+	Search *string `json:"search,omitempty" bson:"search,omitempty"`
+	SortBy *string `json:"sortBy,omitempty" bson:"sortBy,omitempty"`
 }
 
 type MediaPatch struct {
