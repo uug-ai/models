@@ -37867,6 +37867,10 @@ export interface components {
             markers?: string[];
             mediaIds?: string[];
             regions?: components["schemas"]["models.Region"][];
+            /** @description Search keeps only media whose analysis text contains every word of the
+             *     search, ignoring case: the description, marker, event and tag names,
+             *     media tags, detections, and the VLM scene summary and observations. */
+            search?: string;
             sites?: string[];
             sortBy?: string;
             starred?: boolean;
