@@ -43,7 +43,8 @@ func TestProjectAdminHoldsEveryProjectPermission(t *testing.T) {
 func TestViewerChangesNothing(t *testing.T) {
 	for _, permission := range ExpandPermissions(systemRoleFor(t, RoleKeyViewer).Permissions) {
 		action := string(permission)[strings.LastIndex(string(permission), ".")+1:]
-		readOnly := action == "read" || action == "preview" || action == "stream" || action == "page"
+		// Playing in HD is reading recordings at a higher quality.
+		readOnly := action == "read" || action == "preview" || action == "stream" || action == "page" || permission == PermissionMediaPlayHD
 		if !readOnly {
 			t.Errorf("viewer holds %s", permission)
 		}

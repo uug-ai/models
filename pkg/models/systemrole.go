@@ -11,11 +11,13 @@ package models
 // owner-only permissions in every project.
 
 // viewerPermissions: see everything in the assignment's scope, change nothing.
+// Playing recordings includes playing them in HD (media.playHD); the plan
+// decides whether HD is available at all.
 // No PTZ (moving a camera affects everyone watching it) and no export or share
 // (data leaving the system).
 var viewerPermissions = []Permission{
 	PermissionDevicesRead, PermissionLiveStream,
-	PermissionMediaRead, PermissionDaysRead, PermissionMarkersRead, PermissionWorkflowRunsRead,
+	PermissionMediaRead, PermissionMediaPlayHD, PermissionDaysRead, PermissionMarkersRead, PermissionWorkflowRunsRead,
 	PermissionSitesRead, PermissionGroupsRead, PermissionFloorPlansRead, PermissionVideowallsRead, PermissionIORead, PermissionLabelsRead,
 	PermissionNotificationsRead, PermissionAnalyticsRead, PermissionCasesRead,
 	PermissionDashboardPage, PermissionLatestEventsPage, PermissionLivePage, PermissionVideowallsPage,
