@@ -7,6 +7,13 @@ const path = require('path');
 const typesPath = path.join(__dirname, '..', 'src', 'typescript', 'types.ts');
 let content = fs.readFileSync(typesPath, 'utf8');
 
+// models.Limit is a number or "unlimited" (custom JSON marshalling in Go).
+// swag cannot express that union and emits an empty object, so replace it.
+content = content.replace(
+    /"models\.Limit": Record<string, never>;/,
+    '"models.Limit": number | "unlimited";'
+);
+
 // Extract schema names from the components interface
 const schemaNames = [];
 
@@ -32,7 +39,8 @@ for (const line of lines) {
         }
         
         // Look for schema name pattern: "models.SchemaName": { or "api.SchemaName": { or SchemaName: {
-        const quotedMatch = line.trim().match(/^"([^"]+)":\s*{/);
+        const quotedMatch = line.trim().match(/^"([^"]+)":\s*{/) ||
+            line.trim().match(/^"(models\.Limit)":/);
         const unquotedMatch = line.trim().match(/^(\w+):\s*{/);
         
         if (quotedMatch) {

@@ -62,6 +62,37 @@ read them, so they stay until none is deployed (RBAC spec 4.14).
 `Role.StoredCopy` and `OrganisationBuiltInRoleCopies` are deprecated and
 unused.
 
+### Plans, subscriptions and entitlements
+
+Plans are versioned definitions (`PlanDefinition`) read from the Hub chart's
+plan file with `LoadPlans(path)`, which validates it: every limit present,
+unique `{key, version}`, and every permission pattern (`domain.*` or
+`domain.action`) matching at least one plan-gated permission.
+`PlanCatalog.Get(key, version)` returns the version a subscription pins
+(`Subscription.PlanKey`, `PlanVersion`). The legacy `Plan`, `Plans` and
+`DefaultPlans` are deprecated and unchanged.
+
+A `Limit` is a number or `"unlimited"` in JSON, YAML and BSON (TypeScript:
+`number | "unlimited"`); check usage with `Limit.Allows(used)`. In a plan
+every `Limits` field is set; in `Subscription.Overrides.Limits` a missing
+field keeps the plan's value (`Limits.WithOverrides`).
+
+`PermissionDefinition.PlanGated` is set by domain (`live`, `ptz`,
+`videowalls`, `analytics`, `detections`, `workflows`, `workflow-runs`,
+`cases`, `storage`) and for `media.playHD`. Billing, organisation, members,
+roles, teams and the subscription page are never gated
+(`ValidatePermissionCatalog`).
+
+`ComputeEntitlement` / `OrganisationEntitlement` compute an organisation's
+`Entitlement` (`active`, `inactive`, `unknown`): ungated permissions plus the
+plan's gated ones after overrides, and the plan's limits with overrides (the
+last subscription's after a lapse). `Entitlement.CapPermissions` applies it as
+a ceiling, the Owner included. `Access` does not apply it yet.
+
+Everything here is used only for organisations with
+`SubscriptionMode: plans`; a missing mode is `legacy`
+(`Organisation.EffectiveSubscriptionMode`).
+
 ### Alert configuration visibility
 
 `CustomAlert.private` defaults to false (including historical documents without
