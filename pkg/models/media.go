@@ -14,6 +14,10 @@ const (
 	// PermissionMediaForward starts, stops and lists forwarding of recordings to
 	// another storage destination.
 	PermissionMediaForward Permission = "media.forward"
+	// PermissionMediaPlayHD plays recordings and live view in high
+	// definition. It replaces the frontend's plan.level === Enterprise check
+	// and is plan gated (see planGatedPermissions).
+	PermissionMediaPlayHD Permission = "media.playHD"
 )
 
 var mediaPermissions = []Permission{
@@ -24,6 +28,7 @@ var mediaPermissions = []Permission{
 	PermissionMediaRedact,
 	PermissionMediaDelete,
 	PermissionMediaForward,
+	PermissionMediaPlayHD,
 }
 
 // MediaPermissions returns the canonical media permission catalog.
