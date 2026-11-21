@@ -29,6 +29,10 @@ const (
 	// OnboardingOrganisationExists: the account already has a home
 	// organisation; further organisations are created with POST /organisations.
 	OnboardingOrganisationExists OnboardingStatus = "onboarding_organisation_exists"
+	// OnboardingInvalidDetails: a detail of the organisation or its project
+	// is too long or malformed (an unknown kind, time zone or currency, an
+	// email without @). metadata.missingFields names them.
+	OnboardingInvalidDetails OnboardingStatus = "onboarding_invalid_details"
 )
 
 // String returns the string representation of the onboarding status.
@@ -51,6 +55,7 @@ func (s OnboardingStatus) Translate(lang string) string {
 			OnboardingOrganisationCreateFailed:   "Failed to create organisation",
 			OnboardingOrganisationCreateDisabled: "Creating an organisation is not available; ask for an invitation",
 			OnboardingOrganisationExists:         "This account already has its own organisation",
+			OnboardingInvalidDetails:             "Some details of the organisation are not valid",
 		},
 	}
 	if langTranslations, exists := translations[lang]; exists {
@@ -120,9 +125,44 @@ type GetOnboardingErrorResponse struct {
 // @Router /onboarding/organisation [post]
 type CreateOnboardingOrganisationRequest struct {
 	Name string `json:"name"`
+	// Everything below is optional: left out, the organisation is created
+	// with its name only, as before.
+
+	// Kind is business (the default) or personal. A personal organisation
+	// stores no company details and makes its owner both contacts.
+	Kind        models.OrganisationKind `json:"kind,omitempty"`
+	Description string                  `json:"description,omitempty"`
+	// Company is stored for a business organisation only.
+	Company *models.CompanyDetails `json:"company,omitempty"`
+	// Settings are the regional defaults and the contacts.
+	Settings       *OnboardingOrganisationSettings `json:"settings,omitempty"`
+	BillingAddress *models.Address                 `json:"billingAddress,omitempty"`
+	// Project names the default project the organisation starts with. Its
+	// slug is always the default project's.
+	Project *OnboardingProject `json:"project,omitempty"`
 }
+
+// OnboardingOrganisationSettings are the organisation settings the onboarding
+// step sets: the regional defaults and, for a business organisation, the
+// financial and technical contacts.
+type OnboardingOrganisationSettings struct {
+	Timezone         string          `json:"timezone,omitempty"` // IANA timezone, e.g. "Europe/Brussels"
+	Locale           string          `json:"locale,omitempty"`   // BCP-47 locale tag, e.g. "nl-BE"
+	Currency         string          `json:"currency,omitempty"` // ISO 4217 currency code, e.g. "EUR"
+	FinancialContact *models.Contact `json:"financialContact,omitempty"`
+	TechnicalContact *models.Contact `json:"technicalContact,omitempty"`
+}
+
+// OnboardingProject is the name and description of the default project.
+type OnboardingProject struct {
+	Name        string `json:"name"`
+	Description string `json:"description,omitempty"`
+}
+
 type CreateOnboardingOrganisationResponse struct {
 	Organisation models.Organisation `json:"organisation"`
+	// Project is the organisation's default project.
+	Project models.Project `json:"project"`
 	// Token is a session token scoped to the new organisation; Expire is its
 	// expiry (RFC 3339).
 	Token  string `json:"token"`

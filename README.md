@@ -93,6 +93,16 @@ Everything here is used only for organisations with
 `SubscriptionMode: plans`; a missing mode is `legacy`
 (`Organisation.EffectiveSubscriptionMode`).
 
+### Organisation kind
+
+`Organisation.Kind` is `business` or `personal`; a missing kind is `business`
+(`Organisation.EffectiveKind`, `ValidateKind`). A personal organisation, for
+someone's own home or property, has no company details and its owner is its
+financial and technical contact; access, projects, members and the
+subscription work as for a business. The onboarding step sets it, with the
+organisation's details and the default project's name and description
+(`api.CreateOnboardingOrganisationRequest`).
+
 ### Alert configuration visibility
 
 `CustomAlert.private` defaults to false (including historical documents without
