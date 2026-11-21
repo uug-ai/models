@@ -56,6 +56,9 @@ type Organisation struct {
 	Slug        string `json:"slug" bson:"slug,omitempty"`
 	Description string `json:"description" bson:"description,omitempty"`
 	Domain      string `json:"domain" bson:"domain,omitempty"`
+	// Kind says what the organisation is for: a business, or a person's own
+	// home or property. Read it with EffectiveKind; a missing kind is business.
+	Kind OrganisationKind `json:"kind,omitempty" bson:"kind,omitempty"`
 	// OwnerId is the primary owner: the accountable contact for billing and
 	// the contract. Ownership itself is the Owner role (RoleKeyOwner), which
 	// several members can hold; the primary owner must always hold it.
@@ -106,6 +109,50 @@ type OrganisationBilling struct {
 	CardLastFour string `json:"cardLastFour,omitempty" bson:"cardLastFour,omitempty"`
 	// UpdatedAt is the latest local projection update.
 	UpdatedAt time.Time `json:"updatedAt,omitempty" bson:"updatedAt,omitempty"`
+}
+
+// OrganisationKind says what an organisation is for. A business organisation
+// has company details (shown on invoices) and financial and technical
+// contacts; a personal organisation, for someone's own home or property, has
+// neither and its owner is its contact. Access, projects, members and the
+// subscription work the same for both.
+type OrganisationKind string
+
+const (
+	// OrganisationKindBusiness: a company or other organisation. A missing kind
+	// is business, which is how every organisation behaved before kinds existed.
+	OrganisationKindBusiness OrganisationKind = "business"
+	// OrganisationKindPersonal: a person's own organisation, without company
+	// details.
+	OrganisationKindPersonal OrganisationKind = "personal"
+)
+
+// IsValid reports whether the kind is one of the defined kinds. The empty kind
+// is valid and means business.
+func (k OrganisationKind) IsValid() bool {
+	switch k {
+	case "", OrganisationKindBusiness, OrganisationKindPersonal:
+		return true
+	}
+	return false
+}
+
+// EffectiveKind is the organisation's kind as services apply it: a missing or
+// unknown kind is business. ValidateKind rejects unknown values so writers
+// never store one.
+func (o Organisation) EffectiveKind() OrganisationKind {
+	if o.Kind == OrganisationKindPersonal {
+		return OrganisationKindPersonal
+	}
+	return OrganisationKindBusiness
+}
+
+// ValidateKind checks that the stored kind is a defined one.
+func (o Organisation) ValidateKind() error {
+	if !o.Kind.IsValid() {
+		return fmt.Errorf("unknown organisation kind %q", o.Kind)
+	}
+	return nil
 }
 
 // SubscriptionMode says, per organisation, which subscription model applies.

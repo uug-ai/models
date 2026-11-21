@@ -52,6 +52,7 @@ const (
 	OrganisationSlug = "slug"
 	OrganisationDescription = "description"
 	OrganisationDomain = "domain"
+	OrganisationKind = "kind"
 	OrganisationOwnerId = "ownerId"
 	OrganisationSettings = "settings"
 	OrganisationIsActive = "isActive"
