@@ -123,7 +123,8 @@ type GetProjectAccessCandidatesErrorResponse struct {
 
 // ProjectAccessAssignment is one role a principal holds in the project, with
 // its resources. A field left out means none: no sites, no time window, no
-// expiry.
+// expiry. IsActive left out keeps a stored assignment's enabled state; a new
+// one is enabled.
 type ProjectAccessAssignment struct {
 	RoleId     primitive.ObjectID   `json:"roleId"`
 	Resources  models.Selection     `json:"resources"`
@@ -132,6 +133,7 @@ type ProjectAccessAssignment struct {
 	DeviceKeys []string             `json:"deviceKeys,omitempty"`
 	TimeWindow *models.TimeWindow   `json:"timeWindow,omitempty"`
 	ExpiresAt  *time.Time           `json:"expiresAt,omitempty"`
+	IsActive   *bool                `json:"isActive,omitempty"`
 }
 
 // Scope is the assignment's scope in the project.
