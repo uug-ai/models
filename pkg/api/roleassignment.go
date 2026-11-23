@@ -54,6 +54,10 @@ const (
 	// so access is still changed through the legacy role and scope fields
 	// (spec 7.3).
 	RoleAssignmentLegacyMode RoleAssignmentStatus = "role_assignment_legacy_mode"
+	// RoleAssignmentChanged: the principal's access in the project changed
+	// since the caller read it (SetProjectAccessRequest.Version), so nothing
+	// was written. Read it again and repeat the change.
+	RoleAssignmentChanged RoleAssignmentStatus = "role_assignment_changed"
 )
 
 // String returns the string representation of the role assignment status.
@@ -88,6 +92,7 @@ func (s RoleAssignmentStatus) Translate(lang string) string {
 			RoleAssignmentOwnerOnly:         "Only an owner can grant this role",
 			RoleAssignmentLastOwner:         "An organisation needs at least one owner",
 			RoleAssignmentLegacyMode:        "Access for this organisation is still managed through legacy roles",
+			RoleAssignmentChanged:           "This access was changed meanwhile; review it and try again",
 		},
 	}
 

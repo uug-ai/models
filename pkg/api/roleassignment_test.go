@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/uug-ai/models/pkg/models"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 var roleAssignmentStatuses = []RoleAssignmentStatus{
@@ -14,6 +15,7 @@ var roleAssignmentStatuses = []RoleAssignmentStatus{
 	RoleAssignmentUpdateSuccess, RoleAssignmentUpdateFailed, RoleAssignmentDeleteSuccess, RoleAssignmentDeleteFailed,
 	RoleAssignmentExists, RoleAssignmentRoleNotFound, RoleAssignmentPrincipalNotFound, RoleAssignmentResourceNotFound,
 	RoleAssignmentSelf, RoleAssignmentExceedsAccess, RoleAssignmentOwnerOnly, RoleAssignmentLastOwner, RoleAssignmentLegacyMode,
+	RoleAssignmentChanged,
 }
 
 func TestRoleAssignmentStatusTranslate(t *testing.T) {
@@ -86,5 +88,33 @@ func TestRoleAssignmentPrincipalCarriesIdentityOnly(t *testing.T) {
 		default:
 			t.Errorf("principal exposes %q", field)
 		}
+	}
+}
+
+func TestSetProjectAccessRequestDecodes(t *testing.T) {
+	body := `{
+		"version": "v1",
+		"assignments": [
+			{"roleId": "6720f0a1b2c3d4e5f6a7b8ca", "resources": "selected", "siteIds": ["6720f0a1b2c3d4e5f6a7b8cc"]},
+			{"roleId": "6720f0a1b2c3d4e5f6a7b8cd", "resources": "all", "expiresAt": "2027-01-01T00:00:00Z"}
+		]
+	}`
+	var request SetProjectAccessRequest
+	if err := json.Unmarshal([]byte(body), &request); err != nil {
+		t.Fatal(err)
+	}
+	if request.Version != "v1" || len(request.Assignments) != 2 {
+		t.Fatalf("decoded %+v", request)
+	}
+	project, _ := primitive.ObjectIDFromHex("6720f0a1b2c3d4e5f6a7b8cb")
+	scope := request.Assignments[0].Scope(project)
+	if scope.Level != models.LevelProject || scope.ProjectId != project || scope.Resources != models.SelectionSelected || len(scope.SiteIds) != 1 {
+		t.Errorf("scope %+v", scope)
+	}
+	if err := scope.Validate(); err != nil {
+		t.Errorf("scope invalid: %v", err)
+	}
+	if second := request.Assignments[1]; second.ExpiresAt == nil || second.TimeWindow != nil || second.Scope(project).Validate() != nil {
+		t.Errorf("second %+v", second)
 	}
 }
