@@ -79,11 +79,11 @@ func allProjectPermissions() []Permission {
 func systemRoles() []Role {
 	return []Role{
 		systemRole(RoleKeyOrganisationManager, LevelOrganisation, "Organisation manager",
-			"Members, roles, teams and organisation settings; grants access in every project without seeing its resources.", organisationManagerPermissions),
+			"Members, roles, teams and organisation settings, and who has access in every project, without seeing the projects' cameras or recordings.", organisationManagerPermissions),
 		systemRole(RoleKeyBillingAdmin, LevelOrganisation, "Billing admin",
 			"The subscription and billing.", billingAdminPermissions),
 		systemRole(RoleKeyProjectAdmin, LevelProject, "Project admin",
-			"Everything in the project, including device configuration, settings and who has access.", allProjectPermissions()),
+			"Everything in this one project, including device configuration, settings and who has access to this project.", allProjectPermissions()),
 		systemRole(RoleKeyEditor, LevelProject, "Editor",
 			"Works with cameras, recordings and cases, and creates and updates sites, groups and other project content. No deletes, device configuration or access.", editorPermissions),
 		systemRole(RoleKeyViewer, LevelProject, "Viewer",
