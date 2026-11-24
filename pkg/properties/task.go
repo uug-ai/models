@@ -105,6 +105,7 @@ const (
 	TaskExportRequested = "export_requested"
 	TaskExportInProgress = "export_in_progress"
 	TaskExportRevision = "export_revision"
+	TaskExportStep = "export_step"
 	TaskExportUpdatedAt = "export_updated_at"
 	TaskExportSelectionDirty = "export_selection_dirty"
 	TaskMediaCount = "media_count"
@@ -114,6 +115,14 @@ const (
 	TaskLegalHold = "legal_hold"
 	TaskComments = "comments"
 	TaskLabels = "labels"
+)
+
+// TaskExportStep property field names (BSON)
+const (
+	TaskExportStepName = "name"
+	TaskExportStepDone = "done"
+	TaskExportStepTotal = "total"
+	TaskExportStepSkipped = "skipped"
 )
 
 // TaskStatistics property field names (BSON)
