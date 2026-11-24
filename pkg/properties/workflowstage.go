@@ -22,6 +22,15 @@ const (
 	StageParamRequired = "required"
 	StageParamDefault = "default"
 	StageParamOptions = "options"
+	StageParamMinimum = "minimum"
+	StageParamMaximum = "maximum"
+	StageParamWhen = "when"
+)
+
+// StageParamCondition property field names (BSON)
+const (
+	StageParamConditionParam = "param"
+	StageParamConditionIn = "in"
 )
 
 // StagePort property field names (BSON)
@@ -49,6 +58,7 @@ const (
 	WorkflowConditionValue = "value"
 	WorkflowConditionMatch = "match"
 	WorkflowConditionConditions = "conditions"
+	WorkflowConditionField = "field"
 )
 
 // WorkflowStage property field names (BSON)
