@@ -34743,6 +34743,11 @@ export interface components {
             export_selection_dirty?: boolean;
             /** @description An export task, is containing multiple video in a compressed file format (.zip) */
             export_status?: string;
+            /** @description ExportStep is the step a running export is on and how far that step
+             *     has got. hub-pipeline-export writes it in the same update as
+             *     ExportProgress; hub-api and the worker unset it when a run is
+             *     requested or claimed. Nil when no worker reported a step. */
+            export_step?: components["schemas"]["models.TaskExportStep"];
             /** @description ExportUpdatedAt is a heartbeat written by hub-pipeline-export
              *     every time it transitions the export state (claim, status
              *     updates, per-file download, release, complete) and by hub-api
@@ -42638,6 +42643,11 @@ export interface components {
             export_selection_dirty?: boolean;
             /** @description An export task, is containing multiple video in a compressed file format (.zip) */
             export_status?: string;
+            /** @description ExportStep is the step a running export is on and how far that step
+             *     has got. hub-pipeline-export writes it in the same update as
+             *     ExportProgress; hub-api and the worker unset it when a run is
+             *     requested or claimed. Nil when no worker reported a step. */
+            export_step?: components["schemas"]["models.TaskExportStep"];
             /** @description ExportUpdatedAt is a heartbeat written by hub-pipeline-export
              *     every time it transitions the export state (claim, status
              *     updates, per-file download, release, complete) and by hub-api
@@ -42720,6 +42730,16 @@ export interface components {
             video_url?: string;
             videoFile?: string;
             videoProvider?: string;
+        };
+        "models.TaskExportStep": {
+            /** @description files (archiving: recordings) this step finished */
+            done?: number;
+            /** @description downloading | archiving | uploading */
+            name?: string;
+            /** @description files left out so far (not signed, download failed) */
+            skipped?: number;
+            /** @description files the step will handle, without the ones left out */
+            total?: number;
         };
         "models.TaskStatistics": {
             approved?: number;
@@ -44349,6 +44369,7 @@ export namespace models {
     export type Synchronize = components['schemas']['models.Synchronize'];
     export type SynchronizeEvent = components['schemas']['models.SynchronizeEvent'];
     export type Task = components['schemas']['models.Task'];
+    export type TaskExportStep = components['schemas']['models.TaskExportStep'];
     export type TaskStatistics = components['schemas']['models.TaskStatistics'];
     export type TaskWrapper = components['schemas']['models.TaskWrapper'];
     export type Telegram = components['schemas']['models.Telegram'];

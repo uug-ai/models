@@ -130,6 +130,12 @@ type Task struct {
 	ExportInProgress bool         `json:"export_in_progress" bson:"export_in_progress,omitempty"`
 	ExportRevision   int64        `json:"export_revision" bson:"export_revision,omitempty"`
 
+	// ExportStep is the step a running export is on and how far that step
+	// has got. hub-pipeline-export writes it in the same update as
+	// ExportProgress; hub-api and the worker unset it when a run is
+	// requested or claimed. Nil when no worker reported a step.
+	ExportStep *TaskExportStep `json:"export_step,omitempty" bson:"export_step,omitempty"`
+
 	// ExportUpdatedAt is a heartbeat written by hub-pipeline-export
 	// every time it transitions the export state (claim, status
 	// updates, per-file download, release, complete) and by hub-api
@@ -215,6 +221,23 @@ type CompressedPart struct {
 	Files    int    `json:"files" bson:"files"`       // recordings and attachments in this part
 	Url      string `json:"url,omitempty" bson:"-"`   // signed download URL, set on read and never stored
 }
+
+// TaskExportStep is the step of a running export and its counter. The
+// counters add up over the whole run, so a split export does not start
+// again at 0 for every zip.
+type TaskExportStep struct {
+	Name    string `json:"name" bson:"name"`       // downloading | archiving | uploading
+	Done    int    `json:"done" bson:"done"`       // files (archiving: recordings) this step finished
+	Total   int    `json:"total" bson:"total"`     // files the step will handle, without the ones left out
+	Skipped int    `json:"skipped" bson:"skipped"` // files left out so far (not signed, download failed)
+}
+
+// Steps of a running export, stored in TaskExportStep.Name.
+const (
+	ExportStepDownloading = "downloading"
+	ExportStepArchiving   = "archiving"
+	ExportStepUploading   = "uploading"
+)
 
 // ExportFile is the legacy media descriptor embedded on Task.ExportFiles.
 // Kept only for the v20130101 API surface; new code uses CaseMedia.
