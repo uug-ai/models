@@ -288,6 +288,19 @@ type StageParam struct {
 	// Minimum and Maximum bound a StageParamNumber value, inclusively.
 	Minimum *float64 `json:"minimum,omitempty" bson:"minimum,omitempty"`
 	Maximum *float64 `json:"maximum,omitempty" bson:"maximum,omitempty"`
+	// When makes the param conditional: it applies only while another param
+	// has one of the listed values. An inactive param is not shown, not
+	// required, not defaulted and its value is not stored. Nil means always.
+	When *StageParamCondition `json:"when,omitempty" bson:"when,omitempty"`
+}
+
+// StageParamCondition activates a StageParam while the select or boolean
+// param named Param is itself active and its value (or default) is one of In.
+// Param must be declared earlier in the same stage; see
+// WorkflowStage.ValidateParamConditions.
+type StageParamCondition struct {
+	Param string `json:"param" bson:"param"`
+	In    []any  `json:"in" bson:"in"`
 }
 
 // StagePort is a named connection point on a stage. Outputs are the results a
