@@ -118,3 +118,15 @@ func TestSetProjectAccessRequestDecodes(t *testing.T) {
 		t.Errorf("second %+v", second)
 	}
 }
+
+func TestGetMyAccessResponseEncodes(t *testing.T) {
+	data, err := json.Marshal(GetMyAccessResponse{Mode: models.AuthorizationModeRBAC, Owner: false,
+		Assignments: []RoleAssignmentDetails{}, Projects: []MyAccessProject{{Id: "p1", Name: "Headquarters"}}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := `{"mode":"rbac","owner":false,"assignments":[],"projects":[{"id":"p1","name":"Headquarters"}]}`
+	if string(data) != want {
+		t.Errorf("encoded %s, want %s", data, want)
+	}
+}

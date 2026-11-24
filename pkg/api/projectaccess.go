@@ -184,3 +184,37 @@ type DeleteProjectAccessSuccessResponse struct {
 type DeleteProjectAccessErrorResponse struct {
 	ErrorResponse
 }
+
+// ---------- The caller's own access (GET /user/access) ----------
+//
+// A member's own access in the selected organisation, for their profile:
+// what they hold and through which team. Session only and about the caller
+// only, so it needs no permission to read the organisation's members.
+
+// MyAccessProject names a project an assignment is in.
+type MyAccessProject struct {
+	Id   string `json:"id"`
+	Name string `json:"name"`
+}
+
+// GetMyAccess returns the caller's access in the selected organisation. In
+// rbac mode Assignments lists the effectively active assignments to the
+// caller and to their teams (Principal names the team), every level and
+// project, and Projects names the projects they are in; Owner tells whether
+// one of them is the Owner role. Outside rbac mode the legacy role describes
+// the caller: Mode says so and nothing is listed.
+// @Router /user/access [get]
+type GetMyAccessRequest struct{}
+type GetMyAccessResponse struct {
+	Mode        models.AuthorizationMode `json:"mode"`
+	Owner       bool                     `json:"owner"`
+	Assignments []RoleAssignmentDetails  `json:"assignments"`
+	Projects    []MyAccessProject        `json:"projects"`
+}
+type GetMyAccessSuccessResponse struct {
+	SuccessResponse
+	Data GetMyAccessResponse `json:"data"`
+}
+type GetMyAccessErrorResponse struct {
+	ErrorResponse
+}
