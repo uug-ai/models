@@ -145,6 +145,11 @@ type RoleAssignmentPrincipal struct {
 	Email string `json:"email,omitempty"`
 	// MemberCount is set for teams.
 	MemberCount int64 `json:"memberCount,omitempty"`
+	// Source is set for teams: manual, or identityProvider for a team whose
+	// members come from an identity provider group.
+	Source models.TeamSource `json:"source,omitempty"`
+	// Provider names the identity provider connection of a synced team.
+	Provider string `json:"provider,omitempty"`
 }
 
 // RoleAssignmentDetails is an assignment with its role and principal.
