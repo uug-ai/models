@@ -136,6 +136,13 @@ type Task struct {
 	// requested or claimed. Nil when no worker reported a step.
 	ExportStep *TaskExportStep `json:"export_step,omitempty" bson:"export_step,omitempty"`
 
+	// ExportSupersededZips lists zips an earlier export left behind when a
+	// newer export replaced it. hub-pipeline-export adds them when it
+	// records the new zips and deletes each one after a grace period, so a
+	// download that started before the replacement can finish. Internal to
+	// the worker: never sent to clients.
+	ExportSupersededZips []TaskSupersededZip `json:"-" bson:"export_superseded_zips,omitempty"`
+
 	// ExportUpdatedAt is a heartbeat written by hub-pipeline-export
 	// every time it transitions the export state (claim, status
 	// updates, per-file download, release, complete) and by hub-api
@@ -230,6 +237,15 @@ type TaskExportStep struct {
 	Done    int    `json:"done" bson:"done"`       // files (archiving: recordings) this step finished
 	Total   int    `json:"total" bson:"total"`     // files the step will handle, without the ones left out
 	Skipped int    `json:"skipped" bson:"skipped"` // files left out so far (not signed, download failed)
+}
+
+// TaskSupersededZip is a zip of an earlier export that a newer export
+// replaced, waiting to be deleted.
+type TaskSupersededZip struct {
+	File         string    `json:"file" bson:"file"`                   // storage key of the zip
+	Provider     string    `json:"provider" bson:"provider"`           // storage provider holding it
+	SupersededAt time.Time `json:"superseded_at" bson:"superseded_at"` // when the newer export was recorded
+	Attempts     int       `json:"attempts" bson:"attempts"`           // failed delete attempts so far
 }
 
 // Steps of a running export, stored in TaskExportStep.Name.

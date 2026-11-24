@@ -106,6 +106,7 @@ const (
 	TaskExportInProgress = "export_in_progress"
 	TaskExportRevision = "export_revision"
 	TaskExportStep = "export_step"
+	TaskExportSupersededZips = "export_superseded_zips"
 	TaskExportUpdatedAt = "export_updated_at"
 	TaskExportSelectionDirty = "export_selection_dirty"
 	TaskMediaCount = "media_count"
@@ -131,6 +132,14 @@ const (
 	TaskStatisticsRejected = "rejected"
 	TaskStatisticsApproved = "approved"
 	TaskStatisticsTotal = "total"
+)
+
+// TaskSupersededZip property field names (BSON)
+const (
+	TaskSupersededZipFile = "file"
+	TaskSupersededZipProvider = "provider"
+	TaskSupersededZipSupersededAt = "superseded_at"
+	TaskSupersededZipAttempts = "attempts"
 )
 
 // TaskWrapper property field names (BSON)
