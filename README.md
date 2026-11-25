@@ -124,6 +124,11 @@ Signing in (`pkg/api/identityprovidersignin.go`): `GET /sign-in/organisations/{s
 lists an organisation's enabled connections; the browser goes through the
 provider and back to the frontend with a single-use code, exchanged for a
 session or standing for a pending email proof (`IdentityProviderEmailProof`).
+SCIM (`IdentityProviderScim` on the connection, `IdentityProviderScimUser`,
+`IdentityProviderScimGroup`): the provider provisions with a connection-scoped
+token (only its hash is stored). SCIM never creates accounts: it records
+people and groups, invites those who have not joined, and acts at once on
+people already linked.
 A session started through a connection stays in its organisation:
 elsewhere, and for the account's own security, it gets
 `session_sign_in_required`.

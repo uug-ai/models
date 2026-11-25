@@ -112,9 +112,20 @@ type IdentityProviderConnection struct {
 	// JoinOnSignIn lets a first sign-in create the account and the
 	// membership. Off (the default), sign-in links existing accounts and
 	// adds memberships only; new people need an invitation.
-	JoinOnSignIn bool  `json:"joinOnSignIn" bson:"joinOnSignIn"`
-	Enabled      bool  `json:"enabled" bson:"enabled"`
-	Audit        Audit `json:"audit" bson:"audit"`
+	JoinOnSignIn bool `json:"joinOnSignIn" bson:"joinOnSignIn"`
+	Enabled      bool `json:"enabled" bson:"enabled"`
+	// Scim is the connection's SCIM provisioning, nil while it has none.
+	Scim  *IdentityProviderScim `json:"scim,omitempty" bson:"scim,omitempty"`
+	Audit Audit                 `json:"audit" bson:"audit"`
+}
+
+// IdentityProviderScim is a connection's SCIM provisioning (RBAC spec 4.16,
+// decision 8): the provider calls Hub's SCIM API with a bearer token an
+// owner generated. Only the token's hash is stored; the token is shown once.
+type IdentityProviderScim struct {
+	TokenHash string    `json:"-" bson:"tokenHash"`
+	CreatedAt time.Time `json:"createdAt" bson:"createdAt"`
+	CreatedBy string    `json:"createdBy,omitempty" bson:"createdBy,omitempty"`
 }
 
 // Validate checks the connection's own fields: a name, OpenID Connect with

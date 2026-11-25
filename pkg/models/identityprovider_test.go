@@ -131,3 +131,21 @@ func mustBSON(t *testing.T, document bson.M) []byte {
 	}
 	return data
 }
+
+func TestScimTokenHashIsNeverSent(t *testing.T) {
+	connection := validConnection(t)
+	connection.Scim = &IdentityProviderScim{TokenHash: "hash-value"}
+	data, err := json.Marshal(connection)
+	if err != nil || strings.Contains(string(data), "hash-value") || !strings.Contains(string(data), `"scim":{`) {
+		t.Fatalf("connection JSON %s %v", data, err)
+	}
+	if (IdentityProviderScimUser{}).Linked() {
+		t.Fatal("unlinked SCIM user reads as linked")
+	}
+	if key := (IdentityProviderScimGroup{DisplayName: "Ops"}).GroupKey(); key != "Ops" {
+		t.Fatalf("group key %q", key)
+	}
+	if key := (IdentityProviderScimGroup{DisplayName: "Ops", ExternalId: "g-1"}).GroupKey(); key != "g-1" {
+		t.Fatalf("group key %q", key)
+	}
+}
