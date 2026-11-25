@@ -34877,6 +34877,34 @@ export interface components {
             function?: string;
             line?: number;
         };
+        "api.CaseMediaRedactionDraftErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.CaseMediaRedactionDraftResponse": {
+            draft?: components["schemas"]["models.RedactionDraft"];
+        };
+        "api.CaseMediaRedactionDraftSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.CaseMediaRedactionDraftResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
         "api.CaseMediaStatusEvent": {
             caseMediaId?: string;
             file?: string;
@@ -35053,10 +35081,17 @@ export interface components {
         };
         "api.CreateMediaEditRequest": {
             action?: components["schemas"]["models.CaseMediaAction"];
+            /** @description DraftRevision is the revision of the source's redaction draft this
+             *     edit was made from. When it equals the stored revision, the draft is
+             *     removed once the edit is created. */
+            draftRevision?: number;
             editType?: components["schemas"]["models.CaseMediaEditType"];
             params?: {
                 [key: string]: unknown;
             };
+            /** @description Redaction is the plan to render. Required when Action = "redaction"
+             *     and EditType = "regions", and not allowed otherwise. */
+            redaction?: components["schemas"]["models.RedactionPlan"];
             /** @description SourceAttachmentId points at a video CaseAttachment by its id.
              *     When both SourceCaseMediaId and SourceVideoFile are empty the API
              *     materialises (idempotently — reuses the attachment's linked row
@@ -36197,6 +36232,34 @@ export interface components {
             /** @description Application-specific status code */
             applicationStatusCode?: string;
             data?: components["schemas"]["api.GetCaseAttachmentResponse"];
+            /** @description Entity-specific status code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the response */
+            httpStatusCode?: number;
+            /** @description Success message describing the operation */
+            message?: string;
+            /** @description Additional metadata about the response, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetCaseMediaRedactionErrorResponse": {
+            /** @description Application-specific error code */
+            applicationStatusCode?: string;
+            /** @description Entity-specific error code */
+            entityStatusCode?: string;
+            /** @description HTTP status code for the error */
+            httpStatusCode?: number;
+            /** @description Error message describing the issue */
+            message?: string;
+            /** @description Additional metadata about the error, such as timestamps and request IDs */
+            metadata?: components["schemas"]["api.Metadata"];
+        };
+        "api.GetCaseMediaRedactionResponse": {
+            redaction?: components["schemas"]["models.RedactionPlan"];
+        };
+        "api.GetCaseMediaRedactionSuccessResponse": {
+            /** @description Application-specific status code */
+            applicationStatusCode?: string;
+            data?: components["schemas"]["api.GetCaseMediaRedactionResponse"];
             /** @description Entity-specific status code */
             entityStatusCode?: string;
             /** @description HTTP status code for the response */
@@ -38225,6 +38288,12 @@ export interface components {
             /** @description Additional metadata about the response, such as timestamps and request IDs */
             metadata?: components["schemas"]["api.Metadata"];
         };
+        "api.SaveCaseMediaRedactionDraftRequest": {
+            /** @description BaseVersionId is the edit row the draft started from, if any. */
+            baseVersionId?: string;
+            plan?: components["schemas"]["models.RedactionPlan"];
+            revision?: number;
+        };
         "api.SaveFaceRedactionErrorResponse": {
             /** @description Application-specific error code */
             applicationStatusCode?: string;
@@ -38366,6 +38435,11 @@ export interface components {
              *     on-demand PipelineEvent (event.Payload) or a hub-workflows stage dispatch
              *     (run.User) — i.e. the request is self-contained and transport agnostic. */
             organisationId?: string;
+            /** @description Plan is the redaction plan of a "regions" edit. When present the
+             *     worker renders from it alone and ignores Mode, AllFrameCoordinates,
+             *     FaceRedaction and detector output. A worker refuses a plan it does
+             *     not understand or that draws nothing; it never skips a region. */
+            plan?: components["schemas"]["models.RedactionPlan"];
             projectId?: string;
             signedUrl?: string;
             taskId?: string;
@@ -39656,8 +39730,8 @@ export interface components {
             cameraId?: string;
             createdAt?: number;
             createdBy?: string;
-            /** @description EditType is a sub-variant of Action (for example "face_blur",
-             *     "face_pixelate", "face_mask" when Action = "redaction"). Display
+            /** @description EditType is a sub-variant of Action (for example "regions",
+             *     "face_blur", "face_pixelate", "face_mask" when Action = "redaction"). Display
              *     labels are derived from this in the UI. Canonical values are
              *     declared as CaseMediaEditType constants below. */
             editType?: components["schemas"]["models.CaseMediaEditType"];
@@ -39717,6 +39791,17 @@ export interface components {
              *     A nil value keeps it organisation-wide. */
             projectId?: string;
             provider?: string;
+            /** @description Redaction is the plan a Role = "edit" row with Action = "redaction"
+             *     and EditType = "regions" was rendered from: its regions, each with
+             *     its own style, time range and positions. It replaces the tracks
+             *     and per-frame boxes the face_* edit types keep in Params. The case
+             *     media list leaves it out; it is fetched per edit. */
+            redaction?: components["schemas"]["models.RedactionPlan"];
+            /** @description RedactionDraft is a plan saved without rendering it. Only
+             *     meaningful on Role = "source" rows: one draft per source, shared
+             *     by everyone who may edit the case. The case media list leaves it
+             *     out. */
+            redactionDraft?: components["schemas"]["models.RedactionDraft"];
             /** @description Role describes whether this entry represents a source attached to
              *     the case or an edit derived from another entry. See CaseMediaRole. */
             role?: components["schemas"]["models.CaseMediaRole"];
@@ -39769,7 +39854,7 @@ export interface components {
         /** @enum {string} */
         "models.CaseMediaAction": "redaction" | "trim" | "composite";
         /** @enum {string} */
-        "models.CaseMediaEditType": "face_blur" | "face_pixelate" | "face_mask";
+        "models.CaseMediaEditType": "face_blur" | "face_pixelate" | "face_mask" | "regions";
         /** @enum {string} */
         "models.CaseMediaRole": "source" | "edit";
         /** @enum {string} */
@@ -42169,7 +42254,97 @@ export interface components {
             valid?: boolean;
         };
         /** @enum {string} */
+        "models.RedactionBox": {
+            x1?: number;
+            x2?: number;
+            y1?: number;
+            y2?: number;
+        };
+        "models.RedactionDraft": {
+            /** @description BaseVersionId is the edit row the draft started from, if any. */
+            baseVersionId?: string;
+            plan?: components["schemas"]["models.RedactionPlan"];
+            /** @description Revision increases by one on every save. A save sends the revision it
+             *     loaded and is refused when the stored one differs. */
+            revision?: number;
+            updatedAt?: number;
+            updatedBy?: string;
+        };
+        "models.RedactionFrameRange": {
+            from?: number;
+            to?: number;
+        };
+        "models.RedactionKeyframe": {
+            /** @description Edited marks a position the user set. Absent on positions copied from
+             *     a detector. */
+            edited?: boolean;
+            frame?: number;
+            x1?: number;
+            x2?: number;
+            y1?: number;
+            y2?: number;
+        };
         "models.RedactionMode": "blur" | "pixelate" | "black";
+        "models.RedactionPlan": {
+            /** @description Media records what the editor measured on the video the plan was made
+             *     against. It is informational and never used to place a box. */
+            media?: components["schemas"]["models.RedactionPlanMedia"];
+            /** @description Regions are the areas to hide. Order has no meaning. */
+            regions?: components["schemas"]["models.RedactionRegion"][];
+            /** @description SchemaVersion is RedactionPlanSchemaVersion. */
+            schemaVersion?: number;
+        };
+        "models.RedactionPlanLimits": {
+            /** @description MaxKeyframes is the most keyframes a plan may hold over all regions. */
+            maxKeyframes?: number;
+            /** @description MaxLabelLength is the most characters a region label may have. */
+            maxLabelLength?: number;
+            /** @description MaxRegions is the most regions a plan may hold. */
+            maxRegions?: number;
+        };
+        "models.RedactionPlanMedia": {
+            fps?: number;
+            frameCount?: number;
+            height?: number;
+            width?: number;
+        };
+        "models.RedactionRegion": {
+            /** @description Class is what the detector called the region ("face", "person"). Empty
+             *     for a drawn region. */
+            class?: string;
+            /** @description Enabled is the editor's checkbox. A disabled region is stored and not
+             *     rendered. */
+            enabled?: boolean;
+            end?: number;
+            /** @description Hidden lists frame ranges where the region is not drawn. */
+            hidden?: components["schemas"]["models.RedactionFrameRange"][];
+            /** @description Id is unique within the plan and set by the editor. */
+            id?: string;
+            /** @description Keyframes are the region's positions, sorted by frame, at least one.
+             *     A keyframe outside Start..End still anchors the interpolation. */
+            keyframes?: components["schemas"]["models.RedactionKeyframe"][];
+            /** @description Label is the name shown in the editor. */
+            label?: string;
+            origin?: components["schemas"]["models.RedactionRegionOrigin"];
+            shape?: components["schemas"]["models.RedactionShape"];
+            /** @description Source is the detection run and track the region was copied from. */
+            source?: components["schemas"]["models.RedactionRegionSource"];
+            /** @description Start and End are the first and last frame the region applies to,
+             *     inclusive. */
+            start?: number;
+            style?: components["schemas"]["models.RedactionStyle"];
+        };
+        "models.RedactionRegionOrigin": "detected" | "manual";
+        "models.RedactionRegionSource": {
+            /** @description RunId is DetectionRun.Source.RunId. */
+            runId?: string;
+            /** @description TrackId is FaceRedactionTrack.Id within that run. */
+            trackId?: string;
+        };
+        "models.RedactionShape": "rectangle";
+        "models.RedactionStyle": {
+            mode?: components["schemas"]["models.RedactionMode"];
+        };
         "models.Region": {
             device?: string;
             direction?: string;
@@ -44360,6 +44535,18 @@ export namespace models {
     export type ProjectUpdate = components['schemas']['models.ProjectUpdate'];
     export type Pushbullet = components['schemas']['models.Pushbullet'];
     export type Pushover = components['schemas']['models.Pushover'];
+    export type RedactionBox = components['schemas']['models.RedactionBox'];
+    export type RedactionDraft = components['schemas']['models.RedactionDraft'];
+    export type RedactionFrameRange = components['schemas']['models.RedactionFrameRange'];
+    export type RedactionKeyframe = components['schemas']['models.RedactionKeyframe'];
+    export type RedactionPlan = components['schemas']['models.RedactionPlan'];
+    export type RedactionPlanLimits = components['schemas']['models.RedactionPlanLimits'];
+    export type RedactionPlanMedia = components['schemas']['models.RedactionPlanMedia'];
+    export type RedactionRegion = components['schemas']['models.RedactionRegion'];
+    export type RedactionRegionOrigin = components['schemas']['models.RedactionRegionOrigin'];
+    export type RedactionRegionSource = components['schemas']['models.RedactionRegionSource'];
+    export type RedactionShape = components['schemas']['models.RedactionShape'];
+    export type RedactionStyle = components['schemas']['models.RedactionStyle'];
     export type Region = components['schemas']['models.Region'];
     export type RegionPoint = components['schemas']['models.RegionPoint'];
     export type RemoveAlertInput = components['schemas']['models.RemoveAlertInput'];
@@ -44512,6 +44699,9 @@ export namespace api {
     export type AddTaskSuccessResponse = components['schemas']['api.AddTaskSuccessResponse'];
     export type AdminRecentSubscription = components['schemas']['api.AdminRecentSubscription'];
     export type CallerInfo = components['schemas']['api.CallerInfo'];
+    export type CaseMediaRedactionDraftErrorResponse = components['schemas']['api.CaseMediaRedactionDraftErrorResponse'];
+    export type CaseMediaRedactionDraftResponse = components['schemas']['api.CaseMediaRedactionDraftResponse'];
+    export type CaseMediaRedactionDraftSuccessResponse = components['schemas']['api.CaseMediaRedactionDraftSuccessResponse'];
     export type CaseMediaStatusEvent = components['schemas']['api.CaseMediaStatusEvent'];
     export type CountMediaErrorResponse = components['schemas']['api.CountMediaErrorResponse'];
     export type CountMediaRequest = components['schemas']['api.CountMediaRequest'];
@@ -44651,6 +44841,9 @@ export namespace api {
     export type GetCaseAttachmentErrorResponse = components['schemas']['api.GetCaseAttachmentErrorResponse'];
     export type GetCaseAttachmentResponse = components['schemas']['api.GetCaseAttachmentResponse'];
     export type GetCaseAttachmentSuccessResponse = components['schemas']['api.GetCaseAttachmentSuccessResponse'];
+    export type GetCaseMediaRedactionErrorResponse = components['schemas']['api.GetCaseMediaRedactionErrorResponse'];
+    export type GetCaseMediaRedactionResponse = components['schemas']['api.GetCaseMediaRedactionResponse'];
+    export type GetCaseMediaRedactionSuccessResponse = components['schemas']['api.GetCaseMediaRedactionSuccessResponse'];
     export type GetChannelErrorResponse = components['schemas']['api.GetChannelErrorResponse'];
     export type GetChannelResponse = components['schemas']['api.GetChannelResponse'];
     export type GetChannelSuccessResponse = components['schemas']['api.GetChannelSuccessResponse'];
@@ -44869,6 +45062,7 @@ export namespace api {
     export type RunWorkflowRequest = components['schemas']['api.RunWorkflowRequest'];
     export type RunWorkflowResponse = components['schemas']['api.RunWorkflowResponse'];
     export type RunWorkflowSuccessResponse = components['schemas']['api.RunWorkflowSuccessResponse'];
+    export type SaveCaseMediaRedactionDraftRequest = components['schemas']['api.SaveCaseMediaRedactionDraftRequest'];
     export type SaveFaceRedactionErrorResponse = components['schemas']['api.SaveFaceRedactionErrorResponse'];
     export type SaveFaceRedactionRequest = components['schemas']['api.SaveFaceRedactionRequest'];
     export type SaveFaceRedactionResponse = components['schemas']['api.SaveFaceRedactionResponse'];

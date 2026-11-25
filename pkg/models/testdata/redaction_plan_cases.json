@@ -1,0 +1,169 @@
+{
+  "description": "Where a redaction region is drawn, frame by frame. Every implementation of the rule (RedactionRegion.BoxAt in Go, the editor's preview in TypeScript) runs these cases. A region is drawn on a frame when it is enabled, the frame is within start..end, and the frame is in no hidden range (all bounds inclusive). Its box is the keyframe on that frame; between two keyframes a and b each coordinate is a + (b - a) * (frame - a.frame) / (b.frame - a.frame); before the first keyframe it is the first keyframe's box, after the last keyframe the last one's. Each expectation gives a frame and either the box as [x1, y1, x2, y2] or null when the region is not drawn. Compare coordinates with a tolerance of 1e-9.",
+  "cases": [
+    {
+      "name": "a single keyframe is a static region over its time range",
+      "region": {
+        "id": "static", "origin": "manual", "shape": "rectangle", "style": { "mode": "black" },
+        "enabled": true, "start": 10, "end": 20,
+        "keyframes": [{ "frame": 10, "x1": 0.5, "y1": 0.25, "x2": 0.75, "y2": 0.5 }]
+      },
+      "expect": [
+        { "frame": 9, "box": null },
+        { "frame": 10, "box": [0.5, 0.25, 0.75, 0.5] },
+        { "frame": 15, "box": [0.5, 0.25, 0.75, 0.5] },
+        { "frame": 20, "box": [0.5, 0.25, 0.75, 0.5] },
+        { "frame": 21, "box": null }
+      ]
+    },
+    {
+      "name": "each coordinate is interpolated linearly between two keyframes",
+      "region": {
+        "id": "moving", "origin": "detected", "shape": "rectangle", "style": { "mode": "blur" },
+        "enabled": true, "start": 0, "end": 8,
+        "keyframes": [
+          { "frame": 0, "x1": 0, "y1": 0, "x2": 0.25, "y2": 0.5 },
+          { "frame": 8, "x1": 0.5, "y1": 0.25, "x2": 1, "y2": 1 }
+        ]
+      },
+      "expect": [
+        { "frame": 0, "box": [0, 0, 0.25, 0.5] },
+        { "frame": 2, "box": [0.125, 0.0625, 0.4375, 0.625] },
+        { "frame": 4, "box": [0.25, 0.125, 0.625, 0.75] },
+        { "frame": 8, "box": [0.5, 0.25, 1, 1] }
+      ]
+    },
+    {
+      "name": "the segment between the two surrounding keyframes is used",
+      "region": {
+        "id": "three", "origin": "detected", "shape": "rectangle", "style": { "mode": "pixelate" },
+        "enabled": true, "start": 0, "end": 12,
+        "keyframes": [
+          { "frame": 0, "x1": 0, "y1": 0, "x2": 0.5, "y2": 0.5 },
+          { "frame": 4, "x1": 0.5, "y1": 0, "x2": 1, "y2": 0.5 },
+          { "frame": 12, "x1": 0.5, "y1": 0.5, "x2": 1, "y2": 1 }
+        ]
+      },
+      "expect": [
+        { "frame": 2, "box": [0.25, 0, 0.75, 0.5] },
+        { "frame": 4, "box": [0.5, 0, 1, 0.5] },
+        { "frame": 8, "box": [0.5, 0.25, 1, 0.75] },
+        { "frame": 12, "box": [0.5, 0.5, 1, 1] }
+      ]
+    },
+    {
+      "name": "the first box is held before the first keyframe and the last box after the last keyframe",
+      "region": {
+        "id": "held", "origin": "manual", "shape": "rectangle", "style": { "mode": "blur" },
+        "enabled": true, "start": 0, "end": 30,
+        "keyframes": [
+          { "frame": 10, "x1": 0, "y1": 0, "x2": 0.5, "y2": 0.5 },
+          { "frame": 20, "x1": 0.5, "y1": 0.5, "x2": 1, "y2": 1 }
+        ]
+      },
+      "expect": [
+        { "frame": 0, "box": [0, 0, 0.5, 0.5] },
+        { "frame": 9, "box": [0, 0, 0.5, 0.5] },
+        { "frame": 15, "box": [0.25, 0.25, 0.75, 0.75] },
+        { "frame": 21, "box": [0.5, 0.5, 1, 1] },
+        { "frame": 30, "box": [0.5, 0.5, 1, 1] }
+      ]
+    },
+    {
+      "name": "keyframes outside the time range still anchor the interpolation",
+      "region": {
+        "id": "trimmed", "origin": "detected", "shape": "rectangle", "style": { "mode": "blur" },
+        "enabled": true, "start": 4, "end": 6,
+        "keyframes": [
+          { "frame": 0, "x1": 0, "y1": 0, "x2": 0.25, "y2": 0.25 },
+          { "frame": 8, "x1": 0.5, "y1": 0.5, "x2": 0.75, "y2": 0.75 }
+        ]
+      },
+      "expect": [
+        { "frame": 0, "box": null },
+        { "frame": 3, "box": null },
+        { "frame": 4, "box": [0.25, 0.25, 0.5, 0.5] },
+        { "frame": 6, "box": [0.375, 0.375, 0.625, 0.625] },
+        { "frame": 7, "box": null },
+        { "frame": 8, "box": null }
+      ]
+    },
+    {
+      "name": "a hidden range hides both of its ends and nothing around them",
+      "region": {
+        "id": "hidden", "origin": "detected", "shape": "rectangle", "style": { "mode": "blur" },
+        "enabled": true, "start": 0, "end": 10,
+        "hidden": [{ "from": 3, "to": 5 }, { "from": 8, "to": 8 }],
+        "keyframes": [{ "frame": 0, "x1": 0.25, "y1": 0.25, "x2": 0.5, "y2": 0.5 }]
+      },
+      "expect": [
+        { "frame": 2, "box": [0.25, 0.25, 0.5, 0.5] },
+        { "frame": 3, "box": null },
+        { "frame": 4, "box": null },
+        { "frame": 5, "box": null },
+        { "frame": 6, "box": [0.25, 0.25, 0.5, 0.5] },
+        { "frame": 7, "box": [0.25, 0.25, 0.5, 0.5] },
+        { "frame": 8, "box": null },
+        { "frame": 9, "box": [0.25, 0.25, 0.5, 0.5] }
+      ]
+    },
+    {
+      "name": "a keyframe on a hidden frame is not drawn but still anchors the interpolation",
+      "region": {
+        "id": "hidden-keyframe", "origin": "detected", "shape": "rectangle", "style": { "mode": "blur" },
+        "enabled": true, "start": 0, "end": 8,
+        "hidden": [{ "from": 4, "to": 4 }],
+        "keyframes": [
+          { "frame": 0, "x1": 0, "y1": 0, "x2": 0.25, "y2": 0.25 },
+          { "frame": 4, "x1": 0.5, "y1": 0.5, "x2": 0.75, "y2": 0.75 },
+          { "frame": 8, "x1": 0, "y1": 0, "x2": 0.25, "y2": 0.25 }
+        ]
+      },
+      "expect": [
+        { "frame": 2, "box": [0.25, 0.25, 0.5, 0.5] },
+        { "frame": 4, "box": null },
+        { "frame": 6, "box": [0.25, 0.25, 0.5, 0.5] }
+      ]
+    },
+    {
+      "name": "overlapping and unsorted hidden ranges are all applied",
+      "region": {
+        "id": "overlap", "origin": "manual", "shape": "rectangle", "style": { "mode": "black" },
+        "enabled": true, "start": 0, "end": 10,
+        "hidden": [{ "from": 6, "to": 9 }, { "from": 0, "to": 4 }, { "from": 3, "to": 7 }],
+        "keyframes": [{ "frame": 0, "x1": 0, "y1": 0, "x2": 1, "y2": 1 }]
+      },
+      "expect": [
+        { "frame": 0, "box": null },
+        { "frame": 5, "box": null },
+        { "frame": 9, "box": null },
+        { "frame": 10, "box": [0, 0, 1, 1] }
+      ]
+    },
+    {
+      "name": "a disabled region is never drawn",
+      "region": {
+        "id": "disabled", "origin": "detected", "shape": "rectangle", "style": { "mode": "blur" },
+        "enabled": false, "start": 0, "end": 10,
+        "keyframes": [{ "frame": 0, "x1": 0.25, "y1": 0.25, "x2": 0.5, "y2": 0.5 }]
+      },
+      "expect": [
+        { "frame": 0, "box": null },
+        { "frame": 5, "box": null }
+      ]
+    },
+    {
+      "name": "a time range of one frame draws that frame only",
+      "region": {
+        "id": "one-frame", "origin": "manual", "shape": "rectangle", "style": { "mode": "blur" },
+        "enabled": true, "start": 7, "end": 7,
+        "keyframes": [{ "frame": 7, "x1": 0.25, "y1": 0.25, "x2": 0.5, "y2": 0.5 }]
+      },
+      "expect": [
+        { "frame": 6, "box": null },
+        { "frame": 7, "box": [0.25, 0.25, 0.5, 0.5] },
+        { "frame": 8, "box": null }
+      ]
+    }
+  ]
+}

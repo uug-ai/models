@@ -519,6 +519,13 @@ type CreateMediaEditRequest struct {
 	EditType           models.CaseMediaEditType `json:"editType,omitempty"`
 	Params             map[string]interface{}   `json:"params,omitempty"`
 	SupersedesId       string                   `json:"supersedesId,omitempty"`
+	// Redaction is the plan to render. Required when Action = "redaction"
+	// and EditType = "regions", and not allowed otherwise.
+	Redaction *models.RedactionPlan `json:"redaction,omitempty"`
+	// DraftRevision is the revision of the source's redaction draft this
+	// edit was made from. When it equals the stored revision, the draft is
+	// removed once the edit is created.
+	DraftRevision *int64 `json:"draftRevision,omitempty"`
 }
 
 type CreateMediaEditResponse struct {
@@ -574,6 +581,53 @@ type UpdateCaseMediaSelectedVersionSuccessResponse struct {
 }
 
 type UpdateCaseMediaSelectedVersionErrorResponse struct {
+	ErrorResponse
+}
+
+// GetCaseMediaRedactionResponse is the result of
+// GET /tasks/{taskId}/media/{caseMediaId}/redaction: the plan a
+// Role = "edit" redaction row was rendered from. The case media list
+// leaves plans out, so the editor fetches one when the user picks that
+// version as a starting point.
+type GetCaseMediaRedactionResponse struct {
+	Redaction *models.RedactionPlan `json:"redaction"`
+}
+
+type GetCaseMediaRedactionSuccessResponse struct {
+	SuccessResponse
+	Data GetCaseMediaRedactionResponse `json:"data"`
+}
+
+type GetCaseMediaRedactionErrorResponse struct {
+	ErrorResponse
+}
+
+// SaveCaseMediaRedactionDraftRequest is the body of
+// PUT /tasks/{taskId}/media/{caseMediaId}/redaction-draft, which saves
+// the redaction draft of a Role = "source" row.
+//
+// Revision is the revision the editor loaded, 0 when the source had no
+// draft. The save is refused with 409 when the stored revision differs,
+// so two people do not overwrite each other without noticing.
+type SaveCaseMediaRedactionDraftRequest struct {
+	Plan     models.RedactionPlan `json:"plan"`
+	Revision int64                `json:"revision"`
+	// BaseVersionId is the edit row the draft started from, if any.
+	BaseVersionId string `json:"baseVersionId,omitempty"`
+}
+
+// CaseMediaRedactionDraftResponse is the result of reading or saving a
+// redaction draft. Draft is nil when the source has none.
+type CaseMediaRedactionDraftResponse struct {
+	Draft *models.RedactionDraft `json:"draft"`
+}
+
+type CaseMediaRedactionDraftSuccessResponse struct {
+	SuccessResponse
+	Data CaseMediaRedactionDraftResponse `json:"data"`
+}
+
+type CaseMediaRedactionDraftErrorResponse struct {
 	ErrorResponse
 }
 

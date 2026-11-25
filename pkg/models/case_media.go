@@ -39,8 +39,8 @@ type CaseMedia struct {
 	// Role = "edit". See CaseMediaAction.
 	Action CaseMediaAction `json:"action,omitempty" bson:"action,omitempty"`
 
-	// EditType is a sub-variant of Action (for example "face_blur",
-	// "face_pixelate", "face_mask" when Action = "redaction"). Display
+	// EditType is a sub-variant of Action (for example "regions",
+	// "face_blur", "face_pixelate", "face_mask" when Action = "redaction"). Display
 	// labels are derived from this in the UI. Canonical values are
 	// declared as CaseMediaEditType constants below.
 	EditType CaseMediaEditType `json:"editType,omitempty" bson:"edit_type,omitempty"`
@@ -69,6 +69,19 @@ type CaseMedia struct {
 	// "operations" array whose elements have an "op" discriminator
 	// matching one of the single-op CaseMediaAction values.
 	Params map[string]interface{} `json:"params,omitempty" bson:"params,omitempty"`
+
+	// Redaction is the plan a Role = "edit" row with Action = "redaction"
+	// and EditType = "regions" was rendered from: its regions, each with
+	// its own style, time range and positions. It replaces the tracks
+	// and per-frame boxes the face_* edit types keep in Params. The case
+	// media list leaves it out; it is fetched per edit.
+	Redaction *RedactionPlan `json:"redaction,omitempty" bson:"redaction,omitempty"`
+
+	// RedactionDraft is a plan saved without rendering it. Only
+	// meaningful on Role = "source" rows: one draft per source, shared
+	// by everyone who may edit the case. The case media list leaves it
+	// out.
+	RedactionDraft *RedactionDraft `json:"redactionDraft,omitempty" bson:"redaction_draft,omitempty"`
 
 	// OriginAttachmentId marks a Role=source row that was materialised
 	// from a video CaseAttachment (see the case_attachments collection)
@@ -200,14 +213,19 @@ const (
 
 // CaseMediaEditType enumerates the supported sub-variants of an edit
 // action. Values are grouped by their parent Action: redaction variants
-// (face_blur / face_pixelate / face_mask) are validated by hub-api when
-// Action = redaction; trim / composite do not currently use sub-variants.
+// are validated by hub-api when Action = redaction; trim / composite do
+// not currently use sub-variants.
+//
+// A "regions" redaction carries a RedactionPlan in CaseMedia.Redaction,
+// where every region has its own style. The face_* variants name one
+// style for the whole video and keep their tracks in CaseMedia.Params.
 type CaseMediaEditType string
 
 const (
 	CaseMediaEditTypeFaceBlur     CaseMediaEditType = "face_blur"
 	CaseMediaEditTypeFacePixelate CaseMediaEditType = "face_pixelate"
 	CaseMediaEditTypeFaceMask     CaseMediaEditType = "face_mask"
+	CaseMediaEditTypeRegions      CaseMediaEditType = "regions"
 )
 
 // --- Contract notes ---------------------------------------------------------
@@ -249,6 +267,15 @@ func (cm *CaseMedia) Validate() error {
 		if cm.Action != "" || cm.EditType != "" {
 			return fmt.Errorf("case_media: source row must not set action/editType")
 		}
+		if cm.Redaction != nil {
+			return fmt.Errorf("case_media: source row must not set redaction")
+		}
+		if cm.RedactionDraft != nil {
+			// A draft may be empty or draw nothing; it only has to be well formed.
+			if err := cm.RedactionDraft.Plan.Validate(); err != nil {
+				return fmt.Errorf("case_media: redactionDraft: %w", err)
+			}
+		}
 		if cm.Status == "" {
 			// Sources are inherently completed; reject implicit empty
 			// state so list/filter callers can rely on a populated
@@ -262,6 +289,12 @@ func (cm *CaseMedia) Validate() error {
 		if cm.SelectedVersionId != nil {
 			return fmt.Errorf("case_media: edit row must not set selectedVersionId")
 		}
+		if cm.RedactionDraft != nil {
+			return fmt.Errorf("case_media: edit row must not set redactionDraft")
+		}
+		if cm.Redaction != nil && (cm.Action != CaseMediaActionRedaction || cm.EditType != CaseMediaEditTypeRegions) {
+			return fmt.Errorf("case_media: redaction is only allowed on a redaction edit with editType %q", CaseMediaEditTypeRegions)
+		}
 		if cm.Action == "" {
 			return fmt.Errorf("case_media: edit row requires action")
 		}
@@ -269,8 +302,16 @@ func (cm *CaseMedia) Validate() error {
 		case CaseMediaActionRedaction:
 			switch cm.EditType {
 			case CaseMediaEditTypeFaceBlur, CaseMediaEditTypeFacePixelate, CaseMediaEditTypeFaceMask:
+			case CaseMediaEditTypeRegions:
+				// The plan is what gets rendered, so it has to draw something.
+				if cm.Redaction == nil {
+					return fmt.Errorf("case_media: redaction edit with editType %q requires redaction", cm.EditType)
+				}
+				if err := cm.Redaction.ValidateForRender(); err != nil {
+					return fmt.Errorf("case_media: %w", err)
+				}
 			default:
-				return fmt.Errorf("case_media: redaction edit requires a face_* editType (got %q)", cm.EditType)
+				return fmt.Errorf("case_media: redaction edit requires editType regions or face_* (got %q)", cm.EditType)
 			}
 		case CaseMediaActionTrim, CaseMediaActionComposite:
 			if cm.EditType != "" {

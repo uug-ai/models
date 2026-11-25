@@ -8,7 +8,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node copy-fixtures.js",
     "prepublishOnly": "npm run build"
   },
   "keywords": ["models", "typescript", "api"],
