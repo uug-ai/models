@@ -388,6 +388,11 @@ type SubmitFaceRedactionRequest struct {
 	Mode                models.RedactionMode          `json:"mode,omitempty"`
 	AllFrameCoordinates map[string][]*models.TrackBox `json:"allFrameCoordinates,omitempty"`
 	FaceRedaction       *models.FaceRedaction         `json:"faceRedaction,omitempty"`
+	// Plan is the redaction plan of a "regions" edit. When present the
+	// worker renders from it alone and ignores Mode, AllFrameCoordinates,
+	// FaceRedaction and detector output. A worker refuses a plan it does
+	// not understand or that draws nothing; it never skips a region.
+	Plan *models.RedactionPlan `json:"plan,omitempty"`
 }
 type SubmitFaceRedactionResponse struct {
 	AnalysisId    string                `json:"analysisId"`

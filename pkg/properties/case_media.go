@@ -17,6 +17,8 @@ const (
 	CaseMediaSupersedesId = "supersedes_id"
 	CaseMediaSelectedVersionId = "selected_version_id"
 	CaseMediaParams = "params"
+	CaseMediaRedaction = "redaction"
+	CaseMediaRedactionDraft = "redaction_draft"
 	CaseMediaOriginAttachmentId = "origin_attachment_id"
 	CaseMediaSourceMediaId = "source_media_id"
 	CaseMediaTimestamp = "timestamp"

@@ -873,6 +873,63 @@ This is a **models-first, reader-first** change, not an enabled editor feature:
 4. Enable the new UI/writes only after all readers are updated. No data backfill
    is required for existing workflows.
 
+## Redaction plans
+
+A `RedactionPlan` is the saved state of the redaction editor for one video:
+the list of regions to hide. A region is one area to hide, detected or drawn,
+with its own style, time range and positions. The plan holds no pixels; it is
+the instruction the redaction worker follows to produce the redacted file, and
+afterwards the record of what that file hides. There is one plan per redacted
+version, and at most one unrendered draft per source video.
+
+It is unrelated to subscription plans (`Plan`, `PlanDefinition`,
+`PlanCatalog`).
+
+```go
+plan := models.RedactionPlan{
+    SchemaVersion: models.RedactionPlanSchemaVersion,
+    Regions: []models.RedactionRegion{{
+        Id:      "r1",
+        Label:   "Monitor",
+        Origin:  models.RedactionRegionOriginManual,
+        Shape:   models.RedactionShapeRectangle,
+        Style:   models.RedactionStyle{Mode: models.RedactionModeBlack},
+        Enabled: true,
+        Start:   0,
+        End:     14999,
+        Keyframes: []models.RedactionKeyframe{
+            {Frame: 0, X1: 0.70, Y1: 0.10, X2: 0.95, Y2: 0.40},
+        },
+    }},
+}
+if err := plan.ValidateForRender(); err != nil { /* refuse it */ }
+box, drawn := plan.Regions[0].BoxAt(120)
+```
+
+- **Coordinates** are fractions of the frame as displayed, 0 to 1. **Frames**
+  are decode-order indexes starting at 0.
+- **`BoxAt` is the drawing rule.** A region is drawn on a frame when it is
+  enabled, the frame is within `start`..`end`, and the frame is in no `hidden`
+  range. Its box is the keyframe on that frame, a linear interpolation between
+  the two surrounding keyframes, or the first or last keyframe's box outside
+  them. Renderers call `BoxAt` and apply nothing else.
+- **`Validate`** checks the shape and the limits of
+  `DefaultRedactionLimits()` (200 regions, 50,000 keyframes, 80-character
+  labels); an empty plan is a valid draft. **`ValidateForRender`** also
+  requires that the plan draws something.
+- **Where it is stored:** `CaseMedia.Redaction` on an edit row with
+  `action: redaction` and `editType: regions`; `CaseMedia.RedactionDraft` on a
+  source row for a plan saved without rendering. The `face_*` edit types keep
+  their tracks in `CaseMedia.Params`.
+- **Worker request:** `api.SubmitFaceRedactionRequest.Plan`. A worker renders
+  from the plan alone and refuses one it does not understand or that draws
+  nothing.
+
+`pkg/models/testdata/redaction_plan_cases.json` holds regions with the box
+expected on given frames. The Go tests run `BoxAt` against it, and the npm
+package ships it as `@uug-ai/models/dist/fixtures/redaction-plan-cases.json`
+so a TypeScript implementation of the rule runs the same cases.
+
 ## Project Structure
 
 ```
