@@ -28,6 +28,11 @@ const (
 	// IdentityProviderInUse: synced teams name the connection; unlink or
 	// delete them first.
 	IdentityProviderInUse IdentityProviderStatus = "identity_provider_in_use"
+	// IdentityProviderScimTokenCreated: a SCIM token was generated (shown
+	// once).
+	IdentityProviderScimTokenCreated IdentityProviderStatus = "identity_provider_scim_token_created"
+	// IdentityProviderScimTokenDeleted: the SCIM token was removed.
+	IdentityProviderScimTokenDeleted IdentityProviderStatus = "identity_provider_scim_token_deleted"
 )
 
 // String returns the string representation of the identity provider status.
@@ -56,6 +61,8 @@ func (s IdentityProviderStatus) Translate(lang string) string {
 			IdentityProviderNameExists:       "An identity provider with this name already exists",
 			IdentityProviderSlugRequired:     "Set the organisation's slug before enabling sign-in",
 			IdentityProviderInUse:            "Teams are synced from this identity provider",
+			IdentityProviderScimTokenCreated: "SCIM token generated",
+			IdentityProviderScimTokenDeleted: "SCIM token removed",
 		},
 	}
 
@@ -88,6 +95,37 @@ type IdentityProviderConnectionDetails struct {
 	Connection      models.IdentityProviderConnection `json:"connection"`
 	HasClientSecret bool                              `json:"hasClientSecret"`
 	RedirectUri     string                            `json:"redirectUri,omitempty"`
+	// ScimBaseUri is the SCIM endpoint to give the provider.
+	ScimBaseUri string `json:"scimBaseUri,omitempty"`
+}
+
+// CreateIdentityProviderScimToken generates the connection's SCIM token,
+// replacing one it had. The token is in this response only.
+// @Router /identity-providers/{id}/scim-token [post]
+type CreateIdentityProviderScimTokenRequest struct{}
+type CreateIdentityProviderScimTokenResponse struct {
+	Token       string `json:"token"`
+	ScimBaseUri string `json:"scimBaseUri"`
+}
+type CreateIdentityProviderScimTokenSuccessResponse struct {
+	SuccessResponse
+	Data CreateIdentityProviderScimTokenResponse `json:"data"`
+}
+type CreateIdentityProviderScimTokenErrorResponse struct {
+	ErrorResponse
+}
+
+// DeleteIdentityProviderScimToken removes the connection's SCIM token: the
+// provider can no longer provision.
+// @Router /identity-providers/{id}/scim-token [delete]
+type DeleteIdentityProviderScimTokenRequest struct{}
+type DeleteIdentityProviderScimTokenResponse struct{}
+type DeleteIdentityProviderScimTokenSuccessResponse struct {
+	SuccessResponse
+	Data DeleteIdentityProviderScimTokenResponse `json:"data"`
+}
+type DeleteIdentityProviderScimTokenErrorResponse struct {
+	ErrorResponse
 }
 
 // GetIdentityProviderConnections lists the organisation's connections.

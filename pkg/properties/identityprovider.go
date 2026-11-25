@@ -35,5 +35,13 @@ const (
 	IdentityProviderConnectionClaims = "claims"
 	IdentityProviderConnectionJoinOnSignIn = "joinOnSignIn"
 	IdentityProviderConnectionEnabled = "enabled"
+	IdentityProviderConnectionScim = "scim"
 	IdentityProviderConnectionAudit = "audit"
+)
+
+// IdentityProviderScim property field names (BSON)
+const (
+	IdentityProviderScimTokenHash = "tokenHash"
+	IdentityProviderScimCreatedAt = "createdAt"
+	IdentityProviderScimCreatedBy = "createdBy"
 )

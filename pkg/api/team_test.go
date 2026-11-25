@@ -77,7 +77,7 @@ func TestIdentityProviderStatusTranslate(t *testing.T) {
 		IdentityProviderGetAllSuccess, IdentityProviderGetAllFailed, IdentityProviderCreateSuccess, IdentityProviderCreateFailed,
 		IdentityProviderUpdateSuccess, IdentityProviderUpdateFailed, IdentityProviderDeleteSuccess, IdentityProviderDeleteFailed,
 		IdentityProviderNameExists, IdentityProviderSlugRequired,
-		IdentityProviderInUse,
+		IdentityProviderInUse, IdentityProviderScimTokenCreated, IdentityProviderScimTokenDeleted,
 	}
 	for _, status := range statuses {
 		if got := status.Translate("en"); got == status.String() || got == "" {
