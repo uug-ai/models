@@ -16,7 +16,7 @@ type IdentityProviderScimUser struct {
 	ConnectionId   primitive.ObjectID `json:"connectionId" bson:"connectionId"`
 	// ExternalId is the person's id at the provider; it equals the subject
 	// of their identity link once they are linked.
-	ExternalId  string `json:"externalId" bson:"externalId"`
+	ExternalId  string `json:"externalId,omitempty" bson:"externalId,omitempty"`
 	UserName    string `json:"userName" bson:"userName"`
 	Email       string `json:"email,omitempty" bson:"email,omitempty"`
 	DisplayName string `json:"displayName,omitempty" bson:"displayName,omitempty"`
