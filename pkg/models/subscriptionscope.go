@@ -91,3 +91,28 @@ func LatestSubscriptionSort() bson.D {
 		{Key: "_id", Value: -1},
 	}
 }
+
+// PlansSubscriptionFilter selects the subscriptions created in plans mode for
+// an organisation: those with a plan_key, stored with its organisation_id.
+//
+// Legacy rows (Stripe subscriptions without plan_key, or rows that belong to
+// the organisation only through the owner's user_id) never match: an
+// organisation switched to plans has no plans subscription until it is given
+// one, and switching it back to legacy finds its legacy subscription as it
+// was. It is the filter of every entitlement read (Hub API, pipeline-monitor),
+// so they all resolve a plans organisation from the same rows.
+func PlansSubscriptionFilter(organisationId primitive.ObjectID) bson.M {
+	return bson.M{
+		"organisation_id": organisationId,
+		// $gt "" matches non-empty strings only: not a missing, null or
+		// empty plan_key.
+		"plan_key": bson.M{"$gt": ""},
+	}
+}
+
+// EndedSubscriptionFilter selects the subscriptions that have ended at now:
+// ends_at at or before now. It is the complement of ActiveSubscriptionFilter
+// for documents that carry an ends_at.
+func EndedSubscriptionFilter(now time.Time) bson.M {
+	return bson.M{"ends_at": bson.M{"$lte": now}}
+}

@@ -299,6 +299,12 @@ type MonitorStage struct {
 	Plans        map[string]Plan `json:"plans,omitempty"`
 	HighUpload   HighUpload      `json:"highUpload,omitempty"`
 	Activity     Activity        `json:"activity,omitempty"`
+
+	// Entitlement is the organisation's entitlement when it is in plans
+	// mode, resolved once by pipeline-monitor; nil for a legacy
+	// organisation, which keeps Subscription and Plans. Stages after monitor
+	// read it instead of the plan file or the subscriptions.
+	Entitlement *Entitlement `json:"entitlement,omitempty"`
 }
 
 // Constructor function for MonitorStage

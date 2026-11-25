@@ -128,3 +128,22 @@ func TestLatestSubscriptionSortIsNotAliased(t *testing.T) {
 		t.Fatalf("LatestSubscriptionSort() leading key = %q after a caller mutated an earlier result", got[0].Key)
 	}
 }
+
+func TestPlansSubscriptionFilterNeedsOrganisationAndPlanKey(t *testing.T) {
+	organisationId := primitive.NewObjectID()
+	want := bson.M{
+		"organisation_id": organisationId,
+		"plan_key":        bson.M{"$gt": ""},
+	}
+	if got := PlansSubscriptionFilter(organisationId); !reflect.DeepEqual(got, want) {
+		t.Fatalf("PlansSubscriptionFilter() = %#v, want %#v", got, want)
+	}
+}
+
+func TestEndedSubscriptionFilterIncludesNow(t *testing.T) {
+	now := time.Date(2026, 11, 25, 12, 0, 0, 0, time.UTC)
+	want := bson.M{"ends_at": bson.M{"$lte": now}}
+	if got := EndedSubscriptionFilter(now); !reflect.DeepEqual(got, want) {
+		t.Fatalf("EndedSubscriptionFilter() = %#v, want %#v", got, want)
+	}
+}
