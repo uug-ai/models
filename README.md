@@ -875,9 +875,15 @@ This is a **models-first, reader-first** change, not an enabled editor feature:
 
 ## Redaction plans
 
-A `RedactionPlan` is everything needed to render one redacted version of a
-video. It holds regions; a region is one area to hide, detected or drawn, with
-its own style, time range and positions.
+A `RedactionPlan` is the saved state of the redaction editor for one video:
+the list of regions to hide. A region is one area to hide, detected or drawn,
+with its own style, time range and positions. The plan holds no pixels; it is
+the instruction the redaction worker follows to produce the redacted file, and
+afterwards the record of what that file hides. There is one plan per redacted
+version, and at most one unrendered draft per source video.
+
+It is unrelated to subscription plans (`Plan`, `PlanDefinition`,
+`PlanCatalog`).
 
 ```go
 plan := models.RedactionPlan{

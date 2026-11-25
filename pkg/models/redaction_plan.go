@@ -13,11 +13,19 @@ import (
 // package reads and writes. A reader refuses a plan with any other value.
 const RedactionPlanSchemaVersion = 1
 
-// RedactionPlan is everything needed to render one redacted version of a
-// video: the regions to hide, each with its own style, time range and
-// positions. It is stored on a case_media edit row (CaseMedia.Redaction),
-// inside a draft on a source row (CaseMedia.RedactionDraft), and sent to the
-// redaction worker.
+// RedactionPlan is the saved state of the redaction editor for one video:
+// the regions to hide and, for each region, how it is hidden, on which
+// frames, and where it sits on those frames. It holds no pixels. It is the
+// instruction the redaction worker follows to produce the redacted file, and
+// afterwards the record of what that file hides.
+//
+// There is one plan per redacted version, stored on that version's
+// case_media edit row (CaseMedia.Redaction), and at most one unrendered plan
+// per source video, inside the draft on the source row
+// (CaseMedia.RedactionDraft). The worker receives it as
+// api.SubmitFaceRedactionRequest.Plan.
+//
+// It is unrelated to subscription plans (Plan, PlanDefinition, PlanCatalog).
 //
 // RedactionRegion.BoxAt is the only rule that turns a plan into boxes. The
 // editor previews with the same rule, so the render equals the preview.
