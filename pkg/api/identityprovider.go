@@ -82,10 +82,12 @@ func (s IdentityProviderStatus) Translate(lang string) string {
 // (IdentityProviderSlugRequired).
 
 // IdentityProviderConnectionDetails is a connection as returned: the stored
-// connection without its secret, and whether a secret is set.
+// connection without its secret, whether a secret is set, and the redirect
+// URI to register at the provider (one per deployment).
 type IdentityProviderConnectionDetails struct {
 	Connection      models.IdentityProviderConnection `json:"connection"`
 	HasClientSecret bool                              `json:"hasClientSecret"`
+	RedirectUri     string                            `json:"redirectUri,omitempty"`
 }
 
 // GetIdentityProviderConnections lists the organisation's connections.

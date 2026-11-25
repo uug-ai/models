@@ -95,3 +95,20 @@ func TestIdentityProviderStatusTranslate(t *testing.T) {
 		t.Error("patch with a field reads as empty")
 	}
 }
+
+func TestIdentityProviderSignInStatusTranslate(t *testing.T) {
+	for _, status := range []IdentityProviderSignInStatus{
+		IdentityProviderSignInFound, IdentityProviderSignInFailed, IdentityProviderSignInBindingFailed,
+		IdentityProviderSignInOrganisationNotFound, IdentityProviderSignInNotFound, IdentityProviderSignInEmailSent,
+		IdentityProviderSignInEmailUnavailable, IdentityProviderSignInEmailMismatch, IdentityProviderSignInAccountsAmbiguous,
+		IdentityProviderSignInJoinDisabled, IdentityProviderSignInMembershipClosed, IdentityProviderSignInLinked,
+		SessionSignInRequired,
+	} {
+		if got := status.Translate("en"); got == status.String() || got == "" {
+			t.Errorf("%s has no English translation", status)
+		}
+		if status.Translate("xx") != status.Translate("en") {
+			t.Errorf("%s: unknown language does not fall back to English", status)
+		}
+	}
+}
