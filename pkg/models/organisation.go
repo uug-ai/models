@@ -260,6 +260,21 @@ type OrganisationSettings struct {
 	PrimaryContact   Contact `json:"primaryContact" bson:"primaryContact"`     // Main point of contact
 }
 
+// MembershipSource says how a membership was created.
+type MembershipSource string
+
+const (
+	// MembershipSourceInvitation: the person accepted an invitation.
+	MembershipSourceInvitation MembershipSource = "invitation"
+	// MembershipSourceOnboarding: the person created the organisation.
+	MembershipSourceOnboarding MembershipSource = "onboarding"
+	// MembershipSourceMigration: the migration created it from legacy data.
+	MembershipSourceMigration MembershipSource = "migration"
+	// MembershipSourceIdentityProvider: a first sign-in through the
+	// organisation's identity provider created it (RBAC spec 4.16).
+	MembershipSourceIdentityProvider MembershipSource = "identityProvider"
+)
+
 // MembershipStatus enumerates the lifecycle states of an organisation membership.
 type MembershipStatus string
 
@@ -285,6 +300,9 @@ type OrganisationUser struct {
 	InvitedBy      primitive.ObjectID `json:"invitedBy" bson:"invitedBy,omitempty"`
 	InvitedAt      time.Time          `json:"invitedAt" bson:"invitedAt,omitempty"`
 	JoinedAt       time.Time          `json:"joinedAt" bson:"joinedAt,omitempty"`
+	// Source says how the membership was created; absent on memberships
+	// created before it was recorded.
+	Source MembershipSource `json:"source,omitempty" bson:"source,omitempty"`
 	// ExpiresAt optionally bounds the membership in time. It is an overlay on
 	// Status: a membership is only effectively active when Status is
 	// MembershipStatusActive AND ExpiresAt is unset or in the future.

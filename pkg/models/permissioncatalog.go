@@ -103,6 +103,7 @@ var permissionGroups = []permissionGroup{
 	{level: LevelOrganisation, permissions: projectAdministrationPermissions, tenantWide: []Permission{PermissionProjectsCreate}},
 	{level: LevelOrganisation, permissions: billingPermissions, tenantWide: billingPermissions, ownerOnly: billingPermissions},
 	{level: LevelOrganisation, permissions: storagePermissions, tenantWide: storagePermissions, ownerOnly: storagePermissions},
+	{level: LevelOrganisation, permissions: identityProviderPermissions, tenantWide: identityProviderPermissions, ownerOnly: identityProviderPermissions},
 	{level: LevelOrganisation, permissions: auditPermissions, tenantWide: auditPermissions},
 	{level: LevelOrganisation, permissions: deviceAdministrationPermissions, tenantWide: deviceAdministrationPermissions, ownerOnly: deviceAdministrationPermissions},
 	{level: LevelOrganisation, permissions: organisationPagePermissions, tenantWide: []Permission{PermissionSubscriptionPage, PermissionAuditPage},

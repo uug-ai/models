@@ -103,6 +103,24 @@ subscription work as for a business. The onboarding step sets it, with the
 organisation's details and the default project's name and description
 (`api.CreateOnboardingOrganisationRequest`).
 
+### Identity provider connections
+
+An organisation connects its own identity provider
+(`IdentityProviderConnection`, collection `identity_provider_connections`;
+RBAC spec 4.16): OpenID Connect issuer, client id and a write-only client
+secret (never in JSON), the claims to read (subject, email, groups; defaults
+`sub`, `email`, `groups`), and the email domains it answers for. A domain is
+used only once verified through a DNS TXT record
+(`IdentityProviderDomain.VerificationRecordName` / `…Value`);
+`AnswersFor(email)` checks an enabled connection and a verified domain.
+`JoinOnSignIn` (off by default) lets a first sign-in create the account.
+`IdentityLink` (collection `identity_links`) ties an account to a provider
+subject. Synced teams name a connection by its `Name`, which never changes.
+Memberships and team members record their `Source`
+(`MembershipSourceIdentityProvider`, `TeamMemberSourceIdentityProvider`).
+Managing connections needs `organisation.manageIdentityProvider`: owner-only,
+tenant-wide, never an access token scope.
+
 ### Alert configuration visibility
 
 `CustomAlert.private` defaults to false (including historical documents without

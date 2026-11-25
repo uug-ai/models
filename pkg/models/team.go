@@ -158,8 +158,23 @@ type TeamMember struct {
 	OrganisationId primitive.ObjectID `json:"organisationId" bson:"organisationId,omitempty"`
 	TeamId         primitive.ObjectID `json:"teamId" bson:"teamId,omitempty"`
 	UserId         primitive.ObjectID `json:"userId" bson:"userId,omitempty"`
-	Audit          Audit              `json:"audit" bson:"audit"`
+	// Source says who added the member: someone in Hub, or the identity
+	// provider's sync for a synced team. Absent on members added before it
+	// was recorded.
+	Source TeamMemberSource `json:"source,omitempty" bson:"source,omitempty"`
+	Audit  Audit            `json:"audit" bson:"audit"`
 }
+
+// TeamMemberSource says who added a team member.
+type TeamMemberSource string
+
+const (
+	// TeamMemberSourceManual: someone added the member in Hub.
+	TeamMemberSourceManual TeamMemberSource = "manual"
+	// TeamMemberSourceIdentityProvider: the identity provider's sync added
+	// the member to a synced team (RBAC spec 4.16).
+	TeamMemberSourceIdentityProvider TeamMemberSource = "identityProvider"
+)
 
 // Validate checks the member against its team: both ids are set and the
 // member belongs to the team's organisation. Whether the writer may change

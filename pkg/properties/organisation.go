@@ -121,6 +121,7 @@ const (
 	OrganisationUserInvitedBy = "invitedBy"
 	OrganisationUserInvitedAt = "invitedAt"
 	OrganisationUserJoinedAt = "joinedAt"
+	OrganisationUserSource = "source"
 	OrganisationUserExpiresAt = "expiresAt"
 	OrganisationUserAudit = "audit"
 )

@@ -70,3 +70,28 @@ func TestCreateTeamRequestDecodesSyncedTeam(t *testing.T) {
 		t.Errorf("decoded %+v", request)
 	}
 }
+
+func TestIdentityProviderStatusTranslate(t *testing.T) {
+	statuses := []IdentityProviderStatus{
+		IdentityProviderBindingFailed, IdentityProviderValidationFailed, IdentityProviderFound, IdentityProviderNotFound,
+		IdentityProviderGetAllSuccess, IdentityProviderGetAllFailed, IdentityProviderCreateSuccess, IdentityProviderCreateFailed,
+		IdentityProviderUpdateSuccess, IdentityProviderUpdateFailed, IdentityProviderDeleteSuccess, IdentityProviderDeleteFailed,
+		IdentityProviderNameExists, IdentityProviderDomainTaken, IdentityProviderDomainNotVerified, IdentityProviderDomainVerified,
+		IdentityProviderInUse,
+	}
+	for _, status := range statuses {
+		if got := status.Translate("en"); got == status.String() || got == "" {
+			t.Errorf("%s has no English translation", status)
+		}
+		if status.Translate("xx") != status.Translate("en") {
+			t.Errorf("%s: unknown language does not fall back to English", status)
+		}
+	}
+	if !(IdentityProviderConnectionPatch{}).IsEmpty() {
+		t.Error("empty patch not empty")
+	}
+	enabled := false
+	if (IdentityProviderConnectionPatch{Enabled: &enabled}).IsEmpty() {
+		t.Error("patch with a field reads as empty")
+	}
+}

@@ -292,6 +292,7 @@ func TestDomainPermissionLevels(t *testing.T) {
 		{"project administration", ProjectAdministrationPermissions, organisation},
 		{"billing", BillingPermissions, organisation},
 		{"storage", StoragePermissions, organisation},
+		{"identity provider", IdentityProviderPermissions, organisation},
 		{"audit", AuditPermissions, organisation},
 		{"device administration", DeviceAdministrationPermissions, organisation},
 		{"organisation pages", OrganisationPagePermissions, organisation},
@@ -586,6 +587,7 @@ func TestOwnerOnlyPermissions(t *testing.T) {
 	ownerOnly = append(ownerOnly, ChannelPermissions()...)
 	ownerOnly = append(ownerOnly, billingPermissions...)
 	ownerOnly = append(ownerOnly, storagePermissions...)
+	ownerOnly = append(ownerOnly, identityProviderPermissions...)
 	ownerOnly = append(ownerOnly, deviceAdministrationPermissions...)
 	for _, definition := range PermissionDefinitions() {
 		if want := slices.Contains(ownerOnly, definition.Permission); definition.OwnerOnly != want {
