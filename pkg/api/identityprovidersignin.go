@@ -135,7 +135,7 @@ type IdentityProviderEmailProof struct {
 }
 
 // GetIdentityProviderEmailProof returns a pending link.
-// @Router /sso/organisations/proofs/{code} [get]
+// @Router /sso/proofs/{code} [get]
 type GetIdentityProviderEmailProofRequest struct{}
 type GetIdentityProviderEmailProofResponse struct {
 	Proof IdentityProviderEmailProof `json:"proof"`
@@ -149,7 +149,7 @@ type GetIdentityProviderEmailProofErrorResponse struct {
 }
 
 // SendIdentityProviderEmailProof emails a single-use link to the address.
-// @Router /sso/organisations/proofs/{code}/email [post]
+// @Router /sso/proofs/{code}/email [post]
 type SendIdentityProviderEmailProofRequest struct{}
 type SendIdentityProviderEmailProofResponse struct{}
 type SendIdentityProviderEmailProofSuccessResponse struct {
@@ -163,7 +163,7 @@ type SendIdentityProviderEmailProofErrorResponse struct {
 // ConfirmIdentityProviderEmailProof redeems the emailed link: the account
 // with the address is linked (or created, when the connection allows it),
 // and a sign-in code is returned for the exchange.
-// @Router /sso/organisations/proofs/confirm [post]
+// @Router /sso/proofs/confirm [post]
 type ConfirmIdentityProviderEmailProofRequest struct {
 	Token string `json:"token"`
 }
@@ -181,7 +181,7 @@ type ConfirmIdentityProviderEmailProofErrorResponse struct {
 // LinkIdentityProviderAccount links the signed-in account (its own
 // session, whose email must be the address) and returns a sign-in code for
 // the exchange.
-// @Router /sso/organisations/proofs/{code}/link [post]
+// @Router /sso/proofs/{code}/link [post]
 type LinkIdentityProviderAccountRequest struct{}
 type LinkIdentityProviderAccountResponse struct {
 	Code string `json:"code"`
