@@ -34728,6 +34728,13 @@ export interface components {
              *     and getExportUiState for the rule. */
             export_heartbeat_age_seconds?: number;
             export_in_progress?: boolean;
+            /** @description ExportPendingForwards lists the recordings the last export could not
+             *     include because they were still on an edge Vault, and how long the
+             *     export waits for them. hub-pipeline-export writes it when the export
+             *     completes, removes recordings as they arrive and queues a follow-up
+             *     export for them; hub-api resets it when an export is requested. Nil
+             *     when nothing is waited for. */
+            export_pending_forwards?: components["schemas"]["models.TaskPendingForwards"];
             /** @description "0% -> 100%" */
             export_progress?: number;
             export_requested?: boolean;
@@ -42628,6 +42635,13 @@ export interface components {
              *     and getExportUiState for the rule. */
             export_heartbeat_age_seconds?: number;
             export_in_progress?: boolean;
+            /** @description ExportPendingForwards lists the recordings the last export could not
+             *     include because they were still on an edge Vault, and how long the
+             *     export waits for them. hub-pipeline-export writes it when the export
+             *     completes, removes recordings as they arrive and queues a follow-up
+             *     export for them; hub-api resets it when an export is requested. Nil
+             *     when nothing is waited for. */
+            export_pending_forwards?: components["schemas"]["models.TaskPendingForwards"];
             /** @description "0% -> 100%" */
             export_progress?: number;
             export_requested?: boolean;
@@ -42740,6 +42754,16 @@ export interface components {
             skipped?: number;
             /** @description files the step will handle, without the ones left out */
             total?: number;
+        };
+        "models.TaskPendingForwards": {
+            /** @description len(Media), for the page */
+            count?: number;
+            /** @description when a waited-for recording last arrived */
+            last_arrival?: string;
+            /** @description when the forwards were requested */
+            requested_at?: string;
+            /** @description waiting stops after this */
+            until?: string;
         };
         "models.TaskStatistics": {
             approved?: number;
@@ -44370,6 +44394,7 @@ export namespace models {
     export type SynchronizeEvent = components['schemas']['models.SynchronizeEvent'];
     export type Task = components['schemas']['models.Task'];
     export type TaskExportStep = components['schemas']['models.TaskExportStep'];
+    export type TaskPendingForwards = components['schemas']['models.TaskPendingForwards'];
     export type TaskStatistics = components['schemas']['models.TaskStatistics'];
     export type TaskWrapper = components['schemas']['models.TaskWrapper'];
     export type Telegram = components['schemas']['models.Telegram'];

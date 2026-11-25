@@ -143,6 +143,14 @@ type Task struct {
 	// the worker: never sent to clients.
 	ExportSupersededZips []TaskSupersededZip `json:"-" bson:"export_superseded_zips,omitempty"`
 
+	// ExportPendingForwards lists the recordings the last export could not
+	// include because they were still on an edge Vault, and how long the
+	// export waits for them. hub-pipeline-export writes it when the export
+	// completes, removes recordings as they arrive and queues a follow-up
+	// export for them; hub-api resets it when an export is requested. Nil
+	// when nothing is waited for.
+	ExportPendingForwards *TaskPendingForwards `json:"export_pending_forwards,omitempty" bson:"export_pending_forwards,omitempty"`
+
 	// ExportUpdatedAt is a heartbeat written by hub-pipeline-export
 	// every time it transitions the export state (claim, status
 	// updates, per-file download, release, complete) and by hub-api
@@ -237,6 +245,16 @@ type TaskExportStep struct {
 	Done    int    `json:"done" bson:"done"`       // files (archiving: recordings) this step finished
 	Total   int    `json:"total" bson:"total"`     // files the step will handle, without the ones left out
 	Skipped int    `json:"skipped" bson:"skipped"` // files left out so far (not signed, download failed)
+}
+
+// TaskPendingForwards is the set of recordings an export waits for while
+// their edge Vault forwards them.
+type TaskPendingForwards struct {
+	Media       []primitive.ObjectID `json:"-" bson:"media"`                                       // case_media ids still waiting, never sent to clients
+	Count       int                  `json:"count" bson:"count"`                                   // len(Media), for the page
+	RequestedAt time.Time            `json:"requested_at" bson:"requested_at"`                     // when the forwards were requested
+	Until       time.Time            `json:"until" bson:"until"`                                   // waiting stops after this
+	LastArrival time.Time            `json:"last_arrival,omitempty" bson:"last_arrival,omitempty"` // when a waited-for recording last arrived
 }
 
 // TaskSupersededZip is a zip of an earlier export that a newer export
