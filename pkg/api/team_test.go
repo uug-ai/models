@@ -76,7 +76,7 @@ func TestIdentityProviderStatusTranslate(t *testing.T) {
 		IdentityProviderBindingFailed, IdentityProviderValidationFailed, IdentityProviderFound, IdentityProviderNotFound,
 		IdentityProviderGetAllSuccess, IdentityProviderGetAllFailed, IdentityProviderCreateSuccess, IdentityProviderCreateFailed,
 		IdentityProviderUpdateSuccess, IdentityProviderUpdateFailed, IdentityProviderDeleteSuccess, IdentityProviderDeleteFailed,
-		IdentityProviderNameExists, IdentityProviderDomainTaken, IdentityProviderDomainNotVerified, IdentityProviderDomainVerified,
+		IdentityProviderNameExists, IdentityProviderSlugRequired,
 		IdentityProviderInUse,
 	}
 	for _, status := range statuses {

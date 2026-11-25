@@ -52,7 +52,11 @@ type Organisation struct {
 	Name string             `json:"name" bson:"name,omitempty"`
 	// Slug is a stable, URL-friendly handle for the organisation (e.g. "acme-corp").
 	// It is unique and decoupled from the display Name so it can be used in URLs
-	// and references without breaking when the name changes.
+	// and references without breaking when the name changes. It is also the
+	// organisation's sign-in name (RBAC spec 4.16), taking over a legacy
+	// users.domain where exactly one organisation uses it: the sign-in link,
+	// and on multi-tenant deployments the subdomain and the Domain field,
+	// resolve to the organisation by it.
 	Slug        string `json:"slug" bson:"slug,omitempty"`
 	Description string `json:"description" bson:"description,omitempty"`
 	Domain      string `json:"domain" bson:"domain,omitempty"`

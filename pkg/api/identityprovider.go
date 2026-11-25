@@ -22,14 +22,9 @@ const (
 	// IdentityProviderNameExists: the organisation has a connection with
 	// this name already (names compare ignoring case).
 	IdentityProviderNameExists IdentityProviderStatus = "identity_provider_name_exists"
-	// IdentityProviderDomainTaken: another organisation's connection has
-	// verified this domain.
-	IdentityProviderDomainTaken IdentityProviderStatus = "identity_provider_domain_taken"
-	// IdentityProviderDomainNotVerified: the domain's DNS TXT record was not
-	// found, or does not hold the verification token.
-	IdentityProviderDomainNotVerified IdentityProviderStatus = "identity_provider_domain_not_verified"
-	// IdentityProviderDomainVerified: the domain's DNS record was found.
-	IdentityProviderDomainVerified IdentityProviderStatus = "identity_provider_domain_verified"
+	// IdentityProviderSlugRequired: enabling a connection needs the
+	// organisation's slug, its sign-in name.
+	IdentityProviderSlugRequired IdentityProviderStatus = "identity_provider_slug_required"
 	// IdentityProviderInUse: synced teams name the connection; unlink or
 	// delete them first.
 	IdentityProviderInUse IdentityProviderStatus = "identity_provider_in_use"
@@ -46,23 +41,21 @@ func (s IdentityProviderStatus) String() string {
 func (s IdentityProviderStatus) Translate(lang string) string {
 	translations := map[string]map[IdentityProviderStatus]string{
 		"en": {
-			IdentityProviderBindingFailed:     "Identity provider binding failed",
-			IdentityProviderValidationFailed:  "Identity provider validation failed",
-			IdentityProviderFound:             "Identity provider found",
-			IdentityProviderNotFound:          "Identity provider not found",
-			IdentityProviderGetAllSuccess:     "Identity providers retrieved successfully",
-			IdentityProviderGetAllFailed:      "Failed to retrieve identity providers",
-			IdentityProviderCreateSuccess:     "Identity provider connected successfully",
-			IdentityProviderCreateFailed:      "Failed to connect the identity provider",
-			IdentityProviderUpdateSuccess:     "Identity provider updated successfully",
-			IdentityProviderUpdateFailed:      "Failed to update the identity provider",
-			IdentityProviderDeleteSuccess:     "Identity provider removed successfully",
-			IdentityProviderDeleteFailed:      "Failed to remove the identity provider",
-			IdentityProviderNameExists:        "An identity provider with this name already exists",
-			IdentityProviderDomainTaken:       "This domain is verified for another organisation",
-			IdentityProviderDomainNotVerified: "The domain's DNS record was not found",
-			IdentityProviderDomainVerified:    "Domain verified",
-			IdentityProviderInUse:             "Teams are synced from this identity provider",
+			IdentityProviderBindingFailed:    "Identity provider binding failed",
+			IdentityProviderValidationFailed: "Identity provider validation failed",
+			IdentityProviderFound:            "Identity provider found",
+			IdentityProviderNotFound:         "Identity provider not found",
+			IdentityProviderGetAllSuccess:    "Identity providers retrieved successfully",
+			IdentityProviderGetAllFailed:     "Failed to retrieve identity providers",
+			IdentityProviderCreateSuccess:    "Identity provider connected successfully",
+			IdentityProviderCreateFailed:     "Failed to connect the identity provider",
+			IdentityProviderUpdateSuccess:    "Identity provider updated successfully",
+			IdentityProviderUpdateFailed:     "Failed to update the identity provider",
+			IdentityProviderDeleteSuccess:    "Identity provider removed successfully",
+			IdentityProviderDeleteFailed:     "Failed to remove the identity provider",
+			IdentityProviderNameExists:       "An identity provider with this name already exists",
+			IdentityProviderSlugRequired:     "Set the organisation's slug before enabling sign-in",
+			IdentityProviderInUse:            "Teams are synced from this identity provider",
 		},
 	}
 
@@ -84,7 +77,9 @@ func (s IdentityProviderStatus) Translate(lang string) string {
 // An organisation's identity provider connections (RBAC spec 4.16), in the
 // caller's current organisation. Only an owner manages them
 // (organisation.manageIdentityProvider); session tokens only. The client
-// secret is write-only: requests may set it, responses never return it.
+// secret is write-only: requests may set it, responses never return it. A
+// connection is enabled only once the organisation has a slug
+// (IdentityProviderSlugRequired).
 
 // IdentityProviderConnectionDetails is a connection as returned: the stored
 // connection without its secret, and whether a secret is set.
@@ -121,10 +116,8 @@ type GetIdentityProviderConnectionErrorResponse struct {
 	ErrorResponse
 }
 
-// CreateIdentityProviderConnection connects an identity provider. Domains
-// are listed by name; each gets a verification token and is used for
-// sign-in only once verified. The server sets the id, organisation,
-// protocol (oidc) and audit.
+// CreateIdentityProviderConnection connects an identity provider. The server
+// sets the id, organisation, protocol (oidc) and audit.
 // @Router /identity-providers [post]
 type CreateIdentityProviderConnectionRequest struct {
 	Name         string                        `json:"name"`
@@ -133,7 +126,6 @@ type CreateIdentityProviderConnectionRequest struct {
 	ClientSecret string                        `json:"clientSecret"`
 	Scopes       []string                      `json:"scopes,omitempty"`
 	Claims       models.IdentityProviderClaims `json:"claims,omitempty"`
-	Domains      []string                      `json:"domains,omitempty"`
 	JoinOnSignIn bool                          `json:"joinOnSignIn"`
 	Enabled      bool                          `json:"enabled"`
 }
@@ -150,16 +142,13 @@ type CreateIdentityProviderConnectionErrorResponse struct {
 
 // IdentityProviderConnectionPatch changes a connection: only the fields that
 // are set. The name never changes (synced teams name the connection by it).
-// ClientSecret replaces the stored secret. Domains is the full list: a
-// domain already listed keeps its token and verification, a new one gets a
-// token, one left out is removed.
+// ClientSecret replaces the stored secret.
 type IdentityProviderConnectionPatch struct {
 	Issuer       *string                        `json:"issuer,omitempty"`
 	ClientId     *string                        `json:"clientId,omitempty"`
 	ClientSecret *string                        `json:"clientSecret,omitempty"`
 	Scopes       *[]string                      `json:"scopes,omitempty"`
 	Claims       *models.IdentityProviderClaims `json:"claims,omitempty"`
-	Domains      *[]string                      `json:"domains,omitempty"`
 	JoinOnSignIn *bool                          `json:"joinOnSignIn,omitempty"`
 	Enabled      *bool                          `json:"enabled,omitempty"`
 }
@@ -167,7 +156,7 @@ type IdentityProviderConnectionPatch struct {
 // IsEmpty reports whether the patch changes nothing.
 func (p IdentityProviderConnectionPatch) IsEmpty() bool {
 	return p.Issuer == nil && p.ClientId == nil && p.ClientSecret == nil && p.Scopes == nil &&
-		p.Claims == nil && p.Domains == nil && p.JoinOnSignIn == nil && p.Enabled == nil
+		p.Claims == nil && p.JoinOnSignIn == nil && p.Enabled == nil
 }
 
 // UpdateIdentityProviderConnection changes a connection.
@@ -196,21 +185,5 @@ type DeleteIdentityProviderConnectionSuccessResponse struct {
 	Data DeleteIdentityProviderConnectionResponse `json:"data"`
 }
 type DeleteIdentityProviderConnectionErrorResponse struct {
-	ErrorResponse
-}
-
-// VerifyIdentityProviderDomain looks up the domain's DNS TXT record
-// (IdentityProviderDomain.VerificationRecordName) and marks the domain
-// verified when it holds the token.
-// @Router /identity-providers/{id}/domains/{domain}/verify [post]
-type VerifyIdentityProviderDomainRequest struct{}
-type VerifyIdentityProviderDomainResponse struct {
-	Domain models.IdentityProviderDomain `json:"domain"`
-}
-type VerifyIdentityProviderDomainSuccessResponse struct {
-	SuccessResponse
-	Data VerifyIdentityProviderDomainResponse `json:"data"`
-}
-type VerifyIdentityProviderDomainErrorResponse struct {
 	ErrorResponse
 }

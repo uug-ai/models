@@ -33,15 +33,7 @@ const (
 	IdentityProviderConnectionClientSecret = "clientSecret"
 	IdentityProviderConnectionScopes = "scopes"
 	IdentityProviderConnectionClaims = "claims"
-	IdentityProviderConnectionDomains = "domains"
 	IdentityProviderConnectionJoinOnSignIn = "joinOnSignIn"
 	IdentityProviderConnectionEnabled = "enabled"
 	IdentityProviderConnectionAudit = "audit"
-)
-
-// IdentityProviderDomain property field names (BSON)
-const (
-	IdentityProviderDomainName = "name"
-	IdentityProviderDomainVerificationToken = "verificationToken"
-	IdentityProviderDomainVerifiedAt = "verifiedAt"
 )

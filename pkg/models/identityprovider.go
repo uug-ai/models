@@ -1,13 +1,9 @@
 package models
 
 import (
-	"crypto/rand"
-	"encoding/hex"
 	"errors"
 	"fmt"
 	"net/url"
-	"regexp"
-	"slices"
 	"strings"
 	"time"
 
@@ -19,6 +15,12 @@ import (
 // on their first sign-in, and their provider groups decide which of the
 // organisation's synced teams they are in. The identity provider decides who
 // is in a team; Hub decides what the team may do.
+//
+// A connection is reached through its organisation, never through an email
+// domain: the organisation's Slug is its sign-in name (the sign-in link, and
+// on multi-tenant deployments the subdomain and the Domain field). Because a
+// connection can then name any address, a person proves their email once
+// before Hub links an account to the connection or creates one.
 
 // PermissionOrganisationManageIdentityProvider manages the organisation's
 // identity provider connections: who may join it and how. Owner-only and
@@ -86,63 +88,6 @@ func orDefault(value, fallback string) string {
 	return fallback
 }
 
-// IdentityProviderDomain is an email domain a connection answers for. It is
-// used for sign-in only once verified: the organisation publishes a DNS TXT
-// record holding the verification token, so it cannot claim a domain that is
-// not its own.
-type IdentityProviderDomain struct {
-	Name              string    `json:"name" bson:"name"`
-	VerificationToken string    `json:"verificationToken" bson:"verificationToken"`
-	VerifiedAt        time.Time `json:"verifiedAt,omitempty" bson:"verifiedAt,omitempty"`
-}
-
-// Verified reports whether the domain's DNS record was found.
-func (d IdentityProviderDomain) Verified() bool {
-	return !d.VerifiedAt.IsZero()
-}
-
-// VerificationRecordName is the DNS name of the TXT record to publish.
-func (d IdentityProviderDomain) VerificationRecordName() string {
-	return "_hub-verification." + d.Name
-}
-
-// VerificationRecordValue is the TXT record's value.
-func (d IdentityProviderDomain) VerificationRecordValue() string {
-	return "hub-verification=" + d.VerificationToken
-}
-
-// NewIdentityProviderDomain returns an unverified domain with a fresh
-// verification token; the name is normalised (NormaliseDomain).
-func NewIdentityProviderDomain(name string) (IdentityProviderDomain, error) {
-	domain := IdentityProviderDomain{Name: NormaliseDomain(name)}
-	if err := ValidateDomain(domain.Name); err != nil {
-		return IdentityProviderDomain{}, err
-	}
-	token := make([]byte, 16)
-	if _, err := rand.Read(token); err != nil {
-		return IdentityProviderDomain{}, err
-	}
-	domain.VerificationToken = hex.EncodeToString(token)
-	return domain, nil
-}
-
-// NormaliseDomain lowercases a domain and drops surrounding spaces and a
-// trailing dot.
-func NormaliseDomain(name string) string {
-	return strings.TrimSuffix(strings.ToLower(strings.TrimSpace(name)), ".")
-}
-
-var domainPattern = regexp.MustCompile(`^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$`)
-
-// ValidateDomain checks that a normalised name is a DNS host name with at
-// least two labels.
-func ValidateDomain(name string) error {
-	if len(name) > 253 || !domainPattern.MatchString(name) {
-		return fmt.Errorf("%w: domain %q", ErrIdentityProviderInvalid, name)
-	}
-	return nil
-}
-
 // IdentityProviderConnection is an organisation's identity provider (RBAC
 // spec 4.16), stored in identity_provider_connections. Only an owner manages
 // it (PermissionOrganisationManageIdentityProvider).
@@ -163,8 +108,7 @@ type IdentityProviderConnection struct {
 	ClientSecret string   `json:"-" bson:"clientSecret,omitempty"`
 	Scopes       []string `json:"scopes,omitempty" bson:"scopes,omitempty"`
 
-	Claims  IdentityProviderClaims   `json:"claims" bson:"claims"`
-	Domains []IdentityProviderDomain `json:"domains" bson:"domains"`
+	Claims IdentityProviderClaims `json:"claims" bson:"claims"`
 	// JoinOnSignIn lets a first sign-in create the account and the
 	// membership. Off (the default), sign-in links existing accounts and
 	// adds memberships only; new people need an invitation.
@@ -174,8 +118,8 @@ type IdentityProviderConnection struct {
 }
 
 // Validate checks the connection's own fields: a name, OpenID Connect with
-// an https issuer (http only on a loopback host) and a client id, valid
-// claim names, and normalised, distinct domains.
+// an https issuer (http only on a loopback host) and a client id, and valid
+// claim names.
 func (c IdentityProviderConnection) Validate() error {
 	name := strings.TrimSpace(c.Name)
 	if name == "" || len(name) > 64 || name != c.Name {
@@ -195,22 +139,6 @@ func (c IdentityProviderConnection) Validate() error {
 			return fmt.Errorf("%w: claim name %q", ErrIdentityProviderInvalid, claim)
 		}
 	}
-	var names []string
-	for _, domain := range c.Domains {
-		if domain.Name != NormaliseDomain(domain.Name) {
-			return fmt.Errorf("%w: domain %q is not normalised", ErrIdentityProviderInvalid, domain.Name)
-		}
-		if err := ValidateDomain(domain.Name); err != nil {
-			return err
-		}
-		if domain.VerificationToken == "" {
-			return fmt.Errorf("%w: domain %q has no verification token", ErrIdentityProviderInvalid, domain.Name)
-		}
-		if slices.Contains(names, domain.Name) {
-			return fmt.Errorf("%w: domain %q listed twice", ErrIdentityProviderInvalid, domain.Name)
-		}
-		names = append(names, domain.Name)
-	}
 	return nil
 }
 
@@ -227,26 +155,6 @@ func validateIssuer(issuer string) error {
 	return nil
 }
 
-// EmailDomain returns the normalised domain of an email address, empty when
-// it has none.
-func EmailDomain(email string) string {
-	at := strings.LastIndex(email, "@")
-	if at < 0 || at == len(email)-1 {
-		return ""
-	}
-	return NormaliseDomain(email[at+1:])
-}
-
-// AnswersFor reports whether the enabled connection signs in an email
-// address: its domain is one of the connection's verified domains.
-func (c IdentityProviderConnection) AnswersFor(email string) bool {
-	domain := EmailDomain(email)
-	if !c.Enabled || domain == "" {
-		return false
-	}
-	return slices.ContainsFunc(c.Domains, func(d IdentityProviderDomain) bool { return d.Name == domain && d.Verified() })
-}
-
 // IdentityLink ties a Hub account to a person at an identity provider
 // connection (RBAC spec 4.16), stored in identity_links: one per
 // (connection, subject), at most one per (connection, user). Sign-in finds
@@ -258,7 +166,8 @@ type IdentityLink struct {
 	ConnectionId   primitive.ObjectID `json:"connectionId" bson:"connectionId"`
 	// Subject is the provider's stable id of the person (the subject claim).
 	Subject string `json:"subject" bson:"subject"`
-	// Email is the address the provider sent when the link was made.
+	// Email is the address the provider sent when the link was made, which
+	// the person proved before the link was made.
 	Email    string    `json:"email" bson:"email"`
 	LinkedAt time.Time `json:"linkedAt" bson:"linkedAt"`
 	Audit    Audit     `json:"audit" bson:"audit"`

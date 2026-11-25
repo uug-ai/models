@@ -119,7 +119,9 @@ func ValidateOrganisationSlugFormat(slug string) error {
 // together there would reject the one write meant to succeed. Nothing mints an
 // organisation slug — the bootstrap tool is forbidden from synthesizing one, and
 // the field is optional precisely so it can stay absent — so for organisations
-// every write is caller-supplied and both checks always apply.
+// every write is caller-supplied and both checks always apply. That includes
+// the operator-run copy of a legacy users.domain into the slug (RBAC spec
+// 4.16): a domain this refuses is reported, not stored.
 //
 // The slug is optional: an organisation with no slug is valid, and its absence
 // is what the partial unique index is built around. Callers must therefore test

@@ -109,10 +109,10 @@ An organisation connects its own identity provider
 (`IdentityProviderConnection`, collection `identity_provider_connections`;
 RBAC spec 4.16): OpenID Connect issuer, client id and a write-only client
 secret (never in JSON), the claims to read (subject, email, groups; defaults
-`sub`, `email`, `groups`), and the email domains it answers for. A domain is
-used only once verified through a DNS TXT record
-(`IdentityProviderDomain.VerificationRecordName` / `…Value`);
-`AnswersFor(email)` checks an enabled connection and a verified domain.
+`sub`, `email`, `groups`). There are no email domains: a connection is
+reached through its organisation, whose `Slug` is its sign-in name (it takes
+over a legacy `users.domain` used by one organisation), and a person proves
+their email once before Hub links or creates an account.
 `JoinOnSignIn` (off by default) lets a first sign-in create the account.
 `IdentityLink` (collection `identity_links`) ties an account to a provider
 subject. Synced teams name a connection by its `Name`, which never changes.
