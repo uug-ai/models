@@ -120,6 +120,13 @@ Memberships and team members record their `Source`
 (`MembershipSourceIdentityProvider`, `TeamMemberSourceIdentityProvider`).
 Managing connections needs `organisation.manageIdentityProvider`: owner-only,
 tenant-wide, never an access token scope.
+Signing in (`pkg/api/identityprovidersignin.go`): `GET /sign-in/organisations/{slug}`
+lists an organisation's enabled connections; the browser goes through the
+provider and back to the frontend with a single-use code, exchanged for a
+session or standing for a pending email proof (`IdentityProviderEmailProof`).
+A session started through a connection stays in its organisation:
+elsewhere, and for the account's own security, it gets
+`session_sign_in_required`.
 
 ### Alert configuration visibility
 
