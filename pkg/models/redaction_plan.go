@@ -149,8 +149,8 @@ type RedactionDraft struct {
 	UpdatedBy     string              `json:"updatedBy,omitempty" bson:"updated_by,omitempty"`
 }
 
-// RedactionPlanLimits bounds the size of a plan.
-type RedactionPlanLimits struct {
+// RedactionLimits bounds the size of a plan.
+type RedactionLimits struct {
 	// MaxRegions is the most regions a plan may hold.
 	MaxRegions int `json:"maxRegions"`
 	// MaxKeyframes is the most keyframes a plan may hold over all regions.
@@ -159,10 +159,10 @@ type RedactionPlanLimits struct {
 	MaxLabelLength int `json:"maxLabelLength"`
 }
 
-// DefaultRedactionPlanLimits returns the limits Validate applies. 50,000
+// DefaultRedactionLimits returns the limits Validate applies. 50,000
 // keyframes is about 5 MB of BSON, well under MongoDB's 16 MB document limit.
-func DefaultRedactionPlanLimits() RedactionPlanLimits {
-	return RedactionPlanLimits{MaxRegions: 200, MaxKeyframes: 50000, MaxLabelLength: 80}
+func DefaultRedactionLimits() RedactionLimits {
+	return RedactionLimits{MaxRegions: 200, MaxKeyframes: 50000, MaxLabelLength: 80}
 }
 
 // DrawnOn reports whether the region is drawn on the frame: it is enabled,
@@ -262,10 +262,10 @@ func (p *RedactionPlan) KeyframeCount() int {
 	return count
 }
 
-// Validate checks the plan's shape against DefaultRedactionPlanLimits. A
+// Validate checks the plan's shape against DefaultRedactionLimits. A
 // plan without regions is valid: a draft may be empty.
 func (p *RedactionPlan) Validate() error {
-	return p.ValidateWithLimits(DefaultRedactionPlanLimits())
+	return p.ValidateWithLimits(DefaultRedactionLimits())
 }
 
 // ValidateForRender is Validate plus the requirement that the plan draws
@@ -282,7 +282,7 @@ func (p *RedactionPlan) ValidateForRender() error {
 
 // ValidateWithLimits checks the plan's shape against the given limits. It
 // does no I/O.
-func (p *RedactionPlan) ValidateWithLimits(limits RedactionPlanLimits) error {
+func (p *RedactionPlan) ValidateWithLimits(limits RedactionLimits) error {
 	if p == nil {
 		return fmt.Errorf("redaction plan: nil")
 	}
@@ -312,7 +312,7 @@ func (p *RedactionPlan) ValidateWithLimits(limits RedactionPlanLimits) error {
 	return nil
 }
 
-func (r *RedactionRegion) validate(limits RedactionPlanLimits) error {
+func (r *RedactionRegion) validate(limits RedactionLimits) error {
 	if length := utf8.RuneCountInString(r.Label); length > limits.MaxLabelLength {
 		return fmt.Errorf("label has %d characters, at most %d allowed", length, limits.MaxLabelLength)
 	}

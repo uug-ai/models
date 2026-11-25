@@ -914,7 +914,7 @@ box, drawn := plan.Regions[0].BoxAt(120)
   the two surrounding keyframes, or the first or last keyframe's box outside
   them. Renderers call `BoxAt` and apply nothing else.
 - **`Validate`** checks the shape and the limits of
-  `DefaultRedactionPlanLimits()` (200 regions, 50,000 keyframes, 80-character
+  `DefaultRedactionLimits()` (200 regions, 50,000 keyframes, 80-character
   labels); an empty plan is a valid draft. **`ValidateForRender`** also
   requires that the plan draws something.
 - **Where it is stored:** `CaseMedia.Redaction` on an edit row with

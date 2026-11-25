@@ -174,10 +174,10 @@ func TestRedactionPlanValidate(t *testing.T) {
 	}
 }
 
-func TestRedactionPlanLimits(t *testing.T) {
-	limits := DefaultRedactionPlanLimits()
+func TestRedactionLimits(t *testing.T) {
+	limits := DefaultRedactionLimits()
 	if limits.MaxRegions != 200 || limits.MaxKeyframes != 50000 || limits.MaxLabelLength != 80 {
-		t.Fatalf("DefaultRedactionPlanLimits() = %+v", limits)
+		t.Fatalf("DefaultRedactionLimits() = %+v", limits)
 	}
 
 	plan := RedactionPlan{SchemaVersion: RedactionPlanSchemaVersion}
@@ -188,13 +188,13 @@ func TestRedactionPlanLimits(t *testing.T) {
 		t.Fatalf("KeyframeCount() = %d, want 6", got)
 	}
 
-	if err := plan.ValidateWithLimits(RedactionPlanLimits{MaxRegions: 3, MaxKeyframes: 6, MaxLabelLength: 80}); err != nil {
+	if err := plan.ValidateWithLimits(RedactionLimits{MaxRegions: 3, MaxKeyframes: 6, MaxLabelLength: 80}); err != nil {
 		t.Fatalf("plan exactly at the limits: %v", err)
 	}
-	if err := plan.ValidateWithLimits(RedactionPlanLimits{MaxRegions: 2, MaxKeyframes: 6, MaxLabelLength: 80}); err == nil || !strings.Contains(err.Error(), "regions") {
+	if err := plan.ValidateWithLimits(RedactionLimits{MaxRegions: 2, MaxKeyframes: 6, MaxLabelLength: 80}); err == nil || !strings.Contains(err.Error(), "regions") {
 		t.Fatalf("one region over the limit: error = %v", err)
 	}
-	if err := plan.ValidateWithLimits(RedactionPlanLimits{MaxRegions: 3, MaxKeyframes: 5, MaxLabelLength: 80}); err == nil || !strings.Contains(err.Error(), "keyframes") {
+	if err := plan.ValidateWithLimits(RedactionLimits{MaxRegions: 3, MaxKeyframes: 5, MaxLabelLength: 80}); err == nil || !strings.Contains(err.Error(), "keyframes") {
 		t.Fatalf("one keyframe over the limit: error = %v", err)
 	}
 }

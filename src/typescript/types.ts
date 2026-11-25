@@ -42285,6 +42285,14 @@ export interface components {
             y2?: number;
         };
         "models.RedactionMode": "blur" | "pixelate" | "black";
+        "models.RedactionLimits": {
+            /** @description MaxKeyframes is the most keyframes a plan may hold over all regions. */
+            maxKeyframes?: number;
+            /** @description MaxLabelLength is the most characters a region label may have. */
+            maxLabelLength?: number;
+            /** @description MaxRegions is the most regions a plan may hold. */
+            maxRegions?: number;
+        };
         "models.RedactionPlan": {
             /** @description Media records what the editor measured on the video the plan was made
              *     against. It is informational and never used to place a box. */
@@ -42293,14 +42301,6 @@ export interface components {
             regions?: components["schemas"]["models.RedactionRegion"][];
             /** @description SchemaVersion is RedactionPlanSchemaVersion. */
             schemaVersion?: number;
-        };
-        "models.RedactionPlanLimits": {
-            /** @description MaxKeyframes is the most keyframes a plan may hold over all regions. */
-            maxKeyframes?: number;
-            /** @description MaxLabelLength is the most characters a region label may have. */
-            maxLabelLength?: number;
-            /** @description MaxRegions is the most regions a plan may hold. */
-            maxRegions?: number;
         };
         "models.RedactionPlanMedia": {
             fps?: number;
@@ -44539,8 +44539,8 @@ export namespace models {
     export type RedactionDraft = components['schemas']['models.RedactionDraft'];
     export type RedactionFrameRange = components['schemas']['models.RedactionFrameRange'];
     export type RedactionKeyframe = components['schemas']['models.RedactionKeyframe'];
+    export type RedactionLimits = components['schemas']['models.RedactionLimits'];
     export type RedactionPlan = components['schemas']['models.RedactionPlan'];
-    export type RedactionPlanLimits = components['schemas']['models.RedactionPlanLimits'];
     export type RedactionPlanMedia = components['schemas']['models.RedactionPlanMedia'];
     export type RedactionRegion = components['schemas']['models.RedactionRegion'];
     export type RedactionRegionOrigin = components['schemas']['models.RedactionRegionOrigin'];
