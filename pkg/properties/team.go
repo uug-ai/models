@@ -26,5 +26,6 @@ const (
 	TeamMemberOrganisationId = "organisationId"
 	TeamMemberTeamId = "teamId"
 	TeamMemberUserId = "userId"
+	TeamMemberSource = "source"
 	TeamMemberAudit = "audit"
 )
