@@ -107,6 +107,7 @@ const (
 	TaskExportRevision = "export_revision"
 	TaskExportStep = "export_step"
 	TaskExportSupersededZips = "export_superseded_zips"
+	TaskExportPendingForwards = "export_pending_forwards"
 	TaskExportUpdatedAt = "export_updated_at"
 	TaskExportSelectionDirty = "export_selection_dirty"
 	TaskMediaCount = "media_count"
@@ -124,6 +125,15 @@ const (
 	TaskExportStepDone = "done"
 	TaskExportStepTotal = "total"
 	TaskExportStepSkipped = "skipped"
+)
+
+// TaskPendingForwards property field names (BSON)
+const (
+	TaskPendingForwardsMedia = "media"
+	TaskPendingForwardsCount = "count"
+	TaskPendingForwardsRequestedAt = "requested_at"
+	TaskPendingForwardsUntil = "until"
+	TaskPendingForwardsLastArrival = "last_arrival"
 )
 
 // TaskStatistics property field names (BSON)
